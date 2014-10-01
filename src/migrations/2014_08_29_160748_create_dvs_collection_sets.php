@@ -14,8 +14,8 @@ class CreateDvsCollectionSets extends Migration {
         Schema::create('dvs_collection_sets', function($table) {
             $table->increments('id');
             $table->string('name', 255);
-            $table->date('created_at')->nullable();
-            $table->date('updated_at')->nullable();
+            $table->timestamp('created_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
         });
     }
 

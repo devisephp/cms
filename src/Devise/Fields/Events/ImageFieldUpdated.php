@@ -20,75 +20,74 @@ class ImageFieldUpdated
 	 * in devise
 	 *
 	 * @param  Field       $field
-	 * @param  FieldVersin $version
 	 * @param  array       $input
 	 * @return array
 	 */
-	public function handle($field, $version, $input)
+	public function handle($field, $input)
 	{
-		$version->values->merge([
+		$field->values->merge([
 			'has_thumbnail' => array_get($input, 'has_thumbnail', false),
-			'image_url' => $this->createVersionOfImage($version, $input),
-			'thumbnail_url' => $this->createThumbnailOfImage($version, $input),
+			'image_url' => $this->createVersionOfImage($field, $input),
+			'thumbnail_url' => $this->createThumbnailOfImage($field, $input),
 		]);
 
-		$version->value = $version->values->toJSON();
+		$field->json_value = $field->values->toJSON();
 
-		$version->save();
+		$field->save();
 	}
 
 	/**
 	 * Create a version of this image, crops too when
 	 * $crop is set to true
 	 *
-	 * @param FieldVersion $version
+	 * @param Field $field
 	 * @param boolean      $crop
 	 * @return string
 	 */
-	protected function createVersionOfImage($version, $input)
+	protected function createVersionOfImage($field, $input)
 	{
-		if (!$version->values->image)
+		if (!$field->values->image)
 		{
 			return '';
 		}
 
 		return array_get($input, '_crop_image', false)
-			? $this->croppedImagePath($version)
-			: $this->versionedImagePath($version);
+			? $this->croppedImagePath($field)
+			: $this->versionedImagePath($field);
 	}
 
 	/**
 	 * Create a version of this thumbnail, crops too when
 	 * $crop is set to true
 	 *
-	 * @param FieldVersion $version
+	 * @param Field $field
 	 * @param boolean      $crop
 	 * @return string
 	 */
-	protected function createThumbnailOfImage($version, $input)
+	protected function createThumbnailOfImage($field, $input)
 	{
-		if (!array_get($input, 'has_thumbnail', false) || !$version->values->image)
+		if (!array_get($input, 'has_thumbnail', false) || !$field->values->image)
 		{
 			return '';
 		}
 
 		return array_get($input, '_crop_thumbnail', false)
-			? $this->croppedImagePath($version, 'thumbnail')
-			: $this->resizedImagePath($version, 200, 200);
+			? $this->croppedImagePath($field, 'thumbnail')
+			: $this->resizedImagePath($field, 200, 200);
 	}
 
 	/**
 	 * Create a version of this thumbnail, crops too when
 	 * $crop is set to true
 	 *
-	 * @param FieldVersion $version
+	 * @param Field $field
 	 * @param boolean      $crop
 	 * @return string
 	 */
-	protected function resizedImagePath($version, $width, $height)
+	protected function resizedImagePath($field, $width, $height)
 	{
 		// get the parts for this file string
-		$info = $this->MediaPathHelper->fileVersionInfo($version->values->image);
+		$info = $this->MediaPathHelper->fileVersionInfo($field->values->image);
 
 		// create resizedImagePath
 		$resizedImagePath = "{$info->versiondir}/{$info->filename}_{$width}_{$height}.{$info->ext}";
@@ -109,17 +108,17 @@ class ImageFieldUpdated
 	/**
 	 * Creates a versioned copy of this image
 	 *
-	 * @param FieldVersion $version
+	 * @param Field $field
 	 * @return string
 	 */
-	protected function versionedImagePath($version)
+	protected function versionedImagePath($field)
 	{
-		if ($this->MediaPathHelper->isUrlPath($version->values->image))
+		if ($this->MediaPathHelper->isUrlPath($field->values->image))
 		{
-			return $version->values->image;
+			return $field->values->image;
 		}
 
-		$info = $this->MediaPathHelper->fileVersionInfo($version->values->image);
+		$info = $this->MediaPathHelper->fileVersionInfo($field->values->image);
 
 		if ($info->tempfile) unlink($info->tempfile);
 
@@ -130,21 +129,21 @@ class ImageFieldUpdated
 	 * Creates a cropped versioned copy of this image
 	 *
 	 * @param string       $fromImagePath
-	 * @param FieldVersion $version
+	 * @param Field $field
 	 * @return string
 	 */
-	protected function croppedImagePath($version, $type = 'image')
+	protected function croppedImagePath($field, $type = 'image')
 	{
 		// gather info about this file and where it should be versioned
-		$info = $this->MediaPathHelper->fileVersionInfo($version->values->image);
+		$info = $this->MediaPathHelper->fileVersionInfo($field->values->image);
 
 		// setting variables so we can easily access them later
-		$width = $version->values->{$type . '_width'};
-		$height = $version->values->{$type . '_height'};
-		$cropWidth = $version->values->{$type . '_crop_w'};
-		$cropHeight = $version->values->{$type . '_crop_h'};
-		$cropX = $version->values->{$type . '_crop_x'};
-		$cropY = $version->values->{$type . '_crop_y'};
+		$width = $field->values->{$type . '_width'};
+		$height = $field->values->{$type . '_height'};
+		$cropWidth = $field->values->{$type . '_crop_w'};
+		$cropHeight = $field->values->{$type . '_crop_h'};
+		$cropX = $field->values->{$type . '_crop_x'};
+		$cropY = $field->values->{$type . '_crop_y'};
 
 		// this is the croppedImagePath
 		$croppedImagePath = "{$info->versiondir}/{$info->filename}_{$width}_{$height}_{$cropX}_{$cropY}.{$info->ext}";

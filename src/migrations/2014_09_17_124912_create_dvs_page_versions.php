@@ -15,15 +15,13 @@ class CreateDvsPageVersions extends Migration
 		Schema::create('dvs_page_versions', function($table) {
             $table->increments('id');
 			$table->integer('page_id')->unsigned();
-			$table->integer('responsible_user_id')->unsigned();
+			$table->integer('created_by_user_id')->unsigned();
             $table->string('name', 255);
-            $table->string('stage');
-            $table->longText('value');
 			$table->softDeletes();
-            $table->timestamps();
-
+            $table->timestamp('created_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
             $table->index('page_id');
-            $table->index('responsible_user_id');
+            $table->index('created_by_user_id');
         });
 	}
 

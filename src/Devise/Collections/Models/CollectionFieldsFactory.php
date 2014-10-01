@@ -11,13 +11,10 @@ class CollectionFieldsFactory
 
     public function createFromCollectionInstance($instance)
     {
-        $fields = $this->Field->with(['latestPublishedVersion' => function($query) use ($instance)
-        {
-            $query->where('collection_instance_id','=', $instance->id);
-        }])
-        ->where('collection_set_id', '=', $instance->collection_set_id)
-        ->where('page_id', '=', $instance->page_id)
-        ->get();
+        $fields = $this->Field
+            ->where('collection_instance_id', '=', $instance->id)
+            ->where('page_version_id', '=', $instance->page_version_id)
+            ->get();
 
         return new CollectionFields($fields);
     }

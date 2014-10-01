@@ -28,7 +28,7 @@ class DevisePageController extends Controller {
 	 */
     public function show()
     {
-        $page = $this->PagesRepository->findByRouteName( Route::currentRouteName() );
+        $page = $this->PagesRepository->findByRouteName( Route::currentRouteName(), Input::get('page_version', 'Default'));
 
         $localized = $this->PagesRepository->findLocalizedPage($page);
 

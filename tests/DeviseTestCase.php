@@ -20,7 +20,7 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 
 		$testEnvironment = 'testing';
 
-		static::$application = require __DIR__.'/../bootstrap/start.php';
+		static::$application = require __DIR__.'/bootstrap/bootstrap/start.php';
 
 		// Artisan::call('migrate');
 		// Artisan::call('db:seed', ['--class' => 'fixtures\seeder']);

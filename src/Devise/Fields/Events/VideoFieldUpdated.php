@@ -19,16 +19,15 @@ class VideoFieldUpdated
 	 * in devise
 	 *
 	 * @param  Field       $field
-	 * @param  FieldVersin $version
 	 * @param  array       $input
 	 * @return array
 	 */
-	public function handle($field, $version, $input)
+	public function handle($field, $input)
 	{
 		//
 		// can't process imaginary videos (unless you're awesome)
 		//
-		if ($this->noVideoPathDefined($field, $version, $input))
+		if ($this->noVideoPathDefined($field, $input))
 		{
 			return;
 		}
@@ -36,7 +35,7 @@ class VideoFieldUpdated
 		//
 		// get the current settings we should use
 		//
-		$settings = $this->buildSettings($field, $version, $input);
+		$settings = $this->buildSettings($field, $input);
 
 		//
 		// need some way to determine if settings have changed since
@@ -44,19 +43,19 @@ class VideoFieldUpdated
 		// every single time we save something on the video field,
 		// only when something has been changed we create a job
 		//
-		list($unprocessed, $duplicatedFormats) = $this->findUnprocessedVideos($field, $version, $settings);
+		list($unprocessed, $duplicatedFormats) = $this->findUnprocessedVideos($field, $settings);
 
 		//
 		// update this version's mp4_url, ogg_url, etc
 		//
-		$this->updateVersionUrls($field, $version, $unprocessed, $duplicatedFormats);
+		$this->updateVersionUrls($field, $unprocessed, $duplicatedFormats);
 
 		//
 		// only process videos that haven't been processed yet
 		//
 		if ($unprocessed)
 		{
-			$this->Encoder->create($this->MediaPathHelper->zencoderUrl($field->value->video), $unprocessed);
+			$this->Encoder->create($this->MediaPathHelper->zencoderUrl($field->values->video), $unprocessed);
 
 			$this->createTempHoldingFiles($unprocessed);
 		}
@@ -67,17 +66,13 @@ class VideoFieldUpdated
 	 * and then we filter those out
 	 *
 	 * @param  Field        $field
-	 * @param  FieldVersion $version
 	 * @param  array        $settings
 	 * @return array($unprocessed, $duplicated)
 	 */
-	protected function findUnprocessedVideos($field, $version, $settings)
+	protected function findUnprocessedVideos($field, $settings)
 	{
 		$unprocessed = array();
 		$duplicated = array();
-
-		// get all versions of the $field
-		$versions = $field->versions;
 
 		// loop through settings and see if the
 		// file located at setting[label] already exists
@@ -100,22 +95,21 @@ class VideoFieldUpdated
 	 * Update the verion's urls for every format
 	 *
 	 * @param  Field        $field
-	 * @param  FieldVersion $version
 	 * @param  array        $settings
 	 * @return void
 	 */
-	protected function updateVersionUrls($field, $version, $unprocessed, $duplicated)
+	protected function updateVersionUrls($field, $unprocessed, $duplicated)
 	{
 		foreach ($this->formats as $format)
 		{
 			$url = $this->findUrlForFormat($duplicated, $format);
 			$url = $url ?: $this->findUrlForFormat($unprocessed, $format);
 
-			$version->values->merge(["{$format}_url" => $url]);
+			$field->values->merge(["{$format}_url" => $url]);
 		}
 
-		$version->value = $version->values->toJSON();
-		$version->save();
+		$field->json_value = $field->values->toJSON();
+		$field->save();
 	}
 
 	/**
@@ -142,17 +136,16 @@ class VideoFieldUpdated
 	 * encoding
 	 *
 	 * @param  Field       $field
-	 * @param  FieldVersin $version
 	 * @param  array       $input
 	 * @return array
 	 */
-	protected function buildSettings($field, $version, $input)
+	protected function buildSettings($field, $input)
 	{
 		$settings = array();
 
 		foreach ($this->formats as $format)
 		{
-			$url = isset($version->values->$format) && $version->values->$format ? $this->filename($version->values->video, $format) : '';
+			$url = isset($field->values->$format) && $field->values->$format ? $this->filename($field->values->video, $format) : '';
 
 			if ($url)
 			{
@@ -203,13 +196,12 @@ class VideoFieldUpdated
 	 * just doesn't specify a url path to a video
 	 *
 	 * @param  Field 		$field
-	 * @param  FieldVersion $version
 	 * @param  array 		$input
 	 * @return boolean
 	 */
-	protected function noVideoPathDefined($field, $version, $input)
+	protected function noVideoPathDefined($field, $input)
 	{
-		$filepath = $version->values->video;
+		$filepath = $field->values->video;
 
 		if (!empty(trim($filepath)))
 		{
@@ -218,11 +210,11 @@ class VideoFieldUpdated
 
 		foreach ($this->formats as $format)
 		{
-			$version->values->merge(["{$format}_url" => '']);
+			$field->values->merge(["{$format}_url" => '']);
 		}
 
-		$version->value = $version->values->toJSON();
-		$version->save();
+		$field->json_value = $field->values->toJSON();
+		$field->save();
 
 		return true;
 	}

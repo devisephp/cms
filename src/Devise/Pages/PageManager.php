@@ -13,29 +13,22 @@ class PageManager {
 	/**
 	 * @var Page
 	 */
-	private $Page;
-	/**
-	 * @var Validator
-	 */
-	private $Validator;
+	private $Page, $Validator, $PageVersionManager;
 
 	/**
 	 * @var
 	 */
-	public $errors;
-	/**
-	 * @var
-	 */
-	public $message;
+	public $errors, $message;
 
 	/**
 	 * @param Page $Page
 	 * @param Validator $Validator
 	 */
-	function __construct(Page $Page, Validator $Validator)
+	function __construct(Page $Page, Validator $Validator, PageVersionManager $PageVersionManager)
     {
         $this->Page = $Page;
         $this->Validator = $Validator;
+        $this->PageVersionManager = $PageVersionManager;
     }
 
 	/**
@@ -44,25 +37,13 @@ class PageManager {
 	 *
 	 * @return bool
 	 */
-	public function createNewPage($input) {
-        $input = array_except($input, array('_token', '_data_token', 'show_advanced'));
+	public function createNewPage($input)
+	{
+		$page = $this->createPageFromInput($input);
 
-        $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);
-        $this->validator->sometimes('view', 'required|min:3', function($input)
-        {
-            return $input->http_verb == 'get';
-        });
+		$page->version = $this->PageVersionManager->createDefaultPageVersion($page);
 
-        if ($this->validator->passes()){
-            $suggestedRouteName = (!isset($input['route_name'])) ? Str::slug($input['title']) : $input['route_name'];
-            $input['route_name'] = $this->findAvailableRoute($suggestedRouteName);
-
-            return $this->Page->create($input);
-        } else {
-            $this->errors = $this->validator->errors()->all();
-            $this->message = "There were validation errors.";
-            return false;
-        }
+		return $page;
     }
 
 	/**
@@ -72,7 +53,8 @@ class PageManager {
 	 *
 	 * @return bool
 	 */
-	public function updatePage($id, $input) {
+	public function updatePage($id, $input)
+	{
         $input = array_except($input, array('_token', '_data_token', '_method', 'show_advanced'));
         $page = $this->Page->findOrFail($id);
 
@@ -97,7 +79,8 @@ class PageManager {
 	 *
 	 * @return mixed
 	 */
-	public function destroyPage($id) {
+	public function destroyPage($id)
+	{
 		$page = $this->Page->findOrFail($id);
 		return $page->delete();
 	}
@@ -108,12 +91,19 @@ class PageManager {
 	 *
 	 * @return bool
 	 */
-	public function copyPage($input) {
-		$input = array_except($input, array('_token', '_data_token', '_method', 'show_advanced'));
-        if($input['language_id'] == 45){
-            $input['translated_from_page_id'] = 0;
-        }
-		return $this->createNewPage($input);
+	public function copyPage($input)
+	{
+		dd($input);
+
+		$fromPage = $this->Page->findOrFail($input['page_id']);
+		$toPage = $this->createNewPageFromInput($input);
+
+		if ($toPage)
+		{
+			$this->PageVersionManager->copyPageVersions($fromPage, $toPage);
+		}
+
+		return $toPage;
 	}
 
 	/**
@@ -136,4 +126,49 @@ class PageManager {
     }
 
 
+    /**
+     * Create page from given input data
+     *
+     * @return Page
+     */
+    protected function createPageFromInput($input)
+    {
+        $input = array_except($input, array('_token', '_data_token', 'show_advanced'));
+
+        if ($input['language_id'] == 45){
+            $input['translated_from_page_id'] = 0;
+        }
+
+        // validate the input given before we create the page
+        $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);
+        $this->validator->sometimes('view', 'required|min:3', function($input)
+        {
+            return $input->http_verb == 'get';
+        });
+
+        if ($this->validator->passes())
+        {
+            $suggestedRouteName = (!isset($input['route_name'])) ? Str::slug($input['title']) : $input['route_name'];
+            $input['route_name'] = $this->findAvailableRoute($suggestedRouteName);
+
+            return $this->Page->create($input);
+        }
+
+        $this->errors = $this->validator->errors()->all();
+        $this->message = "There were validation errors.";
+
+        return false;
+    }
+
+    /**
+     * Copy the fields from this page version into
+     * another page version
+     * 
+     * @param  [type] $pageVersion
+     * @return [type]
+     */
+    public function copyFieldsFromPageVersion($pageVersion)
+    {
+
+    }
 } 

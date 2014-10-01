@@ -12,11 +12,11 @@ class ResponseHandler {
         $this->CollectionsManager = $CollectionsManager;
     }
 
-    public function requestStoreInstance($pageId, $collectionSetId, $input) {
+    public function requestStoreInstance($pageVersionId, $collectionSetId, $input) {
 
 	    $data = array(
             'collection_set_id' => $collectionSetId,
-		    'page_id' => $pageId,
+		    'page_version_id' => $pageVersionId,
             'sort' => $input['sort'],
 		    'name' => $input['name']
 	    );
@@ -30,7 +30,7 @@ class ResponseHandler {
         }
     }
 
-	public function updateSortOrder($pageId, $collectionSetId, $input) {
+	public function updateSortOrder($pageVersionId, $collectionSetId, $input) {
 		foreach ($input['instance'] as $i => $id) {
 
 			$data = array(
@@ -44,7 +44,7 @@ class ResponseHandler {
 		return $input;
 	}
 
-	public function renameInstance($pageId, $collectionInstanceId, $input) {
+	public function renameInstance($pageVersionId, $collectionInstanceId, $input) {
 		$data = array(
 			'id' => $collectionInstanceId,
 			'name' => $input['name']
@@ -59,4 +59,4 @@ class ResponseHandler {
 
 	}
 
-} 
+}

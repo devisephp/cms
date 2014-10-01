@@ -98,6 +98,7 @@ class EditorDataTranslator
 		$editorData = new EditorData;
 
         $editorData->page_id = $inputData['page_id'];
+        $editorData->page_version_id = $inputData['page_version_id'];
 		$editorData->coordinates->top = $inputData['coordinates']['top'];
 		$editorData->coordinates->left = $inputData['coordinates']['left'];
 		$editorData->isCollection = false;
@@ -167,6 +168,7 @@ class EditorDataTranslator
         $input = array();
         $input['index'] = $element['index'];
         $input['page_id'] = $inputData['page_id'];
+        $input['page_version_id'] = $inputData['page_version_id'];
         $input['type'] = $element['type'];
         $input['human_name'] = $element['humanName'];
         $input['key'] = $element['key'];

@@ -32,8 +32,8 @@ class CreateDvsPages extends Migration {
             $table->string('response_type', 255)->default('View');
             $table->string('response_path', 255)->nullable();
             $table->string('response_params', 255)->nullable();
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
+            $table->timestamp('created_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
             $table->dateTime('deleted_at')->nullable();
 
             $table->index('language_id');

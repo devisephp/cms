@@ -1,56 +1,62 @@
 <?php namespace Devise\Collections;
 
+use Devise\Collections\Repositories\CollectionsRepository;
 use Devise\Editor\Models\EditorData;
 use Devise\Fields\FieldManager;
 use CollectionSet;
 use CollectionInstance;
 use Field;
-use FieldVersion;
 use DB;
 
 class CollectionsManager
 {
-    protected $FieldManager;
-    private $CollectionSet;
-	private $CollectionInstance;
+    protected $FieldManager, $CollectionSet, $CollectionInstance, $CollectionsRepository;
 
-	public function __construct(FieldManager $FieldManager, CollectionSet $CollectionSet, CollectionInstance $CollectionInstance)
+    /**
+     * [__construct description]
+     * @param FieldManager          $FieldManager          [description]
+     * @param CollectionSet         $CollectionSet         [description]
+     * @param CollectionInstance    $CollectionInstance    [description]
+     * @param CollectionsRepository $CollectionsRepository [description]
+     */
+	public function __construct(FieldManager $FieldManager, CollectionSet $CollectionSet, CollectionInstance $CollectionInstance, CollectionsRepository $CollectionsRepository)
 	{
         $this->FieldManager = $FieldManager;
 		$this->CollectionSet = $CollectionSet;
 		$this->CollectionInstance = $CollectionInstance;
+        $this->CollectionsRepository = $CollectionsRepository;
 	}
 
+    /**
+     * [translateFromInputArray description]
+     * @param  [type] $inputData [description]
+     * @return [type]            [description]
+     */
 	public function translateFromInputArray($inputData)
 	{
         $editorData = new EditorData;
 
         $editorData->isCollection = true;
         $editorData->page_id = $inputData['page_id'];
+        $editorData->page_version_id = $inputData['page_version_id'];
         $editorData->coordinates->top = $inputData['coordinates']['top'];
         $editorData->coordinates->left = $inputData['coordinates']['left'];
         $editorData->categoryName = (isset($inputData['categoryName'])) ? $inputData['categoryName'] : null;
         $editorData->categoryCount = (isset($inputData['categoryCount'])) ? $inputData['categoryCount'] : null;
 
-        $collection = $this->findOrFetch($inputData);
+        $collection = $this->CollectionSet->whereName($inputData['collection'])->first();
+
+        if($collection == null)
+        {
+            $collection = $this->createFirstInstance($inputData);
+        }
 
         $editorData->collection = $collection;
-        
+
         $editorData->groups = $this->buildGroups($collection, $inputData);
 
         return $editorData;
 	}
-
-    private function findOrFetch($inputData)
-    {
-        $collection = $this->CollectionSet->whereName($inputData['collection'])->first();
-        if($collection == null){
-
-            $collection = $this->createFirstInstance($inputData);
-        }
-
-        return $collection;
-    }
 
     /**
      * Get the groups array for this input data
@@ -63,94 +69,84 @@ class CollectionsManager
     protected function buildGroups($collection, $inputData)
     {
         $groups = array();
-        if(count($collection->instances)){
-            $inputData['collection_set_id'] = $collection->id;
-            $instances = $collection->instances()->where('page_id', $inputData['page_id'])->get();
-            foreach ($instances as $index => $instance) {
-                $keyName = ($index + 1) . ') ' .$instance->name;
-                $allRequestedFields = $inputData[ $inputData['collection'] ];
-                $foundKeys = array();
 
-                $fields = Field::with(array('latestPublishedVersion' => function($query) use ($instance){
-                    $query->where('collection_instance_id','=',$instance->id);
-                }))
-                ->where('collection_set_id', '=', $collection->id)
-                ->where('page_id','=',$inputData['page_id'])
-                ->get();
+        $instances = $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($collection->id, $inputData['page_version_id']);
 
+        // fields are added to instance here
+        foreach ($instances as $instance)
+        {
+            $this->createAnyNewFieldsForCollectionInstance($instance, $inputData);
+        }
 
-                foreach ($fields as $field) {
-                    $field->collection_instance_id = $instance->id;
-                    
-                    $foundKeys[] = $field->key;
+        // re-fetch instances now that we've created any new fields
+        $instances = $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($collection->id, $inputData['page_version_id']);
 
-                    $fieldName = $field->key;
-                    $groups[ $keyName ][] = $field;
-                }
+        //
+        // loop through all instances for this collection set + page version
+        // and make a big giant array of groups, each group has a set
+        // of fields inside of it
+        //
+        foreach ($instances as $index => $instance)
+        {
+            $keyName = ($index + 1) . ') ' .$instance->name;
 
-                $newKeys = array();
-                foreach ($allRequestedFields as $requestedField) {
-                    if(!in_array($requestedField['key'], $foundKeys))
-                    {
-                        $newKeys[] = $requestedField['key'];
-                        $field = $this->fetchField($inputData, $requestedField);
-                    }
-                }
+            $groups[$keyName] = array();
 
-                if(count($newKeys)){
-                    $fields = Field::with(array('latestPublishedVersion' => function($query) use ($instance){
-                        $query->where('collection_instance_id','=',$instance->id);
-                    }))
-                    ->where('collection_set_id', '=', $collection->id)
-                    ->where('page_id','=',$inputData['page_id'])
-                    ->whereIn('key',$newKeys)
-                    ->get();
-
-
-                    foreach ($fields as $field) {
-                        $field->collection_instance_id = $instance->id;
-                        $fieldName = $field->key;
-                        $groups[ $keyName ][] = $field;
-                    }
-                }
-
-                usort($groups[ $keyName ], array($this, 'sortById'));
+            foreach ($instance->fields as $field)
+            {
+                $groups[$keyName][] = $field;
             }
         }
 
         return $groups;
     }
 
-    protected function sortById($a, $b)
+    /**
+     * We can add new fields to a collection at a later time
+     * this keeps us fresh I guess
+     *
+     * @param  [type] $instance [description]
+     * @return [type]           [description]
+     */
+    protected function createAnyNewFieldsForCollectionInstance($instance, $inputData)
     {
-        return $a->id - $b->id;
+        $groupOfFields = reset($inputData['groups']);
+
+        foreach ($groupOfFields as $fieldData)
+        {
+            $this->fetchField($inputData, $fieldData, $instance);
+        }
     }
 
     /**
      * Get the page field for this given element and inputData
      *
-     * @param  array $element
      * @param  array $inputData
+     * @param  array $fieldData
      * @return PageField
      */
-    protected function fetchField($element, $inputData)
+    protected function fetchField($inputData, $fieldData, $instance)
     {
         $input = array();
         $input['index'] = '1';
-        $input['page_id'] = $element['page_id'];
-        $input['type'] = $inputData['type'];
-        $input['human_name'] = $inputData['humanName'];
-        $input['key'] = $inputData['key'];
-        $input['alternateTarget'] = $inputData['alternateTarget'];
+        $input['page_id'] = $inputData['page_id'];
+        $input['page_version_id'] = $inputData['page_version_id'];
+        $input['type'] = $fieldData['type'];
+        $input['human_name'] = $fieldData['humanName'];
+        $input['key'] = $fieldData['key'];
+        $input['alternateTarget'] = $fieldData['alternateTarget'];
         $input['value'] = '{}';
         $input['settings'] = '{}';
-        if(isset($element['collection_set_id'])){
-            $input['collection_set_id'] = $element['collection_set_id'];
-        }
+        $input['collection_instance_id'] = $instance->id;
 
         return $this->FieldManager->findOrCreateField($input);
     }
 
+    /**
+     * [createFirstInstance description]
+     * @param  [type] $inputData [description]
+     * @return [type]            [description]
+     */
     protected function createFirstInstance($inputData)
     {
         $collection = $this->CollectionSet->create(array('name'=>$inputData['collection']));
@@ -158,6 +154,11 @@ class CollectionsManager
         return $collection;
     }
 
+    /**
+     * [createNewInstance description]
+     * @param  [type] $inputData [description]
+     * @return [type]            [description]
+     */
 	public function createNewInstance($inputData)
 	{
 		$instance = $this->CollectionInstance->create($inputData);
@@ -169,6 +170,11 @@ class CollectionsManager
 		}
 	}
 
+    /**
+     * [updateInstance description]
+     * @param  [type] $inputData [description]
+     * @return [type]            [description]
+     */
 	public function updateInstance($inputData)
 	{
 		$instance = $this->CollectionInstance->find($inputData['id']);
@@ -183,6 +189,11 @@ class CollectionsManager
 		}
 	}
 
+    /**
+     * [updateInstanceName description]
+     * @param  [type] $inputData [description]
+     * @return [type]            [description]
+     */
 	public function updateInstanceName($inputData)
     {
 		$instance = $this->CollectionInstance->find($inputData['id']);
@@ -197,6 +208,11 @@ class CollectionsManager
 		}
 	}
 
+    /**
+     * [removeInstance description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
 	public function removeInstance($id)
     {
 		$instance = $this->CollectionInstance->find($id);

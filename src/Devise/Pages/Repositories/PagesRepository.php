@@ -1,6 +1,6 @@
 <?php namespace Devise\Pages\Repositories;
 
-use Config, Input, Page, Field;
+use Config, Input, Page, Field, GlobalField;
 use URL;
 use Devise\Languages\LanguageDetector;
 use Devise\Collections\Repositories\CollectionsRepository;
@@ -18,11 +18,12 @@ class PagesRepository extends BaseRepository{
      *
      * @param  Page  $Page
      */
-	public function __construct(Page $Page, LanguageDetector $LanguageDetector, Field $Field, CollectionsRepository $CollectionsRepository)
+	public function __construct(Page $Page, LanguageDetector $LanguageDetector, Field $Field, GlobalField $GlobalField, CollectionsRepository $CollectionsRepository)
 	{
 		$this->Page = $Page;
         $this->LanguageDetector = $LanguageDetector;
         $this->Field = $Field;
+        $this->GlobalField = $GlobalField;
         $this->CollectionsRepository = $CollectionsRepository;
 	}
 
@@ -34,7 +35,7 @@ class PagesRepository extends BaseRepository{
      */
 	public function find($id)
 	{
-		return $this->Page->with('fields')->findOrFail($id);
+		return $this->Page->findOrFail($id);
 	}
 
     /**
@@ -44,11 +45,16 @@ class PagesRepository extends BaseRepository{
      * @internal param string $slug
      * @return Page
      */
-	public function findByRouteName($name)
+	public function findByRouteName($name, $versionName = 'Default')
 	{
-		$page = $this->Page->with('fields.latestStagingVersion', 'fields.latestPublishedVersion')->whereRouteName($name)->firstOrFail();
+		$page = $this->Page->whereRouteName($name)->firstOrFail();
 
-        $page = $this->wrapFieldsAroundPage($page);
+        $page->version = $page->versions()->with('fields')->where('name', $versionName)->first();
+
+        if ($page->version)
+        {
+            $page = $this->wrapFieldsAroundPage($page, $page->version);
+        }
 
         return $page;
 	}
@@ -66,7 +72,7 @@ class PagesRepository extends BaseRepository{
 
         if ($language->id == $page->language_id) return null;
 
-        return $this->Page->with('fields')->whereTranslatedFromPageId($page->id)->whereLanguageId($language->id)->first();
+        return $this->Page->whereTranslatedFromPageId($page->id)->whereLanguageId($language->id)->first();
     }
 
     /**
@@ -85,25 +91,78 @@ class PagesRepository extends BaseRepository{
 	}
 
     /**
-     * calls simpler store
-     * @param array $input
-     * @return Page
+     * List of all the languages available for a page
+     *
+     * @param  integer $id
+     * @return array
      */
-	public function store($input)
-	{
-		return $this->simpleStore($this->Page, $input);
-	}
+    public function availableLanguagesForPage($id)
+    {
+        $page = $this->Page->with('localizedPages', 'language', 'translatedFromPage')->find($id);
+
+        $languages = array($page->language_id => array('human_name' => $page->language->human_name, 'url' => URL::route($page->route_name)));
+
+        foreach ($page->localizedPages as $p)
+        {
+            $languages[$p->language_id] = array('human_name' => $p->language->human_name, 'url' => URL::route($p->route_name));
+        }
+
+        if (isset($page->translatedFromPage))
+        {
+            $p = $page->translatedFromPage;
+            $languages[$p->language_id] = array('human_name' => $p->language->human_name, 'url' => URL::route($p->route_name));
+        }
+
+        return $languages;
+    }
 
     /**
-     * calls simpler store
-     * @param int $id
-     * @param array $input
-     * @return Page
+     * Get the versions of a page
+     *
+     * @param  integer $pageId
+     * @return EloquentCollection[PageVersions]
      */
-	public function update($id, $input)
-	{
-		return $this->simpleUpdate($this->Page, $id, $input);
-	}
+    public function getPageVersions($pageId, $selectedPageVersionId = null)
+    {
+        $versions = $this->Page->findOrFail($pageId)->versions;
+
+        if ($selectedPageVersionId)
+        {
+            foreach ($versions as $version)
+            {
+                if ($version->id == $selectedPageVersionId)
+                {
+                    $version->selected = 'selected';
+                }
+            }
+        }
+
+        return $versions;
+    }
+
+    /**
+     * Get the route list for all the non admin pages
+     *
+     * @return Collection
+     */
+    public function getRouteList()
+    {
+        $routes = $this->Page->where('dvs_admin', '<>', 1)->where('language_id',45)->orderBy('slug')->get();
+        $list = array();
+        $slugName = null;
+
+        foreach ($routes as $route)
+        {
+            $arr = explode('/', $route->slug);
+            array_pop($arr);
+            $routeName = implode(' ', $arr);
+            if ($routeName != $slugName){
+                $slugName = ucwords($routeName);
+            }
+            $list[ $slugName ][ $route->route_name ] = $route->title;
+        }
+        return $list;
+    }
 
     /**
      * Wrap all fields around the page
@@ -111,15 +170,15 @@ class PagesRepository extends BaseRepository{
      * @param  Page $page
      * @return Page
      */
-    protected function wrapFieldsAroundPage($page)
+    protected function wrapFieldsAroundPage($page, $pageVersion)
     {
-        $globalFields = $this->Field->where('page_id', 0)->get();
+        $globalFields = $this->GlobalField->get();
 
         $page = $this->wrapTheseFieldsAroundThisPage($globalFields, $page);
 
-        $page = $this->wrapTheseFieldsAroundThisPage($page->fields, $page);
+        $page = $this->wrapTheseFieldsAroundThisPage($pageVersion->fields, $page);
 
-        $page = $this->wrapTheseCollectionsAroundThisPage($this->CollectionsRepository->findCollectionsForPage($page), $page);
+        $page = $this->wrapTheseCollectionsAroundThisPage($this->CollectionsRepository->findCollectionsForPageVersion($pageVersion), $page);
 
         return $page;
     }
@@ -182,51 +241,13 @@ class PagesRepository extends BaseRepository{
     }
 
     /**
-     * List of all the languages available for a page
-     *
-     * @param  integer $id
-     * @return array
+     * [getPagesList description]
+     * @param  boolean $includeAdmin [description]
+     * @param  [type]  $search       [description]
+     * @return [type]                [description]
      */
-    public function availableLanguagesForPage($id)
+    public function getPagesList($includeAdmin = false, $search = null)
     {
-        $page = $this->Page->with('localizedPages', 'language', 'translatedFromPage')->find($id);
-
-        $languages = array($page->language_id => array('human_name' => $page->language->human_name, 'url' => URL::route($page->route_name)));
-
-        foreach ($page->localizedPages as $p) {
-            $languages[$p->language_id] = array('human_name' => $p->language->human_name, 'url' => URL::route($p->route_name));
-        }
-
-        if (isset($page->translatedFromPage)) {
-            $p = $page->translatedFromPage;
-            $languages[$p->language_id] = array('human_name' => $p->language->human_name, 'url' => URL::route($p->route_name));
-        }
-
-        return $languages;
-    }
-
-    /**
-     * Get the route list for all the non admin pages
-     *
-     * @return Collection
-     */
-    public function getRouteList() {
-        $routes = $this->Page->where('dvs_admin', '<>', 1)->where('language_id',45)->orderBy('slug')->get();
-        $list = array();
-        $slugName = null;
-        foreach ($routes as $route) {
-            $arr = explode('/', $route->slug);
-            array_pop($arr);
-            $routeName = implode(' ', $arr);
-            if($routeName != $slugName){
-                $slugName = ucwords($routeName);
-            }
-            $list[ $slugName ][ $route->route_name ] = $route->title;
-        }
-        return $list;
-    }
-
-    public function getPagesList($includeAdmin = false, $search = null) {
         $pages = $this->Page->with('language');
 
         if ($search != null) {

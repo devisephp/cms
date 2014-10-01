@@ -1,18 +1,15 @@
 <?php
 
-use DB;
-
 class CollectionInstance extends Eloquent
 {
 	protected $table = 'dvs_collection_instance';
 
     protected $guarded = array();
 
-    protected $_value;
     /**
-     * All version of this field
+     * Collection instances belong to CollectionSet
      *
-     * @return hasMany
+     * @return belongsTo
      */
     public function collectionSet()
     {
@@ -20,12 +17,12 @@ class CollectionInstance extends Eloquent
     }
 
     /**
-     * All version of this FieldVersion
+     * All collection instances has many fields
      *
      * @return hasMany
      */
-    public function fieldsVersions()
+    public function fields()
     {
-        return $this->hasMany('FieldVersion');
+        return $this->hasMany('Field', 'collection_instance_id');
     }
 }

@@ -27,6 +27,18 @@
         	<div data-devise="colName[textName], text, Text For Collection, groupName1, catName1"></div>
         </li>
         <hr>
+
+        <li>
+            <div data-devise="colName2, image, Image For Collection"></div>
+            <div data-devise="colName3, text, Text For Collection"></div>
+        </li>
+        <hr>
+
+        @if (isset($colName))
+            @foreach ($colName as $col)
+                {{ $col->textName->text('hmm') }}
+            @endforeach
+        @endif
     </ul>
  </div>
 

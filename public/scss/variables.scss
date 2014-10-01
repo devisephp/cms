@@ -1,0 +1,37 @@
+/* Colors - Global */
+$white:   #ffffff;
+$black:   #000000;
+$gray:    #666666;
+
+/* Colors - Application Specific */
+$base-color: #138ad2;
+
+$sidebar-bg: rgba($base-color, .95);
+$sidebar-text-color: #fff;
+
+$form-font-size: 12px;
+$form-color: darken($sidebar-bg, 10%);
+$form-background: lighten($sidebar-bg, 50%);
+$form-border: lighten($sidebar-bg, 50%);
+$form-drop-shadow-spread: 2px;
+
+// Fancy Select Styles
+$form-trigger-background: lighten($sidebar-bg, 50%);
+$form-trigger-border: lighten($sidebar-bg, 50%);
+$form-trigger-top-border-color: lighten($sidebar-bg, 50%);
+$form-trigger-carrot-color: darken($sidebar-bg, 30%);
+$form-trigger-color: darken($sidebar-bg, 30%);
+
+$form-trigger-list-background: saturate(darken(invert($sidebar-bg), 30%), 30%);
+$form-trigger-list-border: lighten(invert($sidebar-bg), 30%);
+$form-trigger-list-color: lighten(invert($sidebar-bg), 30%);
+$form-trigger-list-hover-color: lighten(invert($sidebar-bg), 100%);
+$form-trigger-selected-option-background:saturate(darken(invert($sidebar-bg), 20%), 30%);
+$form-trigger-selected-option-color: lighten(invert($sidebar-bg), 100%);
+
+$form-trigger-open-background:darken($sidebar-bg, 30%);
+$form-trigger-open-color:lighten($sidebar-bg, 30%);
+$form-trigger-open-border-color:#475062;
+$form-trigger-open-carrot-color:lighten($sidebar-bg, 30%);
+
+$form-error-color: #AA3311;

@@ -1,0 +1,48 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git://github.com/orchestral/phpseclib.git"
+        }
+    ],
+    "name": "devise/cms",
+    "description": "",
+    "authors": [
+        {
+            "name": "LBM",
+            "email": "info@lbm.co"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "masterminds/html5": "1.*",
+        "guzzlehttp/guzzle": "~4.0",
+        "zencoder/zencoder-php": "*",
+        "ext-imagick": "*"
+    },
+    "require-dev": {
+        "mockery/mockery": "dev-master",
+        "orchestra/testbench": "2.2.*",
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/Devise/Pages/Controllers",
+            "src/Devise/User/Controllers",
+            "src/Devise/Models/Controllers",
+            "src/Devise/User/Models",
+            "src/Devise/Collections/Models",
+            "src/Devise/Pages/Models",
+            "src/Devise/Models/Models",
+            "src/Devise/Fields/Models",
+            "src/Devise/Languages/Models",
+            "src/Devise/Menus/Models",
+            "src/seeds",
+            "tests/DeviseTestCase.php"
+        ],
+        "psr-0": {
+            "Devise\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

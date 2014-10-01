@@ -1,0 +1,357 @@
+
+.dvs-sidebar-mode {
+
+  #dvs-blocker {
+    opacity: 0;
+    background-color:pink;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+  }
+
+  #dvs-sidebar {
+    opacity: 1;
+    left:0;
+    @include transform(translate3d(0, 0, 0));
+  }
+
+  #dvs-sidebar-collections {
+    opacity: 1;
+    left:330px;
+    @include transform(translate3d(0, 0, 0));
+  }
+
+  #dvs-pusher {
+    @include transform(translate3d(200px, 0, -1000px) rotateY(-10deg));
+  }
+
+  #dvs-node-mode-button {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+    right: 45%;
+  }
+}
+
+#dvs-sidebar {
+  position: fixed;
+  top:0;
+  z-index: 10010;
+  opacity: 0;
+  width: 320px;
+  height: 100%;
+  background: $sidebar-bg;
+  font-family: "Lato", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
+
+  @include transition(all 0.5s);
+  @include transform(translate3d(-100%, 0, 0));
+
+  .dvs-sidebar-group {
+    display:none;
+
+    &.active {
+      display:block;
+    }
+  }
+}
+
+
+#dvs-sidebar-header {
+  position: relative;
+  line-height: 53px;
+  text-align: center;
+  font-weight: 100;
+  background-color: $white;
+  color: $sidebar-bg;
+  border-bottom: 1px solid lighten($sidebar-bg, 15%);
+  outline: none;
+  padding-bottom:12px;
+
+  @include transition(all 0.5s linear);
+  @include clearfix;
+
+  select {
+    background-color:white;
+    color:$sidebar-bg;
+    height:30px;
+    text-indent: 4px;
+    border: 2px solid $sidebar-bg;
+    font-weight:600;
+    font-size:11px;
+
+    &.large {
+      float:left;
+      height:40px;
+      font-size:18px;
+      font-weight:800;
+      margin:12px;
+      width:296px;
+    }
+  }
+}
+
+#dvs-sidebar-admin,
+#dvs-sidebar-close {
+  display: inline-block;
+  cursor: pointer;
+  float:right;
+  background:white url('../img/devise-ctrls.png') no-repeat -34px -30px;
+  width: 30px;
+  height: 30px;
+  border-radius:4px;
+  border: 2px solid $sidebar-bg;
+  margin:12px 12px 0 0;
+
+  &.dark {
+    background:$sidebar-bg url('../img/devise-ctrls.png') no-repeat -34px 0px;
+  }
+}
+
+#dvs-sidebar-admin {
+  background-position:0 -30px;
+
+  &.dark {
+    background-position:0 0px;
+  }
+}
+
+#dvs-sidebar-language-selector {
+  float:left;
+  width:200px;
+  margin:12px 12px 0 12px;
+}
+
+#dvs-sidebar-container {
+  height:100%;
+  overflow:hidden;
+  position:relative;
+  z-index:1006;
+}
+
+#dvs-sidebar-content {
+  padding-right:15px;
+  height:100%;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  margin-right:-15px;
+
+  p.notice {
+    background-color:darken($sidebar-bg, 5%);
+    color:#fff;
+    font-weight:300;
+    padding:25px 15px;
+    font-size:18px;
+    text-align:center;
+  }
+}
+
+#dvs-sidebar-elements-and-groups {
+
+}
+
+.dvs-sidebar-elements,
+.dvs-sidebar-group {
+  position:relative;
+
+  h3 {
+    margin:0;
+    padding:27px 15px;
+    background-color:#10a5ff;
+    color:#fff;
+    font-size:18px;
+    font-weight:300;
+    border-top:1px solid lighten(#10a5ff, 10%);
+    border-bottom:1px solid darken(#10a5ff, 10%);
+    outline: none;
+    cursor:pointer;
+  }
+
+  > div {
+    > div {
+      @include clearfix;
+      padding: 0 15px 18px 12px;
+      box-sizing:content-box;
+      overflow:auto;
+      height:400px;
+
+      form {
+        display:block;
+        @include clearfix;
+      }
+    }
+  }
+
+  h4,
+  label {
+    width:100%;
+    margin:10px 0;
+    color:#fff;
+    font-size:12px;
+    text-transform: uppercase;
+  }
+
+  h4 {
+    margin:18px 0 0 0;
+    font-size:18px;
+    color:lighten(#10a5ff, 20%);
+    text-transform: none;
+    font-weight:300;
+    border-bottom:1px solid #10a5ff;
+
+  }
+
+  textarea,
+  select,
+  input[type="text"] {
+    width:100%;
+    border-top:1px solid lighten(#10a5ff, 10%);
+    border-left:1px solid lighten(#10a5ff, 10%);
+    border-bottom:1px solid darken(#10a5ff, 10%);
+    border-right:1px solid darken(#10a5ff, 10%);
+    border-radius:4px;
+    padding:12px 15px;
+    font-size:14px;
+    color:#222;
+  }
+
+  select {
+    height:40px;
+  }
+
+  #dvs-new-collection-instance,
+  .dvs-sidebar-save-group {
+    background-color: lighten(#10a5ff, 15%);
+    width:100%;
+    padding:27px 15px;
+    font-size:22px;
+    font-weight:600;
+    text-transform: uppercase;
+    border-width:0;
+    color:#fff;
+  }
+}
+
+.dvs-sidebar-datetime-element {
+  height:425px;
+}
+
+#dvs-sidebar-collections {
+  height:100%;
+  width: 340px;
+  overflow-y: scroll;
+  position:fixed;
+  top:0;
+  left:-330px;
+  background: darken($sidebar-bg, 10%);
+  z-index: 1005;
+
+  h2 {
+    margin:0;
+    font-size:20px;
+    padding:15px;
+    font-weight:300;
+    background-color:#fff;
+    color:darken($sidebar-bg, 10%);
+  }
+
+  hr {
+    margin:10px auto;
+    width:50%;
+    border-top-color: lighten($sidebar-bg, 20%);
+  }
+
+  p {
+    font-style: italic;
+    margin:0 30px;
+    text-align: center;
+    color:lighten($sidebar-bg, 40%);
+  }
+
+  .dvs-new-collection {
+    background-color:darken($sidebar-bg, 30%);
+    padding:15px 12px;
+
+    input {
+      width:100%;
+      border-radius:4px;
+      padding:8px 12px;
+      border-width:0;
+      color:$sidebar-bg;
+    }
+
+    button {
+      display:block;
+      background-color: lighten(#10a5ff, 15%);
+      padding:8px 12px;
+      margin:12px 0;
+      font-size:12px;
+      font-weight:600;
+      text-transform: uppercase;
+      border-width:0;
+      border-radius: 4px;
+      color:#fff;
+    }
+
+    p {
+      margin-bottom:20px;
+    }
+  }
+
+}
+
+.dvs-new-collection{
+
+}
+
+
+#dvs-collection-instances-sortable {
+  li {
+    position:relative;
+    font-size:30px;
+    background-color:lighten(#10a5ff, 25%);
+    margin:8px 12px;
+    border-radius:4px;
+    color:$sidebar-bg;
+    font-weight:400;
+    cursor:move;
+
+    input[type="text"] {
+      width:200px;
+      font-size:16px;
+      padding:12px;
+      margin-left:40px;
+      background-color:transparent;
+      border-width:0;
+      color: darken($sidebar-bg, 30%);
+      outline-width: 0;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0.5em;
+      top: 0.6em;
+      width: 0.8em;
+      height: 0.11em;
+      background: lighten($sidebar-bg, 60%);
+      box-shadow:
+      0 0.25em 0 0 lighten($sidebar-bg, 60%),
+      0 0.5em 0 0 lighten($sidebar-bg, 60%);
+    }
+
+    .dvs-collection-instance-remove {
+      float:right;
+      background-color: lighten(#10a5ff, 15%);
+      padding:8px 12px;
+      margin:9px;
+      font-size:12px;
+      font-weight:600;
+      text-transform: uppercase;
+      border-width:0;
+      border-radius: 4px;
+      color:#fff;
+    }
+  }
+}

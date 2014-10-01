@@ -1,0 +1,549 @@
+$containerWidth:90%;
+$gutter:5%;
+$left-column: 20%;
+$right-column: 75%;
+
+a {
+  color:white;
+}
+
+strong {
+  font-weight:600;
+}
+
+.large {
+  font-size:1.4em;
+  line-height:1.5em;
+}
+
+.tar { text-align: right;  }
+.tal { text-align: left;   }
+.tac { text-align: center; }
+
+.dvs-advanced {
+  height:0;
+  overflow:hidden;
+
+  &.open {
+    height: auto;
+  }
+}
+
+#dvs-admin {
+  background:#1489cf url('../img/admin-body-background.jpg') repeat-x;
+  color:#fff;
+  font-size:14px;
+  font-family:"Open Sans", Arial, Verdana;
+  font-weight:400;
+  padding-bottom:50px;
+
+  h1,h2,h3,h4,h5,h6 {
+    font-size:72px;
+    font-weight:300;
+    text-transform: uppercase;
+  }
+
+  h2 { font-size:36px; }
+  h3 { font-size:28px; }
+  h4 { font-size:22px; }
+  h5 { font-size:18px; }
+  h6 { font-size:16px; }
+}
+
+#dvs-admin-top-bar {
+  background-color:#fff;
+  height:77px;
+  box-sizing: border-box;
+  padding:13px 30px;
+}
+
+#dvs-admin-logo {
+  float:left;
+  margin-top:8px;
+}
+
+#dvs-admin-controls {
+  position: relative;
+  float:right;
+  background:url('../img/admin-controls-bg.png') no-repeat;
+  width:56px;
+  height:50px;
+
+  > li {
+    position: absolute;
+  }
+
+  #dvs-admin-toggle {
+    position:relative;
+    top: 16px;
+    left:11px;
+
+    img { cursor:pointer }
+
+    #dvs-admin-sublinks {
+        display:none;
+        position:absolute;
+        top:24px;
+        right:35px;
+        min-width:140px;
+        padding:5px 12px;
+        font-size:13px;
+        border-radius:4px;
+        background-color:#10a5ff;
+    }
+    #dvs-admin-sublinks li {
+        margin:6px 2px 4px;
+    }
+    #dvs-admin-sublinks a {
+        color:#fff;
+        text-decoration:none;
+    }
+  }
+
+  #dvs-admin-logout {
+    top:5px;
+    right:7px;
+
+    a {
+        display:inline-block;
+        width:20px;
+        height:20px;
+        margin-right:-5px;
+        margin-left:-5px;
+        text-align:center;
+        z-index:200;
+    }
+  }
+}
+
+#dvs-admin-body {
+  float:left;
+  width:100%;
+  @include clearfix;
+  padding-bottom:100px;
+}
+
+#dvs-admin-main-menu {
+  position:fixed;
+  display:none;
+  z-index: 100;
+  left:0;
+  top:0;
+  background-color:transparentize(black, 0.4);
+  height:100%;
+  width:100%;
+  text-align:center;
+
+  > div {
+    background-color:transparentize(lighten(black, 10%), 0.2);
+    width:50%;
+    margin:150px auto;
+    padding:25px;
+    box-shadow: 0 0 30px transparentize(black, 0.5);
+    border-radius: 3px;
+  }
+
+  h2 {
+    margin-bottom:20px;
+    padding-bottom:20px;
+    border-bottom:1px solid darken(white, 20%);
+  }
+
+  p {
+    margin-bottom:20px;
+    font-weight:bold;
+  }
+}
+
+#dvs-admin-subnavigation {
+  > ul {
+    @include clearfix;
+    text-align: center;
+    margin:30px auto 0px;
+
+    > li {
+      display:inline-block;
+      margin-right:10px;
+    }
+  }
+}
+
+#dvs-admin-title {
+
+  text-align:center;
+
+  h1 {
+    text-transform: uppercase;
+    margin:40px auto;
+  }
+
+  h3 {
+    line-height:0;
+    padding:20px;
+
+    span {
+      display: inline-block;
+      position: relative;
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        height: 5px;
+        border-top: 1px solid white;
+        top: 0;
+        width: 100px;
+      }
+
+      &:before {
+        right: 100%;
+        margin-right: 15px;
+      }
+
+      &:after {
+        left: 100%;
+        margin-left: 15px;
+      }
+    }
+  }
+
+  p {
+    width:50%;
+    margin:20px auto 50px auto;
+    background:transparentize(white, 0.92);
+    border-radius: 20px;
+    box-shadow: 0 0 50px transparentize(white, 0.85);
+    padding:14px;
+    font-size:1.3em;
+    line-height:1.5em;
+  }
+}
+
+h3.dvs-admin-table-title {
+  font-weight:800;
+}
+
+.dvs-admin-table {
+  margin:0 auto;
+  width: $containerWidth;
+  font-size:13px;
+
+  tr {
+    min-height:40px;
+
+    &:nth-child(even) {
+      td {
+        background-color: #10a5ff;
+      }
+    }
+  }
+
+  th {
+    color:#ade6f9;
+    font-size:13px;
+    font-weight:600;
+    text-transform: uppercase;
+    padding:18px 30px;
+    border-right:1px solid white;
+
+    &.light-border {
+      border-right:1px solid transparentize(white, 0.8);
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    input {
+      margin-left:10px;
+      border-radius: 2px;
+      padding:4px 5px;
+      color: #666;
+      border:0;
+      background-color:darken(#fff, 10%);
+    }
+  }
+
+  td {
+    padding:10px 30px;
+    border-right:1px solid white;
+    vertical-align: middle;
+
+    &.light-border {
+      border-right:1px solid transparentize(white, 0.8);
+    }
+  }
+
+  td:last-child,
+  th:last-child {
+    border-right:0px;
+  }
+}
+
+.dvs-admin-container {
+  width:$containerWidth;
+  margin:0 auto;
+}
+
+.dvs-admin-form-horizontal,
+.dvs-admin-form-vertical {
+  box-sizing: border-box;
+  width:90%;
+  margin:0 auto;
+  background-color:transparentize(white, 0.8);
+  box-shadow: 0 0 20px transparentize(black, 0.8);
+  padding:30px;
+  border-top:5px solid transparentize(white, 0.5);
+  padding-top:50px;
+
+  .dvs-helptext {
+    clear:both;
+    color:darken(white, 5%);
+    background:transparentize(white, 0.92);
+    border-radius: 20px;
+    box-shadow: 0 0 50px transparentize(white, 0.85);
+    font-weight:400;
+    line-height:1.3em;
+    padding:12px 10px 12px 15px;
+    font-size:12px;
+    margin:5px 0 0 $left-column + $gutter;
+    width:$right-column;
+  }
+}
+
+.dvs-admin-form-horizontal {
+  input[type="submit"] {
+    margin-left:$left-column + $gutter;
+  }
+
+  .dvs-form-group {
+    clear: both;
+    margin-bottom: 35px;
+    @include clearfix;
+
+    label {
+      float: left;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 400;
+      width: 25%;
+      text-shadow: 0 0 2px transparentize(black, 0.8);
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea,
+    select,
+    {
+      background-color: white;
+      display: inline-block;
+      width: $right-column;
+      padding: 12px 12px;
+      font-size: 18px;
+      color: #666;
+      border:0;
+      border-left:4px solid darken(#10a5ff, 15%);
+      border-right:4px solid darken(#10a5ff, 15%);
+    }
+
+    select {
+      height: 46px;
+      width: $right-column;
+      border-radius: 0;
+    }
+
+    input[type=checkbox],
+    input[type=radio] {
+      margin-left: $gutter;
+    }
+
+    .fancyCheckbox {
+      margin-left: $left-column + $gutter;
+
+      label {
+        border-radius: 50px;
+        width: 34px;
+        height: 24px;
+      }
+    }
+
+    textarea {
+      &.short {
+        height:100px;
+      }
+    }
+
+  }
+}
+
+.fancyCheckbox {
+  width:78px;
+  height:25px;
+  background: darken(#42A0D7, 35%);
+  position: relative;
+  border-radius: 50px;
+  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+  &:after {
+    content: 'OFF';
+    color: darken(#42A0D7, 15%);
+    position: absolute;
+    right: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: -1px -1px 0px rgba(255,255,255,.15);
+  }
+  &:before {
+    content: 'ON';
+    color: lighten(#42A0D7, 35%);
+    position: absolute;
+    left: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+  }
+  label {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    left: 2px;
+    z-index: 1;
+    background: #fcfff4;
+    border-radius: 50px;
+    border-width:0;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+    @include background( linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%) );
+    @include transition( all .4s ease );
+  }
+  input[type=checkbox] {
+    visibility: hidden;
+    &:checked + label {
+      left: 43px;
+    }
+  }
+}
+
+.simpletoggle {
+  display:none;
+
+  &.open {
+    display:block;
+  }
+}
+
+.pagination {
+  margin:10px 0;
+  li {
+    float:left;
+    display:inline-block;
+    padding:10px;
+    border:1px solid darken(#10A5FF, 10%);
+    background-color:lighten(#10A5FF, 15%);
+
+    &.active {
+      background-color:desaturate(#10A5FF, 20%);
+    }
+
+    &.disabled {
+      background-color:lighten(#ccc, 15%);
+      color:darken(#ccc, 15%);
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+.dvs-admin-mode {
+  #dvs-blocker {
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+  }
+
+  @include perspective(625px);
+
+  #dvs-sidebar {
+    width: 75%;
+
+    #dvs-admin-button {
+
+    }
+
+    #dvs-admin-menu {
+      display: block;
+      width: 50%;
+    }
+  }
+
+  #dvs-content {
+    opacity: .6;
+  }
+}
+
+.dvs-loading {
+  padding: 12px 20px;
+  color: white;
+  width: 200px;
+  margin-left: 100px;
+  background-color: transparentize(#222, 0.1);
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  border-radius:4px;
+  text-align:center;
+  opacity:1;
+  @include transition(all 1s ease);
+
+  &.onload {
+    opacity:0;
+  }
+}
+
+.dvs-link-part {
+  background-color:#cbe3f1;
+  text-decoration: none;
+  color: #1289d1;
+  padding:4px 4px;
+  font-size:11px;
+  border-left:1px solid lighten(#10A5FF, 10%);
+
+  &:first-child {
+    border-radius: 2px 0 0 2px;
+  }
+  &:last-child {
+    border-radius: 0 2px 2px 0;
+  }
+}
+
+.vignette {
+  box-shadow: inset 0px 0px 100px rgba(0,0,0,0.4);
+}
+
+.dvs-admin-form-horizontal {
+  .dvs-menu-items {
+    select,
+    input[type="text"] {
+      border: 0;
+      font-size: 12px;
+      padding:8px 10px;
+      border-radius:3px;
+      margin-right:3px;
+    }
+
+    select {
+      height:30px;
+      background-color:pink;
+    }
+
+    li {
+      .ui-sortable-handle {
+        background:#CBE3F1;
+        border-color: #CBE3F1
+      }
+    }
+  }
+}

@@ -85,16 +85,10 @@ class FieldManager extends Manager
 		$field = $this->getFieldToUpdate($fieldId, $input);
 
 		// in case we want to see how things looked before changing anything
-		$previousVersion = $field->values;
+		$previousVersion = clone $field->values;
 
         // merge input into the FieldValues for this $field
-		$field->value->merge(array_except($input, ['page_id', 'page_version_id', 'field_scope', 'collection_instance_id']));
-
-		// fire updating to any type of field
-		$this->fire('devise.field.updating', [$field, $originalInput, $previousVersion]);
-
-		// fire updating to a specific type of field
-		$this->fire("devise.{$field->type}.field.updating", [$field, $originalInput, $previousVersion]);
+		$field->values->merge(array_except($input, ['page_id', 'page_version_id', 'field_scope', 'collection_instance_id']));
 
 		// update this field's json value
 		$field->json_value = $field->values->toJSON();

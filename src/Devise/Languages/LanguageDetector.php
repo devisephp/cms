@@ -37,6 +37,19 @@ class LanguageDetector
 	}
 
 	/**
+	 * Get the universal language that we fallback
+	 * to... which is likely english
+	 *
+	 * @return Language
+	 */
+	public function universal()
+	{
+		$locale = $this->LocaleDetector->universal();
+
+		return $this->Language->where('code', $locale)->first();
+	}
+
+	/**
 	 * Update the current language for this
 	 * browser
 	 *

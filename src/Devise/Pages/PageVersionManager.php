@@ -54,6 +54,17 @@ class PageVersionManager
         return $this->createNewPageVersion($page->id, 'Default', $this->UserHelper->currentUserId());
     }
 
+    public function copyPageVersionToAnotherPage($fromVersion, $toPage) {
+        // create a new page version
+        $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $this->UserHelper->currentUserId());
+
+        $this->copyFieldsFromVersionToVersion($fromVersion, $newVersion);
+
+        $this->copyCollectionsFromVersionToVersion($fromVersion, $newVersion);
+
+        return $newVersion;
+    }
+
     /**
      * Copy page version for given page version id and name
      *

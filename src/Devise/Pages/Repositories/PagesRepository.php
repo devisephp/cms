@@ -172,7 +172,9 @@ class PagesRepository extends BaseRepository{
      */
     protected function wrapFieldsAroundPage($page, $pageVersion)
     {
-        $globalFields = $this->GlobalField->get();
+        $language = $this->LanguageDetector->current();
+
+        $globalFields = $this->GlobalField->where('language_id', $language->id)->get();
 
         $page = $this->wrapTheseFieldsAroundThisPage($globalFields, $page);
 

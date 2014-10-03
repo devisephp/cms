@@ -65,7 +65,7 @@ class ResponseHandler
 
 	public function requestCopyPage($id, $input) {
 
-		$page = $this->PageManager->copyPage($input);
+		$page = $this->PageManager->copyPage($id, $input);
 
 		if ($page)
         {

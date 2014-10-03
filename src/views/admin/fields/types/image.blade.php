@@ -4,10 +4,11 @@
 <img src="{{ $page->image1->image_url('/imgs/default-images/special-occasions-gallery-img-2.jpg')}}" class="dvs-test-frame" data-devise="image1, image, Image">
 @endsnippet
 
+
 @include('devise::admin.fields.show',
 [
-    'name' => '$page->imageTest',
-    'values' => $page->imageTest,
+    'name' => '$page->image1',
+    'values' => $page->image1,
     'descriptions' =>  [
         'image' => 'URL of the image location',
         'alt' => 'The intended alt tag attribute',

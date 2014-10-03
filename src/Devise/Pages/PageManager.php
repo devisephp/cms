@@ -41,7 +41,10 @@ class PageManager {
 	{
 		$page = $this->createPageFromInput($input);
 
-		$page->version = $this->PageVersionManager->createDefaultPageVersion($page);
+        if ($page)
+        {
+    		$page->version = $this->PageVersionManager->createDefaultPageVersion($page);
+        }
 
 		return $page;
     }
@@ -91,20 +94,19 @@ class PageManager {
 	 *
 	 * @return bool
 	 */
-	public function copyPage($input)
+	public function copyPage($fromPageId, $input)
 	{
-		dd($input);
+		$fromPage = $this->Page->findOrFail($fromPageId);
+        $fromPageVersion = $fromPage->versions()->whereName('Default')->first();
 
-		$fromPage = $this->Page->findOrFail($input['page_id']);
-		$toPage = $this->createNewPageFromInput($input);
-
-		if ($toPage)
-		{
-			$this->PageVersionManager->copyPageVersions($fromPage, $toPage);
-		}
+		$toPage = $this->createPageFromInput($input);
+        
+        $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
 
 		return $toPage;
 	}
+
+
 
 	/**
 	 * @param $suggestedRoute

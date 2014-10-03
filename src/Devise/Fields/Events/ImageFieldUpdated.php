@@ -23,7 +23,7 @@ class ImageFieldUpdated
 	 * @param  array       $input
 	 * @return array
 	 */
-	public function handle($field, $input)
+	public function handle($field, $input, $beforeChanges)
 	{
 		$field->values->merge([
 			'has_thumbnail' => array_get($input, 'has_thumbnail', false),

@@ -35,7 +35,7 @@ class DeviseBindingAdapterTest extends \DeviseTestCase
 	public function test_that_data_devise_is_renamed()
 	{
 		$output = $this->adapter->compile('<h3>Hello</h3><p data-devise="keyName, type, humanName">Hello</p>');
-		assertContains('<h3>Hello</h3><p data-dvs-keyName-id="keyName">Hello</p>', $output);
+		assertContains('<h3>Hello</h3><p data-dvs-keyname-id="keyName">Hello</p>', $output);
 	}
 
 	/**
@@ -45,7 +45,7 @@ class DeviseBindingAdapterTest extends \DeviseTestCase
 	public function test_that_data_devise_is_renamed_for_collection_types()
 	{
 		$output = $this->adapter->compile('<p data-devise="collection[keyName], type, humanName">Hello</p>');
-		assertContains('<p data-dvs-collection-keyName-id="collection-keyName">Hello</p>', $output);
+		assertContains('<p data-dvs-keyname-id="collectionkeyName">Hello</p>', $output);
 	}
 
 	/**

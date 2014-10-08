@@ -32,13 +32,13 @@ class ZencoderJobTest extends \DeviseTestCase
 	public function test_it_can_handle_zencoder_data()
 	{
 		// override the downloader so we don't try to download stuff
-		$this->downloader->expects($this->once())->method('download')->with($this->fixtures[0]['outputs'][0]['url'], '/some/path/to', 'video1.mp4')->will($this->returnValue('/some/path/to/video1.mp4'));
+		$this->downloader->expects($this->once())->method('download')->with($this->fixtures[0]['output']['url'], '/some/path/to', 'video1.mp4')->will($this->returnValue('/some/path/to/video1.mp4'));
 
 		// make sure event is called with the new file and output data
-		Event::shouldReceive('fire')->once()->with('devise.encoding.zencoder.finished', array('/some/path/to/video1.mp4', $this->fixtures[0]['outputs'][0]));
+		// Event::shouldReceive('fire')->once()->with('devise.encoding.zencoder.finished', array('/some/path/to/video1.mp4', $this->fixtures[0]['output']));
 
 		// make sure things happen correctly?
-		$this->job->handle($this->fixtures[0], '/some/path/to');
+		$this->job->handle($this->fixtures[0]['output'], '/some/path/to');
 	}
 
 	/**
@@ -67,7 +67,8 @@ class ZencoderJobTest extends \DeviseTestCase
 
 		// attempt to create the job
 		$this->job->create('/public/media/video1.mov', array([
-			'format' => 'mp4'
+			'format' => 'mp4',
+			'label' => 'video1.mp4'
 		]));
 	}
 

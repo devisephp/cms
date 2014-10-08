@@ -88,7 +88,7 @@ class FieldManager extends Manager
 		$previousVersion = clone $field->values;
 
         // merge input into the FieldValues for this $field
-		$field->values->merge(array_except($input, ['page_id', 'page_version_id', 'field_scope', 'collection_instance_id']));
+		$field->values->merge(array_except($input, ['page_id', 'page_version_id', 'field_scope', 'current_field_scope', 'collection_instance_id']));
 
 		// update this field's json value
 		$field->json_value = $field->values->toJSON();
@@ -116,16 +116,17 @@ class FieldManager extends Manager
 	protected function getFieldToUpdate($fieldId, &$input)
 	{
 		// unset the field scope so it doesn't tamper with field value
-		$fieldScope = !isset($input['field_scope']) ? 'page' : $input['field_scope'];
+		$newFieldScope = !isset($input['field_scope']) ? 'page' : $input['field_scope'];
+		$currentFieldScope = $input['current_field_scope'];
 
 		// find field by scope and id
-		$field = $this->FieldsRepository->findFieldByIdAndScope($fieldId, $fieldScope);
+		$field = $this->FieldsRepository->findFieldByIdAndScope($fieldId, $currentFieldScope);
 
 		//
 		// if we find field that matches the scope of fieldScope then
 		// just return the field because there is nothing else to do
 		//
-		if ($field && $fieldScope == $field->scope)
+		if ($field && $newFieldScope == $field->scope)
 		{
 			return $field;
 		}
@@ -134,7 +135,7 @@ class FieldManager extends Manager
 		// change this field scope from global to page
 		// creates a page field, that overrides the global key
 		//
-		if ($fieldScope == 'page')
+		if ($newFieldScope == 'page')
 		{
 			$globalField = $this->FieldsRepository->findFieldByIdAndScope($fieldId, 'global');
 
@@ -161,7 +162,7 @@ class FieldManager extends Manager
 	 */
 	public function getPageFieldFromGlobalField($globalField, $input)
 	{
-		$pageField = $this->FieldsRepository->findFieldByKeyAndPageVersion($globalField->key, $input['page_version_id']);
+		$pageField = $this->FieldsRepository->findFieldByKeyAndPageVersion($globalField->key, $input['page_version_id'], null);
 
 		return $pageField ?: $this->createPageField([
 			'collection_instance_id' => array_get($input, 'collection_instance_id'),

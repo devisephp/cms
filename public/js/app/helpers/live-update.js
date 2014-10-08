@@ -76,8 +76,13 @@ define(['require', 'jquery'], {getInstance: function() {
         }
 
         function updateBackgroundColor() {
-            logChange('color', 'value');
+            logChange('backgroundColor', 'value');
             $(updateSelector).css('backgroundColor', newValue);
+        }
+
+        function updateColor() {
+            logChange('color', 'value');
+            $(updateSelector).css('color', newValue);
         }
 
         function updateHTML() {
@@ -102,13 +107,17 @@ define(['require', 'jquery'], {getInstance: function() {
 
         function updateTarget() {
 
-            if (alternateTarget === null) {
-
+            if (typeof alternateTarget === 'undefined' || alternateTarget === null)
+            {
                 switch (type) {
                     case 'image':
                         updateImage();
                         break;
                     case 'color':
+                        updateColor();
+                        break;
+
+                    case 'backgroundColor':
                         updateBackgroundColor();
                         break;
 

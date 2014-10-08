@@ -14,6 +14,7 @@
     <h2 class="dvs-test-title">Editors Tests</h2>
 
     <ul class="dvs-test-block">
+
     	@foreach (['audio', 'checkbox-group', 'checkbox',
 			'color', 'datetime', 'file', 'html', 'image',
 			'link', 'map', 'select', 'text', 'textarea',

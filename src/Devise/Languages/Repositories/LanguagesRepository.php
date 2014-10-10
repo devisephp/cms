@@ -2,17 +2,19 @@
 
 use Language;
 use Page;
+use PageVersion;
 use Devise\Languages\LanguageDetector as Detector;
 
 class LanguagesRepository
 {
     protected $Language, $Detector, $Page;
 
-    public function __construct(Language $Language, Detector $Detector, Page $Page)
+    public function __construct(Language $Language, Detector $Detector, Page $Page, PageVersion $PageVersion)
     {
         $this->Language = $Language;
         $this->Detector = $Detector;
         $this->Page = $Page;
+        $this->PageVersion = $PageVersion;
     }
 
     /**
@@ -64,4 +66,17 @@ class LanguagesRepository
     {
         return $this->Detector->current();
     }
+
+    /**
+     * [findLanguageForPageVersion description]
+     * @param  [type] $pageVersionId [description]
+     * @return [type]                [description]
+     */
+    public function findLanguageForPageVersion($pageVersionId)
+    {
+        $pageVersion = $this->PageVersion->findOrFail($pageVersionId);
+
+        return $pageVersion->page->language;
+    }
+
 }

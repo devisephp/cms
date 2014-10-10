@@ -23,24 +23,9 @@ class Page extends Eloquent
 
     public $messages = array();
 
-    /**
-     * Defines has Many to Field
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function fields()
+    public function versions()
     {
-        return $this->hasMany('Field')->where('collection_set_id', null);
-    }
-
-    public function collectionFields()
-    {
-        return $this->hasMany('Field')->whereNotNull('collection_set_id');
-    }
-
-    public function collectionInstances()
-    {
-        return $this->hasMany('CollectionInstance');
+        return $this->hasMany('PageVersion');
     }
 
     public function localizedPages()

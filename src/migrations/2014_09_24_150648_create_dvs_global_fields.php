@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDvsCollectionSets extends Migration {
+class CreateDvsGlobalFields extends Migration {
 
     /**
      * Run the migrations.
@@ -11,11 +11,17 @@ class CreateDvsCollectionSets extends Migration {
      */
     public function up()
     {
-        Schema::create('dvs_collection_sets', function($table) {
+        Schema::create('dvs_global_fields', function($table)
+        {
             $table->increments('id');
-            $table->string('name', 255);
+            $table->unsignedInteger('language_id');
+            $table->string('type', 25);
+            $table->string('human_name', 255)->nullable();
+            $table->string('key', 100);
+            $table->longText('json_value');
             $table->timestamp('created_at')->default('0000-00-00 00:00:00');
             $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 
@@ -26,7 +32,7 @@ class CreateDvsCollectionSets extends Migration {
      */
     public function down()
     {
-        Schema::drop('dvs_collection_sets');
+        Schema::drop('dvs_global_fields');
     }
 
 }

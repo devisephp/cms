@@ -29,10 +29,6 @@ class InputItem extends BaseItem{
             'tag' => $node->tagName
         );
 
-        if($name == ''){
-            dd($newItem);
-        }
-
         $this->validate($newItem);
         return $newItem;
     }

@@ -45,6 +45,7 @@ return array (
         'languages' => 'Devise\Languages\Repositories\LanguagesRepository.languages',
     ),
     'devise::admin.menus.index' => array(
+        'languages' => 'Devise\Languages\Repositories\LanguagesRepository.activeLanguageList',
         'menus' => 'Devise\Menus\Repositories\MenusRepository.menus',
     ),
     'devise::admin.menus.edit' => array(

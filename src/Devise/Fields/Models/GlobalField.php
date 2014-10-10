@@ -2,29 +2,19 @@
 
 use Devise\Fields\Models\FieldValue;
 
-class Field extends Eloquent
+class GlobalField extends Eloquent
 {
     use SoftDeletingTrait;
 
     protected $softDelete = true;
 
-	protected $table = 'dvs_fields';
+	protected $table = 'dvs_global_fields';
 
     protected $guarded = array();
 
     protected $_value;
 
     protected $dates = ['deleted_at'];
-
-    /**
-     * This field belongs to a page
-     *
-     * @return belongsTo
-     */
-	public function pageVersion()
-	{
-		return $this->belongsTo('PageVersion');
-	}
 
     /**
      * Accessor on this model to get value
@@ -57,6 +47,6 @@ class Field extends Eloquent
      */
     public function getScopeAttribute()
     {
-        return 'page';
+        return 'global';
     }
 }

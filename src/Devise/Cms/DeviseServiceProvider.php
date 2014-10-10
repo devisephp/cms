@@ -13,6 +13,7 @@ use Devise\User\Providers\UserServiceProvider;
 use Devise\Sortable\Providers\SortableServiceProvider;
 use Devise\Encoding\Providers\EncodingServiceProvider;
 use Devise\Fields\Providers\FieldsServiceProvider;
+use Devise\Search\Providers\DeviseUniversalSearchProvider;
 use Illuminate\Support\ServiceProvider;
 
 class DeviseServiceProvider extends ServiceProvider {
@@ -33,15 +34,16 @@ class DeviseServiceProvider extends ServiceProvider {
     {
         $this->package('devise/cms', 'devise');
 
-	    $this->registerEvents();
-	    $this->registerData();
-	    $this->registerIndexer();
-	    $this->registerMigrator();
-	    $this->registerModels();
-	    $this->registerPages();
-	    $this->registerSupport();
-	    $this->registerUser();
-	    $this->registerSortable();
+        $this->registerDeviseUniversalSearch();
+        $this->registerEvents();
+        $this->registerData();
+        $this->registerIndexer();
+        $this->registerMigrator();
+        $this->registerModels();
+        $this->registerPages();
+        $this->registerSupport();
+        $this->registerUser();
+        $this->registerSortable();
         $this->registerEncoding();
         $this->registerFields();
 
@@ -199,6 +201,18 @@ class DeviseServiceProvider extends ServiceProvider {
         $FieldsProvider = new FieldsServiceProvider($this->app);
         $this->app->register($FieldsProvider);
         $FieldsProvider->boot();
+    }
+
+    /**
+     * Register fields service provider
+     *
+     * @return array
+     */
+    public function registerDeviseUniversalSearch()
+    {
+        $DeviseUniversalSearchProvider = new DeviseUniversalSearchProvider($this->app);
+        $this->app->register($DeviseUniversalSearchProvider);
+        $DeviseUniversalSearchProvider->boot();
     }
 
     /**

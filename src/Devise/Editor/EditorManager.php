@@ -19,7 +19,8 @@ class EditorManager
         $data = $this->EditorDataTranslator->translateFromInputArray($inputData);
         $availableLanguages = $this->PagesRepository->availableLanguagesForPage($inputData['page_id']);
         $pageRoutes = $this->PagesRepository->getRouteList();
+        $pageVersions = $this->PagesRepository->getPageVersions($inputData['page_id'], $inputData['page_version_id']);
 
-		return View::make('devise::admin.sidebar.main', compact('data', 'availableLanguages', 'pageRoutes'))->render();
+		return View::make('devise::admin.sidebar.main', compact('data', 'pageVersions', 'availableLanguages', 'pageRoutes'))->render();
 	}
 }

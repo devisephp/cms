@@ -5,12 +5,12 @@
             "url": "git://github.com/orchestral/phpseclib.git"
         }
     ],
-    "name": "devise/cms",
-    "description": "",
+    "name": "devisephp/cms",
+    "description": "Content Management System riding on top of the Laravel Framework",
     "authors": [
         {
-            "name": "LBM",
-            "email": "info@lbm.co"
+            "name": "DevisePHP Team",
+            "email": "info@devisephp.com"
         }
     ],
     "require": {

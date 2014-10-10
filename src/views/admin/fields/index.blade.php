@@ -1,4 +1,4 @@
-@extends('layouts.marketing')
+@extends('devise::admin.layouts.master')
 
 @section('content')
 
@@ -14,6 +14,7 @@
     <h2 class="dvs-test-title">Editors Tests</h2>
 
     <ul class="dvs-test-block">
+
     	@foreach (['audio', 'checkbox-group', 'checkbox',
 			'color', 'datetime', 'file', 'html', 'image',
 			'link', 'map', 'select', 'text', 'textarea',
@@ -27,6 +28,18 @@
         	<div data-devise="colName[textName], text, Text For Collection, groupName1, catName1"></div>
         </li>
         <hr>
+
+        <li>
+            <div data-devise="colName2, image, Image For Collection"></div>
+            <div data-devise="colName3, text, Text For Collection"></div>
+        </li>
+        <hr>
+
+        @if (isset($colName))
+            @foreach ($colName as $col)
+                {{ $col->textName->text('hmm') }}
+            @endforeach
+        @endif
     </ul>
  </div>
 

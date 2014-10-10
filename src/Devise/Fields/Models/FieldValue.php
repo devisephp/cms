@@ -9,11 +9,9 @@ class FieldValue
 		$this->json = $json;
 		$values = json_decode($json);
 
-		if($values){
-			foreach ($values as $key => $value)
-			{
-				$this->$key = $value;
-			}
+		foreach ($values as $key => $value)
+		{
+			$this->$key = $value;
 		}
 	}
 
@@ -34,6 +32,14 @@ class FieldValue
 		$values = array_merge($values, $input);
 
 		$this->json = json_encode($values);
+
+		// add the new inputs to our existing object
+		// or else our json representation will be
+		// out of sync with our values on this FieldValue
+		foreach ($input as $key => $value)
+		{
+			$this->$key = $value;
+		}
 	}
 
 	public function toJSON()

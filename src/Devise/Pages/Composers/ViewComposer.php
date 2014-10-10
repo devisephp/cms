@@ -4,8 +4,8 @@ use Config;
 use Route;
 use Devise\Pages\Data\DataBuilder;
 
-class ViewComposer {
-    private static $parameters;
+class ViewComposer
+{
     private static $firstView = true;
 
     private $DataBuilder;
@@ -19,10 +19,6 @@ class ViewComposer {
     public function __construct(DataBuilder $DataBuilder)
     {
         $this->DataBuilder = $DataBuilder;
-        // only setting static paramters var if it has not been set
-        if(!isset(self::$parameters)) {
-            self::$parameters = Route::getCurrentRoute()->parameters();
-        }
     }
 
     /**

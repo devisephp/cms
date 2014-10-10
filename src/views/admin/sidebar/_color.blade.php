@@ -6,8 +6,8 @@ $loadDefaults = (!isset($element->value->color) || $element->value->color == '')
         <h4>Values</h4>
         @include('devise::admin.sidebar._field_scope')
 
-        @include('devise::admin.sidebar._collection_instance_id')        
-        
+        @include('devise::admin.sidebar._collection_instance_id')
+
         {{ Form::label($element->human_name) }}
         {{ Form::text('color', ($element->value->color) ? $element->value->color : '#428bca',  array(
                                                            'class'=>'color dvs-liveupdate-listen ' . $loadDefaults,

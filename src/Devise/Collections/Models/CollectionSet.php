@@ -1,6 +1,5 @@
 <?php
 
-
 class CollectionSet extends Eloquent
 {
 	protected $table = 'dvs_collection_sets';

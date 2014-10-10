@@ -28,10 +28,10 @@ class DevisePageController extends Controller {
 	 */
     public function show()
     {
-        $page = $this->PagesRepository->findByRouteName( Route::currentRouteName() );
+        $page = $this->PagesRepository->findByRouteName( Route::currentRouteName(), Input::get('page_version', 'Default'));
 
         $localized = $this->PagesRepository->findLocalizedPage($page);
 
-        return $localized ? $this->redirectTo($localized) : $this->ResponseBuilder->retrieve($page);
+        return $localized ? Redirect::route($localized->route_name) : $this->ResponseBuilder->retrieve($page);
     }
 }

@@ -28,7 +28,10 @@ class DevisePageController extends Controller {
 	 */
     public function show()
     {
-        $page = $this->PagesRepository->findByRouteName( Route::currentRouteName(), Input::get('page_version', 'Default'));
+        // what does it mean to be in editing mode? right now it is just when you are logged in
+        $editing = !is_null(Auth::user()); //&& Input::get('editing', false);
+
+        $page = $this->PagesRepository->findByRouteName( Route::currentRouteName(), Input::get('page_version', 'Default'), $editing);
 
         $localized = $this->PagesRepository->findLocalizedPage($page);
 

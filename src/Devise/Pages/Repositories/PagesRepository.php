@@ -1,7 +1,7 @@
 <?php namespace Devise\Pages\Repositories;
 
 use Config, Input, Page, Field, GlobalField;
-use URL;
+use URL, DateTime;
 use Devise\Search\Searchable;
 use Devise\Languages\LanguageDetector;
 use Devise\Collections\Repositories\CollectionsRepository;
@@ -47,11 +47,14 @@ class PagesRepository extends BaseRepository
      * @internal param string $slug
      * @return Page
      */
-	public function findByRouteName($name, $versionName = 'Default')
+	public function findByRouteName($name, $versionName = 'Default', $editing = false)
 	{
 		$page = $this->Page->whereRouteName($name)->firstOrFail();
 
-        $page->version = $page->versions()->with('fields')->where('name', $versionName)->first();
+        // if the user is an admin user they can view any page
+        // using the ?page_version query parameter otherwise
+        // they just get the live version
+        $page->version = $editing ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
 
         if ($page->version)
         {
@@ -126,18 +129,18 @@ class PagesRepository extends BaseRepository
      */
     public function getPageVersions($pageId, $selectedPageVersionId = null)
     {
-        $versions = $this->Page->findOrFail($pageId)->versions;
+        $page = $this->Page->findOrFail($pageId);
+        $versions = $page->versions;
 
-        if ($selectedPageVersionId)
+        foreach ($versions as $version)
         {
-            foreach ($versions as $version)
+            if ($selectedPageVersionId && $version->id == $selectedPageVersionId)
             {
-                if ($version->id == $selectedPageVersionId)
-                {
-                    $version->selected = 'selected';
-                }
+                $version->selected = 'selected';
             }
         }
+
+        $versions = $this->wrapPageVersionStatuses($versions, $page);
 
         return $versions;
     }
@@ -164,6 +167,41 @@ class PagesRepository extends BaseRepository
             $list[ $slugName ][ $route->route_name ] = $route->title;
         }
         return $list;
+    }
+
+    /**
+     * Gets the live version of this page
+     *
+     * @param  Page $page
+     * @return PageVersion
+     */
+    public function getLivePageVersion($page, $now = null)
+    {
+        $now = $now ?: new DateTime;
+
+        $version = $page->versions()->with('fields')
+            ->where('starts_at', '<', $now)
+            ->where(function($query) use ($now)
+            {
+                $query->where('ends_at', '>', $now);
+                $query->orWhereNull('ends_at');
+            })
+            ->orderBy('starts_at', 'DESC')
+            ->first();
+
+        return $version ?: $this->getPageVersionByName($page, 'Default');
+    }
+
+    /**
+     * Gets the page version by name
+     *
+     * @param  Page   $page
+     * @param  string $versionName
+     * @return PageVersion
+     */
+    public function getPageVersionByName($page, $versionName)
+    {
+        return $page->versions()->with('fields')->whereName($versionName)->first();
     }
 
     /**
@@ -242,6 +280,69 @@ class PagesRepository extends BaseRepository
         }
 
         return $pages;
+    }
+
+    /**
+     * Wraps the statues around page versions
+     *
+     * @param  $versions
+     * @return $versions
+     */
+    protected function wrapPageVersionStatuses($versions, $page)
+    {
+        $currentVersion = $this->getLivePageVersion($page);
+
+        foreach ($versions as $version)
+        {
+            $startsAt = $version->starts_at ? $this->toHumanDateFormat($version->starts_at) : null;
+            $endsAt = $version->ends_at ? $this->toHumanDateFormat($version->ends_at) : 'forever';
+
+            $version->starts_at_human = $this->toHumanDateFormat($version->starts_at);
+            $version->ends_at_human = $this->toHumanDateFormat($version->ends_at);
+
+            // the current version is live
+            if ($version->id == $currentVersion->id)
+            {
+                $version->status = "live";
+            }
+
+            // if the current version is not default then it is overriden
+            if ($version->id != $currentVersion->id && $version->name == 'Default')
+            {
+                $version->status = "overriden";
+            }
+
+            // if version has a starts_at date
+            if ($startsAt)
+            {
+                $version->status .= $version->status ? ' ' : '';
+                $version->status .= "{$startsAt} thru {$endsAt}";
+            }
+
+            // if version has no starts_at date and is not Default
+            else if ($version->name != 'Default')
+            {
+                $version->status .= $version->status ? ' ' : '';
+                $version->status .= "no dates set";
+            }
+        }
+
+        return $versions;
+    }
+
+    /**
+     * [toHumanDateFormat description]
+     * @param  [type] $timestamp [description]
+     * @param  string $to        [description]
+     * @return [type]            [description]
+     */
+    protected function toHumanDateFormat($timestamp, $to = 'm/d/y H:i:s')
+    {
+        if (!$timestamp) return null;
+
+        $date = new DateTime($timestamp);
+
+        return $date->format($to);
     }
 
     /**

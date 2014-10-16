@@ -1,15 +1,19 @@
 <?php namespace Devise\Search;
 
-use IteratorAggregate;
+use IteratorAggregate, View;
 use Illuminate\Support\Contracts\JsonableInterface;
 
 class Pagination implements IteratorAggregate, JsonableInterface
 {
-	protected $items;
+	protected $items, $appendsToLinkData, $appendsToLink;
 
 	public function make($collection, $page, $perPage)
 	{
 		$this->perPage = $perPage;
+
+		$this->appendsToLinkData = array();
+
+		$this->appendsToLink = '';
 
 		$this->page = $page;
 
@@ -28,11 +32,27 @@ class Pagination implements IteratorAggregate, JsonableInterface
 
 	public function links()
 	{
-		return '';
+		return View::make('devise::search.pagination', $this->toArray())->render();
 	}
 
-	public function appends()
+	public function toArray()
 	{
+		return [
+			'items' => $this->items,
+			'total' => $this->total,
+			'page' => $this->page,
+			'perPage' => $this->perPage,
+			'totalPageCount' => ceil($this->total / $this->perPage),
+			'appends' => $this->appendsToLink,
+		];
+	}
+
+	public function appends($data)
+	{
+		$this->appendsToLinkData = array_merge($this->appendsToLinkData, $data);
+
+		$this->appendsToLink = '&' . http_build_query($this->appendsToLinkData);
+
 		return $this;
 	}
 

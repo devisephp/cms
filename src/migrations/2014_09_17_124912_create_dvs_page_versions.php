@@ -17,6 +17,8 @@ class CreateDvsPageVersions extends Migration
 			$table->integer('page_id')->unsigned();
 			$table->integer('created_by_user_id')->unsigned();
             $table->string('name', 255);
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
 			$table->softDeletes();
             $table->timestamp('created_at')->default('0000-00-00 00:00:00');
             $table->timestamp('updated_at')->default('0000-00-00 00:00:00');

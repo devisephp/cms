@@ -91,6 +91,44 @@ class PageVersionManager
     }
 
     /**
+     * Update the page version dates
+     *
+     * @param  int   $pageVersionId
+     * @param  array $input
+     * @return void
+     */
+    public function updatePageVersionDates($pageVersionId, $input)
+    {
+        $version = $this->PageVersion->findOrFail($pageVersionId);
+
+        // convert dates to proper timestamp
+        $startsAt = $this->convertToDatabaseTimestamp(array_get($input, 'starts_at', null));
+        $endsAt = $this->convertToDatabaseTimestamp(array_get($input, 'ends_at', null));
+
+        $version->starts_at = $startsAt;
+        $version->ends_at = $endsAt;
+        $version->save();
+
+        return $version;
+    }
+
+    /**
+     * [convertToDatabaseTimestamp description]
+     * @param  [type] $timestamp [description]
+     * @param  string $from      [description]
+     * @param  string $to        [description]
+     * @return [type]            [description]
+     */
+    protected function convertToDatabaseTimestamp($timestamp, $from = 'm/d/y H:i:s', $to = 'Y-m-d H:i:s')
+    {
+        if (!$timestamp) return null;
+
+        $date = DateTime::createFromFormat($from, $timestamp);
+
+        return $date->format($to);
+    }
+
+    /**
      * [copyFieldsFromVersionToVersion description]
      * @param  [type] $oldVersion [description]
      * @param  [type] $newVersion [description]

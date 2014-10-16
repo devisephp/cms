@@ -91,4 +91,11 @@ class ResponseHandler
 
         return $this->PagesRepository->getPagesList(false, $_GET['term']);
     }
+
+    public function requestUpdatePageVersionDates($pageVersionId, $input)
+    {
+        $this->PageManager->updatePageVersionDates($pageVersionId, $input);
+
+        return '';
+    }
 }

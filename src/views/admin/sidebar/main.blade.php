@@ -2,14 +2,9 @@
     <div id="dvs-sidebar-content">
 
         <div id="dvs-sidebar-header">
-
-            <div>
-                <select id="dvs-sidebar-version-selector" name="page_version" style="display: inline-block; width: 82%;">
-                    @foreach ($pageVersions as $pageVersion)
-                        <option {{ $pageVersion->selected }} value="{{ $pageVersion->name }}">{{ $pageVersion->name }}</option>
-                    @endforeach
-                </select>
-                <button style="
+            <style>
+                /* this needs to move into stylesheets */
+                .dvs-sidebar-btn {
                     background: rgba(19,138,210,0.95);
                     display: inline-block;
                     cursor: pointer;
@@ -23,9 +18,8 @@
                     font-weight: bold;
                     position: relative;
                     margin-top: 4px;
-                "
-                id="dvs-sidebar-add-version" class="dvs-sidebar-page-version dark">+</button>
-            </div>
+                }
+            </style>
 
         	<div>
         		<button id="dvs-sidebar-close" class="dvs-sidebar-close dark">&nbsp;</button>
@@ -36,6 +30,27 @@
                     @endforeach
                 </select>
         	</div>
+
+            <div>
+                <select id="dvs-sidebar-version-selector" name="page_version" style="display: inline-block; width: 72%;">
+                    @foreach ($pageVersions as $pageVersion)
+                        <option {{ $pageVersion->selected }} value="{{ $pageVersion->name }}">{{ $pageVersion->name }} ({{$pageVersion->status}})</option>
+                        @if ($pageVersion->selected)
+                            @php $selectedVersion = $pageVersion @endphp
+                        @endif
+                    @endforeach
+                </select>
+                <button class="dvs-sidebar-page-version dvs-sidebar-btn dark js-adjust-dates {{ $selectedVersion->name == 'Default' ? 'hidden' : '' }}">*</button>
+                <button id="dvs-sidebar-add-version" class="dvs-sidebar-btn dvs-sidebar-page-version dark">+</button>
+            </div>
+
+            <div class="js-datepickers hidden">
+                <span>Show live<span>
+                <input type="text" name="starts_at" value="{{ $selectedVersion->starts_at_human }}" placeholder="Start Date" class="js-datepicker js-start-date" style="line-height: 20px;">
+                <span>thru</span>
+                <input type="text" name="ends_at" value="{{ $selectedVersion->ends_at_human }}" placeholder="End Date" class="js-datepicker js-end-date" style="line-height: 20px;">
+                <button data-url="{{ URL::route('dvs-update-page-versions-dates', $selectedVersion->id) }}" class="js-update-dates btn">Update</button>
+            </div>
 
             @if(!$data->isCollection)
             	@if ($data->groups)

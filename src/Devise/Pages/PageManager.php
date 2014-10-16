@@ -100,7 +100,7 @@ class PageManager {
         $fromPageVersion = $fromPage->versions()->whereName('Default')->first();
 
 		$toPage = $this->createPageFromInput($input);
-        
+
         $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
 
 		return $toPage;
@@ -163,9 +163,21 @@ class PageManager {
     }
 
     /**
+     * Updates the page version dates
+     *
+     * @param  int $pageVersionId
+     * @param  array $input
+     * @return void
+     */
+    public function updatePageVersionDates($pageVersionId, $input)
+    {
+        return $this->PageVersionManager->updatePageVersionDates($pageVersionId, $input);
+    }
+
+    /**
      * Copy the fields from this page version into
      * another page version
-     * 
+     *
      * @param  [type] $pageVersion
      * @return [type]
      */
@@ -173,4 +185,4 @@ class PageManager {
     {
 
     }
-} 
+}

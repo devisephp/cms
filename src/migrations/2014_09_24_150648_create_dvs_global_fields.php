@@ -11,17 +11,13 @@ class CreateDvsGlobalFields extends Migration {
      */
     public function up()
     {
-        Schema::create('dvs_global_fields', function($table)
+        Schema::create('dvs_page_schedules', function($table)
         {
             $table->increments('id');
-            $table->unsignedInteger('language_id');
-            $table->string('type', 25);
-            $table->string('human_name', 255)->nullable();
-            $table->string('key', 100);
-            $table->longText('json_value');
-            $table->timestamp('created_at')->default('0000-00-00 00:00:00');
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
-            $table->dateTime('deleted_at')->nullable();
+            $table->unsignedInteger('page_id');
+            $table->unsignedInteger('page_version_id');
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
         });
     }
 

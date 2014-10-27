@@ -4,6 +4,9 @@ use \Event;
 
 class ZencoderJobTest extends \DeviseTestCase
 {
+	/**
+	 * setup a Zencoder test
+	 */
 	public function setUp()
 	{
 		parent::setUp();
@@ -13,14 +16,13 @@ class ZencoderJobTest extends \DeviseTestCase
 
 		// setup job and fixtures
 		$this->job = new Devise\Encoding\ZencoderJob('apikey', ['email@address.com'], $this->downloader);
-
-		// fixtuers in an array file (this is data we expect back from zencoder)
-		$this->fixtures = include __DIR__ . '/../../fixtures/zencoder-data.php';
 	}
 
+	/**
+	 * reset the laravel application because we polluted \Event
+	 */
 	public function tearDown()
 	{
-		// reset the laravel application because we polluted \Event
 		$this->resetApplication();
 	}
 
@@ -31,14 +33,17 @@ class ZencoderJobTest extends \DeviseTestCase
 	 */
 	public function test_it_can_handle_zencoder_data()
 	{
+		// fixtuers in an array file (this is data we expect back from zencoder)
+		$fixtures = $this->fixture('zencoder.0');
+
 		// override the downloader so we don't try to download stuff
-		$this->downloader->expects($this->once())->method('download')->with($this->fixtures[0]['output']['url'], '/some/path/to', 'video1.mp4')->will($this->returnValue('/some/path/to/video1.mp4'));
+		$this->downloader->expects($this->once())->method('download')->with($fixtures['output']['url'], '/some/path/to', 'video1.mp4')->will($this->returnValue('/some/path/to/video1.mp4'));
 
 		// make sure event is called with the new file and output data
-		// Event::shouldReceive('fire')->once()->with('devise.encoding.zencoder.finished', array('/some/path/to/video1.mp4', $this->fixtures[0]['output']));
+		// Event::shouldReceive('fire')->once()->with('devise.encoding.zencoder.finished', array('/some/path/to/video1.mp4', $fixtures['output']));
 
 		// make sure things happen correctly?
-		$this->job->handle($this->fixtures[0]['output'], '/some/path/to');
+		$this->job->handle($fixtures['output'], '/some/path/to');
 	}
 
 	/**

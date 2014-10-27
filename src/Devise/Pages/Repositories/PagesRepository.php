@@ -35,9 +35,18 @@ class PagesRepository extends BaseRepository
      * @param  int $id
      * @return Page
      */
-	public function find($id)
+	public function find($id, $versionName = 'Default', $editing = false)
 	{
-		return $this->Page->findOrFail($id);
+		$page = $this->Page->findOrFail($id);
+
+        $page->version = $editing ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
+
+        if ($page->version)
+        {
+            $page = $this->wrapFieldsAroundPage($page, $page->version);
+        }
+
+        return $page;
 	}
 
     /**

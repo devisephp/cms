@@ -15,6 +15,12 @@
 
     <ul class="dvs-test-block">
 
+        @if ($page->hiddenTestField->text('Hidden') != 'Hidden')
+            <li>
+                <div data-devise="hiddenTestField, text">{{ $page->hiddenTestField->text('Hidden') }}</div>
+            </li>
+        @end
+
     	@foreach (['audio', 'checkbox-group', 'checkbox',
 			'color', 'datetime', 'file', 'html', 'image',
 			'link', 'map', 'select', 'text', 'textarea',

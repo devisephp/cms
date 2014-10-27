@@ -1,10 +1,24 @@
 <?php namespace Devise\Search;
 
+class MockSearcher
+{
+	public $searchableType = 'Devise\Search\MockSearcher';
+
+	public function search($for) { return $this; }
+	public function take($number) { return $this; }
+	public function get(){ return $this; }
+	public function merge() { return $this; }
+	public function count() { return 1; }
+	public function skip() { return $this; }
+	public function sortByDesc() { return $this; }
+	public function slice() { return [$this]; }
+}
+
 class UniversalSearchTest extends \DeviseTestCase
 {
 	public function setUp()
 	{
-		$this->search = new UniversalSearch;
+		$this->search = new UniversalSearch(new Pagination);
 	}
 
 	public function test_it_can_register_an_item()
@@ -15,12 +29,7 @@ class UniversalSearchTest extends \DeviseTestCase
 
 	public function test_it_can_search_thru_items()
 	{
-		$item = $this->getMock('Devise\Search\Searchable');
-
-		$item->expects($this->exactly(3))
-			->method('search')
-			->with($this->equalTo('asdf'))
-			->will($this->returnValue(['thing']));
+		$item = new MockSearcher;
 
 		$this->search->register($item);
 		$this->search->register($item);
@@ -28,6 +37,7 @@ class UniversalSearchTest extends \DeviseTestCase
 
 		$outcome = $this->search->search('asdf');
 
-		assertEquals(['thing', 'thing', 'thing'], $outcome);
+		assertInstanceOf('Devise\Search\Pagination', $outcome);
+		assertCount(1, $outcome->toArray()['items']);
 	}
 }

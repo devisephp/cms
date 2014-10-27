@@ -13,7 +13,8 @@ Blade::extend(function($view, $complier)
  */
 Blade::extend(function($view, $compiler)
 {
-	return App::make('Devise\Editor\Helpers\DeviseBindingAdapter')->compile($view);
+	// return App::make('Devise\Editor\Helpers\DeviseBindingAdapter')->compile($view);
+	return App::make('Devise\Pages\Interrupter\DeviseBladeCompiler')->compile($view);
 });
 
 

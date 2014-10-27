@@ -111,8 +111,12 @@ class PagesServiceProvider extends ServiceProvider {
      */
     private function registerDeviseDataContainer()
     {
+        // old page data helpers...
         App::instance("deviseDataJavascriptBindings", new \Devise\Editor\Helpers\PageBindingsContainer);
         App::instance("deviseDataJavascriptCollections", new \Devise\Editor\Helpers\PageCollectionsContainer);
+
+        // new page data helper
+        App::instance("dvsPageData", new \Devise\Pages\Helpers\DvsPageData);
     }
 
     /**

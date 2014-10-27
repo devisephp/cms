@@ -12,6 +12,13 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 	static protected $application;
 
 	/**
+	 * Store all the fixtures for this application
+	 *
+	 * @var array
+	 */
+	static protected $fixtures;
+
+	/**
 	 * Setup the laravel application and run migrations when we first start
 	 */
 	static public function setUpBeforeClass()
@@ -22,11 +29,53 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 
 		static::$application = require __DIR__.'/bootstrap/bootstrap/start.php';
 
+		static::setUpFixtures();
+
 		// Artisan::call('migrate');
 		// Artisan::call('db:seed', ['--class' => 'fixtures\seeder']);
 		// Mail::pretend(true);
 
 		return static::$application;
+	}
+
+	/**
+	 * Setup fixtures for all tests
+	 */
+	static public function setUpFixtures()
+	{
+		$fixtures = array();
+		$basePath = __DIR__ . '/fixtures';
+
+		static::$fixtures = static::fillArrayWithFileNodes(new DirectoryIterator($basePath));
+	}
+
+	/**
+	 * Recursively fill up array with files and data
+	 *
+	 * @param  DirectoryIterator $dir
+	 * @return array
+	 */
+	static public function fillArrayWithFileNodes(DirectoryIterator $dir)
+	{
+		$data = array();
+
+		foreach ($dir as $node)
+		{
+			$ext = $node->getExtension();
+			$filename = $node->getBasename(".{$ext}");
+			$fullpath = $node->getRealPath();
+
+			if ($node->isDir() && !$node->isDot())
+			{
+				$data[$node->getFilename()] = static::fillArrayWithFileNodes(new DirectoryIterator($node->getPathname()));
+			}
+			else if ($node->isFile())
+			{
+				$data[$filename] = $ext == 'php' ? include($fullpath) : file_get_contents($fullpath);
+			}
+		}
+
+		return $data;
 	}
 
 	/**
@@ -60,5 +109,26 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 		// DB::beginTransaction();
 
 		return static::$application;
+	}
+
+	/**
+	 * Returns the fixtures for our testing
+	 *
+	 * @param  string $name
+	 * @param  mixed  $default
+	 * @return mixed
+	 */
+	public function fixture($name, $default = null)
+	{
+		$branch = static::$fixtures;
+		$paths = explode('.', $name);
+
+		foreach ($paths as $path)
+		{
+			if (!isset($branch[$path])) return $default;
+			$branch = $branch[$path];
+		}
+
+		return $branch;
 	}
 }

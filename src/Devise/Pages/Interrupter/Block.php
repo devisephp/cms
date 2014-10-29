@@ -2,7 +2,7 @@
 
 class Block
 {
-	public $type;
+	public $type, $includedViews;
 
 	protected $start, $stop, $childBlocks, $tags;
 
@@ -10,6 +10,7 @@ class Block
 	{
 		$this->childBlocks = [];
 		$this->tags = [];
+		$this->includedViews = [];
 	}
 
 	public function start($node)

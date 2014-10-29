@@ -25,18 +25,19 @@ define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'
 
         // make sure to trigger the change on this input
         // in case we have any events tied to that element
-        parentForm.find(selector).trigger('change');
+        parentForm.find(selector).trigger('input');
+        parentForm.find(selector).trigger('propertychange');
     }
 
 
-    // 
+    //
     // image holds the init function
     // which registers the click event handlers
     //
     var image = {
         init: function()
         {
-            // 
+            //
             // opens the media manager
             // so we can select a new image
             //
@@ -45,7 +46,7 @@ define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'
                 var parentForm = $(this).parents('form');
                 var target = $(e.currentTarget).data('target');
                 var mediaUrl = '/admin/media-manager?type=image&cropMode=Preserve&target=' + target;
-                
+
                 document.onMediaManagerSelect = function(image, target, settings) { onMediaManagerSelect(parentForm, image, target, settings); }
                 window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");
             });
@@ -89,13 +90,13 @@ define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'
             });
 
             // disable the 'adjust thumbnail' btn  when this is not clicked
-            $('input[name="has_thumbnail"]').on('change', function()
+            $('input[name="has_thumbnail"]').on('input', function()
             {
                 $('.js-when-has-thumbnail').attr('disabled', !$(this).is(':checked'));
             });
 
             // disable the 'adjust thumbnail' btn  when this is not clicked
-            $('input[name="image"]').on('change', function()
+            $('input[name="image"]').on('input', function()
             {
                 $('.js-when-has-image').attr('disabled', $(this).val() == '');
             });

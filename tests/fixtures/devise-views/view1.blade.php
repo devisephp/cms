@@ -18,8 +18,8 @@
 
 <div data-devise="col[keyname5], type, humanName, groupName, categoryName"></div>
 
-@include('view2')
+@include('devise-views::view2')
 
 @if ($moreStuff)
-	@include('view2')
+	@include('devise-views::view2')
 @endif

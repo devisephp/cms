@@ -1,5 +1,5 @@
-define(['require', 'jquery', 'dvsNetwork', 'jquery-ui'], function (require, $, network) {
-
+define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQueryHelper', 'jquery-ui'], function (require, $, datePicker, network, pageData, query)
+{
     var node = null;
     var ogWidth = null;
 
@@ -69,6 +69,12 @@ define(['require', 'jquery', 'dvsNetwork', 'jquery-ui'], function (require, $, n
 
         loadDefaultData();
 
+        addPageVersionButton();
+
+        addChangePageVersionListener();
+
+        addPageVersionDateRangePicker();
+
         $('.dvs-sidebar-close').click(function(){
             $('#dvs-mode').trigger('dvsCloseAdmin');
         });
@@ -80,6 +86,86 @@ define(['require', 'jquery', 'dvsNetwork', 'jquery-ui'], function (require, $, n
         $('#dvs-sidebar-content').hide();
 
         network.insertTemplate('devise::admin.sidebar.main', '#dvs-sidebar', node, sidebarLoaded);
+    }
+
+    function addPageVersionButton() {
+        $('#dvs-sidebar-add-version').on('click', function() {
+            var pageName = prompt('What would you like to name this new page version?');
+
+            if (pageName)
+            {
+                var data = { page_version_id: pageData.page_version_id, name: pageName };
+                $.post('/admin/page-versions', data).then(function(results, status, xhr)
+                {
+                    var href = window.location.href;
+
+                    href += (href.indexOf('?') > 7) ? '&' : '?';
+                    href += 'page_version=' + results.name;
+
+                    window.location.href = href;
+                });
+            }
+        });
+    }
+
+    function addChangePageVersionListener() {
+        $('#dvs-sidebar-version-selector').on('change', function() {
+            var json = query.toJson();
+
+            json['page_version'] = $(this).val();
+
+            var queryString = query.toQueryString(json);
+
+            window.location.href = window.location.origin + window.location.pathname + queryString;
+        });
+    }
+
+
+    function addPageVersionDateRangePicker()
+    {
+        datePicker('.js-datepicker', {});
+
+        var datePickers = $('.js-datepickers');
+        var adjustDates = $('.js-adjust-dates');
+        var startDatePicker = $('.js-datepicker.js-start-date');
+        var endDatePicker = $('.js-datepicker.js-end-date');
+        var updateDatesBtn = $('.js-update-dates');
+        var datePickerErrors = $('.js-datepicker-errors');
+
+        // we don't want the user to select a date before the start date,
+        // as this doesn't really make sense
+        startDatePicker.data('onChangeDate', function(e)
+        {
+            var selectedDate = new Date(e.date.getFullYear(), e.date.getMonth(), e.date.getDate());
+            endDatePicker.datetimepicker('setStartDate', selectedDate).focus();
+        });
+
+        // we can show/hide the datePickers when the user
+        // clicks this button
+        adjustDates.on('click', function(e)
+        {
+            datePickers.toggleClass('hidden');
+        });
+
+        updateDatesBtn.on('click', function(e)
+        {
+            var start = startDatePicker.val();
+            var end = endDatePicker.val();
+            var data = {
+                starts_at: start,
+                ends_at: end
+            };
+
+            $.ajax({
+                method: 'put',
+                url: updateDatesBtn.data('url'),
+                data: data,
+                success: function() { window.location.reload(); },
+                error: function(errors) { alert('Error updating the dates for this version!'); }
+            });
+
+            datePickers.addClass('hidden');
+        });
     }
 
     return sidebar;

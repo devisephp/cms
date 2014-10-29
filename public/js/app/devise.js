@@ -1,8 +1,8 @@
-define(['jquery', 'dvsInitialize', 'dvsRouter', 'dvsMessageBus'], (function( $, dvsInitialize, dvsRouter, dvsMessageBus) {
+define(['jquery', 'dvsInitialize', 'dvsRoutes', 'dvsGlobalBus'], (function( $, dvsInitialize, dvsRoutes, dvsMessageBus) {
 
     var devise = {
-        init: function(_pageId) {
-
+        init: function(_pageId, _pageVersionId)
+        {
             //
             // this is here as an example of how to use the message bus
             // to call this we would do dvsMessageBus.execute('devise::sidebar', 12)
@@ -15,8 +15,8 @@ define(['jquery', 'dvsInitialize', 'dvsRouter', 'dvsMessageBus'], (function( $, 
             //     //console.log('trying to fetch sidebar with id ' + id);
             // });
 
-            dvsInitialize(_pageId);
-            dvsRouter.start();
+            dvsInitialize(_pageId, _pageVersionId);
+            dvsRoutes.start();
         }
     };
 

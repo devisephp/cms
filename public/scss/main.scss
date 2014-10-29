@@ -6,9 +6,9 @@
 @import "variables";
 
 /* Helpers */
+@import "helpers/general";
 @import "helpers/grid";
 @import "helpers/buttons";
-@import "helpers/autocomplete";
 @import "helpers/messages";
 
 /* Main UI */
@@ -23,3 +23,6 @@
 /* Editors */
 @import "editors/datepicker";
 @import "editors/images";
+
+/* Testing */
+@import "testing/tests";

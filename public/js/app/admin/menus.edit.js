@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui'], function ()
+define(['jquery', 'jquery-ui', 'jquery-ui/autocomplete'], function ( $, jqUi, autocomplete)
 {
     require(['jquery.nestedSortable'], function() { initialize(); });
 
@@ -26,7 +26,6 @@ define(['jquery', 'jquery-ui'], function ()
             toleranceElement: '> div',
             maxLevels: 3
         });
-
 
         //
         // Add a new menu item button
@@ -83,6 +82,68 @@ define(['jquery', 'jquery-ui'], function ()
         {
             var element = $(event.currentTarget);
             element.closest('.js-menu-item').remove();
+        });
+
+        // menu-accordion
+        $('.menu-accordion').click(function(){
+            var target = $(this).data('target');
+            $(target).toggle();
+            if($(this).html() == '-'){
+                $(this).html('v');
+            } else {
+                $(this).html('-');
+            }
+        });
+
+        $('.dvs-menu-items').on('change', '.url-or-page', function() {
+            var _selection = $(this).val();
+
+            if (_selection == 'url') {
+                $(this).siblings('.menu-item-url').removeClass('hidden');
+                $(this).siblings('.menu-item-page').addClass('hidden');
+            } else {
+                $(this).siblings('.menu-item-page').removeClass('hidden');
+                $(this).siblings('.menu-item-url').addClass('hidden');
+            }
+        });
+
+        var autoCompleteSource = function (request, response) {
+            $.ajax({
+                url: autocompletePagesUrl,
+                dataType: "json",
+                type: 'get',
+                data: {
+                    term: request.term
+                },
+                success: function( data ) {
+                    response($.map(data, function (value, key) {
+                        return {
+                            label: value,
+                            value: key
+                        };
+                    }));
+                }
+            });
+        };
+
+        var autoCompleteSelect = function( event, ui ) {
+            event.preventDefault();
+
+            var _id = ui.item.value;
+            var _label = ui.item.label;
+            $(this).siblings('input[type=hidden]').val(_id);
+            $(this).val(_label);
+        };
+
+        $( ".autocomplete-pages" ).autocomplete({
+            source: autoCompleteSource,
+            minLength: 2,
+            select: autoCompleteSelect,
+            delay: 200
+        });
+
+        $('.autocomplete-pages').on('input', function() {
+            $(this).siblings('input[type=hidden]').val('');
         });
     }
 });

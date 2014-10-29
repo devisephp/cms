@@ -61,8 +61,9 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 
 		foreach ($dir as $node)
 		{
-			$ext = $node->getExtension();
-			$filename = $node->getBasename(".{$ext}");
+			// $ext = $node->getExtension();
+			$fullext = ltrim(strstr($node->getBasename(), '.'), '.');
+			$filename = $node->getBasename(".{$fullext}");
 			$fullpath = $node->getRealPath();
 
 			if ($node->isDir() && !$node->isDot())
@@ -71,7 +72,7 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 			}
 			else if ($node->isFile())
 			{
-				$data[$filename] = $ext == 'php' ? include($fullpath) : file_get_contents($fullpath);
+				$data[$filename] = $fullext == 'php' ? include($fullpath) : file_get_contents($fullpath);
 			}
 		}
 

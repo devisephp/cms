@@ -2,6 +2,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
 
     var collectionId = null;
     var pageId = null;
+    var pageVersionId = null;
     var sortable = null;
 
     var collectionsView = {
@@ -10,6 +11,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
 
             collectionId = $('#dvs-sidebar-collections').data('collection-id');
             pageId = $('#dvs-sidebar-collections').data('page-id');
+            pageVersionId = $('#dvs-sidebar-collections').data('page-version-id');
 
             requestSortable();
             initSortable();
@@ -23,7 +25,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
             var _data = { name: _name, sort: _numberOfItems  };
 
             network.request(
-                '/admin/pages/'+ pageId +'/collections/' + collectionId + '/instances/store',
+                '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/store',
                 _data, 'post', null, addSortableItem
             );
         },
@@ -40,7 +42,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
             var _data = { name: _name };
 
             network.request(
-                '/admin/pages/'+ pageId +'/collections/' + collectionId + '/instances/'+_id+'/update-name',
+                '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/'+_id+'/update-name',
                 _data, 'put', null, updateEditors
             );
         }
@@ -79,7 +81,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
 
         addItem(_data['id'], _data['name']);
         resetSortable();
-        
+
         dvsSidebarView.refresh();
     };
 
@@ -95,7 +97,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
         var _data = $('#dvs-collection-instances-sortable').sortable( "serialize");
 
         network.request(
-            '/admin/pages/'+ pageId +'/collections/' + collectionId + '/instances/update-sort-orders',
+            '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/update-sort-orders',
             _data, 'post', null, updateEditors
         );
     };
@@ -106,7 +108,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
 
     function requestSortable() {
         network.request(
-            '/admin/pages/'+ pageId +'/collections/' + collectionId + '/instances',
+            '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances',
             null, 'get', null, drawSortable
         );
     }

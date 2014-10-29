@@ -160,9 +160,9 @@ define(["jquery", "requests"], function ( $ ) {
         {
             var base = this;
 
-            var modalWrapper = $("<div>", {id: "modal-wrapper", class: "visible loading"}).addClass(this.settings.type);
-            var spinner = $("<div>", {id: "spinner"});
-            var blocker = $("<div>", {id: "bg-blocker", class: "visible"});
+            var modalWrapper = $("<div>", {'id': "modal-wrapper", 'class': "visible loading"}).addClass(this.settings.type);
+            var spinner = $("<div>", {'id': "spinner"});
+            var blocker = $("<div>", {'id': "bg-blocker", 'class': "visible"});
 
             // Add close event handlers to modal-wrapper and blocker
             base._addCloseEventHandlers(modalWrapper, blocker);

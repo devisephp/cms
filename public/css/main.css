@@ -4,6 +4,16 @@
 /* Colors - Global */
 /* Colors - Application Specific */
 /* Helpers */
+.hide,
+.cantsee,
+.hidden {
+  display: none !important; }
+
+.show,
+.cansee,
+.nothidden {
+  display: inherit !important; }
+
 .clearfix, .row {
   zoom: 1; }
   .clearfix:before, .row:before, .clearfix:after, .row:after {
@@ -899,11 +909,15 @@ h3.dvs-admin-table-title {
 .vignette {
   box-shadow: inset 0px 0px 100px rgba(0, 0, 0, 0.4); }
 
+.dvs-admin-form-horizontal .dvs-menu-items select,
 .dvs-admin-form-horizontal .dvs-menu-items input[type="text"] {
   border: 0;
   font-size: 12px;
   padding: 8px 10px;
-  border-radius: 3px; }
+  border-radius: 3px;
+  margin-right: 3px; }
+.dvs-admin-form-horizontal .dvs-menu-items select {
+  height: 30px; }
 .dvs-admin-form-horizontal .dvs-menu-items li .ui-sortable-handle {
   background: #CBE3F1;
   border-color: #cbe3f1; }
@@ -1035,7 +1049,7 @@ h3.dvs-admin-table-title {
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-  margin-right: -15px; }
+  margin-right: -30px; }
   #dvs-sidebar-content p.notice {
     background-color: rgba(17, 123, 187, 0.95);
     color: #fff;
@@ -1470,3 +1484,44 @@ h3.dvs-admin-table-title {
           opacity: 1; }
   .dvs-preview-media:hover .dvs-preview-media-controls {
     opacity: 1; }
+
+/* Testing */
+.dvs-test-title {
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  color: #444; }
+
+.dvs-test-block:after {
+  content: "";
+  display: table;
+  clear: both; }
+.dvs-test-block h3 {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  font-weight: bold;
+  color: #888; }
+.dvs-test-block img.dvs-test-frame {
+  border: 8px solid white;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.3); }
+.dvs-test-block li {
+  padding: 15px; }
+.dvs-test-block pre {
+  margin: 30px 0; }
+.dvs-test-block table {
+  width: 100%;
+  margin: 20px 0;
+  font-size: 12px; }
+  .dvs-test-block table th {
+    border-bottom: 2px solid #888;
+    padding: 8px 10px 5px;
+    font-weight: bold; }
+  .dvs-test-block table td {
+    padding: 4px 10px;
+    border-bottom: 1px solid #bbb;
+    font-size: 11px; }
+  .dvs-test-block table tr:nth-child(2) td {
+    padding-top: 10px; }
+  .dvs-test-block table tr:nth-child(odd) td {
+    background-color: #efefef; }

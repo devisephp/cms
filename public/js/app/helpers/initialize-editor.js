@@ -1,9 +1,11 @@
 define(['jquery', 'dvsListeners'], (function( $, listeners ) {
 
     var pageId = null;
+    var pageVersionId = null;
 
-    var initializeEditor = function (_pageId) {
+    var initializeEditor = function (_pageId, _pageVersionId) {
         pageId = _pageId;
+        pageVersionId = _pageVersionId;
 
         var deviseWrapper = buildDom();
 
@@ -41,6 +43,7 @@ define(['jquery', 'dvsListeners'], (function( $, listeners ) {
     function appendDom(wrapper) {
         $('body').wrapInner(wrapper);
         $('#dvs-mode').data('dvs-page-id', pageId);
+        $('#dvs-mode').data('dvs-page-version-id', pageVersionId);
     }
 
     function appendControls() {

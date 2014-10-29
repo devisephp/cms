@@ -33,6 +33,25 @@ define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPageData) 
         });
     }
 
+    function getCoordinates(binding, index, collectionName) {
+        var collection = collectionName ? collectionName + '-' : '';
+        var selector = '[data-dvs-' + collection + binding.key + '-id="' + binding.key + '"]';
+        var coords = $(selector).first().offset();
+
+        // attempt to find the hidden placeholder for
+        // this binding/collection since we do not see
+        // it on the page. This could be a devise-tag
+        // inside of @if or @foreach blocks
+        if (typeof coords === 'undefined') {
+            selector = '[data-dvs-placeholder-' + collection + binding.key + '-id="' + binding.key + '"]';
+            $(selector).first().show();
+            coords = $(selector).first().offset();
+            $(selector).first().hide();
+        }
+
+        return coords;
+    }
+
     function buildBinding(binding, index, collectionName) {
         var props = {};
 
@@ -46,7 +65,7 @@ define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPageData) 
         props.element = binding;
         props.element.index = index;
         props.element.alternateTarget = binding.alternateTarget;
-        props.coordinates = $('[data-dvs-' + binding.key + '-id="'  + collectionName + binding.key + '"]').offset();
+        props.coordinates = getCoordinates(binding, index, collectionName);
         props.categoryName = binding.category;
         props.group = binding.group;
         props.collection = collectionName;

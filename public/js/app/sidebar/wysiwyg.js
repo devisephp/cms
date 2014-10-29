@@ -9,17 +9,19 @@ define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], function (requ
             toolbar: [
                 [ 'Source' ],
                 [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo' ],
-                [ 'Image', 'Table', 'Link' ],
+                [ 'Image', 'Table', 'Link', 'Iframe' ],
                 '/',
                 [ 'FontSize', 'Bold', 'Italic', 'Underline', 'Strike' ],
-                [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote' ]
+                [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ]
             ]
         };
 
+        _config.extraPlugins = 'iframe,iframedialog,justify';
+
         var cke = $('textarea.dvs-wysiwyg').ckeditor(_config).editor;
     
-        document.onMediaManagerSelect = function(funcNum, url){
-            CKEDITOR.tools.callFunction(funcNum, url);
+        document.onMediaManagerSelect = function(url, target, input){
+            CKEDITOR.tools.callFunction(input.CKEditorFuncNum, url);
         };
 
         $('.dvs-fat-sidebar').click(function(){

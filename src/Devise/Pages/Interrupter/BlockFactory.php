@@ -28,11 +28,13 @@ class BlockFactory
 	 * @param  string $view
 	 * @return Block
 	 */
-	public function createBlock($view)
+	public function createBlock($view, $includedViews = [])
 	{
 		$matches = $this->nodes($view);
 
-		return $this->populateBlock($matches, $this->newBlock());
+		$block = $this->newBlock($includedViews);
+
+		return $this->populateBlock($matches, $block);
 	}
 
 	/**
@@ -40,9 +42,13 @@ class BlockFactory
 	 *
 	 * @return Block
 	 */
-	protected function newBlock()
+	protected function newBlock($includedViews)
 	{
-		return new Block;
+		$block = new Block;
+
+		$block->includedViews = $includedViews;
+
+		return $block;
 	}
 
 	/**
@@ -66,7 +72,7 @@ class BlockFactory
 				break;
 
 				case 'block':
-					$newBlock = $this->newBlock();
+					$newBlock = $this->newBlock($block->includedViews);
 					$newBlock->start($node);
 					$block->addBlock($this->populateBlock($stack, $newBlock));
 				break;
@@ -77,13 +83,15 @@ class BlockFactory
 				break;
 
 				case 'include':
-					$block->addBlock($this->includeBlock($node));
+					$block->addBlock($this->includeBlock($node, $block->includedViews));
 				break;
 			}
 		}
 
 		return $block;
 	}
+
+	public static $overflow = 0;
 
 	/**
 	 * Opens a view for an @include block
@@ -92,13 +100,13 @@ class BlockFactory
 	 * @param  Node $node
 	 * @return Block
 	 */
-	protected function includeBlock($node)
+	protected function includeBlock($node, $includedViews)
 	{
 		$viewpath = $node->matched;
 
-		$view = $this->ViewOpener->open($viewpath);
+		$view = $this->ViewOpener->open($viewpath, $includedViews);
 
-		$block = $this->createBlock($view, $this->newBlock());
+		$block = $this->createBlock($view, $includedViews);
 
 		$block->start($node);
 
@@ -106,9 +114,11 @@ class BlockFactory
 	}
 
 	/**
-	 * [nodes description]
-	 * @param  [type] $view [description]
-	 * @return [type]       [description]
+	 * Gets all the starting, ending include and devise tag matches
+	 * which we call 'nodes'
+	 *
+	 * @param  string $view
+	 * @return array
 	 */
 	protected function nodes($view)
 	{

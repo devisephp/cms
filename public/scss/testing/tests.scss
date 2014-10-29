@@ -1,0 +1,58 @@
+.dvs-test-title {
+  text-transform: uppercase;
+  font-size:16px;
+  letter-spacing: 0.2em;
+  color:#444;
+}
+
+.dvs-test-block {
+  @include clearfix;
+
+  h3 {
+    text-transform: uppercase;
+    font-size:12px;
+    letter-spacing: 0.2em;
+    font-weight:bold;
+    color:#888;
+  }
+
+  img.dvs-test-frame {
+    border:8px solid white;
+    box-shadow: 0 0 14px rgba(0,0,0,0.3);
+  }
+
+  li {
+    padding:15px;
+  }
+
+  pre {
+    margin:30px 0;
+  }
+
+  table {
+    width:100%;
+    margin: 20px 0;
+    font-size:12px;
+    th {
+      border-bottom:2px solid #888;
+      padding:8px 10px 5px;
+      font-weight:bold;
+    }
+    td {
+      padding:4px 10px;
+      border-bottom:1px solid #bbb;
+      font-size:11px;
+    }
+    tr:nth-child(2) {
+      td {
+        padding-top:10px;
+      }
+    }
+
+    tr:nth-child(odd) {
+      td {
+        background-color: #efefef;
+      }
+    }
+  }
+}

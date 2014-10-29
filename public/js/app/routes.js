@@ -1,4 +1,4 @@
-define(['jquery', '/packages/devise/cms/js/app/helpers/router.js'], (function($, Router)
+define(['jquery', 'dvsRouter'], (function($, Router)
 {
     return new Router({
 

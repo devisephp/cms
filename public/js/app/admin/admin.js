@@ -11,6 +11,25 @@ define(['require', 'jquery'], function (require, $) {
         $(window).resize(function() {
             calculateVignette();
         });
+
+        $('#lang-select').change(function(){
+
+            var params = document.location.search.substr(1).split('&');
+            var found = false;
+            var newParam = 'language_id=' + $(this).val();
+            for(var index in params){
+                var keyVal = params[index].split('=');
+                if(keyVal[0] == 'language_id'){
+                    found = true;
+                    params[index] = newParam;
+                    break;
+                }
+            }
+            if(!found){
+                params.push(newParam);
+            }
+            document.location.search = params.join('&');
+        });
     };
 
     var addDeleteConfirmation = function()

@@ -105,8 +105,8 @@ define(['require', 'jquery'], {getInstance: function() {
             }
         }
 
-        function updateTarget() {
-
+        function updateTarget()
+        {
             if (typeof alternateTarget === 'undefined' || alternateTarget === null)
             {
                 switch (type) {

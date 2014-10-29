@@ -142,7 +142,8 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
                     var url = $(this).attr('action');
 
                     // always pass in page_ids so we can restore
-                    // fields from global to page level if needed
+                    // fields from global to page version level if needed
+                    data = data + '&page_version_id=' + pageData.page_version_id;
                     data = data + '&page_id=' + pageData.page_id;
 
                     $.ajax({

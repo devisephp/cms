@@ -50,7 +50,7 @@ define(['require', 'jquery'], function (require, $) {
             navigationItem.append(link);
             navigation.append(navigationItem);
         });
-        
+
         return navigation;
     }
 

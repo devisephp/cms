@@ -25,14 +25,20 @@ class ViewOpener
 	 * @param  string $path
 	 * @return string
 	 */
-	public function open($includeStatement)
+	public function open($includeStatement, &$includedViews)
 	{
 		$path = $this->pathFromIncludeStatement($includeStatement);
+
+		if (in_array($path, $includedViews))
+		{
+			return '';
+		}
+
+		$includedViews[] = $path;
 
 		try
 		{
 			$realpath = $this->finder->find($path);
-
 			return file_get_contents($realpath);
 		}
 

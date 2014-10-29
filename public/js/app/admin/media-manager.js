@@ -1,30 +1,31 @@
 define(['require', 'jquery', 'app/helpers/query-params'], function (require, $, queryParams)
 {
+    var _input = {};
     return {
         init: function(input, finalImages)
         {
+            _input = input;
             //
-            // not sure what this does...
+            // looks for all cropped images in url
+            // if more than 1 found, the onMediaManagerSelect callback is triggered
             //
             if (finalImages && finalImages.length > 0 && opener && opener.document && opener.document.hasOwnProperty('onMediaManagerSelect')){
 
                 if (input.hasOwnProperty('CKEditorFuncNum')){
+                    // we know that this came from the ckeditor plugin
                     opener.document.onMediaManagerSelect(input.CKEditorFuncNum, finalImages[0]);
                 } else {
                     opener.document.onMediaManagerSelect(finalImages);
                 }
 
                 window.close();
+
             }
 
             //
             // add the image url
             // to the opener which has a function ready to go
             //
-
-
-
-            
             $('a.dvs-media-item').click(handleFileSelected);
 
             //
@@ -51,7 +52,7 @@ define(['require', 'jquery', 'app/helpers/query-params'], function (require, $, 
         var target = queryParams('target');
         var url = $(this).attr('href');
 
-        opener.document.onMediaManagerSelect(url, target, {});
+        opener.document.onMediaManagerSelect(url, target, _input);
 
         window.close();
     }

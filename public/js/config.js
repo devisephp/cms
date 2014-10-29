@@ -8,7 +8,7 @@ var require = {
     },
     paths: {
         jquery:             '../lib/jquery',
-        'jquery-ui':        '../lib/jquery-ui/jquery-ui',
+        'jquery-ui':        '../lib/jquery-ui',
         jqueryEasing:       '../lib/jquery.easing.1.3',
         ckeditorCore:       '../lib/ckeditor/ckeditor',
         ckeditorJquery:     '../lib/ckeditor/adapters/jquery',
@@ -33,7 +33,9 @@ var require = {
         dvsReplacement:     '../app/helpers/replacement',
         dvsModal:           '../app/helpers/modal',
         dvsMessageBus:      '../app/helpers/global-bus',
-        dvsRouter:          '../app/routes'
+        dvsRouter:          '../app/routes',
+        dvsQueryHelper:     '../app/helpers/query-helper',
+        dvsDatePicker:      '../app/helpers/date-picker'
     },
     devise: {
         partialLoaderPath:  '/admin/partialLoader'

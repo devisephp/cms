@@ -7,6 +7,7 @@ define(['require', 'jquery'], function (require, $) {
     var network = {
         insertTemplate: function(_view, _target, _data, _callback) {
             _data['page_id'] = $('#dvs-mode').data('dvs-page-id');
+            _data['page_version_id'] = $('#dvs-mode').data('dvs-page-version-id');
 
             buildCollectionData(_data);
 

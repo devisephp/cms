@@ -132,14 +132,23 @@ class FieldManager extends Manager
 		}
 
 		//
+		// find trashed versions of this field for this scope
+		//
+		$trashed = $this->FieldsRepository->findTrashedFieldByIdAndScope($fieldId, $newFieldScope);
+
+		if ($trashed)
+		{
+			$trashed->restore();
+			return $trashed;
+		}
+
+		//
 		// change this field scope from global to page
 		// creates a page field, that overrides the global key
 		//
 		if ($newFieldScope == 'page')
 		{
-			$globalField = $this->FieldsRepository->findFieldByIdAndScope($fieldId, 'global');
-
-			return $this->getPageFieldFromGlobalField($globalField, $input);
+			return $this->getPageFieldFromGlobalField($fieldId, $input);
 		}
 
 		//
@@ -157,19 +166,20 @@ class FieldManager extends Manager
 	 * it does this by creating a page field that overrides
 	 * the global key
 	 *
-	 * @param  GlobalField $globalField
+	 * @param  Field $field
 	 * @return PageField
 	 */
-	public function getPageFieldFromGlobalField($globalField, $input)
+	public function getPageFieldFromGlobalField($field, $input)
 	{
-		$pageField = $this->FieldsRepository->findFieldByKeyAndPageVersion($globalField->key, $input['page_version_id'], null);
+		$pageField = $this->FieldsRepository->findFieldByKeyAndPageVersion($field->key, $input['page_version_id'], null);
+
 
 		return $pageField ?: $this->createPageField([
 			'collection_instance_id' => array_get($input, 'collection_instance_id'),
 			'page_version_id' => $input['page_version_id'],
-			'type' => $globalField->type,
-			'human_name' => $globalField->human_name,
-			'key' => $globalField->key,
+			'type' => $field->type,
+			'human_name' => $field->human_name,
+			'key' => $field->key,
 		]);
 	}
 
@@ -193,6 +203,7 @@ class FieldManager extends Manager
 			'human_name' => $pageField->human_name,
 			'key' => $pageField->key,
 		]);
+
 
 		$pageField->delete();
 

@@ -61,6 +61,10 @@ class MediaPathHelper
 	{
 		$obj = new stdClass;
 
+		$obj->basepath = $this->basepath;
+		$obj->mediapath = $this->basepath . '/media';
+		$obj->mediaversionpath = $this->basepath . '/media-versions';
+
 		$obj->md5 = md5($url);
 		$obj->ext = pathinfo($url, PATHINFO_EXTENSION);
 		$obj->partition = substr($obj->md5, 0, 3) . '/' . substr($obj->md5, 3, 3) . '/' . $obj->md5;
@@ -111,6 +115,10 @@ class MediaPathHelper
 		}
 
 		$obj = new stdClass;
+
+		$obj->basepath = $this->basepath;
+		$obj->mediapath = $this->basepath . '/media';
+		$obj->mediaversionpath = $this->basepath . '/media-versions';
 
 		$obj->md5 = md5_file($path);
 		$obj->ext = pathinfo($path, PATHINFO_EXTENSION);

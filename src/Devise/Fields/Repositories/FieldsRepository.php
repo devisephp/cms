@@ -114,6 +114,11 @@ class FieldsRepository
 		return $fieldScope == 'global' ? $this->GlobalField->find($fieldId) : $this->Field->find($fieldId);
 	}
 
+	public function findTrashedFieldByIdAndScope($fieldId, $fieldScope)
+	{
+		return $fieldScope == 'global' ? $this->GlobalField->withTrashed()->find($fieldId) : $this->Field->withTrashed()->find($fieldId);
+	}
+
 	/**
 	 * [findFieldByGlobalKeyAndLanguage description]
 	 * @param  [type] $key        [description]

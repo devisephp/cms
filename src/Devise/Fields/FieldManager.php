@@ -126,39 +126,25 @@ class FieldManager extends Manager
 		// if we find field that matches the scope of fieldScope then
 		// just return the field because there is nothing else to do
 		//
-		if ($field && $newFieldScope == $field->scope)
+		if ($newFieldScope == $field->scope)
 		{
 			return $field;
 		}
 
 		//
-		// find trashed versions of this field for this scope
-		//
-		$trashed = $this->FieldsRepository->findTrashedFieldByIdAndScope($fieldId, $newFieldScope);
-
-		if ($trashed)
-		{
-			$trashed->restore();
-			return $trashed;
-		}
-
-		//
 		// change this field scope from global to page
-		// creates a page field, that overrides the global key
+		// find or creates a page field, that overrides the global key
 		//
 		if ($newFieldScope == 'page')
 		{
-			return $this->getPageFieldFromGlobalField($fieldId, $input);
+			return $this->getPageFieldFromGlobalField($field, $input);
 		}
 
 		//
 		// change this field scope from page to global
 		// this removes the page field and creates the
 		// global field if it doesn't already exist
-		//
-		$pageField = $this->FieldsRepository->findFieldByIdAndScope($fieldId, 'page');
-
-		return $this->getGlobalFieldFromPageField($pageField, $input);
+		return $this->getGlobalFieldFromPageField($field, $input);
 	}
 
 	/**
@@ -173,6 +159,12 @@ class FieldManager extends Manager
 	{
 		$pageField = $this->FieldsRepository->findFieldByKeyAndPageVersion($field->key, $input['page_version_id'], null);
 
+		if(!$pageField){
+			$pageField = $this->FieldsRepository->findTrashedFieldByKeyAndPageVersion($field->key, $input['page_version_id']);
+			if($pageField){
+				$pageField->restore();
+			}
+		}
 
 		return $pageField ?: $this->createPageField([
 			'collection_instance_id' => array_get($input, 'collection_instance_id'),
@@ -203,7 +195,6 @@ class FieldManager extends Manager
 			'human_name' => $pageField->human_name,
 			'key' => $pageField->key,
 		]);
-
 
 		$pageField->delete();
 

@@ -2722,7 +2722,9 @@
             "time": "2014-10-01 05:50:18"
         }
     ],
-    "aliases": [],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "mockery/mockery": 20
@@ -2732,5 +2734,7 @@
         "php": ">=5.3.0",
         "ext-imagick": "*"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }

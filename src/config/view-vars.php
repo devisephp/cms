@@ -1,6 +1,7 @@
 <?php
 return array (
-	'devise::admin.pages.index' => array(
+    'devise::admin.dashboard.index' => array(),
+    'devise::admin.pages.index' => array(
 		'pages'       => 'Devise\Pages\Repositories\PagesRepository.pages',
         'languages' => 'Devise\Languages\Repositories\LanguagesRepository.activeLanguageList',
     ),

@@ -1,15 +1,13 @@
 @extends('devise::admin.layouts.master')
 
-@section('subnavigation')
-    <ul>
-        <li><a class="dvs-button" href="{{ route('dvs-users') }}">List of Users</a></li>
-    </ul>
-@stop
-
 @section('title')
+    <div id="dvs-admin-title">
+        <h1>Editing User</h1>
+    </div>
 
-<h1>Editing User</h1>
-
+    <div id="dvs-admin-actions">
+        {{ link_to(URL::route('dvs-users'), 'List of Users', array('class'=>'dvs-button')) }}
+    </div>
 @stop
 
 @section('main')

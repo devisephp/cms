@@ -1,17 +1,14 @@
 @extends('devise::admin.layouts.master')
 
-@section('subnavigation')
-	<ul>
-		<li><a href="{{ route('dvs-pages') }}" class="dvs-button">List of Pages</a></li>
-	</ul>
-@stop
-
 @section('title')
+    <div id="dvs-admin-title">
+        <h1>Create a New Page</h1>
+        <p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback.</p>
+    </div>
 
-<h1>Create a New Page</h1>
-<h3><span>About This</span></h3>
-<p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback. Turkey kevin tenderloin, pork shank boudin andouille landjaeger cow meatloaf hamburger shankle strip steak pork belly tongue. </p>
-
+    <div id="dvs-admin-actions">
+        {{ link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) }}
+    </div>
 @stop
 
 @section('main')

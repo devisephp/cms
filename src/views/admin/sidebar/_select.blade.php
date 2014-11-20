@@ -3,7 +3,7 @@
     @include('devise::admin.sidebar._collection_instance_id')
 
     <div class="dvs-editor-values">
-        <h4>Values</h4>
+
         {{ Form::label($element->human_name) }}
         @if(isset($element->value->options) && count($element->value->options))
             @php
@@ -16,16 +16,15 @@
         @else
             {{ Form::select('value', []) }}
         @endif
-    </div>
-    <div class="dvs-editor-settings">
-        <h4>Settings</h4>
-        @include('devise::admin.sidebar._field_scope')
+
+        <hr>
+
         <table class="dvs-options-manager">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Value</th>
-                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-option">New</button></th>
+                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-option dvs-button-secondary">New Option</button></th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +39,8 @@
                 @endif
             </tbody>
         </table>
+
+        @include('devise::admin.sidebar._field_scope')
     </div>
 {{ Form::close() }}
 

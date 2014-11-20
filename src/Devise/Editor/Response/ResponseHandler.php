@@ -23,11 +23,25 @@ class ResponseHandler
      * @param  array $input
      * @return Redirect
      */
-    public function requestPartial($input)
+    public function requestSidebarPartial($input)
     {
         try {
             $code = 200;
         	$view = $this->Manager->fetchPartialView($input['data']);
+            $response = [ 'html' => $view ];
+        } catch (ValidationException $e) {
+            $code = 403;
+            $response = [ 'message' => $e->getMessage(), 'errors' => $e->getErrors() ];
+        }
+
+        return Response::json($response, $code);
+    }
+
+    public function requestElementPartial($input)
+    {
+        try {
+            $code = 200;
+            $view = $this->Manager->fetchElementView($input['data']);
             $response = [ 'html' => $view ];
         } catch (ValidationException $e) {
             $code = 403;

@@ -31,7 +31,12 @@ class DevisePageController extends Controller {
         // what does it mean to be in editing mode? right now it is just when you are logged in
         $editing = !is_null(Auth::user()); //&& Input::get('editing', false);
 
-        $page = $this->PagesRepository->findByRouteName( Route::currentRouteName(), Input::get('page_version', 'Default'), $editing);
+        $pageVersionHash = Input::get('page_version_share', null);
+        $pageVersionName = Input::get('page_version', 'Default');
+
+        $page = $pageVersionHash
+            ? $this->PagesRepository->findByRouteNameAndPreviewHash( Route::currentRouteName(), $pageVersionHash)
+            : $this->PagesRepository->findByRouteName( Route::currentRouteName(), $pageVersionName, $editing);
 
         $localized = $this->PagesRepository->findLocalizedPage($page);
 

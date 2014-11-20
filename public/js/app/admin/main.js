@@ -1,19 +1,11 @@
 define(['jquery', 'app/bindings/data-dvs-replacement'], function ($)
 {
 
-    // handles admin sub nav links show/hide
-    $('#dvs-admin-toggle img').click(function() {
-        if($('#dvs-admin-sublinks').is(':visible')) {
-            $('#dvs-admin-sublinks').fadeOut();
-        } else {
-            $('#dvs-admin-sublinks').fadeIn();
-        }
+  // make entire "dvs-admin-card" into a link
+  if($('.dvs-admin-card').length > 0) {
+    $('.dvs-admin-card').click(function() {
+      window.location.href = $(this).data('dvs-url');
     });
-
-    $('#dvs-admin-body').click(function(){
-        if($('#dvs-admin-sublinks').is(':visible')) {
-            $('#dvs-admin-sublinks').fadeOut();
-        }
-    });
+  }
 
 });

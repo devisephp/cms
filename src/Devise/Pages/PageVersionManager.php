@@ -1,8 +1,8 @@
 <?php namespace Devise\Pages;
 
-use PageVersion, DateTime;
+use PageVersion, DateTime, Hash, Exception, Field, CollectionInstance;
 use Devise\User\Helpers\UserHelper;
-use Field, CollectionInstance;
+use Devise\Pages\Repositories\PagesRepository;
 
 class PageVersionManager
 {
@@ -13,12 +13,13 @@ class PageVersionManager
      * @param PageVersion $PageVersion
      * @param UserHelper  $UserHelper
      */
-    public function __construct(PageVersion $PageVersion, UserHelper $UserHelper, Field $Field, CollectionInstance $CollectionInstance)
+    public function __construct(PagesRepository $PagesRepository, PageVersion $PageVersion, UserHelper $UserHelper, Field $Field, CollectionInstance $CollectionInstance)
     {
-        $this->UserHelper = $UserHelper;
-        $this->PageVersion = $PageVersion;
-        $this->Field = $Field;
         $this->CollectionInstance = $CollectionInstance;
+        $this->Field = $Field;
+        $this->PagesRepository = $PagesRepository;
+        $this->PageVersion = $PageVersion;
+        $this->UserHelper = $UserHelper;
     }
 
     /**
@@ -27,9 +28,10 @@ class PageVersionManager
      * @param  int $pageId
      * @param  string $name
      * @param  int $createdByUserId
-     * @param  datetime $startAt
-     * @param  datetime $endAt
-     * @param  string $stage
+     *
+     * @internal param DateTime $startAt
+     * @internal param DateTime $endAt
+     * @internal param string $stage
      * @return PageVersion
      */
     public function createNewPageVersion($pageId, $name, $createdByUserId)
@@ -38,6 +40,7 @@ class PageVersionManager
         $version->page_id = $pageId;
         $version->name = $name;
         $version->created_by_user_id = $createdByUserId;
+        $version->preview_hash = null;
         $version->save();
 
         return $version;
@@ -68,8 +71,11 @@ class PageVersionManager
     /**
      * Copy page version for given page version id and name
      *
-     * @param  string name
-     * @param  PageVersion $pageVersion
+     * @param $pageVersionId
+     * @param $name
+     *
+     * @internal param name $string
+     * @internal param PageVersion $pageVersion
      * @return PageVersion
      */
     public function copyPageVersion($pageVersionId, $name)
@@ -179,4 +185,43 @@ class PageVersionManager
             }
         }
     }
+
+    /**
+     * Destroys a page version record
+     *
+     * @param $pageVersionId
+     * @return mixed
+     */
+    public function destroyPageVersion($pageVersionId)
+    {
+        $pageVersion = $this->PageVersion->findOrFail($pageVersionId);
+
+        $page = $this->PagesRepository->find($pageVersion['page_id']);
+
+        $liveVersionId = $this->PagesRepository->getLivePageVersion($page)->id;
+
+        // throw exception if attempt to delete live page version
+        if($liveVersionId == $pageVersion['id']) {
+            throw new Exception('Cannot delete live page version');
+        }
+
+        return $pageVersion->delete();
+    }
+
+    /**
+     * Toggle "preview_hash" value between hashed string and null.
+     * The value determines whether preview url is publicly available.
+     *
+     * @param  integer $pageVersionId
+     * @return boolean
+     */
+    public function togglePageVersionPreviewShare($pageVersionId)
+    {
+        $pageVersion = $this->PageVersion->findOrFail($pageVersionId);
+
+        $previewHashValue = is_null($pageVersion->preview_hash) ? urlencode(Hash::make($pageVersion->id)) : null;
+
+        return $pageVersion->update(array('preview_hash' => $previewHashValue));
+    }
+
 }

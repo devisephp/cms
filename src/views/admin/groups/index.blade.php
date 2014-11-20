@@ -1,17 +1,14 @@
 @extends('devise::admin.layouts.master')
 
-@section('subnavigation')
-    <ul>
-        <li>{{ link_to(URL::route('dvs-groups-create'), 'Create New Group', array('class'=>'dvs-button')) }}</li>
-    </ul>
-@stop
-
 @section('title')
+    <div id="dvs-admin-title">
+        <h1>List of Groups</h1>
+        <p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback. Turkey kevin tenderloin, pork shank boudin andouille landjaeger cow meatloaf hamburger shankle strip steak pork belly tongue.</p>
+    </div>
 
-<h1>List of Groups</h1>
-<h3><span>About This</span></h3>
-<p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback. Turkey kevin tenderloin, pork shank boudin andouille landjaeger cow meatloaf hamburger shankle strip steak pork belly tongue. </p>
-
+    <div id="dvs-admin-actions">
+        {{ link_to(URL::route('dvs-groups-create'), 'Create New Group', array('class'=>'dvs-button')) }}
+    </div>
 @stop
 
 @section('main')
@@ -20,25 +17,31 @@
     @else
         <table class="dvs-admin-table">
             <thead>
-                <th class="tal">Id</th>
-                <th class="tal">Name</th>
-                <th class="tal">Created At</th>
-                <th class="actions">Actions</th>
+                <th class="dvs-tac">{{ Sort::link('id','Id') }}</th>
+                <th class="dvs-tac">{{ Sort::link('name','Name') }}</th>
+                <th class="dvs-tac">{{ Sort::link('created_at','Created') }}</th>
+                <th>{{ Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-outset')) }}</th>
             </thead>
 
             <tbody>
                 @foreach($groups as $group)
                     <tr>
-                        <td>{{ $group->id }}</td>
-                        <td>{{ $group->name }}</td>
-                        <td>{{ date("m/d/Y", strtotime($group->created_at)) }}</td>
-                        <td class="tac actions dvs-button-group">
+                        <td class="dvs-tac">{{ $group->id }}</td>
+                        <td class="dvs-tac">{{ $group->name }}</td>
+                        <td class="dvs-tac">{{ date("m/d/Y", strtotime($group->created_at)) }}</td>
+                        <td class="dvs-tac dvs-button-group">
                             <a class="dvs-button dvs-button-small" href="{{ route('dvs-groups-edit', $group->id) }}">Edit</a>
                             {{ Form::delete(route('dvs-groups-destroy', $group->id), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) }}
                         </td>
                     </tr>
                 @endforeach
             </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="4">{{ $groups->appends(Input::except(['page']))->links(); }}</td>
+                </tr>
+            </tfoot>
         </table>
     @endif
 @stop

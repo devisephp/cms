@@ -3,38 +3,41 @@ $loadDefaults = ((!isset($element->value->url) || $element->value->url == '') &&
 @endphp
 {{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-link')) }}
     <div class="dvs-editor-values">
-        <h4>Values</h4>
-        {{ Form::label('Text') }}
 
-        @include('devise::admin.sidebar._collection_instance_id')
+        <div class="dvs-property">
+            {{ Form::label('Text') }}
+            {{ Form::text('text', $element->value->text, array(
+                                                            'class'=>'dvs-liveupdate-listen ' . $loadDefaults,
+                                                            'data-dvs-type' => 'link',
+                                                            'data-dvs-index' => $element->index,
+                                                            'data-dvs-alternate-target' => $element->alternateTarget,
+                                                            'data-dvs-key' => $element->key,
+                                                         )) }}
+        </div>
 
-        {{ Form::text('text', $element->value->text, array(
-                                                        'class'=>'dvs-liveupdate-listen ' . $loadDefaults,
-                                                        'data-dvs-type' => 'link',
-                                                        'data-dvs-index' => $element->index,
-                                                        'data-dvs-alternate-target' => $element->alternateTarget,
-                                                        'data-dvs-key' => $element->key,
-                                                     )) }}
-        {{ Form::label('Page') }}
-        {{ Form::select('route', ['' => 'Select a Page'] + $pageRoutes, $element->value->route) }}
+        <div class="dvs-property">
+            {{ Form::label('Page') }}
+            {{ Form::select('route', ['' => 'Select a Page'] + $pageRoutes, $element->value->route, array('class'=>'dvs-select')) }}
+        </div>
 
-        {{ Form::label('(or) URL') }}
-        {{ Form::text('url', $element->value->url, array(
-                                                         'class'=>$loadDefaults,
-                                                         'data-dvs-type' => 'href',
-                                                         'data-dvs-index' => $element->index,
-                                                         'data-dvs-alternate-target' => $element->alternateTarget,
-                                                         'data-dvs-key' => $element->key,
-                                                     )) }}
+        <div class="dvs-property">
+            {{ Form::label('(or) URL') }}
+            {{ Form::text('url', $element->value->url, array(
+                                                             'class'=>$loadDefaults,
+                                                             'data-dvs-type' => 'href',
+                                                             'data-dvs-index' => $element->index,
+                                                             'data-dvs-alternate-target' => $element->alternateTarget,
+                                                             'data-dvs-key' => $element->key,
+                                                         )) }}
+        </div>
 
+        <div class="dvs-property">
+            {{ Form::label('Target') }}
+            {{ Form::select('target', ['_self' => 'Same Window (_self)', '_blank' => 'New Window (_blank)'], $element->value->target, array('class'=>'dvs-select')) }}
+        </div>
 
-
-    </div>
-    <div class="dvs-editor-settings">
-        <h4>Settings</h4>
         @include('devise::admin.sidebar._field_scope')
-        {{ Form::label('Target') }}
-        {{ Form::select('target', ['_self' => 'Same Window (_self)', '_blank' => 'New Window (_blank)'], $element->value->target) }}
+        @include('devise::admin.sidebar._collection_instance_id')
     </div>
 {{ form::close() }}
 

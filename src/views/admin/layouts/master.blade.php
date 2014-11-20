@@ -74,7 +74,5 @@
 
         @yield('main')
     </div>
-
-
 </body>
 </html>

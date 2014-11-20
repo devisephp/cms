@@ -3,7 +3,6 @@
     @include('devise::admin.sidebar._collection_instance_id')        
     
     <div class="dvs-editor-values">
-        <h4>Values</h4>
         <div class="dvs-checkboxes">
             @if($element->value->checkboxes)
                 @foreach ($element->value->checkboxes as $checkbox)
@@ -20,10 +19,11 @@
             @endif
         </div>
     </div>
-    <div class="dvs-editor-settings">
-        <h4>Settings</h4>
 
-        @include('devise::admin.sidebar._field_scope')
+<hr>
+
+    <div class="dvs-editor-settings">
+
 
         <table class="dvs-checkboxes-manager">
             <thead>
@@ -31,7 +31,7 @@
                     <th>Key</th>
                     <th>Label</th>
                     <th>Default</th>
-                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-checkbox">New</button></th>
+                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-checkbox dvs-button-secondary">New Option</button></th>
                 </tr>
             </thead>
             <tbody>
@@ -40,13 +40,16 @@
                         <tr class="dvs-checkbox-fields">
                             <td>{{ Form::text('checkboxes['.$index.'][key]', $checkbox->key)}}</td>
                             <td>{{ Form::text('checkboxes['.$index.'][label]', $checkbox->label)}}</td>
-                            <td>{{ Form::select('checkboxes['.$index.'][default]',['Off','On'], $checkbox->default)}}</td>
+                            <td>{{ Form::select('checkboxes['.$index.'][default]',['Off','On'], $checkbox->default, ['class' => 'dvs-select'])}}</td>
                             <td><button type="button" class="dvs-button dvs-button-small dvs-table-row-delete">Delete</button></td>
                         </tr>
                     @endforeach
                 @endif
             </tbody>
         </table>
+
+        @include('devise::admin.sidebar._field_scope')
+
     </div>
 {{ Form::close() }}
 
@@ -56,7 +59,7 @@
         <tr class="dvs-checkbox-fields">
             <td>{{ Form::text('checkboxes[0][key]')}}</td>
             <td>{{ Form::text('checkboxes[0][label]')}}</td>
-            <td>{{ Form::select('checkboxes[0][default]',['Off','On'])}}</td>
+            <td>{{ Form::select('checkboxes[0][default]',['Off','On'],['class' => 'dvs-select'])}}</td>
             <td><button type="button" class="dvs-button dvs-button-small dvs-table-row-delete">Delete</button></td>
         </tr>
     </tbody></table>

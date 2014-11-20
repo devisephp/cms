@@ -37,7 +37,7 @@ class PagesRepository extends BaseRepository
      */
 	public function find($id, $versionName = 'Default', $editing = false)
 	{
-		$page = $this->Page->findOrFail($id);
+        $page = $this->Page->findOrFail($id);
 
         $page->version = $editing ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
 
@@ -74,6 +74,38 @@ class PagesRepository extends BaseRepository
 	}
 
     /**
+     * Finds the DvsPage by a route name and preview hash
+     *
+     * @param  string $name
+     * @param  string $previewHash
+     * @return DvsPage
+     */
+    public function findByRouteNameAndPreviewHash($name, $previewHash)
+    {
+        $page = $this->Page->whereRouteName($name)->firstOrFail();
+
+        $page->version = $this->getPageVersionByPreviewHash($page, $previewHash);
+
+        if (!$page->version)
+        {
+            $page->version = $this->getLivePageVersion($page);
+            $page->version->preview_message = array(
+                'warning' => 'The page version you are trying to access is no longer available'
+            );
+        }
+
+        if ($page->version)
+        {
+            $page = $this->wrapFieldsAroundPage($page, $page->version);
+            $page->version->preview_message = array(
+                'message' => 'You are viewing a preview of a specific page version, which may or may not be live'
+            );
+        }
+
+        return $page;
+    }
+
+    /**
      * See if a localized version of this page exists
      * if there is no difference we return null
      *
@@ -97,6 +129,7 @@ class PagesRepository extends BaseRepository
 	public function pages()
 	{
         $languageId = (!Input::has('language_id')) ? Config::get('devise::languages.primary_language_id') : Input::get('language_id');
+
         $pages = $this->Page->where('dvs_admin', '<>', 1)
                             ->where('language_id', '=', $languageId)
                             ->paginate();
@@ -114,17 +147,25 @@ class PagesRepository extends BaseRepository
     {
         $page = $this->Page->with('localizedPages', 'language', 'translatedFromPage')->find($id);
 
-        $languages = array($page->language_id => array('human_name' => $page->language->human_name, 'url' => URL::route($page->route_name)));
+        $languages = array(
+            $page->language_id =>
+                array(
+                    'human_name' => $page->language->human_name,
+                    'code' => $page->language->code,
+                    'url' => URL::route($page->route_name
+                    )
+                )
+        );
 
         foreach ($page->localizedPages as $p)
         {
-            $languages[$p->language_id] = array('human_name' => $p->language->human_name, 'url' => URL::route($p->route_name));
+            $languages[$p->language_id] = array('human_name' => $p->language->human_name, 'code' => $p->language->code, 'url' => URL::route($p->route_name));
         }
 
         if (isset($page->translatedFromPage))
         {
             $p = $page->translatedFromPage;
-            $languages[$p->language_id] = array('human_name' => $p->language->human_name, 'url' => URL::route($p->route_name));
+            $languages[$p->language_id] = array('human_name' => $p->language->human_name, 'code' => $p->language->code, 'url' => URL::route($p->route_name));
         }
 
         return $languages;
@@ -211,6 +252,18 @@ class PagesRepository extends BaseRepository
     public function getPageVersionByName($page, $versionName)
     {
         return $page->versions()->with('fields')->whereName($versionName)->first();
+    }
+
+    /**
+     * Gets the page version by a hash
+     *
+     * @param  Page   $page
+     * @param  string $previewHash
+     * @return PageVersion
+     */
+    protected function getPageVersionByPreviewHash($page, $previewHash)
+    {
+        return $page->versions()->with('fields')->wherePreviewHash($previewHash)->first();
     }
 
     /**

@@ -22,8 +22,8 @@
     },
     "require-dev": {
         "mockery/mockery": "dev-master",
-        "orchestra/testbench": "2.2.*",
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "sami/sami": "*"
     },
     "autoload": {
         "classmap": [
@@ -43,6 +43,9 @@
         "psr-0": {
             "Devise\\": "src/"
         }
+    },
+    "scripts": {
+        "docs" : "vendor/bin/sami.php update sami.php"
     },
     "minimum-stability": "stable"
 }

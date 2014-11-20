@@ -2,12 +2,18 @@
 
 @section('subnavigation')
 <ul>
-    <li>{{ link_to(URL::route('dvs-groups'), 'List of Groups', array('class'=>'dvs-button')) }}</li>
+    <li></li>
 </ul>
 @stop
 
 @section('title')
-	<h1>Edit Group</h1>
+    <div id="dvs-admin-title">
+        <h1>Edit Group</h1>
+    </div>
+
+    <div id="dvs-admin-actions">
+        {{ link_to(URL::route('dvs-groups'), 'List of Groups', array('class'=>'dvs-button')) }}
+    </div>
 @stop
 
 @section('main')
@@ -17,7 +23,7 @@
     	        {{ Form::label('Name') }}
     	        {{ Form::text('name', $group->name) }}
             </div>
-            
+
 	        {{ Form::submit('Update Group', ['class' => 'dvs-button dvs-button-large']) }}<br>
 	    {{ Form::close() }}
 	</div>

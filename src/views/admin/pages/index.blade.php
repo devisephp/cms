@@ -1,70 +1,75 @@
 @extends('devise::admin.layouts.master')
 
-@section('subnavigation')
-	<ul>
-		<li>{{ link_to(URL::route('dvs-pages-create'), 'Create New Page', array('class'=>'dvs-button')) }}</li>
-	</ul>
-@stop
-
 @section('title')
+    <div id="dvs-admin-title">
+        <h1>List of Pages</h1>
 
-<h1>List of Pages</h1>
-<p><label>Active Languages: {{ Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select')) }}</label></p>
+        <p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback. Turkey kevin tenderloin, pork shank boudin andouille landjaeger cow meatloaf hamburger shankle strip steak pork belly tongue.</p>
+
+    </div>
+
+    <div id="dvs-admin-actions">
+        {{ Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select')) }}</label>
+        {{ link_to(URL::route('dvs-pages-create'), 'Create New Page', array('class'=>'dvs-button')) }}
+    </div>
 @stop
 
 @section('main')
-	<table class="dvs-admin-table">
+    <table class="dvs-admin-table">
 		<thead>
 			<tr>
-				<th class="tal">
-					{{ Sort::link('title','Page Name') }}
-				</th>
-				<th class="tal">
-					{{ Sort::link('slug','Path') }} {{ Sort::filter('slug', "#pages, .dvs-admin-container", ['placeholder' => 'Filter by Slug', 'class' => 'filter-by-slug']) }}
-				</th>
-	            <th class="tal">
-	                Route Name
-	            </th>
-				<th class="tal">
-					{{ Sort::link('http_verb','Type') }}
-				</th>
-				<th>
-					Languages
-				</th>
-				<th>
-					{{ Sort::link('is_admin','Admin') }}
-				</th>
-				<th class="actions">
-					{{ Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-secondary')) }}
-				</th>
+				<th class="dvs-tal">
+                    <div class="dvs-inline-block dvs-tal">
+                        {{ Sort::filter('slug', "#pages, .dvs-admin-container", ['placeholder' => 'Filter by Slug', 'class' => 'filter-by-slug']) }}
+                    </div>
+                    <div class="dvs-inline-block dvs-button-group dvs-sort-group dvs-pr">
+                        {{ Sort::link('slug','Path', array('class' => 'dvs-button dvs-button-small dvs-button-outset')) }}
+                        {{ Sort::link('title','Page Name', array('class' => 'dvs-button dvs-button-small dvs-button-outset')) }}
+                    </div>
+                </th>
+				<th>Languages</th>
+				<th>{{ Sort::link('is_admin','Admin') }}</th>
+				<th>{{ Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-outset')) }}</th>
 			</tr>
 		</thead>
 
-		<tbody id="pages">
+		<tbody>
 			@foreach($pages as $page)
 				<tr>
-					<td>{{ $page->title }}</td>
-					<td>{{ HTML::filterLinkParts($page->slug) }}</td>
-					<td>{{ $page->route_name }}</td>
-					<td>{{ HTML::httpVerb($page->http_verb, false) }}</td>
-					<td>{{ HTML::showLanguagesForPages($page->availableLanguages) }}
-					<td class="tac">{{ ($page->is_admin) ? 'Yes' : 'No' }}</td>
-					<td class="tac actions dvs-button-group">
+					<td class="dvs-stacked-col dvs-tal">
+                        <div>{{ $page->title }}</div>
+                        <div class="dvs-inset-text">{{ HTML::filterLinkParts($page->slug) }}</div>
+                        <a class="dvs-expand-details" href="javascript:void(0)">+ Expand Page Versions</a>
+                    </td>
+                    <td class="dvs-tac">{{ HTML::showLanguagesForPages($page->availableLanguages, true) }}</td>
+					<td class="dvs-tac">{{ ($page->is_admin) ? 'Yes' : 'No' }}</td>
+					<td class="dvs-tac dvs-button-group">
 						{{ link_to($page->slug, 'View', array('class'=>'dvs-button dvs-button-small dvs-button-secondary')) }}
 						{{ link_to(URL::route('dvs-pages-edit', array($page->id)), 'Edit', array('class'=>'dvs-button dvs-button-small')) }}
 						{{ link_to(URL::route('dvs-pages-copy', array($page->id)), 'Copy', array('class'=>'dvs-button dvs-button-small')) }}
-	                    @if(!$page->dvs_admin)
-						{{Form::delete(URL::route('dvs-pages-destroy', array($page->id)), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger'))}}
+
+                        @if(!$page->dvs_admin)
+						  {{Form::delete(URL::route('dvs-pages-destroy', array($page->id)), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger'))}}
 						@endif
 	                </td>
 				</tr>
+
+                <tr class="dvs-page-details dvs-collapsed">
+                    <td colspan="4">
+
+                        @include('devise::admin.pages.page-versions._cards')
+
+                    </td>
+                </tr>
 			@endforeach
 		</tbody>
-	</table>
 
-	<div class="dvs-admin-container">
-        {{ $pages->appends(Input::except(['page']))->links(); }}
-	</div>
+        <tfoot>
+            <tr>
+                <td colspan="4">{{ $pages->appends(Input::except(['page']))->links(); }}</td>
+            </tr>
+        </tfoot>
+	</table>
 
 	<script>require(['app/admin/admin', 'app/bindings/data-dvs-replacement', 'app/bindings/data-change-target'])</script>
 @stop

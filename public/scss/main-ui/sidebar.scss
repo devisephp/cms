@@ -1,30 +1,12 @@
-
 .dvs-sidebar-mode {
-
-  #dvs-blocker {
-    opacity: 0;
-    background-color:pink;
-    width: 100%;
-    height: 100%;
-    z-index: 10000;
-  }
-
-  #dvs-sidebar {
+  #dvs-sidebar.loaded {
     opacity: 1;
-    left:0;
+    left: $sidebarDistanceFromLeft;
     @include transform(translate3d(0, 0, 0));
   }
-
-  #dvs-sidebar-collections {
-    opacity: 1;
-    left:330px;
-    @include transform(translate3d(0, 0, 0));
-  }
-
   #dvs-pusher {
     @include transform(translate3d(200px, 0, -1000px) rotateY(-10deg));
   }
-
   #dvs-node-mode-button {
     width: 0px;
     height: 0px;
@@ -32,326 +14,349 @@
     right: 45%;
   }
 }
-
+#dvs-sidebar-contents-container {
+  margin: $sidebarGeneralPadding;
+  margin-top: 0;
+}
+#dvs-sidebar-elements-and-groups {
+  clear: both;
+  margin: $sidebarGeneralPadding;
+}
 #dvs-sidebar {
   position: fixed;
-  top:0;
+  top: $sidebarDistanceFromTop;
   z-index: 10010;
   opacity: 0;
-  width: 320px;
-  height: 100%;
-  background: $sidebar-bg;
-  font-family: "Lato", 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 300;
+  width: $sidebarWidth;
+  background: $sidebarBgColor;
+  font-size: $sidebarMainFontSize;
+  font-family: $sidebarMainFont;
+  font-weight: $sidebarMainFontWeight;
   box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
-
+  border-radius: $sidebarRoundedCorners;
   @include transition(all 0.5s);
   @include transform(translate3d(-100%, 0, 0));
-
-  .dvs-sidebar-group {
-    display:none;
-
-    &.active {
-      display:block;
-    }
+  hr {
+    clear: both;
+    float: left;
+    width: 100%;
+    height: 3px;
+    margin: 25px 0;
+    background-color: $sidebarRuleColor;
+    border-width: 0;
+    @include clearfix;
   }
 }
-
-
-#dvs-sidebar-header {
-  position: relative;
-  line-height: 53px;
-  text-align: center;
-  font-weight: 100;
-  background-color: $white;
-  color: $sidebar-bg;
-  border-bottom: 1px solid lighten($sidebar-bg, 15%);
-  outline: none;
-  padding-bottom:12px;
-
-  @include transition(all 0.5s linear);
-  @include clearfix;
-
-  select {
-    background-color:white;
-    color:$sidebar-bg;
-    height:30px;
-    text-indent: 4px;
-    border: 2px solid $sidebar-bg;
-    font-weight:600;
-    font-size:11px;
-
-    &.large {
-      float:left;
-      height:40px;
-      font-size:18px;
-      font-weight:800;
-      margin:12px;
-      width:296px;
-    }
-  }
-}
-
-#dvs-sidebar-admin,
-#dvs-sidebar-close {
-  display: inline-block;
-  cursor: pointer;
-  float:right;
-  background:white url('../img/devise-ctrls.png') no-repeat -34px -30px;
-  width: 30px;
-  height: 30px;
-  border-radius:4px;
-  border: 2px solid $sidebar-bg;
-  margin:12px 12px 0 0;
-
-  &.dark {
-    background:$sidebar-bg url('../img/devise-ctrls.png') no-repeat -34px 0px;
-  }
-}
-
-#dvs-sidebar-admin {
-  background-position:0 -30px;
-
-  &.dark {
-    background-position:0 0px;
-  }
-}
-
 #dvs-sidebar-language-selector {
-  float:left;
-  width:200px;
-  margin:12px 12px 0 12px;
-}
-
-#dvs-sidebar-container {
-  height:100%;
-  overflow:hidden;
-  position:relative;
-  z-index:1006;
-}
-
-#dvs-sidebar-content {
-  padding-right:15px;
-  height:100%;
-  overflow-y:scroll;
-  overflow-x:hidden;
-  margin-right:-30px;
-
-  p.notice {
-    background-color:darken($sidebar-bg, 5%);
-    color:#fff;
-    font-weight:300;
-    padding:25px 15px;
-    font-size:18px;
-    text-align:center;
+  margin-top: 15px;
+  float: right;
+  .dvs-select-wrapper {
+    width: 75px;
   }
 }
-
-#dvs-sidebar-elements-and-groups {
-
+#dvs-sidebar-groups, #dvs-sidebar-versions-selector {
+  clear: both;
+  float: left;
+  .dvs-select-wrapper {
+    float: left;
+    width: 209px;
+    margin-right: 3px;
+  }
+  button {
+    float: right;
+    width: 76px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
+#dvs-sidebar-groups {
+  margin-top: 3px;
+}
+#dvs-sidebar-title {
+  @include clearfix;
+  background-color: $sidebarTitleBgColor;
+  height: 55px;
+  padding: $sidebarGeneralPadding;
+  border-radius: $sidebarRoundedCorners $sidebarRoundedCorners 0 0;
+  text-transform: uppercase;
+  h1 {
+    margin: 0;
+    float: left;
+    font-size: $sidebarHeaderFontSize;
+    font-weight: $sidebarHeaderFontWeight;
+  }
+  a {
+    float: right;
+    color: $sidebarTextColor;
+  }
+}
+.dvs-sidebar-close {
+  cursor:pointer;
+}
+.dvs-sidebar-elements, .dvs-sidebar-group {
+  position: relative;
 
-.dvs-sidebar-elements,
-.dvs-sidebar-group {
-  position:relative;
-
-  h3 {
-    margin:0;
-    padding:27px 15px;
-    background-color:#10a5ff;
-    color:#fff;
-    font-size:18px;
-    font-weight:300;
-    border-top:1px solid lighten(#10a5ff, 10%);
-    border-bottom:1px solid darken(#10a5ff, 10%);
+  button {
+    float: left;
+    margin: 4px 4px 8px 4px;
+    border-width: 0;
+    height:84px;
+    padding: 27px 15px;
+    background-color: $sidebarElementsButton;
+    color: darken(#fff, 15%);
+    font-size: 12px;
+    font-weight: 400;
     outline: none;
-    cursor:pointer;
+    cursor: pointer;
+    width: ($sidebarWidth / 2) - 26;
+    &:nth-child(odd) {
+      margin-left: 0;
+    }
+    &:nth-child(even) {
+      float: right;
+      margin-right: 0;
+    }
   }
-
   > div {
     > div {
       @include clearfix;
       padding: 0 15px 18px 12px;
-      box-sizing:content-box;
-      overflow:auto;
-      height:400px;
-
+      box-sizing: content-box;
+      overflow: auto;
+      height: 400px;
       form {
-        display:block;
+        display: block;
         @include clearfix;
       }
     }
   }
-
-  h4,
-  label {
-    width:100%;
-    margin:10px 0;
-    color:#fff;
-    font-size:12px;
+  h4, label {
+    width: 100%;
+    margin: 10px 0;
+    color: #fff;
+    font-size: 12px;
     text-transform: uppercase;
   }
-
   h4 {
-    margin:18px 0 0 0;
-    font-size:18px;
-    color:lighten(#10a5ff, 20%);
+    margin: 18px 0 0 0;
+    font-size: 18px;
+    color: lighten(#10a5ff, 20%);
     text-transform: none;
-    font-weight:300;
-    border-bottom:1px solid #10a5ff;
-
-  }
-
-  textarea,
-  select,
-  input[type="text"] {
-    width:100%;
-    border-top:1px solid lighten(#10a5ff, 10%);
-    border-left:1px solid lighten(#10a5ff, 10%);
-    border-bottom:1px solid darken(#10a5ff, 10%);
-    border-right:1px solid darken(#10a5ff, 10%);
-    border-radius:4px;
-    padding:12px 15px;
-    font-size:14px;
-    color:#222;
-  }
-
-  select {
-    height:40px;
-  }
-
-  #dvs-new-collection-instance,
-  .dvs-sidebar-save-group {
-    background-color: lighten(#10a5ff, 15%);
-    width:100%;
-    padding:27px 15px;
-    font-size:22px;
-    font-weight:600;
-    text-transform: uppercase;
-    border-width:0;
-    color:#fff;
+    font-weight: 300;
+    border-bottom: 1px solid #10a5ff;
   }
 }
 
+#dvs-sidebar-breadcrumbs {
+  display:none;
+  clear:both;
+  text-transform: uppercase;
+  font-size:10px;
+  padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
+  color: $sidebarBreadcrumbActive;
+
+  a {
+    color:$sidebarBreadcrumbLink;
+  }
+
+  span {
+    position:relative;
+    top:-3px;
+    margin:0 8px;
+    font-size:1px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 3px 0 3px 5px;
+    border-color: transparent transparent transparent $sidebarBreadcrumbLink;
+  }
+
+}
+
+#dvs-sidebar-current-element {
+  clear:both;
+  padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
+  font-size:13px;
+  display:none;
+
+  label {
+    display:block;
+    color: darken($sidebarTextColor, 15%);
+    font-weight:400;
+    margin-bottom:8px;
+  }
+
+  .dvs-property {
+    margin-top:20px;
+
+    &:first-child {
+      margin-top:0;
+    }
+  }
+}
+
+.dvs-sidebar-discard, .dvs-sidebar-save-group {
+  display: block;
+  background-color: $sidebarSaveButtonBgColor;
+  color: $sidebarSaveButtonTextColor;
+  width: 100%;
+  padding: 27px 15px;
+  font-size: 22px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-width: 0;
+}
+.dvs-sidebar-discard {
+  font-size: 16px;
+  padding: 10px;
+  background-color: $sidebarDiscardButtonBgColor;
+  color: $sidebarDiscardButtonTextColor;
+}
 .dvs-sidebar-datetime-element {
-  height:425px;
+  height: 425px;
 }
 
 #dvs-sidebar-collections {
+  display:none;
+  width:100%;
   height:100%;
-  width: 340px;
-  overflow-y: scroll;
-  position:fixed;
-  top:0;
-  left:-330px;
-  background: darken($sidebar-bg, 10%);
-  z-index: 1005;
-
   h2 {
-    margin:0;
-    font-size:20px;
-    padding:15px;
-    font-weight:300;
-    background-color:#fff;
-    color:darken($sidebar-bg, 10%);
+    margin: 0;
+    font-size: 20px;
+    padding: 15px;
+    font-weight: 300;
+    background-color: #fff;
+    color: darken($sidebarBgColor, 10%);
   }
-
   hr {
-    margin:10px auto;
-    width:50%;
-    border-top-color: lighten($sidebar-bg, 20%);
+    margin: 10px auto;
+    width: 50%;
+    border-top-color: lighten($sidebarBgColor, 20%);
   }
-
   p {
     font-style: italic;
-    margin:0 30px;
+    margin: 0 30px;
     text-align: center;
-    color:lighten($sidebar-bg, 40%);
+    color: lighten($sidebarBgColor, 40%);
   }
 
   .dvs-new-collection {
-    background-color:darken($sidebar-bg, 30%);
-    padding:15px 12px;
-
+    background-color: darken($sidebarBgColor, 5%);
+    padding: 15px 12px;
     input {
-      width:100%;
-      border-radius:4px;
-      padding:8px 12px;
-      border-width:0;
-      color:$sidebar-bg;
-    }
-
-    button {
-      display:block;
-      background-color: lighten(#10a5ff, 15%);
-      padding:8px 12px;
-      margin:12px 0;
-      font-size:12px;
-      font-weight:600;
-      text-transform: uppercase;
-      border-width:0;
+      width: 100%;
       border-radius: 4px;
-      color:#fff;
+      padding: 8px 12px;
+      border-width: 0;
+      color: $sidebarBgColor;
     }
-
+    button {
+      background-color:$primaryButtonBgColor;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-top: 8px;
+      font-weight: 600;
+      color: #fff;
+    }
     p {
-      margin-bottom:20px;
+      margin-bottom: 16px;
     }
   }
-
 }
-
-.dvs-new-collection{
-
-}
-
 
 #dvs-collection-instances-sortable {
   li {
-    position:relative;
-    font-size:30px;
-    background-color:lighten(#10a5ff, 25%);
-    margin:8px 12px;
-    border-radius:4px;
-    color:$sidebar-bg;
-    font-weight:400;
-    cursor:move;
+    position: relative;
+    margin: 8px 12px;
+    background-color:lighten($sidebarBgColor, 5%);
+    font-size: 30px;
+    color:darken($sidebarTextColor, 5%);
+    font-weight: 400;
+    cursor: move;
 
     input[type="text"] {
-      width:200px;
-      font-size:16px;
-      padding:12px;
-      margin-left:40px;
-      background-color:transparent;
-      border-width:0;
-      color: darken($sidebar-bg, 30%);
+      width: 200px;
+      font-size: 16px;
+      padding: 12px;
+      margin-left: 40px;
+      background-color: transparent;
+      border-width: 0;
       outline-width: 0;
     }
 
     &:before {
       content: "";
       position: absolute;
-      left: 0.5em;
-      top: 0.6em;
-      width: 0.8em;
-      height: 0.11em;
-      background: lighten($sidebar-bg, 60%);
-      box-shadow:
-      0 0.25em 0 0 lighten($sidebar-bg, 60%),
-      0 0.5em 0 0 lighten($sidebar-bg, 60%);
+      left: 0.4em;
+      top: 0.56em;
+      width: 0.71em;
+      height: 0.14em;
+      background:darken($sidebarTextColor, 5%);
+      box-shadow: 0 0.25em 0 0 darken($sidebarTextColor, 5%), 0 0.5em 0 0 darken($sidebarTextColor, 5%);
     }
 
     .dvs-collection-instance-remove {
-      float:right;
-      background-color: lighten(#10a5ff, 15%);
-      padding:8px 12px;
-      margin:9px;
-      font-size:12px;
-      font-weight:600;
+      float: right;
+      padding: 8px 12px;
+      margin: 9px;
+      color:darken($sidebarTextColor, 5%);
+      font-size: 16px;
+      font-weight: 300;
       text-transform: uppercase;
-      border-width:0;
-      border-radius: 4px;
-      color:#fff;
+      cursor:pointer;
     }
+
+    &.dvs-sort-placeholder {
+      height:50px;
+      margin:8px 12px;
+      background-color:darken($sidebarBgColor, 4%);
+
+      &:before {
+        background:transparent;
+        box-shadow:none;
+      }
+    }
+  }
+}
+
+/* General Editor Styles */
+.dvs-group-edit {
+  h3 {
+    width: 320px;
+    height: 75px;
+    line-height: 75px;
+    padding: 0 30px;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 18px;
+    border-top: 1px solid lighten($sidebarBgColor, 50%);
+    border-bottom: 1px solid darken($sidebarBgColor, 5%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    @include background-image(linear-gradient(90deg, rgba(244, 244, 244, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%));
+    span {
+      display: none;
+    }
+  }
+
+  .ui-widget-content {
+    background: none;
+    background-color: darken($sidebarBgColor, 3%);
+    border-width: 0px;
+    border-bottom: 1px solid lighten($sidebarBgColor, 20%);
+  }
+}
+
+a.page-sort {
+  text-decoration: underline;
+  background: no-repeat right 7px;
+  &.desc {
+    padding-right: 30px;
+    background-image: url(../img/sort-desc.png);
+  }
+  &.asc {
+    padding-right: 30px;
+    background-image: url(../img/sort-asc.png);
   }
 }

@@ -61,18 +61,16 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
 
         addCollectionsListeners: function() {
 
-            console.log('good - addCollectionsListeners');
-
             if (typeof node.collection !== "undefined" && node.collection !== '' && node.collection !== null) {
-
-                console.log('bad - addCollectionsListeners');
-
                 $('#dvs-sidebar-collections').on('click', '#dvs-new-collection-instance', function(){
                     collectionsView.addCollection();
                 });
+
                 $('#dvs-sidebar-collections').on('click', '.dvs-collection-instance-remove', function(){
                     var _el = $(this);
                     var _id = $(this).data('id');
+
+                    if(confirm('Are you sure?') !== true) { return false; }
 
                     collectionsView.removeCollection(_el, _id);
                 });
@@ -83,7 +81,7 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
 
                     delay(function(){
                         collectionsView.updateInstanceName(_id, _val);
-                    }, 1000 );
+                    }, 600 );
                 });
 
                 collectionsView.init();
@@ -164,7 +162,7 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
 
     function addSidebarGroupsChangeListener() {
         $('#dvs-sidebar-groups').change(function () {
-            var _selectedGroup = $(this).val();
+            var _selectedGroup = $(this).find('.dvs-select').val();
 
             $('.dvs-sidebar-group').removeClass('active');
             $('#dvs-sidebar-group-' + _selectedGroup).addClass('active');

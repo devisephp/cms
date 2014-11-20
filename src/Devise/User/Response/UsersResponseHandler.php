@@ -40,7 +40,7 @@ class UsersResponseHandler
     public function executeLogin($input)
     {
         if($this->SessionsRepository->login($input)) {
-            return $this->Redirect->route('dvs-pages')->with('message-success', $this->SessionsRepository->message);
+            return $this->Redirect->route('dvs-dashboard')->with('message-success', $this->SessionsRepository->message);
         } else {
             return $this->Redirect->route('user-login')
                 ->withInput()

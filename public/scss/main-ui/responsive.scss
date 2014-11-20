@@ -1,0 +1,72 @@
+/* Mobile */
+@media (max-width: 767px) {
+  #dvs-admin { padding:25px 0 }
+
+  #dvs-admin-body { width:100% }
+
+  #dvs-admin-sidenav,
+  .dvs-admin-card {
+    float:none;
+    width:85%;
+  }
+
+  #dvs-admin-sidenav {
+    height:auto;
+    margin:0 auto 35px;
+
+    h5,
+    .dvs-admin-links li a {
+      text-align:center;
+    }
+  }
+
+  .dvs-admin-card {
+    margin:25px auto;
+
+    &:nth-child(1n+1){ clear:left } /* Force one (1) card per row */
+
+    .dvs-card-bottom .dvs-metrics-wpr { display:block !important }
+  }
+}
+
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 979px) {
+  #dvs-admin-sidenav {
+    h5 { font-size:105% }
+  }
+
+  .dvs-admin-card {
+    width:46.4%;
+    margin:20px 1.8%;
+
+    &:nth-child(2n+1){ clear:left } /* Force two (2) cards per row */
+
+    .dvs-card-bottom .dvs-metrics-wpr { display:block }
+  }
+}
+
+
+/* Large Devices */
+@media (min-width: 1200px) {
+  .dvs-admin-card {
+    .dvs-hex-wpr { display:block }
+
+    .dvs-card-bottom .dvs-metrics-wpr {
+      position:absolute;
+      bottom:15px;
+      left:0;
+
+      .dvs-metric {
+        display:inline-block;
+        margin-left:20px;
+        height:auto;
+
+        span {
+          border-radius:11px;
+          padding:4px 10px;
+        }
+      }
+    }
+  }
+}

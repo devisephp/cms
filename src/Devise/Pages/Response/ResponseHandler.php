@@ -4,6 +4,7 @@ use Devise\Pages\PageManager, Devise\Fields\FieldManager, Devise\Collections\Col
 use Devise\Pages\PageVersionManager;
 use Devise\Pages\Repositories\PagesRepository;
 use Illuminate\Routing\Redirector;
+use Response;
 
 class ResponseHandler
 {
@@ -98,4 +99,33 @@ class ResponseHandler
 
         return '';
     }
+
+    public function requestDestroyPageVersion($pageVersionId) {
+        if($this->PageVersionManager->destroyPageVersion($pageVersionId)) {
+            return Response::json([
+                    'message' => 'Page Version successfully removed',
+                    'data' => $pageVersionId
+                ],
+                200
+            );
+
+        } else {
+            return $this->Redirect->route('dvs-pages')
+                ->withErrors($this->PageManager->errors)
+                ->with('message', $this->PageManager->message);
+        }
+    }
+
+
+    public function requestTogglePageVersionShare($pageVersionId) {
+        $this->PageVersionManager->togglePageVersionPreviewShare($pageVersionId);
+
+        return Response::json([
+                'message' => 'Page version\'s share status successfully updated',
+                'data' => $pageVersionId
+            ],
+            200
+        );
+    }
+
 }

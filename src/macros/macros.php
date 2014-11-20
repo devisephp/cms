@@ -96,15 +96,19 @@ HTML::macro('filterLinkParts', function($slug)
 });
 
 
-HTML::macro('showLanguagesForPages', function($languages)
+HTML::macro('showLanguagesForPages', function($languages, $showLinkAsIcon =  false)
 {
-	$html = '';
+    $html = '';
 
-	foreach ($languages as $language)
-	{
-		$html .= $html ? ', ' : $html;
-		$html .= "<a href=\"{$language['url']}\">{$language['human_name']}</a>";
-	}
+    foreach ($languages as $language)
+    {
+        if(!$showLinkAsIcon) {
+            $html .= $html ? ', ' : $html;
+            $html .= "<a href=\"{$language['url']}\">{$language['human_name']}</a>";
+        } else {
+            $html .= "<a class=\"dvs-lang-flag\" href=\"{$language['url']}\" title=\"{$language['human_name']}\"><img src=\"/packages/devise/cms/img/icons/flags/{$language['code']}.png\"></a>";
+        }
+    }
 
-	return $html;
+    return $html;
 });

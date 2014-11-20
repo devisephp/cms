@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQueryHelper', 'jquery-ui'], function (require, $, datePicker, network, pageData, query)
+define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQueryHelper', 'dvsSelectSurrogate', 'jquery-ui'], function (require, $, datePicker, network, pageData, query, selectSurrogate)
 {
     var node = null;
     var ogWidth = null;
@@ -25,7 +25,15 @@ define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQ
         if(passFail == 'done') {
             sidebarLoadSuccessful();
         } else {
-            alert('The sidebar could not load the requested editor plugin')
+            alert('The sidebar could not load the requested editor plugin');
+        }
+    };
+
+    var elementLoaded = function(passFail) {
+        if(passFail == 'done') {
+            showElement();
+        } else {
+            alert('The element could not load the requested editor plugin');
         }
     };
 
@@ -51,10 +59,10 @@ define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQ
                     _value = $(_selector).attr('target');
                     break;
 
-                case 'link':
-                case 'text':
-                case 'wysiwyg':
-                case 'textarea':
+                // case 'link':
+                // case 'text':
+                // case 'wysiwyg':
+                // case 'textarea':
                 default:
                     _value = $(_selector).html();
                     break;
@@ -64,9 +72,87 @@ define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQ
         });
     }
 
-    function sidebarLoadSuccessful() {
-        $( ".dvs-accordion" ).accordion();
+    function setBreadcrumbs(activeLabel) {
+        var link = $('<a href="javascript:void(0)">').html('All Editors');
+        var span = $('<span>').html('&nbsp;');
 
+        link.append(span);
+
+        $('#dvs-sidebar-breadcrumbs').html(link);
+        $('#dvs-sidebar-breadcrumbs').append(activeLabel);
+        $('#dvs-sidebar-breadcrumbs').children('a').click(function(){
+            hideElement();
+        });
+    }
+
+    function showBreadcrumbs() {
+        $('#dvs-sidebar-breadcrumbs').fadeIn();
+    }
+
+    function hideBreadcrumbs() {
+        $('#dvs-sidebar-breadcrumbs').fadeOut();
+    }
+
+    function showElement() {
+        $('#dvs-sidebar-elements-and-groups').fadeOut(function(){
+            $('#dvs-sidebar-current-element').fadeIn();
+            showBreadcrumbs();
+        });
+    }
+
+    function hideElement() {
+        hideBreadcrumbs();
+        hideCollections();
+
+        $('#dvs-sidebar-current-element').fadeOut(function(){
+            $('#dvs-sidebar-elements-and-groups').fadeIn();
+        });
+    }
+
+    function openElementEditor(el) {
+        var _data = {
+            field_id : el.data('field-id')
+        };
+
+        setBreadcrumbs(el.html());
+
+        network.insertElement(_data, '#dvs-sidebar-current-element', elementLoaded);
+    }
+
+    function showCollections() {
+        $('#dvs-sidebar-elements-and-groups').fadeOut(function(){
+            $('#dvs-sidebar-collections').fadeIn();
+            showBreadcrumbs();
+        });
+    }
+
+    function hideCollections() {
+        $('#dvs-sidebar-collections').fadeOut();
+    }
+
+    function openCollectionsManager(el) {
+        setBreadcrumbs(el.html());
+        showCollections();
+    }
+
+    function addListeners() {
+        // Close sidebar
+        $('.dvs-sidebar-close').click(function(){
+            $('#dvs-mode').trigger('dvsCloseAdmin');
+        });
+
+        // Elements
+        $('.dvs-sidebar-elements button').click(function(){
+            openElementEditor($(this));
+        });
+
+        // Manage
+        $('#dvs-sidebar-manage-groups').click(function() {
+            openCollectionsManager($(this));
+        });
+    }
+
+    function sidebarLoadSuccessful() {
         loadDefaultData();
 
         addPageVersionButton();
@@ -75,15 +161,17 @@ define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQ
 
         addPageVersionDateRangePicker();
 
-        $('.dvs-sidebar-close').click(function(){
-            $('#dvs-mode').trigger('dvsCloseAdmin');
-        });
+        selectSurrogate();
+
+        addListeners();
+
+        $('#dvs-sidebar').addClass('loaded');
 
         $('#dvs-sidebar').trigger('sidebarLoaded');
     }
 
     function addHeader() {
-        $('#dvs-sidebar-content').hide();
+        $('#dvs-sidebar').removeClass('loaded');
 
         network.insertTemplate('devise::admin.sidebar.main', '#dvs-sidebar', node, sidebarLoaded);
     }

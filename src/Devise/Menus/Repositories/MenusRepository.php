@@ -84,6 +84,7 @@ class MenusRepository
             ->where('translated_from_menu_id', $menu->id)
             ->where('language_id', $this->currentLanguage->id)
             ->first();
+
         return ($translatedMenu) ? $translatedMenu : $menu;
     }
 

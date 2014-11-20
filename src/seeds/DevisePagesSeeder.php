@@ -2,7 +2,10 @@
 
 class DevisePagesSeeder extends Seeder {
 
-	public function run() {
+	/**
+     *
+     */
+    public function run() {
 		DB::table( 'dvs_pages' )->delete();
 
 		$pages = array(
@@ -127,12 +130,42 @@ class DevisePagesSeeder extends Seeder {
 				'published'               => '1',
 				'is_admin'                => '1',
 				'dvs_admin'               => '1',
-				'slug'                    => '/admin/partialloader',
+				'slug'                    => '/admin/partials/sidebar',
 				'short_description'       => 'Loads a partial for an AJAX load',
 				'response_type'           => 'Function',
 				'response_path'           => 'Devise\Editor\Response\ResponseHandler.requestPartial',
 				'response_params'         => 'input'
 			),
+            array(
+                'id'                      => '10',
+                'language_id'             => '45',
+                'title'                   => 'Partial Loader for Elements',
+                'http_verb'               => 'post',
+                'route_name'              => 'dvs-elements-partials',
+                'published'               => '1',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/partials/element',
+                'short_description'       => 'Loads an element for an AJAX load',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Editor\Response\ResponseHandler.requestElementPartial',
+                'response_params'         => 'input'
+            ),
+            array(
+                'id'                      => '11',
+                'language_id'             => '45',
+                'title'                   => 'Partial Loader for Groups Select on Admin Sidebar',
+                'http_verb'               => 'post',
+                'route_name'              => 'dvs-partial-sidebar-groups',
+                'published'               => '1',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/partials/sidebar-groups',
+                'short_description'       => 'Loads Groups Select for Admin Sidebar',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Editor\Response\ResponseHandler.fetchGroupsSelect',
+                'response_params'         => 'input'
+            ),
             array(
                 'id'                      => '20',
                 'language_id'             => '45',
@@ -647,6 +680,69 @@ class DevisePagesSeeder extends Seeder {
 				'response_path'           => 'Devise\Collections\Response\ResponseHandler.renameInstance',
 				'response_params'         => 'params.collectionInstanceId,input'
 			),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'view'                    => null,
+                'title'                   => 'Destroy Page Version',
+                'http_verb'               => 'delete',
+                'route_name'              => 'dvs-page-version-destroy',
+                'published'               => '1',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/page-versions/{pageVersionId}',
+                'short_description'       => 'Destroys a page version record',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestDestroyPageVersion',
+                'response_params'         => 'params.pageVersionId'
+            ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'view'                    => null,
+                'title'                   => 'Update Devise Page Version Dates',
+                'http_verb'               => 'put',
+                'route_name'              => 'dvs-update-page-versions-dates',
+                'published'               => '1',
+                'is_admin'                => '1',
+                'dvs_admin'               => '0',
+                'slug'                    => '/admin/page-versions/{pageVersionId}/dates',
+                'short_description'       => 'Updates the starts_at and ends_at dates for a page version',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestUpdatePageVersionDates',
+                'response_params'         => 'params.pageVersionId,input'
+            ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'view'                    => 'devise::admin.pages.page-versions._card',
+                'title'                   => 'Page Versions Card',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-page-versions-card',
+                'published'               => '1',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/pages/{pageId}/page-versions/card',
+                'short_description'       => '',
+                'response_type'           => 'View',
+                'response_params'         => 'params.pageId'
+            ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'view'                    => null,
+                'title'                   => 'Toggle Sharing Preview URL for a Page Version',
+                'http_verb'               => 'put',
+                'route_name'              => 'dvs-toggle-page-version-share',
+                'published'               => '1',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/page-versions/{pageVersionId}/toggle-share',
+                'short_description'       => 'Allows admin users to turn on/off the hashed preview url for a page version',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestTogglePageVersionShare',
+                'response_params'         => 'params.pageVersionId'
+            ),
 		);
 
 		foreach ( $pages as $page ) {

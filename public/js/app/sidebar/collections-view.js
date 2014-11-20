@@ -7,8 +7,6 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
 
     var collectionsView = {
         init: function() {
-            console.log('in init');
-
             collectionId = $('#dvs-sidebar-collections').data('collection-id');
             pageId = $('#dvs-sidebar-collections').data('page-id');
             pageVersionId = $('#dvs-sidebar-collections').data('page-version-id');
@@ -18,9 +16,6 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
         },
         addCollection: function() {
             var _numberOfItems = numberOfItemsInCollection()+1;
-
-            console.log(_numberOfItems);
-
             var _name = $('#dvs-new-collection-instance-name').val();
             var _data = { name: _name, sort: _numberOfItems  };
 
@@ -43,14 +38,14 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
 
             network.request(
                 '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/'+_id+'/update-name',
-                _data, 'put', null, updateEditors
+                _data, 'put', null, updateGroupSelect
             );
         }
     };
 
     var removeCollectionFromDOM = function(_el) {
         _el.closest('li').remove();
-    }
+    };
 
     var updateEditors = function() {
         dvsSidebarView.refresh();
@@ -66,23 +61,21 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
             placeholder: "Instance Name"
         }).addClass('dvs-collection-instance-name');
 
-        var _button = $('<button>').addClass('dvs-collection-instance-remove').html('&#10006;');
-        _button.data('id', _id);
+        var _link = $('<a>').addClass('dvs-collection-instance-remove').html('&#10006;');
+        _link.data('id', _id);
 
         var _li = $('<li>').attr('id', 'instance_'+_id);
 
         _li.append(_input);
-        _li.append(_button);
+        _li.append(_link);
 
         $('#dvs-collection-instances-sortable').append(_li);
     };
 
     var addSortableItem = function(response, _data) {
-
         addItem(_data['id'], _data['name']);
-        resetSortable();
 
-        dvsSidebarView.refresh();
+        resetSortable();
     };
 
     var drawSortable = function(response, _data) {
@@ -94,11 +87,13 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
     };
 
     var sortingStopped = function() {
-        var _data = $('#dvs-collection-instances-sortable').sortable( "serialize");
+        var _data = $('#dvs-collection-instances-sortable').sortable('serialize');
+
+        updateGroupSelect(); // keeps groups select options in sync with sortable list
 
         network.request(
             '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/update-sort-orders',
-            _data, 'post', null, updateEditors
+            _data, 'post', null
         );
     };
 
@@ -114,13 +109,37 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
     }
 
     function initSortable() {
-        sortable = $('#dvs-collection-instances-sortable').sortable({ axis: 'y', stop: sortingStopped });
+        sortable = $('#dvs-collection-instances-sortable').sortable({
+            axis: 'y',
+            stop: sortingStopped,
+            placeholder: 'dvs-sort-placeholder'
+        });
+
         sortable.disableSelection();
     }
 
     function resetSortable() {
         $('#dvs-collection-instances-sortable').sortable('refresh');
     }
+
+    var updateGroupSelect = function() {
+        var _el = $('#dvs-sidebar-groups').find('.dvs-select');
+        _el.html(''); // empty all select options then start appending
+
+        $('#dvs-collection-instances-sortable li').each(function(key, value){
+            var _option = $('<option value="'+key+'">');
+            var _value = $(value).find('input').val();
+
+            _option.html(_value);
+            _el.append(_option);
+
+            // set span html so styled select displays the first value's text
+            if (key == 0) {
+                $('#dvs-sidebar-groups span.dvs-holder').html('1) '+_value);
+            }
+        });
+    };
+
     return collectionsView;
 
 });

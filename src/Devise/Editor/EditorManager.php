@@ -30,12 +30,13 @@ class EditorManager
     public function fetchElementView($inputData)
     {
         $element = $this->FieldsRepository->findFieldById($inputData['field_id']);
-        return View::make('devise::admin.sidebar._'.$element->type, compact('element'))->render();
+        $pageRoutes = $this->PagesRepository->getRouteList();
+        return View::make('devise::admin.sidebar._'.$element->type, compact('element','pageRoutes'))->render();
     }
 
-	public function fetchGroupsSelect($inputData)
+	public function fetchElementGridView($inputData)
 	{
         $data = $this->EditorDataTranslator->translateFromInputArray($inputData);
-		return View::make('devise::admin.sidebar._sidebar-groups-select', compact('data'))->render();
+		return View::make('devise::admin.sidebar._sidebar-elements-grid', compact('data'))->render();
 	}
 }

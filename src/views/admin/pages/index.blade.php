@@ -20,7 +20,7 @@
 			<tr>
 				<th class="dvs-tal">
                     <div class="dvs-inline-block dvs-tal">
-                        {{ Sort::filter('slug', "#pages, .dvs-admin-container", ['placeholder' => 'Filter by Slug', 'class' => 'filter-by-slug']) }}
+                        {{ Sort::filter('slug', "#pages, tfoot", ['placeholder' => 'Filter by Slug', 'class' => 'filter-by-slug']) }}
                     </div>
                     <div class="dvs-inline-block dvs-button-group dvs-sort-group dvs-pr">
                         {{ Sort::link('slug','Path', array('class' => 'dvs-button dvs-button-small dvs-button-outset')) }}
@@ -33,7 +33,7 @@
 			</tr>
 		</thead>
 
-		<tbody>
+		<tbody id="pages">
 			@foreach($pages as $page)
 				<tr>
 					<td class="dvs-stacked-col dvs-tal">

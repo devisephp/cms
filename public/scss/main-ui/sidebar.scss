@@ -46,6 +46,9 @@
     border-width: 0;
     @include clearfix;
   }
+  .dvs-sidebar-group {
+    display:none;
+  }
 }
 #dvs-sidebar-language-selector {
   margin-top: 15px;
@@ -193,7 +196,57 @@
       margin-top:0;
     }
   }
+
+  input[type="text"] {
+    background-color: darken($sidebarBgColor, 15%);
+    border-width:0;
+    padding: $sidebarGeneralPadding / 2;
+    width:100%;
+  }
+
+  textarea {
+    width:100%;
+    background-color: darken($sidebarBgColor, 15%);
+    border-width:0;
+    padding: $sidebarGeneralPadding / 2;
+  }
+
+  .dvs-sidebar-button-grid {
+
+    @include clearfix;
+    margin: $sidebarGeneralPadding 0;
+
+    label,
+    button {
+      float:left;
+      margin:2px 2px 0 0;
+      color:$primaryButtonTextColor;
+      padding: 15px 3px;
+      text-align: center;
+      cursor: pointer;
+      width:185px;
+
+      &.dvs-button-secondary {
+        width:99px;
+      }
+    }
+
+    label {
+      background-color:desaturate($primaryButtonBgColor, 100%);
+      @include transition( all .4s ease );
+    }
+
+
+    input[type=checkbox] {
+      position:absolute;
+      visibility: hidden;
+
+      &:checked + label { background-color:$primaryButtonBgColor; }
+    }
+  }
 }
+
+
 
 .dvs-sidebar-discard, .dvs-sidebar-save-group {
   display: block;
@@ -214,6 +267,11 @@
 }
 .dvs-sidebar-datetime-element {
   height: 425px;
+}
+
+.dvs-options-manager,
+.dvs-checkboxes-manager {
+  width:100%;
 }
 
 #dvs-sidebar-collections {

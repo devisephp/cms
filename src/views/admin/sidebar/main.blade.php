@@ -1,6 +1,6 @@
 <div id="dvs-sidebar-header" data-page-id="{{ $data->page_id }}"  data-page-version-id="{{ $data->page_version_id }}" >
     <div id="dvs-sidebar-title">
-        <h1>{{ $data->categoryName or $data->elements[0]->human_name }}</h1>
+        <h1>{{ $data->sidebarTitle }}</h1>
         <a class="dvs-sidebar-close">Close</a>
     </div>
 
@@ -44,45 +44,8 @@
 
 <div id="dvs-sidebar-breadcrumbs"></div>
 
-
-@if ($data->groups)
-<ul id="dvs-sidebar-elements-and-groups">
-    @php $index = 0 @endphp
-
-    @foreach ($data->groups as $name => $elements)
-
-        <li id="dvs-sidebar-group-{{ $index++ }}" class="dvs-sidebar-group dvs-sidebar-elements">
-        @foreach ($elements as $element)
-            <button data-field-id="{{ $element->id }}">{{ $element->human_name }}</button>
-        @endforeach
-        </li>
-
-    @endforeach
-</ul>
-
-<div id="dvs-sidebar-element-forms">
-    <div id="dvs-sidebar-current-element"></div>
-    <button type="button" class="dvs-sidebar-save-group">Save Changes</button>
-</div>
-
-@else
-
-    @if(!$data->isCollection)
-        @php $element = $data->elements[0]; @endphp
-
-        <div id="dvs-sidebar-element-forms">
-            <div id="dvs-sidebar-current-element" style="display:block">
-                 @include("devise::admin.sidebar._{$element->type}", compact('element'))
-            </div>
-            <button type="button" class="dvs-sidebar-save-group">Save</button>
-        </div>
-    @endif
-
-@endif
-
-
 @if($data->isCollection)
-    <div id="dvs-sidebar-collections" data-page-id="{{ $data->page_id }}" data-collection-id="{{ $data->collection->id }}" data-page-version-id="{{ $data->page_version_id }}">
+    <div id="dvs-sidebar-collections" data-page-id="{{ $data->page_id }}" data-collection-name="{{ $data->collection->name }}" data-collection-id="{{ $data->collection->id }}" data-page-version-id="{{ $data->page_version_id }}">
 
         <div class="dvs-new-collection">
             <p>Add a new instance by providing the name and clicking 'Add to Stack'</p>
@@ -92,4 +55,30 @@
 
         <ul id="dvs-collection-instances-sortable"></ul>
     </div>
+@endif
+
+@if ($data->groups || $data->isCollection)
+
+    <ul id="dvs-sidebar-elements-and-groups">
+        @if (count($data->groups))
+            @include('devise::admin.sidebar._sidebar-elements-grid')
+        @endif
+    </ul>
+
+    <div id="dvs-sidebar-element-forms">
+        <div id="dvs-sidebar-current-element"></div>
+        <button type="button" class="dvs-sidebar-save-group">Save Changes</button>
+    </div>
+
+@else
+
+    @php $element = $data->elements[0]; @endphp
+
+    <div id="dvs-sidebar-element-forms">
+        <div id="dvs-sidebar-current-element" style="display:block">
+             @include("devise::admin.sidebar._{$element->type}", compact('element'))
+        </div>
+        <button type="button" class="dvs-sidebar-save-group">Save</button>
+    </div>
+
 @endif

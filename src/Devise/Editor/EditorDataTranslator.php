@@ -102,11 +102,21 @@ class EditorDataTranslator
 		$editorData->coordinates->top = $inputData['coordinates']['top'];
 		$editorData->coordinates->left = $inputData['coordinates']['left'];
 		$editorData->isCollection = false;
-		$editorData->categoryName = (isset($inputData['categoryName'])) ? $inputData['categoryName'] : null;
 		$editorData->categoryCount = (isset($inputData['categoryCount'])) ? $inputData['categoryCount'] : null;
 
 		$editorData->groups = $this->getGroups($inputData);
 		$editorData->elements = $this->getElements($inputData);
+
+		if(isset($inputData['categoryName'])){
+			$editorData->sidebarTitle = $inputData['categoryName'];
+		} else if(isset($inputData['groups']) && count($inputData['groups'])) {
+			$keys = array_keys($inputData['groups']);
+			$editorData->sidebarTitle = reset($keys);
+		} else if(isset($inputData['elements']) && count($editorData->elements)) {
+			$editorData->sidebarTitle = $inputData['elements'][0]['humanName'];
+		} else {
+			$editorData->sidebarTitle = '';
+		}
 
 		return $editorData;
 	}

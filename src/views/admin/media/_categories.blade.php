@@ -12,9 +12,9 @@
 	        <ul>
 	            @foreach ($pageData['categories'] as $category)
 	                <li>
-	                	<a class="dvs-button-small dvs-button dvs-cat-btn" href="{{ $category['url'] }}">{{ $category['name'] }}</a>
-	                	<a data-path="{{ $category['path'] }}" data-name="{{ $category['name'] }}" class="dvs-button-small dvs-button dvs-cat-rename-btn" data-url="{{ $category['rename-url'] }}" href="#">-</a>
-	                	<a class="dvs-button-small dvs-button dvs-cat-delete-btn" href="{{ $category['delete-url'] }}">X</a>
+	                	<a class="dvs-button-small dvs-button dvs-button-gray dvs-cat-btn" href="{{ $category['url'] }}">{{ $category['name'] }}</a>
+	                	<a data-path="{{ $category['path'] }}" data-name="{{ $category['name'] }}" class="dvs-button-small dvs-button dvs-button-dark dvs-cat-rename-btn" data-url="{{ $category['rename-url'] }}" href="#">-</a>
+	                	<a class="dvs-button-small dvs-button dvs-cat-delete-btn  dvs-button-dark" href="{{ $category['delete-url'] }}">X</a>
 	                </li>
 	            @endforeach
 	        </ul>

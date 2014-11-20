@@ -39,9 +39,9 @@ class CollectionsManager
         $editorData->isCollection = true;
         $editorData->page_id = $inputData['page_id'];
         $editorData->page_version_id = $inputData['page_version_id'];
-        $editorData->coordinates->top = $inputData['coordinates']['top'];
-        $editorData->coordinates->left = $inputData['coordinates']['left'];
-        $editorData->categoryName = (isset($inputData['categoryName'])) ? $inputData['categoryName'] : null;
+        $editorData->coordinates->top = (isset($inputData['coordinates'])) ? $inputData['coordinates']['top'] : null;
+        $editorData->coordinates->left = (isset($inputData['coordinates'])) ? $inputData['coordinates']['left'] : null;
+        $editorData->sidebarTitle = (isset($inputData['categoryName'])) ? $inputData['categoryName'] : '';
         $editorData->categoryCount = (isset($inputData['categoryCount'])) ? $inputData['categoryCount'] : null;
 
         $collection = $this->CollectionSet->whereName($inputData['collection'])->first();
@@ -72,15 +72,18 @@ class CollectionsManager
 
         $instances = $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($collection->id, $inputData['page_version_id']);
 
-        // fields are added to instance here
-        foreach ($instances as $instance)
-        {
-            $this->createAnyNewFieldsForCollectionInstance($instance, $inputData);
+        if(isset($inputData['groups'])){
+            // fields are added to instance here
+            foreach ($instances as $instance)
+            {
+                $this->createAnyNewFieldsForCollectionInstance($instance, $inputData);
+            }
+
+            // re-fetch instances now that we've created any new fields
+            $instances = $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($collection->id, $inputData['page_version_id']);
+
         }
-
-        // re-fetch instances now that we've created any new fields
-        $instances = $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($collection->id, $inputData['page_version_id']);
-
+        
         //
         // loop through all instances for this collection set + page version
         // and make a big giant array of groups, each group has a set

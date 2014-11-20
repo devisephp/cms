@@ -18,16 +18,16 @@
                 <option value="">Select an action</option>
                 <option value="publish">Publish</option>
                 <option value="unpublish">Un-Publish</option>
+                <option value="create-version">Create Version from This Version</option>
 
                 @if(is_null($version->preview_hash))
                     <option value="toggle-sharing">Enable Sharing</option>
                 @else
                     <option value="toggle-sharing">Disable Sharing</option>
                     <option value="preview" data-dvs-url="{{ URL::to($page->slug . '?page_version_share=' . $version->preview_hash) }}">Preview</option>
-
-                    @if(!$page->dvs_admin && $version->id != $liveVersion->id)
-                        <option value="delete">Delete</option>
-                    @endif
+                @endif
+                @if(!$page->dvs_admin && $version->id != $liveVersion->id)
+                    <option value="delete">Delete</option>
                 @endif
             </select>
         </div>

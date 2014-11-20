@@ -50,4 +50,18 @@ class ResponseHandler
 
         return Response::json($response, $code);
     }
+
+    public function requestElementGridPartial($input)
+    {
+        try {
+            $code = 200;
+            $view = $this->Manager->fetchElementGridView($input['data']);
+            $response = [ 'html' => $view ];
+        } catch (ValidationException $e) {
+            $code = 403;
+            $response = [ 'message' => $e->getMessage(), 'errors' => $e->getErrors() ];
+        }
+
+        return Response::json($response, $code);
+    }
 }

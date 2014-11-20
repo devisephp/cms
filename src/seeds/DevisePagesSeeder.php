@@ -152,21 +152,6 @@ class DevisePagesSeeder extends Seeder {
                 'response_params'         => 'input'
             ),
             array(
-                'id'                      => '11',
-                'language_id'             => '45',
-                'title'                   => 'Partial Loader for Groups Select on Admin Sidebar',
-                'http_verb'               => 'post',
-                'route_name'              => 'dvs-partial-sidebar-groups',
-                'published'               => '1',
-                'is_admin'                => '1',
-                'dvs_admin'               => '1',
-                'slug'                    => '/admin/partials/sidebar-groups',
-                'short_description'       => 'Loads Groups Select for Admin Sidebar',
-                'response_type'           => 'Function',
-                'response_path'           => 'Devise\Editor\Response\ResponseHandler.fetchGroupsSelect',
-                'response_params'         => 'input'
-            ),
-            array(
                 'id'                      => '20',
                 'language_id'             => '45',
                 'view'                    => 'devise::admin.templates.index',

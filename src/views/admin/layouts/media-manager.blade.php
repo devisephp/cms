@@ -17,7 +17,7 @@
 
 <body id="dvs-admin" class="dvs-default">
 
-    <div id="dvs-admin-body" class="vignette">
+    <div id="dvs-admin">
 
         @if(Session::has('message'))
             <div class="dvs-messages">

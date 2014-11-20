@@ -12,9 +12,9 @@
                     $options[ $option->value ] = $option->name;
                 }
             @endphp
-            {{ Form::select('value', $options) }}
+            {{ Form::select('value', $options, null, array('class'=>'dvs-select')) }}
         @else
-            {{ Form::select('value', []) }}
+            {{ Form::select('value', [], null, array('class'=>'dvs-select')) }}
         @endif
 
         <hr>

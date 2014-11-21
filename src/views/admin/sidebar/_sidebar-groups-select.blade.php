@@ -1,5 +1,5 @@
 @if(!$data->isCollection)
-    @if ($data->groups && count($data->groups) > 2)
+    @if ($data->groups && count($data->groups) >= 2)
         <div id="dvs-sidebar-groups">
             <select class="dvs-select" name="groups" class="large">
                 @php $index = 0 @endphp

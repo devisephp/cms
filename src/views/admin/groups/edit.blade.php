@@ -1,14 +1,10 @@
 @extends('devise::admin.layouts.master')
 
-@section('subnavigation')
-<ul>
-    <li></li>
-</ul>
-@stop
-
 @section('title')
     <div id="dvs-admin-title">
         <h1>Edit Group</h1>
+
+        <p>Update group name using the form below.</p>
     </div>
 
     <div id="dvs-admin-actions">

@@ -20,7 +20,7 @@
 
             <div class="dvs-card-bottom">
                 <h3>Pages</h3>
-                <p>Manage pages, set URLs, and approve new page versions.</p>
+                <p>Manage pages, set URLs, and page versions.</p>
 
                 <div class="dvs-metrics-wpr">
                     <div class="dvs-metric"><span class="dvs-badge">33</span>Queue</div>
@@ -47,7 +47,7 @@
 
             <div class="dvs-card-bottom">
                 <h3>Menus</h3>
-                <p>Manage pages, set URLs, and approve new page versions.</p>
+                <p>Manage menus and children items.</p>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
 
             <div class="dvs-card-bottom">
                 <h3>Events</h3>
-                <p>Manage pages, set URLs, and approve new page versions.</p>
+                <p>Manage events and venue information.</p>
             </div>
         </div>
 
@@ -91,7 +91,7 @@
 
             <div class="dvs-card-bottom">
                 <h3>Users</h3>
-                <p>Manage pages, set URLs, and approve new page versions.</p>
+                <p>Manage users and define group association(s).</p>
             </div>
         </div>
 
@@ -113,7 +113,7 @@
 
             <div class="dvs-card-bottom">
                 <h3>Groups</h3>
-                <p>Manage pages, set URLs, and approve new page versions.</p>
+                <p>Manage groups and related details.</p>
             </div>
         </div>
 
@@ -135,7 +135,7 @@
 
             <div class="dvs-card-bottom">
                 <h3>Languages</h3>
-                <p>Manage pages, set URLs, and approve new page versions.</p>
+                <p>Manage languages and set active languages.</p>
             </div>
         </div>
 	</div>

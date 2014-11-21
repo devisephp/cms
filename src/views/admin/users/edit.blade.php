@@ -3,6 +3,8 @@
 @section('title')
     <div id="dvs-admin-title">
         <h1>Editing User</h1>
+
+        <p>Update user details and set any group association(s).</p>
     </div>
 
     <div id="dvs-admin-actions">

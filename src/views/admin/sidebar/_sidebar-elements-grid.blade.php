@@ -8,7 +8,7 @@
 
     <li id="dvs-sidebar-group-{{ $index++ }}" class="dvs-sidebar-group dvs-sidebar-elements {{ $activeGroupClass }}">
     @foreach ($elements as $element)
-        <button data-field-id="{{ $element->id }}">{{ $element->human_name }}</button>
+        <button data-field-id="{{ $element->id }}" data-field-scope="{{ $element->scope }}" >{{ $element->human_name }}</button>
     @endforeach
     </li>
 

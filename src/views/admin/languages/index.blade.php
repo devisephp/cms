@@ -3,7 +3,6 @@
 @section('title')
     <div id="dvs-admin-title">
         <h1>List of Languages</h1>
-        <p>Turkey kevin tenderloin, pork shank boudin andouille landjaeger cow meatloaf hamburger shankle strip steak pork belly tongue.</p>
     </div>
 @stop
 
@@ -11,9 +10,9 @@
 	<table class="dvs-admin-table">
 		<thead>
 			<tr>
-				<th class="dvs-tal">Short Code</th>
+				<th class="dvs-tal">{{ Sort::link('code','Short Code') }}</th>
 				<th class="dvs-tal">
-					Language
+					{{ Sort::link('human_name','Language') }}
 					{{ Sort::filter('human_name', "#languages, .dvs-admin-container", ['placeholder' => 'Filter by Name']) }}
 				</th>
 	            <th>Active</th>

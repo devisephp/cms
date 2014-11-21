@@ -3,7 +3,8 @@
 @section('title')
     <div id="dvs-admin-title">
         <h1>Create a New Page</h1>
-        <p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback.</p>
+
+        <p>Use the form below to create a new page and define any page-related settings.</p>
     </div>
 
     <div id="dvs-admin-actions">

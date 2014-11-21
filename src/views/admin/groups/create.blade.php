@@ -3,7 +3,7 @@
 @section('title')
     <div id="dvs-admin-title">
         <h1>Create Group</h1>
-        <p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback.</p>
+        <p>Use the form below to create a new group.</p>
     </div>
 
     <div id="dvs-admin-actions">

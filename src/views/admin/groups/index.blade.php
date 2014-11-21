@@ -3,7 +3,6 @@
 @section('title')
     <div id="dvs-admin-title">
         <h1>List of Groups</h1>
-        <p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback. Turkey kevin tenderloin, pork shank boudin andouille landjaeger cow meatloaf hamburger shankle strip steak pork belly tongue.</p>
     </div>
 
     <div id="dvs-admin-actions">

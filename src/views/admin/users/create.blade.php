@@ -3,7 +3,8 @@
 @section('title')
     <div id="dvs-admin-title">
         <h1>Create New User</h1>
-        <p>Bacon ipsum dolor sit amet pork loin chicken doner leberkas, tail jerky brisket kevin jowl meatloaf prosciutto beef ham hock meatball fatback.</p>
+
+        <p>Add new users and define their group association.</p>
     </div>
 
     <div id="dvs-admin-actions">

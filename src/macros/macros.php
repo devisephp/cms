@@ -112,3 +112,22 @@ HTML::macro('showLanguagesForPages', function($languages, $showLinkAsIcon =  fal
 
     return $html;
 });
+
+/*
+|--------------------------------------------------------------------------
+| Is active link
+|--------------------------------------------------------------------------
+|
+| This macro checks if the current request url is equal to the supplied segment.
+| If it is, the default active class ".dvs-active" is applied. Also, boolean can be
+| passed as second param to check singular of segment.
+|
+*/
+function isActiveLink($segment, $checkSingular = false, $active = 'dvs-active')
+{
+    if($checkSingular == false) {
+        return (Request::is($segment)) ? $active : '';
+    }
+
+    return (Request::is($segment) || Request::is(Str::singular($segment))) ? $active : '';
+}

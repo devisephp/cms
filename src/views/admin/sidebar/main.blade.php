@@ -14,7 +14,7 @@
         </div>
 
         <div id="dvs-sidebar-versions-selector">
-            <select class="dvs-select" name="page_version" id="dvs-sidebar-version-selector" style="display: inline-block; width: 72%;">
+            <select class="dvs-select" name="page_version" id="dvs-sidebar-version-selector">
                 @foreach ($pageVersions as $pageVersion)
                     <option {{ $pageVersion->selected }} value="{{ $pageVersion->name }}">{{ $pageVersion->name }} ({{$pageVersion->status}})</option>
                     @if ($pageVersion->selected)

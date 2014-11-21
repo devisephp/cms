@@ -29,7 +29,7 @@ class EditorManager
 
     public function fetchElementView($inputData)
     {
-        $element = $this->FieldsRepository->findFieldById($inputData['field_id']);
+        $element = $this->FieldsRepository->findFieldByIdAndScope($inputData['field_id'], $inputData['field_scope']);
         $pageRoutes = $this->PagesRepository->getRouteList();
         return View::make('devise::admin.sidebar._'.$element->type, compact('element','pageRoutes'))->render();
     }

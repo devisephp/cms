@@ -25,8 +25,8 @@
     <table class="dvs-admin-table">
     	<thead>
     		<tr>
-    			<th class="dvs-tac">Menu Name</th>
-                <th class="dvs-tac">Language</th>
+    			<th class="dvs-tac">{{ Sort::link('name','Menu Name') }}</th>
+                <th class="dvs-tac">{{ Sort::link('language_id','Language') }}</th>
                 <th>{{ Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-outset')) }}</th>
     		</tr>
     	</thead>

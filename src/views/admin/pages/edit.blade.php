@@ -4,9 +4,7 @@
     <div id="dvs-admin-title">
         <h1>Edit Page</h1>
 
-        @if($page->short_description != '')
-            <p>{{ $page->short_description }}</p>
-        @endif
+        <p>Use the form below to update a page and/or any page-related settings.</p>
     </div>
 
     <div id="dvs-admin-actions">

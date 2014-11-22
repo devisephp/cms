@@ -56,14 +56,14 @@ class PagesRepository extends BaseRepository
      * @internal param string $slug
      * @return Page
      */
-	public function findByRouteName($name, $versionName = 'Default', $editing = false)
+	public function findByRouteName($name, $versionName = null, $editing = false)
 	{
 		$page = $this->Page->whereRouteName($name)->firstOrFail();
 
         // if the user is an admin user they can view any page
         // using the ?page_version query parameter otherwise
         // they just get the live version
-        $page->version = $editing ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
+        $page->version = $versionName !== null ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
 
         if ($page->version)
         {

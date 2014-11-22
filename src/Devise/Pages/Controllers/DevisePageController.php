@@ -32,7 +32,7 @@ class DevisePageController extends Controller {
         $editing = !is_null(Auth::user()); //&& Input::get('editing', false);
 
         $pageVersionHash = Input::get('page_version_share', null);
-        $pageVersionName = Input::get('page_version', 'Default');
+        $pageVersionName = Input::get('page_version', null);
 
         $page = $pageVersionHash
             ? $this->PagesRepository->findByRouteNameAndPreviewHash( Route::currentRouteName(), $pageVersionHash)

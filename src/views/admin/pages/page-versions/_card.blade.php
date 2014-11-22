@@ -11,14 +11,10 @@
             <p class="dvs-badge">Live</p>
         @endif
 
-<<<<<<< HEAD
-        <p>{{ is_null($version->starts_at) ? 'Never Starts' : date('m/d/y g:i a', strtotime($version->starts_at)) }} - {{ is_null($version->ends_at) ? 'Never Ends' : date('m/d/y g:i a', strtotime($version->ends_at)) }}</p>
-=======
         <p>
             {{ is_null($version->starts_at) ? 'Never Starts' : date('m/d/y g:ia', strtotime($version->starts_at)) }} -
             {{ is_null($version->ends_at) ? 'Never Ends' : date('m/d/y g:ia', strtotime($version->ends_at)) }}
         </p>
->>>>>>> master
 
         <div data-dvs-page-id="{{ $page->id }}" data-dvs-version-id="{{ $version->id }}">
             <select class="dvs-page-version-actions">
@@ -46,8 +42,13 @@
 
             {{ Form::open(array('method' => 'PUT', 'route' => array('dvs-update-page-versions-dates', $version->id))) }}
 
-                {{ Form::text('starts_at', date('m/d/y H:i:s', strtotime($version->starts_at)), array('class' => 'dvs-date start', 'placeholder' => 'Starts At')) }}
-                {{ Form::text('ends_at', date('m/d/y H:i:s', strtotime($version->ends_at)), array('class' => 'dvs-date end', 'placeholder' => 'Ends At')) }}
+                @php
+                    $startTime = $version->starts_at ? date('m/d/y H:i:s', strtotime($version->starts_at)) : date('m/d/y H:i:s', strtotime('now'));
+                    $endTime = $version->ends_at ? date('m/d/y H:i:s', strtotime($version->ends_at)) : '';
+                @endphp
+
+                {{ Form::text('starts_at', $startTime, array('class' => 'dvs-date start', 'placeholder' => 'Starts At')) }}
+                {{ Form::text('ends_at', $endTime, array('class' => 'dvs-date end', 'placeholder' => 'Ends At')) }}
 
                 <label for="never">
                     {{ Form::checkbox('never') }} Never Ends

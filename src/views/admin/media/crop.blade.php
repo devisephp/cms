@@ -25,7 +25,7 @@
                 {{ Form::label('Height') }}
                 <input type="number" name="cropper[height]" value="{{ array_get($input, 'height', 270) }}">
 
-                {{ Form::submit('Crop', array('class' => 'dvs-button'))}}
+                {{ Form::submit('Crop', array('class' => 'dvs-button dvs-button-small'))}}
             {{ Form::close() }}
         </div>
 

@@ -1,25 +1,32 @@
 <?php namespace Devise\Pages;
 
-use PageVersion, DateTime, Hash, Exception, Field, CollectionInstance;
-use Devise\User\Helpers\UserHelper;
-use Devise\Pages\Repositories\PagesRepository;
+use DateTime;
+use Devise\Users\UserHelper;
 
+/**
+ * Class PageVersionManager manages all things page versions related.
+ *
+ * @package Devise\Pages
+ */
 class PageVersionManager
 {
     /**
      * Construction
      * depends on PageVersin model and UserHelper to get current user id
      *
-     * @param PageVersion $PageVersion
-     * @param UserHelper  $UserHelper
+     * @param UserHelper $UserHelper
+     * @param \DvsPageVersion $PageVersion
+     * @param \DvsField $Field
+     * @param \DvsCollectionInstance $CollectionInstance
      */
-    public function __construct(PagesRepository $PagesRepository, PageVersion $PageVersion, UserHelper $UserHelper, Field $Field, CollectionInstance $CollectionInstance)
+    public function __construct(UserHelper $UserHelper, \DvsPageVersion $PageVersion, \DvsField $Field, \DvsCollectionInstance $CollectionInstance, PagesRepository $PagesRepository)
     {
         $this->CollectionInstance = $CollectionInstance;
         $this->Field = $Field;
         $this->PagesRepository = $PagesRepository;
         $this->PageVersion = $PageVersion;
         $this->UserHelper = $UserHelper;
+        $this->Hash = \Hash::getFacadeRoot();
     }
 
     /**
@@ -28,10 +35,6 @@ class PageVersionManager
      * @param  int $pageId
      * @param  string $name
      * @param  int $createdByUserId
-     *
-     * @internal param DateTime $startAt
-     * @internal param DateTime $endAt
-     * @internal param string $stage
      * @return PageVersion
      */
     public function createNewPageVersion($pageId, $name, $createdByUserId)
@@ -57,6 +60,14 @@ class PageVersionManager
         return $this->createNewPageVersion($page->id, 'Default', $this->UserHelper->currentUserId());
     }
 
+    /**
+     * Copies a page version to another page this is useful
+     * when creating different languages of the same page
+     *
+     * @param $fromVersion
+     * @param $toPage
+     * @return PageVersion
+     */
     public function copyPageVersionToAnotherPage($fromVersion, $toPage) {
         // create a new page version
         $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $this->UserHelper->currentUserId());
@@ -73,9 +84,6 @@ class PageVersionManager
      *
      * @param $pageVersionId
      * @param $name
-     *
-     * @internal param name $string
-     * @internal param PageVersion $pageVersion
      * @return PageVersion
      */
     public function copyPageVersion($pageVersionId, $name)
@@ -119,11 +127,12 @@ class PageVersionManager
     }
 
     /**
-     * [convertToDatabaseTimestamp description]
-     * @param  [type] $timestamp [description]
-     * @param  string $from      [description]
-     * @param  string $to        [description]
-     * @return [type]            [description]
+     * Changes the timestamp from human readable to database specific
+     *
+     * @param  string $timestamp
+     * @param  string $from
+     * @param  string $to
+     * @return string
      */
     protected function convertToDatabaseTimestamp($timestamp, $from = 'm/d/y H:i:s', $to = 'Y-m-d H:i:s')
     {
@@ -135,10 +144,11 @@ class PageVersionManager
     }
 
     /**
-     * [copyFieldsFromVersionToVersion description]
-     * @param  [type] $oldVersion [description]
-     * @param  [type] $newVersion [description]
-     * @return [type]             [description]
+     * Copies all the fields from one page version into another page version
+     *
+     * @param $oldVersion
+     * @param $newVersion
+     * @return void
      */
     protected function copyFieldsFromVersionToVersion($oldVersion, $newVersion)
     {
@@ -156,10 +166,11 @@ class PageVersionManager
     }
 
     /**
-     * [copyCollectionsFromVersionToVersion description]
-     * @param  [type] $oldVersion [description]
-     * @param  [type] $newVersion [description]
-     * @return [type]             [description]
+     * Copy all the collections from one page version into another
+     *
+     * @param $oldVersion
+     * @param $newVersion
+     * @return void
      */
     protected function copyCollectionsFromVersionToVersion($oldVersion, $newVersion)
     {
@@ -190,6 +201,7 @@ class PageVersionManager
      * Destroys a page version record
      *
      * @param $pageVersionId
+     * @throws \Devise\Support\DeviseException
      * @return mixed
      */
     public function destroyPageVersion($pageVersionId)
@@ -201,8 +213,9 @@ class PageVersionManager
         $liveVersionId = $this->PagesRepository->getLivePageVersion($page)->id;
 
         // throw exception if attempt to delete live page version
-        if($liveVersionId == $pageVersion['id']) {
-            throw new Exception('Cannot delete live page version');
+        if ($liveVersionId == $pageVersion['id'])
+        {
+            throw new \Devise\Support\DeviseException('Cannot delete live page version');
         }
 
         return $pageVersion->delete();
@@ -219,7 +232,7 @@ class PageVersionManager
     {
         $pageVersion = $this->PageVersion->findOrFail($pageVersionId);
 
-        $previewHashValue = is_null($pageVersion->preview_hash) ? urlencode(Hash::make($pageVersion->id)) : null;
+        $previewHashValue = is_null($pageVersion->preview_hash) ? urlencode($this->Hash->make($pageVersion->id)) : null;
 
         return $pageVersion->update(array('preview_hash' => $previewHashValue));
     }

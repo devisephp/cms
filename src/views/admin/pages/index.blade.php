@@ -17,7 +17,7 @@
 			<tr>
 				<th class="dvs-tal">
                     <div class="dvs-inline-block dvs-tal">
-                        {{ Sort::filter('slug', "#pages, tfoot", ['placeholder' => 'Filter by Slug', 'class' => 'filter-by-slug']) }}
+                        {{ Sort::filter('slug', "#pages, #pagination-links", ['placeholder' => 'Filter by Slug', 'class' => 'filter-by-slug']) }}
                     </div>
                     <div class="dvs-inline-block dvs-button-group dvs-sort-group dvs-pr">
                         {{ Sort::link('slug','Path', array('class' => 'dvs-button dvs-button-small dvs-button-outset')) }}
@@ -62,7 +62,7 @@
 		</tbody>
 
         <tfoot>
-            <tr>
+            <tr id="pagination-links">
                 <td colspan="4">{{ $pages->appends(Input::except(['page']))->links(); }}</td>
             </tr>
         </tfoot>

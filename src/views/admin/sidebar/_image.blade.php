@@ -17,7 +17,7 @@
         <div class="dvs-sidebar-button-grid dvs-property">
             <button type="button" data-target="image" class="browse dvs-button">Select or Upload Image</button>
             <button type="button" class="js-when-has-image js-crop dvs-button dvs-button-secondary" data-target="image" {{ $loadDefaults ? 'disabled' : '' }}>Crop Image</button>
-            {{ Form::checkbox('has_thumbnail', true, $element->value->has_thumbnail) }}
+            {{ Form::checkbox('has_thumbnail', true, $element->value->has_thumbnail, ['id' => 'has_thumbnail']) }}
             <label class="dvs-button dvs-button-primary" for="has_thumbnail" style="display: inline;">Create Thumbnail?</label>
             <button type="button" class="js-when-has-thumbnail js-crop dvs-button dvs-button-secondary" data-target="thumbnail" data-image-width="100" data-image-height="100" {{ $element->value->has_thumbnail == true ? '' : 'disabled' }}>Crop Thumb</button>
         </div>
@@ -55,5 +55,7 @@
 {{ Form::close() }}
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/image']);
+    require(['devise/app/sidebar/image'], function(obj){
+        obj.init();
+    });
 </script>

@@ -2,6 +2,8 @@ define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], function (requ
 
     function init()
     {
+        CKEDITOR.basePath = '/packages/devise/cms/js/lib/ckeditor/';
+
         var _config = {
             filebrowserBrowseUrl: '/admin/media-manager?type=image',
             filebrowserImageWindowWidth: '1024',
@@ -9,7 +11,7 @@ define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], function (requ
             toolbar: [
                 [ 'Source' ],
                 [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo' ],
-                [ 'Image', 'Table', 'Link', 'Iframe' ],
+                [ 'Image', 'Table', 'Link', 'Iframe', 'HorizontalRule' ],
                 '/',
                 [ 'FontSize', 'Bold', 'Italic', 'Underline', 'Strike' ],
                 [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ]
@@ -19,7 +21,7 @@ define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], function (requ
         _config.extraPlugins = 'iframe,iframedialog,justify';
 
         var cke = $('textarea.dvs-wysiwyg').ckeditor(_config).editor;
-    
+
         document.onMediaManagerSelect = function(url, target, input){
             CKEDITOR.tools.callFunction(input.CKEditorFuncNum, url);
         };

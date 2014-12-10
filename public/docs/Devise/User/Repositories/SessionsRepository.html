@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\User\Repositories\SessionsRepository | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../traits.html">Traits</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Devise/User/Repositories.html">Devise\User\Repositories</a>\SessionsRepository</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>SessionsRepository</strong></p>
+
+    
+    
+            <h2>Properties</h2>
+
+            <table>
+                    <tr>
+                <td class="type" id="property_message">
+                                                            
+                </td>
+                <td>$message</td>
+                <td class="last">
+</td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_errors">
+                                                            
+                </td>
+                <td>$errors</td>
+                <td class="last">
+</td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a> $DvsUser, <a href="../../../Devise/User/Repositories/UsersRepository.html"><abbr title="Devise\User\Repositories\UsersRepository">UsersRepository</abbr></a> $UsersRepository)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\User\Repositories\User">User</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_login">login</a>(array $input)
+                    <p>Login user</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Boolean
+                </td>
+                <td class="last">
+                    <a href="#method_logout">logout</a>()
+                    <p>Log user out</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Boolean
+                </td>
+                <td class="last">
+                    <a href="#method_register">register</a>(array $input)
+                    <p>Register new user</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Void
+                </td>
+                <td class="last">
+                    <a href="#method_resendActivation">resendActivation</a>(array $input)
+                    <p>Resends activate email using submitted email address</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\User\Repositories\Response">Response</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_remind">remind</a>(array $input)
+                    <p>Handle a POST request for "remind password"</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\User\Repositories\Response">Response</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_reset">reset</a>(array $credentials)
+                    <p>Handle POST data from reset (change) password form</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\User\Repositories\False">False</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_activate">activate</a>(int $userId, string $activateCode)
+                    <p>Process user activation request</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Boolean
+                </td>
+                <td class="last">
+                    <a href="#method_removeUnactivatedUsers">removeUnactivatedUsers</a>($daysOutstanding = 30)
+                    <p>Removes users which have been awaiting activation (after registering).</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Boolean
+                </td>
+                <td class="last">
+                    <a href="#method_validateCredentials">validateCredentials</a>($credentials)
+                    <p>Validate user credentials (without logging user into system)</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Boolean
+                </td>
+                <td class="last">
+                    <a href="#method_getRememberMe">getRememberMe</a>($input)
+                    <p>Get "remember_me" field value</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 18</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a> $DvsUser, <a href="../../../Devise/User/Repositories/UsersRepository.html"><abbr title="Devise\User\Repositories\UsersRepository">UsersRepository</abbr></a> $UsersRepository)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a></td>
+                <td>$DvsUser</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Devise/User/Repositories/UsersRepository.html"><abbr title="Devise\User\Repositories\UsersRepository">UsersRepository</abbr></a></td>
+                <td>$UsersRepository</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_login">
+        <div class="location">at line 30</div>
+        <code>            public            <abbr title="Devise\User\Repositories\User">User</abbr>
+    <strong>login</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Login user</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\User\Repositories\User">User</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_logout">
+        <div class="location">at line 56</div>
+        <code>            public            Boolean
+    <strong>logout</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Log user out</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Boolean</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_register">
+        <div class="location">at line 70</div>
+        <code>            public            Boolean
+    <strong>register</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Register new user</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Boolean</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_resendActivation">
+        <div class="location">at line 91</div>
+        <code>            public            Void
+    <strong>resendActivation</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Resends activate email using submitted email address</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_remind">
+        <div class="location">at line 124</div>
+        <code>            public            <abbr title="Devise\User\Repositories\Response">Response</abbr>
+    <strong>remind</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Handle a POST request for "remind password"</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\User\Repositories\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_reset">
+        <div class="location">at line 146</div>
+        <code>            public            <abbr title="Devise\User\Repositories\Response">Response</abbr>
+    <strong>reset</strong>(array $credentials)</code>
+    </h3>
+    <div class="details">
+        <p>Handle POST data from reset (change) password form</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$credentials</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\User\Repositories\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_activate">
+        <div class="location">at line 181</div>
+        <code>            public            <abbr title="Devise\User\Repositories\False">False</abbr>
+    <strong>activate</strong>(int $userId, string $activateCode)</code>
+    </h3>
+    <div class="details">
+        <p>Process user activation request</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$userId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$activateCode</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\User\Repositories\False">False</abbr></td>
+            <td>| DeviseUser</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_removeUnactivatedUsers">
+        <div class="location">at line 205</div>
+        <code>            public            Boolean
+    <strong>removeUnactivatedUsers</strong>($daysOutstanding = 30)</code>
+    </h3>
+    <div class="details">
+        <p>Removes users which have been awaiting activation (after registering).</p>
+        <p>Currently, default is 30 days outstanding</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$daysOutstanding</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Boolean</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_validateCredentials">
+        <div class="location">at line 220</div>
+        <code>            public            Boolean
+    <strong>validateCredentials</strong>($credentials)</code>
+    </h3>
+    <div class="details">
+        <p>Validate user credentials (without logging user into system)</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$credentials</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Boolean</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getRememberMe">
+        <div class="location">at line 230</div>
+        <code>            public            Boolean
+    <strong>getRememberMe</strong>($input)</code>
+    </h3>
+    <div class="details">
+        <p>Get "remember_me" field value</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Boolean</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

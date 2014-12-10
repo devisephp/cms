@@ -102,7 +102,8 @@ HTML::macro('showLanguagesForPages', function($languages, $showLinkAsIcon =  fal
 
     foreach ($languages as $language)
     {
-        if(!$showLinkAsIcon) {
+        if (!$showLinkAsIcon)
+        {
             $html .= $html ? ', ' : $html;
             $html .= "<a href=\"{$language['url']}\">{$language['human_name']}</a>";
         } else {

@@ -31,20 +31,6 @@
   line-height:40px;
   text-transform: uppercase;
   z-index: 100010;
-
-}
-
-/* keyframes for edit-node animations */
-@include keyframes(pulsate) {
-  0% {
-    @include transform(scale(1));
-  }
-  50% {
-    @include transform(scale(1.02));
-  }
-  100% {
-    @include transform(scale(1));
-  }
 }
 
 .dvs-node-mode {
@@ -117,9 +103,6 @@
       width: auto;
       color:#222;
       overflow: hidden;
-      @include animation(1900ms pulsate infinite ease-in-out);
-
-
 
       .dvs-node-inner-wrapper {
         position: absolute;

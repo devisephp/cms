@@ -1,12 +1,14 @@
 <?php
 
-class DevisePagesSeeder extends Seeder {
-
+class DevisePagesSeeder extends Seeder
+{
 	/**
      *
      */
-    public function run() {
+    public function run()
+    {
 		DB::table( 'dvs_pages' )->delete();
+        DB::table( 'dvs_page_versions' )->delete();
 
 		$pages = array(
             array(
@@ -47,7 +49,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/pages',
                 'short_description'       => 'Stores the creation of a new page',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestCreateNewPage',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestCreateNewPage',
                 'response_params'         => 'input'
             ),
             array(
@@ -75,7 +77,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/pages/{pageId}',
                 'short_description'       => 'Updates the page record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestUpdatePage',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestUpdatePage',
                 'response_params'         => 'params.pageId, input'
             ),
             array(
@@ -90,7 +92,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/pages/{pageId}',
                 'short_description'       => 'Destroys a page record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestDestroyPage',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestDestroyPage',
                 'response_params'         => 'params.pageId'
             ),
             array(
@@ -118,7 +120,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/pages/{pageId}/copy',
                 'short_description'       => 'Creates copy record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestCopyPage',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestCopyPage',
                 'response_params'         => 'params.pageId, input'
             ),
 			array(
@@ -133,24 +135,9 @@ class DevisePagesSeeder extends Seeder {
 				'slug'                    => '/admin/partials/sidebar',
 				'short_description'       => 'Loads a partial for an AJAX load',
 				'response_type'           => 'Function',
-				'response_path'           => 'Devise\Editor\Response\ResponseHandler.requestPartial',
+				'response_path'           => 'Devise\Sidebar\ResponseHandler.requestSidebarPartial',
 				'response_params'         => 'input'
 			),
-            array(
-                'id'                      => '10',
-                'language_id'             => '45',
-                'title'                   => 'Partial Loader for Elements',
-                'http_verb'               => 'post',
-                'route_name'              => 'dvs-elements-partials',
-                'published'               => '1',
-                'is_admin'                => '1',
-                'dvs_admin'               => '1',
-                'slug'                    => '/admin/partials/element',
-                'short_description'       => 'Loads an element for an AJAX load',
-                'response_type'           => 'Function',
-                'response_path'           => 'Devise\Editor\Response\ResponseHandler.requestElementPartial',
-                'response_params'         => 'input'
-            ),
             array(
                 'id'                      => '20',
                 'language_id'             => '45',
@@ -290,7 +277,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/users',
                 'short_description'       => 'Stores the creation of a new user',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\User\Response\UsersResponseHandler.requestCreateUser',
+                'response_path'           => 'Devise\Users\UsersResponseHandler.requestCreateUser',
                 'response_params'         => 'input'
             ),
             array(
@@ -318,7 +305,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/users/{userId}',
                 'short_description'       => 'Updates the user record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\User\Response\UsersResponseHandler.requestUpdateUser',
+                'response_path'           => 'Devise\Users\UsersResponseHandler.requestUpdateUser',
                 'response_params'         => 'params.userId, input'
             ),
             array(
@@ -333,7 +320,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/users/{userId}',
                 'short_description'       => 'Destroys a user record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\User\Response\UsersResponseHandler.requestDestroyUser',
+                'response_path'           => 'Devise\Users\UsersResponseHandler.requestDestroyUser',
                 'response_params'         => 'params.userId'
             ),
             array(
@@ -374,7 +361,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/groups',
                 'short_description'       => 'Stores the creation of a new group',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\User\Response\GroupsResponseHandler.requestCreateGroup',
+                'response_path'           => 'Devise\Users\Groups\GroupsResponseHandler.requestCreateGroup',
                 'response_params'         => 'input'
             ),
             array(
@@ -402,7 +389,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/groups/{groupId}',
                 'short_description'       => 'Updates the group record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\User\Response\GroupsResponseHandler.requestUpdateGroup',
+                'response_path'           => 'Devise\Users\Groups\GroupsResponseHandler.requestUpdateGroup',
                 'response_params'         => 'params.groupId, input'
             ),
             array(
@@ -417,7 +404,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/groups/{groupId}',
                 'short_description'       => 'Destroys a group record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\User\Response\GroupsResponseHandler.requestDestroyGroup',
+                'response_path'           => 'Devise\Users\Groups\GroupsResponseHandler.requestDestroyGroup',
                 'response_params'         => 'params.groupId'
             ),
             array(
@@ -445,7 +432,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/languages/{languageId}/patch',
                 'short_description'       => 'Destroys a group record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Languages\Response\LanguagesResponseHandler.requestPatchLanguage',
+                'response_path'           => 'Devise\Languages\LanguagesResponseHandler.requestPatchLanguage',
                 'response_params'         => 'params.languageId,input'
             ),
             array(
@@ -473,7 +460,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/menus',
                 'short_description'       => 'Create a new menu to edit',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Menus\Response\MenusResponseHandler.requestStore',
+                'response_path'           => 'Devise\Menus\MenusResponseHandler.requestStore',
                 'response_params'         => 'input'
             ),
             array(
@@ -501,7 +488,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/menus/{menuId}',
                 'short_description'       => 'Edit existing menu',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Menus\Response\MenusResponseHandler.requestUpdate',
+                'response_path'           => 'Devise\Menus\MenusResponseHandler.requestUpdate',
                 'response_params'         => 'params.menuId,input'
             ),
             array(
@@ -516,7 +503,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/fields/{fieldId}',
                 'short_description'       => 'Update a field via ajax call',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Fields\Response\FieldsResponseHandler.requestUpdate',
+                'response_path'           => 'Devise\Pages\Fields\FieldsResponseHandler.requestUpdate',
                 'response_params'         => 'params.fieldId,input'
             ),
             array(
@@ -544,7 +531,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/media-manager/upload',
                 'short_description'       => 'Update a field via ajax call',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\MediaManager\Files\ResponseHandler.requestUpload',
+                'response_path'           => 'Devise\Media\Files\ResponseHandler.requestUpload',
                 'response_params'         => 'input'
             ),
             array(
@@ -572,7 +559,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/media-manager/crop',
                 'short_description'       => 'Crop and save new image',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\MediaManager\Images\ResponseHandler.requestCrop',
+                'response_path'           => 'Devise\Media\Images\ResponseHandler.requestCrop',
                 'response_params'         => 'input'
             ),
             array(
@@ -587,7 +574,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/media-manager/category/store',
                 'short_description'       => 'Create New Category',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\MediaManager\Categories\ResponseHandler.requestStore',
+                'response_path'           => 'Devise\Media\Categories\ResponseHandler.requestStore',
                 'response_params'         => 'input'
             ),
             array(
@@ -602,7 +589,7 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/media-manager/category/destroy',
                 'short_description'       => 'Deletes a category',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\MediaManager\Categories\ResponseHandler.requestDestroy',
+                'response_path'           => 'Devise\Media\Categories\ResponseHandler.requestDestroy',
                 'response_params'         => 'input'
             ),
 			array(
@@ -617,7 +604,7 @@ class DevisePagesSeeder extends Seeder {
 				'slug'                    => '/admin/collections/{collectionSetId}/instances/store',
 				'short_description'       => 'Adds a new collection instance',
 				'response_type'           => 'Function',
-				'response_path'           => 'Devise\Collections\Response\ResponseHandler.requestStoreInstance',
+				'response_path'           => 'Devise\Pages\Collections\ResponseHandler.requestStoreInstance',
 				'response_params'         => 'params.collectionSetId,input'
 			),
 			array(
@@ -632,7 +619,7 @@ class DevisePagesSeeder extends Seeder {
 				'slug'                    => '/admin/collections/{collectionSetId}/instances',
 				'short_description'       => 'Gets a json index of instances',
 				'response_type'           => 'Function',
-				'response_path'           => 'Devise\Collections\Repositories\CollectionsRepository.getInstances',
+				'response_path'           => 'Devise\Pages\Collections\CollectionsRepository.getInstances',
 				'response_params'         => 'params.collectionSetId'
 			),
 			array(
@@ -647,7 +634,7 @@ class DevisePagesSeeder extends Seeder {
 				'slug'                    => '/admin/collections/{collectionSetId}/instances/update-sort-orders',
 				'short_description'       => 'Updates the sort order of a collection',
 				'response_type'           => 'Function',
-				'response_path'           => 'Devise\Collections\Response\ResponseHandler.updateSortOrder',
+				'response_path'           => 'Devise\Pages\Collections\ResponseHandler.updateSortOrder',
 				'response_params'         => 'params.collectionSetId,input'
 			),
 			array(
@@ -662,10 +649,11 @@ class DevisePagesSeeder extends Seeder {
 				'slug'                    => '/admin/collections/{collectionSetId}/instances/{collectionInstanceId}/update-name',
 				'short_description'       => 'Updates the name of an instance',
 				'response_type'           => 'Function',
-				'response_path'           => 'Devise\Collections\Response\ResponseHandler.renameInstance',
+				'response_path'           => 'Devise\Pages\Collections\ResponseHandler.renameInstance',
 				'response_params'         => 'params.collectionInstanceId,input'
 			),
             array(
+                'id'                      => '74',
                 'language_id'             => '45',
                 'translated_from_page_id' => '0',
                 'view'                    => null,
@@ -678,10 +666,11 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/page-versions/{pageVersionId}',
                 'short_description'       => 'Destroys a page version record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestDestroyPageVersion',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestDestroyPageVersion',
                 'response_params'         => 'params.pageVersionId'
             ),
             array(
+                'id'                      => '75',
                 'language_id'             => '45',
                 'translated_from_page_id' => '0',
                 'view'                    => null,
@@ -694,10 +683,11 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/page-versions/{pageVersionId}/dates',
                 'short_description'       => 'Updates the starts_at and ends_at dates for a page version',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestUpdatePageVersionDates',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestUpdatePageVersionDates',
                 'response_params'         => 'params.pageVersionId,input'
             ),
             array(
+                'id'                      => '76',
                 'language_id'             => '45',
                 'translated_from_page_id' => '0',
                 'view'                    => 'devise::admin.pages.page-versions._card',
@@ -713,6 +703,7 @@ class DevisePagesSeeder extends Seeder {
                 'response_params'         => 'params.pageId'
             ),
             array(
+                'id'                      => '77',
                 'language_id'             => '45',
                 'translated_from_page_id' => '0',
                 'view'                    => null,
@@ -725,15 +716,23 @@ class DevisePagesSeeder extends Seeder {
                 'slug'                    => '/admin/page-versions/{pageVersionId}/toggle-share',
                 'short_description'       => 'Allows admin users to turn on/off the hashed preview url for a page version',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestTogglePageVersionShare',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestTogglePageVersionShare',
                 'response_params'         => 'params.pageVersionId'
             ),
 		);
 
-		foreach ( $pages as $page ) {
+		foreach ( $pages as $page )
+        {
             $page['created_at'] = date('Y-m-d H:i:s', strtotime('now'));
             $page['updated_at'] = date('Y-m-d H:i:s', strtotime('now'));
 			DB::table( 'dvs_pages' )->insert( array( $page ) );
+            DB::table( 'dvs_page_versions' )->insert(
+            [
+                'id' => $page['id'],
+                'page_id' => $page['id'],
+                'created_by_user_id' => 1,
+                'name' => 'Default',
+            ]);
 		}
 	}
 

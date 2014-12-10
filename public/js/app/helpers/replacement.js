@@ -29,6 +29,9 @@ define(['jquery'], function($)
                 var html = page.find(selector).html();
                 $(selector).empty().append(html);
             }
+
+            //@TODO Need to assign table row classes
+            //deviseAdmin.assignTableRowClasses();
         }
 
         function onError()

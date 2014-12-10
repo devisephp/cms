@@ -57,11 +57,11 @@ html, body {
   height:100%;
 }
 
-.dvs-margin {
-  float:left;
-  margin:10px;
+:focus {
+  outline:none;
 }
 
-.dvs-clearfix {
-  @include clearfix();
+table {
+  th a,
+  td a { text-decoration:none }
 }

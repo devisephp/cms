@@ -1,8 +1,5 @@
 <?php namespace Devise\Pages\Interrupter;
 
-use Devise\Pages\Interrupter\Exceptions\InvalidDeviseTagException;
-use Devise\Pages\Interrupter\Exceptions\InvalidDeviseKeyException;
-
 /**
  *  convert this node data into useful key, type, humanName, group, collection, alternateTarget?
  *  assert key is valid for collection or binding both
@@ -90,7 +87,7 @@ class DeviseTag
 	 * data-dvs-key-id="key"
 	 *
 	 * @param  string $view
-	 * @return $view
+	 * @return string
 	 */
 	public function replaceTagInView($view)
 	{
@@ -106,13 +103,14 @@ class DeviseTag
 	}
 
 
-	/**
-	 * Assert this key is valid
-	 *
-	 * @param  string $key
-	 * @param  string $message
-	 * @return void
-	 */
+    /**
+     * Assert this key is valid
+     *
+     * @param  string $key
+     * @param  string $message
+     * @throws Exceptions\InvalidDeviseKeyException
+     * @return void
+     */
 	public function assertValidKey($key, $message = null)
 	{
 		$message = $message ?: "Invalid key provided " . $key;
@@ -133,7 +131,7 @@ class DeviseTag
 		}
 
 		// we made it here so we have an invalid key
-		throw new InvalidDeviseKeyException($message);
+		throw new Exceptions\InvalidDeviseKeyException($message);
 	}
 
 	/**
@@ -193,31 +191,34 @@ class DeviseTag
 		return array($collection, $key);
 	}
 
-	/**
-	 * Assert that the parameters for this node
-	 * are valid
-	 *
-	 * @param  array $params
-	 * @return void
-	 */
+    /**
+     * Assert that the parameters for this node
+     * are valid
+     *
+     * @param  array $params
+     * @throws Exceptions\InvalidDeviseKeyException
+     * @throws Exceptions\InvalidDeviseTagException
+     * @return void
+     */
 	protected function assertParametersValid($params)
 	{
 		if (count($params) < 2)
 		{
-			throw new InvalidDeviseTagException('No key and type parameters found for match:' . $this->node->matched);
+			throw new Exceptions\InvalidDeviseTagException('No key and type parameters found for match:' . $this->node->matched);
 		}
 
 		$this->assertValidKey($params[0], "Invalid key '{$params[0]}' found at match:" . $this->node->matched);
 	}
 
-	/**
-	 * Convert this node into some csv string
-	 * that we can break apart and get the
-	 * parts from: key, type, humanName, etc...
-	 *
-	 * @param  Node $node
-	 * @return string
-	 */
+    /**
+     * Convert this node into some csv string
+     * that we can break apart and get the
+     * parts from: key, type, humanName, etc...
+     *
+     * @param  Node $node
+     * @throws Exceptions\InvalidDeviseTagException
+     * @return string
+     */
 	protected function convertToParametersString($node)
 	{
 		$matched = $node->matched;
@@ -229,7 +230,7 @@ class DeviseTag
 
 		if ($offset === false)
 		{
-			throw new InvalidDeviseTagException('Could not find data-devise in this node:' . $matched);
+			throw new Exceptions\InvalidDeviseTagException('Could not find data-devise in this node:' . $matched);
 		}
 
 		return substr($matched, $offset + $size, $end);

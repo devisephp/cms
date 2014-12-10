@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\User\Repositories\UsersRepository | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../traits.html">Traits</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Devise/User/Repositories.html">Devise\User\Repositories</a>\UsersRepository</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>UsersRepository</strong></p>
+
+    
+    
+            <h2>Properties</h2>
+
+            <table>
+                    <tr>
+                <td class="type" id="property_message">
+                                                            
+                </td>
+                <td>$message</td>
+                <td class="last">
+</td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_errors">
+                                                            
+                </td>
+                <td>$errors</td>
+                <td class="last">
+</td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a> $User)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_retrieveCurrentUser">retrieveCurrentUser</a>()
+                    <p>Retrieve currently logged-in user object</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Integer
+                </td>
+                <td class="last">
+                    <a href="#method_retrieveCurrentUserId">retrieveCurrentUserId</a>()
+                    <p>Retrieve current user's id</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\User\Repositories\Eloquent\Collection">Collection</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_retrievePaginated">retrievePaginated</a>()
+                    <p>Search for users</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\User\Repositories\DeviseUser">DeviseUser</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_findById">findById</a>(int $id)
+                    <p>Find user by id</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\User\Repositories\DeviseUser">DeviseUser</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_findByEmail">findByEmail</a>(string $email)
+                    <p>Find user by email address</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\User\Repositories\Eloquent\Collection">Collection</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_users">users</a>()
+                    <p>Paginated list of users</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Boolean
+                </td>
+                <td class="last">
+                    <a href="#method_activate">activate</a>(object $user)
+                    <p>Activate user</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    String
+                </td>
+                <td class="last">
+                    <a href="#method_generateActivateCode">generateActivateCode</a>(object $user, integer $length = 42)
+                    <p>Generate a random "activate_code" string</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 12</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a> $User)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a></td>
+                <td>$User</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_retrieveCurrentUser">
+        <div class="location">at line 22</div>
+        <code>            public            <a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a>
+    <strong>retrieveCurrentUser</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Retrieve currently logged-in user object</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../DvsUser.html"><abbr title="DvsUser">DvsUser</abbr></a></td>
+            <td>| null</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_retrieveCurrentUserId">
+        <div class="location">at line 32</div>
+        <code>            public            Integer
+    <strong>retrieveCurrentUserId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Retrieve current user's id</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Integer</td>
+            <td>| null</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_retrievePaginated">
+        <div class="location">at line 44</div>
+        <code>            public            <abbr title="Devise\User\Repositories\Eloquent\Collection">Collection</abbr>
+    <strong>retrievePaginated</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Search for users</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\User\Repositories\Eloquent\Collection">Collection</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_findById">
+        <div class="location">at line 55</div>
+        <code>            public            <abbr title="Devise\User\Repositories\DeviseUser">DeviseUser</abbr>
+    <strong>findById</strong>(int $id)</code>
+    </h3>
+    <div class="details">
+        <p>Find user by id</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$id</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\User\Repositories\DeviseUser">DeviseUser</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_findByEmail">
+        <div class="location">at line 66</div>
+        <code>            public            <abbr title="Devise\User\Repositories\DeviseUser">DeviseUser</abbr>
+    <strong>findByEmail</strong>(string $email)</code>
+    </h3>
+    <div class="details">
+        <p>Find user by email address</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$email</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\User\Repositories\DeviseUser">DeviseUser</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_users">
+        <div class="location">at line 76</div>
+        <code>            public            <abbr title="Devise\User\Repositories\Eloquent\Collection">Collection</abbr>
+    <strong>users</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Paginated list of users</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\User\Repositories\Eloquent\Collection">Collection</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_activate">
+        <div class="location">at line 87</div>
+        <code>            public            Boolean
+    <strong>activate</strong>(object $user)</code>
+    </h3>
+    <div class="details">
+        <p>Activate user</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>object</td>
+                <td>$user</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Boolean</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_generateActivateCode">
+        <div class="location">at line 102</div>
+        <code>            public            String
+    <strong>generateActivateCode</strong>(object $user, integer $length = 42)</code>
+    </h3>
+    <div class="details">
+        <p>Generate a random "activate_code" string</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>object</td>
+                <td>$user</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>integer</td>
+                <td>$length</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>String</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

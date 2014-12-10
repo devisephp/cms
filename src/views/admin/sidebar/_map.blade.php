@@ -42,5 +42,8 @@
 {{ form::close() }}
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/map']);
+    require(['devise/app/sidebar/map'], function(obj)
+    {
+        obj.init();
+    });
 </script>

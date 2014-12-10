@@ -1,10 +1,4 @@
 {
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git://github.com/orchestral/phpseclib.git"
-        }
-    ],
     "name": "devisephp/cms",
     "description": "Content Management System riding on top of the Laravel Framework",
     "authors": [
@@ -21,23 +15,17 @@
         "ext-imagick": "*"
     },
     "require-dev": {
+        "laravel/framework": "*",
         "mockery/mockery": "dev-master",
         "phpunit/phpunit": "*",
-        "sami/sami": "*"
+        "sami/sami": "*",
+        "mikey179/vfsStream": "*"
     },
     "autoload": {
         "classmap": [
-            "src/Devise/Pages/Controllers",
-            "src/Devise/User/Controllers",
-            "src/Devise/Models/Controllers",
-            "src/Devise/User/Models",
-            "src/Devise/Collections/Models",
-            "src/Devise/Pages/Models",
-            "src/Devise/Models/Models",
-            "src/Devise/Fields/Models",
-            "src/Devise/Languages/Models",
-            "src/Devise/Menus/Models",
+            "src/models",
             "src/seeds",
+            "src/migrations",
             "tests/DeviseTestCase.php"
         ],
         "psr-0": {

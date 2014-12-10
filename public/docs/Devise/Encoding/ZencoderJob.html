@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\Encoding\ZencoderJob | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../traits.html">Traits</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../Devise/Encoding.html">Devise\Encoding</a>\ZencoderJob</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>ZencoderJob</strong></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>($apiKey, $notifications, <a href="../../Devise/Common/FileDownloader.html"><abbr title="Devise\Common\FileDownloader">FileDownloader</abbr></a> $FileDownloader)
+                    <p>Create a new ZencoderJob</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Encoding\Job">Job</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_create">create</a>(string $filePath, array $settings)
+                    <p>Create a new job with this file path and settings</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_handle">handle</a>($output, $storagePath)
+                    <p>Fire events when you see this job has been called back</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 21</div>
+        <code>            public            
+    <strong>__construct</strong>($apiKey, $notifications, <a href="../../Devise/Common/FileDownloader.html"><abbr title="Devise\Common\FileDownloader">FileDownloader</abbr></a> $FileDownloader)</code>
+    </h3>
+    <div class="details">
+        <p>Create a new ZencoderJob</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$apiKey</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$notifications</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><a href="../../Devise/Common/FileDownloader.html"><abbr title="Devise\Common\FileDownloader">FileDownloader</abbr></a></td>
+                <td>$FileDownloader</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_create">
+        <div class="location">at line 40</div>
+        <code>            public            <abbr title="Devise\Encoding\Job">Job</abbr>
+    <strong>create</strong>(string $filePath, array $settings)</code>
+    </h3>
+    <div class="details">
+        <p>Create a new job with this file path and settings</p>
+        <p>For an idea of different output settings see api docs at
+https://app.zencoder.com/docs/api/encoding</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$filePath</td>
+                <td>path to the video file you want to encode</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$settings</td>
+                <td>custom settings</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Encoding\Job">Job</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Services_Zencoder_Exception">Services_Zencoder_Exception</abbr></td>
+                <td>use $e->getErrors()</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_handle">
+        <div class="location">at line 62</div>
+        <code>            public            void
+    <strong>handle</strong>($output, $storagePath)</code>
+    </h3>
+    <div class="details">
+        <p>Fire events when you see this job has been called back</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$output</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$storagePath</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

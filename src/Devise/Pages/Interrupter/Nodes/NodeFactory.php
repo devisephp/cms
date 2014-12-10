@@ -1,8 +1,19 @@
 <?php namespace Devise\Pages\Interrupter\Nodes;
 
+/**
+ * Class NodeFactory creates new nodes given
+ * matches
+ *
+ * @package Devise\Pages\Interrupter\Nodes
+ */
 class NodeFactory
 {
-	public function createNodeFromRegexMatch($match)
+    /**
+     * @param array $match
+     * @throws UnidentifiedNodeException
+     * @return Node
+     */
+    public function createNodeFromRegexMatch($match)
 	{
 		$matched = $match[0];
 		$position = $match[1];

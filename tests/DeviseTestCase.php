@@ -2,8 +2,25 @@
 
 require_once __DIR__ . '/../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';
 
+//'Config'        'Illuminate\Config\Repository'
+//'Validator'     'Illuminate\Validation\Factory'
+//'Container'     'Illuminate\Container\Container'
+//'Request'       'Illuminate\Http\Request'
+//'Response'      'Illuminate\Support\Facades\Response'
+//'Input'         'Illuminate\Http\Request'
+//'Auth':         'Illuminate\Auth\UserInterface'
+//'Event'         'Illuminate\Events\Dispatcher'
+
 class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 {
+	/**
+	 * Setup the application and migrations once
+	 * not every time we run a new class
+	 *
+	 * @var boolean
+	 */
+	static protected $setup = false;
+
 	/**
 	 * Store the application
 	 *
@@ -23,17 +40,26 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 	 */
 	static public function setUpBeforeClass()
 	{
+        ini_set('memory_limit', '-1');
+
 		$unitTesting = true;
 
 		$testEnvironment = 'testing';
 
-		static::$application = require __DIR__.'/bootstrap/bootstrap/start.php';
+		if (!static::$setup)
+		{
+			static::$application = require __DIR__.'/bootstrap/bootstrap/start.php';
 
-		static::setUpFixtures();
+			static::setUpFixtures();
 
-		// Artisan::call('migrate');
-		// Artisan::call('db:seed', ['--class' => 'fixtures\seeder']);
-		// Mail::pretend(true);
+			Artisan::call('migrate', array('--path' => '../../src/migrations'));
+
+			Artisan::call('db:seed', array('--class' => 'DeviseSeeder'));
+
+			static::$setup = true;
+
+			Mail::pretend(true);
+		}
 
 		return static::$application;
 	}
@@ -72,7 +98,17 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 			}
 			else if ($node->isFile())
 			{
-				$data[$filename] = $fullext == 'php' ? include($fullpath) : file_get_contents($fullpath);
+                switch ($fullext)
+                {
+                    case 'php':
+                        $data[$filename] = include($fullpath);
+                        break;
+                    case 'blade.php':
+                        $data[$filename] = file_get_contents($fullpath);
+                        break;
+                    default:
+                        $data[$filename] = $fullpath;
+                }
 			}
 		}
 
@@ -86,7 +122,17 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 	 */
 	public function tearDown()
 	{
-		// DB::rollback();
+		// bug in laravel if we try to rollback
+		// when there was no database actions
+		// then we will end up with negative
+		// transactionLevel so we need to double
+		// check this before we try to rollback
+		if (DB::transactionLevel() > 0)
+		{
+			DB::rollback();
+		}
+
+		\Mockery::close();
 	}
 
 	/**
@@ -97,6 +143,8 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 	 */
 	public function resetApplication()
 	{
+		static::$setup = false;
+
 		return static::setUpBeforeClass();
 	}
 
@@ -107,7 +155,7 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 	 */
 	public function createApplication()
 	{
-		// DB::beginTransaction();
+		DB::beginTransaction();
 
 		return static::$application;
 	}

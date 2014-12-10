@@ -11,15 +11,16 @@ define(['require', 'jquery', 'spectrum', 'dvsLiveUpdate'], function (require, $,
                 var _picker = colorInput.spectrum({
                     preferredFormat: "hex",
                     flat: true,
+                    allowEmpty: true,
+                    showButtons: false,
+                    clickoutFiresChange: true,
                     move: function(color) {
-                        var _hexColor = color.toHexString();
+                        var _hexColor = (color !== null) ? color.toHexString() : '';
                         colorInput.val(_hexColor);
                         colorInput.trigger('input');
                     }
                 });
             });
-
-
         }
     };
 

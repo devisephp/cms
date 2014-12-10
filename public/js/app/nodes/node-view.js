@@ -338,7 +338,6 @@ define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPageData) 
                     collisions++;
                 }
             }
-
         });
 
         return collisions;

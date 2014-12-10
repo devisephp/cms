@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'sqlite',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -48,7 +48,13 @@ return array(
 
 		'sqlite' => array(
 			'driver'   => 'sqlite',
-			'database' => __DIR__.'/../database/production.sqlite',
+			'database' => ':memory:',
+			'prefix'   => '',
+		),
+
+		'troubleshoot' => array(
+			'driver'   => 'sqlite',
+			'database' => __DIR__.'/../database/troubleshoot.sqlite',
 			'prefix'   => '',
 		),
 

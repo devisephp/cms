@@ -1,6 +1,5 @@
 <?php namespace Devise\Menus;
 
-
 class MenuCache
 {
 	public static $menus = array();

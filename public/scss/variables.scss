@@ -1,37 +1,112 @@
-/* Colors - Global */
+// Roboto Font
+@import url('http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400');
+
+// Colors - Global
 $white:   #ffffff;
-$black:   #000000;
+$black:   #262626;
 $gray:    #666666;
+$red:     #a33737;
+$purple:  #965b95;
+$green:   #7dbd5d;
 
-/* Colors - Application Specific */
-$base-color: #138ad2;
 
-$sidebar-bg: rgba($base-color, .95);
-$sidebar-text-color: #fff;
+// Fonts
+$sidebarMainFont:           'Roboto', Tahoma, Arial, sans-serif;
+$sidebarMainFontWeight:     400;
+$sidebarMainFontSize:       12px;
 
-$form-font-size: 12px;
-$form-color: darken($sidebar-bg, 10%);
-$form-background: lighten($sidebar-bg, 50%);
-$form-border: lighten($sidebar-bg, 50%);
-$form-drop-shadow-spread: 2px;
+$sidebarHeaderFontWeight:   300;
+$sidebarHeaderFontSize:     18px;
 
-// Fancy Select Styles
-$form-trigger-background: lighten($sidebar-bg, 50%);
-$form-trigger-border: lighten($sidebar-bg, 50%);
-$form-trigger-top-border-color: lighten($sidebar-bg, 50%);
-$form-trigger-carrot-color: darken($sidebar-bg, 30%);
-$form-trigger-color: darken($sidebar-bg, 30%);
+$bodyMainFont:              $sidebarMainFont;
+$bodyMainFontSize:          14px;
+$bodyMainFontWeight:        400;
 
-$form-trigger-list-background: saturate(darken(invert($sidebar-bg), 30%), 30%);
-$form-trigger-list-border: lighten(invert($sidebar-bg), 30%);
-$form-trigger-list-color: lighten(invert($sidebar-bg), 30%);
-$form-trigger-list-hover-color: lighten(invert($sidebar-bg), 100%);
-$form-trigger-selected-option-background:saturate(darken(invert($sidebar-bg), 20%), 30%);
-$form-trigger-selected-option-color: lighten(invert($sidebar-bg), 100%);
 
-$form-trigger-open-background:darken($sidebar-bg, 30%);
-$form-trigger-open-color:lighten($sidebar-bg, 30%);
-$form-trigger-open-border-color:#475062;
-$form-trigger-open-carrot-color:lighten($sidebar-bg, 30%);
+// Sidebar General
+$sidebarDistanceFromTop:   35px;
+$sidebarDistanceFromLeft:  35px;
+$sidebarWidth:             328px;
+$sidebarGeneralPadding:    20px;
+$sidebarRoundedCorners:    5px;
 
-$form-error-color: #AA3311;
+
+// Sidebar Colors
+$sidebarBgColor:                #262626;
+$sidebarTitleBgColor:           darken($sidebarBgColor, 20%);
+$sidebarTextColor:              #f5f5f5;
+$sidebarRuleColor:              #7dbd5d;
+$sidebarElementsButton:         #333333;
+$sidebarBreadcrumbLink:         $sidebarRuleColor;
+$sidebarBreadcrumbActive:       #6b6b6b;
+
+// Body General
+$bodyContainerWidth:   90%;
+
+// Body and Sidenav Colors
+$bodyBgColor:              #262424;
+$bodyCustomColor:          #7dbd5d;
+$bodyTitleColor:           #ffffff;
+$bodyTextColor:            #817878;
+$bodyActiveLinkColor:      darken($bodyCustomColor, 12%);
+
+$sidenavTitleColor:        #ffffff;
+$sidenavLinkColor:         #817878;
+$sidenavActiveLinkColor:   $bodyCustomColor;
+
+$dashboardCardTitleColor:    #787878;
+$dashboardCardTextColor:     lighten($dashboardCardTitleColor, 9.25%);
+$dashboardHexagonTextColor:  #e7e7e7;
+
+// Forms
+$formLabelColumnWidth:      20%;
+$formFieldColumnWidth:      80%;
+$formGutterWidth:           5%;
+$formErrorColor:            #834040;
+
+$sidebarFormBgColor :       #333333;
+$sidebarFormTextColor :     #e3e3e3;
+$sidebarSelectArrowColor:   $sidebarRuleColor;
+$sidebarFormPadding :       12px 6px;
+
+$bodyFormBgColor:           #e3e4e5;
+$bodyFormTextColor:         #ababab;
+$bodyFormInputBgColor:      #ffffff;
+
+
+// Tables
+$primaryTableBgColor:       #ebebeb;
+$secondaryTableBgColor:     #e3e4e5;
+$tableTextColor:            #ababab;
+
+
+// Breadcrumbs
+$sidebarCrumbsActiveColor:    $sidebarRuleColor;
+$sidebarCrumbsInactiveColor:  #6b6b6b;
+
+
+// Buttons / Links
+$buttonBorderRadius:        0;
+
+$primaryButtonBgColor:     $sidebarRuleColor;
+$primaryButtonTextColor:   #ffffff;
+
+$secondaryButtonBgColor:   #5dbabd;
+$secondaryButtonTextColor: #ffffff;
+
+$inactiveButtonBgColor:    #333333;
+$inactiveButtonTextColor:  #e3e3e3;
+
+$smallButtonPadding:       8px 10px;
+$regularButtonPadding:     12px 20px;
+$largeButtonPadding:       12px 30px;
+
+$sidebarSaveButtonBgColor:      $sidebarRuleColor;
+$sidebarSaveButtonTextColor:    $white;
+
+$sidebarDiscardButtonBgColor:   $sidebarElementsButton;
+$sidebarDiscardButtonTextColor: $white;
+
+$linkTextColor:            $primaryButtonBgColor;
+
+$bodyPaginationLinkColor:        darken($tableTextColor, 10%);

@@ -1,10 +1,11 @@
-define(['require', 'jquery'], function (require, $) {
+define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $, selectSurrogate) {
 
     var initialize = function()
     {
         addDeleteConfirmation();
         calculateVignette();
         addListeners();
+        selectSurrogate();
     };
 
     var addListeners = function() {
@@ -12,23 +13,26 @@ define(['require', 'jquery'], function (require, $) {
             calculateVignette();
         });
 
-        $('#lang-select').change(function(){
+        $('#lang-select').change(function(e){
 
-            var params = document.location.search.substr(1).split('&');
-            var found = false;
-            var newParam = 'language_id=' + $(this).val();
-            for(var index in params){
-                var keyVal = params[index].split('=');
-                if(keyVal[0] == 'language_id'){
-                    found = true;
-                    params[index] = newParam;
-                    break;
+            if (typeof e.isTrigger == "undefined")
+            {
+                var params = document.location.search.substr(1).split('&');
+                var found = false;
+                var newParam = 'language_id=' + $(this).val();
+                for (var index in params) {
+                    var keyVal = params[index].split('=');
+                    if (keyVal[0] == 'language_id') {
+                        found = true;
+                        params[index] = newParam;
+                        break;
+                    }
                 }
+                if (!found) {
+                    params.push(newParam);
+                }
+                document.location.search = params.join('&');
             }
-            if(!found){
-                params.push(newParam);
-            }
-            document.location.search = params.join('&');
         });
     };
 

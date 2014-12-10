@@ -1,6 +1,7 @@
 {
   "name": "package-devise",
   "version": "0.0.0",
+  "private": "true",
   "description": "awesomeness wrapped into a package",
   "main": "gulpfile.js",
   "directories": {
@@ -16,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.8.8",
+    "gulp": "*",
     "gulp-jasmine": "^1.0.1",
     "gulp-notify": "^1.7.1",
     "gulp-phpunit": "^0.6.3"

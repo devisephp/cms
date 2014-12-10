@@ -3,7 +3,7 @@
 
   &.ui-widget {
     font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-    background: rgba(darken(invert($sidebar-bg), 10%), 1);
+    background: rgba(darken(invert($sidebarBgColor), 10%), 1);
     border: none;
     border-radius: 0;
     -webkit-border-radius: 0;
@@ -69,7 +69,7 @@
     }
 
     td {
-      background: saturate(invert($sidebar-bg), 30%);
+      background: saturate(invert($sidebarBgColor), 30%);
       border: none;
       padding: 0;
     }
@@ -113,7 +113,7 @@
     opacity: 1;
 
     .ui-state-default {
-      color: lighten(saturate(invert($sidebar-bg), 30%), 10%);
+      color: lighten(saturate(invert($sidebarBgColor), 30%), 10%);
     }
   }
 }

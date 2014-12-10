@@ -1,7 +1,7 @@
 {{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-checkbox-group')) }}
 
-    @include('devise::admin.sidebar._collection_instance_id')        
-    
+    @include('devise::admin.sidebar._collection_instance_id')
+
     <div class="dvs-editor-values">
         <div class="dvs-checkboxes">
             @if($element->value->checkboxes)
@@ -74,5 +74,8 @@
 </div>
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/checkbox-group']);
+    require(['devise/app/sidebar/checkbox-group'], function(obj)
+    {
+        obj.init();
+    });
 </script>

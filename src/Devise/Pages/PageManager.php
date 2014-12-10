@@ -1,40 +1,99 @@
 <?php namespace Devise\Pages;
 
-use Page;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Factory as Validator;
+use Devise\Support\Framework;
 
 /**
- * Class PageManager
- * @package Devise\Pages
+ * Class PageManager manages the creating of new pages,
+ * updating pages and removing and copying pages.
  */
-class PageManager {
-
+class PageManager
+{
 	/**
+     * DvsPage model to fetch database dvs_pages
+     *
 	 * @var Page
 	 */
-	private $Page, $Validator, $PageVersionManager;
+	private $Page;
+
+    /**
+     * Validator is used to validate page rules
+     *
+     * @var Illuminate\Validation\Factory
+     */
+    private $Validator;
+
+    /**
+     * PageVersionManager lets us manage versions of a page
+     *
+     * @var PageVersionManager
+     */
+    private $PageVersionManager;
+
+    /**
+     * List of database fields/columns for a dvs_page
+     * we don't want to be vulnerable to mass assignment
+     * attack so we need to specify these...
+     *
+     * @var array
+     */
+    static protected $PageFields = [
+        'language_id',
+        'translated_from_page_id',
+        'view',
+        'title',
+        'http_verb',
+        'route_name',
+        'published',
+        'is_admin',
+        'dvs_admin',
+        'slug',
+        'short_description',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+        'head',
+        'footer',
+        'response_type',
+        'response_path',
+        'response_params',
+    ];
 
 	/**
-	 * @var
+     * Errors are kept in an array and can be
+     * used later if validation fails and we want to
+     * know why
+     *
+	 * @var array
 	 */
-	public $errors, $message;
+	public $errors;
 
-	/**
-	 * @param Page $Page
-	 * @param Validator $Validator
-	 */
-	function __construct(Page $Page, Validator $Validator, PageVersionManager $PageVersionManager)
+    /**
+     * This is a message that we can store why the
+     * validation failed
+     *
+     * @var string
+     */
+    public $message;
+
+    /**
+     * Construct a new page manager
+     *
+     * @param \DvsPage $Page
+     * @param Validator $Validator
+     * @param PageVersionManager $PageVersionManager
+     */
+	public function __construct(\DvsPage $Page, PageVersionManager $PageVersionManager, Framework $Framework)
     {
         $this->Page = $Page;
-        $this->Validator = $Validator;
+        $this->Validator = $Framework->Validator;
         $this->PageVersionManager = $PageVersionManager;
     }
 
 	/**
 	 * Validates and creates a page with the given input
-	 * @param $input
-	 *
+     *
+	 * @param  array a$input
 	 * @return bool
 	 */
 	public function createNewPage($input)
@@ -51,14 +110,14 @@ class PageManager {
 
 	/**
 	 * Validates and updates a page with the given input
-	 * @param $id
-	 * @param $input
-	 *
+     *
+	 * @param  integer $id
+	 * @param  array   $input
 	 * @return bool
 	 */
 	public function updatePage($id, $input)
 	{
-        $input = array_except($input, array('_token', '_data_token', '_method', 'show_advanced'));
+        $input = array_only($input, static::$PageFields);
         $page = $this->Page->findOrFail($id);
 
         $this->validator = $this->Validator->make($input, $this->Page->updateRules, $this->Page->messages);
@@ -67,33 +126,37 @@ class PageManager {
             return $input->http_verb == 'get';
         });
 
-        if ($this->validator->passes()){
-            return $page->update($input);
-        } else {
-            $this->errors = $this->validator->errors()->all();
-            $this->message = "There were validation errors.";
-            return false;
+        if ($this->validator->passes())
+        {
+            $page->update($input);
+            return $page;
         }
+
+        $this->errors = $this->validator->errors()->all();
+        $this->message = "There were validation errors.";
+        return false;
     }
 
 	/**
-	 * Destroys a page
-	 * @param $id
-	 *
-	 * @return mixed
-	 */
+     * Destroys a page
+     *
+     * @param  integer $id
+     * @return boolean
+     */
 	public function destroyPage($id)
 	{
 		$page = $this->Page->findOrFail($id);
+
 		return $page->delete();
 	}
 
 	/**
-	 * Takes the input provided and runs the create method after stripping necessary fields.
-	 * @param $input
-	 *
-	 * @return bool
-	 */
+     * Takes the input provided and runs the create method after stripping necessary fields.
+     *
+     * @param  integer $fromPageId
+     * @param  array   $input
+     * @return DvsPage
+     */
 	public function copyPage($fromPageId, $input)
 	{
 		$fromPage = $this->Page->findOrFail($fromPageId);
@@ -109,35 +172,46 @@ class PageManager {
 
 
 	/**
-	 * @param $suggestedRoute
-	 * @param int $currentIteration
-	 *
-	 * @return string
-	 */
-	private function findAvailableRoute($suggestedRoute, $currentIteration = 0) {
+     * This helper method keeps looking through suggested route names
+     * and adding a number onto the suggested route until it finds an available
+     * one that isn't taken in the database. We don't want route names to be
+     * the same ever as they should be unique so this helps us accomplish that.
+     *
+     * @param  string  $suggestedRoute
+     * @param  integer $currentIteration
+     * @return string
+     */
+	protected function findAvailableRoute($suggestedRoute, $currentIteration = 0)
+    {
         $modifiedRoute = ($currentIteration == 0) ? $suggestedRoute : $suggestedRoute . '-' . $currentIteration;
 
         $existingRouteSearch = $this->Page->where('route_name', '=', $modifiedRoute)->count();
 
-        if ($existingRouteSearch < 1) {
+        if ($existingRouteSearch < 1)
+        {
             return $modifiedRoute;
-        } else {
-            $currentIteration++;
-            return $this->findAvailableRoute($suggestedRoute, $currentIteration);
         }
+
+        return $this->findAvailableRoute($suggestedRoute, $currentIteration + 1);
     }
 
 
     /**
-     * Create page from given input data
+     * Creates a page from the given input data
      *
-     * @return Page
+     * @param  array $input
+     * @return DvsPage
      */
     protected function createPageFromInput($input)
     {
-        $input = array_except($input, array('_token', '_data_token', 'show_advanced'));
+        // fill in some default values
+        $input = array_only($input, static::$PageFields);
+        $input['is_admin'] = array_get($input, 'is_admin', false);
+        $input['dvs_admin'] = array_get($input, 'dvs_admin', false);
+        $input['language_id'] = array_get($input, 'language_id', 45);
 
-        if ($input['language_id'] == 45){
+        if ($input['language_id'] == 45)
+        {
             $input['translated_from_page_id'] = 0;
         }
 
@@ -165,24 +239,12 @@ class PageManager {
     /**
      * Updates the page version dates
      *
-     * @param  int $pageVersionId
+     * @param  int   $pageVersionId
      * @param  array $input
      * @return void
      */
     public function updatePageVersionDates($pageVersionId, $input)
     {
         return $this->PageVersionManager->updatePageVersionDates($pageVersionId, $input);
-    }
-
-    /**
-     * Copy the fields from this page version into
-     * another page version
-     *
-     * @param  [type] $pageVersion
-     * @return [type]
-     */
-    public function copyFieldsFromPageVersion($pageVersion)
-    {
-
     }
 }

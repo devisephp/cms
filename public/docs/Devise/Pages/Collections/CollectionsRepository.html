@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\Pages\Collections\CollectionsRepository | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../traits.html">Traits</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Devise/Pages/Collections.html">Devise\Pages\Collections</a>\CollectionsRepository</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>CollectionsRepository</strong></p>
+
+            <div class="description">
+            <p>Retreives collection instances and sets and fields for us.</p>
+            <p>This class is used in many places to retreieve collection
+data from the database.</p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Pages\Collections\DvsCollectionInstance">DvsCollectionInstance</abbr> $CollectionInstance, <abbr title="Devise\Pages\Collections\DvsCollectionSet">DvsCollectionSet</abbr> $CollectionSet, <abbr title="Devise\Pages\Collections\DvsField">DvsField</abbr> $Field, <abbr title="Devise\Pages\Collections\DvsPageVersion">DvsPageVersion</abbr> $PageVersion, <a href="../../../Devise/Pages/Collections/CollectionFieldsFactory.html"><abbr title="Devise\Pages\Collections\CollectionFieldsFactory">CollectionFieldsFactory</abbr></a> $CollectionFieldsFactory)
+                    <p>Construct a new repository with all the dependencies</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Pages\Collections\EloquentCollection[CollectionInstance]">EloquentCollection[CollectionInstance]</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getInstances">getInstances</a>(int $pageVersionId, int $collectionSetId)
+                    <p>This is used by the /admin/pages/{pageVersionId}/collections/{collectionSetId}/instances slug</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    array
+                </td>
+                <td class="last">
+                    <a href="#method_findCollectionsForPageVersionId">findCollectionsForPageVersionId</a>(int $pageVersionId)
+                    <p>When we only have the pageVersionId we can use this function as a proxy to findCollectionsForPageVersion</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Pages\Collections\array($collectionName">array($collectionName</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_findCollectionsForPageVersion">findCollectionsForPageVersion</a>(<abbr title="Devise\Pages\Collections\DvsPageVersion">DvsPageVersion</abbr> $pageVersion)
+                    <p>Get the list of collections for this page</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Pages\Collections\EloquentCollection[CollectionInstance]">EloquentCollection[CollectionInstance]</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_findCollectionInstancesForCollectionSetIdAndPageVersionId">findCollectionInstancesForCollectionSetIdAndPageVersionId</a>(int $collectionSetId, int $pageVersionId)
+                    <p>Get the instances + fields for this collection set / page_version combo</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 56</div>
+        <code>            public            
+    <strong>__construct</strong>(<abbr title="Devise\Pages\Collections\DvsCollectionInstance">DvsCollectionInstance</abbr> $CollectionInstance, <abbr title="Devise\Pages\Collections\DvsCollectionSet">DvsCollectionSet</abbr> $CollectionSet, <abbr title="Devise\Pages\Collections\DvsField">DvsField</abbr> $Field, <abbr title="Devise\Pages\Collections\DvsPageVersion">DvsPageVersion</abbr> $PageVersion, <a href="../../../Devise/Pages/Collections/CollectionFieldsFactory.html"><abbr title="Devise\Pages\Collections\CollectionFieldsFactory">CollectionFieldsFactory</abbr></a> $CollectionFieldsFactory)</code>
+    </h3>
+    <div class="details">
+        <p>Construct a new repository with all the dependencies</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Pages\Collections\DvsCollectionInstance">DvsCollectionInstance</abbr></td>
+                <td>$CollectionInstance</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Collections\DvsCollectionSet">DvsCollectionSet</abbr></td>
+                <td>$CollectionSet</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Collections\DvsField">DvsField</abbr></td>
+                <td>$Field</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Collections\DvsPageVersion">DvsPageVersion</abbr></td>
+                <td>$PageVersion</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Devise/Pages/Collections/CollectionFieldsFactory.html"><abbr title="Devise\Pages\Collections\CollectionFieldsFactory">CollectionFieldsFactory</abbr></a></td>
+                <td>$CollectionFieldsFactory</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getInstances">
+        <div class="location">at line 72</div>
+        <code>            public            <abbr title="Devise\Pages\Collections\EloquentCollection[CollectionInstance]">EloquentCollection[CollectionInstance]</abbr>
+    <strong>getInstances</strong>(int $pageVersionId, int $collectionSetId)</code>
+    </h3>
+    <div class="details">
+        <p>This is used by the /admin/pages/{pageVersionId}/collections/{collectionSetId}/instances slug</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$pageVersionId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$collectionSetId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Pages\Collections\EloquentCollection[CollectionInstance]">EloquentCollection[CollectionInstance]</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_findCollectionsForPageVersionId">
+        <div class="location">at line 88</div>
+        <code>            public            array
+    <strong>findCollectionsForPageVersionId</strong>(int $pageVersionId)</code>
+    </h3>
+    <div class="details">
+        <p>When we only have the pageVersionId we can use this function as a proxy to findCollectionsForPageVersion</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$pageVersionId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_findCollectionsForPageVersion">
+        <div class="location">at line 99</div>
+        <code>            public            <abbr title="Devise\Pages\Collections\array($collectionName">array($collectionName</abbr>
+    <strong>findCollectionsForPageVersion</strong>(<abbr title="Devise\Pages\Collections\DvsPageVersion">DvsPageVersion</abbr> $pageVersion)</code>
+    </h3>
+    <div class="details">
+        <p>Get the list of collections for this page</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Pages\Collections\DvsPageVersion">DvsPageVersion</abbr></td>
+                <td>$pageVersion</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Pages\Collections\array($collectionName">array($collectionName</abbr></td>
+            <td>=> array(CollectionFields))</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_findCollectionInstancesForCollectionSetIdAndPageVersionId">
+        <div class="location">at line 132</div>
+        <code>            public            <abbr title="Devise\Pages\Collections\EloquentCollection[CollectionInstance]">EloquentCollection[CollectionInstance]</abbr>
+    <strong>findCollectionInstancesForCollectionSetIdAndPageVersionId</strong>(int $collectionSetId, int $pageVersionId)</code>
+    </h3>
+    <div class="details">
+        <p>Get the instances + fields for this collection set / page_version combo</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$collectionSetId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$pageVersionId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Pages\Collections\EloquentCollection[CollectionInstance]">EloquentCollection[CollectionInstance]</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

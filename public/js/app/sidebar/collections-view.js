@@ -1,6 +1,7 @@
 define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], function (require, $, network, dvsSidebarView) {
 
     var collectionId = null;
+    var collectionName = null;
     var pageId = null;
     var pageVersionId = null;
     var sortable = null;
@@ -8,6 +9,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
     var collectionsView = {
         init: function() {
             collectionId = $('#dvs-sidebar-collections').data('collection-id');
+            collectionName = $('#dvs-sidebar-collections').data('collection-name');
             pageId = $('#dvs-sidebar-collections').data('page-id');
             pageVersionId = $('#dvs-sidebar-collections').data('page-version-id');
 
@@ -70,12 +72,15 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
         _li.append(_link);
 
         $('#dvs-collection-instances-sortable').append(_li);
+
+        updateGroupSelect();
     };
 
     var addSortableItem = function(response, _data) {
         addItem(_data['id'], _data['name']);
 
         resetSortable();
+        reloadElementGrids();
     };
 
     var drawSortable = function(response, _data) {
@@ -93,7 +98,7 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
 
         network.request(
             '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/update-sort-orders',
-            _data, 'post', null
+            _data, 'post', reloadElementGrids
         );
     };
 
@@ -106,6 +111,17 @@ define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], funct
             '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances',
             null, 'get', null, drawSortable
         );
+    }
+
+    function reloadElementGrids() {
+        var data = dvsSidebarView.currentNodeData();
+        data['collection'] = collectionName;
+        data['page_version_id'] = pageVersionId;
+        data['page_id'] = pageId;
+
+        console.log(data);
+
+        network.reloadElementGrid(data, '#dvs-sidebar-elements-and-groups');
     }
 
     function initSortable() {

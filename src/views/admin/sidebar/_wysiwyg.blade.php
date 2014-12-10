@@ -19,4 +19,9 @@
         {{ Form::close() }}
     </div>
 
-<script>require(['devise/app/sidebar/wysiwyg'])</script>
+<script>
+    require(['devise/app/sidebar/wysiwyg'], function(obj)
+    {
+        obj.init();
+    });
+</script>

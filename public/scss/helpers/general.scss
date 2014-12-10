@@ -1,11 +1,61 @@
 .hide,
 .cantsee,
-.hidden {
+.hidden,
+.dvs-collapsed,
+.dvs-hidden {
   display:none !important;
 }
 
 .show,
 .cansee,
-.nothidden {
+.nothidden,
+.dvs-active {
   display:inherit !important;
+}
+
+.dvs-clearfix {
+  @include clearfix();
+}
+
+.dvs-pl { float:left }
+.dvs-pr { float:right }
+
+.dvs-tar { text-align: right }
+.dvs-tal { text-align: left }
+.dvs-tac { text-align: center }
+
+.dvs-block { display:block }
+.dvs-inline-block { display:inline-block }
+
+.dvs-margin {
+  float:left;
+  margin:10px;
+}
+
+.dvs-badge {
+  margin-right:5px;
+  padding:2px 5px;
+  color:#e7e7e7;
+  background-color:$gray;
+  border-radius:6px;
+
+  &.white     { background-color:$white }
+  &.black     { background-color:$black }
+  &.gray      { background-color:$gray }
+  &.red       { background-color:$red }
+  &.purple    { background-color:$purple }
+}
+
+.dvs-large {
+  font-size:1.4em;
+  line-height:1.5em;
+}
+
+.dvs-advanced {
+  height:0;
+  overflow:hidden;
+
+  &.open {
+    height: auto;
+  }
 }

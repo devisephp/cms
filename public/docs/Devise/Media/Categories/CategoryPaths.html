@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\Media\Categories\CategoryPaths | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../traits.html">Traits</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Devise/Media/Categories.html">Devise\Media\Categories</a>\CategoryPaths</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>CategoryPaths</strong></p>
+
+            <div class="description">
+            <p>Class CategoryPaths converts dot paths to real paths and also finds server paths and browser urls to the configured root media directory where all our media files are stored at.</p>
+            <p>
+</p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(null $config = null)
+                    <p>Create a new category path</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_fromDot">fromDot</a>(string $path)
+                    <p>Convert dots to slashes in the path</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_toDot">toDot</a>(string $path)
+                    <p>Convert slashes into dots in the path</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_serverPath">serverPath</a>(<abbr title="Devise\Media\Categories\$path">$path</abbr> $path)
+                    <p>Server path is the real path to the root media directory</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_browserPath">browserPath</a>(<abbr title="Devise\Media\Categories\$path">$path</abbr> $path)
+                    <p>Browser path is the url path to this root media directory</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 17</div>
+        <code>            public            
+    <strong>__construct</strong>(null $config = null)</code>
+    </h3>
+    <div class="details">
+        <p>Create a new category path</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>null</td>
+                <td>$config</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_fromDot">
+        <div class="location">at line 28</div>
+        <code>            public            string
+    <strong>fromDot</strong>(string $path)</code>
+    </h3>
+    <div class="details">
+        <p>Convert dots to slashes in the path</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_toDot">
+        <div class="location">at line 39</div>
+        <code>            public            string
+    <strong>toDot</strong>(string $path)</code>
+    </h3>
+    <div class="details">
+        <p>Convert slashes into dots in the path</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_serverPath">
+        <div class="location">at line 50</div>
+        <code>            public            string
+    <strong>serverPath</strong>(<abbr title="Devise\Media\Categories\$path">$path</abbr> $path)</code>
+    </h3>
+    <div class="details">
+        <p>Server path is the real path to the root media directory</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Media\Categories\$path">$path</abbr></td>
+                <td>$path</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_browserPath">
+        <div class="location">at line 62</div>
+        <code>            public            string
+    <strong>browserPath</strong>(<abbr title="Devise\Media\Categories\$path">$path</abbr> $path)</code>
+    </h3>
+    <div class="details">
+        <p>Browser path is the url path to this root media directory</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Media\Categories\$path">$path</abbr></td>
+                <td>$path</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

@@ -1,7 +1,7 @@
 <?php
 
-class DeviseGroupsSeeder extends Seeder {
-
+class DeviseGroupsSeeder extends Seeder
+{
 	public function run() {
 		DB::table( 'groups' )->delete();
 
@@ -9,20 +9,14 @@ class DeviseGroupsSeeder extends Seeder {
 			0  => array(
 				'id'             => 1,
 				'name'           => 'Devise Administrator',
-				'created_at'     => null,
-				'updated_at'     => null
 			),
 			1  => array(
 				'id'             => 2,
 				'name'           => 'Application Administrator',
-				'created_at'     => null,
-				'updated_at'     => null,
 			),
 			2  => array(
 				'id'             => 3,
 				'name'           => 'Editor',
-				'created_at'     => null,
-				'updated_at'     => null,
 			)
 		);
 
@@ -32,5 +26,3 @@ class DeviseGroupsSeeder extends Seeder {
 	}
 
 }
-
- 

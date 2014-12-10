@@ -16,6 +16,7 @@
     		<div class="dvs-form-group">
     			{{ Form::label('Menu Name') }}
     	    	{{ Form::text('name', null, array('placeholder' => 'Menu Name', 'class' => 'form-control')) }}
+                {{ Form::hidden('language_id', (!Input::has('language_id')) ? 45 : Input::get('language_id')) }}
     		</div>
 
     		{{ Form::submit('Create New Menu', array('class' => 'dvs-button dvs-button-large')) }}

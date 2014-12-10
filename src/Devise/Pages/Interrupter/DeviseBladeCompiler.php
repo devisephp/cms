@@ -1,7 +1,19 @@
 <?php namespace Devise\Pages\Interrupter;
 
+/**
+ * Class DeviseBladeCompiler is used for Blade::extend()
+ * and pre-renders blade views to seek out devise tags inside
+ * of the blade html view
+ *
+ * @package Devise\Pages\Interrupter
+ */
 class DeviseBladeCompiler
 {
+    /**
+     * Constructs a new DeviseBladeCompiler
+     *
+     * @param BlockFactory $BlockFactory
+     */
 	public function __construct(BlockFactory $BlockFactory)
 	{
 		$this->BlockFactory = $BlockFactory;
@@ -43,10 +55,11 @@ class DeviseBladeCompiler
 	}
 
 	/**
-	 * [replaceDataDeviseTags description]
-	 * @param  [type] $view  [description]
-	 * @param  [type] $block [description]
-	 * @return [type]        [description]
+	 * Replace the data-devise="..." tags in the view
+     *
+	 * @param  string $view
+	 * @param  Block $block
+	 * @return string
 	 */
 	protected function replaceDataDeviseTags($view, $block)
 	{
@@ -60,12 +73,19 @@ class DeviseBladeCompiler
 		return $view;
 	}
 
-	/**
-	 * [addDeviseTagBindingsAndCollections description]
-	 * @param [type] $view  [description]
-	 * @param [type] $block [description]
-	 */
-	public function addDeviseTagBindingsAndCollections($view, $block)
+    /**
+     * Adds these devise tags to bindings and collections
+     * using a large string that looks like
+     *
+     * <?php
+     *   App::make('dvsPageData')->addBinding('keyname', 'type', ...)
+     * ?>
+     *
+     * @param string $view
+     * @param Block $block
+     * @return string
+     */
+	protected function addDeviseTagBindingsAndCollections($view, $block)
 	{
 		$tags = $block->getTags();
 
@@ -81,11 +101,15 @@ class DeviseBladeCompiler
 		return "<?php" . PHP_EOL . $prepend . "?>" . PHP_EOL . $view;
 	}
 
-	/**
-	 * [addHiddenPlaceHoldersToView description]
-	 * @param [type] $view  [description]
-	 * @param [type] $block [description]
-	 */
+    /**
+     * This adds a hidden placeholder html to the view. It is important to
+     * keep up with offsets too, so we know how much our view has grown because
+     * of the extra html code we threw in for the placeholder.
+     *
+     * @param string $view
+     * @param Block $block
+     * @return string
+     */
 	protected function addHiddenPlaceHoldersToView($view, $block)
 	{
 		// when we start adding stuff to our

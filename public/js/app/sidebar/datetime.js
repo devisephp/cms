@@ -9,14 +9,14 @@ define(['require', 'jquery', 'datetimepicker', 'moment'], function (require, $) 
     function init()
     {
         $('.dvs-datetime').each(function(){
-            var parentForm = $(this).parents('form');
+            var parentForm = $(this).closest('form');
             var input = $(this);
             var formatInput = parentForm.find('select[name="format"]');
-            var sample = input.siblings('input[name="datetime"]');
 
+            var sample = parentForm.find('input[name="datetime"]');
 
             $(this).datetimepicker({
-                inline:true,
+                inline:true
             });
 
             input.on('change', function()

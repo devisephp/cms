@@ -2,6 +2,10 @@
 
 use Request, Cookie, Config;
 
+/**
+ * Locales are shorthand 2 letter strings
+ * for a language/region.
+ */
 class LocaleDetector
 {
 	/**
@@ -12,7 +16,12 @@ class LocaleDetector
 	protected $cookieKey = 'devise.my.locale';
 
 	/**
-	 * Get the current locale
+	 * Get the current locale. At first we try
+	 * to use the cookie if one is set. If a cookie
+	 * is not set then we attempt to deduce the locale
+	 * in this order: url segment, http headers, and finally
+	 * we fall back to the universal locale which is
+	 * set in laravel's app.locale (defaults to en).
 	 *
 	 * @return string
 	 */

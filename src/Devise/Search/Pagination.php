@@ -3,10 +3,37 @@
 use IteratorAggregate, View;
 use Illuminate\Support\Contracts\JsonableInterface;
 
+/**
+ * Class Pagination is used so we can paginate search results
+ * from many different searched models
+ *
+ * @package Devise\Search
+ */
 class Pagination implements IteratorAggregate, JsonableInterface
 {
-	protected $items, $appendsToLinkData, $appendsToLink;
+    /**
+     * @var
+     */
+	protected $items;
 
+    /**
+     * @var
+     */
+    protected $appendsToLinkData;
+
+    /**
+     * @var
+     */
+    protected $appendsToLink;
+
+    /**
+     * Makes a new paginated result from a collection
+     *
+     * @param $collection
+     * @param $page
+     * @param $perPage
+     * @return $this
+     */
 	public function make($collection, $page, $perPage)
 	{
 		$this->perPage = $perPage;
@@ -30,11 +57,21 @@ class Pagination implements IteratorAggregate, JsonableInterface
 		return $this;
 	}
 
+    /**
+     * Lets us do links on this paginated object
+     *
+     * @return mixed
+     */
 	public function links()
 	{
-		return View::make('devise::search.pagination', $this->toArray())->render();
+		return $this->View()->make('devise::search.pagination', $this->toArray())->render();
 	}
 
+    /**
+     * Turns this paginated object into an array
+     *
+     * @return array
+     */
 	public function toArray()
 	{
 		return [
@@ -47,6 +84,12 @@ class Pagination implements IteratorAggregate, JsonableInterface
 		];
 	}
 
+    /**
+     * Append input queries
+     *
+     * @param $data
+     * @return $this
+     */
 	public function appends($data)
 	{
 		$this->appendsToLinkData = array_merge($this->appendsToLinkData, $data);
@@ -56,11 +99,22 @@ class Pagination implements IteratorAggregate, JsonableInterface
 		return $this;
 	}
 
+    /**
+     * Iterator lets us traverse this paginated object
+     *
+     * @return \Traversable
+     */
 	public function getIterator()
 	{
 		return $this->items->getIterator();
 	}
 
+    /**
+     * Turns this object into a json serialized object
+     *
+     * @param int $options
+     * @return string
+     */
 	public function toJson($options = 0)
 	{
 		return json_encode(array(
@@ -71,6 +125,11 @@ class Pagination implements IteratorAggregate, JsonableInterface
 		));
 	}
 
+    /**
+     * Turns the items into the real model. PageSearch turns into
+     * Page model. We usually want that model instead...
+     *
+     */
 	protected function convertItemsToRealModel()
 	{
 		for ($i = 0; $i < count($this->items); $i++)
@@ -78,4 +137,19 @@ class Pagination implements IteratorAggregate, JsonableInterface
 			$this->items[$i]->searchType = $this->items[$i]->searchableType;
 		}
 	}
+
+    /**
+     * Creates the view for us
+     *
+     * @return mixed
+     */
+    protected function View()
+    {
+        if (!isset($this->View))
+        {
+            $this->View = \View::getFacadeRoot();
+        }
+
+        return $this->View;
+    }
 }

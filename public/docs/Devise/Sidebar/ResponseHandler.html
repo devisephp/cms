@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\Sidebar\ResponseHandler | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../traits.html">Traits</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../Devise/Sidebar.html">Devise\Sidebar</a>\ResponseHandler</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>ResponseHandler</strong></p>
+
+            <div class="description">
+            <p>Class ResponseHandler is the controller action that handles fetching the sidebar.</p>
+            <p>It is named</p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../Devise/Sidebar/SidebarManager.html"><abbr title="Devise\Sidebar\SidebarManager">SidebarManager</abbr></a> $Manager)
+                    <p>Construct new response handler for fetching the sidebar view</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Illuminate\Support\Facades\Response">Response</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_requestSidebarPartial">requestSidebarPartial</a>(array $input)
+                    <p>Loads the sidebar menu which houses settings and grid items to be clicked on.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Illuminate\Support\Facades\Response">Response</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_requestElementPartial">requestElementPartial</a>(array $input)
+                    <p>When we click the element box inside of the sidebar it loads the form for a specific element</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Illuminate\Support\Facades\Response">Response</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_requestElementGridPartial">requestElementGridPartial</a>(array $input)
+                    <p>Reloads the entire grid.</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 28</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../Devise/Sidebar/SidebarManager.html"><abbr title="Devise\Sidebar\SidebarManager">SidebarManager</abbr></a> $Manager)</code>
+    </h3>
+    <div class="details">
+        <p>Construct new response handler for fetching the sidebar view</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../Devise/Sidebar/SidebarManager.html"><abbr title="Devise\Sidebar\SidebarManager">SidebarManager</abbr></a></td>
+                <td>$Manager</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_requestSidebarPartial">
+        <div class="location">at line 41</div>
+        <code>            public            <abbr title="Illuminate\Support\Facades\Response">Response</abbr>
+    <strong>requestSidebarPartial</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Loads the sidebar menu which houses settings and grid items to be clicked on.</p>
+        <p>Clicking on a grid item will allow us
+to edit the form for a specific element.</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Illuminate\Support\Facades\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_requestElementPartial">
+        <div class="location">at line 62</div>
+        <code>            public            <abbr title="Illuminate\Support\Facades\Response">Response</abbr>
+    <strong>requestElementPartial</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>When we click the element box inside of the sidebar it loads the form for a specific element</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Illuminate\Support\Facades\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_requestElementGridPartial">
+        <div class="location">at line 84</div>
+        <code>            public            <abbr title="Illuminate\Support\Facades\Response">Response</abbr>
+    <strong>requestElementGridPartial</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Reloads the entire grid.</p>
+        <p>The grid is where all the elements/collection
+items reside. We can click on one of these grid items to load the element
+partial</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Illuminate\Support\Facades\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

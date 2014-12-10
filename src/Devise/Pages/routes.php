@@ -6,11 +6,11 @@
 |--------------------------------------------------------------------------
 |
 | Loading all pages and creating routes from slugs
+| @todo need to implement route caching here for performance boost!
 |
 */
-try {
-	Route::any('/api/notifications/zencoder', ['uses' => 'Devise\Pages\Controllers\ZencoderNotificationsController@store', 'as' => 'dvs-api-notifications-zencoder']);
 
+try {
 	if (\Schema::hasTable('dvs_pages')) {
 		$pages = DB::table('dvs_pages')->select('http_verb','slug','route_name')->get();
 
@@ -24,10 +24,10 @@ try {
 				}, $page->slug, -1, $count);
 
                 $verb = $page->http_verb;
-                Route::$verb($page->slug, array('as' => $page->route_name, 'uses' => 'DevisePageController@show'));
+                Route::$verb($page->slug, array('as' => $page->route_name, 'uses' => 'Devise\Pages\PageController@show'));
             }
         }
     }
 } catch (\Exception $e) {
-    // database server is not accessible
+    print "WARNING in Devise\\Pages\\routes.php got " . $e->getMessage() . PHP_EOL;
 }

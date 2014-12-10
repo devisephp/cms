@@ -22,7 +22,7 @@ define(['require', 'jquery'], function (require, $) {
 
         function onAddNewClick()
         {
-            var parentForm = $(this).parents('form');
+            var parentForm = $(this).closest('form');
             unBindEvents(parentForm);
             
             addNewTableRow(parentForm);
@@ -35,8 +35,8 @@ define(['require', 'jquery'], function (require, $) {
 
         function onDeleteclick()
         {
-            var parentForm = $(this).parents('form');
-            var index = $(this).parents('.dvs-option-fields').index();
+            var parentForm = $(this).closest('form');
+            var index = $(this).closest('.dvs-option-fields').index();
             unBindEvents(parentForm);
 
             parentForm.find('select[name="value"] option:nth-child(' + (index + 1) + ')').remove();
@@ -49,8 +49,8 @@ define(['require', 'jquery'], function (require, $) {
 
         function onInputChange()
         {
-            var parentForm = $(this).parents('form');
-            var index = $(this).parents('.dvs-option-fields').index();
+            var parentForm = $(this).closest('form');
+            var index = $(this).closest('.dvs-option-fields').index();
             var target = parentForm.find('select[name="value"] option:nth-child(' + (index + 1) + ')');
             
             if($(this).attr('name').indexOf('name') > -1){

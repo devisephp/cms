@@ -121,7 +121,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-        'Devise\Cms\DeviseServiceProvider',
+        'Devise\DeviseServiceProvider',
 	),
 
 	/*
@@ -162,7 +162,7 @@ return array(
 		'Crypt'           => 'Illuminate\Support\Facades\Crypt',
 		'DB'              => 'Illuminate\Support\Facades\DB',
 //		'Eloquent'        => 'Illuminate\Database\Eloquent\Model',
-//		'Event'           => 'Illuminate\Support\Facades\Event',
+		'Event'           => 'Illuminate\Support\Facades\Event',
 		'File'            => 'Illuminate\Support\Facades\File',
 		'Form'            => 'Illuminate\Support\Facades\Form',
 		'Hash'            => 'Illuminate\Support\Facades\Hash',
@@ -190,15 +190,14 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 
         /* Devise Facades */
-        'Eloquent'        => 'Devise\Sortable\Database\Eloquent\Model',
-        'Event'           => 'Devise\Events\Facades\DeviseEvent',
-        'DeviseData'      => 'Devise\Data\Facades\DeviseData',
-        'DeviseIndexer'   => 'Devise\Indexer\Facades\DeviseIndexer',
+        'Eloquent'        => 'Devise\Support\Sortable\EloquentModel',
+        // 'Event'           => 'Devise\Support\Events\DeviseEvent',
+        'DeviseData'      => 'Devise\Support\Data\DeviseData',
+        'DeviseIndexer'   => 'Devise\Support\Indexer\DeviseIndexer',
         'DeviseUser'      => 'Devise\User\Facades\DeviseUser',
         'RuleManager'     => 'Devise\User\Facades\RuleManager',
-        'DeviseArray'     => 'Devise\Support\Facades\DeviseArray',
-        'Sort'            => 'Devise\Sortable\Facades\SortableFacade',
-        'Devise' 		  => 'Devise\Cms\Facades\Devise',
+        // 'DeviseArray'     => 'Devise\Support\Facades\DeviseArray',
+        'Sort'            => 'Devise\Support\Sortable\SortableFacade',
 
 	),
 

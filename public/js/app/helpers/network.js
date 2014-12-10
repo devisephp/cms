@@ -31,15 +31,15 @@ define(['require', 'jquery'], function (require, $) {
 
             network.request(_elementPath, data, 'POST', _target, _callback);
         },
-        reloadGroupsSelect: function(_data, _target) {
+        reloadElementGrid: function(_data, _target) {
 
             var data = {
                 data: _data
             };
 
-            var _groupsSelectPath = partialsPath + 'groups-select';
+            var _elementGridPath = partialsPath + 'element-grid';
 
-            network.request(_elementPath, data, 'POST', _target, _callback);
+            network.request(_elementGridPath, data, 'POST', _target);
         },
         request: function(_url, _data, _method, _target, _callback) {
 
@@ -77,7 +77,10 @@ define(['require', 'jquery'], function (require, $) {
 
     function handleTemplateLoadDone( msg ) {
         $(target).html(msg.html);
-        callback('done', msg, data);
+        
+        if(callback){
+            callback('done', msg, data);
+        }
     }
 
     function handleTemplateLoadFail( jqXHR, textStatus ) {

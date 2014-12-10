@@ -7,6 +7,7 @@ define(['jquery'], function ($)
     //
     $('body').on('change', '.js-active', function(event)
     {
+
         var element = $(event.currentTarget);
         var active = element.is(':checked');
         var url = element.attr('data-url');

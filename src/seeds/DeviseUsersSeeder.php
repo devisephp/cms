@@ -14,8 +14,6 @@ class DeviseUsersSeeder extends Seeder {
 				'activated'      => true,
 				'activate_code'  => null,
 				'remember_token' => null,
-				'created_at'     => null,
-				'updated_at'     => null,
 				'deleted_at'     => null,
 			),
 			1  => array(
@@ -26,8 +24,6 @@ class DeviseUsersSeeder extends Seeder {
 				'activated'      => true,
 				'activate_code'  => null,
 				'remember_token' => null,
-				'created_at'     => null,
-				'updated_at'     => null,
 				'deleted_at'     => null,
 			),
 			2  => array(
@@ -38,8 +34,6 @@ class DeviseUsersSeeder extends Seeder {
 				'activated'      => true,
 				'activate_code'  => null,
 				'remember_token' => null,
-				'created_at'     => null,
-				'updated_at'     => null,
 				'deleted_at'     => null,
 			),
 			3  => array(
@@ -50,8 +44,6 @@ class DeviseUsersSeeder extends Seeder {
 				'activated'      => true,
 				'activate_code'  => null,
 				'remember_token' => null,
-				'created_at'     => null,
-				'updated_at'     => null,
 				'deleted_at'     => null,
 			),
 			4  => array(
@@ -62,8 +54,6 @@ class DeviseUsersSeeder extends Seeder {
 				'activated'      => true,
 				'activate_code'  => null,
 				'remember_token' => null,
-				'created_at'     => null,
-				'updated_at'     => null,
 				'deleted_at'     => null,
 			)
 		);

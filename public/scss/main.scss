@@ -10,6 +10,7 @@
 @import "helpers/grid";
 @import "helpers/buttons";
 @import "helpers/messages";
+@import "helpers/responsive";
 
 /* Main UI */
 @import "main-ui/reset";
@@ -19,6 +20,10 @@
 @import "main-ui/sidebar";
 @import "main-ui/media-manager";
 @import "main-ui/content-manager";
+@import "main-ui/public";
+
+/* Responsive */
+@import "main-ui/responsive";
 
 /* Editors */
 @import "editors/datepicker";

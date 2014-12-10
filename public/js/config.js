@@ -1,9 +1,13 @@
 var require = {
     baseUrl: '/packages/devise/cms/js/lib',
-    urlArgs: "bust=" + (new Date()).getTime(),
+    //urlArgs: "bust=" + (new Date()).getTime(),
     shim:  {
         ckeditorJquery : {
             deps: ['jquery', 'ckeditorCore']
+        },
+        datetimepicker : {
+            deps: ['jquery'],
+            exports: '$.fn.datetimepicker'
         }
     },
     paths: {
@@ -21,6 +25,7 @@ var require = {
         propertyParser :    '../lib/millermedeiros-plugins/propertyParser',
         app:                '../app',
         dvsEditor:          '../app/devise',
+        dvsPublic:          '../app/public/preview',
         dvsInitialize:      '../app/helpers/initialize-editor',
         dvsListeners:       '../app/helpers/listeners',
         dvsNetwork:         '../app/helpers/network',
@@ -35,9 +40,13 @@ var require = {
         dvsMessageBus:      '../app/helpers/global-bus',
         dvsRouter:          '../app/routes',
         dvsQueryHelper:     '../app/helpers/query-helper',
-        dvsDatePicker:      '../app/helpers/date-picker'
+        dvsDatePicker:      '../app/helpers/date-picker',
+        dvsSelectSurrogate: '../app/helpers/forms-select-surrogate'
+
     },
     devise: {
         partialLoaderPath:  '/admin/partialLoader'
-    }
+    },
 };
+
+var CKEDITOR_BASEPATH = "/packages/devise/cms/js/lib/ckeditor/";

@@ -51,28 +51,6 @@
             </div>
         </div>
 
-        <div class="dvs-admin-card" data-dvs-url="{{ URL::route('admin-event-index') }}">
-            <div class="dvs-card-top">
-                <div class="dvs-image-wpr">
-                    <img src="{{ URL::asset('packages/devise/cms/img/default-images/user-icon.png') }}">
-                </div>
-
-                <div class="dvs-hex-wpr">
-                    <div class="dvs-card-hex">
-                        <div class="dvs-hex-text">
-                            <p class="dvs-value">4</p>
-                            <p>Current Events</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dvs-card-bottom">
-                <h3>Events</h3>
-                <p>Manage events and venue information.</p>
-            </div>
-        </div>
-
         <div class="dvs-admin-card" data-dvs-url="{{ URL::route('dvs-users') }}">
             <div class="dvs-card-top">
                 <div class="dvs-image-wpr">

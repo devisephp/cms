@@ -57,7 +57,7 @@ class BlockFactory
 	 *
 	 * @param  array $stack
 	 * @param  Block $block
-	 * @return $block
+	 * @return Block
 	 */
 	protected function populateBlock(&$stack, $block)
 	{
@@ -90,8 +90,6 @@ class BlockFactory
 
 		return $block;
 	}
-
-	public static $overflow = 0;
 
 	/**
 	 * Opens a view for an @include block
@@ -196,7 +194,7 @@ class BlockFactory
 	/**
 	 * Finds matches that start with @if or @foreach
 	 *
-	 * @param  string $view
+	 * @param  array allMatches
 	 * @return array
 	 */
 	protected function sortMatches($allMatches)

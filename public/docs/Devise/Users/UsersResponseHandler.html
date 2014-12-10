@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\Users\UsersResponseHandler | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../traits.html">Traits</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../Devise/Users.html">Devise\Users</a>\UsersResponseHandler</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>UsersResponseHandler</strong></p>
+
+            <div class="description">
+            <p>Response handler takes care of user login/logout, creating, updating, destroying users within /admin/users routes</p>
+            <p>
+</p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../Devise/Users/Sessions/SessionsRepository.html"><abbr title="Devise\Users\Sessions\SessionsRepository">SessionsRepository</abbr></a> $SessionsRepository, <a href="../../Devise/Users/UserManager.html"><abbr title="Devise\Users\UserManager">UserManager</abbr></a> $UserManager, <a href="../../Devise/Support/Framework.html"><abbr title="Devise\Support\Framework">Framework</abbr></a> $Framework)
+                    <p>Constructs a new UsersResponseHandler</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Users\Response">Response</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_executeLogout">executeLogout</a>()
+                    <p>Executes logout method in SessionsRepository</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Users\Response">Response</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_executeLogin">executeLogin</a>(array $input)
+                    <p>Executes login method in SessionsRepository</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Users\Redirector">Redirector</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_requestCreateUser">requestCreateUser</a>(array $input)
+                    <p>Request a new user be created</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Users\Redirector">Redirector</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_requestUpdateUser">requestUpdateUser</a>(integer $id, array $input)
+                    <p>Request user be updated with a given input</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Users\Redirector">Redirector</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_requestDestroyUser">requestDestroyUser</a>(integer $id)
+                    <p>Request the user be deleted from database</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 41</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../Devise/Users/Sessions/SessionsRepository.html"><abbr title="Devise\Users\Sessions\SessionsRepository">SessionsRepository</abbr></a> $SessionsRepository, <a href="../../Devise/Users/UserManager.html"><abbr title="Devise\Users\UserManager">UserManager</abbr></a> $UserManager, <a href="../../Devise/Support/Framework.html"><abbr title="Devise\Support\Framework">Framework</abbr></a> $Framework)</code>
+    </h3>
+    <div class="details">
+        <p>Constructs a new UsersResponseHandler</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../Devise/Users/Sessions/SessionsRepository.html"><abbr title="Devise\Users\Sessions\SessionsRepository">SessionsRepository</abbr></a></td>
+                <td>$SessionsRepository</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><a href="../../Devise/Users/UserManager.html"><abbr title="Devise\Users\UserManager">UserManager</abbr></a></td>
+                <td>$UserManager</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><a href="../../Devise/Support/Framework.html"><abbr title="Devise\Support\Framework">Framework</abbr></a></td>
+                <td>$Framework</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_executeLogout">
+        <div class="location">at line 53</div>
+        <code>            public            <abbr title="Devise\Users\Response">Response</abbr>
+    <strong>executeLogout</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Executes logout method in SessionsRepository</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Users\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_executeLogin">
+        <div class="location">at line 67</div>
+        <code>            public            <abbr title="Devise\Users\Response">Response</abbr>
+    <strong>executeLogin</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Executes login method in SessionsRepository</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Users\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_requestCreateUser">
+        <div class="location">at line 87</div>
+        <code>            public            <abbr title="Devise\Users\Redirector">Redirector</abbr>
+    <strong>requestCreateUser</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Request a new user be created</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Users\Redirector">Redirector</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_requestUpdateUser">
+        <div class="location">at line 107</div>
+        <code>            public            <abbr title="Devise\Users\Redirector">Redirector</abbr>
+    <strong>requestUpdateUser</strong>(integer $id, array $input)</code>
+    </h3>
+    <div class="details">
+        <p>Request user be updated with a given input</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$id</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Users\Redirector">Redirector</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_requestDestroyUser">
+        <div class="location">at line 126</div>
+        <code>            public            <abbr title="Devise\Users\Redirector">Redirector</abbr>
+    <strong>requestDestroyUser</strong>(integer $id)</code>
+    </h3>
+    <div class="details">
+        <p>Request the user be deleted from database</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$id</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Users\Redirector">Redirector</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

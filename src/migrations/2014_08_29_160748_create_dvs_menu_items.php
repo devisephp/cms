@@ -14,12 +14,12 @@ class CreateDvsMenuItems extends Migration {
         Schema::create('dvs_menu_items', function($table) {
             $table->increments('id');
             $table->integer('menu_id')->unsigned();
+            $table->integer('page_id')->nullable()->unsigned();
             $table->integer('parent_item_id')->nullable()->unsigned();
             $table->string('name', 255);
-            $table->integer('page_id')->nullable()->unsigned();
             $table->string('url', 255);
-            $table->string('image');
-            $table->text('description');
+            $table->string('image')->nullable();
+            $table->text('description')->nullable();
             $table->integer('position')->default('0');
             $table->timestamp('created_at')->default('0000-00-00 00:00:00');
             $table->timestamp('updated_at')->default('0000-00-00 00:00:00');

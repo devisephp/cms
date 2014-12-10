@@ -1,21 +1,26 @@
 
+.dvs-media-manager-container {
+    padding:10px;
+}
+
 #dvs-media-manager {
 
-    width:100%;
+    padding:20px;
+    margin-top: -100px;
 
     h4 {
         clear:both;
         margin: 10px;
         font-size: 18px;
-        color: #76cbff;
+        color: #fff;
         text-transform: none;
         font-weight: 300;
-        border-bottom: 1px solid #10a5ff;
+        border-bottom: 1px solid transparentize(#fff, 0.85);
     }
 
     h5.empty {
         margin: 15px;
-        color: #9BD9FF;
+        color: $green;
         text-align:center;
     }
 
@@ -28,9 +33,13 @@
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
         padding: 8px 15px;
+        margin-right:-3px;
     }
+    .dvs-cat-rename-btn {
+        margin-right:-2px;
+    }
+
     .dvs-cat-delete-btn {
-        margin-left: 1px;
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
     }
@@ -40,6 +49,7 @@
         font-size: .7em;
         a {
             text-decoration: none;
+            color: $green;
             &:hover {
                 text-decoration:underline;
             }
@@ -74,11 +84,11 @@
         width: 100%;
         li {
             display:inline-block;
-            margin: 10px 0 10px 10px;
+            margin: 5px 0 5px 5px;
         }
     }
     #dvs-error-message {
-        background-color: $form-error-color;
+        background-color: $formErrorColor;
         text-align: center;
         padding: 30px;
     }
@@ -106,21 +116,24 @@
 
         a.dvs-media-item {
             display:inline-block;
-            overflow:hidden;
             margin: 10px;
             width: 125px;
             height: 180px;
             vertical-align: top;
+            text-decoration:none;
+            color: darken($white, 10%);
+            font-size: 12px;
+            font-weight:100;
 
             .dvs-media-thumb-cont {
-                background-color: rgba(255, 255, 255, .5);
-                width: 125px;
-                height: 125px;
+                background-color: lighten($black, 5%);
+                width: 115px;
+                height: 115px;
 
                 img {
                     width: 105px;
                     height: 105px;
-                    margin: 10px;
+                    margin: 5px;
                 }
             }
 
@@ -130,16 +143,18 @@
                 overflow:hidden;
                 text-align:center;
                 line-height: 18px;
+                word-break: break-all;
             }
         }
     }
 
-    input[type="text"] {
-        border-top: 0px;
-        border-left: 1px solid #43b8ff;
-        border-right: 1px solid #0089dc;
-        border-radius: 4px;
+    input[type="text"],
+    input[type="number"] {
+        border-radius: 2px;
+        border-width:0;
         padding: 5px 15px;
-        font-size: 14px;
+        font-size: 12px;
+        background-color:lighten($black, 13%);
+        color: darken($white, 10%);
     }
 }

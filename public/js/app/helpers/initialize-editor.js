@@ -54,13 +54,18 @@ define(['jquery', 'dvsListeners'], (function( $, listeners ) {
         var adminButton = $('<button>').attr({id: 'dvs-admin-mode-button', onClick: 'location.href = "/admin/pages"'}).html('Admin');
 
         var nodes       = $('<div>').attr('id', 'dvs-nodes').addClass('dvs-faded');
+        var sidebarCont = $('<div>').attr('id', 'dvs-sidebar-container').attr('style', 'display:none;');
+        var sidebarScroll = $('<div>').attr('id', 'dvs-sidebar-scroller');
         var sidebar     = $('<div>').attr('id', 'dvs-sidebar');
 
         content.append(shadow);
         theme.append(editButton);
         theme.append(adminButton);
         theme.append(nodes);
-        theme.append(sidebar);
+
+        sidebarCont.append(sidebarScroll);
+        sidebarScroll.append(sidebar);
+        theme.append(sidebarCont);
 
 //        $('#dvs-nodes').removeClass('dvs-faded');
     }

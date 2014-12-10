@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\Search\Pagination | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../traits.html">Traits</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../Devise/Search.html">Devise\Search</a>\Pagination</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>Pagination</strong>        implements
+        <a href="http://php.net/IteratorAggregate"><abbr title="IteratorAggregate">IteratorAggregate</abbr></a>, <abbr title="Illuminate\Support\Contracts\JsonableInterface">JsonableInterface</abbr></p>
+
+            <div class="description">
+            <p>Class Pagination is used so we can paginate search results from many different searched models</p>
+            <p>
+</p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Search\$this">$this</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_make">make</a>(<abbr title="Devise\Search\$collection">$collection</abbr> $collection, <abbr title="Devise\Search\$page">$page</abbr> $page, <abbr title="Devise\Search\$perPage">$perPage</abbr> $perPage)
+                    <p>Makes a new paginated result from a collection</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_links">links</a>()
+                    <p>Lets us do links on this paginated object</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    array
+                </td>
+                <td class="last">
+                    <a href="#method_toArray">toArray</a>()
+                    <p>Turns this paginated object into an array</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Devise\Search\$this">$this</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_appends">appends</a>(<abbr title="Devise\Search\$data">$data</abbr> $data)
+                    <p>Append input queries</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/Traversable"><abbr title="Traversable">Traversable</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getIterator">getIterator</a>()
+                    <p>Iterator lets us traverse this paginated object</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_toJson">toJson</a>(int $options)
+                    <p>Turns this object into a json serialized object</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_make">
+        <div class="location">at line 37</div>
+        <code>            public            <abbr title="Devise\Search\$this">$this</abbr>
+    <strong>make</strong>(<abbr title="Devise\Search\$collection">$collection</abbr> $collection, <abbr title="Devise\Search\$page">$page</abbr> $page, <abbr title="Devise\Search\$perPage">$perPage</abbr> $perPage)</code>
+    </h3>
+    <div class="details">
+        <p>Makes a new paginated result from a collection</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Search\$collection">$collection</abbr></td>
+                <td>$collection</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Search\$page">$page</abbr></td>
+                <td>$page</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Search\$perPage">$perPage</abbr></td>
+                <td>$perPage</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Search\$this">$this</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_links">
+        <div class="location">at line 65</div>
+        <code>            public            mixed
+    <strong>links</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Lets us do links on this paginated object</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_toArray">
+        <div class="location">at line 75</div>
+        <code>            public            array
+    <strong>toArray</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Turns this paginated object into an array</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_appends">
+        <div class="location">at line 93</div>
+        <code>            public            <abbr title="Devise\Search\$this">$this</abbr>
+    <strong>appends</strong>(<abbr title="Devise\Search\$data">$data</abbr> $data)</code>
+    </h3>
+    <div class="details">
+        <p>Append input queries</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Search\$data">$data</abbr></td>
+                <td>$data</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Devise\Search\$this">$this</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getIterator">
+        <div class="location">at line 107</div>
+        <code>            public            <a href="http://php.net/Traversable"><abbr title="Traversable">Traversable</abbr></a>
+    <strong>getIterator</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Iterator lets us traverse this paginated object</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/Traversable"><abbr title="Traversable">Traversable</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_toJson">
+        <div class="location">at line 118</div>
+        <code>            public            string
+    <strong>toJson</strong>(int $options)</code>
+    </h3>
+    <div class="details">
+        <p>Turns this object into a json serialized object</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$options</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

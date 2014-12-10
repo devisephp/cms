@@ -13,10 +13,10 @@ class CreateUsers extends Migration {
     {
         Schema::create('users', function($table) {
             $table->increments('id');
-            $table->string('name', 255);
+            $table->string('name', 255)->nullable();
             $table->string('email', 255);
             $table->string('password', 255);
-            $table->boolean('activated');
+            $table->boolean('activated')->default(false);
             $table->string('activate_code', 255)->nullable();
             $table->string('remember_token', 255)->nullable();
             $table->timestamp('created_at')->default('0000-00-00 00:00:00');

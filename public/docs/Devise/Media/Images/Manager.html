@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Devise\Media\Images\Manager | Devise</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../traits.html">Traits</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Devise</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Devise/Media/Images.html">Devise\Media\Images</a>\Manager</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>Manager</strong></p>
+
+            <div class="description">
+            <p>Class Manager takes care of image management.</p>
+            <p>This lets us
+get a list of images and also crop and resize images</p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../Devise/Media/Files/Filesystem.html"><abbr title="Devise\Media\Files\Filesystem">Filesystem</abbr></a> $Filesystem, <a href="../../../Devise/Media/Categories/CategoryPaths.html"><abbr title="Devise\Media\Categories\CategoryPaths">CategoryPaths</abbr></a> $CategoryPaths, <a href="../../../Devise/Media/Images/Images.html"><abbr title="Devise\Media\Images\Images">Images</abbr></a> $Images, <abbr title="Illuminate\Config\Repository">Repository</abbr> $Config = null)
+                    <p>Construct a new image manager</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    array
+                </td>
+                <td class="last">
+                    <a href="#method_extractImagesForCallback">extractImagesForCallback</a>(<abbr title="Devise\Media\Images\$input">$input</abbr> $input)
+                    <p>Not sure what this is for.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getImageUrl">getImageUrl</a>(<abbr title="Devise\Media\Images\$input">$input</abbr> $input)
+                    <p>Image url for a given category and image</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_cropAndSaveFile">cropAndSaveFile</a>(<abbr title="Devise\Media\Images\$input">$input</abbr> $input)
+                    <p>Crop and save an image</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 37</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../Devise/Media/Files/Filesystem.html"><abbr title="Devise\Media\Files\Filesystem">Filesystem</abbr></a> $Filesystem, <a href="../../../Devise/Media/Categories/CategoryPaths.html"><abbr title="Devise\Media\Categories\CategoryPaths">CategoryPaths</abbr></a> $CategoryPaths, <a href="../../../Devise/Media/Images/Images.html"><abbr title="Devise\Media\Images\Images">Images</abbr></a> $Images, <abbr title="Illuminate\Config\Repository">Repository</abbr> $Config = null)</code>
+    </h3>
+    <div class="details">
+        <p>Construct a new image manager</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../Devise/Media/Files/Filesystem.html"><abbr title="Devise\Media\Files\Filesystem">Filesystem</abbr></a></td>
+                <td>$Filesystem</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Devise/Media/Categories/CategoryPaths.html"><abbr title="Devise\Media\Categories\CategoryPaths">CategoryPaths</abbr></a></td>
+                <td>$CategoryPaths</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Devise/Media/Images/Images.html"><abbr title="Devise\Media\Images\Images">Images</abbr></a></td>
+                <td>$Images</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Illuminate\Config\Repository">Repository</abbr></td>
+                <td>$Config</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_extractImagesForCallback">
+        <div class="location">at line 52</div>
+        <code>            public            array
+    <strong>extractImagesForCallback</strong>(<abbr title="Devise\Media\Images\$input">$input</abbr> $input)</code>
+    </h3>
+    <div class="details">
+        <p>Not sure what this is for.</p>
+        <p>Looks like it extracts images
+from a category path...</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Media\Images\$input">$input</abbr></td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getImageUrl">
+        <div class="location">at line 76</div>
+        <code>            public            string
+    <strong>getImageUrl</strong>(<abbr title="Devise\Media\Images\$input">$input</abbr> $input)</code>
+    </h3>
+    <div class="details">
+        <p>Image url for a given category and image</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Media\Images\$input">$input</abbr></td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_cropAndSaveFile">
+        <div class="location">at line 89</div>
+        <code>            public            string
+    <strong>cropAndSaveFile</strong>(<abbr title="Devise\Media\Images\$input">$input</abbr> $input)</code>
+    </h3>
+    <div class="details">
+        <p>Crop and save an image</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Devise\Media\Images\$input">$input</abbr></td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

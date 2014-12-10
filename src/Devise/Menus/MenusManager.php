@@ -1,21 +1,49 @@
 <?php namespace Devise\Menus;
 
-use Menu, MenuItem;
-use Devise\Common\Manager;
+use Devise\Support\Framework;
 
-class MenusManager extends Manager
+class MenusManager
 {
-	protected $Menu, $MenuItem;
+    /**
+     * Keeps up with model for DvsMenu
+     *
+     * @var \DvsMenu
+     */
+	protected $Menu;
 
-	/**
-	 * Construct a new user manager
-	 *
-	 * @param Menu $Menu
-	 */
-	public function __construct(Menu $Menu, MenuItem $MenuItem)
+    /**
+     * Keeps up with model for DvsMenuItem
+     *
+     * @var \DvsMenuItem
+     */
+    protected $MenuItem;
+
+    /**
+     * Keeps any errors from validation
+     *
+     * @var \errors
+     */
+    public $errors;
+
+    /**
+     * Generic message for success or failure of method execution
+     *
+     * @var \message
+     */
+    public $message;
+
+    /**
+     * Construct a new user manager
+     *
+     * @param \DvsMenu $Menu
+     * @param \errors $MenuItem
+     * @param Framework $Framework
+     */
+	public function __construct(\DvsMenu $Menu, \DvsMenuItem $MenuItem, Framework $Framework)
 	{
 		$this->Menu = $Menu;
 		$this->MenuItem = $MenuItem;
+        $this->Validator = $Framework->Validator;
 	}
 
 	/**
@@ -38,13 +66,23 @@ class MenusManager extends Manager
 	 */
 	public function createMenu($input)
 	{
-		if ($this->fails($input, $this->createRules(), "Could not create new menu")) return false;
+        $validator = $this->Validator->make($input, $this->createRules());
 
-		$menu = $this->Menu;
-		$menu->name = $input['name'];
-		$menu->save();
+        if ($validator->fails()){
+            $this->message = 'Validation failure.';
+            $this->errors = $validator->errors()->all();
 
-		return $menu;
+            return false;
+        } else {
+
+            $this->message = 'Menu item created.';
+    		$menu = $this->Menu;
+            $menu->language_id = $input['language_id'];
+    		$menu->name = $input['name'];
+    		$menu->save();
+
+    		return $menu;
+        }
 	}
 
 	/**
@@ -56,38 +94,49 @@ class MenusManager extends Manager
 	public function updateRules($id)
 	{
 		return array(
-			'name' => "required|unique:dvs_menus,name,{$id}"
-			// something about menu links too?
+			'name' => "required|unique:dvs_menus,name,{$id}",
+            'item' => 'array',
+            'item_order' => 'array',
 		);
 	}
 
-	/**
-	 * Updates the active field of a Menu
-	 *
-	 * @param  array $input
-	 * @return Menu || null
-	 */
+    /**
+     * Updates the active field of a Menu
+     *
+     * @param $id
+     * @param  array $input
+     * @return Menu || null
+     */
 	public function updateMenu($id, $input)
 	{
-		if ($this->fails($input, $this->updateRules($id), "Could not update menu")) return false;
+        $validator = $this->Validator->make($input, $this->updateRules($id));
 
-		$menu = $this->Menu->findOrFail($id);
-		$menu->name = $input['name'];
-		$menu->save();
+        if ($validator->fails()){
+            $this->message = 'Validation failure.';
+            $this->errors = $validator->errors()->all();
 
-		$this->syncMenuItems($menu, $input);
+            return false;
+        } else {
 
-		return $menu;
+    		$menu = $this->Menu->findOrFail($id);
+    		$menu->name = $input['name'];
+    		$menu->save();
+
+    		$this->syncMenuItems($menu, $input);
+
+    		return $menu;
+        }
 	}
 
-	/**
-	 * Sync the menu items with this menu, this
-	 * creates new items, reorders the positions
-	 * and updates parent item ids too.
-	 *
-	 * @param Menu $menu
-	 * @return void
-	 */
+    /**
+     * Sync the menu items with this menu, this
+     * creates new items, reorders the positions
+     * and updates parent item ids too.
+     *
+     * @param Menu $menu
+     * @param $input
+     * @return void
+     */
 	protected function syncMenuItems($menu, $input)
 	{
 		$position = 0;
@@ -110,7 +159,6 @@ class MenusManager extends Manager
 			$menuItem->position = $position++;
 			$menuItem->save();
 		}
-
 
 		// user removed these menu items so let's remove in database
 		$removeItems = array_diff($menu->allItems()->lists('id'), array_keys($items));

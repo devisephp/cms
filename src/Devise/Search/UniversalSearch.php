@@ -1,5 +1,11 @@
 <?php namespace Devise\Search;
 
+/**
+ * Class UniversalSearch lets us register new searchable models
+ * and then search through all of them
+ *
+ * @package Devise\Search
+ */
 class UniversalSearch
 {
 	/**
@@ -31,18 +37,21 @@ class UniversalSearch
 		$this->registered[] = $item;
 	}
 
-	/**
-	 * Search through all registered searchers
-	 * and put them together in results
-	 *
-	 * @param  string $text
-	 * @return array
-	 */
+    /**
+     * Search through all registered searchers
+     * and put them together in results
+     *
+     * @param $for
+     * @param int $page
+     * @param int $perPage
+     * @throws \Devise\Support\DeviseException
+     * @return array
+     */
 	public function search($for, $page = 1, $perPage = 10)
 	{
 		$limit = 100;
 
-		if ($perPage > $limit) throw new \Exception("Cannot have more than $limit results per page");
+		if ($perPage > $limit) throw new \Devise\Support\DeviseException("Cannot have more than $limit results per page");
 
 		// first pass, give everyone a fair chance to get into the collection
 		$collection = $this->searchRegistered($for, $limit);
@@ -65,10 +74,11 @@ class UniversalSearch
 	}
 
 	/**
-	 * [searchRegistered description]
-	 * @param  [type] $for   [description]
-	 * @param  [type] $limit [description]
-	 * @return [type]        [description]
+	 * Search all the registered searchables
+     *
+	 * @param  text $for
+	 * @param  integer $limit
+	 * @return Collection
 	 */
 	protected function searchRegistered($for, $limit)
 	{
@@ -85,12 +95,15 @@ class UniversalSearch
 	}
 
 	/**
-	 * [searchRegisteredSecondPass description]
-	 * @param  [type] $for        [description]
-	 * @param  [type] $limit      [description]
-	 * @param  [type] $leftover   [description]
-	 * @param  [type] $collection [description]
-	 * @return [type]             [description]
+	 * On the second pass it's all about trying to take up
+     * as much of the leftovers as you want, like an all you
+     * can eat salad bar
+     *
+	 * @param  string $for
+	 * @param  integer $limit
+	 * @param  integer $leftover
+	 * @param  Collection $collection
+	 * @return Collection
 	 */
 	protected function searchRegisteredSecondPass($for, $limit, $leftover, $collection)
 	{

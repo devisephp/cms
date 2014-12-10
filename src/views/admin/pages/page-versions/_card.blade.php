@@ -1,5 +1,5 @@
- @php
-    $pagesRepo = App::make('Devise\Pages\Repositories\PagesRepository');
+@php
+    $pagesRepo = App::make('Devise\Pages\PagesRepository');
     $liveVersion = $pagesRepo->getLivePageVersion($page);
 @endphp
 

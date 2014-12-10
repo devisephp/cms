@@ -75,5 +75,8 @@
 {{ Form::close() }}
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/video']);
+    require(['devise/app/sidebar/video'], function(obj)
+    {
+        obj.init();
+    });
 </script>

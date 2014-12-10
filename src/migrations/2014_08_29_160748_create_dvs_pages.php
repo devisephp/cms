@@ -14,8 +14,8 @@ class CreateDvsPages extends Migration {
         Schema::create('dvs_pages', function($table) {
             $table->increments('id');
             $table->integer('language_id');
-            $table->integer('translated_from_page_id');
-            $table->string('view', 255);
+            $table->integer('translated_from_page_id')->default(0);
+            $table->string('view', 255)->nullable();
             $table->string('title', 255);
             $table->string('http_verb', 255)->default('get');
             $table->string('route_name', 255);

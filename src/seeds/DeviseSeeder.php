@@ -20,5 +20,8 @@ class DeviseSeeder extends \Illuminate\Database\Seeder {
 		$this->call('DeviseGroupUserSeeder');
 		$this->call('DeviseFieldsSeeder');
 		$this->call('DeviseDevPagesSeeder');
+		$this->call('DeviseCollectionInstancesSeeder');
+		$this->call('DeviseCollectionSetsSeeder');
+		$this->call('DeviseGlobalFieldsSeeder');
 	}
 }

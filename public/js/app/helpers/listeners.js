@@ -16,6 +16,8 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
         $('body').on('dvsCloseAdmin', '#dvs-mode', function(){
             closeAdmin();
         });
+
+        addSidebarGroupsChangeListener();
     }
 
     var listeners = {
@@ -122,13 +124,14 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
 
     function addSidebarLanguageListener() {
         $('#dvs-sidebar-language-selector').change(function(){
-            window.location = $(this).val();
+            window.location = $(this).find("option:selected").val();
         });
     }
 
     function addSidebarSaveListener() {
         $('#dvs-sidebar .dvs-sidebar-save-group').click(function (evt) {
-            $(this).closest('.dvs-sidebar-elements').find('form').each(function () {
+
+            $('#dvs-sidebar-current-element').find('form').each(function () {
 
                 var config = {continue: true};
                 $(this).trigger('beforeSave', [config]);
@@ -164,8 +167,8 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
         $('#dvs-sidebar-groups').change(function () {
             var _selectedGroup = $(this).find('.dvs-select').val();
 
-            $('.dvs-sidebar-group').removeClass('active');
-            $('#dvs-sidebar-group-' + _selectedGroup).addClass('active');
+            $('.dvs-sidebar-group').removeClass('dvs-active');
+            $('#dvs-sidebar-group-' + _selectedGroup).addClass('dvs-active');
 
             $(".dvs-accordion").accordion("refresh");
 
@@ -196,6 +199,8 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
 
     function closeAdmin()
     {
+        $('#dvs-sidebar-container').hide().css('width','428px');
+        $('#dvs-sidebar-scroller').css('width','478px');
         $('#dvs-mode').removeClass('dvs-node-mode dvs-admin-mode dvs-sidebar-mode');
         $('#dvs-nodes').html('');
         $('#dvs-node-mode-button').html('Edit Page');
@@ -205,6 +210,7 @@ define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsColl
 
     function openSidebar(node)
     {
+        $('#dvs-sidebar-container').show();
         sidebarView.init(node);
 
         $('#dvs-mode')

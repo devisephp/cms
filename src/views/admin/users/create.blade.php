@@ -21,6 +21,11 @@
             </div>
 
             <div class="dvs-form-group">
+                {{ Form::label('Name') }}
+                {{ Form::text('name') }}
+            </div>
+
+            <div class="dvs-form-group">
                 {{ Form::label('Email') }}
                 {{ Form::text('email') }}
             </div>

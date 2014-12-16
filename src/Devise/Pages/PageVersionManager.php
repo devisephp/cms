@@ -37,11 +37,13 @@ class PageVersionManager
      * @param  int $createdByUserId
      * @return PageVersion
      */
-    public function createNewPageVersion($pageId, $name, $createdByUserId)
+    public function createNewPageVersion($pageId, $name, $createdByUserId, $startsAt = null, $endsAt = null)
     {
         $version = $this->PageVersion->newInstance();
         $version->page_id = $pageId;
         $version->name = $name;
+        $version->starts_at = $startsAt;
+        $version->ends_at = $endsAt;
         $version->created_by_user_id = $createdByUserId;
         $version->preview_hash = null;
         $version->save();
@@ -55,9 +57,9 @@ class PageVersionManager
      * @param  Page $page
      * @return PageVersion
      */
-    public function createDefaultPageVersion($page)
+    public function createDefaultPageVersion($page, $startsAt = null)
     {
-        return $this->createNewPageVersion($page->id, 'Default', $this->UserHelper->currentUserId());
+        return $this->createNewPageVersion($page->id, 'Default', $this->UserHelper->currentUserId(), $startsAt);
     }
 
     /**

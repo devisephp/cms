@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui'], function($)
+define(['jquery', 'jquery-ui', 'datetimepicker'], function($)
 {
     return function(selector, options)
     {

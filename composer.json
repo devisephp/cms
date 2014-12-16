@@ -12,7 +12,8 @@
         "masterminds/html5": "1.*",
         "guzzlehttp/guzzle": "~4.0",
         "zencoder/zencoder-php": "*",
-        "ext-imagick": "*"
+        "ext-imagick": "*",
+        "symfony/console": "~2.0"
     },
     "require-dev": {
         "laravel/framework": "*",

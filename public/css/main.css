@@ -358,9 +358,9 @@ table td a {
   width: 100px;
   height: 40px;
   color: #fff;
-  border-radius: 4px 4px 0 0;
+  border-radius: 3px 0 0 0;
   border-width: 0;
-  background-color: rgba(16, 165, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.7);
   cursor: pointer;
   outline: none;
   z-index: 10005;
@@ -372,9 +372,13 @@ table td a {
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   transition: all 0.5s; }
+  #dvs-admin-mode-button:hover,
+  #dvs-node-mode-button:hover {
+    background-color: rgba(0, 0, 0, 0.9); }
 
 #dvs-admin-mode-button {
-  right: 20px; }
+  right: 20px;
+  border-radius: 0 3px 0 0; }
 
 .dvs-select-wrapper {
   position: relative;
@@ -480,10 +484,10 @@ table td a {
     cursor: pointer;
     position: relative; }
 .dvs-node-mode #dvs-node-mode-button {
-  width: 100px;
-  height: 100px;
-  right: 45%;
-  border-radius: 50px; }
+  height: 45px;
+  color: #424242;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2); }
 .dvs-node-mode #dvs-sidebar {
   -webkit-transform: translate3d(-100%, 0, 0);
   -moz-transform: translate3d(-100%, 0, 0);
@@ -528,7 +532,7 @@ table td a {
       z-index: 10; }
       .dvs-node-mode #dvs-nodes .dvs-node > span .count {
         text-align: center;
-        display: inline-block;
+        display: none;
         background-color: rgba(0, 0, 0, 0.8);
         border-radius: 10px;
         min-width: 20px;
@@ -546,6 +550,8 @@ table td a {
         position: relative;
         padding: 0 40px 0 20px;
         top: 40px; }
+      .dvs-node-mode #dvs-nodes .dvs-node.left:hover, .dvs-node-mode #dvs-nodes .dvs-node.column:hover, .dvs-node-mode #dvs-nodes .dvs-node.col1:hover, .dvs-node-mode #dvs-nodes .dvs-node.col2:hover, .dvs-node-mode #dvs-nodes .dvs-node.col3:hover, .dvs-node-mode #dvs-nodes .dvs-node.col4:hover, .dvs-node-mode #dvs-nodes .dvs-node.col5:hover, .dvs-node-mode #dvs-nodes .dvs-node.col6:hover, .dvs-node-mode #dvs-nodes .dvs-node.col7:hover, .dvs-node-mode #dvs-nodes .dvs-node.col8:hover, .dvs-node-mode #dvs-nodes .dvs-node.col9:hover, .dvs-node-mode #dvs-nodes .dvs-node.col10:hover, .dvs-node-mode #dvs-nodes .dvs-node.col11:hover, .dvs-node-mode #dvs-nodes .dvs-node.col12:hover {
+        left: -5px; }
     .dvs-node-mode #dvs-nodes .dvs-node.right {
       right: 1px; }
       .dvs-node-mode #dvs-nodes .dvs-node.right .dvs-node-inner-wrapper {
@@ -562,6 +568,8 @@ table td a {
         position: relative;
         padding: 0 20px 0 70px;
         top: 52px; }
+      .dvs-node-mode #dvs-nodes .dvs-node.right:hover {
+        right: -4px; }
 
 #dvs-admin {
   background-color: #262424;
@@ -1158,10 +1166,16 @@ table.dvs-admin-table {
   -o-transform: translate3d(200px, 0, -1000px) rotateY(-10deg);
   transform: translate3d(200px, 0, -1000px) rotateY(-10deg); }
 .dvs-sidebar-mode #dvs-node-mode-button {
+  font-size: 12px;
+  font-family: "Roboto", Tahoma, Arial, sans-serif;
   width: 0px;
   height: 0px;
   opacity: 0;
   right: 45%; }
+
+#dvs-mode #dvs-node-mode-button,
+#dvs-mode #dvs-admin-mode-button {
+  font-family: "Roboto", Tahoma, Arial, sans-serif; }
 
 #dvs-sidebar-contents-container {
   margin: 20px;
@@ -1190,6 +1204,7 @@ table.dvs-admin-table {
   z-index: 10010;
   opacity: 0;
   width: 328px;
+  color: whitesmoke;
   background: #262626;
   font-size: 12px;
   font-family: "Roboto", Tahoma, Arial, sans-serif;
@@ -1222,7 +1237,7 @@ table.dvs-admin-table {
   #dvs-sidebar .dvs-element-color input[type=text] {
     color: white; }
   #dvs-sidebar select {
-    color: #262626;
+    color: whitesmoke;
     background-color: white;
     padding: 20px; }
 
@@ -1238,12 +1253,16 @@ table.dvs-admin-table {
   #dvs-sidebar-groups .dvs-select-wrapper, #dvs-sidebar-versions-selector .dvs-select-wrapper {
     float: left;
     width: 209px;
-    margin-right: 3px; }
+    margin-right: 3px;
+    color: whitesmoke;
+    font-family: "Roboto", Tahoma, Arial, sans-serif; }
   #dvs-sidebar-groups button, #dvs-sidebar-versions-selector button {
     float: right;
     width: 76px;
     padding-left: 10px;
-    padding-right: 10px; }
+    padding-right: 10px;
+    color: whitesmoke;
+    font-family: "Roboto", Tahoma, Arial, sans-serif; }
 
 #dvs-sidebar-groups {
   margin-top: 3px; }
@@ -1261,11 +1280,14 @@ table.dvs-admin-table {
   #dvs-sidebar-title h1 {
     margin: 0;
     float: left;
+    color: whitesmoke;
+    font-family: "Roboto", Tahoma, Arial, sans-serif;
     font-size: 18px;
     font-weight: 300; }
   #dvs-sidebar-title a {
     float: right;
-    color: whitesmoke; }
+    color: whitesmoke;
+    font-family: "Roboto", Tahoma, Arial, sans-serif; }
 
 .dvs-sidebar-close {
   cursor: pointer; }
@@ -1279,9 +1301,9 @@ table.dvs-admin-table {
     height: 84px;
     padding: 27px 15px;
     background-color: #333333;
-    color: #d9d9d9;
+    color: #cfcfcf;
     font-size: 12px;
-    font-weight: 400;
+    font-family: "Roboto", Tahoma, Arial, sans-serif;
     outline: none;
     cursor: pointer;
     width: 138px; }
@@ -1308,15 +1330,17 @@ table.dvs-admin-table {
   .dvs-sidebar-elements h4, .dvs-sidebar-elements label, .dvs-sidebar-group h4, .dvs-sidebar-group label {
     width: 100%;
     margin: 10px 0;
-    color: #fff;
+    color: whitesmoke;
     font-size: 12px;
+    font-family: "Roboto", Tahoma, Arial, sans-serif;
     text-transform: uppercase; }
   .dvs-sidebar-elements h4, .dvs-sidebar-group h4 {
     margin: 18px 0 0 0;
-    font-size: 18px;
     color: #76cbff;
-    text-transform: none;
+    font-size: 18px;
+    font-family: "Roboto", Tahoma, Arial, sans-serif;
     font-weight: 300;
+    text-transform: none;
     border-bottom: 1px solid #10a5ff; }
 
 #dvs-sidebar-breadcrumbs {
@@ -1324,6 +1348,7 @@ table.dvs-admin-table {
   clear: both;
   text-transform: uppercase;
   font-size: 10px;
+  font-family: "Roboto", Tahoma, Arial, sans-serif;
   padding: 0 20px 20px;
   color: #6b6b6b; }
   #dvs-sidebar-breadcrumbs a {
@@ -1343,26 +1368,25 @@ table.dvs-admin-table {
   clear: both;
   padding: 0 20px 20px;
   font-size: 13px;
+  font-family: "Roboto", Tahoma, Arial, sans-serif;
   display: none; }
   #dvs-sidebar-current-element label {
     display: block;
     color: #cfcfcf;
+    font-family: "Roboto", Tahoma, Arial, sans-serif;
     font-weight: 400;
     margin-bottom: 8px; }
   #dvs-sidebar-current-element .dvs-property {
     margin-top: 20px; }
     #dvs-sidebar-current-element .dvs-property:first-child {
       margin-top: 0; }
-  #dvs-sidebar-current-element input[type="text"] {
-    background-color: black;
-    border-width: 0;
-    padding: 10px;
-    width: 100%; }
+  #dvs-sidebar-current-element input[type="text"],
   #dvs-sidebar-current-element textarea {
     width: 100%;
+    padding: 10px;
+    font-family: "Roboto", Tahoma, Arial, sans-serif;
     background-color: black;
-    border-width: 0;
-    padding: 10px; }
+    border-width: 0; }
   #dvs-sidebar-current-element .dvs-sidebar-button-grid {
     margin: 20px 0; }
     #dvs-sidebar-current-element .dvs-sidebar-button-grid:after {
@@ -1373,8 +1397,9 @@ table.dvs-admin-table {
     #dvs-sidebar-current-element .dvs-sidebar-button-grid button {
       float: left;
       margin: 2px 2px 0 0;
-      color: white;
       padding: 15px 3px;
+      color: white;
+      font-family: "Roboto", Tahoma, Arial, sans-serif;
       text-align: center;
       cursor: pointer;
       width: 185px; }
@@ -1382,32 +1407,37 @@ table.dvs-admin-table {
       #dvs-sidebar-current-element .dvs-sidebar-button-grid button.dvs-button-secondary {
         width: 99px; }
     #dvs-sidebar-current-element .dvs-sidebar-button-grid label {
+      font-family: "Roboto", Tahoma, Arial, sans-serif;
       background-color: #8d8d8d;
       -webkit-transition: all 0.4s ease;
       -moz-transition: all 0.4s ease;
       transition: all 0.4s ease; }
     #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox] {
       position: absolute;
-      visibility: hidden; }
+      visibility: hidden;
+      font-family: "Roboto", Tahoma, Arial, sans-serif; }
       #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox]:checked + label {
+        font-family: "Roboto", Tahoma, Arial, sans-serif;
         background-color: #7dbd5d; }
 
 .dvs-sidebar-discard, .dvs-sidebar-save-group {
   display: block;
-  background-color: #7dbd5d;
-  color: white;
   width: 100%;
   padding: 27px 15px;
+  color: white;
+  font-family: "Roboto", Tahoma, Arial, sans-serif;
   font-size: 22px;
   font-weight: 600;
   text-transform: uppercase;
+  background-color: #7dbd5d;
   border-width: 0; }
 
 .dvs-sidebar-discard {
-  font-size: 16px;
   padding: 10px;
-  background-color: #333333;
-  color: white; }
+  color: white;
+  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  font-size: 16px;
+  background-color: #333333; }
 
 .dvs-sidebar-datetime-element .xdsoft_datetimepicker .xdsoft_datepicker {
   width: 204px;
@@ -1453,12 +1483,12 @@ table.dvs-admin-table {
       border-width: 0;
       color: #262626; }
     #dvs-sidebar-collections .dvs-new-collection button {
-      background-color: #7dbd5d;
+      margin-top: 8px;
       padding-left: 10px;
       padding-right: 10px;
-      margin-top: 8px;
+      color: whitesmoke;
       font-weight: 600;
-      color: #fff; }
+      background-color: #7dbd5d; }
     #dvs-sidebar-collections .dvs-new-collection p {
       margin-bottom: 16px; }
 

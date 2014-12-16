@@ -67,7 +67,7 @@ class MenusRepository
     public function findById($id)
     {
         $menu = $this->Menu->find($id);
-        
+
         if ($this->currentLanguage->id != $this->LanguageDetector->primaryLanguageId())
         {
             $menu = $this->getTranslation($menu);
@@ -221,7 +221,7 @@ class MenusRepository
             {
                 // this item is the active item
                 $menuItem->activeItem = true;
-                
+
                 $this->activeItemChildren = $menuItem->children;
                 $this->activeItemSiblings = $menuItems;
 

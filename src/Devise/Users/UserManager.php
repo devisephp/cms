@@ -99,7 +99,7 @@ class UserManager
     		$user->password = $this->Hash->make(array_get($input, 'password'));
     		$user->save();
 
-    		$user->groups()->sync([array_get($input, 'group_id')]);
+    		$user->groups()->sync([array_get($input, 'group_id', [])]);
 
     		return $user;
         }

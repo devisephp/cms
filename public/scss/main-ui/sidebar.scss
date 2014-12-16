@@ -8,10 +8,18 @@
     @include transform(translate3d(200px, 0, -1000px) rotateY(-10deg));
   }
   #dvs-node-mode-button {
+    font-size: $sidebarMainFontSize;
+    font-family: $sidebarMainFont;
     width: 0px;
     height: 0px;
     opacity: 0;
     right: 45%;
+  }
+}
+#dvs-mode {
+  #dvs-node-mode-button,
+  #dvs-admin-mode-button {
+    font-family: $sidebarMainFont;
   }
 }
 #dvs-sidebar-contents-container {
@@ -41,6 +49,7 @@
   z-index: 10010;
   opacity: 0;
   width: $sidebarWidth;
+  color: $sidebarTextColor;
   background: $sidebarBgColor;
   font-size: $sidebarMainFontSize;
   font-family: $sidebarMainFont;
@@ -68,9 +77,8 @@
         color:$white;
       }
   }
-
   select {
-    color:$black;
+    color: $sidebarTextColor;
     background-color: $white;
     padding:$sidebarGeneralPadding;
   }
@@ -89,12 +97,16 @@
     float: left;
     width: 209px;
     margin-right: 3px;
+    color: $sidebarTextColor;
+    font-family: $sidebarMainFont;
   }
   button {
     float: right;
     width: 76px;
     padding-left: 10px;
     padding-right: 10px;
+    color: $sidebarTextColor;
+    font-family: $sidebarMainFont;
   }
 }
 #dvs-sidebar-groups {
@@ -110,12 +122,15 @@
   h1 {
     margin: 0;
     float: left;
+    color: $sidebarTextColor;
+    font-family: $sidebarMainFont;
     font-size: $sidebarHeaderFontSize;
     font-weight: $sidebarHeaderFontWeight;
   }
   a {
     float: right;
     color: $sidebarTextColor;
+    font-family: $sidebarMainFont;
   }
 }
 .dvs-sidebar-close {
@@ -131,9 +146,9 @@
     height:84px;
     padding: 27px 15px;
     background-color: $sidebarElementsButton;
-    color: darken(#fff, 15%);
-    font-size: 12px;
-    font-weight: 400;
+    color: darken($sidebarTextColor, 15%);
+    font-size: $sidebarMainFontSize;
+    font-family: $sidebarMainFont;
     outline: none;
     cursor: pointer;
     width: ($sidebarWidth / 2) - 26;
@@ -145,32 +160,32 @@
       margin-right: 0;
     }
   }
-  > div {
-    > div {
+  > div > div {
+    @include clearfix;
+    padding: 0 15px 18px 12px;
+    box-sizing: content-box;
+    overflow: auto;
+    height: 400px;
+    form {
+      display: block;
       @include clearfix;
-      padding: 0 15px 18px 12px;
-      box-sizing: content-box;
-      overflow: auto;
-      height: 400px;
-      form {
-        display: block;
-        @include clearfix;
-      }
     }
   }
   h4, label {
     width: 100%;
     margin: 10px 0;
-    color: #fff;
-    font-size: 12px;
+    color: $sidebarTextColor;
+    font-size: $sidebarMainFontSize;
+    font-family: $sidebarMainFont;
     text-transform: uppercase;
   }
   h4 {
     margin: 18px 0 0 0;
-    font-size: 18px;
     color: lighten(#10a5ff, 20%);
+    font-size: $sidebarMainFontSize + 6;
+    font-family: $sidebarMainFont;
+    font-weight: $sidebarHeaderFontWeight;
     text-transform: none;
-    font-weight: 300;
     border-bottom: 1px solid #10a5ff;
   }
 }
@@ -179,7 +194,8 @@
   display:none;
   clear:both;
   text-transform: uppercase;
-  font-size:10px;
+  font-size: $sidebarMainFontSize - 2;
+  font-family: $sidebarMainFont;
   padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
   color: $sidebarBreadcrumbActive;
 
@@ -198,19 +214,20 @@
     border-width: 3px 0 3px 5px;
     border-color: transparent transparent transparent $sidebarBreadcrumbLink;
   }
-
 }
 
 #dvs-sidebar-current-element {
   clear:both;
   padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
-  font-size:13px;
+  font-size: $sidebarMainFontSize + 1;
+  font-family: $sidebarMainFont;
   display:none;
 
   label {
     display:block;
     color: darken($sidebarTextColor, 15%);
-    font-weight:400;
+    font-family: $sidebarMainFont;
+    font-weight: $sidebarHeaderFontWeight + 100;
     margin-bottom:8px;
   }
 
@@ -222,22 +239,16 @@
     }
   }
 
-  input[type="text"] {
-    background-color: darken($sidebarBgColor, 15%);
-    border-width:0;
-    padding: $sidebarGeneralPadding / 2;
-    width:100%;
-  }
-
+  input[type="text"],
   textarea {
     width:100%;
+    padding: $sidebarGeneralPadding / 2;
+    font-family: $sidebarMainFont;
     background-color: darken($sidebarBgColor, 15%);
     border-width:0;
-    padding: $sidebarGeneralPadding / 2;
   }
 
   .dvs-sidebar-button-grid {
-
     @include clearfix;
     margin: $sidebarGeneralPadding 0;
 
@@ -245,8 +256,9 @@
     button {
       float:left;
       margin:2px 2px 0 0;
-      color:$primaryButtonTextColor;
       padding: 15px 3px;
+      color:$primaryButtonTextColor;
+      font-family: $sidebarMainFont;
       text-align: center;
       cursor: pointer;
       width:185px;
@@ -257,38 +269,42 @@
     }
 
     label {
+      font-family: $sidebarMainFont;
       background-color:desaturate($primaryButtonBgColor, 100%);
       @include transition( all .4s ease );
     }
 
-
     input[type=checkbox] {
       position:absolute;
       visibility: hidden;
+      font-family: $sidebarMainFont;
 
-      &:checked + label { background-color:$primaryButtonBgColor; }
+      &:checked + label {
+        font-family: $sidebarMainFont;
+        background-color:$primaryButtonBgColor;
+      }
     }
   }
 }
 
-
-
 .dvs-sidebar-discard, .dvs-sidebar-save-group {
   display: block;
-  background-color: $sidebarSaveButtonBgColor;
-  color: $sidebarSaveButtonTextColor;
   width: 100%;
   padding: 27px 15px;
-  font-size: 22px;
-  font-weight: 600;
+  color: $sidebarSaveButtonTextColor;
+  font-family: $sidebarMainFont;
+  font-size: $sidebarMainFontSize + 10;
+  font-weight: $sidebarMainFontWeight + 200;
   text-transform: uppercase;
+  background-color: $sidebarSaveButtonBgColor;
   border-width: 0;
 }
 .dvs-sidebar-discard {
-  font-size: 16px;
   padding: 10px;
-  background-color: $sidebarDiscardButtonBgColor;
   color: $sidebarDiscardButtonTextColor;
+  font-family: $sidebarMainFont;
+  font-size: $sidebarMainFontSize + 4;
+  background-color: $sidebarDiscardButtonBgColor;
 }
 .dvs-sidebar-datetime-element {
   .xdsoft_datetimepicker {
@@ -349,12 +365,12 @@
       color: $sidebarBgColor;
     }
     button {
-      background-color:$primaryButtonBgColor;
+      margin-top: 8px;
       padding-left: 10px;
       padding-right: 10px;
-      margin-top: 8px;
+      color: $sidebarTextColor;
       font-weight: 600;
-      color: #fff;
+      background-color:$primaryButtonBgColor;
     }
     p {
       margin-bottom: 16px;

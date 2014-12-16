@@ -46,7 +46,7 @@ class UsersResponseHandlerTest extends \DeviseTestCase
     {
         $this->UserManager->errors = true;
         $this->UserManager->message = 'There was an error';
-        $this->UserManager->shouldReceive('createUser')->once()->andReturnSelf();
+        $this->UserManager->shouldReceive('createUser')->once()->andReturn(false);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('withInput')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('withErrors')->once()->andReturnSelf();
@@ -59,6 +59,7 @@ class UsersResponseHandlerTest extends \DeviseTestCase
     {
         $this->UserManager->shouldReceive('createUser')->once()->andReturn(new \DvsUser);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
+        $this->Framework->Redirect->shouldReceive('with')->once()->andReturnSelf();
         $this->UsersResponseHandler->requestCreateUser(['foo' => 'input data']);
     }
 
@@ -66,7 +67,7 @@ class UsersResponseHandlerTest extends \DeviseTestCase
     {
         $this->UserManager->errors = true;
         $this->UserManager->message = 'There was an error';
-        $this->UserManager->shouldReceive('updateUser')->once()->andReturnSelf();
+        $this->UserManager->shouldReceive('updateUser')->once()->andReturn(false);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('withInput')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('withErrors')->once()->andReturnSelf();
@@ -79,6 +80,7 @@ class UsersResponseHandlerTest extends \DeviseTestCase
     {
         $this->UserManager->shouldReceive('updateUser')->once()->andReturn(new \DvsUser);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
+        $this->Framework->Redirect->shouldReceive('with')->once()->andReturnSelf();
         $this->UsersResponseHandler->requestUpdateUser(1, ['foo' => 'input data']);
     }
 

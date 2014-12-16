@@ -16,7 +16,7 @@
     <div class="dvs-admin-form-horizontal">
         {{ Form::model($page, array('method' => 'PUT', 'route' => array('dvs-pages-update', $page->id))) }}
 
-            @include('devise::admin.pages._page-form')
+            @include('devise::admin.pages._page-form', ['method' => 'update'])
 
             {{ Form::submit('Edit Page', array('class' => 'dvs-button dvs-button-large')) }}
         {{ Form::close() }}

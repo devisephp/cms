@@ -130,7 +130,6 @@ class PagesRepositoryTest extends \DeviseTestCase
             'title'                   => 'Some test title',
             'http_verb'               => 'get',
             'route_name'              => 'dvs-test-route-name',
-            'published'               => '1',
             'is_admin'                => '0',
             'dvs_admin'               => '0',
             'slug'                    => '/test/pages',

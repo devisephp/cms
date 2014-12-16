@@ -1,13 +1,8 @@
-@php
-    $pagesRepo = App::make('Devise\Pages\PagesRepository');
-    $liveVersion = $pagesRepo->getLivePageVersion($page);
-@endphp
-
- @foreach($page->versions as $version)
+@foreach($page->versions as $version)
     <div class="dvs-card dvs-page-versions-card">
         <h4>{{ $version->name }}</h4>
 
-        @if($version->id == $liveVersion->id)
+        @if ($version->status == 'live')
             <p class="dvs-badge">Live</p>
         @endif
 
@@ -23,7 +18,7 @@
                 <option value="unpublish">Un-Publish</option>
                 <option value="create-version">Create Version from This Version</option>
 
-                @if($version->id != $liveVersion->id)
+                @if($version->status != 'live')
                     @if(is_null($version->preview_hash))
                         <option value="toggle-sharing">Enable Sharing</option>
                     @else

@@ -55,8 +55,8 @@ class DeviseTag
 		$tagType = $this->tagBindingType();
 
 		return $tagType == 'Binding'
-			? "<span style=\"display:none;\" data-dvs-placeholder-{$this->key}-id=\"{$this->key}\"></span>"
-			: "<span style=\"display:none;\" data-dvs-placeholder-{$this->collection}-{$this->key}-id=\"{$this->key}\"></span>";
+			? "<?php if (Devise\Users\DeviseUser::showDeviseSpan(\"{$this->key}\", null)): ?><span style=\"display:none;\" data-dvs-placeholder-{$this->key}-id=\"{$this->key}\"></span><?php endif ?>"
+			: "<?php if (Devise\Users\DeviseUser::showDeviseSpan(\"{$this->key}\", \"{$this->collection}\")): ?><span style=\"display:none;\" data-dvs-placeholder-{$this->collection}-{$this->key}-id=\"{$this->key}\"></span><?php endif ?>";
 	}
 
 	/**

@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Facade;
 /**
 * @see \Devise\User\Permissions\RuleManager.php
 */
-class RuleManager extends Facade {
-
+class RuleManagerFacade extends Facade
+{
     /**
     * Get the registered name of the component.
     *

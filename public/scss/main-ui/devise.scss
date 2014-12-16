@@ -71,9 +71,9 @@
   width: 100px;
   height: 40px;
   color: #fff;
-  border-radius: 4px 4px 0 0;
+  border-radius: 3px 0 0 0;
   border-width: 0;
-  background-color: transparentize(#10a5ff, 0.2);
+  background-color: transparentize(#000000, 0.3);
   cursor: pointer;
   outline: none;
   z-index: 10005;
@@ -84,10 +84,15 @@
   text-transform: uppercase;
 
   @include transition(all 0.5s);
+
+  &:hover {
+    background-color: transparentize(#000000, 0.1);
+  }
 }
 
 #dvs-admin-mode-button {
   right: 20px;
+  border-radius: 0 3px 0 0;
 }
 
 .dvs-select-wrapper{

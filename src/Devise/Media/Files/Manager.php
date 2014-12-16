@@ -1,7 +1,7 @@
 <?php namespace Devise\Media\Files;
 
 use Devise\Media\Categories\CategoryPaths;
-use Devise\Media\Images\Image;
+use Devise\Media\Images\Images;
 
 /**
  * Class Manager
@@ -31,7 +31,7 @@ class Manager
      * @param CategoryPaths $CategoryPaths
      * @param Image $Image
      */
-    public function __construct(Filesystem $Filesystem, CategoryPaths $CategoryPaths, Image $Image, $Config = null)
+    public function __construct(Filesystem $Filesystem, CategoryPaths $CategoryPaths, Images $Image, $Config = null)
     {
         $this->Filesystem = $Filesystem;
         $this->CategoryPaths = $CategoryPaths;

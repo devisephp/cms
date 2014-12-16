@@ -23,7 +23,7 @@ class MenusRepositoryTest extends \DeviseTestCase
     public function test_it_retrieves_menus()
     {
         $this->Input->shouldReceive('get')->andReturn(45);
-        assertCount(0, $this->MenusRepository->menus());
+        assertCount(1, $this->MenusRepository->menus());
     }
 
     public function test_it_finds_menu_by_id()
@@ -62,7 +62,8 @@ class MenusRepositoryTest extends \DeviseTestCase
     {
         $menu = array_merge([
             'id' => 9999,
-            'name' => 'Name'
+            'name' => 'Name',
+            'language_id' => 45,
         ], $menu);
 
         \DB::table('dvs_menus')->insert($menu);

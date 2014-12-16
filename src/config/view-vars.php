@@ -62,6 +62,6 @@ return array (
         'imageUrl' => ['Devise\Media\Images\Manager.getImageUrl' => ['input']]
     ),
     'devise::admin.pages.page-versions._card' => array(
-        'page'  => ['Devise\Pages\PagesRepository.find' => ['params.pageId']]
+        'page'  => ['Devise\Pages\PagesRepository.find' => ['params.pageId']],
     ),
 );

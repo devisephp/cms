@@ -16,7 +16,7 @@
 	<div class="dvs-admin-form-horizontal">
 		{{ Form::open(array('method' => 'POST', 'route' => array('dvs-pages-store'))) }}
 
-            @include('devise::admin.pages._page-form')
+            @include('devise::admin.pages._page-form', ['method' => 'store'])
 
 			{{ Form::submit('Create Page', array('class' => 'dvs-button dvs-button-large')) }}
 		{{ Form::close() }}

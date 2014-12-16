@@ -10,53 +10,48 @@
     <link href="{{ URL::asset('/packages/devise/cms/css/jquery.datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('packages/devise/cms/css/main.css') }}" type="text/css" rel="stylesheet">
 
-	@yield('css')
+    @yield('css')
 
     <script src="{{ URL::asset('/packages/devise/cms/js/config.js') }}"></script>
     <script data-main="app/admin/main" src="{{ URL::asset('/packages/devise/cms/js/require.js') }}"></script>
 </head>
 
 <body id="dvs-admin" class="dvs-default">
-    <div id="dvs-admin-top-bar">
+    <div id="dvs-admin-sidenav">
         <div id="dvs-admin-logo">
-            <img src="{{ URL::asset('packages/devise/cms/img/admin-logo.png') }}">
+            <img src="{{ URL::asset('packages/devise/cms/img/admin-logo.png') }}" width="100%">
         </div>
 
-        <ul id="dvs-admin-controls">
-            <li id="dvs-admin-logout"><a href="{{ URL::route('user-logout') }}"><img src="{{ URL::asset('packages/devise/cms/img/admin-logout.png') }}"></a></li>
-            <li id="dvs-admin-toggle">
-                <img src="{{ URL::asset('packages/devise/cms/img/admin-toggle-menu.png') }}">
+        <hr class="dvs-thick">
 
-                <ul class="pz" id="dvs-admin-sublinks">
-                    <li><a href="{{ URL::route('dvs-content-queue-index') }}">Content</a></li>
-                    <li><a href="{{ URL::route('dvs-groups') }}">Groups</a></li>
-                    <li><a href="{{ URL::route('dvs-languages') }}">Languages</a></li>
-                    <li><a href="{{ URL::route('dvs-menus') }}">Menus</a></li>
-                    <li><a href="{{ URL::route('dvs-pages') }}">Pages</a></li>
-                    <li><a href="{{ URL::route('dvs-users') }}">Users</a></li>
-                </ul>
-            </li>
+        <h5>Website Management</h5>
+        <ul class="dvs-admin-links">
+            <li><a class="{{ isActiveLink('admin') }}" href="{{ URL::route('dvs-dashboard') }}">Dashboard</a></li>
+            <li><a class="{{ isActiveLink('admin/menus*') }}" href="{{ URL::route('dvs-menus') }}">All Menus</a></li>
+            <li><a class="{{ isActiveLink('admin/pages*') }}" href="{{ URL::route('dvs-pages') }}">All Pages</a></li>
+            <li><a href="{{ URL::route('user-logout') }}">Logout</a></li>
         </ul>
-    </div>
 
-    <div id="dvs-admin-main-menu">
-        <div>
-            <h2>Admin Navigation</h2>
-            <p class="large">Navigate the administration by selecting from the list below or by typing what you want whenever this message is visible.</p>
-            <select>
-                <option value="http://google.com">Content: Pages</option>
-                <option value="http://facebook.com">Application: Themes</option>
-            </select>
+        <hr>
+
+        <h5>Application Management</h5>
+        <ul class="dvs-admin-links">
+            <li><a class="{{ isActiveLink('admin/users*') }}" href="{{ URL::route('dvs-users') }}">Users</a></li>
+            <li><a class="{{ isActiveLink('admin/groups*') }}" href="{{ URL::route('dvs-groups') }}">Groups</a></li>
+            <li><a class="{{ isActiveLink('admin/languages*') }}" href="{{ URL::route('dvs-languages') }}">Languages</a></li>
+        </ul>
+
+        <div class="dvs-hide-mobile" id="dvs-devise-logo-sm">
+            <img src="{{ URL::asset('packages/devise/cms/img/admin-devise-powered-logo.png') }}" width="100%">
         </div>
     </div>
 
-    <div id="dvs-admin-body" class="vignette">
+    <div id="dvs-admin-body">
+        <div id="dvs-admin-subnavigation">
+            @yield('subnavigation')
+        </div>
 
-	    <div id="dvs-admin-subnavigation">
-		    @yield('subnavigation')
-	    </div>
-
-        <div id="dvs-admin-title">
+        <div class="dvs-admin-container">
             @yield('title')
         </div>
 

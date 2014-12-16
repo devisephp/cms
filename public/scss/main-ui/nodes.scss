@@ -60,15 +60,14 @@
       background-color: #fff;
       cursor:pointer;
       position:relative;
-
     }
   }
 
   #dvs-node-mode-button {
-    width: 100px;
-    height: 100px;
-    right: 45%;
-    border-radius: 50px;
+    height: 45px;
+    color:#424242;
+    background-color:transparentize(#ffffff, 0.3);
+    box-shadow: 0 0 6px transparentize(#000000, 0.8);
   }
 
   #dvs-sidebar {
@@ -95,7 +94,6 @@
   }
 
   #dvs-nodes {
-
     opacity: 1;
 
     .dvs-node {
@@ -125,7 +123,7 @@
 
         .count {
           text-align:center;
-          display:inline-block;
+          display:none;
           background-color:transparentize(black, 0.2);
           border-radius: 10px;
           min-width:20px;
@@ -152,6 +150,10 @@
           padding: 0 40px 0 20px;
           top: 40px;
         }
+
+        &:hover {
+          left:-5px;
+        }
       }
 
       &.right {
@@ -174,7 +176,13 @@
           padding: 0 20px 0 70px;
           top: 52px;
         }
+
+        &:hover {
+          right:-4px;
+        }
       }
+
+
     }
   }
 }

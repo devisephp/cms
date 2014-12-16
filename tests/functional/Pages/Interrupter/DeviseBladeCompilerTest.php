@@ -15,7 +15,9 @@ class DeviseBladeCompilerTest extends \DeviseTestCase
 		$view = $compiler->compile($this->fixture('devise-views.view1'));
 
 		// then
-		assertContains('<span style="display:none;" data-dvs-placeholder-keyname1-id="keyname1"></span><span style="display:none;" data-dvs-placeholder-keyname2-id="keyname2"></span><span style="display:none;" data-dvs-placeholder-keyname3-id="keyname3"></span>@if ($isTrue)', $view);
+		assertContains('<span style="display:none;" data-dvs-placeholder-keyname1-id="keyname1"></span>', $view);
+		assertContains('<span style="display:none;" data-dvs-placeholder-keyname2-id="keyname2"></span>', $view);
+		assertContains('<span style="display:none;" data-dvs-placeholder-keyname3-id="keyname3"></span>', $view);
 		assertContains("<?php" . PHP_EOL .
 				"App::make('dvsPageData')->addCollection('col', 'keyname5', 'type', 'humanName', 'groupName', 'categoryName', null);" . PHP_EOL .
 				"App::make('dvsPageData')->addBinding('keyname1', 'type', 'humanName', null, null, null);" . PHP_EOL .

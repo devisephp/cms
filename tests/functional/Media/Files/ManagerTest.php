@@ -10,7 +10,7 @@ class ManagerTest extends \DeviseTestCase
 
         $this->Filesystem = m::mock('Devise\Media\Files\Filesystem');
         $this->CategoryPaths = m::mock('Devise\Media\Categories\CategoryPaths');
-        $this->Image = m::mock('Devise\Media\Images\Image');
+        $this->Image = m::mock('Devise\Media\Images\Images');
         $this->Config = m::mock('Illuminate\Config\Repository');
         $this->Manager = new Manager($this->Filesystem, $this->CategoryPaths, $this->Image, $this->Config);
     }

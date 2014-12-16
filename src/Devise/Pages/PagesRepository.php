@@ -70,10 +70,12 @@ class PagesRepository
 
         $page->version = $editing ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
 
-        if ($page->version)
+        if (!$page->version)
         {
-            $page = $this->wrapFieldsAroundPage($page, $page->version);
+            throw new PageNotFoundException('Page not found!');
         }
+
+        $page = $this->wrapFieldsAroundPage($page, $page->version);
 
         return $page;
 	}
@@ -94,12 +96,14 @@ class PagesRepository
         // if the user is an admin user they can view any page
         // using the ?page_version query parameter otherwise
         // they just get the live version
-        $page->version = $versionName !== null ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
+        $page->version = $editing && $versionName !== null ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
 
-        if ($page->version)
+        if (!$page->version)
         {
-            $page = $this->wrapFieldsAroundPage($page, $page->version);
+            throw new PageNotFoundException('Page not found!');
         }
+
+        $page = $this->wrapFieldsAroundPage($page, $page->version);
 
         return $page;
 	}
@@ -165,6 +169,11 @@ class PagesRepository
         $pages = $this->Page->where('dvs_admin', '<>', 1)
                             ->where('language_id', '=', $languageId)
                             ->paginate();
+
+        foreach ($pages as $page)
+        {
+            $this->wrapPageVersionStatuses($page->versions, $page);
+        }
 
         return $this->wrapLanguagesAroundPages($pages);
 	}
@@ -282,7 +291,7 @@ class PagesRepository
             ->orderBy('starts_at', 'DESC')
             ->first();
 
-        return $version ?: $this->getPageVersionByName($page, 'Default');
+        return $version;
     }
 
     /**
@@ -468,40 +477,61 @@ class PagesRepository
 
         foreach ($versions as $version)
         {
-            $startsAt = $version->starts_at ? $this->toHumanDateFormat($version->starts_at) : null;
-            $endsAt = $version->ends_at ? $this->toHumanDateFormat($version->ends_at) : 'forever';
-
-            $version->starts_at_human = $this->toHumanDateFormat($version->starts_at);
-            $version->ends_at_human = $this->toHumanDateFormat($version->ends_at);
-
-            // the current version is live
-            if ($version->id == $currentVersion->id)
-            {
-                $version->status = "live";
-            }
-
-            // if the current version is not default then it is overriden
-            if ($version->id != $currentVersion->id && $version->name == 'Default')
-            {
-                $version->status = "overriden";
-            }
-
-            // if version has a starts_at date
-            if ($startsAt)
-            {
-                $version->status .= $version->status ? ' ' : '';
-                $version->status .= "{$startsAt} thru {$endsAt}";
-            }
-
-            // if version has no starts_at date and is not Default
-            else if ($version->name != 'Default')
-            {
-                $version->status .= $version->status ? ' ' : '';
-                $version->status .= "no dates set";
-            }
+            $version = $this->wrapPageVersionStatus($version, $page, $currentVersion);
         }
 
         return $versions;
+    }
+
+    /**
+     * Wraps the status around a single page version
+     *
+     * @param  DvsPageVersion $version
+     * @param  DvsPage        $page
+     * @param  DvsPageVersion $currentVersion
+     * @return DvsPageVersion
+     */
+    protected function wrapPageVersionStatus($version, $page, $currentVersion)
+    {
+        // sometimes we don't have a current version
+        // like when a page is completely unpublished!
+        if (is_null($currentVersion))
+        {
+            $currentVersion = new \StdClass;
+            $currentVersion->id = -1;
+        }
+
+        $now = new \DateTime;
+        $startsAt = $version->starts_at;
+        $endsAt = $version->ends_at;
+
+        $version->starts_at_human = $version->starts_at ? $this->toHumanDateFormat($version->starts_at) : 'never starts';
+        $version->ends_at_human = $version->ends_at ? $this->toHumanDateFormat($version->ends_at) : 'never ends';
+
+        // the current version is live
+        if ($version->id == $currentVersion->id)
+        {
+            $version->status = "live";
+            return $version;
+        }
+
+        // if the version is overriden b/c it has started and has not finished but is not live version
+        if ($version->id != $currentVersion->id && $startsAt && $startsAt < $now && ($endsAt > $now || is_null($endsAt)))
+        {
+            $version->status = "overridden";
+            return $version;
+        }
+
+        // if version has a starts_at date scheduled
+        if ($startsAt && $startsAt > $now)
+        {
+            $version->status = 'scheduled';
+            return $version;
+        }
+
+        // finally fallback to the page is just unpublished status
+        $version->status = "unpublished";
+        return $version;
     }
 
     /**

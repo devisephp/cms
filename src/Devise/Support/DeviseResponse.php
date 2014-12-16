@@ -4,7 +4,7 @@
  * Class DeviseResponse for some reason Illuminate\Support\Facades\Response
  * is not an actual facade but a real class. So we can't use getFacadeAccessor
  * on it. Instead we write a proxy class called DeviseResponse which simply
- * calls static methods on Request object.
+ * calls static methods on Response object.
  *
  * @package Devise\Support
  */
@@ -28,7 +28,7 @@ class DeviseResponse
      */
     public function macro($name, callable $macro)
     {
-        return Request::macro($name, $macro);
+        return \Response::macro($name, $macro);
     }
 
     /**
@@ -39,7 +39,7 @@ class DeviseResponse
      */
     public function hasMacro($name)
     {
-        return \Request::hasMacro($name);
+        return \Response::hasMacro($name);
     }
 
     /**
@@ -52,7 +52,7 @@ class DeviseResponse
      */
     public function make($content = '', $status = 200, array $headers = array())
     {
-        return \Request::make($content, $status, $headers);
+        return \Response::make($content, $status, $headers);
     }
 
     /**
@@ -66,7 +66,7 @@ class DeviseResponse
      */
     public static function view($view, $data = array(), $status = 200, array $headers = array())
     {
-        return \Request::view($view, $data, $status, $headers);
+        return \Response::view($view, $data, $status, $headers);
     }
 
     /**
@@ -80,7 +80,7 @@ class DeviseResponse
      */
     public function json($data = array(), $status = 200, array $headers = array(), $options = 0)
     {
-        return \Request::json($data, $status, $headers, $options);
+        return \Response::json($data, $status, $headers, $options);
     }
 
     /**
@@ -95,7 +95,7 @@ class DeviseResponse
      */
     public function jsonp($callback, $data = [], $status = 200, array $headers = [], $options = 0)
     {
-        return \Request::jsonp($callback, $data, $status, $headers, $options);
+        return \Response::jsonp($callback, $data, $status, $headers, $options);
     }
 
     /**
@@ -108,7 +108,7 @@ class DeviseResponse
      */
     public function stream($callback, $status = 200, array $headers = array())
     {
-        return \Request::stream($callback, $status, $headers);
+        return \Response::stream($callback, $status, $headers);
     }
 
     /**
@@ -122,6 +122,6 @@ class DeviseResponse
      */
     public function download($file, $name = null, array $headers = array(), $disposition = 'attachment')
     {
-        return \Request::download($file, $name, $headers, $disposition);
+        return \Response::download($file, $name, $headers, $disposition);
     }
 }

@@ -188,6 +188,7 @@ class DataBuilder
     private function loadClass($path)
     {
         if(!isset($this->loadedClasses[ $path ])){
+
             $this->loadedClasses[ $path ] = \App::make($path);
         }
 

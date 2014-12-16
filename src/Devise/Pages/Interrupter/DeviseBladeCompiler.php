@@ -46,11 +46,10 @@ class DeviseBladeCompiler
 		// inside of our view with the data-dvs-...-id="stuff"
 		$view = $this->replaceDataDeviseTags($view, $block);
 
-		// adds bindings to top of the view page so we 
+		// adds bindings to top of the view page so we
 		// can do the javascript json stuff for dvsPageData
 		$view = $this->addDeviseTagBindingsAndCollections($view, $block);
 
-		// done changing up the view
 		return $view;
 	}
 

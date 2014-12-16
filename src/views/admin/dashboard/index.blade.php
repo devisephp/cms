@@ -21,11 +21,6 @@
             <div class="dvs-card-bottom">
                 <h3>Pages</h3>
                 <p>Manage pages, set URLs, and page versions.</p>
-
-                <div class="dvs-metrics-wpr">
-                    <div class="dvs-metric"><span class="dvs-badge">33</span>Queue</div>
-                    <div class="dvs-metric"><span class="dvs-badge purple">4</span>In Progress</div>
-                </div>
             </div>
         </div>
 

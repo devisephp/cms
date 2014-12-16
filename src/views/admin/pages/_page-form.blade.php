@@ -68,13 +68,15 @@
     </div>
 </div>
 
+@if ($method == 'store')
 <div class="dvs-form-group">
-    {{ Form::label('Published') }}
+    {{ Form::label('Publish on save') }}
     <div class="fancyCheckbox">
-        {{ Form::checkbox('published', null, null, array('id' => 'published')) }}
+        {{ Form::checkbox('published', true, true, array('id' => 'published')) }}
         {{ Form::label('published', '&nbsp;') }}
     </div>
 </div>
+@endif
 
 <div class="dvs-form-group">
     {{ Form::label('Show Advanced Options') }}

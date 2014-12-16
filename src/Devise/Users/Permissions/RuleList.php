@@ -11,6 +11,14 @@ use Devise\Support\Framework;
 class RuleList
 {
     /**
+     * Is this user logged in? Cache the value on this object
+     * for performance reasons
+     *
+     * @var boolean
+     */
+    protected $isLoggedIn;
+
+    /**
      * User model to fetch database table "users"
      *
      * @var User
@@ -177,4 +185,14 @@ class RuleList
         return false;
     }
 
+    /**
+     * Determines if we should show the devise span
+     *
+     * @param  [type] $key
+     * @return [type]
+     */
+    public function showDeviseSpan($key, $collection)
+    {
+        return $this->isLoggedIn();
+    }
 }

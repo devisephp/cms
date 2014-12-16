@@ -7,6 +7,7 @@ class DeviseMenusSeeder extends Seeder
 		$menus = array(
 			array(
 				'id' => 1,
+				'language_id' => 45,
 				'name' => 'Main Navigation'
 			),
 		);

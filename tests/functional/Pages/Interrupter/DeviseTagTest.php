@@ -73,8 +73,8 @@ class DeviseTagTest extends \DeviseTestCase
 		$tag1 = $this->tag(' data-devise="keyname1, type"', 19);
 		$tag2 = $this->tag(' data-devise="col[keyname1], type"', 19);
 
-		assertEquals('<span style="display:none;" data-dvs-placeholder-keyname1-id="keyname1"></span>', $tag1->hiddenPlaceholderStr());
-		assertEquals('<span style="display:none;" data-dvs-placeholder-col-keyname1-id="keyname1"></span>', $tag2->hiddenPlaceholderStr());
+		assertContains('<span style="display:none;" data-dvs-placeholder-keyname1-id="keyname1"></span>', $tag1->hiddenPlaceholderStr());
+		assertContains('<span style="display:none;" data-dvs-placeholder-col-keyname1-id="keyname1"></span>', $tag2->hiddenPlaceholderStr());
 	}
 
 	public function test_it_can_return_add_to_devise_page_string()

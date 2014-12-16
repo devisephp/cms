@@ -8,8 +8,7 @@ class UserManagerTest extends \DeviseTestCase
     {
         parent::setUp();
 
-        $this->Framework = m::mock('Devise\Support\Framework');
-        $this->Framework->Validator = m::mock('Illuminate\Validation\Factory');
+        $this->Framework = new \Devise\Support\Framework;
         $this->UserManager = new UserManager(new \DvsUser, $this->Framework);
     }
 
@@ -18,11 +17,9 @@ class UserManagerTest extends \DeviseTestCase
         assertInternalType('array', $this->UserManager->createRules());
     }
 
-    public function test_it_cannot_create_user()
+    public function test_it_cannot_create_invalid_user()
     {
-        $this->Framework->Validator->shouldReceive('make')->once()->andReturnSelf();
-        $this->Framework->Validator->shouldReceive('fails')->once()->andReturnSelf();
-        $this->UserManager->createUser(['foo' => 'input data']);
+        assertFalse($this->UserManager->createUser(['foo' => 'input data']));
     }
 
     public function test_it_can_create_user()
@@ -30,12 +27,10 @@ class UserManagerTest extends \DeviseTestCase
         $validInput = [
             'email' => 'deviseadmin2@lbm.co',
             'name' => 'mister devise',
-            'group_id' => '1',
+            'group_id' => ['1'],
             'password' => 'secret'
         ];
 
-        $this->Framework->Validator->shouldReceive('make')->once()->andReturnSelf();
-        $this->Framework->Validator->shouldReceive('fails')->once()->andReturn(null);
         $this->UserManager->createUser($validInput);
     }
 
@@ -46,9 +41,7 @@ class UserManagerTest extends \DeviseTestCase
 
     public function test_it_cannot_update_user()
     {
-        $this->Framework->Validator->shouldReceive('make')->once()->andReturnSelf();
-        $this->Framework->Validator->shouldReceive('fails')->once()->andReturnSelf();
-        $this->UserManager->updateUser(1, ['foo' => 'input data']);
+        assertFalse($this->UserManager->updateUser(1, ['foo' => 'input data']));
     }
 
     public function test_it_can_update_user()
@@ -56,12 +49,10 @@ class UserManagerTest extends \DeviseTestCase
         $validInput = [
             'email' => 'deviseadmin2@lbm.co',
             'name' => 'mister devise',
-            'group_id' => '1',
+            'group_id' => ['1'],
             'password' => 'secret'
         ];
 
-        $this->Framework->Validator->shouldReceive('make')->once()->andReturnSelf();
-        $this->Framework->Validator->shouldReceive('fails')->once()->andReturn(null);
         $this->UserManager->updateUser(1, $validInput);
     }
 
@@ -70,5 +61,4 @@ class UserManagerTest extends \DeviseTestCase
         $output = $this->UserManager->destroyUser(1);
         assertInternalType('boolean', $output);
     }
-
 }

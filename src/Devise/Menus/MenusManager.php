@@ -55,6 +55,7 @@ class MenusManager
 	{
 		return array(
         	'name' => 'required|unique:dvs_menus',
+        	'language_id' => 'required',
 		);
 	}
 

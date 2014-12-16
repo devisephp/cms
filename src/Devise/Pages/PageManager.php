@@ -44,7 +44,6 @@ class PageManager
         'title',
         'http_verb',
         'route_name',
-        'published',
         'is_admin',
         'dvs_admin',
         'slug',
@@ -102,7 +101,8 @@ class PageManager
 
         if ($page)
         {
-    		$page->version = $this->PageVersionManager->createDefaultPageVersion($page);
+            $startsAt = array_get($input, 'published', false) ? new \DateTime : null;
+    		$page->version = $this->PageVersionManager->createDefaultPageVersion($page, $startsAt);
         }
 
 		return $page;

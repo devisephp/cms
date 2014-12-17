@@ -1,5 +1,5 @@
 var require = {
-    baseUrl: '/packages/devise/cms/js/lib',
+    baseUrl: '/packages/devisephp/cms/js/lib',
     //urlArgs: "bust=" + (new Date()).getTime(),
     shim:  {
         ckeditorJquery : {
@@ -50,4 +50,4 @@ var require = {
     }
 };
 
-var CKEDITOR_BASEPATH = "/packages/devise/cms/js/lib/ckeditor/";
+var CKEDITOR_BASEPATH = "/packages/devisephp/cms/js/lib/ckeditor/";

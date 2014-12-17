@@ -2,7 +2,7 @@
 
 @section('main')
 
-<link href="{{ URL::asset('/packages/devise/cms/css/fullcalendar.min.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('/packages/devisephp/cms/css/fullcalendar.min.css') }}" rel="stylesheet">
 
 <style>
 	#modal-blind {

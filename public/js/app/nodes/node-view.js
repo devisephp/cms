@@ -244,7 +244,7 @@ define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPageData) 
 
         var newNodeInnerWrapper = $('<div>').addClass('dvs-node-inner-wrapper');
         var label = $('<span>').html(label);
-        var svgPath = require.toUrl('/packages/devise/cms/img/node-arrow.svg');
+        var svgPath = require.toUrl('/packages/devisephp/cms/img/node-arrow.svg');
         var svg = $(newNodeInnerWrapper).load(svgPath);
 
         newNode.append(newNodeInnerWrapper);

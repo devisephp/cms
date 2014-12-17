@@ -11,8 +11,8 @@
 
 	@yield('css')
 
-    <script src="{{ URL::asset('/packages/devise/cms/js/config.js') }}"></script>
-    <script data-main="app/admin/main" src="{{ URL::asset('/packages/devise/cms/js/require.js') }}"></script>
+    <script src="{{ URL::asset('/packages/devisephp/cms/js/config.js') }}"></script>
+    <script data-main="app/admin/main" src="{{ URL::asset('/packages/devisephp/cms/js/require.js') }}"></script>
 </head>
 
 <body id="dvs-admin" class="dvs-default">
@@ -32,7 +32,7 @@
         @endif
 
         @yield('main')
-        
+
     </div>
 </body>
 </html>

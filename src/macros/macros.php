@@ -107,7 +107,7 @@ HTML::macro('showLanguagesForPages', function($languages, $showLinkAsIcon =  fal
             $html .= $html ? ', ' : $html;
             $html .= "<a href=\"{$language['url']}\">{$language['human_name']}</a>";
         } else {
-            $html .= "<a class=\"dvs-lang-flag\" href=\"{$language['url']}\" title=\"{$language['human_name']}\"><img src=\"/packages/devise/cms/img/icons/flags/{$language['code']}.png\"></a>";
+            $html .= "<a class=\"dvs-lang-flag\" href=\"{$language['url']}\" title=\"{$language['human_name']}\"><img src=\"/packages/devisephp/cms/img/icons/flags/{$language['code']}.png\"></a>";
         }
     }
 

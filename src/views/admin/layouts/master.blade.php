@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
-    <link href="{{ URL::asset('/packages/devise/cms/css/jquery.datetimepicker.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('packages/devise/cms/css/main.css') }}" type="text/css" rel="stylesheet">
 
     @yield('css')
 
-    <script src="{{ URL::asset('/packages/devise/cms/js/config.js') }}"></script>
-    <script data-main="app/admin/main" src="{{ URL::asset('/packages/devise/cms/js/require.js') }}"></script>
+    <script src="{{ URL::asset('/packages/devisephp/cms/js/config.js') }}"></script>
+    <script data-main="app/admin/main" src="{{ URL::asset('/packages/devisephp/cms/js/require.js') }}"></script>
 </head>
 
 <body id="dvs-admin" class="dvs-default">

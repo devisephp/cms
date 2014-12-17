@@ -22,6 +22,6 @@
         {{ Form::close() }}
     </div>
 
-    <script data-main="{{ URL::asset('/packages/devise/cms/js/config') }}" src="{{ URL::asset('/packages/devise/cms/js/require.js') }}"></script>
+    <script data-main="{{ URL::asset('/packages/devisephp/cms/js/config') }}" src="{{ URL::asset('/packages/devisephp/cms/js/require.js') }}"></script>
     <script>require(['app/admin/pages'])</script>
 @stop

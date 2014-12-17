@@ -5,7 +5,7 @@
         <div class="dvs-admin-card" data-dvs-url="{{ URL::route('dvs-pages') }}">
             <div class="dvs-card-top">
                 <div class="dvs-image-wpr">
-                    <img src="{{ URL::asset('packages/devise/cms/img/default-images/user-icon.png') }}">
+                    <img src="{{ URL::asset('/packages/devisephp/cms/img/default-images/user-icon.png') }}">
                 </div>
 
                 <div class="dvs-hex-wpr">
@@ -27,7 +27,7 @@
         <div class="dvs-admin-card" data-dvs-url="{{ URL::route('dvs-menus') }}">
             <div class="dvs-card-top">
                 <div class="dvs-image-wpr">
-                    <img src="{{ URL::asset('packages/devise/cms/img/default-images/user-icon.png') }}">
+                    <img src="{{ URL::asset('/packages/devisephp/cms/img/default-images/user-icon.png') }}">
                 </div>
 
                 <div class="dvs-hex-wpr">
@@ -49,7 +49,7 @@
         <div class="dvs-admin-card" data-dvs-url="{{ URL::route('dvs-users') }}">
             <div class="dvs-card-top">
                 <div class="dvs-image-wpr">
-                    <img src="{{ URL::asset('packages/devise/cms/img/default-images/user-icon.png') }}">
+                    <img src="{{ URL::asset('/packages/devisephp/cms/img/default-images/user-icon.png') }}">
                 </div>
 
                 <div class="dvs-hex-wpr">
@@ -71,7 +71,7 @@
         <div class="dvs-admin-card" data-dvs-url="{{ URL::route('dvs-groups') }}">
             <div class="dvs-card-top">
                 <div class="dvs-image-wpr">
-                    <img src="{{ URL::asset('packages/devise/cms/img/default-images/user-icon.png') }}">
+                    <img src="{{ URL::asset('/packages/devisephp/cms/img/default-images/user-icon.png') }}">
                 </div>
 
                 <div class="dvs-hex-wpr">
@@ -93,7 +93,7 @@
         <div class="dvs-admin-card" data-dvs-url="{{ URL::route('dvs-languages') }}">
             <div class="dvs-card-top">
                 <div class="dvs-image-wpr">
-                    <img src="{{ URL::asset('packages/devise/cms/img/default-images/user-icon.png') }}">
+                    <img src="{{ URL::asset('/packages/devisephp/cms/img/default-images/user-icon.png') }}">
                 </div>
 
                 <div class="dvs-hex-wpr">

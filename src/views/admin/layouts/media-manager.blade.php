@@ -6,8 +6,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="{{ URL::asset('packages/devise/cms/css/main.css') }}" type="text/css" rel="stylesheet">
-    <link href="{{ URL::asset('packages/devise/cms/css/jquery.Jcrop.min.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ URL::asset('/packages/devisephp/cms/css/main.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ URL::asset('/packages/devisephp/cms/css/jquery.Jcrop.min.css') }}" type="text/css" rel="stylesheet">
 
 	@yield('css')
 

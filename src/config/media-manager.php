@@ -31,15 +31,15 @@ return array(
     */
 
     'thumbs' => [
-        'file' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'png' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'jpeg' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'jpg' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'gif' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'xls' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'doc' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'docx' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'zip' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
-        'js' => 'packages/devise/cms/img/meda-manager-default-thumb.png',
+        'file' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'png' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'jpeg' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'jpg' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'gif' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'xls' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'doc' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'docx' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'zip' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
+        'js' => '/packages/devisephp/cms/img/meda-manager-default-thumb.png',
     ]
 );

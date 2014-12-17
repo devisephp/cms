@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
     <link href="{{ URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('packages/devise/cms/css/main.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ URL::asset('/packages/devisephp/cms/css/main.css') }}" type="text/css" rel="stylesheet">
 
     @yield('css')
 
@@ -19,7 +19,7 @@
 <body id="dvs-admin" class="dvs-default">
     <div id="dvs-admin-sidenav">
         <div id="dvs-admin-logo">
-            <img src="{{ URL::asset('packages/devise/cms/img/admin-logo.png') }}" width="100%">
+            <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-logo.png') }}" width="100%">
         </div>
 
         <hr class="dvs-thick">
@@ -42,7 +42,7 @@
         </ul>
 
         <div class="dvs-hide-mobile" id="dvs-devise-logo-sm">
-            <img src="{{ URL::asset('packages/devise/cms/img/admin-devise-powered-logo.png') }}" width="100%">
+            <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-devise-powered-logo.png') }}" width="100%">
         </div>
     </div>
 

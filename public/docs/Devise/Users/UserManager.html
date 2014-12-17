@@ -37,6 +37,13 @@
 
             <table>
                     <tr>
+                <td class="type" id="property_errors">
+                                                            array
+                </td>
+                <td>$errors</td>
+                <td class="last">Errors are kept in an array and can be used later if validation fails and we want to know why</td>
+            </tr>
+                    <tr>
                 <td class="type" id="property_messages">
                                                             string
                 </td>
@@ -71,7 +78,7 @@
             </tr>
                     <tr>
                 <td class="type">
-                    <abbr title="Devise\Users\$this">$this</abbr>
+                    <abbr title="Devise\Users\DvsUser">DvsUser</abbr>
                 </td>
                 <td class="last">
                     <a href="#method_createUser">createUser</a>(array $input)
@@ -91,7 +98,7 @@
             </tr>
                     <tr>
                 <td class="type">
-                    <abbr title="Devise\Users\$this">$this</abbr>
+                    <abbr title="Devise\Users\DvsUser">DvsUser</abbr>
                 </td>
                 <td class="last">
                     <a href="#method_updateUser">updateUser</a>(integer $id, array $input)
@@ -135,7 +142,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 53</div>
+        <div class="location">at line 62</div>
         <code>            public            
     <strong>__construct</strong>(<abbr title="Devise\Users\DvsUser">DvsUser</abbr> $DvsUser, <a href="../../Devise/Support/Framework.html"><abbr title="Devise\Support\Framework">Framework</abbr></a> $Framework)</code>
     </h3>
@@ -168,7 +175,7 @@
     </div>
 
                 <h3 id="method_createRules">
-        <div class="location">at line 65</div>
+        <div class="location">at line 74</div>
         <code>            public            array
     <strong>createRules</strong>()</code>
     </h3>
@@ -194,8 +201,8 @@
     </div>
 
                 <h3 id="method_createUser">
-        <div class="location">at line 81</div>
-        <code>            public            <abbr title="Devise\Users\$this">$this</abbr>
+        <div class="location">at line 90</div>
+        <code>            public            <abbr title="Devise\Users\DvsUser">DvsUser</abbr>
     <strong>createUser</strong>(array $input)</code>
     </h3>
     <div class="details">
@@ -219,7 +226,7 @@
 
                     <table>
         <tr>
-            <td><abbr title="Devise\Users\$this">$this</abbr></td>
+            <td><abbr title="Devise\Users\DvsUser">DvsUser</abbr></td>
             <td>
 </td>
         </tr>
@@ -231,7 +238,7 @@
     </div>
 
                 <h3 id="method_updateRules">
-        <div class="location">at line 105</div>
+        <div class="location">at line 119</div>
         <code>            public            array
     <strong>updateRules</strong>(integer $id, array $input)</code>
     </h3>
@@ -274,8 +281,8 @@
     </div>
 
                 <h3 id="method_updateUser">
-        <div class="location">at line 131</div>
-        <code>            public            <abbr title="Devise\Users\$this">$this</abbr>
+        <div class="location">at line 144</div>
+        <code>            public            <abbr title="Devise\Users\DvsUser">DvsUser</abbr>
     <strong>updateUser</strong>(integer $id, array $input)</code>
     </h3>
     <div class="details">
@@ -305,7 +312,7 @@
 
                     <table>
         <tr>
-            <td><abbr title="Devise\Users\$this">$this</abbr></td>
+            <td><abbr title="Devise\Users\DvsUser">DvsUser</abbr></td>
             <td>
 </td>
         </tr>
@@ -317,7 +324,7 @@
     </div>
 
                 <h3 id="method_destroyUser">
-        <div class="location">at line 158</div>
+        <div class="location">at line 176</div>
         <code>            public            boolean
     <strong>destroyUser</strong>(integer $id)</code>
     </h3>
@@ -354,7 +361,7 @@
     </div>
 
                 <h3 id="method_activate">
-        <div class="location">at line 170</div>
+        <div class="location">at line 188</div>
         <code>            public            boolean
     <strong>activate</strong>(<abbr title="Devise\Users\DvsUser">DvsUser</abbr> $user)</code>
     </h3>
@@ -391,7 +398,7 @@
     </div>
 
                 <h3 id="method_generateActivateCode">
-        <div class="location">at line 185</div>
+        <div class="location">at line 202</div>
         <code>            public            string
     <strong>generateActivateCode</strong>(<abbr title="Devise\Users\DvsUser">DvsUser</abbr> $user, integer $length = 42)</code>
     </h3>

@@ -27,7 +27,7 @@ define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate)
         });
     }
 
-    var textarea = {
+    return {
         init: function() {
             $('form.dvs-element-textarea').each(function(){
                 var parentForm = $(this);
@@ -41,8 +41,4 @@ define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate)
             });
         }
     };
-
-    $('#dvs-sidebar').on('sidebarLoaded', textarea.init());
-
-    return textarea;
 });

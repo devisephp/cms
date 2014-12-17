@@ -325,9 +325,21 @@
   }
 }
 
-.dvs-options-manager,
-.dvs-checkboxes-manager {
-  width:100%;
+#dvs-sidebar-current-element {
+  .dvs-options-manager,
+  .dvs-checkboxes-manager {
+    width:100%;
+
+    .dvs-option-fields {
+      td {
+        padding:1px 1px 0 0;
+      }
+
+      input[type=text] {
+        background-color:lighten($sidebarBgColor, 5%);
+      }
+    }
+  }
 }
 
 #dvs-sidebar-collections {

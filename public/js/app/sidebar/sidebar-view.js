@@ -114,6 +114,14 @@ define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQ
         });
     }
 
+    function showSaveButton() {
+        $('button.dvs-sidebar-save-group').show();
+    }
+
+    function hideSaveButton() {
+        $('button.dvs-sidebar-save-group').hide();
+    }
+
     function hideElement() {
         hideBreadcrumbs();
         hideCollections();
@@ -158,17 +166,17 @@ define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQ
 
     function addListeners() {
         // Close sidebar
-        $('.dvs-sidebar-close').click(function(){
+        $('#dvs-sidebar').on('click', '.dvs-sidebar-close', function(){
             $('#dvs-node-mode-button').trigger('click');
         });
 
         // Elements
-        $('.dvs-sidebar-elements button').click(function(){
+        $('#dvs-sidebar').on('click', '.dvs-sidebar-elements button', function(){
             openElementEditor($(this));
         });
 
         // Manage
-        $('#dvs-sidebar-manage-groups').click(function() {
+        $('#dvs-sidebar').on('click', '#dvs-sidebar-manage-groups', function(){
             openCollectionsManager($(this));
         });
     }
@@ -176,6 +184,8 @@ define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQ
     function sidebarLoadSuccessful() {
 
         $( ".dvs-accordion" ).accordion();
+
+        // if (node.collection) hideSaveButton();
 
         loadDefaultData();
 

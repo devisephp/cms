@@ -42,7 +42,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(<abbr title="Devise\User\UserHelper">UserHelper</abbr> $UserHelper, <abbr title="Devise\Pages\DvsPageVersion">DvsPageVersion</abbr> $PageVersion, <abbr title="Devise\Pages\DvsField">DvsField</abbr> $Field, <abbr title="Devise\Pages\DvsCollectionInstance">DvsCollectionInstance</abbr> $CollectionInstance, <a href="../../Devise/Pages/PagesRepository.html"><abbr title="Devise\Pages\PagesRepository">PagesRepository</abbr></a> $PagesRepository)
+                    <a href="#method___construct">__construct</a>(<a href="../../Devise/Users/UserHelper.html"><abbr title="Devise\Users\UserHelper">UserHelper</abbr></a> $UserHelper, <abbr title="Devise\Pages\DvsPageVersion">DvsPageVersion</abbr> $PageVersion, <abbr title="Devise\Pages\DvsField">DvsField</abbr> $Field, <abbr title="Devise\Pages\DvsCollectionInstance">DvsCollectionInstance</abbr> $CollectionInstance, <a href="../../Devise/Pages/PagesRepository.html"><abbr title="Devise\Pages\PagesRepository">PagesRepository</abbr></a> $PagesRepository)
                     <p>Construction depends on PageVersin model and UserHelper to get current user id</p>
                 </td>
                 <td></td>
@@ -52,7 +52,7 @@
                     <abbr title="Devise\Pages\PageVersion">PageVersion</abbr>
                 </td>
                 <td class="last">
-                    <a href="#method_createNewPageVersion">createNewPageVersion</a>(int $pageId, string $name, int $createdByUserId)
+                    <a href="#method_createNewPageVersion">createNewPageVersion</a>($pageId, $name, $createdByUserId, $startsAt = null, $endsAt = null)
                     <p>Create a new page version with given parameters</p>
                 </td>
                 <td></td>
@@ -62,7 +62,7 @@
                     <abbr title="Devise\Pages\PageVersion">PageVersion</abbr>
                 </td>
                 <td class="last">
-                    <a href="#method_createDefaultPageVersion">createDefaultPageVersion</a>(<abbr title="Devise\Pages\Page">Page</abbr> $page)
+                    <a href="#method_createDefaultPageVersion">createDefaultPageVersion</a>($page, $startsAt = null)
                     <p>Create a new default page version for given page</p>
                 </td>
                 <td></td>
@@ -125,7 +125,7 @@
                         <h3 id="method___construct">
         <div class="location">at line 22</div>
         <code>            public            
-    <strong>__construct</strong>(<abbr title="Devise\User\UserHelper">UserHelper</abbr> $UserHelper, <abbr title="Devise\Pages\DvsPageVersion">DvsPageVersion</abbr> $PageVersion, <abbr title="Devise\Pages\DvsField">DvsField</abbr> $Field, <abbr title="Devise\Pages\DvsCollectionInstance">DvsCollectionInstance</abbr> $CollectionInstance, <a href="../../Devise/Pages/PagesRepository.html"><abbr title="Devise\Pages\PagesRepository">PagesRepository</abbr></a> $PagesRepository)</code>
+    <strong>__construct</strong>(<a href="../../Devise/Users/UserHelper.html"><abbr title="Devise\Users\UserHelper">UserHelper</abbr></a> $UserHelper, <abbr title="Devise\Pages\DvsPageVersion">DvsPageVersion</abbr> $PageVersion, <abbr title="Devise\Pages\DvsField">DvsField</abbr> $Field, <abbr title="Devise\Pages\DvsCollectionInstance">DvsCollectionInstance</abbr> $CollectionInstance, <a href="../../Devise/Pages/PagesRepository.html"><abbr title="Devise\Pages\PagesRepository">PagesRepository</abbr></a> $PagesRepository)</code>
     </h3>
     <div class="details">
         <p>Construction depends on PageVersin model and UserHelper to get current user id</p>
@@ -136,7 +136,7 @@
 
                     <table>
                     <tr>
-                <td><abbr title="Devise\User\UserHelper">UserHelper</abbr></td>
+                <td><a href="../../Devise/Users/UserHelper.html"><abbr title="Devise\Users\UserHelper">UserHelper</abbr></a></td>
                 <td>$UserHelper</td>
                 <td>
 </td>
@@ -174,9 +174,9 @@
     </div>
 
                 <h3 id="method_createNewPageVersion">
-        <div class="location">at line 39</div>
+        <div class="location">at line 40</div>
         <code>            public            <abbr title="Devise\Pages\PageVersion">PageVersion</abbr>
-    <strong>createNewPageVersion</strong>(int $pageId, string $name, int $createdByUserId)</code>
+    <strong>createNewPageVersion</strong>($pageId, $name, $createdByUserId, $startsAt = null, $endsAt = null)</code>
     </h3>
     <div class="details">
         <p>Create a new page version with given parameters</p>
@@ -187,20 +187,32 @@
 
                     <table>
                     <tr>
-                <td>int</td>
+                <td></td>
                 <td>$pageId</td>
                 <td>
 </td>
             </tr>
                     <tr>
-                <td>string</td>
+                <td></td>
                 <td>$name</td>
                 <td>
 </td>
             </tr>
                     <tr>
-                <td>int</td>
+                <td></td>
                 <td>$createdByUserId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$startsAt</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$endsAt</td>
                 <td>
 </td>
             </tr>
@@ -223,9 +235,9 @@
     </div>
 
                 <h3 id="method_createDefaultPageVersion">
-        <div class="location">at line 57</div>
+        <div class="location">at line 60</div>
         <code>            public            <abbr title="Devise\Pages\PageVersion">PageVersion</abbr>
-    <strong>createDefaultPageVersion</strong>(<abbr title="Devise\Pages\Page">Page</abbr> $page)</code>
+    <strong>createDefaultPageVersion</strong>($page, $startsAt = null)</code>
     </h3>
     <div class="details">
         <p>Create a new default page version for given page</p>
@@ -236,8 +248,14 @@
 
                     <table>
                     <tr>
-                <td><abbr title="Devise\Pages\Page">Page</abbr></td>
+                <td></td>
                 <td>$page</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$startsAt</td>
                 <td>
 </td>
             </tr>
@@ -260,7 +278,7 @@
     </div>
 
                 <h3 id="method_copyPageVersionToAnotherPage">
-        <div class="location">at line 70</div>
+        <div class="location">at line 73</div>
         <code>            public            <abbr title="Devise\Pages\PageVersion">PageVersion</abbr>
     <strong>copyPageVersionToAnotherPage</strong>(<abbr title="Devise\Pages\$fromVersion">$fromVersion</abbr> $fromVersion, <abbr title="Devise\Pages\$toPage">$toPage</abbr> $toPage)</code>
     </h3>
@@ -303,7 +321,7 @@
     </div>
 
                 <h3 id="method_copyPageVersion">
-        <div class="location">at line 88</div>
+        <div class="location">at line 91</div>
         <code>            public            <abbr title="Devise\Pages\PageVersion">PageVersion</abbr>
     <strong>copyPageVersion</strong>(<abbr title="Devise\Pages\$pageVersionId">$pageVersionId</abbr> $pageVersionId, <abbr title="Devise\Pages\$name">$name</abbr> $name)</code>
     </h3>
@@ -346,7 +364,7 @@
     </div>
 
                 <h3 id="method_updatePageVersionDates">
-        <div class="location">at line 113</div>
+        <div class="location">at line 116</div>
         <code>            public            void
     <strong>updatePageVersionDates</strong>(int $pageVersionId, array $input)</code>
     </h3>
@@ -389,7 +407,7 @@
     </div>
 
                 <h3 id="method_destroyPageVersion">
-        <div class="location">at line 206</div>
+        <div class="location">at line 209</div>
         <code>            public            mixed
     <strong>destroyPageVersion</strong>(<abbr title="Devise\Pages\$pageVersionId">$pageVersionId</abbr> $pageVersionId)</code>
     </h3>
@@ -436,7 +454,7 @@
     </div>
 
                 <h3 id="method_togglePageVersionPreviewShare">
-        <div class="location">at line 230</div>
+        <div class="location">at line 233</div>
         <code>            public            boolean
     <strong>togglePageVersionPreviewShare</strong>(integer $pageVersionId)</code>
     </h3>

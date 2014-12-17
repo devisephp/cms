@@ -832,6 +832,34 @@ class DevisePagesSeeder extends Seeder
                 'response_path'           => 'Devise\Sidebar\ResponseHandler.requestElementGridPartial',
                 'response_params'         => 'input'
             ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'view'                    => 'devise::admin.calendar.index',
+                'title'                   => 'Devise Admin Calendar that keeps up with different scheduled events',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-calendar-index',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/calendar',
+                'short_description'       => 'Shows the calendar for devise admin where we can change schedules',
+                'response_type'           => 'View',
+            ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'view'                    => '',
+                'title'                   => 'Devise Admin Calendar Source for Page Versions',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-calendar-page-version-source',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/calendar/sources/page-versions',
+                'short_description'       => 'Shows the json data for page versions event source',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Calendar\CalendarResponseHandler.requestPageVersionEventSource',
+                'response_params'         => 'input',
+            ),
 
 		);
 

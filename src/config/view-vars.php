@@ -64,4 +64,7 @@ return array (
     'devise::admin.pages.page-versions._card' => array(
         'page'  => ['Devise\Pages\PagesRepository.find' => ['params.pageId']],
     ),
+    'devise::admin.calendar.index' => array(
+        'unscheduledPageVersions' => 'Devise\Pages\PageVersionsRepository.getUnscheduledPageVersions'
+    ),
 );

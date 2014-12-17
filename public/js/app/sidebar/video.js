@@ -12,7 +12,7 @@ define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'
         parentForm.find(selector).trigger('propertychange');
     }
 
-    var video = {
+    return {
         init: function() {
             $('.browse').click(function(e)
             {
@@ -25,8 +25,4 @@ define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'
             });
         }
     };
-
-    $('#dvs-sidebar').on('sidebarLoaded', video.init);
-
-    video.init();
 });

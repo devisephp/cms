@@ -19,6 +19,7 @@ var require = {
         spectrum:           '../lib/spectrum',
         datetimepicker:     '../lib/jquery.datetimepicker',
         moment:             '../lib/moment',
+        fullCalendar:       '../lib/fullcalendar.min',
         jcrop :             '../lib/jquery.Jcrop.min',
         async:              '../lib/millermedeiros-plugins/async',
         goog:               '../lib/millermedeiros-plugins/goog',
@@ -41,12 +42,12 @@ var require = {
         dvsRouter:          '../app/routes',
         dvsQueryHelper:     '../app/helpers/query-helper',
         dvsDatePicker:      '../app/helpers/date-picker',
-        dvsSelectSurrogate: '../app/helpers/forms-select-surrogate'
-
+        dvsSelectSurrogate: '../app/helpers/forms-select-surrogate',
+        dvsCalendar:        '../app/admin/calendar'
     },
     devise: {
         partialLoaderPath:  '/admin/partialLoader'
-    },
+    }
 };
 
 var CKEDITOR_BASEPATH = "/packages/devise/cms/js/lib/ckeditor/";

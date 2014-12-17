@@ -29,12 +29,7 @@ define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'
         parentForm.find(selector).trigger('propertychange');
     }
 
-
-    //
-    // image holds the init function
-    // which registers the click event handlers
-    //
-    var image = {
+    return {
         init: function()
         {
             //
@@ -90,24 +85,10 @@ define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'
             });
 
             // disable the 'adjust thumbnail' btn  when this is not clicked
-            $('input[name="has_thumbnail"]').on('input', function()
+            $('[for="has_thumbnail"]').on('click', function()
             {
-                $('.js-when-has-thumbnail').attr('disabled', !$(this).is(':checked'));
-            });
-
-            // disable the 'adjust thumbnail' btn  when this is not clicked
-            $('input[name="image"]').on('input', function()
-            {
-                $('.js-when-has-image').attr('disabled', $(this).val() == '');
+                $('.js-when-has-thumbnail').attr('disabled', $('input[name="has_thumbnail"]').is(':checked'));
             });
         }
     };
-
-
-    // not sure why we init once the sidebar is loaded
-    // and then init right after this too?
-    $('#dvs-sidebar').on('sidebarLoaded', image.init);
-
-    image.init();
-
 });

@@ -1,9 +1,8 @@
 define(['require', 'jquery'], function (require, $) {
-    // function init()
-    // {
-        
-    // }
+    return {
+    	init: function()
+    	{
 
-    // $('#dvs-sidebar').on('sidebarLoaded', init);
-    // init();
+    	}
+    };
 });

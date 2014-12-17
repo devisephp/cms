@@ -6,39 +6,39 @@ define(['require', 'jquery', 'datetimepicker', 'moment'], function (require, $) 
         'm/d/Y': 'MM/D/YYYY',
     };
 
-    function init()
-    {
-        $('.dvs-datetime').each(function(){
-            var parentForm = $(this).closest('form');
-            var input = $(this);
-            var formatInput = parentForm.find('select[name="format"]');
+    return {
+        init: function()
+        {
+            $('.dvs-datetime').each(function(){
+                var parentForm = $(this).closest('form');
+                var input = $(this);
+                var formatInput = parentForm.find('select[name="format"]');
 
-            var sample = parentForm.find('input[name="datetime"]');
+                var sample = parentForm.find('input[name="datetime"]');
 
-            $(this).datetimepicker({
-                inline:true
-            });
+                $(this).datetimepicker({
+                    inline:true
+                });
 
-            input.on('change', function()
-            {
-                var format = formatInput.val();
-                var m = moment(input.val()).format(formatMap[format]);
-                sample.val(m);
-            });
-
-            formatInput.on('change', function()
-            {
-                var newformat = $(this).val();
-                var m = moment(input.val()).format(formatMap[newformat]);
-
-                if (m != 'Invalid date')
+                input.on('change', function()
                 {
+                    var format = formatInput.val();
+                    var m = moment(input.val()).format(formatMap[format]);
                     sample.val(m);
-                }
-            });
-        });
-    }
+                });
 
-    $('#dvs-sidebar').on('sidebarLoaded', init);
-    init();
+                formatInput.on('change', function()
+                {
+                    var newformat = $(this).val();
+                    var m = moment(input.val()).format(formatMap[newformat]);
+
+                    if (m != 'Invalid date')
+                    {
+                        sample.val(m);
+                    }
+                });
+            });
+        }
+    };
+
 });

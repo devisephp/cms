@@ -1,5 +1,5 @@
 define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate) {
-    var link = {
+    return {
         init: function() {
             $('form.dvs-element-link').each(function () {
 
@@ -12,6 +12,4 @@ define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate)
         }
 
     };
-
-    return link;
 });

@@ -1,33 +1,4 @@
 define(['require', 'jquery', 'async!http://maps.google.com/maps/api/js?sensor=false'], function (require, $) {
-    function init()
-    {
-        $('.dvs-google-map').each(function(){
-            var parentForm = $(this).parents('form');
-            var addressField = parentForm.find('[name="address"]');
-            var latField = parentForm.find('[name="latitude"]');
-            var lngField = parentForm.find('[name="longitude"]');
-            var marker;
-            var map = new google.maps.Map($(this).get(0),{
-                zoom:7,
-                center: new google.maps.LatLng(25.7877, -80.2241),
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                streetViewControl: false,
-                mapTypeControl: false
-            });
-
-            google.maps.event.addListener(map, 'click', function(event) {
-                if (marker) {
-                    marker.setMap(null);
-                    marker = null;
-                }
-
-                marker = createMarker(event.latLng, "name", map);
-                updateAddress(event.latLng.lat(), event.latLng.lng(), addressField);
-                latField.val(event.latLng.lat());
-                lngField.val(event.latLng.lng());
-            });
-        });
-    }
 
     function updateAddress(lat, lng, target)
     {
@@ -54,6 +25,35 @@ define(['require', 'jquery', 'async!http://maps.google.com/maps/api/js?sensor=fa
         return marker;
     }
 
-    $('#dvs-sidebar').on('sidebarLoaded', init);
-    init();
+    return {
+        init: function()
+        {
+            $('.dvs-google-map').each(function(){
+                var parentForm = $(this).parents('form');
+                var addressField = parentForm.find('[name="address"]');
+                var latField = parentForm.find('[name="latitude"]');
+                var lngField = parentForm.find('[name="longitude"]');
+                var marker;
+                var map = new google.maps.Map($(this).get(0),{
+                    zoom:7,
+                    center: new google.maps.LatLng(25.7877, -80.2241),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    streetViewControl: false,
+                    mapTypeControl: false
+                });
+
+                google.maps.event.addListener(map, 'click', function(event) {
+                    if (marker) {
+                        marker.setMap(null);
+                        marker = null;
+                    }
+
+                    marker = createMarker(event.latLng, "name", map);
+                    updateAddress(event.latLng.lat(), event.latLng.lng(), addressField);
+                    latField.val(event.latLng.lat());
+                    lngField.val(event.latLng.lng());
+                });
+            });
+        }
+    };
 });

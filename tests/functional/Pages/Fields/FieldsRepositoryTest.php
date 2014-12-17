@@ -5,7 +5,6 @@ class FieldsRepositoryTest extends \DeviseTestCase
 	public function setUp()
 	{
 		parent::setUp();
-
 		$this->FieldsRepository = new FieldsRepository(new \DvsField, new \DvsGlobalField);
 	}
 

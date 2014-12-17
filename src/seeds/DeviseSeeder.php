@@ -14,7 +14,8 @@ class DeviseSeeder extends \Illuminate\Database\Seeder {
 		$this->call('DevisePagesSeeder');
 		$this->call('DeviseGroupsSeeder');
 
-		if (App::environment() == 'local') {
+		if (App::environment() == 'local' || App::environment() == 'testing')
+		{
 			// For Development
 			$this->call('DeviseMenusSeeder');
 			$this->call('DeviseUsersSeeder');

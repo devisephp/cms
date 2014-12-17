@@ -27,7 +27,7 @@ define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate)
         });
     }
 
-    var textEditor = {
+    return {
         init: function () {
 
             $('form.dvs-element-text').each(function () {
@@ -43,8 +43,4 @@ define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate)
             });
         }
     };
-
-    $('#dvs-sidebar').on('sidebarLoaded', textEditor.init);
-
-    textEditor.init();
 });

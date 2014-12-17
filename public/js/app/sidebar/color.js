@@ -1,5 +1,6 @@
 define(['require', 'jquery', 'spectrum', 'dvsLiveUpdate'], function (require, $, spectrum, liveUpdate) {
-    var color = {
+
+    return {
         init: function() {
             $('form.dvs-element-color').each(function(){
                 var parentForm = $(this);
@@ -23,10 +24,4 @@ define(['require', 'jquery', 'spectrum', 'dvsLiveUpdate'], function (require, $,
             });
         }
     };
-
-    $('#dvs-sidebar').on('sidebarLoaded', color.init);
-
-    color.init();
-
-    return color;
 });

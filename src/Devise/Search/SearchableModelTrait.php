@@ -19,6 +19,7 @@ trait SearchableModelTrait
      */
     protected $totalWords = 0;
 
+
     /**
      * Makes the search process work for a model
      *
@@ -27,6 +28,19 @@ trait SearchableModelTrait
      * @return mixed
      */
     public function scopeSearch($query, $search)
+    {
+        return $this->createSearchQuery($query, $search);
+    }
+
+    /**
+     * Makes the search query to search for text by
+     * relevance inside the database using IF statements
+     *
+     * @param  Query $query
+     * @param  text  $search
+     * @return Query
+     */
+    protected function createSearchQuery($query, $search)
     {
         if (!$search) {
             return $query;

@@ -40,36 +40,20 @@ class PageSearch extends \DvsPage
 
     public function scopeSearch($query, $search)
     {
+        $query = $this->createSearchQuery($query, $search);
+
+        // only show the languages that are active
         $language = App::make('Devise\Languages\LanguageDetector')->current();
         $query->where('language_id', $language->id);
-        return $this->createSearchQuery($query, $search);
-    }
 
-    protected function createSearchQuery($query, $search)
-    {
-        if (!$search) {
-            return $query;
-        }
-
-        $relevance_count = 0;
-        $words = explode(' ', $search);
-
-        $selects = [];
-
-        foreach ($this->getColumns() as $column => $relevance)
+        // exclude pages that don't have a live page version currently
+        $now = new \DateTime;
+        $query->where('starts_at', '<', $now);
+        $query->where(function($query) use ($now)
         {
-            $relevance_count += $relevance;
-            $queries = $this->getSearchQueriesForColumn($column, $relevance, $words);
-
-            foreach ($queries as $select) {
-                $selects[] = $select;
-            }
-        }
-
-        $this->addSelectsToQuery($query, $selects);
-        $this->filterQueryWithRelevance($query, ($relevance_count / 4));
-
-        $this->makeJoins($query);
+            $query->where('ends_at', '>', $now);
+            $query->orWhereNull('ends_at');
+        });
 
         return $query;
     }

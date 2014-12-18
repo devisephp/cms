@@ -40,6 +40,8 @@ class PageSearch extends \DvsPage
 
     public function scopeSearch($query, $search)
     {
+        if (!$search) return $query;
+
         $query = $this->createSearchQuery($query, $search);
 
         // only show the languages that are active
@@ -48,11 +50,11 @@ class PageSearch extends \DvsPage
 
         // exclude pages that don't have a live page version currently
         $now = new \DateTime;
-        $query->where('starts_at', '<', $now);
+        $query->where('dvs_page_versions.starts_at', '<', $now);
         $query->where(function($query) use ($now)
         {
-            $query->where('ends_at', '>', $now);
-            $query->orWhereNull('ends_at');
+            $query->where('dvs_page_versions.ends_at', '>', $now);
+            $query->orWhereNull('dvs_page_versions.ends_at');
         });
 
         return $query;

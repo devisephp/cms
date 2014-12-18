@@ -64,18 +64,9 @@ class PagesRepository
      * @param bool $editing
      * @return Page
      */
-	public function find($id, $versionName = 'Default', $editing = false)
+	public function find($id)
 	{
         $page = $this->Page->findOrFail($id);
-
-        $page->version = $editing ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
-
-        if (!$page->version)
-        {
-            throw new PageNotFoundException('Page not found!');
-        }
-
-        $page = $this->wrapFieldsAroundPage($page, $page->version);
 
         return $page;
 	}

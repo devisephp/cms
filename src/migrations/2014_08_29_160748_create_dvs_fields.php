@@ -26,6 +26,7 @@ class CreateDvsFields extends Migration {
 
             $table->index('collection_instance_id');
             $table->index('page_version_id');
+            $table->unique(['collection_instance_id', 'page_version_id', 'key'], 'collection_instance_page_version_key_unique_index');
         });
     }
 

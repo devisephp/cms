@@ -24,6 +24,7 @@ class CreateDvsGlobalFields extends Migration {
             $table->dateTime('deleted_at')->nullable();
 
             $table->index('language_id');
+            $table->unique(['language_id', 'key']);
         });
     }
 

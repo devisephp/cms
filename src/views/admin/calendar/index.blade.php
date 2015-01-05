@@ -112,7 +112,7 @@
 
 <!-- script gets the calendar started -->
 <script>
-	requirejs(['dvsCalendar'], function(calendar)
+	devise.require(['dvsCalendar'], function(calendar)
 	{
 		//
 		// initialize and add draggable

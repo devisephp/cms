@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], function (require, $, network, dvsSidebarView) {
+devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], function (require, $, network, dvsSidebarView) {
 
     var collectionId = null;
     var collectionName = null;

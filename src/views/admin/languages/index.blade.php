@@ -13,7 +13,7 @@
 				<th class="dvs-tal">{{ Sort::link('code','Short Code') }}</th>
 				<th class="dvs-tal">
 					{{ Sort::link('human_name','Language') }}
-					{{ Sort::filter('human_name', "#languages, .dvs-admin-container", ['placeholder' => 'Filter by Name']) }}
+					{{ Sort::filter('human_name', "#languages", ['placeholder' => 'Filter by Name']) }}
 				</th>
 	            <th>Active</th>
 			</tr>
@@ -30,13 +30,7 @@
 				</tr>
 			@endforeach
 		</tbody>
-
-        <tfoot>
-            <tr>
-                <td>{{ $languages->appends(Input::except(['page']))->links(); }}</td>
-            </tr>
-        </tfoot>
 	</table>
 
-	<script>require(['app/admin/languages'])</script>
+	<script>devise.require(['app/admin/languages', 'dvsDataReplacement', 'dvsChangeTarget'])</script>
 @stop

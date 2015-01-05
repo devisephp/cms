@@ -56,7 +56,7 @@
 </div>
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/select'], function(obj)
+    devise.require(['app/sidebar/select'], function(obj)
     {
         obj.init();
     });

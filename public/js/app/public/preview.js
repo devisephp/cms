@@ -1,4 +1,4 @@
-define(['require', 'jquery'], function (require, $) {
+devise.define(['require', 'jquery'], function (require, $) {
 
     var init = function(pageVersion) {
         if(typeof pageVersion.preview_message !== 'undefined') {

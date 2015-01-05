@@ -1,4 +1,4 @@
-define(['jquery', 'dvsRouter'], (function($, Router)
+devise.define(['jquery', 'dvsRouter'], (function($, Router)
 {
     return new Router({
 

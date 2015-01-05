@@ -1,4 +1,4 @@
-define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], function ($, fullCalendar)
+devise.define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], function ($, fullCalendar)
 {
     //
     // we need to keep the date formats consistent especially
@@ -24,7 +24,7 @@ define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], function ($, f
             .fadeTo(500, 0.8)
             .click(function(e){ closeModal(); });
 
-        $('.modal .close').click(function(e)
+        $('.modal .close,.btn-close').click(function(e)
         {
             e.preventDefault();
             closeModal();
@@ -269,6 +269,7 @@ define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], function ($, f
 
             $selector.fullCalendar(
             {
+                columnFormat: {month: 'dddd'},
                 eventSources: [ pageVersionSource ],
                 editable: true,
                 droppable: true,

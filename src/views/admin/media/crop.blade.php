@@ -32,6 +32,6 @@
         <div class="js-image-preview"></div>
     </div>
 	<script>
-        require(['app/admin/media-manager-crop', 'app/admin/admin']);
+        devise.require(['app/admin/media-manager-crop', 'app/admin/admin']);
     </script>
 @stop

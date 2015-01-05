@@ -36,7 +36,7 @@
 </div>
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/datetime'], function(obj)
+    devise.require(['app/sidebar/datetime'], function(obj)
     {
         obj.init();
     });

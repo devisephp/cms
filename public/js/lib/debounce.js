@@ -1,7 +1,7 @@
 /**
  * Usage: debounce(funcName, 500)
  */
-define([], function()
+devise.define([], function()
 {
 	return function (func, threshold)
 	{

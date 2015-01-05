@@ -30,7 +30,7 @@ $loadDefaults = (!isset($element->value->text) || $element->value->text == '') ?
 {{ Form::close() }}
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/text'], function(obj)
+    devise.require(['app/sidebar/text'], function(obj)
     {
         obj.init();
     });

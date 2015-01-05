@@ -1,4 +1,4 @@
-define(['jquery', 'datetimepicker'], function ($, datetimepicker)
+devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
 {
     // make entire "dvs-admin-card" into a link
     if($('.dvs-admin-card').length > 0) {

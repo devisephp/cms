@@ -102,6 +102,16 @@ class RuleList
     }
 
     /**
+     * Is user not logged in system
+     *
+     * @return boolean
+     */
+    public function isNotLoggedIn()
+    {
+        return $this->Auth->check();
+    }
+
+    /**
      * Checks if user is in a group
      *
      * @param  string  $groupname

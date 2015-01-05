@@ -77,6 +77,6 @@
 	{{ $fields->links(); }}
 </div>
 
-<script>require(['app/admin/content-queue'])</script>
+<script>devise.require(['app/admin/content-queue'])</script>
 
 @stop

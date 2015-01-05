@@ -1,4 +1,4 @@
-define(['jquery'], function($)
+devise.define(['jquery'], function($)
 {
     var defaults = {
         previousUrl: '',                                // we don't call ajax if previous == current filter

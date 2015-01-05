@@ -1,7 +1,7 @@
 /**
  * Usage: throttle(funcName, 5000)
  */
-define([], function()
+devise.define([], function()
 {
 	return function (func, threshold)
 	{

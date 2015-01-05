@@ -1,6 +1,5 @@
-define(['jquery'], function ($)
+devise.define(['jquery'], function ($)
 {
-
     //
     // Controls the sending via ajax of active/inactive
     // for a language to backend server

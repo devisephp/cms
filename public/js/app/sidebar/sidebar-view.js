@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQueryHelper', 'dvsSelectSurrogate', 'jquery-ui'], function (require, $, datePicker, network, pageData, query, selectSurrogate)
+devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQueryHelper', 'dvsSelectSurrogate', 'jquery-ui'], function (require, $, datePicker, network, pageData, query, selectSurrogate)
 {
     var node = null;
     var ogWidth = null;

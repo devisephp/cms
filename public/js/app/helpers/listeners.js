@@ -1,4 +1,4 @@
-define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsCollectionsView', 'dvsAdminView', 'dvsPageData'], (function( $, nodeView, floaterNodeSidebarView, sidebarView, collectionsView, adminView, pageData ) {
+devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsCollectionsView', 'dvsAdminView', 'dvsPageData'], (function( $, nodeView, floaterNodeSidebarView, sidebarView, collectionsView, adminView, pageData ) {
 
     var savingCount = 0;
     var node = null;

@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate) {
+devise.define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate) {
 
     function addMaxLengthInputBinding(maxlengthInput, textInput) {
         maxlengthInput.bind('input', function () {

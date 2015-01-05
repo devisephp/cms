@@ -1,4 +1,4 @@
-define(['require', 'jquery'], {getInstance: function() {
+devise.define(['require', 'jquery'], {getInstance: function() {
 
     var changes = {};
     var instance = new Object();

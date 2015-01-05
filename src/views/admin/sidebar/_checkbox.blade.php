@@ -22,7 +22,7 @@
 {{ Form::close() }}
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/checkbox'], function(obj)
+    devise.require(['app/sidebar/checkbox'], function(obj)
     {
         obj.init();
     });

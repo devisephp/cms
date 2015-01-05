@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'spectrum', 'dvsLiveUpdate'], function (require, $, spectrum, liveUpdate) {
+devise.define(['require', 'jquery', 'spectrum', 'dvsLiveUpdate'], function (require, $, spectrum, liveUpdate) {
 
     return {
         init: function() {

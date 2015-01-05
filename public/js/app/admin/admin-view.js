@@ -1,4 +1,4 @@
-define(['require', 'jquery'], function (require, $) {
+devise.define(['require', 'jquery'], function (require, $) {
 
     var navigationType     = 'dropdown'; // 'list', 'dropdown'
     var navigationLocation = 'both'; // 'sidebar', 'topbar', 'both'

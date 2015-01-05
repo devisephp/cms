@@ -42,7 +42,7 @@ $loadDefaults = ((!isset($element->value->url) || $element->value->url == '') &&
 {{ form::close() }}
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/link'], function(obj)
+    devise.require(['app/sidebar/link'], function(obj)
     {
         obj.init();
     });

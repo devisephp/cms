@@ -1,4 +1,4 @@
-define(["jquery", "typeahead"], function ( $ ) {
+devise.define(["jquery", "typeahead"], function ( $ ) {
 	// Setting of defaults
 	var pluginName = "autoComplete",
 		defaults = {};

@@ -1,3 +1,3 @@
-define(["jquery", "autoComplete"], (function( $ ) {
+devise.define(["jquery", "autoComplete"], (function( $ ) {
     $('.typeahead').autoComplete();
 }));

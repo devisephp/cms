@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'app/helpers/query-params'], function (require, $, queryParams)
+devise.define(['require', 'jquery', 'app/helpers/query-params'], function (require, $, queryParams)
 {
     var _input = {};
     return {

@@ -1,7 +1,5 @@
-define(['jquery', 'jquery-ui', 'jquery-ui/autocomplete'], function ( $, jqUi, autocomplete)
+devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $, jqUi, autocomplete)
 {
-    require(['jquery.nestedSortable'], function() { initialize(); });
-
     function updateItemParent(itemId, parentId)
     {
         var selector = '[name="item_order[' + itemId + ']"]';
@@ -146,4 +144,6 @@ define(['jquery', 'jquery-ui', 'jquery-ui/autocomplete'], function ( $, jqUi, au
             $(this).siblings('input[type=hidden]').val('');
         });
     }
+
+    initialize();
 });

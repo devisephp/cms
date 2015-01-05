@@ -87,8 +87,8 @@ class ViewvarComposer
      */
     private function getVars($name)
     {
-        $vars = $this->Config->get('devise::view-vars')[$name];
-        $parent = $this->Config->get('devise::view-extensions.' . $name);
+        $vars = isset($this->Config->get('devise::view-vars')[$name]) ? $this->Config->get('devise::view-vars')[$name] : null;
+        $parent = isset($this->Config->get('devise::view-extensions')[$name]) ? $this->Config->get('devise::view-extensions')[$name] : null;
 
         if ($vars || $parent)
         {

@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPageData) {
+devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPageData) {
 
     var nodes = null;
     var nodeHeight = 82;

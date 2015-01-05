@@ -400,13 +400,24 @@ class DevisePagesSeeder extends Seeder
             ),
             array(
                 'language_id'             => '45',
+                'view'                    => 'devise::admin.menus.create',
                 'title'                   => 'Create a new menu',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-menus-create',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/menus/create',
+                'short_description'       => 'Create new menu form',
+            ),
+            array(
+                'language_id'             => '45',
+                'title'                   => 'Store menu',
                 'http_verb'               => 'post',
                 'route_name'              => 'dvs-menus-store',
                 'is_admin'                => '1',
                 'dvs_admin'               => '1',
                 'slug'                    => '/admin/menus',
-                'short_description'       => 'Create a new menu to edit',
+                'short_description'       => 'Store a new menu',
                 'response_type'           => 'Function',
                 'response_path'           => 'Devise\Menus\MenusResponseHandler.requestStore',
                 'response_params'         => 'input'
@@ -860,7 +871,21 @@ class DevisePagesSeeder extends Seeder
                 'response_path'           => 'Devise\Calendar\CalendarResponseHandler.requestPageVersionEventSource',
                 'response_params'         => 'input',
             ),
-
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'view'                    => '',
+                'title'                   => 'Patches Devise Admin Calendar Source for Page Versions',
+                'http_verb'               => 'patch',
+                'route_name'              => 'dvs-calendar-page-version-source-update',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => '/admin/calendar/sources/page-versions/{pageVersionId}',
+                'short_description'       => 'Updates the page versions dates and information',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Calendar\CalendarResponseHandler.requestPageVersionEventUpdate',
+                'response_params'         => 'params.pageVersionId,input',
+            ),
 		);
 
         $now = date('Y-m-d H:i:s', strtotime('now'));

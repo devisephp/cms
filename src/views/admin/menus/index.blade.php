@@ -54,5 +54,5 @@
         </tfoot>
     </table>
 
-    <script>require(['app/admin/admin'])</script>
+    <script>devise.require(['app/admin/admin'])</script>
 @stop

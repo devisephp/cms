@@ -1,4 +1,4 @@
-define(["jquery", "requests"], function ( $ ) {
+devise.define(["jquery", "requests"], function ( $ ) {
 	// Setting of defaults
 	var pluginName = "ajaxForm",
 		defaults = {

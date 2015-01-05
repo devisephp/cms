@@ -1,4 +1,4 @@
-define(['dvsMessageBus'], function(MessageBus)
+devise.define(['dvsMessageBus'], function(MessageBus)
 {
 	return new MessageBus;
 });

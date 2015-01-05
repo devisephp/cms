@@ -68,5 +68,5 @@
         </tfoot>
 	</table>
 
-	<script>require(['app/admin/admin', 'app/bindings/data-dvs-replacement', 'app/bindings/data-change-target'])</script>
+	<script>devise.require(['app/admin/admin', 'app/bindings/data-dvs-replacement', 'app/bindings/data-change-target'])</script>
 @stop

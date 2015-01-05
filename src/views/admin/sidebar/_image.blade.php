@@ -55,7 +55,7 @@
 {{ Form::close() }}
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/image'], function(obj){
+    devise.require(['app/sidebar/image'], function(obj){
         obj.init();
     });
 </script>

@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'app/helpers/query-params', 'jcrop'], function (require, $, queryParams)
+devise.define(['require', 'jquery', 'app/helpers/query-params', 'jcrop'], function (require, $, queryParams)
 {
     var width = $('input[name="cropper[width]"]').val();
     var height = $('input[name="cropper[height]"]').val();

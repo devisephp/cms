@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'async!http://maps.google.com/maps/api/js?sensor=false'], function (require, $) {
+devise.define(['require', 'jquery', 'async!http://maps.google.com/maps/api/js?sensor=false'], function (require, $) {
 
     function updateAddress(lat, lng, target)
     {

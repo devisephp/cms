@@ -1,4 +1,4 @@
-define(['jquery', 'pageData'], function ($, pageData)
+devise.define(['jquery', 'pageData'], function ($, pageData)
 {
 
 });

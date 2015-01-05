@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $, selectSurrogate) {
+devise.define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $, selectSurrogate) {
 
     var initialize = function()
     {

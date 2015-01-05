@@ -1,9 +1,9 @@
-define(['require', 'jquery'], function (require, $) {
+devise.define(['require', 'jquery'], function (require, $) {
 
     var target;
     var callback;
     var data;
-    var partialsPath = requirejs.s.contexts._.config.devise.partialLoaderPath;
+    var partialsPath = devise.requirejs.s.contexts._.config.devise.partialLoaderPath;
 
     var network = {
         insertTemplate: function(_view, _target, _data, _callback) {

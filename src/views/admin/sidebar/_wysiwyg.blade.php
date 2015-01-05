@@ -20,7 +20,7 @@
     </div>
 
 <script>
-    require(['devise/app/sidebar/wysiwyg'], function(obj)
+    devise.require(['app/sidebar/wysiwyg'], function(obj)
     {
         obj.init();
     });

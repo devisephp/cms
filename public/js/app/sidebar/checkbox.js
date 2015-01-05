@@ -1,4 +1,4 @@
-define(['require', 'jquery'], function (require, $) {
+devise.define(['require', 'jquery'], function (require, $) {
     return {
     	init: function()
     	{

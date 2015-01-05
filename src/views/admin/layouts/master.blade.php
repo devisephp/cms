@@ -12,8 +12,8 @@
 
     @yield('css')
 
-    <script src="{{ URL::asset('/packages/devisephp/cms/js/config.js') }}"></script>
-    <script data-main="app/admin/main" src="{{ URL::asset('/packages/devisephp/cms/js/require.js') }}"></script>
+    <script src="{{ URL::asset('/packages/devisephp/cms/js/devise.min.js') }}"></script>
+    <script>devise.require(['app/admin/main'])</script>
 </head>
 
 <body id="dvs-admin" class="dvs-default">

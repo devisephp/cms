@@ -25,8 +25,8 @@
 {{ Form::close() }}
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/color'], function(obj)
-    {
-        obj.init();
-    });
+  devise.require(['app/sidebar/color'], function(obj)
+  {
+      obj.init();
+  });
 </script>

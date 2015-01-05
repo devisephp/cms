@@ -41,7 +41,7 @@
 </div>
 
 @include('devise::admin.menus._itemsjs')
-<script>require(['app/admin/menus.edit'])</script>
+<script>devise.require(['app/admin/menus.edit'])</script>
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('/packages/devisephp/cms/css/jquery.nestedSortable.css') }}">
 
 @stop

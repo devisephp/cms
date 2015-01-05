@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'dvsAdmin'], function (require, $) {
+devise.define(['require', 'jquery', 'dvsAdmin'], function (require, $) {
 
     var initialize = function() {
         addListeners();

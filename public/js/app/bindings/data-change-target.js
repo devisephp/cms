@@ -1,4 +1,4 @@
-define(['jquery'], function ($)
+devise.define(['jquery'], function ($)
 {
 
 	$('body').on('click', '[data-change-target][data-value]', function(e)

@@ -1,4 +1,4 @@
-define([], function()
+devise.define([], function()
 {
 	return function()
 	{

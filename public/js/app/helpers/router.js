@@ -1,4 +1,4 @@
-define(['jquery', 'crossroads', 'dvsGlobalBus'], (function($, crossroads, dvsMessageBus)
+devise.define(['jquery', 'crossroads', 'dvsGlobalBus'], (function($, crossroads, dvsMessageBus)
 {
 	//
 	// Create the router object that will be returned

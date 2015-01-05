@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate) {
+devise.define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate) {
     return {
         init: function() {
             $('form.dvs-element-link').each(function () {

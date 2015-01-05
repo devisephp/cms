@@ -74,7 +74,7 @@
 </div>
 
 <script type="text/javascript">
-    require(['devise/app/sidebar/checkbox-group'], function(obj)
+    devise.require(['app/sidebar/checkbox-group'], function(obj)
     {
         obj.init();
     });

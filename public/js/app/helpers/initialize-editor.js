@@ -1,4 +1,4 @@
-define(['jquery', 'dvsListeners'], (function( $, listeners ) {
+devise.define(['jquery', 'dvsListeners'], (function( $, listeners ) {
 
     var pageId = null;
     var pageVersionId = null;

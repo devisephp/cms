@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'datetimepicker', 'moment'], function (require, $) {
+devise.define(['require', 'jquery', 'datetimepicker', 'moment'], function (require, $) {
     var formatMap = {
         'F jS Y h:i A': 'MMMM Do YYYY h:mm A',
         'F jS Y': 'MMMM Do YYYY',

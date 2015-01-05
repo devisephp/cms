@@ -1,4 +1,4 @@
-define(["jquery"], function ( $ ) {
+devise.define(["jquery"], function ( $ ) {
 	// Setting of defaults
 	var pluginName = "filterList",
 		defaults = {

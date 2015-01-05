@@ -1,4 +1,4 @@
-define(['require', 'jquery', 'jquery-ui', 'dvsAdmin'], function (require, $) {
+devise.define(['require', 'jquery', 'jquery-ui', 'dvsAdmin'], function (require, $) {
 
     var settings = {
         hoverClass: 'about-to-drop',

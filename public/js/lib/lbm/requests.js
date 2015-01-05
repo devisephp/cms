@@ -1,4 +1,4 @@
-define(["jquery"], function ( $, window, document, undefined ) {
+devise.define(["jquery"], function ( $, window, document, undefined ) {
 	// Setting of defaults
 	var pluginName = "requests",
 		defaults = {

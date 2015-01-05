@@ -72,6 +72,34 @@ class PagesRepository
 	}
 
     /**
+     * finds a record by it's id and provide version and field data
+     *
+     * @param  int $id
+     * @param string $versionName
+     * @param bool $editing
+     * @internal param string $slug
+     * @return Page
+     */
+    public function findWithVersion($id, $versionName = null, $editing = false)
+    {
+        $page = $this->Page->findOrFail($id);
+
+        // if the user is an admin user they can view any page
+        // using the ?page_version query parameter otherwise
+        // they just get the live version
+        $page->version = $editing && $versionName !== null ? $this->getPageVersionByName($page, $versionName) : $this->getLivePageVersion($page);
+
+        if (!$page->version)
+        {
+            throw new PageNotFoundException('Page not found!');
+        }
+
+        $page = $this->wrapFieldsAroundPage($page, $page->version);
+
+        return $page;
+    }
+
+    /**
      * finds a record by it's slug
      *
      * @param $name

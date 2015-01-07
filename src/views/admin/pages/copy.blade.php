@@ -1,20 +1,16 @@
 @extends('devise::admin.layouts.master')
 
-@section('subnavigation')
-<ul>
-    <li>{{ link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) }}</li>
-</ul>
-@stop
-
 @section('title')
 
-<h1>Copy Page</h1>
-<h3><span>COPYING PAGE: {{ $page->title }}</span></h3>
-@if ($page->short_description != '')
-<p>{{ $page->short_description }}</p>
-@else
-<br><br>
-@endif
+    <div id="dvs-admin-title">
+        <h1>Copy Page</h1>
+
+        <p>COPYING PAGE: {{ $page->title }}</p>
+    </div>
+
+    <div id="dvs-admin-actions">
+        {{ link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) }}
+    </div>
 
 @stop
 
@@ -26,7 +22,7 @@
 
     {{ Form::model($page, array('method' => 'POST', 'route' => array('dvs-pages-copy-store', $page->id))) }}
 
-        @include('devise::admin.pages._page-form', array('translatedFromPage' => true))
+        @include('devise::admin.pages._page-form', ['translatedFromPage' => true, 'method' => 'copy'])
 
         {{ Form::submit('Copy Page', array('class' => 'dvs-button dvs-button-large')) }}
 

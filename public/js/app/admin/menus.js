@@ -1,4 +1,4 @@
-devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $, jqUi, autocomplete)
+devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
 {
     function updateItemParent(itemId, parentId)
     {
@@ -11,6 +11,48 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $, jqUi, a
         }
 
         $(selector).val(parentId);
+    }
+
+    function initAutoComplete()
+    {
+        var autoCompleteSource = function (request, response) {
+            $.ajax({
+                url: autocompletePagesUrl,
+                dataType: "json",
+                type: 'get',
+                data: {
+                    term: request.term
+                },
+                success: function( data ) {
+                    response($.map(data, function (value, key) {
+                        return {
+                            label: value,
+                            value: key
+                        };
+                    }));
+                }
+            });
+        };
+
+        var autoCompleteSelect = function( event, ui ) {
+            event.preventDefault();
+
+            var _id = ui.item.value;
+            var _label = ui.item.label;
+            $(this).siblings('input[type=hidden]').val(_id);
+            $(this).val(_label);
+        };
+
+        $( ".autocomplete-pages" ).autocomplete({
+            source: autoCompleteSource,
+            minLength: 2,
+            select: autoCompleteSelect,
+            delay: 200
+        });
+
+        $('.autocomplete-pages').on('input', function() {
+            $(this).siblings('input[type=hidden]').val('');
+        });
     }
 
     function initialize()
@@ -34,6 +76,8 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $, jqUi, a
         $('.js-add-menu-item').on('click', function()
         {
             $('.dvs-menu-items').append(newMenuItemTemplate.replace(/\{cid\}/g, 'cid' + cid++));
+
+            initAutoComplete();
         });
 
 
@@ -105,44 +149,7 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $, jqUi, a
             }
         });
 
-        var autoCompleteSource = function (request, response) {
-            $.ajax({
-                url: autocompletePagesUrl,
-                dataType: "json",
-                type: 'get',
-                data: {
-                    term: request.term
-                },
-                success: function( data ) {
-                    response($.map(data, function (value, key) {
-                        return {
-                            label: value,
-                            value: key
-                        };
-                    }));
-                }
-            });
-        };
-
-        var autoCompleteSelect = function( event, ui ) {
-            event.preventDefault();
-
-            var _id = ui.item.value;
-            var _label = ui.item.label;
-            $(this).siblings('input[type=hidden]').val(_id);
-            $(this).val(_label);
-        };
-
-        $( ".autocomplete-pages" ).autocomplete({
-            source: autoCompleteSource,
-            minLength: 2,
-            select: autoCompleteSelect,
-            delay: 200
-        });
-
-        $('.autocomplete-pages').on('input', function() {
-            $(this).siblings('input[type=hidden]').val('');
-        });
+        initAutoComplete();
     }
 
     initialize();

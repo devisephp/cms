@@ -10303,17 +10303,14 @@ jQuery.fn.andSelf = jQuery.fn.addBack;
 // AMD loader is present. jQuery is a special case. For more information, see
 // https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
-
-// removed BY KELT... we are using this jquery for PACKAGE DEVISE REQUIRE
-// so we don't need to define it on the global 'define' var... that goes
-// against the whole concept of namespacing... especially since we need
-// to wrap this into private variable `devise.$` insead of window.$
 //
-// if ( typeof define === "function" && define.amd ) {
-// 	define( "jquery", [], function() {
-// 		return jQuery;
-// 	});
-// }
+// changed BY KELT to allow this to load as an AMD module...
+//
+if ( typeof define === "function" && define.amd ) {
+	define([], function() {
+		return jQuery;
+	});
+}
 
 
 
@@ -10337,12 +10334,19 @@ jQuery.noConflict = function( deep ) {
 	return jQuery;
 };
 
+
+// removed BY KELT... we are using this jquery for PACKAGE DEVISE REQUIRE
+// so we don't need to define it on the global 'define' var... that goes
+// against the whole concept of namespacing... especially since we need
+// to wrap this into private variable `devise.$` insead of window.$
+//
+
 // Expose jQuery and $ identifiers, even in
 // AMD (#7102#comment:10, https://github.com/jquery/jquery/pull/557)
 // and CommonJS for browser emulators (#13566)
-if ( typeof noGlobal === strundefined ) {
-	window.jQuery = window.$ = jQuery;
-}
+// if ( typeof noGlobal === strundefined ) {
+// 	window.jQuery = window.$ = jQuery;
+// }
 
 
 

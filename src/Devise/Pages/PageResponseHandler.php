@@ -151,6 +151,30 @@ class PageResponseHandler
     }
 
     /**
+     * Request page version be destroyed
+     *
+     * @param  integer $pageVersionId
+     * @return Response || Redirect
+     */
+    public function requestDestroyPageVersion($pageVersionId) {
+        if($this->PageVersionManager->destroyPageVersion($pageVersionId)) {
+            return Response::json([
+                    'message' => 'Page Version successfully removed',
+                    'data' => $pageVersionId
+                ],
+                200
+            );
+
+        } else {
+            return Response::json([
+                    'message' => 'The Page Version could not be removed. Please try again or contact an administrator',
+                ],
+                500
+            );
+        }
+    }
+
+    /**
      * Request the page listing
      *
      * @param  array   $input

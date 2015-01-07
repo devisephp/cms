@@ -1,4 +1,4 @@
-define(['lib/jquery-1.11.2'], function()
+define(['lib/jquery-1.11.2'], function(jQueryPrivate)
 {
-    return jQuery.noConflict();
+	return jQueryPrivate.noConflict(true);
 });

@@ -152,6 +152,9 @@ class MenusManager
 			if (isset($item['image'])) {
 				$menuItem->image = $item['image'];
 			}
+            if (isset($item['url_or_page']) && $item['url_or_page'] !== 'page') {
+                $item['page_id'] = NULL;
+            }
 
 			$menuItem->parent_item_id = $order[$id] ?: null;
 			$menuItem->url = $item['url'];
@@ -195,7 +198,7 @@ class MenusManager
 					'menu_id' => $menu->id,
 					'parent_item_id' => null,
 					'url' => $item['url'],
-					'image' => $item['image'],
+					'image' => array_get($item, 'image', NULL),
 					'name' => $item['name'],
 					'position' => 0,
 				]);

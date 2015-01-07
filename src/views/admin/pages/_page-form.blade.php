@@ -17,13 +17,15 @@
 	</div>
 </div>
 
-<div class="dvs-form-group open simpletoggle" id="view-template-form">
-    {{ Form::label('Language') }}
-    {{ Form::select('language_id', $languages) }}
-    @if(isset($translatedFromPage) && $translatedFromPage)
-    {{ Form::hidden('translated_from_page_id', $page->id) }}
-    @endif
-</div>
+@if ($method != 'update')
+    <div class="dvs-form-group open simpletoggle" id="view-template-form">
+        {{ Form::label('Language') }}
+        {{ Form::select('language_id', $languages) }}
+        @if(isset($translatedFromPage) && $translatedFromPage)
+        {{ Form::hidden('translated_from_page_id', $page->id) }}
+        @endif
+    </div>
+@endif
 
 <h3>Above It</h3>
 <hr>
@@ -69,13 +71,13 @@
 </div>
 
 @if ($method == 'store')
-<div class="dvs-form-group">
-    {{ Form::label('Publish on save') }}
-    <div class="fancyCheckbox">
-        {{ Form::checkbox('published', true, true, array('id' => 'published')) }}
-        {{ Form::label('published', '&nbsp;') }}
+    <div class="dvs-form-group">
+        {{ Form::label('Publish on save') }}
+        <div class="fancyCheckbox">
+            {{ Form::checkbox('published', true, true, array('id' => 'published')) }}
+            {{ Form::label('published', '&nbsp;') }}
+        </div>
     </div>
-</div>
 @endif
 
 <div class="dvs-form-group">

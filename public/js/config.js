@@ -4,10 +4,6 @@ require.config({
 
     baseUrl: '/packages/devisephp/cms/js',
 
-    //urlArgs: "bust=" + (new Date()).getTime(),
-
-    skipDataMain: true,
-
     shim:  {
         ckeditorJquery : {
             deps: ['jquery', 'ckeditorCore']
@@ -20,12 +16,6 @@ require.config({
         },
         crossroads: {
             deps: ['signals']
-        },
-        'jquery-ui': {
-            deps: ['jquery']
-        },
-        jqNestedSortable: {
-            deps: ['jquery-ui']
         }
     },
 
@@ -59,6 +49,7 @@ require.config({
         dvsCollectionsView: 'app/sidebar/collections-view',
         dvsAdminView:       'app/admin/admin-view',
         dvsAdminPages:      'app/admin/pages',
+        dvsAdminMenus:      'app/admin/menus',
         dvsLiveUpdate:      'app/helpers/live-update',
         dvsReplacement:     'app/helpers/replacement',
         dvsModal:           'app/helpers/modal',

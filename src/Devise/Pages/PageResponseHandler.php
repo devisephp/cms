@@ -1,6 +1,7 @@
 <?php namespace Devise\Pages;
 
 use Illuminate\Routing\Redirector;
+use Response;
 
 /**
  * Response handler takes care of creating,updating, destroying

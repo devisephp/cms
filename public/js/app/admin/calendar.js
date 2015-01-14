@@ -128,6 +128,8 @@ devise.define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], functio
     {
         var start = event.start.format(THE_DATE_FORMAT);
 
+        console.log(event.title);
+
         var data = {
             start: start,
             end: null,

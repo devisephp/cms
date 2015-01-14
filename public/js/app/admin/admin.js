@@ -3,15 +3,11 @@ devise.define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $,
     var initialize = function()
     {
         addDeleteConfirmation();
-        calculateVignette();
         addListeners();
         selectSurrogate();
     };
 
     var addListeners = function() {
-        $(window).resize(function() {
-            calculateVignette();
-        });
 
         $('#lang-select').change(function(e){
 
@@ -43,13 +39,6 @@ devise.define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $,
         });
     };
 
-    var calculateVignette = function() {
-
-        var docHeight = $(document).height();
-        var targetHeight = docHeight - $('#dvs-admin-top-bar').outerHeight();
-
-        $('.vignette').css('height', targetHeight);
-    };
 
     initialize();
 

@@ -143,15 +143,6 @@
   width:75%;
 }
 
-#dvs-admin-logo {
-  text-align:center;
-
-  img {
-    max-width:225px;
-    max-height:55px;
-  }
-}
-
 #dvs-devise-logo-sm {
   margin:50px auto 25px;
   text-align:center;
@@ -317,16 +308,17 @@
 #dvs-admin-actions {
   float:left;
   width:36.6666%;
+  margin-bottom:25px;
 
   .dvs-button {
-    margin-bottom:25px;
+    margin-bottom:5px;
+    width:150px
   }
 
   a {
     clear:both;
     float:right;
     font-size:11px;
-    margin:5px 0;
   }
 
   select {
@@ -334,9 +326,10 @@
   }
 
   .dvs-select-wrapper {
-    width:138px;
+    width:150px;
     font-size:11px;
     float:right;
+    margin-bottom:5px;
   }
 }
 

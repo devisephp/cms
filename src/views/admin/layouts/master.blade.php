@@ -18,9 +18,7 @@
 
 <body id="dvs-admin" class="dvs-default">
     <div id="dvs-admin-sidenav">
-        <div id="dvs-admin-logo">
-            <img src="{{ URL::asset('/imgs/admin-logo.png') }}" width="100%">
-        </div>
+        <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-logo.png') }}" width="195" height="71" >
 
         <hr class="dvs-thick">
 

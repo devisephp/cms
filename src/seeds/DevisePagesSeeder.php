@@ -886,6 +886,33 @@ class DevisePagesSeeder extends Seeder
                 'response_path'           => 'Devise\Calendar\CalendarResponseHandler.requestPageVersionEventUpdate',
                 'response_params'         => 'params.pageVersionId,input',
             ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'view'                    => 'devise::installer.install',
+                'title'                   => 'Devise Install Form',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-install',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => 'install',
+                'short_description'       => 'Devise UI Installer - Install Form',
+                'response_type'           => 'View'
+            ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
+                'title'                   => 'Devise Install Attempt',
+                'http_verb'               => 'post',
+                'route_name'              => 'dvs-install-execute',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'slug'                    => 'install',
+                'short_description'       => 'Devise UI Installer - Attempt Install',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Installer\InstallerResponseHandler.executeInstall',
+                'response_params'         => 'input'
+            ),
 		);
 
         $now = date('Y-m-d H:i:s', strtotime('now'));

@@ -1,0 +1,96 @@
+.dvs-calendar-container {
+    width:96%;
+
+    .fc-month-view {
+
+      > table {
+          margin:0 auto 50px;
+          width:100%;
+          font-size:13px;
+          border-radius:5px;
+          box-shadow:0 2px 24px 12px rgba(0,0,0,.6);
+          @include background(linear-gradient($secondaryTableBgColor, $primaryTableBgColor));
+      }
+
+
+    thead {
+
+      th, th a {
+        color:darken($tableTextColor, 10%);
+        font-weight:$bodyMainFontWeight + 300;
+        text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
+        text-decoration:none;
+      }
+
+      th { padding:15px 20px}
+    }
+
+    tbody tr {
+      color:$tableTextColor;
+    }
+  }
+}
+
+#dvs-admin {
+  #page-version-events {
+    float:left;
+    width:100%;
+    border-width:0;
+    line-height:1.3em;
+
+    h6 {
+      text-transform: capitalize;
+      line-height:1.3em;
+      font-weight:400;
+      color:darken($white, 20%);
+    }
+  }
+}
+
+.js-template {
+  display: none;
+}
+
+.dvs-calendar-container {
+  float: left;
+  padding-right: 10px;
+}
+
+.external-events {
+  float: right;
+  width: 15%;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.external-events .fc-event {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+#dvs-admin {
+  .fc-widget-content {
+    padding:0;
+  }
+
+  .fc-event {
+    padding:$regularButtonPadding;
+    border-radius:0;
+    background-color:$primaryButtonBgColor;
+    border-width:0;
+    color:$white;
+  }
+
+  .fc-event-container {
+    padding:5px;
+
+    .fc-event {
+      padding:$regularButtonPadding / 2;
+    }
+  }
+
+  .fc-day-number {
+    padding:5px;
+  }
+}

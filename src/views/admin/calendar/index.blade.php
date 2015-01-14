@@ -1,85 +1,37 @@
 @extends('devise::admin.layouts.master')
 
+
+@section('title')
+
+	<div id="dvs-admin-title"></div>
+    <div id="dvs-admin-actions">
+        {{ Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select')) }}</label>
+        {{ link_to(URL::route('dvs-pages-create'), 'Create New Page', array('class'=>'dvs-button')) }}
+        {{ link_to(URL::route('dvs-pages'), 'All Pages', array('class'=>'dvs-button dvs-button-secondary')) }}
+    </div>
+@stop
+
 @section('main')
 
 <link href="{{ URL::asset('/packages/devisephp/cms/css/fullcalendar.min.css') }}" rel="stylesheet">
 
-<style>
-	#modal-blind {
-	   position:absolute;
-	   z-index:9999;
-	   top:0;
-	   left:0;
-	   width:100%;
-	   height:100%;
-	   background-color:#000000;
-	}
-
-	.modal {
-	   position:absolute;
-	   z-index:10000;
-	   width:400px;
-	   height:248px;
-	   margin-left:-200px;
-	   margin-top:-124px;
-	   left:-1000px;
-	   top:-1000px;
-	   background-color:#ffffff;
-	   box-shadow:4px 4px 80px #000;
-	   -webkit-box-shadow:4px 4px 80px #000;
-	   -moz-box-shadow:4px 4px 80px #000;
-	   padding:24px;
-	   color: #333;
-	}
-
-	#dvs-modal-container h1,
-	#dvs-modal-container h2,
-	#dvs-modal-container h3,
-	#dvs-modal-container h4,
-	#dvs-modal-container h5,
-	#dvs-modal-container h6 {
-		color: #555;
-	}
-
-	.js-template {
-		display: none;
-	}
-
-	.dvs-calendar-container {
-		float: left;
-		width: 80%;
-		padding-right: 10px;
-	}
-
-	.external-events {
-		float: right;
-		width: 15%;
-		padding: 0 10px;
-		border: 1px solid #ccc;
-		text-align: left;
-	}
-
-	.external-events .fc-event {
-		margin: 10px 0;
-		cursor: pointer;
-	}
-
-</style>
-
 <!-- calendar resides here -->
 <div class="dvs-calendar-container"></div>
 
-<!-- page versions that aren't scheduled go here -->
-<div id="page-version-events" class="external-events">
-	<h4>Page Versions</h4>
-	@foreach ($unscheduledPageVersions as $unscheduled)
-		<div class="fc-event"
-			 data-title="{{$unscheduled->name}}"
-			 data-update-url="{{$unscheduled->update_url}}">
-			 {{$unscheduled->name}}: {{$unscheduled->page_slug}}
+    <div id="dvs-admin-title">
+		<!-- page versions that aren't scheduled go here -->
+		<div id="page-version-events" class="external-events">
+			<h6>Pages needed to be scheduled</h6>
+			@foreach ($unscheduledPageVersions as $unscheduled)
+				<div class="fc-event dvs-button"
+					 data-title="{{ $unscheduled->Page->title }} - {{$unscheduled->name}}"
+					 data-update-url="{{$unscheduled->update_url}}">
+					 {{ $unscheduled->Page->title }}<br>
+					 {{$unscheduled->name}}: {{$unscheduled->page_slug}}
+				</div>
+			@endforeach
 		</div>
-	@endforeach
-</div>
+    </div>
 
 <!-- place to put our modal -->
 <div id="dvs-modal-container" class="modal"></div>
@@ -106,13 +58,13 @@
 			<label>Published</label>
 			<input type="checkbox" name="published" value="1" checked>
 		</div>
-		<button class="js-save-btn">Update</button>
+		<button class="js-save-btn dvs-button">Update</button>
 	</form>
 </div>
 
 <!-- script gets the calendar started -->
 <script>
-	devise.require(['dvsCalendar'], function(calendar)
+	devise.require(['jquery', 'dvsCalendar', 'app/admin/admin'], function($, calendar)
 	{
 		//
 		// initialize and add draggable

@@ -1,4 +1,4 @@
-@if (DeviseUser::checkConditions('showDeviseEditor') || true)
+@if (DeviseUser::checkConditions('showDeviseEditor'))
 
 	<script src="/packages/devisephp/cms/js/devise.min.js"></script>
 

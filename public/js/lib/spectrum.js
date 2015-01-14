@@ -2255,4 +2255,4 @@
         }
     });
 
-})(window, jQuery);
+})(window, devise.$);

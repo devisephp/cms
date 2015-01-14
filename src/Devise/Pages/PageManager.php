@@ -147,6 +147,8 @@ class PageManager
 	{
 		$page = $this->Page->findOrFail($id);
 
+        $page->versions()->delete();
+
 		return $page->delete();
 	}
 

@@ -65,6 +65,7 @@ return array (
         'page'  => ['Devise\Pages\PagesRepository.find' => ['params.pageId']],
     ),
     'devise::admin.calendar.index' => array(
-        'unscheduledPageVersions' => 'Devise\Pages\PageVersionsRepository.getUnscheduledPageVersions'
+        'unscheduledPageVersions' => 'Devise\Pages\PageVersionsRepository.getUnscheduledPageVersions',
+        'languages' => 'Devise\Languages\LanguagesRepository.activeLanguageList',
     ),
 );

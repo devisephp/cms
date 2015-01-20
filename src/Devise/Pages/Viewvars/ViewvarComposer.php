@@ -93,10 +93,9 @@ class ViewvarComposer
         if ($vars || $parent)
         {
             $vars = ($vars) ? $vars : array();
-
             if ($parent)
             {
-                $parentArr = $this->Config->get('devise::templates')[$parent];
+                $parentArr = $this->Config->get('devise::templates.' . $parent);
                 $parentVars = array_get($parentArr, 'vars', array());
                 return array_merge($vars, $parentVars);
             }

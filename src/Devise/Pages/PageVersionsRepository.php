@@ -42,6 +42,17 @@ class PageVersionsRepository
     }
 
     /**
+     * Returns a list of all the versions for a particular page
+     *
+     * @param DvsPage
+     * @return array
+     */
+    public function getVersionsListForPage($page)
+    {
+        return $page->versions()->orderBy('created_at','desc')->lists('name','id');
+    }
+
+    /**
      * Wraps these extra fields around page versions that are passed in
      *
      * @param  Collection $versions

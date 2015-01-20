@@ -757,6 +757,61 @@ table td a {
     color: #a94442; }
   #dvs-admin .alert.alert-success h3 {
     color: #3c763d; }
+  #dvs-admin .dvs-admin-items-wpr {
+    width: 100%;
+    margin: 30px auto;
+    float: left; }
+    #dvs-admin .dvs-admin-items-wpr > h4 {
+      margin-bottom: 12px;
+      color: #919191;
+      font-size: 16px;
+      font-weight: 600;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
+    #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items {
+      width: 100%; }
+      #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr {
+        margin: 0;
+        padding: 20px;
+        border: 1px solid #d4d4d4;
+        border-color: #D4D4D4 #D4D4D4 #BCBCBC;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        background: #f6f6f6;
+        background: -moz-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(47%, #f6f6f6), color-stop(100%, #ededed));
+        background: -webkit-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
+        background: -o-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
+        background: -ms-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
+        background: linear-gradient(to bottom, white 0%, #f6f6f6 47%, #ededed 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); }
+      #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group {
+        padding: 20px 2%; }
+        #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group input {
+          width: 20%;
+          padding: 6px 7px; }
+          #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group input:nth-of-type(1n) {
+            width: 18%; }
+          #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group input:nth-of-type(2n) {
+            width: 42%; }
+    #dvs-admin .dvs-admin-items-wpr .dvs-button-small {
+      padding: 0; }
+  #dvs-admin #dvs-admin-modal {
+    position: absolute;
+    top: 42%;
+    left: 42%;
+    z-index: 20000; }
+  #dvs-admin #dvs-admin-blocker {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(38, 38, 38, 0.55);
+    z-index: 12000; }
+  #dvs-admin .dvs-secondary-text {
+    padding-top: 10px;
+    font-size: 12px; }
 
 #dvs-admin-sidenav {
   float: left;
@@ -930,6 +985,9 @@ table td a {
   border: 1px solid #dadde2;
   box-shadow: inset 0 1px 0 #d8d9dc, 0 1px 0 #fafbff;
   overflow: hidden; }
+
+.dvs-opaque-text {
+  opacity: 0.8; }
 
 .dvs-admin-container {
   width: 90%;

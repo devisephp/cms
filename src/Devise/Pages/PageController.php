@@ -20,7 +20,7 @@ class PageController extends \Controller
 
     /**
      * The DataBuilder extracts view vars from the
-     * view-vars.php config file for a give page
+     * views.php config file for a give page
      *
      * @var Devise\Pages\Viewvars\DataBuilder
      */
@@ -70,7 +70,7 @@ class PageController extends \Controller
 
     /**
      * This retrieves a page with all the
-     * viewvars set on the response
+     * view's vars set on the response
      *
      * @param \DvsPage $page
      * @throws PagesException
@@ -118,6 +118,13 @@ class PageController extends \Controller
         $config = ($page->response_params != null && $page->response_params != '')
             ? [ $page->response_path => explode(',', $page->response_params) ]
             : $page->response_path;
+
+        if(isset($config[ $page->response_path ])){
+            // wrapping params in curly braces
+            foreach ($config[ $page->response_path ] as &$param) {
+                $param = '{' . $param .'}';
+            }
+        }
 
         return $this->DataBuilder->getValue($config);
     }

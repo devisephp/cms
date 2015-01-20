@@ -34,6 +34,7 @@
 
         <h5>Application Management</h5>
         <ul class="dvs-admin-links">
+            <li><a class="{{ isActiveLink('admin/views*') }}" href="{{ URL::route('dvs-templates') }}">Templates</a></li>
             <li><a class="{{ isActiveLink('admin/users*') }}" href="{{ URL::route('dvs-users') }}">Users</a></li>
             <li><a class="{{ isActiveLink('admin/groups*') }}" href="{{ URL::route('dvs-groups') }}">Groups</a></li>
             <li><a class="{{ isActiveLink('admin/languages*') }}" href="{{ URL::route('dvs-languages') }}">Languages</a></li>

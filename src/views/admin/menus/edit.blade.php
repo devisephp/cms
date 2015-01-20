@@ -1,10 +1,15 @@
 @extends('devise::admin.layouts.master')
 
 @section('title')
-    <h1>Edit Menu</h1>
-    @if ($page->short_description != '')
-        <p>{{ $page->short_description }}</p>
-    @endif
+     <div id="dvs-admin-title">
+        <h1>Editing Menu</h1>
+
+        <p>Update menu details and set order and parent/child item(s).</p>
+    </div>
+
+    <div id="dvs-admin-actions">
+        {{ link_to(URL::route('dvs-menus'), 'List of Menus', array('class'=>'dvs-button')) }}
+    </div>
 @stop
 
 @section('main')

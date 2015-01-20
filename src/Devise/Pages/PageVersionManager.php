@@ -234,7 +234,7 @@ class PageVersionManager
     {
         $pageVersion = $this->PageVersion->findOrFail($pageVersionId);
 
-        $previewHashValue = is_null($pageVersion->preview_hash) ? urlencode($this->Hash->make($pageVersion->id)) : null;
+        $previewHashValue = is_null($pageVersion->preview_hash) ? $this->Hash->make($pageVersion->id) : null;
 
         return $pageVersion->update(array('preview_hash' => $previewHashValue));
     }

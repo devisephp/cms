@@ -3,7 +3,7 @@
 /**
  * View composer here is registered in the
  * Devise\Pages\PagesServiceProvider.php for all
- * views that are contained within the view-vars config
+ * views that are contained within the views config
  * file. That is how those views have their data injected
  * into them properly - by running through this view composer.
  */
@@ -87,8 +87,8 @@ class ViewvarComposer
      */
     private function getVars($name)
     {
-        $vars = isset($this->Config->get('devise::view-vars')[$name]) ? $this->Config->get('devise::view-vars')[$name] : null;
-        $parent = isset($this->Config->get('devise::view-extensions')[$name]) ? $this->Config->get('devise::view-extensions')[$name] : null;
+        $vars = isset($this->Config->get('devise::templates')[$name]['vars']) ? $this->Config->get('devise::templates')[$name]['vars'] : null;
+        $parent = isset($this->Config->get('devise::templates')[$name]['extends']) ? $this->Config->get('devise::templates')[$name]['extends'] : null;
 
         if ($vars || $parent)
         {
@@ -96,7 +96,8 @@ class ViewvarComposer
 
             if ($parent)
             {
-                $parentVars = $this->Config->get('devise::view-vars.' . $parent);
+                $parentArr = $this->Config->get('devise::templates')[$parent];
+                $parentVars = array_get($parentArr, 'vars', array());
                 return array_merge($vars, $parentVars);
             }
 

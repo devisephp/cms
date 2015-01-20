@@ -66,7 +66,9 @@ class PagesRepository
      */
 	public function find($id)
 	{
-        $page = $this->Page->findOrFail($id);
+        $page = $this->Page->with('versions')->findOrFail($id);
+
+        $this->wrapPageVersionStatuses($page->versions, $page);
 
         return $page;
 	}
@@ -355,40 +357,24 @@ class PagesRepository
         return $pageList;
     }
 
+
     /**
-     * Get the list of available views
+     * Gets a list of languages that the page has not been translated to or originates from
      *
+     * @param  integer $pageId
+     * @param  array  $languages
      * @return array
      */
-    public function availableViewsList()
+    public function getUnUsedLanguageList($pageId, $languages)
     {
-        $views = array();
-        $viewLocations = $this->Config->get('view');
-        $humanNames = $this->Config->get('view.template_human_names');
-
-        foreach ($viewLocations['paths'] as $path) {
-            if (!$this->File->exists($path)) {
-                continue;
-            }
-
-            $files = $this->File->allFiles($path);
-
-            foreach ($files as $file) {
-                if (substr_count($file->getRelativePathname(), '.blade.php')) {
-                    $value = str_replace('/', '.', str_replace('.blade.php', '', $file->getRelativePathname()));
-                    $nameArr = explode('.', $value);
-                    $folderName = $nameArr[0];
-                    $viewName = $nameArr[1];
-
-                    if (substr($viewName, 0, 1) != '_' && $folderName == 'templates') {
-                        $views[$value] = isset($humanNames[$value]) ? $humanNames[$value] : $value;
-                    }
-                }
-            }
-        }
-
-        asort($views);
-        return $views;
+        $existingLangages = $this->Page
+                                ->where(function($query) use ($pageId) {
+                                    $query->where('id',$pageId)
+                                        ->orWhere('translated_from_page_id', $pageId);
+                                })
+                                ->lists('title', 'language_id');
+                                
+        return array_diff_key($languages, $existingLangages);
     }
 
     /*

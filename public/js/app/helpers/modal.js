@@ -1,12 +1,11 @@
 devise.define(['require', 'jquery'], function (require, $) {
 
-    var target = null;
+    var target = this.target || null;
 
     var initialize = function (_target) {
         target = _target;
-
         $(target).click(launchModal);
-    }
+    };
 
     var launchModal = function(e) {
         e.preventDefault();
@@ -22,6 +21,14 @@ devise.define(['require', 'jquery'], function (require, $) {
         } else if (typeof hrefTarget != 'undefined') {
             loadUrl(hrefTarget);
         }
+    };
+
+    var closeModal = function() {
+        $('#dvs-admin-modal')
+            .html('')
+            .addClass('dvs-hidden');
+
+        hideBgBlocker();
     };
 
     var loadTarget = function(target) {
@@ -40,12 +47,31 @@ devise.define(['require', 'jquery'], function (require, $) {
     };
 
     var insertContent = function(msg) {
-        $('#dvs-modal').html(msg);
+        $('#dvs-admin-modal')
+            .toggleClass('dvs-hidden')
+            .html(msg);
+
+        showBgBlocker();
+    };
+
+    var showBgBlocker = function() {
+        $('#dvs-admin-blocker').removeClass('dvs-hidden');
+        addCloseListener();
+    };
+
+    var hideBgBlocker = function() {
+        $('#dvs-admin-blocker').addClass('dvs-hidden');
     };
 
     var loadFailed = function(jqXHR, textStatus) {
         //console.log(textStatus);
     };
 
-    return initialize;
+    var addCloseListener = function() {
+        $('#dvs-admin-blocker').on('click', function() {
+            closeModal();
+        });
+    };
+
+    return initialize(target);
 });

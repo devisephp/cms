@@ -1,7 +1,7 @@
 <?php namespace Devise\Pages\Viewvars;
 
 /**
- *  This builds the variables that are found in view-vars.php config
+ *  This builds the variables that are found in views.php config
  *  for a devise page. It uses a ViewComposer (found in this directory)
  *  to inject in the data that is built using this class.
  */
@@ -25,7 +25,7 @@ class DataBuilder
     /**
      * The data crawler uses dot notation to transform
      * a string Namespaced\Class\Path.methodName from
-     * the view vars into a proper class and method name
+     * the views into a proper class and method name
      * we can execute
      *
      * @var DataCrawler
@@ -106,7 +106,7 @@ class DataBuilder
 
                 $params = $this->fillParamRequest( reset($options) );
 
-                if (in_array(DataCrawler::PARAM_NOT_FOUND, $params))
+                if (in_array(DataCrawler::PARAM_NOT_FOUND, $params, true))
                 {
                     return DataCrawler::PARAM_NOT_FOUND;
                 }
@@ -114,7 +114,7 @@ class DataBuilder
         }
         catch (\Exception $e)
         {
-            throw new DeviseRouteConfigurationException('Devise route configuration error. Debug: This is likely due to a configuration error in your view-vars.php configuration file or in the pages table. Ensure any functional routes have the following format: This\Is\My\Namespace\ClassName.methodName');
+            throw new DeviseRouteConfigurationException('Devise route configuration error. Debug: This is likely due to a configuration error in your views.php configuration file or in the pages table. Ensure any functional routes have the following format: This\Is\My\Namespace\ClassName.methodName');
         }
 
         $classInstance = $this->loadClass($classPath);
@@ -196,7 +196,7 @@ class DataBuilder
     }
 
     /**
-     * Loops through params in view vars config and fills the value of each
+     * Loops through params in views config and fills the value of each
      * parameter key => value pair
      *
      * @return array
@@ -204,10 +204,14 @@ class DataBuilder
     private function fillParamRequest($paramRequestList)
     {
         $params = array();
-
-        foreach ($paramRequestList  as $key => $param)
+        foreach ($paramRequestList  as $param)
         {
-	        $params[] = ($key === 'value') ? $param : $this->DataCrawler->extract($this->data, $param);
+            preg_match_all('/{(.*?)}/', $param, $matches);
+            if(isset($matches[1]) && count($matches[1])){
+                $params[] = $this->DataCrawler->extract($this->data, $matches[1][0]);
+            } else {
+                $params[] = $param;
+            }
         }
 
         return $params;

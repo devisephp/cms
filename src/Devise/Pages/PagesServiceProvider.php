@@ -5,7 +5,7 @@
  * within the Devise cms. It also provides the ability to scan blade views
  * and extract out fields and collections which can be loaded in the Devise
  * Sidebar and maintained by the admin.
- * 
+ *
  */
 class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -70,14 +70,14 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * The template composer is what manages the viewvars
+     * The template composer is what manages a view's vars
      * component of devise.
      *
      * @return void
      */
     private function registerTemplateComposer()
     {
-        $views = array_keys(\Config::get('devise::view-vars'));
+        $views = array_keys(\Config::get('devise::templates'));
         \View::composer($views, 'Devise\Pages\Viewvars\ViewvarComposer');
     }
 

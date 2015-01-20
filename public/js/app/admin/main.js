@@ -11,29 +11,31 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
     $('.dvs-admin-table').on('click', '.dvs-expand-details', function() {
         togglePageDetailsRow($(this));
     });
-
     $('.dvs-admin-table').on('change', '.dvs-page-version-actions', function() {
         var value = $(this).val();
+        var pageId = getSelectedPageId($(this));
+        var pageVersionId = getSelectedVersionId($(this));
+        var selected = $('option:selected', this);
 
         switch(value) {
             case 'publish':
-                publish($(this));
+                publish(pageId, pageVersionId);
             break;
 
             case 'unpublish':
-                unpublish($(this));
+                unpublish(pageId, selected);
             break;
 
             case 'toggle-sharing':
-                toggleSharing($(this));
+                toggleSharing(pageId, selected);
             break;
 
             case 'delete':
-                deleteVersion($(this));
+                deleteVersion(pageId, selected);
             break;
 
             case 'create-version':
-                createNewPageVersion($(this));
+                createNewPageVersion(pageId, pageVersionId, selected);
             break;
 
             case 'preview':
@@ -43,10 +45,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
     });
 
     //  publish page version
-    var publish = function(el) {
-        var pageId = getSelectedPageId(el);
-        var pageVersionId = getSelectedVersionId(el);
-
+    var publish = function(pageId, pageVersionId) {
         // show datetime pickers for current version
         $('.dvs-publish-dates.'+pageVersionId).show();
 
@@ -61,7 +60,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
             // at least one date value has been selected
             if($form.find('.dvs-date.start').val() != '' || $form.find('.dvs-date.end').val() != '') {
 
-                submitAjaxForm(pageId, pageVersionId, $form.serialize());
+                submitAjaxForm(pageId, $form.serialize(), $form.attr('action'));
 
             } else {
 
@@ -72,31 +71,44 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
     };
 
     // unpublish page version
-    var unpublish = function(el) {
-        var pageId = getSelectedPageId(el);
-        var versionId = getSelectedVersionId(el);
+    var unpublish = function(pageId, el) {
+        var url = el.data('dvs-url');
 
-        unpublishPageVersion(pageId, versionId);
+        var confirmVal = confirm('Are you sure you want to un-publish this page version?');
+
+        if(confirmVal == true) {
+            // since user confirmed the "un-publishing" of the page version.
+            // Go ahead and hit the url and pass null "starts_at" and "ends_at" data
+            submitAjaxForm(pageId, 'starts_at=&ends_at=', url);
+            return true;
+        }
+
+        return false;
     };
 
     // toggle sharing status of page version
-    var toggleSharing = function(el) {
-        var pageId = getSelectedPageId(el);
-        var versionId = getSelectedVersionId(el);
-        var enableDisableText = el.find(":selected").text();
+    var toggleSharing = function(pageId, el) {
+        var enableDisableText = el.text();
+        var url = el.data('dvs-url');
 
-         enablePageVersionSharing(pageId, versionId, enableDisableText);
+        var sharingConfirm = confirm('Are you sure you want to "'+ enableDisableText +'"?');
+
+        if(sharingConfirm == true) {
+            submitAjaxForm(pageId, null, url);
+            return true;
+        }
+
+        return false;
     };
 
     // page version delete
-    var deleteVersion = function(el) {
-        var pageId = getSelectedPageId(el);
-        var versionId = getSelectedVersionId(el);
+    var deleteVersion = function(pageId, el) {
+        var url = el.data('dvs-url');
 
         var deleteConfirm = confirm('Are you sure?');
 
         if(deleteConfirm == true) {
-            submitAjaxForm(pageId, versionId, null, '/admin/page-versions/'+ versionId, 'DELETE');
+            submitAjaxForm(pageId, null, url, 'DELETE');
             return true;
         }
 
@@ -104,15 +116,14 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
     };
 
     // create new page version from selected version
-    var createNewPageVersion = function(_this) {
-        var _pageId = getSelectedPageId(_this);
-        var _pageVersionId = getSelectedVersionId(_this);
+    var createNewPageVersion = function(pageId, pageVersionId, el) {
+        var url = el.data('dvs-url');
 
         var pageName = prompt('What would you like to name this new page version?');
 
         if (pageName) {
-            var _data = { page_version_id: _pageVersionId, name: pageName };
-            submitAjaxForm(_pageId, _pageVersionId, _data, '/admin/page-versions', 'POST');
+            var _data = { page_version_id: pageVersionId, name: pageName };
+            submitAjaxForm(pageId, _data, url, 'POST');
         }
     }
 
@@ -133,42 +144,6 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
         }
     }
 
-    /**
-     * Handles the "un-publishing" of a given page version
-     * @return {boolean}
-     */
-    function unpublishPageVersion(_pageId, _versionId) {
-        var confirmVal = confirm('Are you sure you want to un-publish this page version?');
-
-        if(confirmVal == true) {
-            // since user confirmed the "un-publishing" of the page version.
-            // Go ahead and hit the url and pass null "starts_at" and "ends_at" data
-            submitAjaxForm(_pageId, _versionId, 'starts_at=&ends_at=');
-            return true;
-        }
-
-        return false;
-    }
-
-
-    /**
-     * Handles the "enable sharing" of a given page version (making it publicly available)
-     * @param {int}  _pageId
-     * @param {int}  _versionId  Page Version Id
-     * @param {string}  Button text: "Disable Sharing" or "Enable Sharing"
-     * @return {boolean}
-     */
-    function enablePageVersionSharing(_pageId, _versionId, _shareStatusText) {
-        var sharingConfirm = confirm('Are you sure you want to "'+ _shareStatusText +'"?');
-
-        if(sharingConfirm == true) {
-            submitAjaxForm(_pageId, _versionId, null, '/admin/page-versions/'+ _versionId +'/toggle-share');
-            return true;
-        }
-
-        return false;
-    }
-
 
     /**
      * Submit ajax form
@@ -176,8 +151,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
      * @param  {string}  Serialized string of form/input data
      * @param  {string}  Form action url
      */
-    function submitAjaxForm(_pageId, _versionId, _data, _url, _method) {
-        var _url = _url || "/admin/page-versions/" + _versionId + "/dates";
+    function submitAjaxForm(_pageId, _data, _url, _method) {
         var _method = _method || "PUT";
 
         var jqxhr = $.ajax({
@@ -188,7 +162,6 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
         }).success(function() {
 
             var reloadUrl = $('#page-'+_pageId).data('dvs-reload-url');
-
             $.get(reloadUrl, function(responseHtml) {
                  $('#page-'+_pageId).html(responseHtml);
             });

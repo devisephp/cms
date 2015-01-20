@@ -8,9 +8,7 @@ devise.define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $,
     };
 
     var addListeners = function() {
-
         $('#lang-select').change(function(e){
-
             if (typeof e.isTrigger == "undefined")
             {
                 var params = document.location.search.substr(1).split('&');

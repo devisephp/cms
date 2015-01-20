@@ -162,7 +162,23 @@ class PageManager
 	public function copyPage($fromPageId, $input)
 	{
 		$fromPage = $this->Page->findOrFail($fromPageId);
-        $fromPageVersion = $fromPage->versions()->whereName('Default')->first();
+        
+        if(isset($input['page_version_id'])){
+            // a specific version has been requested to copy
+            $fromPageVersion = $fromPage->versions()->findOrFail($input['page_version_id']);
+            $fromPageVersion->name = 'Default';
+        } else {
+            // we'll use the current live version to copy
+            $fromPageVersion = $fromPage->versions()
+                    ->where('starts_at', '<', $now)
+                    ->where(function($query) use ($now)
+                    {
+                        $query->where('ends_at', '>', $now);
+                        $query->orWhereNull('ends_at');
+                    })
+                    ->orderBy('starts_at', 'DESC')
+                    ->first();
+        }
 
 		$toPage = $this->createPageFromInput($input);
 
@@ -211,11 +227,6 @@ class PageManager
         $input['is_admin'] = array_get($input, 'is_admin', false);
         $input['dvs_admin'] = array_get($input, 'dvs_admin', false);
         $input['language_id'] = array_get($input, 'language_id', 45);
-
-        if ($input['language_id'] == 45)
-        {
-            $input['translated_from_page_id'] = 0;
-        }
 
         // validate the input given before we create the page
         $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);

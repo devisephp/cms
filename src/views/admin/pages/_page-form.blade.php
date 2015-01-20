@@ -20,10 +20,12 @@
 @if ($method != 'update')
     <div class="dvs-form-group open simpletoggle" id="view-template-form">
         {{ Form::label('Language') }}
-        {{ Form::select('language_id', $languages) }}
-        @if(isset($translatedFromPage) && $translatedFromPage)
-        {{ Form::hidden('translated_from_page_id', $page->id) }}
+        {{ Form::select('language_id', ($method != 'translate') ? $languages : $availableLanguages) }}
+
+        @if($method == 'translate')
+            {{ Form::hidden('translated_from_page_id', $page->id) }}
         @endif
+        
     </div>
 @endif
 

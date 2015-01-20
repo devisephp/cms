@@ -15,18 +15,18 @@
             <select class="dvs-page-version-actions">
                 <option value="">Select an action</option>
                 <option value="publish">Publish</option>
-                <option value="unpublish">Un-Publish</option>
-                <option value="create-version">Create Version from This Version</option>
+                <option data-dvs-url="{{ URL::route('dvs-update-page-versions-dates', $version->id) }}" value="unpublish">Un-Publish</option>
+                <option data-dvs-url="{{ URL::route('dvs-page-version-store') }}" value="create-version">Create Version from This Version</option>
 
                 @if($version->status != 'live')
                     @if(is_null($version->preview_hash))
-                        <option value="toggle-sharing">Enable Sharing</option>
+                        <option data-dvs-url="{{ URL::route('dvs-toggle-page-version-share', $version->id) }}" value="toggle-sharing">Enable Sharing</option>
                     @else
-                        <option value="toggle-sharing">Disable Sharing</option>
-                        <option value="preview" data-dvs-url="{{ URL::to($page->slug . '?page_version_share=' . $version->preview_hash) }}">Preview</option>
+                        <option data-dvs-url="{{ URL::route('dvs-toggle-page-version-share', $version->id) }}" value="toggle-sharing">Disable Sharing</option>
+                        <option data-dvs-url="{{ URL::to($page->slug . '?page_version_share=' . urlencode($version->preview_hash)) }}" value="preview">Preview</option>
                     @endif
                     @if(!$page->dvs_admin)
-                        <option value="delete">Delete</option>
+                        <option data-dvs-url="{{ URL::route('dvs-delete-page-version', $version->id) }}" value="delete">Delete</option>
                     @endif
                 @endif
             </select>

@@ -1,4 +1,6 @@
-.dvs-sidebar-mode {
+// This very wide wrapper is to override the very wide public reset
+// This probably needs to be rethought out.
+#dvs-mode.dvs-sidebar-mode {
   #dvs-sidebar.loaded {
     opacity: 1;
     left: $sidebarDistanceFromLeft;
@@ -8,481 +10,493 @@
     @include transform(translate3d(200px, 0, -1000px) rotateY(-10deg));
   }
   #dvs-node-mode-button {
-    font-size: $sidebarMainFontSize;
-    font-family: $sidebarMainFont;
-    width: 0px;
-    height: 0px;
+    bottom: -50px;
     opacity: 0;
-    right: 45%;
   }
-}
-#dvs-mode {
-  #dvs-node-mode-button,
-  #dvs-admin-mode-button {
-    font-family: $sidebarMainFont;
-  }
-}
-#dvs-sidebar-contents-container {
-  margin: $sidebarGeneralPadding;
-  margin-top: 0;
-}
-#dvs-sidebar-elements-and-groups {
-  clear: both;
-  margin: $sidebarGeneralPadding;
-}
-#dvs-sidebar-container {
-  overflow:hidden;
-  position:fixed;
-  height:100%;
-  width:$sidebarWidth + 100;
-  top:0;
-  left:0;
-}
-#dvs-sidebar-scroller {
-  overflow-y: scroll;
-  overflow-x:hidden;
-  height:100%;
-  width:$sidebarWidth + 150;
-}
-#dvs-sidebar {
-  top: $sidebarDistanceFromTop;
-  z-index: 10010;
-  opacity: 0;
-  width: $sidebarWidth;
-  color: $sidebarTextColor;
-  background: $sidebarBgColor;
-  font-size: $sidebarMainFontSize;
-  font-family: $sidebarMainFont;
-  font-weight: $sidebarMainFontWeight;
-  box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
-  border-radius: $sidebarRoundedCorners;
-  margin: 35px;
-  @include transition(all 0.5s);
-  @include transform(translate3d(-100%, 0, 0));
-  hr {
-    clear: both;
-    float: left;
-    width: 100%;
-    height: 3px;
-    margin: 25px 0;
-    background-color: $sidebarRuleColor;
-    border-width: 0;
-    @include clearfix;
-  }
-  .dvs-sidebar-group {
-    display:none;
-  }
-  .dvs-element-color {
-      input[type=text] {
-        color:$white;
-      }
-  }
-  select {
-    color: $sidebarTextColor;
-    background-color: $white;
-    padding:$sidebarGeneralPadding;
-  }
-}
-#dvs-sidebar-language-selector {
-  margin-top: 15px;
-  float: right;
-  .dvs-select-wrapper {
-    width: 75px;
-  }
-}
-#dvs-sidebar-groups, #dvs-sidebar-versions-selector {
-  clear: both;
-  float: left;
-  .dvs-select-wrapper {
-    float: left;
-    width: 209px;
-    margin-right: 3px;
-    color: $sidebarTextColor;
-    font-family: $sidebarMainFont;
-  }
-  button {
-    float: right;
-    width: 76px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: $sidebarTextColor;
-    font-family: $sidebarMainFont;
-  }
-}
-#dvs-sidebar-groups {
-  margin-top: 3px;
-}
-#dvs-sidebar-title {
-  @include clearfix;
-  background-color: $sidebarTitleBgColor;
-  height: 55px;
-  padding: $sidebarGeneralPadding;
-  border-radius: $sidebarRoundedCorners $sidebarRoundedCorners 0 0;
-  text-transform: uppercase;
-  h1 {
-    margin: 0;
-    float: left;
-    color: $sidebarTextColor;
-    font-family: $sidebarMainFont;
-    font-size: $sidebarHeaderFontSize;
-    font-weight: $sidebarHeaderFontWeight;
-  }
-  a {
-    float: right;
-    color: $sidebarTextColor;
-    font-family: $sidebarMainFont;
-  }
-}
-.dvs-sidebar-close {
-  cursor:pointer;
-}
-.dvs-sidebar-elements, .dvs-sidebar-group {
-  position: relative;
 
-  button {
-    float: left;
-    margin: 4px 4px 8px 4px;
-    border-width: 0;
-    height:84px;
-    padding: 27px 15px;
-    background-color: $sidebarElementsButton;
-    color: darken($sidebarTextColor, 15%);
+  #dvs-mode {
+    #dvs-node-mode-button,
+    #dvs-admin-mode-button {
+      font-family: $sidebarMainFont;
+    }
+  }
+  #dvs-sidebar-contents-container {
+    margin: $sidebarGeneralPadding;
+    margin-top: 0;
+  }
+  #dvs-sidebar-elements-and-groups {
+    clear: both;
+    margin: $sidebarGeneralPadding;
+  }
+  #dvs-sidebar-container {
+    overflow:hidden;
+    position:fixed;
+    height:100%;
+    width:$sidebarWidth + 100;
+    top:0;
+    left:0;
+  }
+  #dvs-sidebar-scroller {
+    overflow-y: scroll;
+    overflow-x:hidden;
+    height:100%;
+    width:$sidebarWidth + 150;
+  }
+  #dvs-sidebar {
+    top: $sidebarDistanceFromTop;
+    z-index: 10010;
+    opacity: 0;
+    width: $sidebarWidth;
+    color: $sidebarTextColor;
+    background: $sidebarBgColor;
     font-size: $sidebarMainFontSize;
     font-family: $sidebarMainFont;
-    outline: none;
-    cursor: pointer;
-    width: ($sidebarWidth / 2) - 26;
-    &:nth-child(odd) {
-      margin-left: 0;
-    }
-    &:nth-child(even) {
-      float: right;
-      margin-right: 0;
-    }
-  }
-  > div > div {
-    @include clearfix;
-    padding: 0 15px 18px 12px;
-    box-sizing: content-box;
-    overflow: auto;
-    height: 400px;
-    form {
-      display: block;
+    font-weight: $sidebarMainFontWeight;
+    box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
+    border-radius: $sidebarRoundedCorners;
+    margin: 35px;
+    @include transition(all 0.5s);
+    @include transform(translate3d(-100%, 0, 0));
+    hr {
+      clear: both;
+      float: left;
+      width: 100%;
+      height: 3px;
+      margin: 25px 0;
+      background-color: $sidebarRuleColor;
+      border-width: 0;
       @include clearfix;
     }
-  }
-  h4, label {
-    width: 100%;
-    margin: 10px 0;
-    color: $sidebarTextColor;
-    font-size: $sidebarMainFontSize;
-    font-family: $sidebarMainFont;
-    text-transform: uppercase;
-  }
-  h4 {
-    margin: 18px 0 0 0;
-    color: lighten(#10a5ff, 20%);
-    font-size: $sidebarMainFontSize + 6;
-    font-family: $sidebarMainFont;
-    font-weight: $sidebarHeaderFontWeight;
-    text-transform: none;
-    border-bottom: 1px solid #10a5ff;
-  }
-}
-
-#dvs-sidebar-breadcrumbs {
-  display:none;
-  clear:both;
-  text-transform: uppercase;
-  font-size: $sidebarMainFontSize - 2;
-  font-family: $sidebarMainFont;
-  padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
-  color: $sidebarBreadcrumbActive;
-
-  a {
-    color:$sidebarBreadcrumbLink;
-  }
-
-  span {
-    position:relative;
-    top:-3px;
-    margin:0 8px;
-    font-size:1px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 3px 0 3px 5px;
-    border-color: transparent transparent transparent $sidebarBreadcrumbLink;
-  }
-}
-
-#dvs-sidebar-current-element {
-  clear:both;
-  padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
-  font-size: $sidebarMainFontSize + 1;
-  font-family: $sidebarMainFont;
-  display:none;
-
-  label {
-    display:block;
-    color: darken($sidebarTextColor, 15%);
-    font-family: $sidebarMainFont;
-    font-weight: $sidebarHeaderFontWeight + 100;
-    margin-bottom:8px;
-  }
-
-  .dvs-property {
-    margin-top:20px;
-
-    &:first-child {
-      margin-top:0;
+    .dvs-sidebar-group {
+      display:none;
+    }
+    textarea,
+    select,
+    input[type=text] {
+      color:$sidebarTextColor;
+    }
+    select {
+      background-color: $white;
+      padding:$sidebarGeneralPadding;
     }
   }
 
-  input[type="text"],
-  textarea {
-    width:100%;
-    padding: $sidebarGeneralPadding / 2;
-    font-family: $sidebarMainFont;
-    background-color: darken($sidebarBgColor, 15%);
-    border-width:0;
+  .dvs-select-wrapper {
+    padding          : $sidebarFormPadding;
   }
 
-  .dvs-sidebar-button-grid {
-    @include clearfix;
-    margin: $sidebarGeneralPadding 0;
-
-    label,
-    button {
-      float:left;
-      margin:2px 2px 0 0;
-      padding: 15px 3px;
-      color:$primaryButtonTextColor;
-      font-family: $sidebarMainFont;
-      text-align: center;
-      cursor: pointer;
-      width:185px;
-
-      &.dvs-button-secondary {
-        width:99px;
-      }
-    }
-
-    label {
-      font-family: $sidebarMainFont;
-      background-color:desaturate($primaryButtonBgColor, 100%);
-      @include transition( all .4s ease );
-    }
-
-    input[type=checkbox] {
-      position:absolute;
-      visibility: hidden;
-      font-family: $sidebarMainFont;
-
-      &:checked + label {
-        font-family: $sidebarMainFont;
-        background-color:$primaryButtonBgColor;
-      }
+  #dvs-sidebar-language-selector {
+    margin-top: 15px;
+    float: right;
+    .dvs-select-wrapper {
+      width: 75px;
     }
   }
-}
-
-.dvs-sidebar-discard, .dvs-sidebar-save-group {
-  display: block;
-  width: 100%;
-  padding: 27px 15px;
-  color: $sidebarSaveButtonTextColor;
-  font-family: $sidebarMainFont;
-  font-size: $sidebarMainFontSize + 10;
-  font-weight: $sidebarMainFontWeight + 200;
-  text-transform: uppercase;
-  background-color: $sidebarSaveButtonBgColor;
-  border-width: 0;
-}
-.dvs-sidebar-discard {
-  padding: 10px;
-  color: $sidebarDiscardButtonTextColor;
-  font-family: $sidebarMainFont;
-  font-size: $sidebarMainFontSize + 4;
-  background-color: $sidebarDiscardButtonBgColor;
-}
-.dvs-sidebar-datetime-element {
-  .xdsoft_datetimepicker {
-    .xdsoft_datepicker {
-      width:204px;
+  #dvs-sidebar-groups, #dvs-sidebar-versions-selector {
+    clear: both;
+    float: left;
+    .dvs-select-wrapper {
       float: left;
-      margin-left:8px;
-    }
-
-    .xdsoft_month {
-      text-align:center;
-      width:94px;
-    }
-
-    .xdsoft_year {
-      width:45px;
-    }
-  }
-}
-
-#dvs-sidebar-current-element {
-  .dvs-options-manager,
-  .dvs-checkboxes-manager {
-    width:100%;
-
-    .dvs-option-fields {
-      td {
-        padding:1px 1px 0 0;
-      }
-
-      input[type=text] {
-        background-color:lighten($sidebarBgColor, 5%);
-      }
-    }
-  }
-}
-
-#dvs-sidebar-collections {
-  display:none;
-  width:100%;
-  height:100%;
-  h2 {
-    margin: 0;
-    font-size: 20px;
-    padding: 15px;
-    font-weight: 300;
-    background-color: #fff;
-    color: darken($sidebarBgColor, 10%);
-  }
-  hr {
-    margin: 10px auto;
-    width: 50%;
-    border-top-color: lighten($sidebarBgColor, 20%);
-  }
-  p {
-    font-style: italic;
-    margin: 0 30px;
-    text-align: center;
-    color: lighten($sidebarBgColor, 40%);
-  }
-
-  .dvs-new-collection {
-    background-color: darken($sidebarBgColor, 5%);
-    padding: 15px 12px;
-    input {
-      width: 100%;
-      border-radius: 4px;
-      padding: 8px 12px;
-      border-width: 0;
-      color: $sidebarBgColor;
+      width: 209px;
+      margin-right: 3px;
+      color: $sidebarTextColor;
+      font-family: $sidebarMainFont;
     }
     button {
-      margin-top: 8px;
+      float: right;
+      width: 76px;
       padding-left: 10px;
       padding-right: 10px;
       color: $sidebarTextColor;
-      font-weight: 600;
-      background-color:$primaryButtonBgColor;
-    }
-    p {
-      margin-bottom: 16px;
+      font-family: $sidebarMainFont;
     }
   }
-}
-
-#dvs-collection-instances-sortable {
-  li {
-    position: relative;
-    margin: 8px 12px;
-    background-color:lighten($sidebarBgColor, 5%);
-    font-size: 30px;
-    color:darken($sidebarTextColor, 5%);
-    font-weight: 400;
-    cursor: move;
-
-    input[type="text"] {
-      width: 200px;
-      font-size: 16px;
-      padding: 12px;
-      margin-left: 40px;
-      background-color: transparent;
-      border-width: 0;
-      outline-width: 0;
+  #dvs-sidebar-groups {
+    margin-top: 3px;
+  }
+  #dvs-sidebar-title {
+    @include clearfix;
+    background-color: $sidebarTitleBgColor;
+    padding: $sidebarGeneralPadding;
+    border-radius: $sidebarRoundedCorners $sidebarRoundedCorners 0 0;
+    text-transform: uppercase;
+    h1 {
+      margin: 0;
+      float: left;
+      color: $sidebarTextColor;
+      font-family: $sidebarMainFont;
+      font-size: $sidebarHeaderFontSize;
+      font-weight: $sidebarHeaderFontWeight;
     }
-
-    &:before {
-      content: "";
-      position: absolute;
-      left: 0.4em;
-      top: 0.56em;
-      width: 0.71em;
-      height: 0.14em;
-      background:darken($sidebarTextColor, 5%);
-      box-shadow: 0 0.25em 0 0 darken($sidebarTextColor, 5%), 0 0.5em 0 0 darken($sidebarTextColor, 5%);
-    }
-
-    .dvs-collection-instance-remove {
+    a {
       float: right;
-      padding: 8px 12px;
-      margin: 9px;
-      color:darken($sidebarTextColor, 5%);
-      font-size: 16px;
-      font-weight: 300;
+      color: $sidebarTextColor;
+      font-family: $sidebarMainFont;
+    }
+  }
+  .dvs-sidebar-close {
+    cursor:pointer;
+  }
+  .dvs-sidebar-elements, .dvs-sidebar-group {
+    position: relative;
+
+    button {
+      float: left;
+      margin: 4px 4px 8px 4px;
+      border-width: 0;
+      height:84px;
+      padding: 27px 15px;
+      background-color: $sidebarElementsButton;
+      color: darken($sidebarTextColor, 15%);
+      font-size: $sidebarMainFontSize;
+      font-family: $sidebarMainFont;
+      outline: none;
+      cursor: pointer;
+      width: ($sidebarWidth / 2) - 26;
+      &:nth-child(odd) {
+        margin-left: 0;
+      }
+      &:nth-child(even) {
+        float: right;
+        margin-right: 0;
+      }
+    }
+    > div > div {
+      @include clearfix;
+      padding: 0 15px 18px 12px;
+      box-sizing: content-box;
+      overflow: auto;
+      height: 400px;
+      form {
+        display: block;
+        @include clearfix;
+      }
+    }
+    h4, label {
+      width: 100%;
+      margin: 10px 0;
+      color: $sidebarTextColor;
+      font-size: $sidebarMainFontSize;
+      font-family: $sidebarMainFont;
       text-transform: uppercase;
-      cursor:pointer;
+    }
+    h4 {
+      margin: 18px 0 0 0;
+      color: lighten(#10a5ff, 20%);
+      font-size: $sidebarMainFontSize + 6;
+      font-family: $sidebarMainFont;
+      font-weight: $sidebarHeaderFontWeight;
+      text-transform: none;
+      border-bottom: 1px solid #10a5ff;
+    }
+  }
+
+  #dvs-sidebar-breadcrumbs {
+    display:none;
+    clear:both;
+    text-transform: uppercase;
+    font-size: $sidebarMainFontSize - 2;
+    font-family: $sidebarMainFont;
+    padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
+    color: $sidebarBreadcrumbActive;
+
+    a {
+      color:$sidebarBreadcrumbLink;
     }
 
-    &.dvs-sort-placeholder {
-      height:50px;
-      margin:8px 12px;
-      background-color:darken($sidebarBgColor, 4%);
+    span {
+      position:relative;
+      top:-3px;
+      margin:0 8px;
+      font-size:1px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 3px 0 3px 5px;
+      border-color: transparent transparent transparent $sidebarBreadcrumbLink;
+    }
+  }
 
-      &:before {
-        background:transparent;
-        box-shadow:none;
+  #dvs-sidebar-current-element {
+    clear:both;
+    padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
+    font-size: $sidebarMainFontSize + 1;
+    font-family: $sidebarMainFont;
+    display:none;
+
+    label {
+      display:block;
+      color: darken($sidebarTextColor, 15%);
+      font-family: $sidebarMainFont;
+      font-weight: $sidebarHeaderFontWeight + 100;
+      margin-bottom:8px;
+    }
+
+    .dvs-property {
+      margin-top:20px;
+
+      &:first-child {
+        margin-top:0;
+      }
+    }
+
+    input[type="text"],
+    textarea {
+      width:100%;
+      padding: $sidebarGeneralPadding / 2;
+      font-family: $sidebarMainFont;
+      background-color: darken($sidebarBgColor, 15%);
+      border-width:0;
+    }
+
+    .dvs-sidebar-button-grid {
+      @include clearfix;
+      margin: $sidebarGeneralPadding 0;
+
+      label,
+      button {
+        float:left;
+        margin:2px 2px 0 0;
+        padding: 15px 3px;
+        color:$primaryButtonTextColor;
+        font-family: $sidebarMainFont;
+        text-align: center;
+        cursor: pointer;
+        width:185px;
+
+        &.dvs-button-secondary {
+          width:99px;
+        }
+      }
+
+      label {
+        font-family: $sidebarMainFont;
+        background-color:desaturate($primaryButtonBgColor, 100%);
+        @include transition( all .4s ease );
+      }
+
+      input[type=checkbox] {
+        position:absolute;
+        visibility: hidden;
+        font-family: $sidebarMainFont;
+
+        &:checked + label {
+          font-family: $sidebarMainFont;
+          background-color:$primaryButtonBgColor;
+        }
       }
     }
   }
-}
 
-/* General Editor Styles */
-.dvs-group-edit {
-  h3 {
-    width: 320px;
-    height: 75px;
-    line-height: 75px;
-    padding: 0 30px;
-    margin: 0;
-    outline: none;
-    cursor: pointer;
-    font-weight: 300;
-    font-size: 18px;
-    border-top: 1px solid lighten($sidebarBgColor, 50%);
-    border-bottom: 1px solid darken($sidebarBgColor, 5%);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    @include background-image(linear-gradient(90deg, rgba(244, 244, 244, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%));
-    span {
-      display: none;
+  .dvs-sidebar-discard, .dvs-sidebar-save-group {
+    display: block;
+    width: 100%;
+    padding: 27px 15px;
+    color: $sidebarSaveButtonTextColor;
+    font-family: $sidebarMainFont;
+    font-size: $sidebarMainFontSize + 10;
+    font-weight: $sidebarMainFontWeight + 200;
+    text-transform: uppercase;
+    background-color: $sidebarSaveButtonBgColor;
+    border-width: 0;
+  }
+  .dvs-sidebar-discard {
+    padding: 10px;
+    color: $sidebarDiscardButtonTextColor;
+    font-family: $sidebarMainFont;
+    font-size: $sidebarMainFontSize + 4;
+    background-color: $sidebarDiscardButtonBgColor;
+  }
+  .dvs-sidebar-datetime-element {
+    .xdsoft_datetimepicker {
+      .xdsoft_datepicker {
+        width:204px;
+        float: left;
+        margin-left:8px;
+      }
+
+      .xdsoft_month {
+        text-align:center;
+        width:94px;
+      }
+
+      .xdsoft_year {
+        width:45px;
+      }
     }
   }
 
-  .ui-widget-content {
-    background: none;
-    background-color: darken($sidebarBgColor, 3%);
-    border-width: 0px;
-    border-bottom: 1px solid lighten($sidebarBgColor, 20%);
-  }
-}
+  #dvs-sidebar-current-element {
+    .dvs-options-manager,
+    .dvs-checkboxes-manager {
+      width:100%;
 
-a.page-sort {
-  text-decoration: underline;
-  background: no-repeat right 7px;
-  &.desc {
-    padding-right: 30px;
-    background-image: url(../img/sort-desc.png);
+      .dvs-option-fields {
+        td {
+          padding:1px 1px 0 0;
+        }
+
+        input[type=text] {
+          background-color:lighten($sidebarBgColor, 5%);
+        }
+      }
+    }
   }
-  &.asc {
-    padding-right: 30px;
-    background-image: url(../img/sort-asc.png);
+
+  #dvs-sidebar-collections {
+    display:none;
+    width:100%;
+    height:100%;
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      padding: 15px;
+      font-weight: 300;
+      background-color: #fff;
+      color: darken($sidebarBgColor, 10%);
+    }
+    hr {
+      margin: 10px auto;
+      width: 50%;
+      border-top-color: lighten($sidebarBgColor, 20%);
+    }
+    p {
+      font-style: italic;
+      margin: 0 30px;
+      text-align: center;
+      color: lighten($sidebarBgColor, 40%);
+    }
+
+    .dvs-new-collection {
+      background-color: darken($sidebarBgColor, 5%);
+      padding: 15px 12px;
+      input {
+        width: 100%;
+        border-radius: 4px;
+        padding: 8px 12px;
+        border-width: 0;
+        color: $sidebarBgColor;
+      }
+      button {
+        margin-top: 8px;
+        padding-left: 10px;
+        padding-right: 10px;
+        color: $sidebarTextColor;
+        font-weight: 600;
+        background-color:$primaryButtonBgColor;
+      }
+      p {
+        margin-bottom: 16px;
+      }
+    }
   }
+
+  #dvs-collection-instances-sortable {
+    li {
+      position: relative;
+      margin: 8px 12px;
+      background-color:lighten($sidebarBgColor, 5%);
+      font-size: 30px;
+      color:darken($sidebarTextColor, 5%);
+      font-weight: 400;
+      cursor: move;
+
+      input[type="text"] {
+        width: 200px;
+        font-size: 16px;
+        padding: 12px;
+        margin-left: 40px;
+        background-color: transparent;
+        border-width: 0;
+        outline-width: 0;
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0.4em;
+        top: 0.56em;
+        width: 0.71em;
+        height: 0.14em;
+        background:darken($sidebarTextColor, 5%);
+        box-shadow: 0 0.25em 0 0 darken($sidebarTextColor, 5%), 0 0.5em 0 0 darken($sidebarTextColor, 5%);
+      }
+
+      .dvs-collection-instance-remove {
+        float: right;
+        padding: 8px 12px;
+        margin: 9px;
+        color:darken($sidebarTextColor, 5%);
+        font-size: 16px;
+        font-weight: 300;
+        text-transform: uppercase;
+        cursor:pointer;
+      }
+
+      &.dvs-sort-placeholder {
+        height:50px;
+        margin:8px 12px;
+        background-color:darken($sidebarBgColor, 4%);
+
+        &:before {
+          background:transparent;
+          box-shadow:none;
+        }
+      }
+    }
+  }
+
+  /* General Editor Styles */
+  .dvs-group-edit {
+    h3 {
+      width: 320px;
+      height: 75px;
+      line-height: 75px;
+      padding: 0 30px;
+      margin: 0;
+      outline: none;
+      cursor: pointer;
+      font-weight: 300;
+      font-size: 18px;
+      border-top: 1px solid lighten($sidebarBgColor, 50%);
+      border-bottom: 1px solid darken($sidebarBgColor, 5%);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      @include background-image(linear-gradient(90deg, rgba(244, 244, 244, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%));
+      span {
+        display: none;
+      }
+    }
+
+    .ui-widget-content {
+      background: none;
+      background-color: darken($sidebarBgColor, 3%);
+      border-width: 0px;
+      border-bottom: 1px solid lighten($sidebarBgColor, 20%);
+    }
+  }
+
+  a.page-sort {
+    text-decoration: underline;
+    background: no-repeat right 7px;
+    &.desc {
+      padding-right: 30px;
+      background-image: url(../img/sort-desc.png);
+    }
+    &.asc {
+      padding-right: 30px;
+      background-image: url(../img/sort-asc.png);
+    }
+  }
+
+  label {
+    float:left;
+  }
+
+  .fancy-sidebar-checkbox {
+    > label {
+      margin:5px 0 0 90px ;
+    }
+  }
+
+
 }

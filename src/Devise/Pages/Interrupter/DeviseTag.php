@@ -157,7 +157,7 @@ class DeviseTag
 		list($this->collection, $this->key) = $this->collectionAndKey($params[0]);
 
 		$this->type = $params[1];
-		$this->humanName = isset($params[2]) && $params[2] && $params[2] !== 'null' ? $params[2] : ucfirst($this->key);
+		$this->humanName = isset($params[2]) && $params[2] && $params[2] !== 'null' ? $params[2] : ucwords(str_replace('_', ' ', $this->key));
 		$this->group = isset($params[3]) && $params[3] && $params[3] !== 'null' ? $params[3] : null;
 		$this->category = isset($params[4]) && $params[4] && $params[4] !== 'null' ? $params[4] : null;
 		$this->alternateTarget = isset($params[5]) && $params[5] && $params[5] !== 'null' ? $params[5] : null;

@@ -1,14 +1,7 @@
-.hide,
-.cantsee,
-.hidden,
-.dvs-collapsed,
 .dvs-hidden {
   display:none !important;
 }
 
-.show,
-.cansee,
-.nothidden,
 .dvs-active {
   display:inherit !important;
 }
@@ -59,3 +52,7 @@
     height: auto;
   }
 }
+
+.tac { text-align:center; }
+.tal { text-align:left; }
+.tar { text-align:right; }

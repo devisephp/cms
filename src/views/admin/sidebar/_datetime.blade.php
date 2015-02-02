@@ -1,5 +1,5 @@
 <div class="dvs-sidebar-datetime-element">
-{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put')) }}
+{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type)) }}
     <div class="dvs-editor-values">
 
         <div class="dvs-property">

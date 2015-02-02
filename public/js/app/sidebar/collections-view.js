@@ -21,6 +21,7 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
             var _name = $('#dvs-new-collection-instance-name').val();
             var _data = { name: _name, sort: _numberOfItems  };
 
+
             network.request(
                 '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/store',
                 _data, 'post', null, addSortableItem
@@ -115,11 +116,10 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
 
     function reloadElementGrids() {
         var data = dvsSidebarView.currentNodeData();
+
         data['collection'] = collectionName;
         data['page_version_id'] = pageVersionId;
         data['page_id'] = pageId;
-
-        console.log(data);
 
         network.reloadElementGrid(data, '#dvs-sidebar-elements-and-groups');
     }

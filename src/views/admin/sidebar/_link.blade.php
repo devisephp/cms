@@ -1,7 +1,7 @@
 @php
 $loadDefaults = ((!isset($element->value->url) || $element->value->url == '') && (!isset($element->value->route) || $element->value->route == '')) ? 'dvs-editor-load-defaults' : '';
 @endphp
-{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-link')) }}
+{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-link', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type)) }}
     <div class="dvs-editor-values">
 
         <div class="dvs-property">

@@ -53,6 +53,8 @@ class PageManager
         'meta_keywords',
         'head',
         'footer',
+        'before',
+        'after',
         'response_type',
         'response_path',
         'response_params',
@@ -87,6 +89,7 @@ class PageManager
         $this->Page = $Page;
         $this->Validator = $Framework->Validator;
         $this->PageVersionManager = $PageVersionManager;
+        $this->now = new \DateTime;
     }
 
 	/**
@@ -162,22 +165,17 @@ class PageManager
 	public function copyPage($fromPageId, $input)
 	{
 		$fromPage = $this->Page->findOrFail($fromPageId);
-        
-        if(isset($input['page_version_id'])){
+
+        if (isset($input['page_version_id']))
+        {
             // a specific version has been requested to copy
             $fromPageVersion = $fromPage->versions()->findOrFail($input['page_version_id']);
             $fromPageVersion->name = 'Default';
-        } else {
+        }
+        else
+        {
             // we'll use the current live version to copy
-            $fromPageVersion = $fromPage->versions()
-                    ->where('starts_at', '<', $now)
-                    ->where(function($query) use ($now)
-                    {
-                        $query->where('ends_at', '>', $now);
-                        $query->orWhereNull('ends_at');
-                    })
-                    ->orderBy('starts_at', 'DESC')
-                    ->first();
+            $fromPageVersion = $fromPage->getLiveVersion();
         }
 
 		$toPage = $this->createPageFromInput($input);

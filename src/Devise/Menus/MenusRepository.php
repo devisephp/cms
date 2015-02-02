@@ -84,7 +84,7 @@ class MenusRepository
      */
     public function findMenuByName($name)
     {
-        $menu = $this->Menu->whereName($name)->firstOrFail();
+        $menu = $this->Menu->with('items.children')->whereName($name)->firstOrFail();
 
         if ($this->currentLanguage->id != $this->LanguageDetector->primaryLanguageId())
         {

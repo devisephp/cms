@@ -1,7 +1,9 @@
-devise.define(['require', 'jquery'], {getInstance: function() {
+devise.define(['require', 'jquery'], { getInstance: function() {
 
-    var changes = {};
-    var instance = new Object();
+    var changes    = {};
+    var instance   = {};
+    var jquery     = null;
+    var editorType = null;
 
     function resetProperty(el, name, type, value) {
         switch(type) {
@@ -11,25 +13,32 @@ devise.define(['require', 'jquery'], {getInstance: function() {
             case 'attr':
                 el.attr(name, value);
                 break;
-            case 'html':
+            // case 'html':
             default:
                 el.html(value);
                 break;
         }
     }
 
-    $('#dvs-mode').on('closeAdmin', function() {
-        $.each(changes, function(updateElement, properties){
-            var _el = $(updateElement);
-            $.each(properties, function(propertyType, values){
-                $.each(values, function(propertyName, value){
-                    resetProperty(_el, propertyName, propertyType, value);
-                })
+    function addAdminCloseListener() {
+
+        jQuery('#dvs-mode').on('closeAdmin', function() {
+            jQuery.each(changes, function(updateElement, properties){
+                var _el = jQuery(updateElement);
+                jQuery.each(properties, function(propertyType, values){
+                    jQuery.each(values, function(propertyName, value){
+                        resetProperty(_el, propertyName, propertyType, value);
+                    });
+                });
             });
         });
-    });
+
+    }
 
     instance.init = function($, listenTo, type) {
+
+        jQuery     = $;
+        editorType = type;
 
         var updateSelector  = null;
         var alternateTarget = null;
@@ -45,7 +54,10 @@ devise.define(['require', 'jquery'], {getInstance: function() {
                 case 'attr':
                     _currentValue = $(updateSelector).attr(_property);
                     break;
-                case 'html':
+                case 'wysiwyg':
+                    _currentValue = _property.getData();
+                    break;
+                // case 'html':
                 default:
                     _currentValue = $(updateSelector).html();
                     break;
@@ -60,7 +72,7 @@ devise.define(['require', 'jquery'], {getInstance: function() {
 
         function logChange(_type, _property) {
             if(typeof changes[updateSelector] == 'undefined') {
-                changes[updateSelector] = {}
+                changes[updateSelector] = {};
             }
             if(typeof changes[updateSelector][_type] == 'undefined') {
                 changes[updateSelector][_type] = {};
@@ -92,16 +104,15 @@ devise.define(['require', 'jquery'], {getInstance: function() {
 
         function updateAlternateTarget() {
 
-            var re = /(style.)(.+)/;
+            var re = /(attribute.)(.+)/;
             var matches = re.exec(alternateTarget);
 
             if (matches !== null && matches.length > 1) {
-                logChange('css', matches[2]);
-                $(updateSelector).css(matches[2], newValue);
-
+                logChange('attr', matches[2]);
+                $(updateSelector).attr(matches[2], newValue);
             } else {
-                logChange('attr', alternateTarget);
-                $(updateSelector).attr(alternateTarget, newValue);
+                logChange('css', alternateTarget);
+                $(updateSelector).css(alternateTarget, newValue);
             }
         }
 
@@ -121,9 +132,9 @@ devise.define(['require', 'jquery'], {getInstance: function() {
                         updateBackgroundColor();
                         break;
 
-                    case 'link':
-                    case 'text':
-                    case 'textarea':
+                    // case 'link':
+                    // case 'text':
+                    // case 'textarea':
                     default:
                         updateHTML();
                         break;
@@ -134,19 +145,42 @@ devise.define(['require', 'jquery'], {getInstance: function() {
             }
         }
 
-        listenTo.bind('input', function() {
-            newValue = listenTo.val();
+        if (editorType !== 'wysiwyg') {
+            listenTo.bind('input', function() {
+                newValue = listenTo.val();
 
-            var _index           = listenTo.data('dvs-index');
+                var _index           = listenTo.data('dvs-index');
+                var _key             = listenTo.data('dvs-key');
+                var _alternateTarget = listenTo.data('dvs-alternate-target');
 
-            var _key             = listenTo.data('dvs-key');
-            var _alternateTarget = listenTo.data('dvs-alternate-target');
+                updateSelector       = '[data-dvs-' + _key + '-id="' + _key + '"]';
 
-            updateSelector       = '[data-dvs-' + _key + '-id="' + _key + '"]';
-            alternateTarget      = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+                console.log(alternateTarget);
 
-            updateTarget();
-        });
+                alternateTarget      = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+
+                updateTarget();
+            });
+        } else {
+            listenTo.on('change', function() {
+
+                newValue = listenTo.getData();
+
+                var _textArea = jQuery('textarea.dvs-wysiwyg');
+
+                var _index           = _textArea.data('dvs-index');
+                var _key             = _textArea.data('dvs-key');
+                var _alternateTarget = _textArea.data('dvs-alternate-target');
+
+                updateSelector       = '[data-dvs-' + _key + '-id="' + _key + '"]';
+                alternateTarget      = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+
+                updateTarget();
+
+            });
+        }
+
+        addAdminCloseListener();
     };
 
     return instance;

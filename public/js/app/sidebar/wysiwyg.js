@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], function (require, $, sidebar) {
+devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'], function (require, $, sidebar, liveUpdate) {
     return {
         init: function()
         {
@@ -20,6 +20,9 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], functio
 
             var cke = $('textarea.dvs-wysiwyg').ckeditor(_config).editor;
 
+            var _liveUpdate = liveUpdate.getInstance();
+                _liveUpdate.init($, cke, 'wysiwyg');
+
             document.onMediaManagerSelect = function(url, target, input){
                 CKEDITOR.tools.callFunction(input.CKEditorFuncNum, url);
             };
@@ -31,6 +34,7 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], functio
             $('.dvs-skinny-sidebar').click(function(){
                 sidebar.skinnyMe();
             });
+
         }
     };
 });

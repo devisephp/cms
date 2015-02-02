@@ -3,6 +3,7 @@
 use \Services_Zencoder;
 use \Services_Zencoder_Exception;
 use Devise\Media\Files\FileDownloader;
+use Devise\Support\Framework;
 
 /**
  * Class ZencoderJob handles incoming requests that have been
@@ -35,12 +36,12 @@ class ZencoderJob
      * @param FileDownloader $FileDownloader
      * @param null $Event
      */
-	public function __construct($apiKey, $notifications, FileDownloader $FileDownloader, $Event = null)
+	public function __construct($apiKey, $notifications, FileDownloader $FileDownloader, Framework $Framework)
 	{
 		$this->apiKey = $apiKey;
 		$this->notifications = $notifications;
 		$this->FileDownloader = $FileDownloader;
-        $this->Event = $Event ?: \Event::getFacadeRoot();
+        $this->Event = $Framework->Event;
 		$this->Zencoder = new Services_Zencoder($this->apiKey);
 	}
 
@@ -64,7 +65,14 @@ class ZencoderJob
 			'outputs' => $this->buildOutputSettings($filePath, $settings),
 		];
 
-		$job = $this->Zencoder->jobs->create($data);
+		try {
+			$job = $this->Zencoder->jobs->create($data);
+		}
+		catch (\Services_Zencoder_Exception $e) {
+			// we want a better error message for our exception
+			// so that's what we are doing here
+			throw new InvalidEncodingSettingsException($e->getErrors()->{'0'});
+		}
 
 		$this->Event->fire('devise.encoding.zencoder.started', [$job]);
 

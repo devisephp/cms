@@ -23,36 +23,88 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         $.each(dvsPageData.collections, function(collectionName, collection) {
             $.each(collection, function(index, binding) {
                 // build to binding with flag to turn on collection true
-                buildBinding(binding, index, collectionName);
+                buildBinding(index, binding, collectionName);
             });
         });
 
         // Regular groups and other nodes
-        $.each(dvsPageData.bindings, function (index, binding) {
-            buildBinding(binding, index);
-        });
+        $.each(dvsPageData.bindings, buildBinding);
+        $.each(dvsPageData.models, buildModelNode);
+        $.each(dvsPageData.model_attributes, buildModelAttributeNode);
+        $.each(dvsPageData.model_creators, buildModelCreatorNode);
     }
 
-    function getCoordinates(binding, index, collectionName) {
-        var collection = collectionName ? collectionName + '-' : '';
-        var selector = '[data-dvs-' + collection + binding.key + '-id="' + binding.key + '"]';
-        var coords = $(selector).first().offset();
+    function buildModelNode(index, model)
+    {
+        var props = {};
 
-        // attempt to find the hidden placeholder for
-        // this binding/collection since we do not see
-        // it on the page. This could be a devise-tag
-        // inside of @if or @foreach blocks
-        if (typeof coords === 'undefined') {
-            selector = '[data-dvs-placeholder-' + collection + binding.key + '-id="' + binding.key + '"]';
-            $(selector).first().show();
-            coords = $(selector).first().offset();
-            $(selector).first().hide();
-        }
+        // the sidebar is going to treat this like a model type
+        model.type = 'model';
 
-        return coords;
+        // Start the coordinates where the item is located
+        props.type = 'model';
+        props.element = model;
+        props.element.index = index;
+        props.coordinates = getCoordinatesFromCid(model.cid);
+        props.collection = model.collection;
+        props.categoryName = null;
+        props.group = model.collection;
+
+        var inCategory = isInCategory(props);
+        var inGroup = isInGroup(props);
+        var groupNode = getGroupNode(props);
+        var categoryNode = getIndexOfCategoryNode(inCategory, props);
+
+       addToNodesArray(inGroup, categoryNode, groupNode, props);
     }
 
-    function buildBinding(binding, index, collectionName) {
+    function buildModelAttributeNode(index, modelAttribute)
+    {
+        var props = {};
+
+        modelAttribute.type = 'attribute';
+        props.type = 'attribute';
+        props.element = modelAttribute;
+        props.element.index = index;
+        props.coordinates = getCoordinatesFromCid(modelAttribute.cid);
+        props.collection = modelAttribute.collection;
+        props.categoryName = null;
+        props.group = modelAttribute.collection;
+
+        var inCategory = isInCategory(props);
+        var inGroup = isInGroup(props);
+        var groupNode = getGroupNode(props);
+        var categoryNode = getIndexOfCategoryNode(inCategory, props);
+
+        addToNodesArray(inGroup, categoryNode, groupNode, props);
+    }
+
+    function buildModelCreatorNode(index, modelCreator)
+    {
+        var props = {};
+
+        // the sidebar is going to treat this like a model creator type
+        modelCreator.type = 'model_creator';
+        modelCreator.humanName = modelCreator.human_name;
+
+        // Start the coordinates where the item is located
+        props.type = 'model_creator';
+        props.element = modelCreator;
+        props.element.index = index;
+        props.coordinates = getCoordinatesFromCid(modelCreator.cid);
+        props.collection = null;
+        props.categoryName = null;
+        props.group = null;
+
+        var inCategory = isInCategory(props);
+        var inGroup = isInGroup(props);
+        var groupNode = getGroupNode(props);
+        var categoryNode = getIndexOfCategoryNode(inCategory, props);
+
+        addToNodesArray(inGroup, categoryNode, groupNode, props);
+    }
+
+    function buildBinding(index, binding, collectionName) {
         var props = {};
 
         props.coordinates = null;
@@ -76,6 +128,40 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         var categoryNode = getIndexOfCategoryNode(inCategory, props);
 
         addToNodesArray(inGroup, categoryNode, groupNode, props);
+    }
+
+    function getCoordinates(binding, index, collectionName) {
+        var collection = collectionName ? collectionName + '-' : '';
+        var selector = '[data-dvs-' + collection + binding.key + '-id="' + binding.key + '"]';
+        var coords = $(selector).first().offset();
+
+        // attempt to find the hidden placeholder for
+        // this binding/collection since we do not see
+        // it on the page. This could be a devise-tag
+        // inside of @if or @foreach blocks
+        if (typeof coords === 'undefined') {
+            selector = '[data-dvs-placeholder-' + collection + binding.key + '-id="' + binding.key + '"]';
+            $(selector).first().show();
+            coords = $(selector).first().offset();
+            $(selector).first().hide();
+        }
+
+        return coords;
+    }
+
+    function getCoordinatesFromCid(cid)
+    {
+        var selector = '[data-dvs-cid-' + cid + ']';
+        var coords = $(selector).first().offset();
+
+        if (typeof coords === 'undefined')
+        {
+            $(selector).first().show();
+            coords = $(selector).first().offset();
+            $(selector).first().hide();
+        }
+
+        return coords;
     }
 
     function isInCategory(props) {
@@ -161,6 +247,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
             coordinates: props.coordinates,
             collection: props.collection,
             categoryName: props.categoryName,
+            type: props.type,
             categoryCount: 0
         }) - 1;
     }
@@ -186,6 +273,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         var _index = nodes.push({
                 coordinates: props.coordinates,
                 collection: props.collection,
+                type: props.type,
                 groups: {}
         }) - 1;
 
@@ -197,6 +285,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         var _index = nodes.push({
                 coordinates: props.coordinates,
                 collection: props.collection,
+                type: props.type,
                 elements: []
         }) - 1;
 

@@ -26,7 +26,7 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->package('devise/cms', 'devise', __DIR__ . '/../');
+        $this->package('devisephp/cms', 'devise', __DIR__ . '/../');
 
         // support must be booted first since many
         // things might depend on support

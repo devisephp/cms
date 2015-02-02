@@ -2,6 +2,8 @@
 .dvs-absolute { position: absolute; }
 .dvs-relative { position: relative; }
 .dvs-fixed    { position: fixed; }
+
+.dvs-collapsed,
 .dvs-hidden   { display: none }
 
 /* Application-Specific */
@@ -9,6 +11,7 @@
   @include transition(none !important);
 }
 
+#dvs-mode,
 #dvs-container,
 #dvs-pusher,
 #dvs-content {

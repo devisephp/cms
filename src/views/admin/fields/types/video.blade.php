@@ -8,6 +8,7 @@
     poster="{{ $page->video1->poster_image }}"
     width="100%"
     height="100%"
+    style="max-height: 500px;"
     data-setup='{"example_option":true}'>
     @if ($page->video1->mp4_url) <source src="{{ $page->video1->mp4_url }}" type='video/mp4' /> @endif
     @if ($page->video1->webm_url) <source src="{{ $page->video1->webm_url }}" type='video/webm' /> @endif

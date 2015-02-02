@@ -64,4 +64,19 @@ class DvsPage extends Eloquent
             or array_key_exists($key, $this->relations)
             or method_exists($this, camel_case($key));
     }
+
+    public function getLiveVersion($now = null)
+    {
+        $now = $now ?: new DateTime;
+
+        return $this->versions()
+            ->where('starts_at', '<', $now)
+            ->where(function($query) use ($now)
+            {
+                $query->where('ends_at', '>', $now);
+                $query->orWhereNull('ends_at');
+            })
+            ->orderBy('starts_at', 'DESC')
+            ->first();
+    }
 }

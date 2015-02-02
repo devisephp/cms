@@ -2,7 +2,7 @@
     $loadDefaults = (!isset($element->value->image) || $element->value->image == '') ? 'dvs-editor-load-defaults' : '';
 @endphp
 
-{{ Form::open(array('class' => 'dvs-element-image', 'route' => array('dvs-fields-update', $element->id), 'method' => 'put')) }}
+{{ Form::open(array('class' => 'dvs-element-image', 'route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type)) }}
     <div class="dvs-editor-values">
 
         @include('devise::admin.sidebar._collection_instance_id')

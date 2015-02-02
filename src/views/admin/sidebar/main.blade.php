@@ -34,7 +34,7 @@
 </div>
 
 
-<div class="js-datepickers hidden">
+<div class="js-datepickers dvs-hidden dvs-clearfix">
     <span>Show live<span>
     <input type="text" name="starts_at" value="{{ $selectedVersion->starts_at_human }}" placeholder="Start Date" class="js-datepicker js-start-date" style="line-height: 20px;">
     <span>thru</span>

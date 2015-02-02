@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Devise\Media\Files\FileDownloader;
+use Devise\Support\Framework;
 
 /**
  * Registers a new devise.video.encoder we can use
@@ -39,7 +40,7 @@ class EncodingServiceProvider extends ServiceProvider
 
         $apiKey = $this->app['config']->get('devise::zencoder.api-key');
         $notifications = $this->app['config']->get('devise::zencoder.notifications');
-        $encoder = new ZencoderJob($apiKey, $notifications, new FileDownloader);
+        $encoder = new ZencoderJob($apiKey, $notifications, new FileDownloader, new Framework);
 
         $this->app->instance("devise.video.encoder", $encoder);
     }

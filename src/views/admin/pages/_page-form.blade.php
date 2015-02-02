@@ -25,7 +25,7 @@
         @if($method == 'translate')
             {{ Form::hidden('translated_from_page_id', $page->id) }}
         @endif
-        
+
     </div>
 @endif
 
@@ -50,7 +50,7 @@
 
 <div class="dvs-form-group open simpletoggle" id="view-template-form">
     {{ Form::label('View Template to Use') }}
-    {{ Form::select('view', ['' => 'Select a Template'] + $viewList + ['custom' => 'Custom'], null, array('placeholder' => 'View Template')) }}
+    {{ Form::select('view', ['' => 'Select a Template'] + $templateList + ['custom' => 'Custom'], null, array('placeholder' => 'View Template')) }}
     <div class="dvs-helptext">
         <p>You only need to select a template view file if the page is a regular page (GET).</p>
     </div>
@@ -133,6 +133,23 @@
         <div class="fancyCheckbox">
             {{ Form::checkbox('is_admin', null, null, array('id' => 'is_admin')) }}
             {{ Form::label('is_admin', '&nbsp;') }}
+        </div>
+    </div>
+    <h3>Filters</h3>
+    <hr>
+
+    <div class="dvs-form-group">
+        {{ Form::label('Before') }}
+        {{ Form::text('before', null, array('placeholder' => 'Before Filters')) }}
+        <div class="dvs-helptext">
+            <p>The before filters are functions that execute before a page is rendered. To execute multiple filters separate each name with a "|". These are great for setting access limitations to specific pages. Any saved permission name will also execute as a permission ("canAccessAdmin", "isEditor" etc.).</p>
+        </div>
+    </div>
+    <div class="dvs-form-group">
+        {{ Form::label('After') }}
+        {{ Form::text('after', null, array('placeholder' => 'After Filters')) }}
+        <div class="dvs-helptext">
+            <p>The after filters are function that execute after the page is rendered.</p>
         </div>
     </div>
 </div>

@@ -6,6 +6,8 @@ class DvsField extends Eloquent
 {
     use SoftDeletingTrait;
 
+    public $dvs_type = 'field';
+
     protected $softDelete = true;
 
 	protected $table = 'dvs_fields';

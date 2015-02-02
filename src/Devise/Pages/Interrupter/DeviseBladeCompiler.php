@@ -30,8 +30,9 @@ class DeviseBladeCompiler
 		// gets the block structure for this view
 		$block = $this->BlockFactory->createBlock($view);
 
-		// no tags found so don't touch $view
-		if (count($block->getTags()) == 0)
+		// no devise tags found so don't touch $view
+		if (count($block->getTags()) == 0 && count($block->getModels()) == 0
+			&& count($block->getModelCreators()) == 0)
 		{
 			return $view;
 		}
@@ -46,9 +47,56 @@ class DeviseBladeCompiler
 		// inside of our view with the data-dvs-...-id="stuff"
 		$view = $this->replaceDataDeviseTags($view, $block);
 
+		// we will replace instances of data-devise="$model, ..."
+		// with helper functions that disect the model for
+		// further use in the javascript world
+		$view = $this->replaceDataDeviseModels($view, $block);
+
+		// we will replace data-devise-create-model="..." tags
+		// with a cid that can be used as a place holder
+		$view = $this->replaceDataDeviseModelCreators($view, $block);
+
 		// adds bindings to top of the view page so we
 		// can do the javascript json stuff for dvsPageData
-		$view = $this->addDeviseTagBindingsAndCollections($view, $block);
+		$view = $this->addDeviseTagBindingsModelCreatorsAndCollections($view, $block);
+
+		return $view;
+	}
+
+	/**
+	 * Replace the data-devise="$model, ..." models in the view
+     *
+	 * @param  string $view
+	 * @param  Block $block
+	 * @return string
+	 */
+	protected function replaceDataDeviseModels($view, $block)
+	{
+		$models = $block->getModels();
+
+		foreach ($models as $model)
+		{
+			$view = $model->replaceModelInView($view);
+		}
+
+		return $view;
+	}
+
+	/**
+	 * Replaces data-devise-create-model="..." in the view
+	 *
+	 * @param  string $view
+	 * @param  Block  $block
+	 * @return string
+	 */
+	protected function replaceDataDeviseModelCreators($view, $block)
+	{
+		$modelCreators = $block->getModelCreators();
+
+		foreach ($modelCreators as $modelCreator)
+		{
+			$view = $modelCreator->replaceModelCreateTagInView($view);
+		}
 
 		return $view;
 	}
@@ -84,17 +132,24 @@ class DeviseBladeCompiler
      * @param Block $block
      * @return string
      */
-	protected function addDeviseTagBindingsAndCollections($view, $block)
+	protected function addDeviseTagBindingsModelCreatorsAndCollections($view, $block)
 	{
 		$tags = $block->getTags();
 
-		if (count($tags) == 0) return $view;
+		$modelCreators = $block->getModelCreators();
+
+		if (count($tags) == 0 && count($modelCreators) == 0) return $view;
 
 		$prepend = "";
 
 		foreach ($tags as $tag)
 		{
 			$prepend .= $tag->addToDevisePageStr();
+		}
+
+		foreach ($modelCreators as $modelCreator)
+		{
+			$prepend .= $modelCreator->addToDevisePageStr();
 		}
 
 		return "<?php" . PHP_EOL . $prepend . "?>" . PHP_EOL . $view;

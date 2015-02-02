@@ -56,7 +56,7 @@ class RuleList
      */
     public function __construct(\User $User, Framework $Framework)
     {
-        $this->rules = get_class_methods($this);
+        $this->rules = array_diff(get_class_methods($this), array('__call','__construct'));
         $this->User = $User;
         $this->Auth = $Framework->Auth;
     }
@@ -77,14 +77,11 @@ class RuleList
                 return call_user_func_array(array($this, $method), $arguments);
             } else {
                 // run closure since the "method" is not a class method
-                $rule = function($m, $args) {
-                    if(isset($this->closures[$m])) {
-                        return $this->closures[$m]($args);
-                    } else {
-                       throw new Exception('Unknown Function "'.$m.'" in RuleList');
-                    }
-                };
-                return call_user_func_array($rule, array($method, $arguments));
+                if(isset($this->closures[$method])) {
+                    return call_user_func_array($this->closures[$method], $arguments);
+                } else {
+                   throw new Exception('Unknown Function "'.$method.'" in RuleList');
+                }
             }
         } else {
             throw new Exception('Unknown Function "'.$method.'" in RuleList');
@@ -108,7 +105,7 @@ class RuleList
      */
     public function isNotLoggedIn()
     {
-        return $this->Auth->check();
+        return !$this->Auth->check();
     }
 
     /**
@@ -152,7 +149,7 @@ class RuleList
     }
 
     /**
-     * Determine if a username or email is used for application login.
+     * Determine if a name or email is used for application login.
      * Then checks if username/email equals specified value
      *
      * @param  string  $username  Handles username or email search
@@ -160,7 +157,7 @@ class RuleList
      */
     public function hasUserName($username)
     {
-        if($this->hasFieldValue('username', $username)) {
+        if($this->hasFieldValue('name', $username)) {
             return true;
         }
         return $this->hasFieldValue('email', $username);

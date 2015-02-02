@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
     <link href="{{ URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('/packages/devisephp/cms/css/dvs-admin.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ URL::asset('/packages/devisephp/cms/css/main.css') }}" type="text/css" rel="stylesheet">
 
     @yield('css')
@@ -22,23 +23,14 @@
 
         <hr class="dvs-thick">
 
-        <h5>Website Management</h5>
-        <ul class="dvs-admin-links">
-            <li><a class="{{ isActiveLink('admin') }}" href="{{ URL::route('dvs-dashboard') }}">Dashboard</a></li>
-            <li><a class="{{ isActiveLink('admin/menus*') }}" href="{{ URL::route('dvs-menus') }}">All Menus</a></li>
-            <li><a class="{{ isActiveLink('admin/pages*') }}" href="{{ URL::route('dvs-pages') }}">All Pages</a></li>
-            <li><a href="{{ URL::route('user-logout') }}">Logout</a></li>
-        </ul>
-
-        <hr>
-
-        <h5>Application Management</h5>
-        <ul class="dvs-admin-links">
-            <li><a class="{{ isActiveLink('admin/views*') }}" href="{{ URL::route('dvs-templates') }}">Templates</a></li>
-            <li><a class="{{ isActiveLink('admin/users*') }}" href="{{ URL::route('dvs-users') }}">Users</a></li>
-            <li><a class="{{ isActiveLink('admin/groups*') }}" href="{{ URL::route('dvs-groups') }}">Groups</a></li>
-            <li><a class="{{ isActiveLink('admin/languages*') }}" href="{{ URL::route('dvs-languages') }}">Languages</a></li>
-        </ul>
+        @foreach ($dvsAdminMenu as $menuGroup)
+            <h5>{{ $menuGroup->name }}</h5>
+            <ul class="dvs-admin-links">
+                @foreach ($menuGroup->children as $link)
+                    <li><a class="{{ isActiveLink($link->url) }}" href="{{ $link->url }}">{{ $link->name }}</a></li>
+                @endforeach
+            </ul>
+        @endforeach
 
         <div class="dvs-hide-mobile" id="dvs-devise-logo-sm">
             <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-devise-powered-logo.png') }}" width="100%">

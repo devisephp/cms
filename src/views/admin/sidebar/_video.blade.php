@@ -2,7 +2,7 @@
     $loadDefaults = (!isset($element->value->video) || $element->value->video == '') ? 'dvs-editor-load-defaults' : '';
 @endphp
 
-{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put')) }}
+{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type)) }}
     <div class="dvs-editor-values">
         <div class="dvs-property">
             {{ Form::label('Video Path')}}
@@ -17,31 +17,31 @@
             <button type="button" data-target="video" class="browse dvs-button mt">Browse</button>
         </div>
 
-        <div class="dvs-property">
+        <div class="dvs-property fancy-sidebar-checkbox">
             <label>MP4</label>
             <div class="fancyCheckbox">
-                {{ Form::checkbox('mp4', $element->mp4, null, array('id' => 'mp4')) }}
+                {{ Form::checkbox('mp4', true, $element->value->mp4, array('id' => 'mp4')) }}
                 {{ Form::label('mp4', '&nbsp;') }}
             </div>
         </div>
 
-        <div class="dvs-property">
+        <div class="dvs-property fancy-sidebar-checkbox">
             <label>OGG</label>
             <div class="fancyCheckbox">
-                {{ Form::checkbox('ogg', $element->ogg, null, array('id' => 'ogg')) }}
+                {{ Form::checkbox('ogg', true, $element->value->ogg, array('id' => 'ogg')) }}
                 {{ Form::label('ogg', '&nbsp;') }}
             </div>
         </div>
 
-        <div class="dvs-property">
+        <div class="dvs-property fancy-sidebar-checkbox">
             <label>WebM</label>
             <div class="fancyCheckbox">
-                {{ Form::checkbox('webm', $element->webm, null, array('id' => 'webm')) }}
+                {{ Form::checkbox('webm', true, $element->value->webm, array('id' => 'webm')) }}
                 {{ Form::label('webm', '&nbsp;') }}
             </div>
         </div>
 
-        <div class="dvs-property">
+        <div class="dvs-property ">
             {{ Form::label('Audio Encoding') }}
             {{ Form::select('audioEncoding', ['AAC'=>'AAC','MP3'=>'MP3'], $element->value->audioEncoding, ['class' => 'dvs-select']) }}
         </div>
@@ -56,7 +56,7 @@
             {{ Form::text('height', $element->value->width) }}
         </div>
 
-        <div class="dvs-property">
+        <div class="dvs-property fancy-sidebar-checkbox">
             {{ Form::label('Upscale Video') }}
             <div class="fancyCheckbox">
                 {{ Form::checkbox('upscale', 1, $element->value->upscale, array('id' => 'upscale')) }}

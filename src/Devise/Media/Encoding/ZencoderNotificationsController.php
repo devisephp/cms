@@ -1,5 +1,7 @@
 <?php namespace Devise\Media\Encoding;
 
+use Devise\Support\Framework;
+
 /**
  * Class ZencoderNotificationsController handles incoming requests
  * from the zencoder server when it is finished encoding our videos
@@ -11,17 +13,15 @@
 class ZencoderNotificationsController extends \Controller
 {
     /**
-     * Construct a new controller
+     * Create a new ZencoderNotificationsController
      *
-     * @param null $App
-     * @param null $Response
-     * @param null $Input
+     * @param Framework $Framework
      */
-    public function __construct($App = null, $Response = null, $Input = null)
+    public function __construct(Framework $Framework)
     {
-        $this->App = $App ?: \App::getFacadeRoot();
-        $this->Response = $Response ?: \Response::getFacadeRoot();
-        $this->Input = $Input ?: \Input::getFacadeRoot();
+        $this->App = $Framework->Container;
+        $this->Input = $Framework->Input;
+        $this->Response = $Framework->Response;
     }
 
     /**

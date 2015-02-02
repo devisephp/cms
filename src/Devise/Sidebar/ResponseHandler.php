@@ -94,4 +94,61 @@ class ResponseHandler
 
         return Response::json($response, $code);
     }
+
+    /**
+     * Request that a new model be created
+     *
+     * @param  array $input
+     * @return Response
+     */
+    public function requestCreateModel($input)
+    {
+        try {
+            $code = 200;
+            $response = $this->Manager->createModel($input);
+        } catch (DeviseValidationException $e) {
+            $code = 403;
+            $response = [ 'message' => $e->getMessage(), 'errors' => $e->getErrors() ];
+        }
+
+        return Response::json($response, $code);
+    }
+
+    /**
+     * Request that a model be updated
+     *
+     * @param  array $input
+     * @return Response
+     */
+    public function requestUpdateModel($input)
+    {
+        try {
+            $code = 200;
+            $response = $this->Manager->updateModel($input);
+        } catch (DeviseValidationException $e) {
+            $code = 403;
+            $response = [ 'message' => $e->getMessage(), 'errors' => $e->getErrors() ];
+        }
+
+        return Response::json($response, $code);
+    }
+
+    /**
+     * Request that a group be updated
+     *
+     * @param  array $input
+     * @return Response
+     */
+    public function requestUpdateGroup($input)
+    {
+        try {
+            $code = 200;
+            $response = $this->Manager->updateGroup($input);
+        } catch (DeviseValidationException $e) {
+            $code = 403;
+            $response = [ 'message' => $e->getMessage(), 'errors' => $e->getErrors() ];
+        }
+
+        return Response::json($response, $code);
+    }
 }

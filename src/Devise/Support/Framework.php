@@ -85,6 +85,10 @@ class Framework
                 return \Request::getFacadeRoot();
             break;
 
+            case 'schema':
+                return \Schema::getFacadeRoot();
+            break;
+
             case 'session':                 // Illuminate\Session\SessionManager
                 return \Session::getFacadeRoot();
             break;

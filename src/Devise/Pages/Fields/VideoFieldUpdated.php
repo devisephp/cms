@@ -1,6 +1,7 @@
 <?php namespace Devise\Pages\Fields;
 
 use Devise\Media\MediaPaths;
+use Devise\Support\Framework;
 
 /**
  * When the video field is updated we will
@@ -23,10 +24,10 @@ class VideoFieldUpdated
      * @param MediaPaths $MediaPaths
      * @param null $Encoder
      */
-	public function __construct(MediaPaths $MediaPaths, $Encoder = null)
+	public function __construct(MediaPaths $MediaPaths, $Encoder = null, Framework $Framework)
 	{
 		$this->MediaPaths = $MediaPaths;
-		$this->Encoder = $Encoder ?: \App::resolve('devise.video.encoder');
+		$this->Encoder = $Encoder ?: $Framework->Container->make('devise.video.encoder');
 	}
 
 	/**

@@ -54,6 +54,25 @@ class RuleManager
     }
 
     /**
+     * Get all rules
+     *
+     * @return Array
+     */
+    public function getNumberOfRequiredParametersForRule($ruleName)
+    {
+
+        if(in_array($ruleName, get_class_methods($this->RuleList))) {
+            $fct = new \ReflectionMethod($this->RuleList, $ruleName);
+            return $fct->getNumberOfRequiredParameters();
+        } else {
+            $fct = new \ReflectionFunction($this->RuleList->closures[ $ruleName ]);
+            return $fct->getNumberOfRequiredParameters();
+        }
+
+        return 0;
+    }
+
+    /**
      * Get all closures
      *
      * @param  string $method
@@ -96,7 +115,7 @@ class RuleManager
      */
     public function getCondition($conditionName)
     {
-        $condition = json_encode($this->Config->get('devise::permission-conditions.'.$conditionName));
+        $condition = json_encode($this->Config->get('devise::permissions.'.$conditionName));
         if(!$condition) {
             throw new \Devise\Support\DeviseException($conditionName.' condition not found');
         }
@@ -117,7 +136,7 @@ class RuleManager
         $condition = $this->getCondition($conditionName);
         $results = $this->executeCondition($condition);
 
-        return ($evaluateResults) ? $this->evaluateResults($results, $redirectOnFail) : $results;
+        return ($evaluateResults) ? $this->evaluateResults($results, $redirectOnFail, $condition) : $results;
     }
 
     /**
@@ -140,7 +159,7 @@ class RuleManager
      * @param  boolean $redirectOnFail
      * @return boolean
      */
-    public function evaluateResults($results, $redirectOnFail)
+    public function evaluateResults($results, $redirectOnFail, $conditionObject)
     {
         if(in_array(false, $results)) {
             if($redirectOnFail) {
@@ -172,16 +191,18 @@ class RuleManager
     {
         $conditionResults = array();
         foreach($conditions as $functionOperator => $groupArguments) {
-            if($functionOperator == 'and' || $functionOperator == 'or') {
-                $groupResults = $this->parseCondition($groupArguments, $functionOperator);
+            if(!in_array($functionOperator, array('redirect','redirect_message','redirect_type'))){
+                if($functionOperator == 'and' || $functionOperator == 'or') {
+                    $groupResults = $this->parseCondition($groupArguments, $functionOperator);
 
-                if($parentOperator == 'and') {
-                    return array(!in_array(false, $groupResults));
+                    if($parentOperator == 'and') {
+                        return array(!in_array(false, $groupResults));
+                    }
+
+                    return array(in_array(true, $groupResults));
+                } else {
+                    $conditionResults[] = call_user_func_array(array($this->RuleList, $functionOperator), $groupArguments);
                 }
-
-                return array(in_array(true, $groupResults));
-            } else {
-                $conditionResults[] = call_user_func_array(array($this->RuleList, $functionOperator), $groupArguments);
             }
         }
         return $conditionResults;

@@ -1,7 +1,7 @@
 @php
 $loadDefaults = (!isset($element->value->text) || $element->value->text == '') ? 'dvs-editor-load-defaults' : '';
 @endphp
-{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-textarea')) }}
+{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-textarea', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type)) }}
 
     @include('devise::admin.sidebar._collection_instance_id')
 

@@ -114,6 +114,18 @@ HTML::macro('showLanguagesForPages', function($languages, $showLinkAsIcon =  fal
     return $html;
 });
 
+HTML::macro('getHtmlForJsVar', function($path, $data = array())
+{
+	return str_replace(
+				PHP_EOL,
+				'',
+				\View::make(
+					$path,
+					$data
+				)->render()
+			);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Is active link
@@ -133,5 +145,47 @@ if (!function_exists('isActiveLink'))
 	    }
 
 	    return (Request::is($segment) || Request::is(Str::singular($segment))) ? $active : '';
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Devise model
+|--------------------------------------------------------------------------
+|
+| This adds a model to devise at run time on the page when the
+| view is rendered. It will use the model's key() and get_class()
+| information.
+|
+*/
+if (!function_exists('devise_model'))
+{
+    function devise_model($chain, $humanName, $collection)
+    {
+        $extractor = new Devise\Pages\Interrupter\DeviseModelExtractor($chain);
+
+        return $extractor->attribute()
+            ? App::make('dvsPageData')->addModelAttribute($extractor->model(), $extractor->attribute(), $humanName, $collection)['cid']
+            : App::make('dvsPageData')->addModel($extractor->model(), $humanName, $collection)['cid'];
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Gets proper url/link in the order precedence, 1) route or 2) url
+|--------------------------------------------------------------------------
+|
+*/
+if (!function_exists('getLinkRouteOrUrl'))
+{
+	function getLinkRouteOrUrl($linkValue, $default = '/#')
+	{
+        $link = ($linkValue->url != '') ? $linkValue->url : $default;
+
+		if($linkValue->route != '') {
+            $link = URL::route($linkValue->route);
+        }
+
+        return $link;
 	}
 }

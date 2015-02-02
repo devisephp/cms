@@ -20,14 +20,19 @@
                     <div class="dvs-inline-block dvs-tal">
                         {{ Sort::filter('slug', "#pages, #pagination-links", ['placeholder' => 'Filter by Slug', 'class' => 'filter-by-slug']) }}
                     </div>
+                </th>
+				<th>Languages</th>
+				<th>
+                    {{ Sort::link('is_admin','Admin') }}
+                    <input type="checkbox" name="show_admin" value="true" {{ Input::get('show_admin') === 'true' ? 'checked' : '' }}>
+                </th>
+				<th>
                     <div class="dvs-inline-block dvs-button-group dvs-sort-group dvs-pr">
                         {{ Sort::link('slug','Path', array('class' => 'dvs-button dvs-button-small dvs-button-outset')) }}
                         {{ Sort::link('title','Page Name', array('class' => 'dvs-button dvs-button-small dvs-button-outset')) }}
+                        {{ Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-outset')) }}
                     </div>
                 </th>
-				<th>Languages</th>
-				<th>{{ Sort::link('is_admin','Admin') }}</th>
-				<th>{{ Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-outset')) }}</th>
 			</tr>
 		</thead>
 
@@ -69,5 +74,5 @@
         </tfoot>
 	</table>
 
-	<script>devise.require(['app/admin/admin', 'app/bindings/data-dvs-replacement', 'app/bindings/data-change-target'])</script>
+	<script>devise.require(['app/admin/admin', 'app/admin/pages-index', 'app/bindings/data-dvs-replacement', 'app/bindings/data-change-target'])</script>
 @stop

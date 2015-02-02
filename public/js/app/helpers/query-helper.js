@@ -1,4 +1,4 @@
-devise.define([], (function()
+devise.define(['jquery'], (function($)
 {
     var query = {};
 

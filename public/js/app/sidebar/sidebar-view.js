@@ -2,6 +2,7 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
 {
     var node = null;
     var ogWidth = null;
+    var addedListenersBefore = false;
 
     var sidebar = {
         init: function(_node) {
@@ -31,6 +32,9 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         },
         currentNodeData: function() {
             return node;
+        },
+        showElementGrid: function() {
+            hideElement();
         }
     };
 
@@ -122,12 +126,15 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         $('button.dvs-sidebar-save-group').hide();
     }
 
-    function hideElement() {
+    function hideElement()
+    {
         hideBreadcrumbs();
         hideCollections();
 
         $('#dvs-sidebar-current-element').hide();
         $('#dvs-sidebar-elements-and-groups').fadeIn();
+        $('[data-field-container]').hide();
+        $('[data-model-field-type="attribute"]').show();
     }
 
     function openElementEditor(el) {
@@ -139,6 +146,149 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         setBreadcrumbs(el.html());
 
         network.insertElement(_data, '#dvs-sidebar-current-element', elementLoaded);
+    }
+
+    function openModelEditor(el) {
+
+        var cid = el.data('model-field-cid');
+        var parent = el.parent().parent().parent();
+
+        setBreadcrumbs(el.html());
+
+        parent.find('.js-sidebar-model-attributes').fadeOut(function()
+        {
+            parent.find('[data-field-container="' + cid + '"]').fadeIn();
+            showBreadcrumbs();
+        });
+    }
+
+    function saveModelGroups(button)
+    {
+        var action = button.data('submitAction');
+        var method = button.data('submitMethod');
+        var pageVersionId = button.data('pageVersionId');
+        var groups = [];
+
+        // empty out validation messages for now
+        $('#dvs-sidebar-validation-messages').html('');
+
+        // gather up form data from all the different forms
+        // and attribute buttons and then send it off i guess
+        // we only submit the dvs-active group though because
+        // we don't want to submit 100's of groups when only
+        // one has changed
+        $('[data-group-container].dvs-active').each(function(index, element)
+        {
+            var $element = $(element);
+            var cid = $element.data('groupContainer');
+            var type = $element.data('groupType');
+            var key = $element.data('groupKey');
+            var className = $element.data('groupClassName');
+            var forms = {};
+
+            $(element).find('form').each(function(index, form)
+            {
+                var $form = $(form);
+                var serialized = $form.serializeArray();
+                var fieldId = $form.data('dvsFieldId');
+                var formData = {};
+
+                for (var index in serialized)
+                {
+                    formData[serialized[index].name] = serialized[index].value;
+                }
+
+                if (isNaN(fieldId)) throw "Could not find valid field id on this form";
+
+                fieldId = fieldId.toString();
+
+                forms[fieldId] = formData;
+            });
+
+            groups.push({ 'cid': cid, 'key': key, 'type': type, 'class_name': className, 'forms': forms });
+        });
+
+        $.ajax(
+        {
+            url: action,
+            type: method,
+            data: {'page_version_id': pageVersionId, 'groups': groups},
+            success: function(){ console.log('success'); },
+            error: showValidationMessages
+        });
+    }
+
+    function saveModelAttributes(button)
+    {
+        var action = button.data('submitAction');
+        var method = button.data('submitMethod');
+        var data = {
+            'class_name': button.data('model'),
+            'key': button.data('key'),
+            'page_version_id': button.data('pageVersionId'),
+            'forms': {},
+        };
+
+        // empty out validation messages for now
+        $('#dvs-sidebar-validation-messages').html('');
+
+        // gather up form data from all the different forms
+        // and attribute buttons and then send it off i guess
+        $('[data-field-container]').each(function(index, element)
+        {
+            var $element = $(element);
+            var cid = $element.data('fieldContainer');
+            var alias = $element.data('modelFieldAlias');
+            var form = $(element).find('form');
+            var serialized = form.serializeArray();
+            var forms = {};
+
+            for (var index in serialized)
+            {
+                forms[serialized[index].name] = serialized[index].value;
+            }
+
+            data['forms'][alias] = forms;
+        });
+
+        $.ajax(
+        {
+            url: action,
+            data: data,
+            type: method,
+            success: hideElement,
+            error: showValidationMessages
+        });
+    }
+
+    function showValidationMessages(xhr)
+    {
+        var json = xhr.responseJSON;
+
+        if (xhr.status != 403 || typeof json === 'undefined' || typeof json.errors === 'undefined')
+        {
+            alert('There was an error while trying to update!');
+        }
+
+        var message = json.message;
+        var errors = json.errors;
+        var template = $('[data-template="validation-messages"]').html();
+        var errorsTemplate = $('[data-template="validation-message"]').html();
+        var errorsHtml = '';
+
+        for (var index in errors)
+        {
+            var html = errorsTemplate.replace(/\{error\}/g, errors[index]);
+            html = html.replace(/\{name\}/g, index);
+            errorsHtml += html;
+        }
+
+        template = template.replace(/\{errors\}/g, errorsHtml);
+        template = template.replace(/\{message\}/g, message);
+
+        var previousHtml = $('#dvs-sidebar-validation-messages').html();
+
+        $('#dvs-sidebar-validation-messages').html(previousHtml + template);
     }
 
     function showCollections() {
@@ -165,19 +315,42 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
     }
 
     function addListeners() {
+        // we don't want to register these listeners over and over, only once
+        // since the #dvs-sidebar element stays intact even when a new sidebar is loaded
+        // later on the page, this means we would have multiple handlers registered
+
+        if (addedListenersBefore) return;
+
+        addedListenersBefore = true;
+
         // Close sidebar
         $('#dvs-sidebar').on('click', '.dvs-sidebar-close', function(){
             $('#dvs-node-mode-button').trigger('click');
         });
 
         // Elements
-        $('#dvs-sidebar').on('click', '.dvs-sidebar-elements button', function(){
+        $('#dvs-sidebar').on('click', '.dvs-sidebar-elements button[data-field-id]', function(){
             openElementEditor($(this));
+        });
+
+        // Models
+        $('#dvs-sidebar').on('click', '.dvs-sidebar-elements button[data-model-field-cid]', function(){
+            openModelEditor($(this));
         });
 
         // Manage
         $('#dvs-sidebar').on('click', '#dvs-sidebar-manage-groups', function(){
             openCollectionsManager($(this));
+        });
+
+        // Prevent model forms from submitting automatically
+        $('#dvs-sidebar').on('click', '.dvs-sidebar-save-model', function(){
+            saveModelAttributes($(this));
+        });
+
+        // Save a model collection/grouping and all it's forms
+        $('#dvs-sidebar').on('click', '.dvs-sidebar-save-model-groups', function(){
+            saveModelGroups($(this));
         });
     }
 

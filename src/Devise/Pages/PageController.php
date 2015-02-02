@@ -77,9 +77,12 @@ class PageController extends \Controller
      */
     public function retrieveResponse($page)
     {
+        $route = $this->Route->getCurrentRoute();
+
         $data['page'] = $page;
         $data['input'] = $this->Input->all();
-        $data['params'] = $this->Route->getCurrentRoute()->parameters();
+        $data['params'] = $route ? $route->parameters() : [];
+
         $this->DataBuilder->setData($data);
 
         return $this->getResponse($page);
@@ -119,7 +122,8 @@ class PageController extends \Controller
             ? [ $page->response_path => explode(',', $page->response_params) ]
             : $page->response_path;
 
-        if(isset($config[ $page->response_path ])){
+        if (isset($config[ $page->response_path ]))
+        {
             // wrapping params in curly braces
             foreach ($config[ $page->response_path ] as &$param) {
                 $param = '{' . $param .'}';

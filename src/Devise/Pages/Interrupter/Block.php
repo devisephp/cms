@@ -14,7 +14,18 @@
 class Block
 {
     /**
-     * The type of block could be if or foreach
+     * The type of block could be include or block
+     * this helps us in the getTags() method so we
+     * don't try to get children tags of include blocks
+     * because those are separate views, and we don't
+     * need those. They will be included in their own
+     * view blade files with
+     *
+     *     App::make('DvsPageData')->addBinding(...)
+     *     App::make('DvsPageData')->addCollection(...)
+     *
+     * and we could easily end up with duplicated tags
+     * in both views if we didn't keep track of this
      *
      * @var string
      */
@@ -60,12 +71,22 @@ class Block
     protected $tags;
 
     /**
+     * These are devise models that are directly
+     * under this block (only direct models)
+     *
+     * @var array
+     */
+    protected $models;
+
+    /**
      * Construct a new block
      */
     public function __construct()
 	{
 		$this->childBlocks = [];
 		$this->tags = [];
+        $this->models = [];
+        $this->modelCreators = [];
 		$this->includedViews = [];
 	}
 
@@ -98,10 +119,30 @@ class Block
      *
      * @param Nodes\Node $node
      */
-    public function addTag($node)
+    public function addTag(Nodes\Node $node)
 	{
 		$this->tags[] = new DeviseTag($node);
 	}
+
+    /**
+     * Add a devise model to this block
+     *
+     * @param Nodes\Node $node
+     */
+    public function addModel(Nodes\Node $node)
+    {
+        $this->models[] = new DeviseModel($node);
+    }
+
+    /**
+     * Add a devise model creator to this block
+     *
+     * @param Nodes\Node $node
+     */
+    public function addModelCreator(Nodes\Node $node)
+    {
+        $this->modelCreators[] = new DeviseModelCreator($node);
+    }
 
     /**
      * Add another nested block to this block
@@ -177,4 +218,45 @@ class Block
 
 		return $tags;
 	}
+
+    /**
+     * Return an array of models for this Block
+     *
+     * @return array
+     */
+    public function getModels($includeTypes = ['block'])
+    {
+        $models = $this->models;
+
+        foreach ($this->childBlocks as $childBlock)
+        {
+            if (in_array($childBlock->type, $includeTypes))
+            {
+                $models = array_merge($models, $childBlock->getModels());
+            }
+        }
+
+        return $models;
+    }
+
+    /**
+     * Returns an array of model creators for this Block
+     *
+     * @param  array $includeTypes
+     * @return array
+     */
+    public function getModelCreators($includeTypes = ['block'])
+    {
+        $modelCreators = $this->modelCreators;
+
+        foreach ($this->childBlocks as $childBlock)
+        {
+            if (in_array($childBlock->type, $includeTypes))
+            {
+                $modelCreators = array_merge($modelCreators, $childBlock->getModelCreators());
+            }
+        }
+
+        return $modelCreators;
+    }
 }

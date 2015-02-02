@@ -87,22 +87,22 @@ class ViewvarComposer
      */
     private function getVars($name)
     {
-        $vars = isset($this->Config->get('devise::templates')[$name]['vars']) ? $this->Config->get('devise::templates')[$name]['vars'] : null;
-        $parent = isset($this->Config->get('devise::templates')[$name]['extends']) ? $this->Config->get('devise::templates')[$name]['extends'] : null;
+        $config = $this->Config->get('devise::templates');
+
+        $vars = isset($config[$name]['vars']) ? $config[$name]['vars'] : null;
+        $parent = isset($config[$name]['extends']) ? $config[$name]['extends'] : null;
 
         if ($vars || $parent)
         {
             $vars = ($vars) ? $vars : array();
+
             if ($parent)
             {
-                $parentArr = $this->Config->get('devise::templates.' . $parent);
-                $parentVars = array_get($parentArr, 'vars', array());
+                $parentVars = isset($config[$parent]['vars']) ? $config[$parent]['vars'] : [];
                 return array_merge($vars, $parentVars);
             }
-
-            return $vars;
         }
 
-        return array();
+        return $vars;
     }
 }

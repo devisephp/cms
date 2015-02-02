@@ -7,10 +7,11 @@ devise.define(['require', 'jquery'], function (require, $) {
 
     var network = {
         insertTemplate: function(_view, _target, _data, _callback) {
-            _data['page_id'] = $('#dvs-mode').data('dvs-page-id');
-            _data['page_version_id'] = $('#dvs-mode').data('dvs-page-version-id');
 
             buildCollectionData(_data);
+
+            _data['page_id'] = $('#dvs-mode').data('dvs-page-id');
+            _data['page_version_id'] = $('#dvs-mode').data('dvs-page-version-id');
 
             var data = {
                 view: _view,
@@ -72,12 +73,17 @@ devise.define(['require', 'jquery'], function (require, $) {
                     _data[_data.collection].push(g);
                 });
             });
+
+            if (_data.type == 'model' || _data.type == 'attribute')
+            {
+                _data.type = 'model_collection';
+            }
         }
     }
 
     function handleTemplateLoadDone( msg ) {
         $(target).html(msg.html);
-        
+
         if(callback){
             callback('done', msg, data);
         }

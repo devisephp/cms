@@ -183,13 +183,20 @@ class PagesRepository
      *
      * @return Page
      */
-	public function pages()
-	{
+    public function pages()
+    {
         $languageId = $this->Input->get('language_id', $this->Config->get('devise::languages.primary_language_id'));
 
-        $pages = $this->Page->where('dvs_admin', '<>', 1)
-                            ->where('language_id', '=', $languageId)
-                            ->paginate();
+        $showAdmin = $this->Input->get('show_admin', false);
+
+        $pages = $this->Page->where('language_id', '=', $languageId);
+
+        if ($showAdmin !== 'true')
+        {
+            $pages = $pages->where('dvs_admin', '<>', 1);
+        }
+
+        $pages = $pages->paginate();
 
         foreach ($pages as $page)
         {
@@ -197,7 +204,7 @@ class PagesRepository
         }
 
         return $this->wrapLanguagesAroundPages($pages);
-	}
+    }
 
     /**
      * List of all the languages available for a page
@@ -373,8 +380,49 @@ class PagesRepository
                                         ->orWhere('translated_from_page_id', $pageId);
                                 })
                                 ->lists('title', 'language_id');
-                                
+
         return array_diff_key($languages, $existingLangages);
+    }
+
+    /**
+     * Get the list of available views
+     *
+     * @return array
+     */
+    public function availableViewsList()
+    {
+        $views = array();
+        $viewLocations = $this->Config->get('view');
+        $humanNames = $this->Config->get('view.template_human_names');
+
+        foreach ($viewLocations['paths'] as $path) {
+            if (!$this->File->exists($path)) {
+                continue;
+            }
+
+            $files = $this->File->allFiles($path);
+
+            foreach ($files as $file) {
+                if (substr_count($file->getRelativePathname(), '.blade.php')) {
+                    $value = str_replace('/', '.', str_replace('.blade.php', '', $file->getRelativePathname()));
+                    $nameArr = explode('.', $value);
+
+                    // added in case you have a file directory within the views directory
+                    // then you will see a big fat error because there is no index [1] below
+                    if (count($nameArr) < 2) continue;
+
+                    $folderName = $nameArr[0];
+                    $viewName = $nameArr[1];
+
+                    if (substr($viewName, 0, 1) != '_' && $folderName == 'templates') {
+                        $views[$value] = isset($humanNames[$value]) ? $humanNames[$value] : $value;
+                    }
+                }
+            }
+        }
+
+        asort($views);
+        return $views;
     }
 
     /*

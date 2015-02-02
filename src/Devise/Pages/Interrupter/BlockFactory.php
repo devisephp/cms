@@ -1,7 +1,5 @@
 <?php namespace Devise\Pages\Interrupter;
 
-use Devise\Pages\Interrupter\Nodes\NodeFactory;
-
 /**
  * the purpose this class is to take a blade view and
  * abstract out all the @if, @foreach blocks and put them
@@ -13,12 +11,10 @@ class BlockFactory
 	/**
 	 * Create a new block factory
 	 *
-	 * @param NodeFactory $NodeFactory
 	 * @param ViewOpener $ViewOpener
 	 */
-	public function __construct(NodeFactory $NodeFactory, ViewOpener $ViewOpener)
+	public function __construct(ViewOpener $ViewOpener)
 	{
-		$this->NodeFactory = $NodeFactory;
 		$this->ViewOpener = $ViewOpener;
 	}
 
@@ -30,11 +26,41 @@ class BlockFactory
 	 */
 	public function createBlock($view, $includedViews = [])
 	{
-		$matches = $this->nodes($view);
+		$nodes = $this->nodes($view);
 
 		$block = $this->newBlock($includedViews);
 
-		return $this->populateBlock($matches, $block);
+		return $this->populateBlock($nodes, $block);
+	}
+
+	/**
+	 * Gets all the starting, ending include and devise tag and model
+	 * matches which we call 'nodes'
+	 *
+	 * @param  string $view
+	 * @return array
+	 */
+	protected function nodes($view)
+	{
+		$matches = [];
+
+		$matches[] = $this->ifMatches($view);
+
+		$matches[] = $this->endifMatches($view);
+
+		$matches[] = $this->foreachMatches($view);
+
+		$matches[] = $this->endforeachMatches($view);
+
+		$matches[] = $this->includeMatches($view);
+
+		$matches[] = $this->deviseMatches($view);
+
+		$matches[] = $this->deviseModelMatches($view);
+
+		$matches[] = $this->deviseModelCreatorMatches($view);
+
+		return $this->sortNodes($matches);
 	}
 
 	/**
@@ -49,6 +75,34 @@ class BlockFactory
 		$block->includedViews = $includedViews;
 
 		return $block;
+	}
+
+	/**
+	 * Sort all the nodes by their positions in the view
+	 *
+	 * @param  array allMatches
+	 * @return array
+	 */
+	protected function sortNodes($allNodes)
+	{
+		$combined = [];
+
+		// flatten out (combined) the nodes into 1 giant array
+		foreach ($allNodes as $nodes)
+		{
+			foreach ($nodes as $node)
+			{
+				$combined[] = $node;
+			}
+		}
+
+		// sort the nodes by position in the view
+		usort($combined, function ($node1, $node2)
+		{
+			return $node1->position > $node2->position ? 1 : -1;
+		});
+
+		return $combined;
 	}
 
 	/**
@@ -69,6 +123,14 @@ class BlockFactory
 			{
 				case 'tag':
 					$block->addTag($node);
+				break;
+
+				case 'model':
+					$block->addModel($node);
+				break;
+
+				case 'model_creator':
+					$block->addModelCreator($node);
 				break;
 
 				case 'block':
@@ -112,26 +174,6 @@ class BlockFactory
 	}
 
 	/**
-	 * Gets all the starting, ending include and devise tag matches
-	 * which we call 'nodes'
-	 *
-	 * @param  string $view
-	 * @return array
-	 */
-	protected function nodes($view)
-	{
-		$startingMatches = $this->startingMatches($view);
-
-		$endingMatches = $this->endingMatches($view);
-
-		$includeMatches = $this->includeMatches($view);
-
-		$deviseMatches = $this->deviseMatches($view);
-
-		return $this->sortMatches([$startingMatches, $endingMatches, $includeMatches, $deviseMatches]);
-	}
-
-	/**
 	 * Find matches in this view for this given regex pattern
 	 *
 	 * @param  string $view
@@ -148,25 +190,79 @@ class BlockFactory
 	}
 
 	/**
-	 * Finds matches that start @if or @foreach blocks
+	 * Helper utility function that creates node classes in
+	 * an array for each different matched node type, i.e.
+	 * @foreach, @if, data-devise, etc
 	 *
-	 * @param  string $view
-	 * @return array
+	 * @param  array $matches
+	 * @param  string $nodeClass
+	 * @return [type]
 	 */
-	protected function startingMatches($view)
+	protected function createNodes($matches, $nodeClass)
 	{
-		return $this->matches($view, '/(@if ?\(|@foreach ?\()/');
+		$nodes = [];
+
+		foreach ($matches as $match)
+		{
+			$matched = $match[0];
+			$position = $match[1];
+
+			$nodes[] = new $nodeClass($matched, $position);
+		}
+
+		return $nodes;
 	}
 
 	/**
-	 * Finds matches that end the @if or @foreach blocks
+	 * Finds matches that start @if blocks
 	 *
 	 * @param  string $view
 	 * @return array
 	 */
-	protected function endingMatches($view)
+	protected function ifMatches($view)
 	{
-		return $this->matches($view, '/(@endif|@endforeach)/');
+		$matches = $this->matches($view, '/(@if ?\()/');
+
+		return $this->createNodes($matches, 'Devise\Pages\Interrupter\Nodes\IfNode');
+	}
+
+	/**
+	 * Finds matches that end the @if blocks
+	 *
+	 * @param  string $view
+	 * @return array
+	 */
+	protected function endifMatches($view)
+	{
+		$matches = $this->matches($view, '/(@endif)/');
+
+		return $this->createNodes($matches, 'Devise\Pages\Interrupter\Nodes\EndIfNode');
+	}
+
+	/**
+	 * Finds matches that start @foreach blocks
+	 *
+	 * @param  string $view
+	 * @return array
+	 */
+	protected function foreachMatches($view)
+	{
+		$matches = $this->matches($view, '/(@foreach ?\()/');
+
+		return $this->createNodes($matches, 'Devise\Pages\Interrupter\Nodes\ForeachNode');
+	}
+
+	/**
+	 * Finds matches that end the @foreach blocks
+	 *
+	 * @param  string $view
+	 * @return array
+	 */
+	protected function endforeachMatches($view)
+	{
+		$matches = $this->matches($view, '/(@endforeach)/');
+
+		return $this->createNodes($matches, 'Devise\Pages\Interrupter\Nodes\EndForeachNode');
 	}
 
 	/**
@@ -177,7 +273,9 @@ class BlockFactory
 	 */
 	protected function includeMatches($view)
 	{
-		return $this->matches($view, '/(@include ?\([^\)]*\))/');
+		$matches = $this->matches($view, '/(@include ?\([^\)]*\))/');
+
+		return $this->createNodes($matches, 'Devise\Pages\Interrupter\Nodes\IncludeNode');
 	}
 
 	/**
@@ -188,33 +286,35 @@ class BlockFactory
 	 */
 	protected function deviseMatches($view)
 	{
-		return $this->matches($view, "/ data-devise(-[0-9]+)?=[\"|']([^\"']*)[\"|']/");
+		$matches = $this->matches($view, "/ data-devise=[\"|']([^\"'$]*)[\"|']/");
+
+		return $this->createNodes($matches, 'Devise\Pages\Interrupter\Nodes\DeviseTagNode');
 	}
 
 	/**
-	 * Finds matches that start with @if or @foreach
+	 * Matches a devise model which has a variable in it
 	 *
-	 * @param  array allMatches
+	 * @param  string $view
 	 * @return array
 	 */
-	protected function sortMatches($allMatches)
+	protected function deviseModelMatches($view)
 	{
-		$nodes = [];
+		$matches = $this->matches($view, "/ data-devise=[\"'] *(\\$[^\"']*)[\"']/");
 
-		foreach ($allMatches as $matches)
-		{
-			foreach ($matches as $match)
-			{
-				$nodes[] = $this->NodeFactory->createNodeFromRegexMatch($match);
-			}
-		}
+		return $this->createNodes($matches, 'Devise\Pages\Interrupter\Nodes\DeviseModelNode');
+	}
 
-		// sort the nodes by position in the view
-		usort($nodes, function ($node1, $node2)
-		{
-			return $node1->position > $node2->position ? 1 : -1;
-		});
+	/**
+	 * Matches a devise model creator so we can add new
+	 * instances of models
+	 *
+	 * @param  string $view
+	 * @return array
+	 */
+	protected function deviseModelCreatorMatches($view)
+	{
+		$matches = $this->matches($view, "/ data-devise-create-model=[\"'] *([^\"'])*[\"']/");
 
-		return $nodes;
+		return $this->createNodes($matches, 'Devise\Pages\Interrupter\Nodes\DeviseModelCreatorNode');
 	}
 }

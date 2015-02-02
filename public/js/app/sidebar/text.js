@@ -3,7 +3,7 @@ devise.define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, live
     function addMaxLengthInputBinding(maxlengthInput, textInput) {
         maxlengthInput.bind('input', function () {
             var val = $(this).val();
-            if (val != '') {
+            if (val !== '') {
                 if (!isNaN(val)) {
                     $(this).val(parseInt(val));
                     textInput.attr('maxlength', parseInt(val));

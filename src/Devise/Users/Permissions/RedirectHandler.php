@@ -41,14 +41,14 @@ class RedirectHandler
             case 'route':
             case 'to':
             case 'action':
-                    return $this->Redirect->$redirectType($conditionObject->redirect)->with('message', $redirectMessage);
+                    return $this->Redirect->$redirectType($conditionObject->redirect)->with('message-errors', $redirectMessage);
             break;
 
             default:
             case 'back':
                 try
                 {
-                    return $this->Redirect->back()->with('message', $redirectMessage);
+                    return $this->Redirect->back()->with('message-errors', $redirectMessage);
                 }
                 catch(\Exception $e)
                 {

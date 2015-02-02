@@ -3,6 +3,7 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
     var savingCount = 0;
     var node = null;
     var sidebarListenersAdded = false;
+    var nodesInitialized = false;
 
     var delay = (function(){
         var timer = 0;
@@ -25,12 +26,21 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
 
             $('#dvs-node-mode-button').click(function() {
 
-                if(!$('#dvs-mode').hasClass('dvs-node-mode')) {
-                    nodeView();
-                    floaterNodeSidebarView.init();
-                    addNodeListeners();
-                    addFloaterNodeListeners();
-                } else {
+                if (!$('#dvs-mode').hasClass('dvs-node-mode'))
+                {
+                    if (nodesInitialized === false)
+                    {
+                        nodeView();
+                        addNodeListeners();
+                        nodesInitialized = true;
+                    }
+
+                    $('#dvs-mode').removeClass('dvs-sidebar-mode');
+                    $('#dvs-mode').addClass('dvs-node-mode');
+                    $('#dvs-nodes').show();
+                }
+                else
+                {
                     closeAdmin();
                 }
             });
@@ -164,11 +174,17 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
     }
 
     function addSidebarGroupsChangeListener() {
-        $('#dvs-sidebar-groups').change(function () {
+        $('#dvs-sidebar-groups').change(function() {
             var _selectedGroup = $(this).find('.dvs-select').val();
 
             $('.dvs-sidebar-group').removeClass('dvs-active');
             $('#dvs-sidebar-group-' + _selectedGroup).addClass('dvs-active');
+
+            // if breadcrumbs are visible, refresh and show element grid
+            // with the newly selected collection's elements
+            if($('#dvs-sidebar-breadcrumbs').is(':visible')) {
+                sidebarView.showElementGrid();
+            }
 
             $(".dvs-accordion").accordion("refresh");
 
@@ -202,7 +218,7 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
         $('#dvs-sidebar-container').hide().css('width','428px');
         $('#dvs-sidebar-scroller').css('width','478px');
         $('#dvs-mode').removeClass('dvs-node-mode dvs-admin-mode dvs-sidebar-mode');
-        $('#dvs-nodes').html('');
+        $('#dvs-nodes').hide(); //html('');
         $('#dvs-node-mode-button').html('Edit Page');
         floaterNodeSidebarView.closeSidebar();
         $('#dvs-mode').trigger('closeAdmin');

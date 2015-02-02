@@ -57,6 +57,21 @@ class FieldValue
 	}
 
 	/**
+	 * Gets this field with this name, returns
+	 * default if nothing is found...
+	 *
+	 * @param  string $name
+	 * @param  mixed  $default
+	 * @return mixed
+	 */
+	public function get($name, $default = null)
+	{
+		$value = $this->{$name};
+
+		return is_a($value, 'Devise\Pages\Fields\FieldValue') ? $default : $value;
+	}
+
+	/**
 	 * Merges in the array data into the
 	 * field object json
 	 *
@@ -103,8 +118,6 @@ class FieldValue
 	{
 		$default = count($args) > 0 ? $args[0] : '';
 
-		$value = $this->{$name};
-
-		return is_a($value, 'Devise\Pages\Fields\FieldValue') ? $default : $value;
+		return $this->get($name, $default);
 	}
 }

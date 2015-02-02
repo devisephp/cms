@@ -1,10 +1,9 @@
-
-{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put')) }}
+{{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type)) }}
     <div class="dvs-editor-values">
 
         @include('devise::admin.sidebar._collection_instance_id')
 
-        <div class="dvs-property">
+        <div class="dvs-property fancy-sidebar-checkbox">
             {{ Form::hidden('value', 0) }}
 
             <label>{{ $element->human_name }}</label>

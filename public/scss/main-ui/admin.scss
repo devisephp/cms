@@ -618,6 +618,68 @@ table.dvs-admin-table {
 
     select { height:30px }
   }
+
+
+}
+
+
+.dvs-admin-form-horizontal #dvs-permissions {
+  margin:0 auto;
+  width:100%;
+  overflow:auto;
+  
+  hr {
+    margin-bottom: 10px; 
+  }
+
+  .dvs-form-group {
+    float:left;
+    width:100%;
+
+    input[type="text"],
+    input[type="password"],
+    textarea,
+    select {
+      width:150px;
+
+      display:inline-block;
+
+      &.operator-types {
+        display:block;
+        float:none;
+      }
+    }
+  }
+
+  input {
+    &.rule-param {
+      margin-left:5px;
+    }
+  }
+
+  .dvs-button {
+      padding:8px 6px;
+      float: right;
+      margin: 0 3px;
+      &.dvs-enabled {
+        background-color:$bodyCustomColor;
+      }
+  }
+
+  .group {
+    background-color:rgba(255, 255, 255, 0.5);
+    margin-top:30px;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+    padding: 30px;
+    width: 100%;
+
+    .operator {
+      margin: 5px 0;
+      .dvs-button {
+        float:none;
+      }
+    }
+  }
 }
 
 .fancyCheckbox {
@@ -790,3 +852,4 @@ table.dvs-admin-table {
   &:first-child { border-radius: 2px 0 0 2px }
   &:last-child { border-radius: 0 2px 2px 0 }
 }
+

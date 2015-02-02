@@ -100,10 +100,11 @@ class TemplatesRepository
     public function unregisteredTemplatesList()
     {
         $templates = array();
-        $templateLocations = $this->Config->get('template');
+        $templateLocations = $this->Config->get('view');
         $regisHumanNames = $this->registeredTemplatesList();
 
         foreach ($templateLocations['paths'] as $path) {
+
             if (!$this->File->exists($path)) {
                 continue;
             }
@@ -112,12 +113,13 @@ class TemplatesRepository
 
             foreach ($files as $file) {
                 if (substr_count($file->getRelativePathname(), '.blade.php')) {
+
                     $value = str_replace('/', '.', str_replace('.blade.php', '', $file->getRelativePathname()));
                     $nameArr = explode('.', $value);
-                    $folderName = $nameArr[0];
-                    $templateName = $nameArr[1];
 
-                    if (substr($templateName, 0, 1) != '_' && $folderName == 'templates') {
+                    $templateName = last($nameArr);
+
+                    if (substr($templateName, 0, 1) != '_') {
                         $templates[$value] = isset($regisHumanNames[$value]) ? $regisHumanNames[$value] : $value;
                     }
                 }

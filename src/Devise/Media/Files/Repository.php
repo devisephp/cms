@@ -196,7 +196,7 @@ class Repository
                 } else {
                     $fileData = array();
                     $fileData['cropped_files'] = $this->matchingCroppedfiles($file, $croppedFiles);
-                    $fileData['thumb'] = $this->getThumbName($file, ($lastThumb != null) ? $lastThumb : null);
+                    $fileData['thumb'] = $this->getThumbName($file, $lastThumb);
                     $fileData['name'] = $this->getFileName($file);
                     $fileData['url'] = $this->getPath($file, $fileData['name']);
                     $fileData['filepath'] = $this->getFilePath($file, $fileData['name']);
@@ -277,14 +277,15 @@ class Repository
      */
     private function getThumbName($pathName, $possibleThumbPathName)
     {
-        $thumbPathName = $this->stringPopExtension($possibleThumbPathName, 2);
-        $imagePathName = $this->stringPopExtension($pathName);
+        $pathinfo = pathinfo($pathName);
+        $dirname = $pathinfo['dirname'];
+        $filename = $pathinfo['filename'];
+        $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
+        $thumbnailFile = "{$dirname}/{$filename}.{$this->config['thumb-key']}.{$ext}";
 
-        if($thumbPathName == $imagePathName){
-            return $this->getPath($possibleThumbPathName, $media = false);
-        } else {
-            return $this->getDefaultThumb($pathName);
-        }
+        return file_exists($thumbnailFile)
+            ? $this->getPath($thumbnailFile, $media = false)
+            : $this->getDefaultThumb($pathName);
     }
 
     /**

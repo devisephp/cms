@@ -28,6 +28,8 @@ class CreateDvsPages extends Migration {
             $table->string('meta_keywords', 255)->nullable();
             $table->text('head')->nullable();
             $table->text('footer')->nullable();
+            $table->text('before')->nullable();
+            $table->text('after')->nullable();
             $table->string('response_type', 255)->default('View');
             $table->string('response_path', 255)->nullable();
             $table->string('response_params', 255)->nullable();

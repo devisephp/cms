@@ -97,6 +97,7 @@
 			'extends' => 'devise::admin.layouts.master',
 			'vars' => array(
 				'users' => 'Devise\Users\UsersRepository.users',
+				'groups' => 'Devise\Users\Groups\GroupsRepository.groupList',
 			),
 		),
 		'devise::admin.users.edit' => array(

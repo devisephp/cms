@@ -127,7 +127,7 @@ class Manager
     private function getNewCroppedName($currentName, $width, $height)
     {
         $nameArr = explode('.', $currentName);
-        $inject = $this->Config->get('devise::media-manager.crop-key') . '.' . $width . 'x' . $height;
+        $inject = $this->Config->get('devise.media-manager.crop-key') . '.' . $width . 'x' . $height;
         array_splice($nameArr, count($nameArr) - 1, 0, $inject);
         return implode('.', $nameArr);
     }

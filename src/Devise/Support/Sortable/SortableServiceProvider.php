@@ -25,7 +25,6 @@ class SortableServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->package('devise/sort');
 	}
 
 	/**

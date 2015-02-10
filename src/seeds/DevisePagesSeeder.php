@@ -1,15 +1,9 @@
 <?php
 
-class DevisePagesSeeder extends Seeder
+class DevisePagesSeeder extends DeviseSeeder
 {
-	/**
-     *
-     */
     public function run()
     {
-		DB::table( 'dvs_pages' )->delete();
-        DB::table( 'dvs_page_versions' )->delete();
-
 		$pages = array(
             array(
 				'language_id'             => '45',
@@ -463,6 +457,21 @@ class DevisePagesSeeder extends Seeder
             ),
             array(
                 'language_id'             => '45',
+                'title'                   => 'Finds all content requested fields',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-fields-content-requested',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'canAccessAdmin',
+                'after'                   => '',
+                'slug'                    => 'admin/fields/content-requested/{pageVersionId}',
+                'short_description'       => 'Finds all fields which are flagged as \"content requested\" for a given page version id',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Pages\Fields\FieldsRepository.findContentRequestedFieldsList',
+                'response_params'         => 'params.pageVersionId'
+            ),
+            array(
+                'language_id'             => '45',
                 'view'                    => 'devise::admin.media.manager',
                 'title'                   => 'Media Manager',
                 'http_verb'               => 'get',
@@ -851,7 +860,7 @@ class DevisePagesSeeder extends Seeder
                 'route_name'              => 'user-login',
                 'is_admin'                => '1',
                 'dvs_admin'               => '1',
-                'before'                  => '',
+                'before'                  => 'canAccessLogin',
                 'after'                   => '',
                 'slug'                    => '/admin/login',
                 'short_description'       => 'Allows users to login',
@@ -1186,7 +1195,7 @@ class DevisePagesSeeder extends Seeder
                 'slug'                    => 'admin/permissions',
                 'short_description'       => 'Attempts to Store a New Permission Condition',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Permissions\PermissionsResponseHandler.executeStore',
+                'response_path'           => 'Devise\Users\Permissions\PermissionsResponseHandler.executeStore',
                 'response_params'         => 'input'
             ),
             array(
@@ -1214,7 +1223,7 @@ class DevisePagesSeeder extends Seeder
                 'slug'                    => 'admin/permissions/update',
                 'short_description'       => 'Attempts to Update a Permission Condition',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Permissions\PermissionsResponseHandler.executeUpdate',
+                'response_path'           => 'Devise\Users\Permissions\PermissionsResponseHandler.executeUpdate',
                 'response_params'         => 'input'
             ),
             array(
@@ -1229,22 +1238,19 @@ class DevisePagesSeeder extends Seeder
                 'slug'                    => 'admin/permissions/destroy',
                 'short_description'       => 'Destroys a Permission Condition',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Permissions\PermissionsResponseHandler.executeDestroy',
+                'response_path'           => 'Devise\Users\Permissions\PermissionsResponseHandler.executeDestroy',
                 'response_params'         => 'input.condition'
             ),
 		);
 
         $now = date('Y-m-d H:i:s', strtotime('now'));
 
-		foreach ( $pages as $page )
+        $dvsPages = $this->findOrCreateRows('dvs_pages', 'route_name', $pages);
+
+		foreach ( $dvsPages as $dvsPage )
         {
-            $page['created_at'] = $now;
-            $page['updated_at'] = $now;
-			$page['id'] = DB::table( 'dvs_pages' )->insertGetId(  $page  );
-            DB::table( 'dvs_page_versions' )->insert(
-            [
-                'id'                 => $page['id'],
-                'page_id'            => $page['id'],
+            $this->findOrCreateRow('dvs_page_versions', 'page_id', [
+                'page_id'            => $dvsPage->id,
                 'created_by_user_id' => 1,
                 'name'               => 'Default',
                 'starts_at'          => $now,

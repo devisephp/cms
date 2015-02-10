@@ -41,7 +41,7 @@ class SnippetBladeCompiler
             $with = str_replace('{', '&#123;', $with);
             $with = str_replace('}', '&#125;', $with);
             $with = str_replace(' data-devise=', ' data&#45;devise=', $with);
-            $view = str_replace($replace, "{$original} <pre class=\"devise-code-snippet\">{$with}</pre>", $view);
+            $view = str_replace($replace, "{$original} <pre><code class=\"html\">{$with}</code></pre>", $view);
         }
 
         return $view;

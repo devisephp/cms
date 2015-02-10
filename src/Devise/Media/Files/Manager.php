@@ -103,7 +103,7 @@ class Manager
     private function getNewThumbName($currentName)
     {
         $nameArr = explode('.', $currentName);
-        $inject = $this->Config->get('devise::media-manager.thumb-key');
+        $inject = $this->Config->get('devise.media-manager.thumb-key');
         array_splice($nameArr, count($nameArr) - 1, 0, $inject);
         return implode('.', $nameArr);
     }

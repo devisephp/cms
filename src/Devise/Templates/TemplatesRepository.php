@@ -18,7 +18,8 @@ class TemplatesRepository
         $this->Config = $Framework->Config;
         $this->Input = $Framework->Input;
         $this->View = $Framework->View;
-        $this->File = $File ?: \File::getFacadeRoot();
+        $this->File = $Framework->File;
+        $this->Paginator = $Framework->Paginator;
     }
 
     /**
@@ -30,7 +31,7 @@ class TemplatesRepository
      */
     public function getTemplateByPath($templatePath)
     {
-        $template = $this->Config->get('devise::templates')[$templatePath];
+        $template = $this->Config->get('devise.templates')[$templatePath];
 
         $templateSource = $this->getTemplateSourceByPath($templatePath);
 
@@ -62,7 +63,7 @@ class TemplatesRepository
 
         $pagedData = array_slice($templatesList, $currentPage * $perPage, $perPage);
 
-        return \Paginator::make($pagedData, count($templatesList), $perPage);
+        return $this->Paginator->make($pagedData, count($templatesList), $perPage);
     }
 
     /**
@@ -74,7 +75,7 @@ class TemplatesRepository
      */
     public function registeredTemplatesList($showHumanName = true)
     {
-        $templatesArr = $this->Config->get('devise::templates');
+        $templatesArr = $this->Config->get('devise.templates');
         $templateKeysArr = array_keys($templatesArr);
 
         $results = array();

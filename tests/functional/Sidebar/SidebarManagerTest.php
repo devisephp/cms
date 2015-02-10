@@ -14,10 +14,12 @@ class SidebarManagerTest extends \DeviseTestCase
         $PagesRepository->shouldReceive('getRouteList')->andReturn([]);
         $PagesRepository->shouldReceive('getPageVersions')->andReturn([]);
         $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
+        $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+        $ModelMapper = m::mock('Devise\Sidebar\ModelMapper');
         $View = m::mock('Mocked\View');
         $View->shouldReceive('make')->andReturnSelf();
         $View->shouldReceive('render')->andReturn('some html here');
-        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $View);
+        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $ModelMapper, $FieldManager, $View);
         $SidebarManager->fetchPartialView(['page_id' => 1, 'page_version_id' => 1]);
     }
 
@@ -33,10 +35,12 @@ class SidebarManagerTest extends \DeviseTestCase
         $PagesRepository->shouldReceive('getPageVersions')->andReturn([]);
         $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
         $FieldsRepository->shouldReceive('findFieldByIdAndScope')->andReturn($DvsField);
+        $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+        $ModelMapper = m::mock('Devise\Sidebar\ModelMapper');
         $View = m::mock('Mocked\View');
         $View->shouldReceive('make')->andReturnSelf();
         $View->shouldReceive('render')->andReturn('some html here');
-        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $View);
+        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $ModelMapper, $FieldManager, $View);
         $SidebarManager->fetchElementView(['field_id' => 1, 'field_scope' => 'page']);
     }
 
@@ -50,11 +54,22 @@ class SidebarManagerTest extends \DeviseTestCase
         $PagesRepository->shouldReceive('getRouteList')->andReturn([]);
         $PagesRepository->shouldReceive('getPageVersions')->andReturn([]);
         $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
+        $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+        $ModelMapper = m::mock('Devise\Sidebar\ModelMapper');
         $View = m::mock('Mocked\View');
         $View->shouldReceive('make')->andReturnSelf();
         $View->shouldReceive('render')->andReturn('some html here');
-        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $View);
+        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $ModelMapper, $FieldManager, $View);
         $SidebarManager->fetchElementGridView(['page_id' => 1, 'page_version_id' => 1]);
     }
 
+    public function test_it_updates_model_with_fields()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_it_updates_group()
+    {
+        $this->markTestIncomplete();
+    }
 }

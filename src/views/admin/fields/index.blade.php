@@ -1,38 +1,49 @@
-<html>
+@extends('devise::admin.layouts.master')
 
-<head>
+@section('css')
 
-<!-- some weird style that I'm just overriding so I can see the listed attributes -->
-<style>
-    .dvs-test-block table tr:nth-child(odd) td {
-        background-color: transparent;
-    }
-</style>
+    <link href="{{ URL::asset('/packages/devisephp/cms/css/obsidian.min.css') }}" rel="stylesheet" >
+    <script type="text/javascript" src="{{ URL::asset('/packages/devisephp/cms/js/lib/highlight.pack.js') }}"></script>
 
-@include('devise::styles')
+    <!-- some weird style that I'm just overriding so I can see the listed attributes -->
+    <style>
+        /*.dvs-test-block table tr:nth-child(odd) td {
+            background-color: transparent;
+        }*/
+    </style>
 
-</head>
-<body>
+    @include('devise::styles')
+@stop
 
-<div style="padding:20px;">
-    <h2 class="dvs-test-title">Editors Tests</h2>
+@section('title')
+    <div id="dvs-admin-title">
+        <h1>Editor's Examples</h1>
+    </div>
+@stop
 
-    <ul class="dvs-test-block">
 
-    	@foreach (['model', 'model-attribute', 'model-group',
+@section('main')
+
+    <table class="dvs-admin-table dvs-test-blocks">
+
+        <tbody>
+
+        @foreach (['model', 'model-attribute', 'model-group',
             'audio', 'checkbox-group', 'checkbox', 'color',
             'datetime', 'file', 'html', 'image',
-			'link', 'map', 'select', 'text', 'textarea',
-			'video', 'wysiwyg', 'collections', 'hidden-fields'] as $type)
-	        <li>@include("devise::admin.fields.types.{$type}")</li>
-	        <hr>
+            'link', 'map', 'select', 'text', 'textarea',
+            'video', 'wysiwyg', 'collections', 'hidden-fields'] as $type)
+            <tr>
+                <td>
+                    @include("devise::admin.fields.types.{$type}")
+                </td>
+            </tr>
         @endforeach
 
-    </ul>
- </div>
+        </tbody>
+    </table>
 
- @include('devise::scripts')
+    @include('devise::scripts')
+    <script>hljs.initHighlightingOnLoad();</script>
 
-</body>
-
-</html>
+@stop

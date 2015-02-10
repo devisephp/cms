@@ -107,7 +107,10 @@ class FieldManager
 		$previousVersion = clone $field->values;
 
         // merge input into the FieldValues for this $field
-		$field->values->merge(array_except($input, ['page_id', 'page_version_id', 'field_scope', 'current_field_scope', 'collection_instance_id']));
+		$field->values->merge(array_except($input, ['page_id', 'page_version_id', 'field_scope', 'current_field_scope', 'collection_instance_id', 'content_requested']));
+
+        // set "content_requested" value
+        $field->content_requested = array_get($input, 'content_requested', false);
 
 		// update this field's json value
 		$field->json_value = $field->values->toJSON();

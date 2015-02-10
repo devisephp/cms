@@ -88,7 +88,7 @@ class PageVersionSource implements Source
 
 		$event->id = $pageVersion->id;
 		$event->page = $pageVersion->page;
-		$event->title = $pageVersion->name;
+		$event->title = $pageVersion->page->title . ' (' . $pageVersion->name . ')';
 		$event->start = $pageVersion->starts_at;
 		$event->end = $pageVersion->ends_at;
 		$event->published = !is_null($pageVersion->starts_at);

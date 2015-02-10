@@ -20,6 +20,9 @@ devise.define(['jquery', 'dvsListeners'], (function( $, listeners ) {
         // This should be a configurable option in the initilization
         // of devise.
 
+        // Get all the styles from the body tag
+        var bodyStyles = css($('body'));
+
         /* General Structure of what we are adding:
          div#dvs-mode.[theme-class]
          -- div#dvs-container
@@ -30,8 +33,7 @@ devise.define(['jquery', 'dvsListeners'], (function( $, listeners ) {
         var theme = $('<div>').addClass('dvs-default').attr('id', 'dvs-mode');
         var container = $('<div>').attr('id', 'dvs-container');
         var pusher = $('<div>').attr('id', 'dvs-pusher');
-        var content = $('<div>').attr('id', 'dvs-content');
-        var blocker = $('<div>').attr('id', 'dvs-blocker');
+        var content = $('<div>').attr('id', 'dvs-content').css(bodyStyles);
 
         pusher.append(content);
         container.append(pusher);
@@ -43,13 +45,14 @@ devise.define(['jquery', 'dvsListeners'], (function( $, listeners ) {
     function appendDom(wrapper) {
 
         var _body = $('body');
-        var _bodyStyle = $('body').attr('style');
-        var _documentHeight = $(document).height();
+        var _paddingTop = parseInt(_body.css('padding-top'));
+        var _paddingBot = parseInt(_body.css('padding-bottom'));
+        var _documentHeight = $(document).height() + _paddingTop + _paddingBot;
 
         if (_body.height() < _documentHeight) {
             _body.attr(
                 'style',
-                ' height:' + _documentHeight + 'px!important; ' + _bodyStyle
+                ' height:' + _documentHeight + 'px!important; '
             );
         }
 
@@ -89,6 +92,40 @@ devise.define(['jquery', 'dvsListeners'], (function( $, listeners ) {
     function removePreloader() {
         // Removes class disabling animation on page load
         $("body").removeClass("preload");
+    }
+
+    function css(a) {
+        var sheets = document.styleSheets, o = {};
+        for (var i in sheets) {
+            var rules = sheets[i].rules || sheets[i].cssRules;
+            for (var r in rules) {
+                if (a.is(rules[r].selectorText)) {
+                    o = $.extend(o, css2json(rules[r].style), css2json(a.attr('style')));
+                }
+            }
+        }
+        return o;
+    }
+
+    function css2json(css) {
+        var s = {};
+        if (!css) return s;
+        if (css instanceof CSSStyleDeclaration) {
+            for (var i in css) {
+                if ((css[i]).toLowerCase) {
+                    if(css[i] !== "overflow-x" && css[i] !== 'overflow-y') {
+                        s[(css[i]).toLowerCase()] = (css[css[i]]);
+                    }
+                }
+            }
+        } else if (typeof css == "string") {
+            css = css.split("; ");
+            for (var i in css) {
+                var l = css[i].split(": ");
+                s[l[0].toLowerCase()] = (l[1]);
+            }
+        }
+        return s;
     }
 
     return initializeEditor;

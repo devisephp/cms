@@ -13,6 +13,20 @@
 class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
+     * List of config files we need to publish/merge
+     *
+     * @var array
+     */
+    protected $configFiles = [
+        'languages',
+        'media-manager',
+        'model-mapping',
+        'permissions',
+        'templates',
+        'zencoder',
+    ];
+
+    /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
@@ -26,7 +40,9 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->package('devisephp/cms', 'devise', __DIR__ . '/../');
+        $this->registerLaravelFormAndHtmlProvider();
+        $this->registerConfigPublisher();
+        $this->registerDeviseViews();
 
         // support must be booted first since many
         // things might depend on support
@@ -58,6 +74,48 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     public function provides()
     {
         return array();
+    }
+
+    /**
+     * Registers the views with devise
+     *
+     * @return void
+     */
+    private function registerDeviseViews()
+    {
+        $this->loadViewsFrom(__DIR__.'/../views', 'devise');
+    }
+
+    /**
+     * Handles publishing all the config files for devise
+     * package
+     *
+     * @return void
+     */
+    private function registerConfigPublisher()
+    {
+        $publishes = [];
+
+        foreach ($this->configFiles as $configFile)
+        {
+            $publishes[__DIR__."/../config/{$configFile}.php"] = config_path("devise/devise.{$configFile}.php");
+            $this->mergeConfigFrom(__DIR__."/../config/{$configFile}.php", "devise.{$configFile}");
+        }
+
+        $this->publishes($publishes);
+    }
+
+    /**
+     * The Form and Html Facades are no longer available in L5
+     * so we register them here since we need them
+     *
+     * @return void
+     */
+    private function registerLaravelFormAndHtmlProvider()
+    {
+        $provider = new \Illuminate\Html\HtmlServiceProvider($this->app);
+        $this->app->register($provider);
+        $provider->boot();
     }
 
     /**

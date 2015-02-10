@@ -39,7 +39,7 @@ class Repository
     public function __construct(Filesystem $Filesystem, $Config = null, $Request = null, $URL = null)
     {
         $this->Filesystem = $Filesystem;
-        $this->config = $Config ?: \Config::get('devise::media-manager');
+        $this->config = $Config ?: \Config::get('devise.media-manager');
         $this->Request = $Request?: \Request::getFacadeRoot();
         $this->URL = $URL ?: \URL::getFacadeRoot();
         $this->guesser = MimeTypeGuesser::getInstance();

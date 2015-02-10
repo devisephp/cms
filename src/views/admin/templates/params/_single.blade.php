@@ -15,7 +15,7 @@
 
 
 <div class="dvs-param-wrapper dvs-inline-block" data-var-type="{{$varType}}">
-    {{ Form::hidden('template[vars]['.$var.'][params][]', $parameter) }}
+    <?= Form::hidden('template[vars]['.$var.'][params][]', $parameter) ?>
 
     <div class="dvs-badge">
         {{ $parameterForShow or $parameter }}&nbsp;

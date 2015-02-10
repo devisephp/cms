@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery'], function (require, $) {
+devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPageData) {
 
     var target;
     var callback;
@@ -14,6 +14,7 @@ devise.define(['require', 'jquery'], function (require, $) {
             _data['page_version_id'] = $('#dvs-mode').data('dvs-page-version-id');
 
             var data = {
+                _token: dvsPageData.csrf_token,
                 view: _view,
                 data: _data
             };
@@ -25,6 +26,7 @@ devise.define(['require', 'jquery'], function (require, $) {
         insertElement: function(_data, _target, _callback) {
 
             var data = {
+                _token: dvsPageData.csrf_token,
                 data: _data
             };
 
@@ -35,6 +37,7 @@ devise.define(['require', 'jquery'], function (require, $) {
         reloadElementGrid: function(_data, _target) {
 
             var data = {
+                _token: dvsPageData.csrf_token,
                 data: _data
             };
 
@@ -43,9 +46,11 @@ devise.define(['require', 'jquery'], function (require, $) {
             network.request(_elementGridPath, data, 'POST', _target);
         },
         request: function(_url, _data, _method, _target, _callback) {
-
-            data = _data;
-
+            if(_data){
+                _data['_token'] = dvsPageData.csrf_token;
+            } else {
+                _data = {_token: dvsPageData.csrf_token};
+            }
             target = _target;
             callback = _callback;
 

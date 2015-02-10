@@ -11,6 +11,6 @@ class DvsGroup extends Eloquent
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function users() {
-        return $this->belongsToMany('User', 'group_user', 'group_id', 'user_id');
+        return $this->belongsToMany('DvsUser', 'group_user', 'group_id', 'user_id');
     }
 }

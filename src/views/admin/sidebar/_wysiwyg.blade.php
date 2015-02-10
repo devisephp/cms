@@ -7,23 +7,23 @@
         </div>
         <div class="dvs-clearfix">&nbsp;</div>
 
-        {{ Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type)) }}
+        <?= Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type, 'id' => 'dvs-sidebar-field-form')) ?>
 
                 <div class="dvs-editor-values">
-                    {{ Form::textarea('text', $element->value->text,
+                    <?= Form::textarea('text', $element->value->text,
                                 array(
                                     'class'=>'dvs-wysiwyg',
                                     'data-dvs-type' => 'wysiwyg',
                                     'data-dvs-index' => $element->index,
                                     'data-dvs-alternate-target' => $element->alternateTarget,
                                     'data-dvs-key' => $element->key
-                                )) }}
+                                )) ?>
                 </div>
 
                 @include('devise::admin.sidebar._collection_instance_id')
                 @include('devise::admin.sidebar._field_scope')
 
-        {{ Form::close() }}
+        <?= Form::close() ?>
     </div>
 
     <script>

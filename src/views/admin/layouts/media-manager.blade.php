@@ -23,10 +23,10 @@
             <div class="dvs-messages">
                 <h2>{{ Session::get('message') }}</h2>
                 @if($errors->any())
-                    <ul class="list">{{ implode('', $errors->all('<li class="error">:message')) }}</ul>
+                    <ul class="list"><?= implode('', $errors->all('<li class="error">:message')) ?></ul>
                 @endif
                 @if(isset($warnings) && count($warnings))
-                    <ul class="list"><li>{{ implode('</li><li>', $warnings) }}</li></ul>
+                    <ul class="list"><li><?= implode('</li><li>', $warnings) ?></li></ul>
                 @endif
             </div>
         @endif

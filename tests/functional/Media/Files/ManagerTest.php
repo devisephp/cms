@@ -29,7 +29,7 @@ class ManagerTest extends \DeviseTestCase
 
     public function test_it_renames_uploaded_files()
     {
-        $this->Filesystem->shouldReceive('rename')->times(1)->with('/media/some/path', '/media/new/path');
+        $this->Filesystem->shouldReceive('rename')->times(1)->with($this->Manager->basepath . 'some/path', $this->Manager->basepath . 'new/path');
         $this->Manager->renameUploadedFile('some/path', 'new/path');
     }
 

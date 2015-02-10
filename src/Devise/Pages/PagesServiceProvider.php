@@ -1,5 +1,8 @@
 <?php namespace Devise\Pages;
 
+use Illuminate\View\Engines\CompilerEngine;
+use Illuminate\View\Compilers\BladeCompiler;
+
 /**
  * Registers the Pages service provider. This allows us to manage our pages
  * within the Devise cms. It also provides the ability to scan blade views
@@ -39,9 +42,35 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
+        $this->registerInterpreter();
         $this->registerPhpBladeExtensions();
         $this->registerDeviseDataContainer();
         $this->registerTemplateComposer();
+    }
+
+    /**
+     * [registerInterpreter description]
+     * @return [type]
+     */
+    private function registerInterpreter()
+    {
+        $app = $this->app;
+
+        $resolver = $this->app['view']->getEngineResolver();
+
+        $compiler = $resolver->resolve('blade')->getCompiler();
+
+        $resolver->register('blade', function() use ($app, $compiler)
+        {
+            $extended = new Interrupter\ExtendedBladeCompiler($compiler, $app['files']);
+
+            return new CompilerEngine($extended, $app['files']);
+        });
+
+        \Blade::extend(function($view, $compiler)
+        {
+            return \App::make('Devise\Pages\Interrupter\DeviseBladeCompiler')->compile($view, $compiler);
+        });
     }
 
     /**
@@ -62,11 +91,6 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
             $pattern = $compiler->createPlainMatcher('endphp');
             return preg_replace($pattern, "\n?>", $view);
         });
-
-        \Blade::extend(function($view, $compiler)
-        {
-            return \App::make('Devise\Pages\Interrupter\DeviseBladeCompiler')->compile($view);
-        });
     }
 
     /**
@@ -77,7 +101,7 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     private function registerTemplateComposer()
     {
-        $views = array_keys(\Config::get('devise::templates'));
+        $views = array_keys(config('devise.templates'));
         \View::composer($views, 'Devise\Pages\Viewvars\ViewvarComposer');
     }
 

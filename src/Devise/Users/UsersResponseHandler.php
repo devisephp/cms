@@ -68,8 +68,11 @@ class UsersResponseHandler
     {
         if ($this->SessionsRepository->login($input))
         {
-            return $this->Redirect->route('dvs-pages')
-                ->with('message-success', $this->SessionsRepository->message);
+            if(isset($input['intended'])) {
+                return $this->Redirect->to($input['intended']);
+            }
+
+            return $this->Redirect->route('dvs-dashboard');
         }
 
         return $this->Redirect->route('user-login')

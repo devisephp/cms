@@ -1,27 +1,74 @@
+
 devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPageData) {
 
     var nodes = null;
     var nodeHeight = 82;
     var nodeThreshold = 5;
     var nodesCalculated = false;
-    var floaterNodePresent = false;
+    var contentRequestedKeysArr = [];
 
     var initializeNodeView = function () {
-
         nodes = [];
 
-        loadNodeLocations();
-        solveNodeCollisions();
-        placeNodes();
-        openNodeMode();
+        checkContentRequested(function(){
+            loadNodeLocations();
+            solveNodeCollisions();
+            placeNodes();
+            openNodeMode();
+        });
 
         return true;
     };
 
+    function checkContentRequested(callback) {
+        $.ajax({
+            type: 'get',
+            url: dvsPageData.content_requested_url,
+            cache: false
+        }).done(function(fieldKeysArr) {
+            // set global var "contentRequestedKeysArr"
+            // equal to array of keys returned
+            contentRequestedKeysArr = fieldKeysArr;
+
+            isKeyInContentRequestedArr(dvsPageData.bindings);
+
+            callback();
+        });
+    }
+
+    /**
+     * Checks each _binding.key against contentRequestedKeysArr
+     * to determine if the should be marked
+     *
+     * @param  {object} _binding
+     * @return {boolean}
+     */
+    function isContentRequestedInBinding(_binding) {
+        // if the binding.key value is in array, add
+        // the "contentRequested" property to binding object
+        if($.inArray(_binding.key, contentRequestedKeysArr) != -1){
+            return true;
+        }
+
+        return false;
+    }
+
+    function isKeyInContentRequestedArr(_data) {
+        // loop thru bindings and sets property "contentRequested"
+        // on current data set
+        $.each(_data, function(index, binding) {
+            binding.contentRequested = isContentRequestedInBinding(binding);
+        });
+    }
+
     function loadNodeLocations() {
         // Collections
         $.each(dvsPageData.collections, function(collectionName, collection) {
+
             $.each(collection, function(index, binding) {
+
+                binding.contentRequested = isContentRequestedInBinding(binding);
+
                 // build to binding with flag to turn on collection true
                 buildBinding(index, binding, collectionName);
             });
@@ -108,6 +155,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         var props = {};
 
         props.coordinates = null;
+        props.contentRequested = '';
 
         if (typeof collectionName == 'undefined') {
             collectionName = '';
@@ -165,11 +213,11 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
     }
 
     function isInCategory(props) {
-        return props.categoryName != null;
+        return props.categoryName !== null;
     }
 
     function isInGroup(props) {
-        return props.group != null;
+        return props.group !== null;
     }
 
     function getIndexOfCategoryNode(inCategory, props) {
@@ -201,7 +249,6 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
     function addToNodesArray(inGroup, categoryNode, groupNode, props) {
 
         if (inGroup) {
-
             if (categoryNode !== false && groupNode !== false) {
                 // Category Node and group index exists
                 addToGroup(groupNode, props);
@@ -212,6 +259,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
             } else if (groupNode !== false){
                 // Group index exists
                 addToGroup(groupNode, props);
+
             } else {
                 // Node for this group doesn't exist
                 makeGroupNode(props);
@@ -224,6 +272,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
     }
 
     function getGroupNode(props) {
+
         var _groupExists = false;
 
         $.each(nodes, function (index, node) {
@@ -248,6 +297,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
             collection: props.collection,
             categoryName: props.categoryName,
             type: props.type,
+            contentRequested: props.contentRequested,
             categoryCount: 0
         }) - 1;
     }
@@ -266,6 +316,13 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
     }
 
     function addToGroup(groupNode, props) {
+        // check and set contentRequested prop
+        if(typeof props.element.contentRequested != 'undefined' &&
+            props.element.contentRequested === true)
+        {
+            nodes[groupNode].contentRequested = ' dvs-content-requested';
+        }
+
         nodes[groupNode].groups[props.group].push(props.element);
     }
 
@@ -274,6 +331,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
                 coordinates: props.coordinates,
                 collection: props.collection,
                 type: props.type,
+                contentRequested: props.contentRequested,
                 groups: {}
         }) - 1;
 
@@ -286,6 +344,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
                 coordinates: props.coordinates,
                 collection: props.collection,
                 type: props.type,
+                contentRequested: props.contentRequested,
                 elements: []
         }) - 1;
 
@@ -299,12 +358,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
      */
     function placeNodes() {
         $.each(nodes, function (index, node) {
-
-            if (typeof node.coordinates !== 'undefined') {
-                placeNode(node);
-            } else {
-                placeNodeInFloaters(node);
-            }
+            placeNode(node);
         });
     }
 
@@ -322,25 +376,28 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
     }
 
     function placeNode(node) {
-
         var side = calculateSide(node.coordinates);
-        var newNode = $('<div>')
-            .addClass('dvs-node ' + side)
-            .css({
-                top: node.coordinates.top
-            });
-        var label = getLabel(node);
 
-        var newNodeInnerWrapper = $('<div>').addClass('dvs-node-inner-wrapper');
-        var label = $('<span>').html(label);
-        var svgPath = require.toUrl('/packages/devisephp/cms/img/node-arrow.svg');
-        var svg = $(newNodeInnerWrapper).load(svgPath);
+        if(typeof node.contentRequested != 'undefined') {
+            var newNode = $('<div>')
+                .addClass('dvs-node ' + side + node.contentRequested)
+                .css({
+                    top: node.coordinates.top
+                });
 
-        newNode.append(newNodeInnerWrapper);
-        newNode.append(label);
-        newNode.data('dvsData', node);
+            var label = getLabel(node);
 
-        $('#dvs-nodes').append(newNode);
+            var newNodeInnerWrapper = $('<div>').addClass('dvs-node-inner-wrapper');
+            var labelTag = $('<span>').html(label);
+            var svgPath = require.toUrl('/packages/devisephp/cms/img/node-arrow.svg');
+            var svg = $(newNodeInnerWrapper).load(svgPath);
+
+            newNode.append(newNodeInnerWrapper);
+            newNode.append(labelTag);
+            newNode.data('dvsData', node);
+
+            $('#dvs-nodes').append(newNode);
+        }
     }
 
     function getLabel(node) {
@@ -353,28 +410,6 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
             // There can only be one element so let's grab the first one's human name
             return node.elements[0].humanName;
         }
-    }
-
-    function placeNodeInFloaters(node) {
-        if (!floaterNodePresent) {
-            drawFloaterNode();
-        }
-
-        node.label = getLabel(node);
-
-        var _currentNodes = $('#dvs-floater-node').data('nodes');
-        _currentNodes = typeof _currentNodes == 'undefined' ? [] : _currentNodes;
-        _currentNodes.push(node);
-
-        $('#dvs-floater-node').data('nodes', _currentNodes);
-    }
-
-    function drawFloaterNode() {
-        var floaterNode = $('<div>')
-            .attr('id', 'dvs-floater-node')
-            .html('Hidden Nodes');
-
-        $('#dvs-nodes').append(floaterNode);
     }
 
     /**

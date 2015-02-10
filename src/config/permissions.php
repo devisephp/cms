@@ -44,6 +44,13 @@ return array(
         'redirect_message' => 'You are not currently logged in.',
     ),
 
+   'canAccessLogin' => array(
+        'isNotLoggedIn' => array(),
+        'redirect' => 'dvs-dashboard',
+        'redirect_type' => 'route',
+        'redirect_message' => '',
+    ),
+
    'showDeviseEditor' => array(
         'isLoggedIn' => array()
     ),

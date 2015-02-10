@@ -8,21 +8,21 @@
     </div>
 
     <div id="dvs-admin-actions">
-        {{ link_to(URL::route('dvs-menus'), 'List of Menus', array('class'=>'dvs-button')) }}
+        <?= link_to(URL::route('dvs-menus'), 'List of Menus', array('class'=>'dvs-button')) ?>
     </div>
 @stop
 
 @section('main')
     <div class="dvs-admin-form-horizontal">
-        {{ Form::open(array('method' => 'put', 'route' => array('dvs-menus-update', $menu->id), 'class' => 'js-menu-form')) }}
+        <?= Form::open(array('method' => 'put', 'route' => array('dvs-menus-update', $menu->id), 'class' => 'js-menu-form')) ?>
 
     		<div class="dvs-form-group">
-    		    {{ Form::label('Menu Name') }}
-    		    {{ Form::text('name', $menu->name, array('placeholder' => 'Menu')) }}
+    		    <?= Form::label('Menu Name') ?>
+    		    <?= Form::text('name', $menu->name, array('placeholder' => 'Menu')) ?>
     		</div>
 
     		<div class="dvs-form-group">
-    		    {{ Form::label('Menu Items') }}
+    		    <?= Form::label('Menu Items') ?>
     		    <button type="button" class="dvs-button js-add-menu-item">Add Item</button>
     		</div>
 
@@ -35,8 +35,8 @@
     			</ol>
     		</div>
 
-    		{{ Form::submit('Update Menu', array('class' => 'dvs-button dvs-button-large')) }}
-        {{ Form::close() }}
+    		<?= Form::submit('Update Menu', array('class' => 'dvs-button dvs-button-large')) ?>
+        <?= Form::close() ?>
     </div>
 
     @include('devise::admin.menus._itemsjs')

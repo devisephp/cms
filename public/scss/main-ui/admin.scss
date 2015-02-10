@@ -8,7 +8,7 @@
 
   h1,h2,h3,h4,h5,h6 {
     font-size:38px;
-    font-weight:100;
+    font-weight:300;
     text-transform: uppercase;
     color:darken($white, 5%);
   }
@@ -229,119 +229,41 @@
 
 
 /* Dashboard */
-.dvs-admin-card {
-  float:left;
-  width:30.1%;
-  margin:20px 1.6%;
-  color:$dashboardCardTitleColor;
-  background-color:lighten($bodyBgColor, 2%);
-  border-radius:5px;
-  cursor:pointer;
+#dvs-admin {
+  .dvs-admin-card {
+    float:left;
+    width:25%;
+    margin:20px 1.6%;
+    color:$dashboardCardTitleColor;
+    background-color:lighten($bodyBgColor, 2%);
+    border-radius:5px;
+    cursor:pointer;
+    transition: all 0.5s;
 
-  .dvs-card-top {
-    position:relative;
-    height:215px;
-    text-align:center;
-    border-top-left-radius:5px;
-    border-top-right-radius:5px;
-    @include background( linear-gradient(117deg, $bodyCustomColor, darken($bodyCustomColor, 9)) );
-
-    .dvs-image-wpr {
-      line-height:215px;
-
-      img { vertical-align:middle }
-    }
-  }
-
-  .dvs-card-bottom {
-    position:relative;
-    height:230px;
-    padding:40px 20px 25px;
-
-    h3 {
-      font-size:30px;
-      padding-bottom:20px;
-    }
-
-    p {
-      color:$dashboardCardTextColor;
-      line-height:20px;
-    }
-
-    .dvs-metrics-wpr {
+    .dvs-card-bottom {
       position:relative;
-      margin-top:15px;
-      text-transform:uppercase;
+      height:150px;
+      padding:25px 20px 25px;
 
-      .dvs-metric {
-        display:block;
-        height:28px;
-        color:darken($dashboardCardTextColor, 18.25%);
-        font-weight:$bodyMainFontWeight + 300;
+      h3 {
+        font-size:18px;
+        padding-bottom:20px;
+        font-weight:normal;
       }
-    }
-  }
 
-  .dvs-hex-wpr {
-    display:none;
-    position:absolute;
-    bottom:-54px;
-    right:5%;
-
-    .dvs-card-hex {
-      position: relative;
-      width: 105.1px;
-      height: 57.74px;
-      background-color:$bodyCustomColor;
-      margin: 28.87px 0;
-      border-left: solid 3px lighten($bodyBgColor, 2%);
-      border-right: solid 3px lighten($bodyBgColor, 2%);
-
-      .dvs-hex-text {
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        z-index:10;
-        color:$dashboardHexagonTextColor;
-        text-shadow:rgba(0,0,0,.3) 0 2px 5px;
-
-        .dvs-value {
-          margin:6px auto 3px;
-          font-size:22px;
-          font-weight:$bodyMainFontWeight + 300;
-        }
-
-        &.dvs-double-line {
-          .dvs-value { margin-top:0 }
-        }
+      p {
+        color:$dashboardCardTextColor;
+        line-height:20px;
+        transition: all 0.5s;
       }
     }
 
-    .dvs-card-hex:before,
-    .dvs-card-hex:after {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      width: 70.71px;
-      height: 70.71px;
-      -webkit-transform: scaleY(0.5774) rotate(-45deg);
-      -ms-transform: scaleY(0.5774) rotate(-45deg);
-      transform: scaleY(0.5774) rotate(-45deg);
-      background-color: inherit;
-      left: 11.6447px;
-    }
+    &:hover {
+      background-color:$green;
 
-    .dvs-card-hex:before {
-      top:-37.3553px;
-      border-top: solid 4.2426px lighten($bodyBgColor, 2%);
-      border-right: solid 4.2426px lighten($bodyBgColor, 2%);
-    }
-
-    .dvs-card-hex:after {
-      bottom:-37.3553px;
-      border-bottom: solid 4.2426px lighten($bodyBgColor, 2%);
-      border-left: solid 4.2426px lighten($bodyBgColor, 2%);
+      h3, p {
+        color:#fff;
+      }
     }
   }
 }
@@ -522,6 +444,16 @@ table.dvs-admin-table {
       max-width : 100px;
     }
   }
+
+  .dvs-badge {
+    &.dvs-content-requested {
+      text-align:center;
+      width:40%;
+      clear:both;
+      margin-bottom:3px;
+      padding:0 2px;
+    }
+  }
 }
 
 
@@ -627,9 +559,9 @@ table.dvs-admin-table {
   margin:0 auto;
   width:100%;
   overflow:auto;
-  
+
   hr {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
   }
 
   .dvs-form-group {
@@ -812,7 +744,10 @@ table.dvs-admin-table {
   #dvs-content { opacity:.6 }
 }
 
-.dvs-loading {
+.dvs-loading,
+#dvs-sidebar-loading {
+  font-family: $sidebarMainFont;
+  line-height:1.4em;
   padding: 12px 20px;
   color: white;
   width: 200px;
@@ -829,6 +764,13 @@ table.dvs-admin-table {
   &.onload {
     opacity:0;
   }
+}
+
+#dvs-sidebar-loading {
+    position:absolute;
+    top:225px;
+    margin-left:-100px !important;
+    z-index:14000;
 }
 
 .dvs-link-part {

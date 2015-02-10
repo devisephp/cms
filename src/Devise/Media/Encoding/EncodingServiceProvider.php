@@ -38,8 +38,8 @@ class EncodingServiceProvider extends ServiceProvider
         // Zencoder callback uses this to tell our server that it is finished encoding a video
         \Route::any('/api/notifications/zencoder', ['uses' => 'Devise\Media\Encoding\ZencoderNotificationsController@store', 'as' => 'dvs-api-notifications-zencoder']);
 
-        $apiKey = $this->app['config']->get('devise::zencoder.api-key');
-        $notifications = $this->app['config']->get('devise::zencoder.notifications');
+        $apiKey = $this->app['config']->get('devise.zencoder.api-key');
+        $notifications = $this->app['config']->get('devise.zencoder.notifications');
         $encoder = new ZencoderJob($apiKey, $notifications, new FileDownloader, new Framework);
 
         $this->app->instance("devise.video.encoder", $encoder);

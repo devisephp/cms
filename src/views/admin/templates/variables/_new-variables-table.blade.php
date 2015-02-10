@@ -8,9 +8,9 @@
             <td class="dvs-form-group">
                 <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-remove-row dvs-pl">X</a>
 
-                {{ Form::text('template[newVars]['.$newVar.'][varName]', $newVar, ['placeholder' => 'Variable Name']) }}
-                {{ Form::text('template[newVars]['.$newVar.'][classPath]', '', ['placeholder' => 'Class Path']) }}
-                {{ Form::text('template[newVars]['.$newVar.'][methodName]', '', ['placeholder' => 'Method Name']) }}
+                <?= Form::text('template[newVars]['.$newVar.'][varName]', $newVar, ['placeholder' => 'Variable Name']) ?>
+                <?= Form::text('template[newVars]['.$newVar.'][classPath]', '', ['placeholder' => 'Class Path']) ?>
+                <?= Form::text('template[newVars]['.$newVar.'][methodName]', '', ['placeholder' => 'Method Name']) ?>
 
 
                 <div class="dvs-param-wrapper dvs-inline-block">&nbsp;</div>

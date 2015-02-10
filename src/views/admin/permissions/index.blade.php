@@ -6,7 +6,7 @@
     </div>
 
     <div id="dvs-admin-actions">
-        {{ link_to(URL::route('dvs-permissions-create'), 'Create New Permission', array('class'=>'dvs-button')) }}
+        <?= link_to(URL::route('dvs-permissions-create'), 'Create New Permission', array('class'=>'dvs-button')) ?>
     </div>
 @stop
 
@@ -30,8 +30,8 @@
                         @endforeach
                     </td>
 					<td class="dvs-tac dvs-button-group">
-						{{ link_to(URL::route('dvs-permissions-edit').'?condition='.$permissionName, 'Edit', array('class'=>'dvs-button dvs-button-small')) }}
-						{{ Form::delete(URL::route('dvs-permissions-destroy').'?condition='.$permissionName, 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) }}
+						<?= link_to(URL::route('dvs-permissions-edit').'?condition='.$permissionName, 'Edit', array('class'=>'dvs-button dvs-button-small')) ?>
+						<?= Form::delete(URL::route('dvs-permissions-destroy').'?condition='.$permissionName, 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) ?>
 	                </td>
 				</tr>
 			@endforeach
@@ -39,7 +39,7 @@
 
         <tfoot>
             <tr id="pagination-links">
-                <td colspan="3">{{ $permissions->appends(Input::except(['permission']))->links(); }}</td>
+                <td colspan="3"><?= $permissions->appends(Input::except(['permission']))->render() ?></td>
             </tr>
         </tfoot>
 	</table>

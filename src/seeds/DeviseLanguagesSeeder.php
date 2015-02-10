@@ -1,1824 +1,1418 @@
 <?php
 
-class DeviseLanguagesSeeder extends Seeder {
+class DeviseLanguagesSeeder extends DeviseSeeder {
 
-	public function run() {
-		DB::table( 'dvs_languages' )->delete();
-
-		$languages = array(
-			0   => array(
+	public function run()
+    {
+        $this->findOrCreateRows('dvs_languages', 'id', [
+			array(
                 'id'         => '1',
                 'code'       => 'aa',
                 'human_name' => 'Afar',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
 			),
-            1   => array(
+            array(
                 'id'         => '2',
                 'code'       => 'ab',
                 'human_name' => 'Abkhazian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            2   => array(
+            array(
                 'id'         => '3',
                 'code'       => 'af',
                 'human_name' => 'Afrikaans',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            3   => array(
+            array(
                 'id'         => '4',
                 'code'       => 'ak',
                 'human_name' => 'Akan',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            4   => array(
+            array(
                 'id'         => '5',
                 'code'       => 'sq',
                 'human_name' => 'Albanian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            5   => array(
+            array(
                 'id'         => '6',
                 'code'       => 'am',
                 'human_name' => 'Amharic',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            6   => array(
+            array(
                 'id'         => '7',
                 'code'       => 'ar',
                 'human_name' => 'Arabic',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            7   => array(
+            array(
                 'id'         => '8',
                 'code'       => 'an',
                 'human_name' => 'Aragonese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            8   => array(
+            array(
                 'id'         => '9',
                 'code'       => 'hy',
                 'human_name' => 'Armenian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            9   => array(
+            array(
                 'id'         => '10',
                 'code'       => 'as',
                 'human_name' => 'Assamese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            10  => array(
+            array(
                 'id'         => '11',
                 'code'       => 'av',
                 'human_name' => 'Avaric',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            11  => array(
+            array(
                 'id'         => '12',
                 'code'       => 'ae',
                 'human_name' => 'Avestan',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            12  => array(
+            array(
                 'id'         => '13',
                 'code'       => 'ay',
                 'human_name' => 'Aymara',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            13  => array(
+            array(
                 'id'         => '14',
                 'code'       => 'az',
                 'human_name' => 'Azerbaijani',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            14  => array(
+            array(
                 'id'         => '15',
                 'code'       => 'ba',
                 'human_name' => 'Bashkir',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            15  => array(
+            array(
                 'id'         => '16',
                 'code'       => 'bm',
                 'human_name' => 'Bambara',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            16  => array(
+            array(
                 'id'         => '17',
                 'code'       => 'eu',
                 'human_name' => 'Basque',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            17  => array(
+            array(
                 'id'         => '18',
                 'code'       => 'be',
                 'human_name' => 'Belarusian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            18  => array(
+            array(
                 'id'         => '19',
                 'code'       => 'bn',
                 'human_name' => 'Bengali',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            19  => array(
+            array(
                 'id'         => '20',
                 'code'       => 'bh',
                 'human_name' => 'Bihari languages',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            20  => array(
+            array(
                 'id'         => '21',
                 'code'       => 'bi',
                 'human_name' => 'Bislama',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            21  => array(
+            array(
                 'id'         => '22',
                 'code'       => 'bo',
                 'human_name' => 'Tibetan',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            22  => array(
+            array(
                 'id'         => '23',
                 'code'       => 'bs',
                 'human_name' => 'Bosnian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            23  => array(
+            array(
                 'id'         => '24',
                 'code'       => 'br',
                 'human_name' => 'Breton',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            24  => array(
+            array(
                 'id'         => '25',
                 'code'       => 'bg',
                 'human_name' => 'Bulgarian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            25  => array(
+            array(
                 'id'         => '26',
                 'code'       => 'my',
                 'human_name' => 'Burmese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            26  => array(
+            array(
                 'id'         => '27',
                 'code'       => 'ca',
                 'human_name' => 'Catalan; Valencian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            27  => array(
+            array(
                 'id'         => '28',
                 'code'       => 'cs',
                 'human_name' => 'Czech',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            28  => array(
+            array(
                 'id'         => '29',
                 'code'       => 'ch',
                 'human_name' => 'Chamorro',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            29  => array(
+            array(
                 'id'         => '30',
                 'code'       => 'ce',
                 'human_name' => 'Chechen',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            30  => array(
+            array(
                 'id'         => '31',
                 'code'       => 'zh',
                 'human_name' => 'Chinese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            31  => array(
+            array(
                 'id'         => '32',
                 'code'       => 'cu',
                 'human_name' => 'Church Slavic',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            32  => array(
+            array(
                 'id'         => '33',
                 'code'       => 'cv',
                 'human_name' => 'Chuvash',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            33  => array(
+            array(
                 'id'         => '34',
                 'code'       => 'kw',
                 'human_name' => 'Cornish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            34  => array(
+            array(
                 'id'         => '35',
                 'code'       => 'co',
                 'human_name' => 'Corsican',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            35  => array(
+            array(
                 'id'         => '36',
                 'code'       => 'cr',
                 'human_name' => 'Cree',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            36  => array(
+            array(
                 'id'         => '37',
                 'code'       => 'cy',
                 'human_name' => 'Welsh',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            37  => array(
+            array(
                 'id'         => '38',
                 'code'       => 'cs',
                 'human_name' => 'Czech',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            38  => array(
+            array(
                 'id'         => '39',
                 'code'       => 'da',
                 'human_name' => 'Danish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            39  => array(
+            array(
                 'id'         => '40',
                 'code'       => 'de',
                 'human_name' => 'German',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            40  => array(
+            array(
                 'id'         => '41',
                 'code'       => 'dv',
                 'human_name' => 'Divehi; Dhivehi; Maldivian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            41  => array(
+            array(
                 'id'         => '42',
                 'code'       => 'nl',
                 'human_name' => 'Dutch; Flemish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            42  => array(
+            array(
                 'id'         => '43',
                 'code'       => 'dz',
                 'human_name' => 'Dzongkha',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            43  => array(
+            array(
                 'id'         => '44',
                 'code'       => 'el',
                 'human_name' => 'Greek, Modern (1453-)',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            44  => array(
+            array(
                 'id'         => '45',
                 'code'       => 'en',
                 'human_name' => 'English',
                 'regional_human_name' => '',
                 'active'     => '1',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            45  => array(
+            array(
                 'id'         => '46',
                 'code'       => 'eo',
                 'human_name' => 'Esperanto',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            46  => array(
+            array(
                 'id'         => '47',
                 'code'       => 'et',
                 'human_name' => 'Estonian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            47  => array(
+            array(
                 'id'         => '48',
                 'code'       => 'eu',
                 'human_name' => 'Basque',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            48  => array(
+            array(
                 'id'         => '49',
                 'code'       => 'ee',
                 'human_name' => 'Ewe',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            49  => array(
+            array(
                 'id'         => '50',
                 'code'       => 'fo',
                 'human_name' => 'Faroese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            50  => array(
+            array(
                 'id'         => '51',
                 'code'       => 'fa',
                 'human_name' => 'Persian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            51  => array(
+            array(
                 'id'         => '52',
                 'code'       => 'fj',
                 'human_name' => 'Fijian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            52  => array(
+            array(
                 'id'         => '53',
                 'code'       => 'fi',
                 'human_name' => 'Finnish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            53  => array(
+            array(
                 'id'         => '54',
                 'code'       => 'fr',
                 'human_name' => 'French',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            54  => array(
+            array(
                 'id'         => '55',
                 'code'       => 'ka',
                 'human_name' => 'Georgian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            55  => array(
+            array(
                 'id'         => '56',
                 'code'       => 'de',
                 'human_name' => 'German',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            56  => array(
+            array(
                 'id'         => '57',
                 'code'       => 'gd',
                 'human_name' => 'Gaelic; Scottish Gaelic',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            57  => array(
+            array(
                 'id'         => '58',
                 'code'       => 'ga',
                 'human_name' => 'Irish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            58  => array(
+            array(
                 'id'         => '59',
                 'code'       => 'gl',
                 'human_name' => 'Galician',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            59  => array(
+            array(
                 'id'         => '60',
                 'code'       => 'gv',
                 'human_name' => 'Manx',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            60  => array(
+            array(
                 'id'         => '61',
                 'code'       => 'el',
                 'human_name' => 'Greek, Modern (1453-)',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            61  => array(
+            array(
                 'id'         => '62',
                 'code'       => 'gn',
                 'human_name' => 'Guarani',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            62  => array(
+            array(
                 'id'         => '63',
                 'code'       => 'gu',
                 'human_name' => 'Gujarati',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            63  => array(
+            array(
                 'id'         => '64',
                 'code'       => 'ht',
                 'human_name' => 'Haitian; Haitian Creole',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            64  => array(
+            array(
                 'id'         => '65',
                 'code'       => 'ha',
                 'human_name' => 'Hausa',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            65  => array(
+            array(
                 'id'         => '66',
                 'code'       => 'he',
                 'human_name' => 'Hebrew',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            66  => array(
+            array(
                 'id'         => '67',
                 'code'       => 'hz',
                 'human_name' => 'Herero',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            67  => array(
+            array(
                 'id'         => '68',
                 'code'       => 'hi',
                 'human_name' => 'Hindi',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            68  => array(
+            array(
                 'id'         => '69',
                 'code'       => 'ho',
                 'human_name' => 'Hiri Motu',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            69  => array(
+            array(
                 'id'         => '70',
                 'code'       => 'hr',
                 'human_name' => 'Croatian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            70  => array(
+            array(
                 'id'         => '71',
                 'code'       => 'hu',
                 'human_name' => 'Hungarian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            71  => array(
+            array(
                 'id'         => '72',
                 'code'       => 'hy',
                 'human_name' => 'Armenian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            72  => array(
+            array(
                 'id'         => '73',
                 'code'       => 'ig',
                 'human_name' => 'Igbo',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            73  => array(
+            array(
                 'id'         => '74',
                 'code'       => 'is',
                 'human_name' => 'Icelandic',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            74  => array(
+            array(
                 'id'         => '75',
                 'code'       => 'io',
                 'human_name' => 'Ido',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            75  => array(
+            array(
                 'id'         => '76',
                 'code'       => 'ii',
                 'human_name' => 'Sichuan Yi; Nuosu',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            76  => array(
+            array(
                 'id'         => '77',
                 'code'       => 'iu',
                 'human_name' => 'Inuktitut',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            77  => array(
+            array(
                 'id'         => '78',
                 'code'       => 'ie',
                 'human_name' => 'Interlingue; Occidental',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            78  => array(
+            array(
                 'id'         => '79',
                 'code'       => 'ia',
                 'human_name' => 'Interlingua (International Auxiliary Language Association)',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            79  => array(
+            array(
                 'id'         => '80',
                 'code'       => 'id',
                 'human_name' => 'Indonesian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            80  => array(
+            array(
                 'id'         => '81',
                 'code'       => 'ik',
                 'human_name' => 'Inupiaq',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            81  => array(
+            array(
                 'id'         => '82',
                 'code'       => 'is',
                 'human_name' => 'Icelandic',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            82  => array(
+            array(
                 'id'         => '83',
                 'code'       => 'it',
                 'human_name' => 'Italian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            83  => array(
+            array(
                 'id'         => '84',
                 'code'       => 'jv',
                 'human_name' => 'Javanese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            84  => array(
+            array(
                 'id'         => '85',
                 'code'       => 'ja',
                 'human_name' => 'Japanese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            85  => array(
+            array(
                 'id'         => '86',
                 'code'       => 'kl',
                 'human_name' => 'Kalaallisut; Greenlandic',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            86  => array(
+            array(
                 'id'         => '87',
                 'code'       => 'kn',
                 'human_name' => 'Kannada',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            87  => array(
+            array(
                 'id'         => '88',
                 'code'       => 'ks',
                 'human_name' => 'Kashmiri',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            88  => array(
+            array(
                 'id'         => '89',
                 'code'       => 'ka',
                 'human_name' => 'Georgian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            89  => array(
+            array(
                 'id'         => '90',
                 'code'       => 'kr',
                 'human_name' => 'Kanuri',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            90  => array(
+            array(
                 'id'         => '91',
                 'code'       => 'kk',
                 'human_name' => 'Kazakh',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            91  => array(
+            array(
                 'id'         => '92',
                 'code'       => 'km',
                 'human_name' => 'Central Khmer',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            92  => array(
+            array(
                 'id'         => '93',
                 'code'       => 'ki',
                 'human_name' => 'Kikuyu; Gikuyu',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            93  => array(
+            array(
                 'id'         => '94',
                 'code'       => 'rw',
                 'human_name' => 'Kinyarwanda',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            94  => array(
+            array(
                 'id'         => '95',
                 'code'       => 'ky',
                 'human_name' => 'Kirghiz; Kyrgyz',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            95  => array(
+            array(
                 'id'         => '96',
                 'code'       => 'kv',
                 'human_name' => 'Komi',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            96  => array(
+            array(
                 'id'         => '97',
                 'code'       => 'kg',
                 'human_name' => 'Kongo',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            97  => array(
+            array(
                 'id'         => '98',
                 'code'       => 'ko',
                 'human_name' => 'Korean',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            98  => array(
+            array(
                 'id'         => '99',
                 'code'       => 'kj',
                 'human_name' => 'Kuanyama; Kwanyama',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            99  => array(
+            array(
                 'id'         => '100',
                 'code'       => 'ku',
                 'human_name' => 'Kurdish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            100 => array(
+            array(
                 'id'         => '101',
                 'code'       => 'lo',
                 'human_name' => 'Lao',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            101 => array(
+            array(
                 'id'         => '102',
                 'code'       => 'la',
                 'human_name' => 'Latin',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            102 => array(
+            array(
                 'id'         => '103',
                 'code'       => 'lv',
                 'human_name' => 'Latvian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            103 => array(
+            array(
                 'id'         => '104',
                 'code'       => 'li',
                 'human_name' => 'Limburgan; Limburger; Limburgish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            104 => array(
+            array(
                 'id'         => '105',
                 'code'       => 'ln',
                 'human_name' => 'Lingala',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            105 => array(
+            array(
                 'id'         => '106',
                 'code'       => 'lt',
                 'human_name' => 'Lithuanian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            106 => array(
+            array(
                 'id'         => '107',
                 'code'       => 'lb',
                 'human_name' => 'Luxembourgish; Letzeburgesch',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            107 => array(
+            array(
                 'id'         => '108',
                 'code'       => 'lu',
                 'human_name' => 'Luba-Katanga',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            108 => array(
+            array(
                 'id'         => '109',
                 'code'       => 'lg',
                 'human_name' => 'Ganda',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            109 => array(
+            array(
                 'id'         => '110',
                 'code'       => 'mk',
                 'human_name' => 'Macedonian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            110 => array(
+            array(
                 'id'         => '111',
                 'code'       => 'mh',
                 'human_name' => 'Marshallese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            111 => array(
+            array(
                 'id'         => '112',
                 'code'       => 'ml',
                 'human_name' => 'Malayalam',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            112 => array(
+            array(
                 'id'         => '113',
                 'code'       => 'mi',
                 'human_name' => 'Maori',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            113 => array(
+            array(
                 'id'         => '114',
                 'code'       => 'mr',
                 'human_name' => 'Marathi',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            114 => array(
+            array(
                 'id'         => '115',
                 'code'       => 'ms',
                 'human_name' => 'Malay',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            115 => array(
+            array(
                 'id'         => '116',
                 'code'       => 'mk',
                 'human_name' => 'Macedonian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            116 => array(
+            array(
                 'id'         => '117',
                 'code'       => 'mg',
                 'human_name' => 'Malagasy',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            117 => array(
+            array(
                 'id'         => '118',
                 'code'       => 'mt',
                 'human_name' => 'Maltese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            118 => array(
+            array(
                 'id'         => '119',
                 'code'       => 'mn',
                 'human_name' => 'Mongolian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            119 => array(
+            array(
                 'id'         => '120',
                 'code'       => 'mi',
                 'human_name' => 'Maori',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            120 => array(
+            array(
                 'id'         => '121',
                 'code'       => 'ms',
                 'human_name' => 'Malay',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            121 => array(
+            array(
                 'id'         => '122',
                 'code'       => 'my',
                 'human_name' => 'Burmese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            122 => array(
+            array(
                 'id'         => '123',
                 'code'       => 'na',
                 'human_name' => 'Nauru',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            123 => array(
+            array(
                 'id'         => '124',
                 'code'       => 'nv',
                 'human_name' => 'Navajo; Navaho',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            124 => array(
+            array(
                 'id'         => '125',
                 'code'       => 'nr',
                 'human_name' => 'Ndebele, South; South Ndebele',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            125 => array(
+            array(
                 'id'         => '126',
                 'code'       => 'nd',
                 'human_name' => 'Ndebele, North; North Ndebele',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            126 => array(
+            array(
                 'id'         => '127',
                 'code'       => 'ng',
                 'human_name' => 'Ndonga',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            127 => array(
+            array(
                 'id'         => '128',
                 'code'       => 'ne',
                 'human_name' => 'Nepali',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            128 => array(
+            array(
                 'id'         => '129',
                 'code'       => 'nl',
                 'human_name' => 'Dutch; Flemish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            129 => array(
+            array(
                 'id'         => '130',
                 'code'       => 'nn',
                 'human_name' => 'Norwegian Nynorsk; Nynorsk, Norwegian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            130 => array(
+            array(
                 'id'         => '131',
                 'code'       => 'nb',
                 'human_name' => 'Bokmål, Norwegian; Norwegian Bokmål',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            131 => array(
+            array(
                 'id'         => '132',
                 'code'       => 'no',
                 'human_name' => 'Norwegian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            132 => array(
+            array(
                 'id'         => '133',
                 'code'       => 'ny',
                 'human_name' => 'Chichewa; Chewa; Nyanja',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            133 => array(
+            array(
                 'id'         => '134',
                 'code'       => 'oc',
                 'human_name' => 'Occitan (post 1500)',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            134 => array(
+            array(
                 'id'         => '135',
                 'code'       => 'oj',
                 'human_name' => 'Ojibwa',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            135 => array(
+            array(
                 'id'         => '136',
                 'code'       => 'or',
                 'human_name' => 'Oriya',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            136 => array(
+            array(
                 'id'         => '137',
                 'code'       => 'om',
                 'human_name' => 'Oromo',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            137 => array(
+            array(
                 'id'         => '138',
                 'code'       => 'os',
                 'human_name' => 'Ossetian; Ossetic',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            138 => array(
+            array(
                 'id'         => '139',
                 'code'       => 'pa',
                 'human_name' => 'Panjabi; Punjabi',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            139 => array(
+            array(
                 'id'         => '140',
                 'code'       => 'fa',
                 'human_name' => 'Persian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            140 => array(
+            array(
                 'id'         => '141',
                 'code'       => 'pi',
                 'human_name' => 'Pali',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            141 => array(
+            array(
                 'id'         => '142',
                 'code'       => 'pl',
                 'human_name' => 'Polish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            142 => array(
+            array(
                 'id'         => '143',
                 'code'       => 'pt',
                 'human_name' => 'Portuguese',
                 'regional_human_name' => 'Português',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            143 => array(
+            array(
                 'id'         => '144',
                 'code'       => 'ps',
                 'human_name' => 'Pushto; Pashto',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            144 => array(
+            array(
                 'id'         => '145',
                 'code'       => 'qu',
                 'human_name' => 'Quechua',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            145 => array(
+            array(
                 'id'         => '146',
                 'code'       => 'rm',
                 'human_name' => 'Romansh',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            146 => array(
+            array(
                 'id'         => '147',
                 'code'       => 'ro',
                 'human_name' => 'Romanian; Moldavian; Moldovan',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            147 => array(
+            array(
                 'id'         => '148',
                 'code'       => 'ro',
                 'human_name' => 'Romanian; Moldavian; Moldovan',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            148 => array(
+            array(
                 'id'         => '149',
                 'code'       => 'rn',
                 'human_name' => 'Rundi',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            149 => array(
+            array(
                 'id'         => '150',
                 'code'       => 'ru',
                 'human_name' => 'Russian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            150 => array(
+            array(
                 'id'         => '151',
                 'code'       => 'sg',
                 'human_name' => 'Sango',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            151 => array(
+            array(
                 'id'         => '152',
                 'code'       => 'sa',
                 'human_name' => 'Sanskrit',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            152 => array(
+            array(
                 'id'         => '153',
                 'code'       => 'si',
                 'human_name' => 'Sinhala; Sinhalese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            153 => array(
+            array(
                 'id'         => '154',
                 'code'       => 'sk',
                 'human_name' => 'Slovak',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            154 => array(
+            array(
                 'id'         => '155',
                 'code'       => 'sk',
                 'human_name' => 'Slovak',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            155 => array(
+            array(
                 'id'         => '156',
                 'code'       => 'sl',
                 'human_name' => 'Slovenian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            156 => array(
+            array(
                 'id'         => '157',
                 'code'       => 'se',
                 'human_name' => 'Northern Sami',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            157 => array(
+            array(
                 'id'         => '158',
                 'code'       => 'sm',
                 'human_name' => 'Samoan',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            158 => array(
+            array(
                 'id'         => '159',
                 'code'       => 'sn',
                 'human_name' => 'Shona',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            159 => array(
+            array(
                 'id'         => '160',
                 'code'       => 'sd',
                 'human_name' => 'Sindhi',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            160 => array(
+            array(
                 'id'         => '161',
                 'code'       => 'so',
                 'human_name' => 'Somali',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            161 => array(
+            array(
                 'id'         => '162',
                 'code'       => 'st',
                 'human_name' => 'Sotho, Southern',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            162 => array(
+            array(
                 'id'         => '163',
                 'code'       => 'es',
                 'human_name' => 'Spanish; Castilian',
                 'regional_human_name' => 'Español',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            163 => array(
+            array(
                 'id'         => '164',
                 'code'       => 'sq',
                 'human_name' => 'Albanian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            164 => array(
+            array(
                 'id'         => '165',
                 'code'       => 'sc',
                 'human_name' => 'Sardinian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            165 => array(
+            array(
                 'id'         => '166',
                 'code'       => 'sr',
                 'human_name' => 'Serbian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            166 => array(
+            array(
                 'id'         => '167',
                 'code'       => 'ss',
                 'human_name' => 'Swati',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            167 => array(
+            array(
                 'id'         => '168',
                 'code'       => 'su',
                 'human_name' => 'Sundanese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            168 => array(
+            array(
                 'id'         => '169',
                 'code'       => 'sw',
                 'human_name' => 'Swahili',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            169 => array(
+            array(
                 'id'         => '170',
                 'code'       => 'sv',
                 'human_name' => 'Swedish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            170 => array(
+            array(
                 'id'         => '171',
                 'code'       => 'ty',
                 'human_name' => 'Tahitian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            171 => array(
+            array(
                 'id'         => '172',
                 'code'       => 'ta',
                 'human_name' => 'Tamil',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            172 => array(
+            array(
                 'id'         => '173',
                 'code'       => 'tt',
                 'human_name' => 'Tatar',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            173 => array(
+            array(
                 'id'         => '174',
                 'code'       => 'te',
                 'human_name' => 'Telugu',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            174 => array(
+            array(
                 'id'         => '175',
                 'code'       => 'tg',
                 'human_name' => 'Tajik',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            175 => array(
+            array(
                 'id'         => '176',
                 'code'       => 'tl',
                 'human_name' => 'Tagalog',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            176 => array(
+            array(
                 'id'         => '177',
                 'code'       => 'th',
                 'human_name' => 'Thai',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            177 => array(
+            array(
                 'id'         => '178',
                 'code'       => 'bo',
                 'human_name' => 'Tibetan',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            178 => array(
+            array(
                 'id'         => '179',
                 'code'       => 'ti',
                 'human_name' => 'Tigrinya',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            179 => array(
+            array(
                 'id'         => '180',
                 'code'       => 'to',
                 'human_name' => 'Tonga (Tonga Islands)',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            180 => array(
+            array(
                 'id'         => '181',
                 'code'       => 'tn',
                 'human_name' => 'Tswana',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            181 => array(
+            array(
                 'id'         => '182',
                 'code'       => 'ts',
                 'human_name' => 'Tsonga',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            182 => array(
+            array(
                 'id'         => '183',
                 'code'       => 'tk',
                 'human_name' => 'Turkmen',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            183 => array(
+            array(
                 'id'         => '184',
                 'code'       => 'tr',
                 'human_name' => 'Turkish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            184 => array(
+            array(
                 'id'         => '185',
                 'code'       => 'tw',
                 'human_name' => 'Twi',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            185 => array(
+            array(
                 'id'         => '186',
                 'code'       => 'ug',
                 'human_name' => 'Uighur; Uyghur',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            186 => array(
+            array(
                 'id'         => '187',
                 'code'       => 'uk',
                 'human_name' => 'Ukrainian',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            187 => array(
+            array(
                 'id'         => '188',
                 'code'       => 'ur',
                 'human_name' => 'Urdu',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            188 => array(
+            array(
                 'id'         => '189',
                 'code'       => 'uz',
                 'human_name' => 'Uzbek',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            189 => array(
+            array(
                 'id'         => '190',
                 'code'       => 've',
                 'human_name' => 'Venda',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            190 => array(
+            array(
                 'id'         => '191',
                 'code'       => 'vi',
                 'human_name' => 'Vietnamese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            191 => array(
+            array(
                 'id'         => '192',
                 'code'       => 'vo',
                 'human_name' => 'Volapük',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            192 => array(
+            array(
                 'id'         => '193',
                 'code'       => 'cy',
                 'human_name' => 'Welsh',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            193 => array(
+            array(
                 'id'         => '194',
                 'code'       => 'wa',
                 'human_name' => 'Walloon',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            194 => array(
+            array(
                 'id'         => '195',
                 'code'       => 'wo',
                 'human_name' => 'Wolof',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            195 => array(
+            array(
                 'id'         => '196',
                 'code'       => 'xh',
                 'human_name' => 'Xhosa',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            196 => array(
+            array(
                 'id'         => '197',
                 'code'       => 'yi',
                 'human_name' => 'Yiddish',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            197 => array(
+            array(
                 'id'         => '198',
                 'code'       => 'yo',
                 'human_name' => 'Yoruba',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            198 => array(
+            array(
                 'id'         => '199',
                 'code'       => 'za',
                 'human_name' => 'Zhuang; Chuang',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            199 => array(
+            array(
                 'id'         => '200',
                 'code'       => 'zh',
                 'human_name' => 'Chinese',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-            200 => array(
+            array(
                 'id'         => '201',
                 'code'       => 'zu',
                 'human_name' => 'Zulu',
                 'regional_human_name' => '',
                 'active'     => '0',
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
             ),
-		);
-		foreach ( $languages as $lang ) {
-			DB::table( 'dvs_languages' )->insert( array( $lang ) );
-		}
+		]);
 	}
 
 }

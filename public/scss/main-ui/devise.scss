@@ -85,6 +85,7 @@
   font-weight:bold;
   font-size:12px;
   text-transform: uppercase;
+  font-family: $sidebarMainFont;
 
   @include transition(all 0.5s);
 
@@ -155,4 +156,19 @@
     border-right   : 5px solid transparent;
     border-top     : 5px solid $sidebarSelectArrowColor;
   }
+
+  &.dvs-select-small {
+
+    &:after {
+      border-width:0;
+    }
+
+  }
 }
+
+td {
+  .dvs-select-small {
+    margin-top:5px;
+  }
+}
+

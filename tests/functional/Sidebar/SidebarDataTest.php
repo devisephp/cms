@@ -6,7 +6,7 @@ class SidebarDataTest extends \DeviseTestCase
 {
     public function test_it_constructs_and_has_certain_public_properties()
     {
-        $SidebarData = new SideBarData;
+        $SidebarData = new SidebarData;
 
         assertEquals(0, $SidebarData->coordinates->top);
         assertEquals(0, $SidebarData->coordinates->left);

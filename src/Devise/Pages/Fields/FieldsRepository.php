@@ -130,4 +130,21 @@ class FieldsRepository
 	{
 		return $this->GlobalField->where('key', $key)->where('language_id', $languageId)->first();
 	}
+
+    /**
+     * Find all fields where content requested is true for given
+     * page version id and builds a list of field ids => keys
+     *
+     * @param  integer $pageVersionId
+     * @return Field
+     */
+    public function findContentRequestedFieldsList($pageVersionId)
+    {
+        return $this->Field
+            ->where('page_version_id', '=', $pageVersionId)
+            ->where('content_requested','=',true)
+            ->select('key')
+            ->lists('key');
+    }
+
 }

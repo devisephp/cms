@@ -27,6 +27,34 @@ class BlockTest extends \DeviseTestCase
         $obj->addTag($node);
 	}
 
+    public function test_block_can_add_deivse_models()
+    {
+        $obj = new Block;
+        $node = m::mock('Devise\Pages\Interrupter\Nodes\DeviseModelNode');
+        $node->matched = ' data-devise="$model, Human name';
+        $obj->addModel($node);
+    }
+
+    public function test_block_can_add_devise_model_creators()
+    {
+        $obj = new Block;
+        $node = m::mock('Devise\Pages\Interrupter\Nodes\DeviseModelCreatorNode');
+        $node->matched = ' data-devise-create-model="DvsUser"';
+        $obj->addModelCreator($node);
+    }
+
+    public function test_block_can_get_devise_model_creators()
+    {
+        $obj = new Block;
+        assertEquals([], $obj->getModelCreators());
+    }
+
+    public function test_block_can_get_devise_models()
+    {
+        $obj = new Block;
+        assertEquals([], $obj->getModels());
+    }
+
 	public function test_block_can_add_children_blocks()
 	{
         $obj = new Block;

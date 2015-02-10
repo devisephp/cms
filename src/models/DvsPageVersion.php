@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class DvsPageVersion extends Eloquent
 {
-    use SoftDeletingTrait;
+    use SoftDeletes;
 
     protected $softDelete = true;
 

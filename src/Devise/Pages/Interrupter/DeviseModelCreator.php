@@ -70,7 +70,7 @@ class DeviseModelCreator
 
 		$humanName = $this->humanName;
 
-		return "App::make('dvsPageData')->addModelCreator(\"$cid\", \"$modelName\", \"$humanName\");" . PHP_EOL;
+		return "App::make('dvsPageData')->addModelCreator(\"$cid\", \"$modelName\", \"$humanName\");";
 	}
 
 	/**

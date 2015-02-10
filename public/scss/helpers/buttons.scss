@@ -24,6 +24,11 @@
     color:$secondaryButtonTextColor;
   }
 
+  &.dvs-button-inactive {
+    background-color:$inactiveButtonBgColor;
+    color:$secondaryButtonTextColor;
+  }
+
   &.dvs-button-dark {
     background-color:lighten($black, 5%);
     color:$secondaryButtonTextColor;

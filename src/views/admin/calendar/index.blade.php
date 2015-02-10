@@ -5,15 +5,15 @@
 
 	<div id="dvs-admin-title"></div>
     <div id="dvs-admin-actions">
-        {{ Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select')) }}</label>
-        {{ link_to(URL::route('dvs-pages-create'), 'Create New Page', array('class'=>'dvs-button')) }}
-        {{ link_to(URL::route('dvs-pages'), 'All Pages', array('class'=>'dvs-button dvs-button-secondary')) }}
+        <?= Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select')) ?></label>
+        <?= link_to(URL::route('dvs-pages-create'), 'Create New Page', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-pages'), 'All Pages', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 
 @section('main')
 
-<link href="{{ URL::asset('/packages/devisephp/cms/css/fullcalendar.min.css') }}" rel="stylesheet">
+<link href="<?= URL::asset('/packages/devisephp/cms/css/fullcalendar.min.css') ?>" rel="stylesheet">
 
 <!-- calendar resides here -->
 <div class="dvs-calendar-container"></div>
@@ -24,10 +24,10 @@
 			<h6>Pages needed to be scheduled</h6>
 			@foreach ($unscheduledPageVersions as $unscheduled)
 				<div class="fc-event dvs-button"
-					 data-title="{{ $unscheduled->Page->title }} - {{$unscheduled->name}}"
-					 data-update-url="{{$unscheduled->update_url}}">
-					 {{ $unscheduled->Page->title }}<br>
-					 {{$unscheduled->name}}: {{$unscheduled->page_slug}}
+					 data-title="<?= $unscheduled->Page->title ?> - <?=$unscheduled->name?>"
+					 data-update-url="<?=$unscheduled->update_url?>">
+					 <?= $unscheduled->Page->title ?><br>
+					 <?=$unscheduled->name?>: <?=$unscheduled->page_slug?>
 				</div>
 			@endforeach
 		</div>
@@ -80,7 +80,7 @@
 		{
 			$.ajax({
 				method: 'get',
-				url: '{{ route("dvs-calendar-index") }}',
+				url: '<?= route("dvs-calendar-index") ?>',
 				success: function(data)
 				{
 					var html = $(data).find('#page-version-events').html();

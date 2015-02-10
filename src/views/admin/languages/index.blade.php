@@ -10,10 +10,10 @@
 	<table class="dvs-admin-table">
 		<thead>
 			<tr>
-				<th class="dvs-tal">{{ Sort::link('code','Short Code') }}</th>
+				<th class="dvs-tal"><?= Sort::link('code','Short Code') ?></th>
 				<th class="dvs-tal">
-					{{ Sort::link('human_name','Language') }}
-					{{ Sort::filter('human_name', "#languages", ['placeholder' => 'Filter by Name']) }}
+					<?= Sort::link('human_name','Language') ?>
+					<?= Sort::filter('human_name', "#languages", ['placeholder' => 'Filter by Name']) ?>
 				</th>
 	            <th>Active</th>
 			</tr>

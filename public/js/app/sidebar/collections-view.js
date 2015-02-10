@@ -21,7 +21,6 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
             var _name = $('#dvs-new-collection-instance-name').val();
             var _data = { name: _name, sort: _numberOfItems  };
 
-
             network.request(
                 '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/store',
                 _data, 'post', null, addSortableItem
@@ -54,8 +53,9 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
         dvsSidebarView.refresh();
     };
 
-    var addItem = function(_id, _name) {
+    var addItem = function(_id, _name, _sort) {
         var _fieldName = 'id-'+_id;
+        var _sort = _sort || null;
 
         var _input = $('<input>').attr({
             name: _fieldName,
@@ -74,11 +74,11 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
 
         $('#dvs-collection-instances-sortable').append(_li);
 
-        updateGroupSelect();
+        updateGroupSelect(_sort);
     };
 
     var addSortableItem = function(response, _data) {
-        addItem(_data['id'], _data['name']);
+        addItem(_data['id'], _data['name'], _data['sort']);
 
         resetSortable();
         reloadElementGrids();
@@ -110,7 +110,7 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
     function requestSortable() {
         network.request(
             '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances',
-            null, 'get', null, drawSortable
+            {}, 'get', null, drawSortable
         );
     }
 
@@ -138,11 +138,16 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
         $('#dvs-collection-instances-sortable').sortable('refresh');
     }
 
-    var updateGroupSelect = function() {
+    var updateGroupSelect = function(_sortNum) {
+        var _sortNum = _sortNum || null;
         var _el = $('#dvs-sidebar-groups').find('.dvs-select');
-        _el.html(''); // empty all select options then start appending
+
+        if(_sortNum > 1 || _sortNum === null) {
+            _el.html(''); // empty all select options then start appending
+        }
 
         $('#dvs-collection-instances-sortable li').each(function(key, value){
+
             var _option = $('<option value="'+key+'">');
             var _value = $(value).find('input').val();
 
@@ -150,7 +155,7 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
             _el.append(_option);
 
             // set span html so styled select displays the first value's text
-            if (key == 0) {
+            if (key == 0 && _sortNum > 1) {
                 $('#dvs-sidebar-groups span.dvs-holder').html('1) '+_value);
             }
         });

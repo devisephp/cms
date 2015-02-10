@@ -17,9 +17,9 @@
                         );
                     @endphp
 
-                    {{ Form::select('paramType', $paramTypesList, null, array('id' => 'dvs-param-type')) }}
+                    <?= Form::select('paramType', $paramTypesList, null, array('id' => 'dvs-param-type')) ?>
 
-                    {{ Form::text('paramValue', null, array('id' => 'dvs-param-value', 'placeholder' => 'input')) }}
+                    <?= Form::text('paramValue', null, array('id' => 'dvs-param-value', 'placeholder' => 'input')) ?>
                 </td>
             </tr>
         </table>

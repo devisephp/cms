@@ -58,6 +58,14 @@ class DeviseModelExtractor
 
 		$model = $iterator->current();
 
+		// we cant do anything with null models so throw an error
+		if (is_null($model))
+		{
+			$variableName = $iterator->key();
+			throw new Exceptions\InvalidDeviseTagException("Cannot use '{$variableName}'' as a devise model because it is null");
+		}
+
+		// make sure this model is a model
 		if (is_a($model, '\Illuminate\Database\Eloquent\Model'))
 		{
 			$this->model = $model;
@@ -71,7 +79,7 @@ class DeviseModelExtractor
 
 		$attribute = $iterator->key();
 		$iterator->next();
-		$model = $iterator->valid() ? $iterator->current() : false;
+		$model = $iterator->valid() ? $iterator->current() : null;
 
 		// let's try this again
 		if (is_a($model, '\Illuminate\Database\Eloquent\Model'))

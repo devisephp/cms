@@ -9,12 +9,17 @@
         </div>
 
         <div class="tac mb sp75">
-            <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-logo.png') }}">
+            <img src="<?= URL::asset('/packages/devisephp/cms/img/admin-logo.png') ?>">
         </div>
 
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                {{ Form::open(array('method' => 'POST', 'route' => 'user-attempt-login')) }}
+                <?= Form::open(array('method' => 'POST', 'route' => 'user-attempt-login')) ?>
+
+                    @if(URL::previous() && Request::url() != URL::previous())
+                        <input type="hidden" name="intended" value="<?= URL::previous() ?>">
+                    @endif
+
                     <div class="form-group">
                         <input name="email" type="text" class="form-control" placeholder="Email" />
                     </div>
@@ -26,7 +31,7 @@
                     <div class="form-group">
                         <button class="dvs-button dvs-button-primary">Log In to Administration</button>
                     </div>
-                {{ Form::close() }}
+                <?= Form::close() ?>
             </div>
         </div>
     </div>

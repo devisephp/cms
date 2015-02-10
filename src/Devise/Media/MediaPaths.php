@@ -176,7 +176,7 @@ class MediaPaths
 			return $filename;
 		}
 
-		return $this->Config->get('devise::zencoder.callback-url') . $filename;
+		return $this->Config->get('devise.zencoder.callback-url') . $filename;
 	}
 
     /**

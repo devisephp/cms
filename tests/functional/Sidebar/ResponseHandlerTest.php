@@ -27,4 +27,12 @@ class ResponseHandlerTest extends \DeviseTestCase
         $ResponseHandler = new ResponseHandler($Manager);
         $ResponseHandler->requestElementGridPartial(['data' => 'mocked']);
     }
+
+    public function test_it_can_request_model_update()
+    {
+        $Manager = m::mock('Devise\Sidebar\SidebarManager');
+        $Manager->shouldReceive('updateModel')->andReturn('some html here');
+        $ResponseHandler = new ResponseHandler($Manager);
+        $ResponseHandler->requestUpdateModel(['data' => 'mocked']);
+    }
 }

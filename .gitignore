@@ -1,0 +1,11 @@
+/vendor
+composer.phar
+composer.lock
+.DS_Store
+tests/_log
+tests/reports/*
+tests/bootstrap/app/storage
+node_modules
+/.sami
+/.idea
+

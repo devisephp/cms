@@ -1,10 +1,11 @@
 <?php
 
 use Devise\Pages\Fields\FieldValue;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DvsGlobalField extends Eloquent
 {
-    use SoftDeletingTrait;
+    use SoftDeletes;
 
     protected $softDelete = true;
 

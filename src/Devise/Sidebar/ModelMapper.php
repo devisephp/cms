@@ -511,7 +511,7 @@ class ModelMapper
 	{
 		if (!$this->config)
 		{
-			$this->config = $this->Config->get('devise::model-mapping');
+			$this->config = $this->Config->get('devise.model-mapping');
 		}
 
 		return $this->config[$className];

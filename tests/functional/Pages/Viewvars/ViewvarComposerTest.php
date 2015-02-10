@@ -12,8 +12,7 @@ class ViewvarComposerTest extends \DeviseTestCase
         $view->shouldReceive('getName')->times(1)->andReturn('cool-view');
         $view->shouldReceive('with')->times(2);
         $Config = m::mock('Illuminate\Config\Repository');
-        $Config->shouldReceive('get')->with('devise::view-vars')->andReturn(['cool-view' => $vars]);
-        $Config->shouldReceive('get')->with('devise::view-extensions.cool-view')->andReturn([]);
+        $Config->shouldReceive('get')->with('devise.templates')->andReturn(['cool-view' => ['vars' => $vars]]);
         $DataBuilder = m::mock('Devise\Pages\Viewvars\DataBuilder');
         $DataBuilder->shouldReceive('setData')->with([]);
         $DataBuilder->shouldReceive('compile')->with($vars)->andReturn($vars);

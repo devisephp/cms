@@ -7,7 +7,7 @@ class BlockFactoryTest extends \DeviseTestCase
 		parent::setUp();
 
 		\View::addNamespace('devise-views', __DIR__ . '/../../../fixtures/devise-views');
-		$this->factory = new BlockFactory(new Nodes\NodeFactory, new ViewOpener);
+		$this->factory = new BlockFactory(new ViewOpener);
 	}
 
 	public function test_it_can_create_a_new_block_from_view1()
@@ -16,6 +16,31 @@ class BlockFactoryTest extends \DeviseTestCase
 
 		assertEquals(5, count($block->getTags()));
 		assertEquals(4, count($block->getBlocks()));
+		assertEquals(0, count($block->getModels()));
+	}
+
+	public function test_it_can_create_a_new_block_with_model_in_it()
+	{
+		//
+		// we are adding the ability to have models in a devise tag
+		// to do this we use data-devise="$somevar" and then we need
+		// to transform this code into the ability to edit this Eloquent
+		// model
+		//
+		$block = $this->factory->createBlock($this->fixture('devise-views.view4'));
+
+		assertEquals(0, count($block->getTags()));
+		assertEquals(1, count($block->getBlocks()));
+		assertEquals(1, count($block->getModels()));
+	}
+
+	public function test_it_can_create_a_new_model_creator_block()
+	{
+		$block = $this->factory->createBlock($this->fixture('devise-views.view5'));
+
+		assertEquals(0, count($block->getTags()));
+		assertEquals(0, count($block->getBlocks()));
+		assertEquals(1, count($block->getModelCreators()));
 	}
 
 	public function test_it_can_handle_recursion_in_view3()

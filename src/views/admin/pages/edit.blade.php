@@ -8,18 +8,18 @@
     </div>
 
     <div id="dvs-admin-actions">
-        {{ link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) }}
+        <?= link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) ?>
     </div>
 @stop
 
 @section('main')
     <div class="dvs-admin-form-horizontal">
-        {{ Form::model($page, array('method' => 'PUT', 'route' => array('dvs-pages-update', $page->id))) }}
+        <?= Form::model($page, array('method' => 'PUT', 'route' => array('dvs-pages-update', $page->id))) ?>
 
             @include('devise::admin.pages._page-form', ['method' => 'update'])
 
-            {{ Form::submit('Edit Page', array('class' => 'dvs-button dvs-button-large')) }}
-        {{ Form::close() }}
+            <?= Form::submit('Edit Page', array('class' => 'dvs-button dvs-button-large')) ?>
+        <?= Form::close() ?>
     </div>
 
     <script data-main="{{ URL::asset('/packages/devisephp/cms/js/config') }}" src="{{ URL::asset('/packages/devisephp/cms/js/require.js') }}"></script>

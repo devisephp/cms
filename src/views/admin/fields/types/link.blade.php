@@ -17,3 +17,4 @@
         'target' => 'Open the window in _self or _blank',
     ],
 ])
+

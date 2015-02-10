@@ -1,7 +1,5 @@
 <?php
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Delete form macro
@@ -124,6 +122,33 @@ HTML::macro('getHtmlForJsVar', function($path, $data = array())
 					$data
 				)->render()
 			);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Displays text which indicates a page has atleast one field with
+| the value of "content_requested" equal to true
+|--------------------------------------------------------------------------
+|
+*/
+HTML::macro('showPagesWithRequestedContent', function($page)
+{
+    if( $page->getLiveVersion() ) {
+        $pageLiveVersion = $page->getLiveVersion()->load('fields', 'collectionFields');
+
+        $fieldsArr = array_merge(
+            $page->getLiveVersion()->fields->toArray(),
+            $page->getLiveVersion()->collectionFields->toArray()
+        );
+
+        foreach($fieldsArr as $field) {
+            if(isset($field['content_requested']) && $field['content_requested'] == '1') {
+                return '<div class="dvs-badge dvs-content-requested fg red">Needs Content</div>';
+            }
+        }
+    }
+
+    return '';
 });
 
 /*

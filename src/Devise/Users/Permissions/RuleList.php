@@ -1,7 +1,6 @@
 <?php namespace Devise\Users\Permissions;
 
 use Exception;
-use User;
 use Devise\Support\Framework;
 
 /**
@@ -54,7 +53,7 @@ class RuleList
      * @param \User $User
      * @param Framework $Framework
      */
-    public function __construct(\User $User, Framework $Framework)
+    public function __construct(\DvsUser $User, Framework $Framework)
     {
         $this->rules = array_diff(get_class_methods($this), array('__call','__construct'));
         $this->User = $User;

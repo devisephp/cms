@@ -69,11 +69,8 @@ class SessionsRepository
         $this->UserManager = $UserManager;
         $this->UsersRepository = $UsersRepository;
         $this->Auth = $Framework->Auth;
-        $this->Exception = $Framework->Exception;
         $this->Hash = $Framework->Hash;
         $this->Lang = $Framework->Lang;
-        $this->Mail = $Framework->Mail;
-        $this->Password = $Framework->Password;
         $this->Validator = $Framework->Validator;
     }
 
@@ -158,7 +155,7 @@ class SessionsRepository
             // check user has not been activated
             if(!$data['user']->isActivated()) {
                 // re-send activation/welcome email
-                $this->Mail->send('devise::emails.welcome', $data, function($message) {
+                \Mail::send('devise::emails.welcome', $data, function($message) {
                     $message->to('testing@logicbombmedia.com')->from('info@lbm.co')->subject('Welcome to Devise!');
                 });
 
@@ -179,14 +176,14 @@ class SessionsRepository
     */
     public function remind($input)
     {
-        switch($response = $this->Password->remind($input)) {
-            case $this->Password->INVALID_USER:
+        switch($response = \Password::remind($input)) {
+            case \Password::INVALID_USER:
                 $this->message = 'There were validation errors.';
                 $this->errors = $this->Lang->get($response);
                 return false;
                 break;
 
-            case $this->Password->REMINDER_SENT:
+            case \Password::REMINDER_SENT:
                 $this->message = 'Email has been sent.';
                 return true;
                 break;
@@ -202,22 +199,22 @@ class SessionsRepository
     public function reset($credentials)
     {
         $resetUser = null;
-        $response = $this->Password->reset($credentials, function($user, $password) use (&$resetUser) {
+        $response = \Password::reset($credentials, function($user, $password) use (&$resetUser) {
             $user->password = $this->Hash->make($password);
             $user->save();
             $resetUser = $user;
         });
 
         switch($response) {
-            case $this->Password->INVALID_PASSWORD:
-            case $this->Password->INVALID_TOKEN:
-            case $this->Password->INVALID_USER:
+            case \Password::INVALID_PASSWORD:
+            case \Password::INVALID_TOKEN:
+            case \Password::INVALID_USER:
                 $this->message = 'There were validation errors.';
                 $this->errors = $this->Lang->get($response);
                 return false;
                 break;
 
-            case $this->Password->PASSWORD_RESET:
+            case \Password::PASSWORD_RESET:
                 // login user after successful password change
                 $this->Auth->login($resetUser);
 

@@ -15,53 +15,7 @@
   @include transition(all 0.5s);
 }
 
-#dvs-floater-node {
-  background-color: rgba(16, 165, 255, 0.8);
-  position:fixed;
-  bottom:0;
-  left:20px;
-  width:120px;
-  height:40px;
-  border-radius:4px 4px 0 0;
-  cursor:pointer;
-  font-size:12px;
-  font-weight:bold;
-  vertical-align: middle;
-  text-align: center;
-  line-height:40px;
-  text-transform: uppercase;
-  z-index: 100010;
-}
-
 .dvs-node-mode {
-
-  #dvs-floater-node-sidebar {
-    background-color: rgba(16, 165, 255, 0.8);
-    position:fixed;
-    top:0;
-    right:-360px;
-    width:360px;
-    height:100%;
-    z-index:10010;
-
-    @include transition(all 0.5s ease);
-
-    &.active {
-      right:0;
-    }
-
-    li {
-      width:330px;
-      margin:15px;
-      padding:12px 15px;
-      text-transform: uppercase;
-      font-weight:400;
-      color:#222;
-      background-color: #fff;
-      cursor:pointer;
-      position:relative;
-    }
-  }
 
   #dvs-node-mode-button {
     height: 45px;
@@ -154,6 +108,10 @@
         &:hover {
           left:-5px;
         }
+
+        &.dvs-content-requested {
+            .svg-node-arrow { fill:#ffffe0 }
+        }
       }
 
       &.right {
@@ -180,9 +138,11 @@
         &:hover {
           right:-4px;
         }
+
+        &.dvs-content-requested {
+            .svg-node-arrow { fill:#ffffe0 }
+        }
       }
-
-
     }
   }
 }

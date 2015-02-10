@@ -1,7 +1,7 @@
 <?php namespace Devise\Search;
 
 use IteratorAggregate, View;
-use Illuminate\Support\Contracts\JsonableInterface;
+use Illuminate\Contracts\Support\Jsonable;
 
 /**
  * Class Pagination is used so we can paginate search results
@@ -9,7 +9,7 @@ use Illuminate\Support\Contracts\JsonableInterface;
  *
  * @package Devise\Search
  */
-class Pagination implements IteratorAggregate, JsonableInterface
+class Pagination implements IteratorAggregate, Jsonable
 {
     /**
      * @var

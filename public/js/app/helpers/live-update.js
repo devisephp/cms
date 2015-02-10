@@ -155,8 +155,6 @@ devise.define(['require', 'jquery'], { getInstance: function() {
 
                 updateSelector       = '[data-dvs-' + _key + '-id="' + _key + '"]';
 
-                console.log(alternateTarget);
-
                 alternateTarget      = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
 
                 updateTarget();

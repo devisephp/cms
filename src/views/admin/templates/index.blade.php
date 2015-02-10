@@ -6,7 +6,7 @@
     </div>
 
     <div id="dvs-admin-actions">
-        {{ link_to(URL::route('dvs-templates-register'), 'Register New Template', array('class'=>'dvs-button')) }}
+        <?= link_to(URL::route('dvs-templates-register'), 'Register New Template', array('class'=>'dvs-button')) ?>
     </div>
 @stop
 
@@ -27,8 +27,8 @@
                         <div class="dvs-secondary-text dvs-opaque-text">filename: {{ $templatePath }}</div>
                     </td>
 					<td class="dvs-tac dvs-button-group">
-						{{ link_to(URL::route('dvs-templates-edit', array($templatePath)), 'Edit', array('class'=>'dvs-button dvs-button-small')) }}
-						{{ Form::delete(URL::route('dvs-templates-destroy', array($templatePath)), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) }}
+						<?= link_to(URL::route('dvs-templates-edit', array($templatePath)), 'Edit', array('class'=>'dvs-button dvs-button-small')) ?>
+						<?= Form::delete(URL::route('dvs-templates-destroy', array($templatePath)), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) ?>
 	                </td>
 				</tr>
 			@endforeach
@@ -36,7 +36,7 @@
 
         <tfoot>
             <tr id="pagination-links">
-                <td colspan="3">{{ $templates->appends(Input::except(['template']))->links(); }}</td>
+                <td colspan="3"><?= $templates->appends(Input::except(['template']))->render() ?></td>
             </tr>
         </tfoot>
 	</table>

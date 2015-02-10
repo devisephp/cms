@@ -156,6 +156,7 @@ class MenusManager
                 $item['page_id'] = NULL;
             }
 
+
 			$menuItem->parent_item_id = $order[$id] ?: null;
 			$menuItem->url = $item['url'];
 			$menuItem->page_id = $item['page_id'];
@@ -194,9 +195,19 @@ class MenusManager
 		{
 			if (strpos($id, 'cid') === 0)
 			{
+				if ($item['url_or_page'] == 'page' && (!isset($item['page_id']) || $item['page_id'] == '')) {
+					unset($items[$id]);
+					continue;
+				}
+
+				if ($item['url_or_page'] == 'url') {
+					$item['page_id'] = NULL;
+				}
+
 				$menuItem = $this->MenuItem->create([
 					'menu_id' => $menu->id,
 					'parent_item_id' => null,
+					'page_id' => $item['page_id'],
 					'url' => $item['url'],
 					'image' => array_get($item, 'image', NULL),
 					'name' => $item['name'],
@@ -204,7 +215,11 @@ class MenusManager
 				]);
 
 				unset($items[$id]);
-				$items[$menuItem->id] = array('url' => $menuItem->url, 'name' => $menuItem->name);
+				$items[$menuItem->id] = array(
+					'url' => $menuItem->url,
+					'name' => $menuItem->name,
+					'page_id' => $menuItem->page_id
+				);
 				$newlyCreated[$id] = $menuItem->id;
 			}
 		}

@@ -19,9 +19,6 @@
 
 <body id="dvs-admin" class="dvs-default">
     <div id="dvs-admin-sidenav">
-        <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-logo.png') }}" width="195" height="71" >
-
-        <hr class="dvs-thick">
 
         @foreach ($dvsAdminMenu as $menuGroup)
             <h5>{{ $menuGroup->name }}</h5>
@@ -50,10 +47,10 @@
             <div class="dvs-messages">
                 <h2>{{ Session::get('message') }}</h2>
                 @if($errors->any())
-                    <ul class="list">{{ implode('', $errors->all('<li class="error">:message')) }}</ul>
+                    <ul class="list"><?= implode('', $errors->all('<li class="error">:message')) ?></ul>
                 @endif
                 @if(isset($warnings) && count($warnings))
-                    <ul class="list"><li>{{ implode('</li><li>', $warnings) }}</li></ul>
+                    <ul class="list"><li><?= implode('</li><li>', $warnings) ?></li></ul>
                 @endif
             </div>
         @endif

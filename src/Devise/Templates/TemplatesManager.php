@@ -1,6 +1,6 @@
 <?php namespace Devise\Templates;
 
-use Devise\Config\FileManager as ConfigFileManager;
+use Devise\Support\Config\FileManager as ConfigFileManager;
 use Devise\Support\Framework;
 
 /**
@@ -86,7 +86,7 @@ class TemplatesManager
 
         if($validator->passes())
         {
-            $configContents = $this->Config->get('devise::templates');
+            $configContents = $this->Config->get('devise.templates');
 
             // setup array for config file and sets vars array to
             // blank key/value pair to prep. data for init. edit form
@@ -114,7 +114,7 @@ class TemplatesManager
         if($this->validateInputVars($input))
         {
              // current templates config contents
-            $templateContents = $this->Config->get('devise::templates');
+            $templateContents = $this->Config->get('devise.templates');
 
             // if newVars exist, validate and add to vars array
             if(isset($input['template']['newVars'])) {
@@ -145,9 +145,9 @@ class TemplatesManager
     public function destroyTemplate($templatePath)
     {
         // check if key exists in config, if so unset it
-        if($this->Config->has('devise::templates.' . $templatePath))
+        if($this->Config->has('devise.templates.' . $templatePath))
         {
-            $configContents = $this->Config->get('devise::templates');
+            $configContents = $this->Config->get('devise.templates');
             unset($configContents[$templatePath]);
 
             return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
@@ -184,7 +184,7 @@ class TemplatesManager
 
         if($validator->passes())
         {
-            $configContents = $this->Config->get('devise::templates');
+            $configContents = $this->Config->get('devise.templates');
 
             $pathAndMethod = $input['class_path'] . '.' . $input['method_name'];
 

@@ -30,7 +30,7 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditor
     }
 
     return {
-        init: function()
+        init: function(url)
         {
             //
             // opens the media manager
@@ -40,7 +40,7 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditor
             {
                 var parentForm = $(this).parents('form');
                 var target = $(e.currentTarget).data('target');
-                var mediaUrl = '/admin/media-manager?type=image&cropMode=Preserve&target=' + target;
+                var mediaUrl = url + '?type=image&cropMode=Preserve&target=' + target;
 
                 document.onMediaManagerSelect = function(image, target, settings) { onMediaManagerSelect(parentForm, image, target, settings); }
                 window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");
@@ -56,7 +56,7 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditor
                 var imageWidth = $(e.currentTarget).data('imageWidth');
                 var imageHeight = $(e.currentTarget).data('imageHeight');
                 var imagePath = parentForm.find('[name="image"]').val();
-                var mediaUrl = '/admin/media-manager/crop?type=image&cropMode=Tool&target=' + target + '&image=' + imagePath;
+                var mediaUrl = url + '/crop?type=image&cropMode=Tool&target=' + target + '&image=' + imagePath;
 
                 if (imageWidth)
                     mediaUrl += '&width=' + imageWidth;

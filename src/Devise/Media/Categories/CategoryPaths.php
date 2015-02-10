@@ -50,7 +50,7 @@ class CategoryPaths
     public function serverPath($path)
     {
         $path = ($path != '') ? $path . '/' : '';
-        return public_path() . '/' . $this->Config->get('devise::media-manager.root-dir') . '/' . $path;
+        return public_path() . '/' . $this->Config->get('devise.media-manager.root-dir') . '/' . $path;
     }
 
     /**
@@ -62,6 +62,6 @@ class CategoryPaths
     public function browserPath($path)
     {
         $path = ($path != '') ? $path . '/' : '';
-        return '/' . $this->Config->get('devise::media-manager.root-dir') . '/' . $path;
+        return '/' . $this->Config->get('devise.media-manager.root-dir') . '/' . $path;
     }
 }

@@ -2,15 +2,6 @@
 
 require_once __DIR__ . '/../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';
 
-//'Config'        'Illuminate\Config\Repository'
-//'Validator'     'Illuminate\Validation\Factory'
-//'Container'     'Illuminate\Container\Container'
-//'Request'       'Illuminate\Http\Request'
-//'Response'      'Illuminate\Support\Facades\Response'
-//'Input'         'Illuminate\Http\Request'
-//'Auth':         'Illuminate\Auth\UserInterface'
-//'Event'         'Illuminate\Events\Dispatcher'
-
 class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 {
 	/**
@@ -48,13 +39,21 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 
 		if (!static::$setup)
 		{
-			static::$application = require __DIR__.'/bootstrap/bootstrap/start.php';
+			$loader = require __DIR__ . '/../vendor/autoload.php';
+
+			$loader->setPsr4("App\\", __DIR__ . "/bootstrap/app/");
+
+			static::$application = require __DIR__.'/bootstrap/bootstrap/app.php';
+
+			static::$application->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
 			static::setUpFixtures();
 
-			Artisan::call('migrate', array('--path' => '../../src/migrations'));
+			static::runMigrations();
 
 			Artisan::call('db:seed', array('--class' => 'DeviseSeeder'));
+
+			Artisan::call('db:seed', array('--class' => 'DeviseTestsOnlySeeder'));
 
 			static::$setup = true;
 
@@ -62,6 +61,22 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 		}
 
 		return static::$application;
+	}
+
+	/**
+	 * Runs the migrations for devise in our sqlite memory db
+	 *
+	 * @return void
+	 */
+	static public function runMigrations()
+	{
+		$migrations = static::$application->make('migration.repository');
+
+		if (! $migrations->repositoryExists()) $migrations->createRepository();
+
+		$migrator = static::$application->make('migrator');
+
+		$migrator->run(__DIR__.'/../src/migrations');
 	}
 
 	/**

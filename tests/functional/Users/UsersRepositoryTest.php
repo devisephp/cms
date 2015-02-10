@@ -36,7 +36,7 @@ class UsersRepositoryTest extends \DeviseTestCase
     {
         $output = $this->UsersRepository->users();
 
-        assertCount(5, $output); // 5 users in seeds
+        assertCount(1, $output); // 1 users in seeds
     }
 
     public function test_it_can_get_user_with_find_by_id()
@@ -48,9 +48,9 @@ class UsersRepositoryTest extends \DeviseTestCase
 
     public function test_it_can_get_user_with_find_by_email()
     {
-        $output = $this->UsersRepository->findByEmail('deviseadmin@lbm.co');
+        $output = $this->UsersRepository->findByEmail('noreply@devisephp.com');
 
-        assertEquals('deviseadmin@lbm.co', $output->email);
+        assertEquals('noreply@devisephp.com', $output->email);
     }
 
 }

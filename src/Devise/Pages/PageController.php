@@ -1,5 +1,7 @@
 <?php namespace Devise\Pages;
 
+use Illuminate\Routing\Controller;
+
 /**
  * All pages registered in dvs_pages database table
  * come through this controller show method. The reason
@@ -9,7 +11,7 @@
  * The templates have already been designed by the developer
  * but new pages can be added easily by the cms administrator.
  */
-class PageController extends \Controller
+class PageController extends Controller
 {
     /**
      * Repository for retrieving pages

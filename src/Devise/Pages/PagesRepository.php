@@ -185,7 +185,7 @@ class PagesRepository
      */
     public function pages()
     {
-        $languageId = $this->Input->get('language_id', $this->Config->get('devise::languages.primary_language_id'));
+        $languageId = $this->Input->get('language_id', $this->Config->get('devise.languages.primary_language_id'));
 
         $showAdmin = $this->Input->get('show_admin', false);
 
@@ -291,10 +291,12 @@ class PagesRepository
             if ($routeName != $slugName)
             {
                 $slugName = ucwords($routeName);
+                $list[ $slugName ][ $route->route_name ] = $route->title;
+            } else {
+                $list[$route->route_name] = $route->title;
             }
-
-            $list[ $slugName ][ $route->route_name ] = $route->title;
         }
+
         return $list;
     }
 
@@ -526,6 +528,7 @@ class PagesRepository
      */
     protected function wrapPageVersionStatuses($versions, $page)
     {
+        $page->status = 'unpublished';
         $currentVersion = $this->getLivePageVersion($page);
 
         foreach ($versions as $version)
@@ -564,6 +567,7 @@ class PagesRepository
         // the current version is live
         if ($version->id == $currentVersion->id)
         {
+            $page->status = 'live';
             $version->status = "live";
             return $version;
         }

@@ -97,7 +97,7 @@
     float: left;
     .dvs-select-wrapper {
       float: left;
-      width: 209px;
+      width: 133px;
       margin-right: 3px;
       color: $sidebarTextColor;
       font-family: $sidebarMainFont;
@@ -159,6 +159,10 @@
       &:nth-child(even) {
         float: right;
         margin-right: 0;
+      }
+      &.dvs-content-requested {
+        background-color:$primaryButtonBgColor;
+        color:$white;
       }
     }
     > div > div {
@@ -330,6 +334,10 @@
     .dvs-options-manager,
     .dvs-checkboxes-manager {
       width:100%;
+
+      td {
+        vertical-align: middle;
+      }
 
       .dvs-option-fields {
         td {

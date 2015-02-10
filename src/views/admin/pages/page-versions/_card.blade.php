@@ -35,23 +35,23 @@
         <div class="dvs-publish-dates {{ $version->id }}" style="display:none;">
             <p>Current Server Time: <strong>{{ date('m/d/y H:i:s') }}</strong></p>
 
-            {{ Form::open(array('method' => 'PUT', 'route' => array('dvs-update-page-versions-dates', $version->id))) }}
+            <?= Form::open(array('method' => 'PUT', 'route' => array('dvs-update-page-versions-dates', $version->id))) ?>
 
                 @php
                     $startTime = $version->starts_at ? date('m/d/y H:i:s', strtotime($version->starts_at)) : date('m/d/y H:i:s', strtotime('now'));
                     $endTime = $version->ends_at ? date('m/d/y H:i:s', strtotime($version->ends_at)) : '';
                 @endphp
 
-                {{ Form::text('starts_at', $startTime, array('class' => 'dvs-date start', 'placeholder' => 'Starts At')) }}
-                {{ Form::text('ends_at', $endTime, array('class' => 'dvs-date end', 'placeholder' => 'Ends At')) }}
+                <?= Form::text('starts_at', $startTime, array('class' => 'dvs-date start', 'placeholder' => 'Starts At')) ?>
+                <?= Form::text('ends_at', $endTime, array('class' => 'dvs-date end', 'placeholder' => 'Ends At')) ?>
 
                 <label for="never">
-                    {{ Form::checkbox('never') }} Never Ends
+                    <?= Form::checkbox('never') ?> Never Ends
                 </label>
 
-                {{ Form::submit('Submit', array('class' => 'dvs-button dvs-button-small')) }}
+                <?= Form::submit('Submit', array('class' => 'dvs-button dvs-button-small')) ?>
 
-            {{ Form::close() }}
+            <?= Form::close() ?>
         </div>
     </div>
 @endforeach

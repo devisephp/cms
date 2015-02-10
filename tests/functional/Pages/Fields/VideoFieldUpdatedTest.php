@@ -13,7 +13,8 @@ class VideoFieldUpdatedTest extends \DeviseTestCase
 		$DvsField->shouldReceive('setAttribute')->with('json_value', $FieldValue->toJSON());
 		$DvsField->shouldReceive('save')->times(1);
         $Encoder = m::mock('Devise\Media\Encoding\ZencoderJob');
-        $VideoFieldUpdated = new VideoFieldUpdated($MediaPathHelper, $Encoder);
+        $Framework = new \Devise\Support\Framework;
+        $VideoFieldUpdated = new VideoFieldUpdated($MediaPathHelper, $Encoder, $Framework);
 
 		$VideoFieldUpdated->handle($DvsField, []);
 	}

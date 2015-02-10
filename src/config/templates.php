@@ -97,7 +97,6 @@
 			'extends' => 'devise::admin.layouts.master',
 			'vars' => array(
 				'users' => 'Devise\Users\UsersRepository.users',
-				'groups' => 'Devise\Users\Groups\GroupsRepository.groupList',
 			),
 		),
 		'devise::admin.users.edit' => array(
@@ -241,16 +240,16 @@
             'human_name' => 'Devise Permissions List',
             'extends' => 'devise::admin.layouts.master',
             'vars' => array(
-                'permissions' => 'Devise\Permissions\PermissionsRepository.allPermissionsPaginated',
+                'permissions' => 'Devise\Users\Permissions\PermissionsRepository.allPermissionsPaginated',
             ),
         ),
         'devise::admin.permissions.create' => array(
             'human_name' => 'Devise Permissions Edit',
             'extends' => 'devise::admin.layouts.master',
             'vars' => array(
-                'availableRulesList' => 'Devise\Permissions\PermissionsRepository.availableRulesList',
+                'availableRulesList' => 'Devise\Users\Permissions\PermissionsRepository.availableRulesList',
                 'ruleParamMap' => array(
-                    'Devise\Permissions\PermissionsRepository.getRuleParamMap' => array(
+                    'Devise\Users\Permissions\PermissionsRepository.getRuleParamMap' => array(
                         '{availableRulesList}'
                     )
                 ),
@@ -261,14 +260,22 @@
             'extends' => 'devise::admin.layouts.master',
             'vars' => array(
                 'permission' => array(
-                    'Devise\Permissions\PermissionsRepository.getPermissionByPath' => ['{input.condition}']
+                    'Devise\Users\Permissions\PermissionsRepository.getPermissionByPath' => ['{input.condition}']
                 ),
-                'availableRulesList' => 'Devise\Permissions\PermissionsRepository.availableRulesList',
+                'availableRulesList' => 'Devise\Users\Permissions\PermissionsRepository.availableRulesList',
                 'ruleParamMap' => array(
-                    'Devise\Permissions\PermissionsRepository.getRuleParamMap' => array(
+                    'Devise\Users\Permissions\PermissionsRepository.getRuleParamMap' => array(
                         '{availableRulesList}'
                     )
                 ),
             ),
         ),
+        'devise::admin.fields.index' => array(
+			'human_name' => 'Devise Admin Fields Documentation',
+			'extends' => null,
+			'vars' => array(
+				'dvsAdminMenu' => array('Devise\Menus\MenusRepository.buildMenu' => array('Admin Menu')),
+			)
+		),
+
 	);

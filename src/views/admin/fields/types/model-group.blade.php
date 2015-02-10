@@ -6,8 +6,10 @@
 @endforeach
 
 <pre class="devise-code-snippet">
+	<code class="html">
 &lt;php $users = DvsUser::where('id', '&lt;', 4)->get(); ?&gt;
 &#64;foreach ($users as $user)
 &lt;div data-devise&#61;"$user, User $user->id, Edit Users"&gt;We might want to edit user @{{ $user->id }} inside a group.&lt;/div&gt;
 &#64;endforeach
+	</code>
 </pre>

@@ -24,7 +24,7 @@ class SupportServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->package('lbm/devise-support');
+		$this->registerDeviseLaravelConsoleCommands();
 	}
 
 	/**
@@ -63,4 +63,35 @@ class SupportServiceProvider extends ServiceProvider
 	{
 		return array();
 	}
+
+    /**
+     * Register the installer command for devise
+     *
+     * @return void
+     */
+    private function registerDeviseLaravelConsoleCommands()
+    {
+        $this->app->singleton('command.devise.install', function($app)
+        {
+            return new Console\DeviseInstallCommand($this->app);
+        });
+
+        $this->app->singleton('command.devise.assets', function($app)
+        {
+            return new Console\DevisePublishAssetsCommand($this->app);
+        });
+
+        $this->app->singleton('command.devise.migrate', function($app)
+        {
+            return new Console\DeviseMigrateCommand($this->app);
+        });
+
+        $this->app->singleton('command.devise.seed', function($app)
+        {
+            return new Console\DeviseSeedCommand($this->app);
+        });
+
+        $this->commands(['command.devise.install', 'command.devise.assets', 'command.devise.seed', 'command.devise.migrate']);
+    }
+
 }

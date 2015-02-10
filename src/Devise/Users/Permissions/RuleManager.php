@@ -115,7 +115,7 @@ class RuleManager
      */
     public function getCondition($conditionName)
     {
-        $condition = json_encode($this->Config->get('devise::permissions.'.$conditionName));
+        $condition = json_encode($this->Config->get('devise.permissions.'.$conditionName));
         if(!$condition) {
             throw new \Devise\Support\DeviseException($conditionName.' condition not found');
         }

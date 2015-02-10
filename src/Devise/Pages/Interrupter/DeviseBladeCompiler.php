@@ -25,7 +25,7 @@ class DeviseBladeCompiler
 	 * @param  string $view
 	 * @return string
 	 */
-	public function compile($view)
+	public function compile($view, $compiler)
 	{
 		// gets the block structure for this view
 		$block = $this->BlockFactory->createBlock($view);
@@ -58,7 +58,13 @@ class DeviseBladeCompiler
 
 		// adds bindings to top of the view page so we
 		// can do the javascript json stuff for dvsPageData
-		$view = $this->addDeviseTagBindingsModelCreatorsAndCollections($view, $block);
+		$prepend = $this->addDeviseTagBindingsModelCreatorsAndCollections($view, $block);
+
+		// this will be run after the thing is compiled,
+		$compiler->afterCompiled[] = function($view, $compiler) use ($prepend)
+		{
+			return $prepend ? '<?php ' . $prepend . ' ?>' . PHP_EOL . $view : $view;
+		};
 
 		return $view;
 	}
@@ -138,7 +144,7 @@ class DeviseBladeCompiler
 
 		$modelCreators = $block->getModelCreators();
 
-		if (count($tags) == 0 && count($modelCreators) == 0) return $view;
+		if (count($tags) == 0 && count($modelCreators) == 0) return '';
 
 		$prepend = "";
 
@@ -152,7 +158,7 @@ class DeviseBladeCompiler
 			$prepend .= $modelCreator->addToDevisePageStr();
 		}
 
-		return "<?php" . PHP_EOL . $prepend . "?>" . PHP_EOL . $view;
+		return $prepend;
 	}
 
     /**

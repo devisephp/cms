@@ -77,8 +77,8 @@ class DeviseTag
 		$alternateTarget = $this->alternateTarget ? "'{$this->alternateTarget}'" : 'null';
 
 		return $tagType == 'Binding'
-			? "App::make('dvsPageData')->add{$tagType}({$key}, {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget});" . PHP_EOL
-			: "App::make('dvsPageData')->add{$tagType}({$collection}, {$key}, {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget});" . PHP_EOL;
+			? "App::make('dvsPageData')->add{$tagType}({$key}, {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget});"
+			: "App::make('dvsPageData')->add{$tagType}({$collection}, {$key}, {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget});";
 	}
 
 	/**

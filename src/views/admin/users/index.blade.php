@@ -6,7 +6,7 @@
     </div>
 
     <div id="dvs-admin-actions">
-        {{ link_to(URL::route('dvs-users-create'), 'Create New User', array('class'=>'dvs-button')) }}
+        <?= link_to(URL::route('dvs-users-create'), 'Create New User', array('class'=>'dvs-button')) ?>
     </div>
 @stop
 
@@ -16,10 +16,10 @@
     @else
         <table class="dvs-admin-table">
             <thead>
-                <th class="dvs-tal">{{ Sort::link('id','Id') }}</th>
+                <th class="dvs-tal"><?= Sort::link('id','Id') ?></th>
                 <th class="dvs-tal">Email</th>
-                <th class="dvs-tac">{{ Sort::link('created_at','Created') }}</th>
-                <th>{{ Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-outset')) }}</th>
+                <th class="dvs-tac"><?= Sort::link('created_at','Created') ?></th>
+                <th><?= Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-outset')) ?></th>
             </thead>
 
             <tbody>
@@ -30,7 +30,7 @@
                         <td>{{ date("m/d/Y", strtotime($user->created_at)) }}</td>
                         <td class="dvs-tac dvs-button-group">
                             <a class="dvs-button dvs-button-small" href="{{ route('dvs-users-edit', $user->id) }}">Edit</a>
-                            {{ Form::delete(route('dvs-users-destroy', $user->id), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) }}
+                            <?= Form::delete(route('dvs-users-destroy', $user->id), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) ?>
                         </td>
                     </tr>
                 @endforeach
@@ -38,7 +38,7 @@
 
             <tfoot>
                 <tr>
-                    <td>{{ $users->appends(Input::except(['page']))->links(); }}</td>
+                    <td><?= $users->appends(Input::except(['page']))->render() ?></td>
                 </tr>
             </tfoot>
         </table>

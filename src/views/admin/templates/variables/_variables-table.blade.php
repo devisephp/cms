@@ -22,9 +22,9 @@
                 <td class="dvs-form-group">
                     <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-remove-row dvs-pl">X</a>
 
-                    {{ Form::text('template[vars]['.$var.'][varName]', $var) }}
-                    {{ Form::text('template[vars]['.$var.'][classPath]', $classPath) }}
-                    {{ Form::text('template[vars]['.$var.'][methodName]', $methodName) }}
+                    <?= Form::text('template[vars]['.$var.'][varName]', $var) ?>
+                    <?= Form::text('template[vars]['.$var.'][classPath]', $classPath) ?>
+                    <?= Form::text('template[vars]['.$var.'][methodName]', $methodName) ?>
 
                     @if(is_array($varDataArr))
 

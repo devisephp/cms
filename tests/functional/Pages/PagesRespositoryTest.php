@@ -61,6 +61,7 @@ class PagesRepositoryTest extends \DeviseTestCase
         $this->createTestPage([]);
         $this->Config->shouldReceive('get')->times(1)->andReturn(45);
         $this->Input->shouldReceive('get')->with('language_id', 45)->andReturn(45);
+        $this->Input->shouldReceive('get')->with('show_admin', false)->andReturn(true);
         $this->URL->shouldReceive('route')->andReturn('http://boyf.me');
         $pages = $this->PagesRepository->pages();
         assertCount($pageCount + 1, $pages);
@@ -106,14 +107,6 @@ class PagesRepositoryTest extends \DeviseTestCase
         $expectedSize = \DB::table('dvs_pages')->count();
         $list = $this->PagesRepository->getPagesList($includeAdmin = true);
         assertCount($expectedSize, $list);
-    }
-
-    public function test_it_gets_available_views_list()
-    {
-        $this->Config->shouldReceive('get')->times(2)->andReturn(['paths' => [__DIR__]]);
-        $this->File->shouldReceive('exists')->times(1)->andReturn(true);
-        $this->File->shouldReceive('allFiles')->times(1)->andReturn([]);
-        assertCount(0, $this->PagesRepository->availableViewsList());
     }
 
     /**

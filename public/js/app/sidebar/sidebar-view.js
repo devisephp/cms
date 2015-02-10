@@ -1,14 +1,12 @@
-devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQueryHelper', 'dvsSelectSurrogate', 'jquery-ui'], function (require, $, datePicker, network, pageData, query, selectSurrogate)
+devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData', 'dvsQueryHelper', 'dvsSelectSurrogate', 'dvsListeners', 'jquery-ui'], function (require, $, datePicker, network, pageData, query, selectSurrogate, listeners)
 {
     var node = null;
-    var ogWidth = null;
     var addedListenersBefore = false;
 
     var sidebar = {
         init: function(_node) {
             node = _node;
             addHeader();
-            ogWidth = $('#dvs-sidebar').width();
         },
         fattenUp: function() {
             $('#dvs-sidebar').css({
@@ -21,7 +19,7 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         skinnyMe: function() {
             $('#dvs-sidebar').css({
                 right: 'inherit',
-                width: ogWidth
+                width: 328
             });
             $('#dvs-sidebar-container').css('width', '428px');
             $('#dvs-sidebar-scroller').css('width', '478px');
@@ -35,7 +33,7 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         },
         showElementGrid: function() {
             hideElement();
-        }
+        },
     };
 
     var sidebarLoaded = function(passFail) {
@@ -98,22 +96,43 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
 
         $('#dvs-sidebar-breadcrumbs').html(link);
         $('#dvs-sidebar-breadcrumbs').append(activeLabel);
-        $('#dvs-sidebar-breadcrumbs').children('a').click(function(){
+        $('#dvs-sidebar-breadcrumbs a').click(function(){
             hideElement();
         });
     }
 
     function showBreadcrumbs() {
         $('#dvs-sidebar-breadcrumbs').fadeIn();
+
+        if($('#dvs-sidebar-loading').length) {
+            removeLoader();
+        }
     }
 
     function hideBreadcrumbs() {
         $('#dvs-sidebar-breadcrumbs').hide();
     }
 
+    function addLoader() {
+        if( !$('#dvs-sidebar-loading').length ) {
+            var _loader = $('<div id="dvs-sidebar-loading">')
+                .html('loading...');
+
+            $('#dvs-sidebar-header').after(_loader);
+        }
+    }
+
+    function removeLoader() {
+       $('#dvs-sidebar-loading').fadeOut().remove();
+    }
+
     function showElement() {
-        $('#dvs-sidebar-elements-and-groups').fadeOut(function(){
-            $('#dvs-sidebar-current-element').fadeIn();
+        $('#dvs-sidebar-elements-and-groups').fadeOut(function() {
+
+            $('#dvs-sidebar-current-element').fadeIn(function() {
+                removeLoader();
+            });
+
             showBreadcrumbs();
         });
     }
@@ -143,15 +162,18 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
             field_scope : el.data('field-scope')
         };
 
+        addLoader();
+
         setBreadcrumbs(el.html());
 
         network.insertElement(_data, '#dvs-sidebar-current-element', elementLoaded);
     }
 
     function openModelEditor(el) {
-
         var cid = el.data('model-field-cid');
         var parent = el.parent().parent().parent();
+
+        addLoader();
 
         setBreadcrumbs(el.html());
 
@@ -212,8 +234,7 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         {
             url: action,
             type: method,
-            data: {'page_version_id': pageVersionId, 'groups': groups},
-            success: function(){ console.log('success'); },
+            data: {'_token': pageData.csrf_token, 'page_version_id': pageVersionId, 'groups': groups},
             error: showValidationMessages
         });
     }
@@ -223,6 +244,7 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         var action = button.data('submitAction');
         var method = button.data('submitMethod');
         var data = {
+            '_token': pageData.csrf_token,
             'class_name': button.data('model'),
             'key': button.data('key'),
             'page_version_id': button.data('pageVersionId'),
@@ -297,7 +319,9 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         }
 
         $('#dvs-sidebar-elements-and-groups, .dvs-sidebar-group.dvs-active').fadeOut(function(){
+
             $('#dvs-sidebar-collections').fadeIn();
+
             showBreadcrumbs();
         });
     }
@@ -307,6 +331,8 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
     }
 
     function openCollectionsManager(el) {
+        addLoader();
+
         setBreadcrumbs(el.html());
 
         $('#dvs-sidebar-elements-and-groups').fadeOut(function() {
@@ -357,8 +383,6 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
     function sidebarLoadSuccessful() {
 
         $( ".dvs-accordion" ).accordion();
-
-        // if (node.collection) hideSaveButton();
 
         loadDefaultData();
 
@@ -451,6 +475,7 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
             var start = startDatePicker.val();
             var end = endDatePicker.val();
             var data = {
+                '_token': pageData.csrf_token,
                 starts_at: start,
                 ends_at: end
             };

@@ -9,15 +9,13 @@ class EloquentBuilderTest extends \DeviseTestCase
         // all these mocks are just to keep Eloquent satisfied
         $BuilderMock = m::mock('Illuminate\Database\Query\Builder');
         $EloquentBuilder = new EloquentBuilder($BuilderMock);
-        $BuilderMock->shouldReceive('getConnection')->andReturnSelf();
-        $BuilderMock->shouldReceive('getPaginator')->andReturnSelf();
-        $BuilderMock->shouldReceive('getPaginationCount')->andReturnSelf(10);
-        $BuilderMock->shouldReceive('getCurrentPage')->andReturnSelf();
+        $BuilderMock->shouldReceive('getCountForPagination')->andReturn(10);
         $BuilderMock->shouldReceive('forPage')->andReturnSelf();
         $BuilderMock->shouldReceive('from')->andReturnSelf();
         $BuilderMock->shouldReceive('get')->andReturnSelf();
-        $BuilderMock->shouldReceive('make')->andReturnSelf();
+
         $ModelMock = m::mock('Illuminate\Database\Eloquent\Model');
+        $ModelMock->shouldReceive('toArray')->andReturn([]);
         $ModelMock->shouldReceive('getTable')->andReturnSelf();
         $ModelMock->shouldReceive('getConnectionName')->andReturnSelf();
         $ModelMock->shouldReceive('newFromBuilder')->andReturnSelf();

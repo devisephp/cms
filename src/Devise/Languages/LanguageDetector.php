@@ -86,6 +86,6 @@ class LanguageDetector
      */
     public function primaryLanguageId()
     {
-        return $this->Config->get('devise::languages.primary_language_id');
+        return $this->Config->get('devise.languages.primary_language_id');
     }
 }

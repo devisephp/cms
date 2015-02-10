@@ -2,7 +2,7 @@
 
 @section('subnavigation')
 <ul>
-	<li>{{ link_to(URL::route('dvs-pages-create'), 'Task Manager', array('class'=>'dvs-button')) }}</li>
+	<li><?= link_to(URL::route('dvs-pages-create'), 'Task Manager', array('class'=>'dvs-button')) ?></li>
 </ul>
 @stop
 
@@ -74,7 +74,7 @@
 </table>
 
 <div class="dvs-admin-container">
-	{{ $fields->links(); }}
+	<?= $fields->render() ?>
 </div>
 
 <script>devise.require(['app/admin/content-queue'])</script>

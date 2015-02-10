@@ -8,29 +8,29 @@
     </div>
 
     <div id="dvs-admin-actions">
-        {{ link_to(URL::route('dvs-templates'), 'List of Templates', array('class'=>'dvs-button')) }}
+        <?= link_to(URL::route('dvs-templates'), 'List of Templates', array('class'=>'dvs-button')) ?>
     </div>
 @stop
 
 @section('main')
     <div class="dvs-admin-form-horizontal">
-        {{ Form::open(array('method' => 'PUT', 'route' => array('dvs-templates-update', $params['templatePath']))) }}
-            {{ Form::hidden('template_path', $params['templatePath']) }}
+        <?= Form::open(array('method' => 'PUT', 'route' => array('dvs-templates-update', $params['templatePath']))) ?>
+            <?= Form::hidden('template_path', $params['templatePath']) ?>
 
             <div class="dvs-form-group">
-                {{ Form::label('Human Name') }}
-                {{ Form::text('template[human_name]', array_get($template, 'human_name', '')) }}
+                <?= Form::label('Human Name') ?>
+                <?= Form::text('template[human_name]', array_get($template, 'human_name', '')) ?>
             </div>
 
             <div class="dvs-form-group">
-                {{ Form::label('Extends') }}
-                {{ Form::text('template[extends]', array_get($template, 'newExtends', $template['extends'])) }}
+                <?= Form::label('Extends') ?>
+                <?= Form::text('template[extends]', array_get($template, 'newExtends', $template['extends'])) ?>
             </div>
 
             @include('devise::admin.templates.variables._variables-table')
 
-            {{ Form::submit('Update Template', array('class' => 'dvs-button dvs-button-large')) }}
-        {{ Form::close() }}
+            <?= Form::submit('Update Template', array('class' => 'dvs-button dvs-button-large')) ?>
+        <?= Form::close() ?>
     </div>
 
     <div class="dvs-hidden" id="dvs-admin-modal"></div>

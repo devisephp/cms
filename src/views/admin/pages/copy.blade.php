@@ -9,7 +9,7 @@
     </div>
 
     <div id="dvs-admin-actions">
-        {{ link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) }}
+        <?= link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) ?>
     </div>
 
 @stop
@@ -29,10 +29,10 @@
         <hr>
 
         <div class="dvs-form-group">
-            {{ Form::label('Select One') }}
-                {{ link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=copy', 'Basic Page Copy', array('class'=>'dvs-button')) }}
+            <?= Form::label('Select One') ?>
+                <?= link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=copy', 'Basic Page Copy', array('class'=>'dvs-button')) ?>
                 @if(isset($availableLanguages) && count($availableLanguages) > 0)
-                    {{ link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=translate', 'Translate Page', array('class'=>'dvs-button')) }}
+                    <?= link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=translate', 'Translate Page', array('class'=>'dvs-button')) ?>
                 @endif
             <div class="dvs-helptext">
                 <p>For what purpose are you copying this page.</p>
@@ -47,25 +47,25 @@
     		$page->title = $page->title . ' Copy';
     	?>
 
-        {{ Form::model($page, array('method' => 'POST', 'route' => array('dvs-pages-copy-store', $page->id))) }}
+        <?= Form::model($page, array('method' => 'POST', 'route' => array('dvs-pages-copy-store', $page->id))) ?>
 
             <h3>Page Version</h3>
-            
+
             <hr>
 
             <div class="dvs-form-group">
-                {{ Form::label('Version To Copy') }}
-                {{ Form::select('page_version_id', $versionsList, ($liveVersion) ? $liveVersion->id : null, array('id' => 'http-verb')) }}
+                <?= Form::label('Version To Copy') ?>
+                <?= Form::select('page_version_id', $versionsList, ($liveVersion) ? $liveVersion->id : null, array('id' => 'http-verb')) ?>
                 <div class="dvs-helptext">
                     <p>Which page version would you like to use when this copy is created. The currently live version (if one exists) is selected by default.</p>
                 </div>
             </div>
-            
+
             @include('devise::admin.pages._page-form', ['method' => $input['reason']])
 
-            {{ Form::submit('Copy Page', array('class' => 'dvs-button dvs-button-large')) }}
+            <?= Form::submit('Copy Page', array('class' => 'dvs-button dvs-button-large')) ?>
 
-        {{ Form::close() }}
+        <?= Form::close() ?>
     </div>
 
 @endif

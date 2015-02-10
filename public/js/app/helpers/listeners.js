@@ -1,4 +1,4 @@
-devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', 'dvsCollectionsView', 'dvsAdminView', 'dvsPageData'], (function( $, nodeView, floaterNodeSidebarView, sidebarView, collectionsView, adminView, pageData ) {
+devise.define(['jquery', 'dvsNodeView', 'dvsSidebarView', 'dvsCollectionsView', 'dvsAdminView', 'dvsPageData'], (function( $, nodeView, sidebarView, collectionsView, adminView, pageData ) {
 
     var savingCount = 0;
     var node = null;
@@ -59,6 +59,7 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
                     addSidebarGroupsChangeListener();
                     addSidebarSaveListener();
                     addSidebarLanguageListener();
+                    addContentRequestedChangeListener();
                     listeners.addCollectionsListeners();
                 });
             }
@@ -132,6 +133,28 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
         removeLoader();
     }
 
+    function checkGlobalStatus() {
+        var _fieldScope = $('#field_scope').prop('checked');
+
+        if (_fieldScope) {
+            $('#current_field_scope').val('global');
+        } else {
+            $('#current_field_scope').val('page');
+        }
+    }
+
+    function updateFieldId(response) {
+        if (typeof response.id !== 'undefined') {
+            var _sidebarFormAction = $('#dvs-sidebar-field-form').attr('action');
+
+            var _parts = _sidebarFormAction.split('/');
+
+            _parts[_parts.length - 1] = response.id;
+
+            $('#dvs-sidebar-field-form').attr('action', _parts.join('/'));
+        }
+    }
+
     function addSidebarLanguageListener() {
         $('#dvs-sidebar-language-selector').change(function(){
             window.location = $(this).find("option:selected").val();
@@ -150,6 +173,7 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
 
                 if (config.continue) {
                     var data = $(this).serialize();
+
                     var url = $(this).attr('action');
 
                     // always pass in page_ids so we can restore
@@ -161,11 +185,13 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
                         url: url,
                         data: data,
                         type: 'post',
-                        success: function () {
+                        success: function (response) {
                             removeFromSavingCount();
+                            checkGlobalStatus();
+                            updateFieldId(response);
                         },
                         error: function () {
-                            alert('There was a problem saving these fields')
+                            alert('There was a problem saving these fields');
                         }
                     });
                 }
@@ -195,7 +221,7 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
     }
 
     function addNodeListeners() {
-        $('.dvs-node').click(function() {
+        $('#dvs-nodes').on('click', '.dvs-node', function() {
             var _node = $(this).data('dvsData');
             node = _node;
 
@@ -204,12 +230,49 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
         });
     }
 
-    function addFloaterNodeListeners() {
-        $('#dvs-mode').on('click', '#dvs-floater-node', function(){
-            var _floaterNodes = $('#dvs-floater-node').data('nodes');
+    /**
+     * Handles saving/updating of the "content_requested" value for
+     * a given field id. Only token, page_id, page_version_id and field
+     * value are passed thru.
+     */
+    function addContentRequestedChangeListener() {
+        $('#dvs-sidebar-current-element').on('change', '#content_requested', function() {
+            var _form = $('#dvs-sidebar-field-form');
+            var url = $(_form).prop('action');
+            var _token = $(_form).find('input[name="_token"]').val();
 
-            floaterNodeSidebarView.openSidebar(_floaterNodes);
-            addNodeListeners();
+            var config = {continue: true};
+            $(this).trigger('beforeSave', [config]);
+
+            addToSavingCount();
+
+            if (config.continue) {
+                var data = $(this).serialize();
+                var fieldScope = $('#field_scope').prop('checked');
+
+                data = data + '&_token=' + _token;
+                data = data + '&page_version_id=' + pageData.page_version_id;
+                data = data + '&page_id=' + pageData.page_id;
+                data = data + '&current_field_scope=' + $('#current_field_scope').val();
+
+                if (fieldScope) {
+                    data = data + '&field_scope=global';
+                } else {
+                    data = data + '&field_scope=page';
+                }
+
+                $.ajax({
+                    url: url,
+                    data: data,
+                    type: 'put',
+                    success: function () {
+                        removeFromSavingCount();
+                    },
+                    error: function () {
+                        alert('There was a problem saving these fields');
+                    }
+                });
+            }
         });
     }
 
@@ -220,7 +283,6 @@ devise.define(['jquery', 'dvsNodeView', 'dvsFloaterSidebar', 'dvsSidebarView', '
         $('#dvs-mode').removeClass('dvs-node-mode dvs-admin-mode dvs-sidebar-mode');
         $('#dvs-nodes').hide(); //html('');
         $('#dvs-node-mode-button').html('Edit Page');
-        floaterNodeSidebarView.closeSidebar();
         $('#dvs-mode').trigger('closeAdmin');
     }
 

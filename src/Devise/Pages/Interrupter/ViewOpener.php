@@ -23,9 +23,10 @@ class ViewOpener
      * Construct a new view opener
      * @param Illuminate\View\FileViewFinder $finder
      */
-	public function __construct($finder = null)
+	public function __construct($finder = null, $file = null)
 	{
-		$this->finder = $finder ?: \App::make('view.finder');
+		$this->finder = $finder ?: \App::make('view')->getFinder();
+		$this->file = $file ?: \App::make('files');
 	}
 
     /**
@@ -46,7 +47,7 @@ class ViewOpener
 	{
 		$path = $this->pathFromIncludeStatement($includeStatement);
 
-		if (in_array($path, $includedViews))
+		if (is_null($path) || in_array($path, $includedViews))
 		{
 			return '';
 		}
@@ -56,7 +57,8 @@ class ViewOpener
 		try
 		{
 			$realpath = $this->finder->find($path);
-			return file_get_contents($realpath);
+
+			return $this->file->get($realpath);
 		}
 
 		catch (\Exception $e)

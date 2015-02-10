@@ -39,6 +39,8 @@ class PageControllerTest extends \DeviseTestCase
     {
         $DvsPage = new \DvsPage;
         $DvsPage->response_type = 'Function';
+        $DvsPage->response_path = 'Fake\Class\That\Doesnt\Exist.someMethod';
+        $DvsPage->response_params = null;
 
         $PagesRepository = m::mock('Devise\Pages\PagesRepository');
         $PagesRepository->shouldReceive('findByRouteName')->times(0)->andReturn($DvsPage);

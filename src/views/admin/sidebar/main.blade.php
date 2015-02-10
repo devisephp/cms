@@ -23,6 +23,7 @@
                 @endforeach
             </select>
             <button id="dvs-sidebar-add-version" class="dvs-button dvs-button-primary">Add</button>
+            <button id="dvs-sidebar-edit-version" onclick="location.href = '{{ route('dvs-pages-edit', $pageVersion->page_id) }}'" class="dvs-button dvs-button-primary">Edit</a>
         </div>
 
         <div id="dvs-sidebar-groups-wpr">

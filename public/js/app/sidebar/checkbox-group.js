@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery'], function (require, $) {
+devise.define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $, dvsSelectSurrogate) {
     return {
         init: function()
         {
@@ -10,7 +10,7 @@ devise.define(['require', 'jquery'], function (require, $) {
                 var form = $(evt.currentTarget);
                 var passed = true;
                 form.find('[name$="[key]"], [name$="[label]"]').each(function(){
-                    if($(this).val() == ''){
+                    if($(this).val() === ''){
                         passed = false;
                         return false;
                     }
@@ -32,6 +32,8 @@ devise.define(['require', 'jquery'], function (require, $) {
 
                 $( ".dvs-accordion" ).accordion("refresh");
                 bindEvents(parentForm);
+
+                dvsSelectSurrogate();
             }
 
             function onDeleteclick()

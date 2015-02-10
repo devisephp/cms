@@ -12,7 +12,7 @@
 			<tr>
 				<td>{{ $key }}</td>
 				<td>{{ $description }}</td>
-                <td>{{ is_array($values->{$key}) ? 'array => ' . json_encode($values->{$key}) : htmlentities($values->{$key}) }}</td>
+                <td><?= is_array($values->{$key}) ? 'array => ' . json_encode($values->{$key}) : htmlentities($values->{$key}) ?></td>
 				<td>{{ $name }}->{{ $key }}</td>
 			</tr>
 		@endforeach
@@ -22,7 +22,7 @@
                 <tr>
                     <td>{{ $key }}</td>
                     <td>No description found for this attribute</td>
-                    <td>{{ is_array($value) ? 'array => ' . json_encode($value) : htmlentities($value) }}</td>
+                    <td><?= is_array($value) ? 'array => ' . json_encode($value) : htmlentities($value) ?></td>
                     <td>{{ $name }}->{{ $key }}</td>
                 </tr>
             @endif

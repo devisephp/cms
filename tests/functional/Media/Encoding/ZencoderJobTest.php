@@ -14,11 +14,14 @@ class ZencoderJobTest extends \DeviseTestCase
 		// keep downloads from happening with a Mock file
 		$this->FileDownloader = m::mock('Devise\Media\Files\FileDownloader');
 
+		// pass the framework in
+		$this->Framework = new \Devise\Support\Framework;
+
         // mock events
-        $this->Event = m::mock('\Illuminate\Events\Dispatcher');
+        $this->Framework->Event = m::mock('\Illuminate\Events\Dispatcher');
 
 		// setup job and fixtures
-		$this->job = new ZencoderJob('apikey', ['email@address.com'], $this->FileDownloader, $this->Event);
+		$this->job = new ZencoderJob('apikey', ['email@address.com'], $this->FileDownloader, $this->Framework);
 	}
 
 	/**
@@ -35,7 +38,7 @@ class ZencoderJobTest extends \DeviseTestCase
 		$this->FileDownloader->shouldReceive('download')->times(1)->with($fixtures['output']['url'], '/some/path/to', 'video1.mp4')->andReturn('/some/path/to/video1.mp4');
 
 		// make sure event is called with the new file and output data
-		$this->Event->shouldReceive('fire')->once()->with('devise.encoding.zencoder.finished', array('/some/path/to/video1.mp4', $fixtures['output']));
+		$this->Framework->Event->shouldReceive('fire')->once()->with('devise.encoding.zencoder.finished', array('/some/path/to/video1.mp4', $fixtures['output']));
 
 		// make sure things happen correctly?
 		$this->job->handle($fixtures['output'], '/some/path/to');
@@ -59,10 +62,10 @@ class ZencoderJobTest extends \DeviseTestCase
 		];
 
         // ensure events are fired when zencoder starts encoding
-        $this->Event->shouldReceive('fire')->once()->with('devise.encoding.zencoder.started', ['foo']);
+        $this->Framework->Event->shouldReceive('fire')->once()->with('devise.encoding.zencoder.started', ['foo']);
 
         // override the Zencoder class so we don't send api requests to the server
-		$jobs = m::mock('FakeClass', ['create']);
+		$jobs = m::mock('FakeClass');
 		$jobs->shouldReceive('create')->with($expectedSettings)->andReturn('foo');
 		$this->job->Zencoder->jobs = $jobs;
 

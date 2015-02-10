@@ -1,10 +1,11 @@
 <?php
 
 use Devise\Pages\Fields\FieldValue;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DvsField extends Eloquent
 {
-    use SoftDeletingTrait;
+    use SoftDeletes;
 
     public $dvs_type = 'field';
 

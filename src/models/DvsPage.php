@@ -1,10 +1,13 @@
 <?php
 
 use Devise\Pages\Fields\FieldValue;
+use Devise\Support\Sortable\Sortable;
 
 class DvsPage extends Eloquent
 {
-   protected $guarded = array();
+    use Sortable;
+
+    protected $guarded = array();
 
     protected $table = 'dvs_pages';
 

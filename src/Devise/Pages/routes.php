@@ -10,9 +10,9 @@
 |
 */
 
-if(!App::runningInConsole() && \Schema::hasTable('dvs_pages')) {
+if(!App::runningInConsole()) {
 
-    $filters = \Config::get('devise::permissions');
+    $filters = \Config::get('devise.permissions');
     $names = array_keys( $filters );
     foreach ($names as $name) {
         Route::filter($name, function($route, $request, $response = null) use ($filters, $name) {

@@ -1,6 +1,7 @@
 <?php namespace Devise\Media\Encoding;
 
 use Devise\Support\Framework;
+use Illuminate\Routing\Controller;
 
 /**
  * Class ZencoderNotificationsController handles incoming requests
@@ -10,7 +11,7 @@ use Devise\Support\Framework;
  *
  * @package Devise\Pages\Controllers
  */
-class ZencoderNotificationsController extends \Controller
+class ZencoderNotificationsController extends Controller
 {
     /**
      * Create a new ZencoderNotificationsController

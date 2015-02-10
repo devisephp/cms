@@ -45,6 +45,10 @@ class Framework
                 return \App::getFacadeRoot();
             break;
 
+            case 'file':
+                return \File::getFacadeRoot();
+            break;
+
             case 'event':                   // Illuminate\Config\Repository
                 return \Event::getFacadeRoot();
             break;
@@ -67,6 +71,10 @@ class Framework
 
             case 'mail':                    // Illuminate\Mail\Mailer
                 return \Mail::getFacadeRoot();
+            break;
+
+            case 'paginator':
+                return new DevisePaginator;
             break;
 
             case 'password':                // Illuminate\Auth\Reminders\PasswordBroker

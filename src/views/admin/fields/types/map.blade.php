@@ -17,3 +17,4 @@
         'maxZoom' => 'Amount allowed to zoom out on map scalled 1 thru 19',
     ],
 ])
+

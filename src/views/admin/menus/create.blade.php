@@ -6,13 +6,13 @@
 
 @section('main')
     <div class="dvs-admin-form-horizontal">
-        {{ Form::open(array('route' => array('dvs-menus-store'))) }}
+        <?= Form::open(array('route' => array('dvs-menus-store'))) ?>
     		<div class="dvs-form-group">
-    		    {{ Form::label('Menu Name') }}
-    		    {{ Form::text('name', $menu->name, array('placeholder' => 'Menu Name')) }}
+    		    <?= Form::label('Menu Name') ?>
+    		    <?= Form::text('name', $menu->name, array('placeholder' => 'Menu Name')) ?>
     		</div>
 
-    		{{ Form::submit('Save Menu', array('class' => 'dvs-button dvs-button-large')) }}
-        {{ Form::close() }}
+    		<?= Form::submit('Save Menu', array('class' => 'dvs-button dvs-button-large')) ?>
+        <?= Form::close() ?>
     </div>
 @stop

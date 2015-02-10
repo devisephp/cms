@@ -87,11 +87,6 @@ devise.define(['require', 'jquery'], { getInstance: function() {
             $(updateSelector).attr('src', newValue);
         }
 
-        function updateBackgroundColor() {
-            logChange('backgroundColor', 'value');
-            $(updateSelector).css('backgroundColor', newValue);
-        }
-
         function updateColor() {
             logChange('color', 'value');
             $(updateSelector).css('color', newValue);
@@ -127,11 +122,6 @@ devise.define(['require', 'jquery'], { getInstance: function() {
                     case 'color':
                         updateColor();
                         break;
-
-                    case 'backgroundColor':
-                        updateBackgroundColor();
-                        break;
-
                     // case 'link':
                     // case 'text':
                     // case 'textarea':
@@ -161,6 +151,7 @@ devise.define(['require', 'jquery'], { getInstance: function() {
             });
         } else {
             listenTo.on('change', function() {
+
 
                 newValue = listenTo.getData();
 

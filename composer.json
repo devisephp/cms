@@ -17,7 +17,7 @@
         "illuminate/html": "5.0.*"
     },
     "require-dev": {
-        "laravel/framework": "5.0.*@dev", //https://github.com/laravel/framework/pull/7306 - Waiting for this to be merged in to 5.0 branch (likely 5.0.3)
+        "laravel/framework": "5.0.*@dev",
         "mockery/mockery": "dev-master",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*"

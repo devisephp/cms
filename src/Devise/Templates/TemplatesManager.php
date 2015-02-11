@@ -91,7 +91,7 @@ class TemplatesManager
             // setup array for config file and sets vars array to
             // blank key/value pair to prep. data for init. edit form
             $configContents[$input['file_name']] = array(
-                'human_name' => $input['file_name'],
+                'human_name' => $input['human_name'],
                 'extends' => $input['extends'],
             );
 

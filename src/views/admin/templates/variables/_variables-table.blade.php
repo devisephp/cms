@@ -1,7 +1,7 @@
 <div class="dvs-admin-items-wpr">
-    <h4>Variables <div class="dvs-pr dvs-fr"><a class="dvs-add-button" href="{{ URL::route('dvs-templates-var-create', $params['templatePath']) }}">Add New Variable</a></div></h4>
+    <h4 class="fl">Variables</h4> <a class="dvs-button dvs-button-primary dvs-add-button fr" href="{{ URL::route('dvs-templates-var-create', $params['templatePath']) }}">Add New Variable</a>
 
-    <table class="dvs-admin-items">
+    <table class="dvs-admin-items mt sp50">
         @if(count($template['vars']))
             @foreach($template['vars'] as $var => $varDataArr)
 
@@ -20,8 +20,6 @@
 
             <tr id="dvs-var-{{$var}}" class="dvs-var-item" data-var-type="vars">
                 <td class="dvs-form-group">
-                    <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-remove-row dvs-pl">X</a>
-
                     <?= Form::text('template[vars]['.$var.'][varName]', $var) ?>
                     <?= Form::text('template[vars]['.$var.'][classPath]', $classPath) ?>
                     <?= Form::text('template[vars]['.$var.'][methodName]', $methodName) ?>
@@ -40,7 +38,12 @@
 
                     @endif
 
-                    <a href="{{ URL::route('dvs-templates-param-create') }}?varName={{$var}}" class="dvs-button dvs-button-small dvs-add-button">+</a>
+                    <div class="mt sp10">
+                        <a href="{{ URL::route('dvs-templates-param-create') }}?varName={{$var}}" class="dvs-button dvs-button-small dvs-add-button">Add Param</a>
+
+
+                        <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-button-gray sp10 ml dvs-remove-row">Remove</a>
+                    </div>
                 </td>
             </tr>
             @endforeach

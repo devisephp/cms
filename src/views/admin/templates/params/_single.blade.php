@@ -19,6 +19,6 @@
 
     <div class="dvs-badge">
         {{ $parameterForShow or $parameter }}&nbsp;
-        <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-remove-param dvs-pr" style="padding:0;">X</a>
+        <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-remove-param dvs-pr">X</a>
     </div>
 </div>

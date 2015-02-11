@@ -205,6 +205,9 @@ input[type="submit"].dvs-button.dvs-button-small {
   padding: 6px 7px 8px;
   cursor: pointer; }
 
+.pagination li {
+  float: left; }
+
 .dvs-messages {
   background-color: #17d4d2;
   width: 90%;
@@ -756,13 +759,16 @@ td .dvs-select-small {
             width: 18%; }
           #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group input:nth-of-type(2n) {
             width: 42%; }
-    #dvs-admin .dvs-admin-items-wpr .dvs-button-small {
-      padding: 0; }
   #dvs-admin #dvs-admin-modal {
     position: absolute;
     top: 42%;
     left: 42%;
     z-index: 20000; }
+    #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
+      padding-top: 30px; }
+      #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal h4 {
+        color: #262626;
+        margin-bottom: 15px; }
   #dvs-admin #dvs-admin-blocker {
     position: fixed;
     top: 0;

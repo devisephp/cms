@@ -9,7 +9,6 @@ use Devise\Support\Framework;
  */
 class TemplatesRepository
 {
-    protected $Framework;
 
     public function __construct(TemplatesManager $TemplatesManager, Framework $Framework, $File = null)
     {

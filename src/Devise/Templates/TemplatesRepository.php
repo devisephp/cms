@@ -92,7 +92,8 @@ class TemplatesRepository
         }
 
         asort($results);
-        return $results;
+
+        return array_reverse($results);
     }
 
 

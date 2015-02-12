@@ -80,7 +80,26 @@ class FieldManager
 		// no field was found so create a new field for this page
         $field = $field ?: $this->createPageField($input);
 
-        // add extra data to fields... for some reason? Gary?
+        // we want to be able to override the type and human name if
+        // the developer changes it in the blade view later on down the road
+        $type = array_get($input, 'type');
+        $humanName = array_get($input, 'human_name');
+
+        if ($type && $type != $field->type)
+        {
+	        $field->type = $type;
+	        $field->save();
+        }
+
+        // human names can be updated too in the database...
+        // whenever the developer changes it in the blade view
+        if ($humanName && $humanName != $field->human_name)
+        {
+	        $field->human_name = $humanName;
+	        $field->save();
+        }
+
+        // we apply these fields dynamically for helpers
         $field->index = array_get($input, 'index', '');
         $field->alternateTarget = array_get($input, 'alternateTarget', '');
 

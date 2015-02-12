@@ -7,7 +7,7 @@ Devise
 
 ##Installation
 
-We have provided full installation instructions in our official [documentation](http://devisephp.com/docs/1-installation.html)
+We have provided full installation instructions in our official [documentation](http://devisephp.com/docs/)
 
 ###License
 

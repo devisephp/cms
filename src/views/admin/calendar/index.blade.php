@@ -40,6 +40,7 @@
 <div class="edit-page-version js-template">
 	<form method="POST" action="{event.update_url}">
 		<input type="hidden" name="_method" value="PATCH">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 		<h3>{event.title}</h3>
 		<h6>{event.page.slug}</h6>

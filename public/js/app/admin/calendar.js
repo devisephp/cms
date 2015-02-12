@@ -5,6 +5,8 @@ devise.define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], functio
     // when communicating back and forth between server and client
     //
     var THE_DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+    // using the form rendered in the js-template to retrieve our csrf_token
+    var csrf_token = $('input[name="_token"]').val();
 
     //
     // this shows the calendar modal
@@ -132,7 +134,8 @@ devise.define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], functio
             start: start,
             end: null,
             title: event.title,
-            published: true
+            published: true,
+            _token: csrf_token,
         };
 
         $.ajax(
@@ -198,7 +201,8 @@ devise.define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], functio
             start: start,
             end: end,
             title: event.title,
-            published: true
+            published: true,
+            _token: csrf_token
         };
 
         $.ajax(

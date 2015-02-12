@@ -1,6 +1,6 @@
 <?php namespace Devise\Support\Config;
 
-use Devise\Support\ValidationException;
+use Devise\Support\DeviseValidationException;
 use Devise\Support\Framework;
 
 class SettingsResponseHandler
@@ -13,16 +13,13 @@ class SettingsResponseHandler
 
 	public function executeUpdate($input)
 	{
-		try
-		{
+		try {
 			$this->SettingsManager->update($input['settings']);
-		}
-		catch (\ValidationException $e)
-		{
+		} catch (DeviseValidationException $e) {
 	        return $this->Redirect->route('dvs-settings-index')
     	        ->withInput()
-        	    ->withErrors($e->getValidator())
-            	->with('message', "Invalid settings supplied");
+        	    ->withErrors($e->getErrors())
+            	->with('message', $e->getMessage());
 		}
 
         return $this->Redirect->route('dvs-settings-index');

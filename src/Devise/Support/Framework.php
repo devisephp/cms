@@ -45,7 +45,7 @@ class Framework
                 return \App::getFacadeRoot();
             break;
 
-            case 'file':
+            case 'file':                    // Illuminate\Filesystem\Filesystem
                 return \File::getFacadeRoot();
             break;
 

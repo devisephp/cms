@@ -142,7 +142,7 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
         var _sortNum = _sortNum || null;
         var _el = $('#dvs-sidebar-groups').find('.dvs-select');
 
-        if(_sortNum > 1 || _sortNum === null) {
+        if(_sortNum > 1 || _sortNum === null || _sortNum == 'done') {
             _el.html(''); // empty all select options then start appending
         }
 

@@ -155,10 +155,6 @@
         }
       }
     }
-
-    .dvs-button-small {
-      padding:0;
-    }
   }
 
   #dvs-admin-modal {
@@ -166,6 +162,15 @@
     top:42%;
     left:42%;
     z-index:20000;
+
+    .dvs-admin-form-horizontal {
+      padding-top:30px;
+
+      h4 {
+        color:$black;
+        margin-bottom:15px;
+      }
+    }
   }
 
   #dvs-admin-blocker {
@@ -339,7 +344,7 @@
 }
 
 .dvs-opaque-text {
-  opacity:0.8;
+  opacity:0.5;
 }
 
 .dvs-admin-container {

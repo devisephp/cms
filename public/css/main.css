@@ -41,10 +41,12 @@
 
 .dvs-badge {
   margin-right: 5px;
-  padding: 2px 5px;
+  padding: 5px 7px;
   color: #e7e7e7;
   background-color: #5d5d5d;
-  border-radius: 6px; }
+  border-radius: 3px;
+  font-size: 10px;
+  text-transform: uppercase; }
   .dvs-badge.white {
     background-color: white; }
   .dvs-badge.black {
@@ -55,6 +57,11 @@
     background-color: #a33737; }
   .dvs-badge.purple {
     background-color: #965b95; }
+  .dvs-badge .dvs-button.dvs-button-small {
+    padding: 1px 3px 1px 2px;
+    font-weight: bold;
+    font-size: 8px;
+    border-radius: 1px; }
 
 .dvs-large {
   font-size: 1.4em;
@@ -204,6 +211,9 @@
 input[type="submit"].dvs-button.dvs-button-small {
   padding: 6px 7px 8px;
   cursor: pointer; }
+
+.pagination li {
+  float: left; }
 
 .dvs-messages {
   background-color: #17d4d2;
@@ -756,13 +766,16 @@ td .dvs-select-small {
             width: 18%; }
           #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group input:nth-of-type(2n) {
             width: 42%; }
-    #dvs-admin .dvs-admin-items-wpr .dvs-button-small {
-      padding: 0; }
   #dvs-admin #dvs-admin-modal {
     position: absolute;
     top: 42%;
     left: 42%;
     z-index: 20000; }
+    #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
+      padding-top: 30px; }
+      #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal h4 {
+        color: #262626;
+        margin-bottom: 15px; }
   #dvs-admin #dvs-admin-blocker {
     position: fixed;
     top: 0;
@@ -888,7 +901,7 @@ td .dvs-select-small {
   overflow: hidden; }
 
 .dvs-opaque-text {
-  opacity: 0.8; }
+  opacity: 0.5; }
 
 .dvs-admin-container {
   width: 90%;
@@ -1353,6 +1366,9 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar select {
       background-color: white;
       padding: 20px; }
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar #dvs-sidebar-loading {
+      height: 40px;
+      line-height: 40px; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper {
     padding: 12px 6px; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-language-selector {
@@ -1376,10 +1392,11 @@ table.dvs-admin-table {
       padding-right: 10px;
       color: whitesmoke;
       font-family: "Roboto", Tahoma, Arial, sans-serif; }
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups #dvs-sidebar-manage-groups, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector #dvs-sidebar-manage-groups {
+      width: 152px; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups {
     margin-top: 3px; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-title {
-    background-color: black;
     padding: 20px;
     border-radius: 5px 5px 0 0;
     text-transform: uppercase; }
@@ -1406,8 +1423,8 @@ table.dvs-admin-table {
       float: left;
       margin: 4px 4px 8px 4px;
       border-width: 0;
-      height: 84px;
-      padding: 27px 15px;
+      height: 60px;
+      padding: 20px 15px;
       background-color: #333333;
       color: #cfcfcf;
       font-size: 12px;

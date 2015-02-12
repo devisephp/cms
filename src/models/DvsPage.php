@@ -25,6 +25,7 @@ class DvsPage extends Eloquent
 
     public $messages = array();
 
+
     public function versions()
     {
         return $this->hasMany('DvsPageVersion', 'page_id');
@@ -81,5 +82,14 @@ class DvsPage extends Eloquent
             })
             ->orderBy('starts_at', 'DESC')
             ->first();
+    }
+
+    public function setIsAdminAttribute($value)
+    {
+        if ($value === 'on' || $value === true || $value === 1) {
+            $this->attributes['is_admin'] = 1;
+        } else {
+            $this->attributes['is_admin'] = 0;
+        }
     }
 }

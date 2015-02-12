@@ -79,6 +79,11 @@
       background-color: $white;
       padding:$sidebarGeneralPadding;
     }
+
+    #dvs-sidebar-loading {
+      height: 40px;
+      line-height:40px;
+    }
   }
 
   .dvs-select-wrapper {
@@ -110,13 +115,18 @@
       color: $sidebarTextColor;
       font-family: $sidebarMainFont;
     }
+
+    #dvs-sidebar-manage-groups {
+      width:152px;
+    }
   }
+
+
   #dvs-sidebar-groups {
     margin-top: 3px;
   }
   #dvs-sidebar-title {
     @include clearfix;
-    background-color: $sidebarTitleBgColor;
     padding: $sidebarGeneralPadding;
     border-radius: $sidebarRoundedCorners $sidebarRoundedCorners 0 0;
     text-transform: uppercase;
@@ -144,8 +154,8 @@
       float: left;
       margin: 4px 4px 8px 4px;
       border-width: 0;
-      height:84px;
-      padding: 27px 15px;
+      height:60px;
+      padding: 20px 15px;
       background-color: $sidebarElementsButton;
       color: darken($sidebarTextColor, 15%);
       font-size: $sidebarMainFontSize;

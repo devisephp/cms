@@ -5,6 +5,7 @@
     </div>
 
     <div id="dvs-sidebar-contents-container">
+        @if(count($availableLanguages) > 1)
         <div id="dvs-sidebar-language-selector">
             <select class="dvs-select" name="other_languages">
                 @foreach ($availableLanguages as $language)
@@ -12,6 +13,7 @@
                 @endforeach
             </select>
         </div>
+        @endif
 
         <div id="dvs-sidebar-versions-selector">
             <select class="dvs-select" name="page_version" id="dvs-sidebar-version-selector">
@@ -22,8 +24,8 @@
                     @endif
                 @endforeach
             </select>
-            <button id="dvs-sidebar-add-version" class="dvs-button dvs-button-primary">Add</button>
-            <button id="dvs-sidebar-edit-version" onclick="location.href = '{{ route('dvs-pages-edit', $pageVersion->page_id) }}'" class="dvs-button dvs-button-primary">Edit</a>
+            <button id="dvs-sidebar-add-version" class="dvs-button dvs-button-gray">Add</button>
+            <button id="dvs-sidebar-edit-version" onclick="location.href = '{{ route('dvs-pages-edit', $pageVersion->page_id) }}'" class="dvs-button dvs-button-gray">Edit</a>
         </div>
 
         <div id="dvs-sidebar-groups-wpr">

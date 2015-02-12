@@ -27,16 +27,27 @@
 
 .dvs-badge {
   margin-right:5px;
-  padding:2px 5px;
+  padding:5px 7px;
   color:#e7e7e7;
   background-color:$gray;
-  border-radius:6px;
+  border-radius:3px;
+  font-size:10px;
+  text-transform: uppercase;
 
   &.white     { background-color:$white }
   &.black     { background-color:$black }
   &.gray      { background-color:$gray }
   &.red       { background-color:$red }
   &.purple    { background-color:$purple }
+
+  .dvs-button {
+    &.dvs-button-small {
+      padding:1px 3px 1px 2px;
+      font-weight:bold;
+      font-size:8px;
+      border-radius:1px;
+    }
+  }
 }
 
 .dvs-large {

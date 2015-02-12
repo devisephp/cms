@@ -6,13 +6,13 @@
     </div>
 
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-templates-register'), 'Register New Template', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-templates-register'), 'Register Template', array('class'=>'dvs-button')) ?>
     </div>
 @stop
 
 @section('main')
     <table class="dvs-admin-table">
-		<thead>
+		<thead>`
 			<tr>
 				<th class="dvs-tal">Template Name</th>
                 <th>&nbsp;</th>
@@ -22,9 +22,9 @@
 		<tbody id="templates">
 			@foreach($templates as $templatePath => $templateName)
 				<tr>
-                    <td>
+                    <td class="dvs-stacked-col">
                         <div>{{ $templateName }}</div>
-                        <div class="dvs-secondary-text dvs-opaque-text">filename: {{ $templatePath }}</div>
+                        <div class="dvs-secondary-text dvs-opaque-text">Filename: {{ $templatePath }}</div>
                     </td>
 					<td class="dvs-tac dvs-button-group">
 						<?= link_to(URL::route('dvs-templates-edit', array($templatePath)), 'Edit', array('class'=>'dvs-button dvs-button-small')) ?>

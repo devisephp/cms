@@ -38,8 +38,14 @@ class UsersResponseHandlerTest extends \DeviseTestCase
     {
         $this->SessionsRepository->shouldReceive('login')->once()->andReturn(true);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
-        $this->Framework->Redirect->shouldReceive('with')->once()->andReturnSelf();
         $this->UsersResponseHandler->executeLogin(['foo' => 'input data']);
+    }
+
+    public function test_it_can_execute_login_with_an_intended_redirect()
+    {
+        $this->SessionsRepository->shouldReceive('login')->once()->andReturn(true);
+        $this->Framework->Redirect->shouldReceive('to')->with('some/path')->once()->andReturnSelf();
+        $this->UsersResponseHandler->executeLogin(['intended' => 'some/path', 'foo' => 'input data']);
     }
 
     public function test_it_cannot_request_create_user()

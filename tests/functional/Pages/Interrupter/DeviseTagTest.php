@@ -82,7 +82,7 @@ class DeviseTagTest extends \DeviseTestCase
 		$tag1 = $this->tag(' data-devise="keyname1, type"', 19);
 		$tag2 = $this->tag(' data-devise="col[keyname1], type"', 19);
 
-		assertEquals("App::make('dvsPageData')->addBinding('keyname1', 'type', 'Keyname1', null, null, null);" . PHP_EOL, $tag1->addToDevisePageStr());
-		assertEquals("App::make('dvsPageData')->addCollection('col', 'keyname1', 'type', 'Keyname1', null, null, null);" . PHP_EOL, $tag2->addToDevisePageStr());
+		assertEquals("App::make('dvsPageData')->addBinding('keyname1', 'type', 'Keyname1', null, null, null);", $tag1->addToDevisePageStr());
+		assertEquals("App::make('dvsPageData')->addCollection('col', 'keyname1', 'type', 'Keyname1', null, null, null);", $tag2->addToDevisePageStr());
 	}
 }

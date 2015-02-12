@@ -77,6 +77,7 @@
 <script type="text/javascript">
     devise.require(['app/sidebar/video'], function(obj)
     {
-        obj.init();
+        var mediaManagerUlr = '<?= URL::route('dvs-media-manager') ?>';
+        obj.init(mediaManagerUlr);
     });
 </script>

@@ -12,7 +12,7 @@
 
 @section('main')
     <table class="dvs-admin-table">
-		<thead>`
+		<thead>
 			<tr>
 				<th class="dvs-tal">Template Name</th>
                 <th>&nbsp;</th>

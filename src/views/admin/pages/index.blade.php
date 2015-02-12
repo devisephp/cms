@@ -48,11 +48,11 @@
 					<td class="dvs-tac"><?= ($page->is_admin) ? 'Yes' : 'No'  ?></td>
 					<td class="dvs-tac dvs-button-group">
                         @if($page->status == 'live' && $page->http_verb == 'get')
-						  <?= link_to($page->slug, 'View', array('class'=>'dvs-button dvs-button-small dvs-button-secondary'))  ?>
+						  <?= link_to($page->slug, 'View/Edit', array('class'=>'dvs-button dvs-button-small dvs-button-secondary'))  ?>
                         @else
                           <span class="dvs-button dvs-button-small dvs-button-inactive">View</span>
                         @endif
-						<?= link_to(URL::route('dvs-pages-edit', array($page->id)), 'Edit', array('class'=>'dvs-button dvs-button-small'))  ?>
+						<?= link_to(URL::route('dvs-pages-edit', array($page->id)), 'Settings', array('class'=>'dvs-button dvs-button-small'))  ?>
 						<?= link_to(URL::route('dvs-pages-copy', array($page->id)), 'Copy', array('class'=>'dvs-button dvs-button-small'))  ?>
 
                         @if(!$page->dvs_admin)

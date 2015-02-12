@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "78a56d685487e50d5403760f4bf1730a",
+    "hash": "2f966df38840e8adfada71135d765c96",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -574,16 +574,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "5.0.x-dev",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "fe10d7afa9913beb2d83ecf2ea4f49f53bb4a92a"
+                "reference": "b5eafda7dba3d1367a63095b83a068a73d32d97f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/fe10d7afa9913beb2d83ecf2ea4f49f53bb4a92a",
-                "reference": "fe10d7afa9913beb2d83ecf2ea4f49f53bb4a92a",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/b5eafda7dba3d1367a63095b83a068a73d32d97f",
+                "reference": "b5eafda7dba3d1367a63095b83a068a73d32d97f",
                 "shasum": ""
             },
             "require": {
@@ -695,7 +695,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-02-11 20:11:33"
+            "time": "2015-02-11 20:37:48"
         },
         {
             "name": "league/flysystem",
@@ -1088,16 +1088,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.3.3",
+            "version": "v0.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "0355cecab0591c83fed019a9572c510b0da29174"
+                "reference": "218ea9e49c9fe21e28fce6cf77f22615af92daef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/0355cecab0591c83fed019a9572c510b0da29174",
-                "reference": "0355cecab0591c83fed019a9572c510b0da29174",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/218ea9e49c9fe21e28fce6cf77f22615af92daef",
+                "reference": "218ea9e49c9fe21e28fce6cf77f22615af92daef",
                 "shasum": ""
             },
             "require": {
@@ -1154,7 +1154,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2015-01-20 21:18:03"
+            "time": "2015-02-12 05:21:32"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3055,10 +3055,10 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "laravel/framework": 20,
         "mockery/mockery": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0",
         "ext-imagick": "*"

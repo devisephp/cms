@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditorJquery'], function (require, $, sidebar, liveUpdate) {
+devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'dvsPageData', 'ckeditorJquery'], function (require, $, sidebar, liveUpdate, dvsPageData) {
 
     function onMediaManagerSelect(parentForm, video, target, settings)
     {
@@ -13,12 +13,12 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditor
     }
 
     return {
-        init: function() {
+        init: function(url) {
             $('.browse').click(function(e)
             {
                 var parentForm = $(this).parents('form');
                 var target = $(e.currentTarget).data('target');
-                var mediaUrl = '/admin/media-manager?type=video&target=' + target;
+                var mediaUrl = url + '?type=video&target=' + target;
 
                 document.onMediaManagerSelect = function(video, target, settings) { onMediaManagerSelect(parentForm, video, target, settings); }
                 window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");

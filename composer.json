@@ -17,7 +17,7 @@
         "illuminate/html": "5.0.*"
     },
     "require-dev": {
-        "laravel/framework": "5.0.*@dev",
+        "laravel/framework": "5.0.*",
         "mockery/mockery": "dev-master",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*"

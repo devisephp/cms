@@ -4,12 +4,12 @@ class DeviseMenusSeeder extends DeviseSeeder
 {
 	public function run()
     {
-		$menus = array(
+		$menu = $this->findOrCreateRow('dvs_menus', 'name', [
 				'language_id' => 45,
 				'name' => 'Admin Menu'
-			);
+		]);
 
-		$menuId = DB::table('dvs_menus')->insertGetId($menus);
+		$menuId = $menu->id;
 
 		$menuItems = array(
 			array(
@@ -89,8 +89,15 @@ class DeviseMenusSeeder extends DeviseSeeder
 				'url' => '/admin/languages',
 				'position' => 11,
 			),
+			array(
+				'menu_id' => $menuId,
+				'parent_item_id' => 7,
+				'name' => 'Settings',
+				'url' => '/admin/settings',
+				'position' => 12,
+			),
 		);
 
-		DB::table('dvs_menu_items')->insert($menuItems);
+		$this->findOrCreateRows('dvs_menu_items', ['menu_id', 'name'], $menuItems);
 	}
 }

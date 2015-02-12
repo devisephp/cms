@@ -63,7 +63,7 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-
+        $this->registerConfigOverrideWrapper();
     }
 
     /**
@@ -74,6 +74,23 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     public function provides()
     {
         return array();
+    }
+
+    /**
+     * Overrides the config stuff
+     * @return [type]
+     */
+    private function registerConfigOverrideWrapper()
+    {
+        $overrideFile = $this->app['path.storage'] . '/app/config.overrides.php';
+
+        $items = $this->app['config']->all();
+
+        $overrides = file_exists($overrideFile) ? include $overrideFile : [];
+
+        $this->app['config.overrides.file'] = $overrideFile;
+
+        $this->app['config'] = new Support\Config\Overrides($items, $overrides);
     }
 
     /**

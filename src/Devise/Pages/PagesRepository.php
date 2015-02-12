@@ -193,7 +193,7 @@ class PagesRepository
 
         if ($showAdmin !== 'true')
         {
-            $pages = $pages->where('dvs_admin', '<>', 1);
+            $pages = $pages->where('dvs_admin', '<>', 1)->where('is_admin', '<>', 1);
         }
 
         $pages = $pages->paginate();

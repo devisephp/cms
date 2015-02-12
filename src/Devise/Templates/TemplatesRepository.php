@@ -9,7 +9,6 @@ use Devise\Support\Framework;
  */
 class TemplatesRepository
 {
-    protected $Framework;
 
     public function __construct(TemplatesManager $TemplatesManager, Framework $Framework, $File = null)
     {
@@ -31,22 +30,27 @@ class TemplatesRepository
      */
     public function getTemplateByPath($templatePath)
     {
-        $template = $this->Config->get('devise.templates')[$templatePath];
+        $configData = $this->Config->get('devise.templates');
+        if(isset($configData[$templatePath])){
+            $template = $configData[$templatePath];
 
-        $templateSource = $this->getTemplateSourceByPath($templatePath);
+            $templateSource = $this->getTemplateSourceByPath($templatePath);
 
-        // if extends is empty/not set, retrieve it from blade
-        if(empty($template['extends'])) {
-            $template['extends'] = $this->getTemplateExtends($templateSource);
+            // if extends is empty/not set, retrieve it from blade
+            if(empty($template['extends'])) {
+                $template['extends'] = $this->getTemplateExtends($templateSource);
+            }
+
+            // retrieve and set any vars found in source of config
+            $template['vars'] = $this->getVarsFromSource($template, $templateSource);
+
+            // split vars array into vars and newVars keys
+            $template = $this->splitVarsAndNewVars($template);
+
+            return $template;
+        } else {
+            throw new DeviseTemplateNotFoundException('"' . $templatePath . '" was not found in templates config. Please check the devise.templates.php and ensure this path exists.');
         }
-
-        // retrieve and set any vars found in source of config
-        $template['vars'] = $this->getVarsFromSource($template, $templateSource);
-
-        // split vars array into vars and newVars keys
-        $template = $this->splitVarsAndNewVars($template);
-
-        return $template;
     }
 
     /**
@@ -88,7 +92,8 @@ class TemplatesRepository
         }
 
         asort($results);
-        return $results;
+
+        return array_reverse($results);
     }
 
 

@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui'], function (require, $, network, dvsSidebarView) {
+devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'dvsPageData', 'jquery-ui'], function (require, $, network, dvsSidebarView, dvsPageData) {
 
     var collectionId = null;
     var collectionName = null;
@@ -22,14 +22,14 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
             var _data = { name: _name, sort: _numberOfItems  };
 
             network.request(
-                '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/store',
+                dvsPageData.url('add_collection_instance', { pageVersionId: pageVersionId, collectionId: collectionId }),
                 _data, 'post', null, addSortableItem
             );
         },
         removeCollection: function(_el, _id) {
 
             network.request(
-                '/admin/collections/' + collectionId + '/instances/'+_id+'/delete',
+                dvsPageData.url('remove_collection_instance', { id: _id, collectionId: collectionId }),
                 null, 'post', null
             );
 
@@ -39,7 +39,7 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
             var _data = { name: _name };
 
             network.request(
-                '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/'+_id+'/update-name',
+                dvsPageData.url('update_collection_instance', { id: _id, pageVersionId: pageVersionId, collectionId: collectionId }),
                 _data, 'put', null, updateGroupSelect
             );
         }
@@ -98,7 +98,7 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
         updateGroupSelect(); // keeps groups select options in sync with sortable list
 
         network.request(
-            '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances/update-sort-orders',
+            dvsPageData.url('sort_collection_instance', { pageVersionId: pageVersionId, collectionId: collectionId }),
             _data, 'post', reloadElementGrids
         );
     };
@@ -109,7 +109,7 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'jquery-ui']
 
     function requestSortable() {
         network.request(
-            '/admin/pages/'+ pageVersionId +'/collections/' + collectionId + '/instances',
+            dvsPageData.url('request_sort_collection', { pageVersionId: pageVersionId, collectionId: collectionId }),
             {}, 'get', null, drawSortable
         );
     }

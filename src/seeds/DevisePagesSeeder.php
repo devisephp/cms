@@ -1241,6 +1241,35 @@ class DevisePagesSeeder extends DeviseSeeder
                 'response_path'           => 'Devise\Users\Permissions\PermissionsResponseHandler.executeDestroy',
                 'response_params'         => 'input.condition'
             ),
+            array(
+                'language_id'             => '45',
+                'title'                   => 'Settings Page',
+                'http_verb'               => 'get',
+                'view'                    => 'devise::admin.settings.index',
+                'route_name'              => 'dvs-settings-index',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'canAccessAdmin',
+                'after'                   => '',
+                'slug'                    => 'admin/settings',
+                'short_description'       => 'Configure devise settings',
+                'response_type'           => 'View',
+            ),
+            array(
+                'language_id'             => '45',
+                'title'                   => 'Change devise configuration settings',
+                'http_verb'               => 'put',
+                'route_name'              => 'dvs-settings-update',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'canAccessAdmin',
+                'after'                   => '',
+                'slug'                    => 'admin/settings',
+                'short_description'       => 'Updates the devise configuration settings',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Support\Config\SettingsResponseHandler.executeUpdate',
+                'response_params'         => 'input'
+            ),
 		);
 
         $now = date('Y-m-d H:i:s', strtotime('now'));

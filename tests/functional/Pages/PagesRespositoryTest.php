@@ -43,7 +43,7 @@ class PagesRepositoryTest extends \DeviseTestCase
         // create a translated spanish page of page #1
         $this->createTestPage([
             'translated_from_page_id' => '1',
-            'language_id'             => '162',
+            'language_id'             => '162', // spanish page
             'route_name'              => 'dvs-pages-es',
             'slug'                    => '/admin/es/pages',
         ]);

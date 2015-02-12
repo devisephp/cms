@@ -174,7 +174,7 @@ return [
 		'Cookie'    => 'Illuminate\Support\Facades\Cookie',
 		'Crypt'     => 'Illuminate\Support\Facades\Crypt',
 		'DB'        => 'Illuminate\Support\Facades\DB',
-		//'Eloquent'  => 'Illuminate\Database\Eloquent\Model',
+		'Eloquent'  => 'Illuminate\Database\Eloquent\Model',
 		'Event'     => 'Illuminate\Support\Facades\Event',
 		'File'      => 'Illuminate\Support\Facades\File',
 		'Hash'      => 'Illuminate\Support\Facades\Hash',
@@ -200,7 +200,6 @@ return [
 		/*
 		 * Devise Facades...
 		 */
-        'Eloquent'        => 'Devise\Support\Sortable\EloquentModel',
         'Sort'            => 'Devise\Support\Sortable\SortableFacade',
         'DeviseUser'      => 'Devise\Users\DeviseUser',
         'RuleManager'     => 'Devise\Users\Permissions\RuleManagerFacade',

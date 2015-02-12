@@ -4,50 +4,113 @@ use Mockery as m;
 
 class RuleListTest extends \DeviseTestCase
 {
-    public function test_it_can_handle_execution_of_different_types_of_methods()
+    public function setUp()
     {
-    	// for some reason we are using the __call magic method
-        $this->markTestIncomplete();
+        parent::setUp();
+
+        $this->DvsUser = new \DvsUser;
+        $this->Framework =  new \Devise\Support\Framework;
+        $this->Framework->Auth = m::mock('Illuminate\Auth\Guard');
+        $this->RuleList = new RuleList($this->DvsUser, $this->Framework);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function test_it_throws_exception_for_call_to_unknown_method()
+    {
+        $this->RuleList->fooMethod();
+    }
+
+    public function test_it_can_call_a_user_defined_function()
+    {
+        // add closure to rules array
+        $this->RuleList->rules[] = 'functOne';
+
+        // define anonymous function and add to closures array
+        $this->RuleList->closures['functOne'] = function() {
+            return 'foo';
+        };
+
+        assertEquals( 'foo', $this->RuleList->functOne() );
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function test_it_throws_an_error_on_call_to_undefined_user_function()
+    {
+        // add closure to rules array
+        $this->RuleList->rules[] = 'functOne';
+        $this->RuleList->functOne();
     }
 
     public function test_it_tells_us_if_we_are_logged_in()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth->shouldReceive('check')->once()->andReturn(true);
+        assertTrue( $this->RuleList->isLoggedIn() );
     }
 
     public function test_it_tells_us_if_we_are_not_logged_in()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth->shouldReceive('check')->once()->andReturn(false);
+        assertTrue( $this->RuleList->isNotLoggedIn() );
     }
 
     public function test_it_tells_us_if_we_are_in_a_group()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth->shouldReceive('check')->once()->andReturn(true);
+
+        $currentUser = $this->DvsUser->find(1);
+        $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
+
+        assertTrue( $this->RuleList->isInGroup('Devise Administrator') );
     }
 
     public function test_it_tells_us_if_we_are_not_in_a_group()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth->shouldReceive('check')->once()->andReturn(true);
+
+        $currentUser = $this->DvsUser->find(1);
+        $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
+
+        assertFalse( $this->RuleList->isNotInGroup('Devise Administrator') );
     }
 
     public function test_it_tells_us_if_we_have_a_username()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth->shouldReceive('check')->andReturn(true);
+
+        $currentUser = $this->DvsUser->find(1);
+        $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
+
+        assertTrue( $this->RuleList->hasUserName('noreply@devisephp.com') );
     }
 
     public function test_it_tells_us_if_we_have_an_email()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth->shouldReceive('check')->once()->andReturn(true);
+
+        $currentUser = $this->DvsUser->find(1);
+        $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
+
+        assertTrue( $this->RuleList->hasEmail('noreply@devisephp.com') );
     }
 
     public function test_it_tells_us_if_we_have_a_field_value()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth->shouldReceive('check')->once()->andReturn(true);
+
+        $currentUser = $this->DvsUser->find(1);
+        $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
+
+        assertTrue( $this->RuleList->hasFieldValue('email', 'noreply@devisephp.com') );
     }
 
     public function test_it_tells_us_if_we_can_show_devise_span()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth->shouldReceive('check')->once()->andReturn(true);
+        assertTrue( $this->RuleList->showDeviseSpan('someKey', new \Illuminate\Support\Collection) );
     }
 
 }

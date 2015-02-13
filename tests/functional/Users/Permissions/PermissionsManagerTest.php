@@ -60,7 +60,8 @@ class PermissionsManagerTest extends \DeviseTestCase
 
     public function test_it_can_destroy_permission()
     {
-        $result = $this->PermissionsManager->destroyPermission('newPermission');
+
+        $result = $this->PermissionsManager->destroyPermission('isDeviseAdmin');
 
         assertInternalType('array', $result);
     }

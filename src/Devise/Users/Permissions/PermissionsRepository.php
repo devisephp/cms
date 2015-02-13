@@ -1,7 +1,6 @@
 <?php namespace Devise\Users\Permissions;
 
 use Devise\Support\Framework;
-use Devise\Users\Permissions\RuleList;
 use Illuminate\Filesystem\Filesystem as File;
 
 /**
@@ -12,13 +11,9 @@ use Illuminate\Filesystem\Filesystem as File;
 class PermissionsRepository
 {
     protected $Framework;
-    protected $RuleList;
 
-    public function __construct(PermissionsManager $PermissionsManager, RuleList $RuleList, Framework $Framework, $File = null)
+    public function __construct(Framework $Framework, $File = null)
     {
-        $this->PermissionsManager = $PermissionsManager;
-        $this->RuleList = $RuleList;
-
         $this->Config = $Framework->Config;
         $this->Input = $Framework->Input;
         $this->View = $Framework->View;

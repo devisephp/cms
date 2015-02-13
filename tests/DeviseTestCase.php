@@ -119,6 +119,7 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
                         $data[$filename] = include($fullpath);
                         break;
                     case 'blade.php':
+                    case 'txt';
                         $data[$filename] = file_get_contents($fullpath);
                         break;
                     default:

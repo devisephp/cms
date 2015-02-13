@@ -30,7 +30,7 @@ class SettingsManager
 	 * @param  array $settings
 	 * @return void
 	 */
-	public function update($settings)
+	public function update(array $settings)
 	{
 		$contents = $this->prettyVarExport($settings);
 
@@ -44,7 +44,7 @@ class SettingsManager
 	 * @param  array $settings
 	 * @return void
 	 */
-	public function merge($settings)
+	public function merge(array $settings)
 	{
 		$merged = array_merge(require $this->overridesFile, $settings);
 

@@ -135,6 +135,7 @@ class RuleManager
     public function runCondition($conditionName, $redirectOnFail, $evaluateResults = true)
     {
         $condition = $this->getCondition($conditionName);
+
         $results = $this->executeCondition($condition);
 
         return ($evaluateResults) ? $this->evaluateResults($results, $redirectOnFail, $condition) : $results;
@@ -144,7 +145,7 @@ class RuleManager
      * Executes conditions one at a time and returns result
      *
      * @param object  $conditionObject
-     * @return boolean
+     * @return array
      */
     public function executeCondition($conditionObject)
     {

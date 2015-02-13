@@ -33,7 +33,8 @@ class RedirectHandler
      */
     public function redirect($conditionObject)
     {
-        $redirectType = $conditionObject->redirect_type;
+        // Default to 'back'
+        $redirectType = isset($conditionObject->redirect_type) ? $conditionObject->redirect_type : 'back';
         $redirectMessage = isset($conditionObject->redirect_message) ? $conditionObject->redirect_message : '';
 
         switch ($redirectType)

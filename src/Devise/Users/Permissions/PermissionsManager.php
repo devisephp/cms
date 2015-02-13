@@ -59,11 +59,36 @@ class PermissionsManager
         'permission_name_edit.alpha' => 'The permission name can only contain alpha characters, and no spaces.',
     );
 
+
+    /**
+     * Create rules for a new permission
+     *
+     * @return array
+     */
+    public function createRules()
+    {
+        return array(
+            'permission_name' => 'required|alpha',
+        );
+    }
+
+    /**
+     * Create rules to edit a permission
+     *
+     * @return array
+     */
+    public function updateRules()
+    {
+        return array(
+            'permission_name_edit' => 'required|alpha',
+        );
+    }
+
     /**
      * Validates and updates a permission with the given input
      *
      * @param  array   $input
-     * @return bool
+     * @return bool | array
      */
     public function storePermission($input)
     {
@@ -77,7 +102,7 @@ class PermissionsManager
                 $configContents = $this->Config->get('devise.permissions');
 
                 $this->includeRedirect($input, $input[ $input['permission_name'] ]);
-                
+
                 $configContents[ $input['permission_name'] ] = $input[ $input['permission_name'] ];
 
                 return $this->ConfigFileManager->saveToFile($configContents, 'permissions', 'devisephp/cms');
@@ -114,7 +139,7 @@ class PermissionsManager
                 }
 
                 $this->includeRedirect($input, $input[ $input['permission_name_edit'] ]);
-                
+
                 $configContents[ $input['permission_name_edit'] ] = $input[ $input['permission_name_edit'] ];
 
                 return $this->ConfigFileManager->saveToFile($configContents, 'permissions', 'devisephp/cms');
@@ -129,36 +154,11 @@ class PermissionsManager
     }
 
     /**
-     * Create rules for a new permission
-     *
-     * @return array
-     */
-    public function createRules()
-    {
-        return array(
-            'permission_name' => 'required|alpha',
-        );
-    }
-
-    /**
-     * Create rules to edit a permission
-     *
-     * @return array
-     */
-    public function updateRules()
-    {
-        return array(
-            'permission_name_edit' => 'required|alpha',
-        );
-    }
-
-
-    /**
      * Destroys a permission by retrieving current config contents and
      * unsetting the key (condition) then saving the updated contents
      *
      * @param  string $condition
-     * @return boolean
+     * @return boolean | array
      */
     public function destroyPermission($condition)
     {

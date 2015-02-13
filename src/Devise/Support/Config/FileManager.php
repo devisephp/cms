@@ -29,8 +29,8 @@ class FileManager
     {
         $configFile = $this->getFileByEnvironment($filename, $package);
 
-        \File::put($configFile, '<?php return ' . $this->prettyVarExport($content) . ';');
-        
+        $this->files->put($configFile, '<?php return ' . $this->prettyVarExport($content) . ';');
+
         sleep(1); // hack to force the file to update on the next request. @todo look at asap
 
         return $content;

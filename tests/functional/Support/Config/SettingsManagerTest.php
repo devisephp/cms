@@ -1,31 +1,56 @@
 <?php namespace Devise\Support\Config;
 
 use Mockery as m;
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 class SettingsManagerTest extends \DeviseTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $structure = array(
+            'my' => array(
+                'path' => array(
+                    'config.overrides.php' => $this->fixture('config-overrides'),
+                ),
+            ),
+        );
+
+        vfsStream::setup('root', null, $structure);
+    }
+
     public function test_it_can_update()
     {
-    	$overridesFile = '/the/path/to/config.overrides.php';
-    	$settings = [
-    		'a' => 1, 'b' => 2, 'other.thing' => 'Some value',
-    	];
+        // given
+    	$overridesFile = vfsStream::url('root/my/path/config.overrides.php');
+    	$settings = ['b' => 4, 'other.thing' => 'Some value'];
 
-    	// content needs to look exactly like below,
-    	// so don't reformat it or change how it is tabbed
-    	$content = "<?php return array (
-		'a' => 1,
-		'b' => 2,
-		'other.thing' => 'Some value',
-	);";
-
+        // when
     	$Framework = new \Devise\Support\Framework;
-    	$Framework->File = m::mock('Illuminate\Filesystem\Filesystem');
-    	$Framework->Container = m::mock('Illuminate\Container\Container');
-    	$Framework->Container->shouldReceive('make')->with('config.overrides.file')->andReturn($overridesFile);
-    	$Framework->File->shouldReceive('put')->with($overridesFile, $content);
-
-    	$SettingsManager = new SettingsManager($Framework);
+    	$SettingsManager = new SettingsManager($Framework, $overridesFile);
     	$SettingsManager->update($settings);
+
+        // then
+        $results = require $overridesFile;
+        assertEquals(["b" => 4, "other.thing" => "Some value"], $results);
     }
+
+    public function test_it_can_merge()
+    {
+        // given
+        $overridesFile = vfsStream::url('root/my/path/config.overrides.php');
+        $settings = ['b' => 4, 'other.thing' => 'Some value'];
+
+        // when
+        $Framework = new \Devise\Support\Framework;
+        $SettingsManager = new SettingsManager($Framework, $overridesFile);
+        $SettingsManager->merge($settings);
+
+        // then
+        $results = require $overridesFile;
+        assertEquals(["a" => 1, "b" => 4, "other.thing" => "Some value"], $results);
+    }
+
 }

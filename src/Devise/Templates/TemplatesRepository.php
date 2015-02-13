@@ -61,6 +61,11 @@ class TemplatesRepository
      */
     public function allTemplatesPaginated($perPage = 25)
     {
+        $perPage = is_numeric($perPage) ? $perPage : 25;
+
+        // Prevent some silly attack
+        $perPage = ($perPage <= 300) ? $perPage : 100;
+
         $templatesList = $this->registeredTemplatesList();
 
         $currentPage = $this->Input->get('page', 1) - 1;

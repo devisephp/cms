@@ -69,18 +69,36 @@ class RuleManagerTest extends \DeviseTestCase
         $this->RuleManager->getCondition($conditionName);
     }
 
+    public function test_it_can_run_condition_without_type_goes_back()
+    {
+        $conditionName = 'isDeviseAdmin';
+        assertInstanceOf('Illuminate\Http\RedirectResponse', $this->RuleManager->runCondition($conditionName, true));
+    }
+
     public function test_it_can_run_condition()
     {
-        var_dump($this->RuleManager->runCondition('isDeviseAdmin', false));
+        $conditionName = 'canAccessAdmin';
+        $RedirectHandlerMock = m::mock('Devise\Users\Permissions\RedirectHandler');
+        $RedirectHandlerMock->shouldReceive('redirect')->once()->andReturn(true);
+
+        $RuleManagerMock = m::mock(new RuleManager($RedirectHandlerMock, $this->Framework));
+
+        assertEquals(true, $RuleManagerMock->runCondition($conditionName, true));
     }
 
     public function test_it_can_execute_condition()
     {
-        $this->markTestIncomplete();
+        $conditionName = 'isDeviseAdmin';
+        $conditionObject = $this->RuleManager->getCondition($conditionName);
+        assertInternalType('array', $this->RuleManager->executeCondition($conditionObject));
     }
 
     public function test_it_can_evaluate_results()
     {
-        $this->markTestIncomplete();
+        $conditionName = 'isDeviseAdmin';
+        $conditionObject = $this->RuleManager->getCondition($conditionName);
+        $results = $this->RuleManager->executeCondition($conditionObject);
+        assertInternalType('boolean', $this->RuleManager->evaluateResults($results, false, $conditionObject));
+        assertEquals(false, $this->RuleManager->evaluateResults($results, false, $conditionObject));
     }
 }

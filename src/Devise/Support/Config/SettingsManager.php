@@ -10,23 +10,45 @@ use Devise\Support\Framework;
 class SettingsManager
 {
 	/**
-	 * [__construct description]
+	 * Create a new settings manager
+	 *
 	 * @param Framework $Framework
 	 */
-	public function __construct(Framework $Framework)
+	public function __construct(Framework $Framework, $overridesFile = null)
 	{
 		$this->files = $Framework->File;
-		$this->overridesFile = $Framework->Container->make('config.overrides.file');
+		$this->overridesFile = $overridesFile ?: $Framework->Container->make('config.overrides.file');
 	}
 
 	/**
-	 * [update description]
-	 * @param  [type] $settings
-	 * @return [type]
+	 * Overrides the settings inside of the overrides file
+	 * this does not merge... so if you have settings in your
+	 * overrides file that aren't in the $settings array they
+	 * will be lost. To keep them we need to use the merge()
+	 * method instead
+	 *
+	 * @param  array $settings
+	 * @return void
 	 */
-	public function update($settings)
+	public function update(array $settings)
 	{
 		$contents = $this->prettyVarExport($settings);
+
+		$this->files->put($this->overridesFile, $contents);
+	}
+
+	/**
+	 * Merges these settings in with the other settings from
+	 * the overrides config file
+	 *
+	 * @param  array $settings
+	 * @return void
+	 */
+	public function merge(array $settings)
+	{
+		$merged = array_merge(require $this->overridesFile, $settings);
+
+		$contents = $this->prettyVarExport($merged);
 
 		$this->files->put($this->overridesFile, $contents);
 	}

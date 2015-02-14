@@ -28,7 +28,7 @@
 
         <tbody>
 
-        @foreach (['model', 'model-attribute', 'model-group',
+        @foreach (['model-creator', 'model', 'model-attribute', 'model-group',
             'audio', 'checkbox-group', 'checkbox', 'color',
             'datetime', 'file', 'html', 'image',
             'link', 'map', 'select', 'text', 'textarea',

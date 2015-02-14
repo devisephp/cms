@@ -9,7 +9,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
 
     var initializeNodeView = function () {
         nodes = [];
-
+        devise.nodes = nodes;
         checkContentRequested(function(){
             loadNodeLocations();
             solveNodeCollisions();
@@ -102,7 +102,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         var groupNode = getGroupNode(props);
         var categoryNode = getIndexOfCategoryNode(inCategory, props);
 
-       addToNodesArray(inGroup, categoryNode, groupNode, props);
+        addToNodesArray(inGroup, categoryNode, groupNode, props);
     }
 
     function buildModelAttributeNode(index, modelAttribute)
@@ -377,27 +377,26 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
 
     function placeNode(node) {
         var side = calculateSide(node.coordinates);
+        var contentRequested = typeof node.contentRequested === 'undefined' ? '' : node.contentRequested;
 
-        if(typeof node.contentRequested != 'undefined') {
-            var newNode = $('<div>')
-                .addClass('dvs-node ' + side + node.contentRequested)
-                .css({
-                    top: node.coordinates.top
-                });
+        var newNode = $('<div>')
+            .addClass('dvs-node ' + side + ' ' + contentRequested)
+            .css({
+                top: node.coordinates.top
+            });
 
-            var label = getLabel(node);
+        var label = getLabel(node);
 
-            var newNodeInnerWrapper = $('<div>').addClass('dvs-node-inner-wrapper');
-            var labelTag = $('<span>').html(label);
-            var svgPath = require.toUrl('/packages/devisephp/cms/img/node-arrow.svg');
-            var svg = $(newNodeInnerWrapper).load(svgPath);
+        var newNodeInnerWrapper = $('<div>').addClass('dvs-node-inner-wrapper');
+        var labelTag = $('<span>').html(label);
+        var svgPath = require.toUrl('/packages/devisephp/cms/img/node-arrow.svg');
+        var svg = $(newNodeInnerWrapper).load(svgPath);
 
-            newNode.append(newNodeInnerWrapper);
-            newNode.append(labelTag);
-            newNode.data('dvsData', node);
+        newNode.append(newNodeInnerWrapper);
+        newNode.append(labelTag);
+        newNode.data('dvsData', node);
 
-            $('#dvs-nodes').append(newNode);
-        }
+        $('#dvs-nodes').append(newNode);
     }
 
     function getLabel(node) {

@@ -429,7 +429,7 @@ class ModelMapper
 	protected function newModelFieldInstance($type, $mapping)
 	{
 		$modelField = $this->DvsModelField->newInstance();
-		$modelField->model_id = -1;
+		$modelField->model_id = 0;
 		$modelField->model_type = $type;
 		$modelField->mapping = $mapping;
 		$modelField->json_value = '{}';

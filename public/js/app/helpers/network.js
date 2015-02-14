@@ -58,7 +58,6 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
             target = _target;
             callback = _callback;
 
-            console.log(_data);
             var _request = $.ajax({
                 url: _url,
                 type: _method,

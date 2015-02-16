@@ -67,7 +67,6 @@ class SidebarManagerTest extends \DeviseTestCase
     {
         $SidebarDataTranslator = m::mock('Devise\Sidebar\SidebarDataTranslator');
         $PagesRepository = m::mock('Devise\Pages\PagesRepository');
-        $PagesRepository->shouldReceive('availableLanguagesForPage')->andReturn([]);
         $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
         $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
         $View = m::mock('Mocked\View');
@@ -84,9 +83,8 @@ class SidebarManagerTest extends \DeviseTestCase
 
     public function test_it_can_create_model()
     {
-         $SidebarDataTranslator = m::mock('Devise\Sidebar\SidebarDataTranslator');
+        $SidebarDataTranslator = m::mock('Devise\Sidebar\SidebarDataTranslator');
         $PagesRepository = m::mock('Devise\Pages\PagesRepository');
-        $PagesRepository->shouldReceive('availableLanguagesForPage')->andReturn([]);
         $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
         $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
         $View = m::mock('Mocked\View');
@@ -103,6 +101,39 @@ class SidebarManagerTest extends \DeviseTestCase
 
     public function test_it_updates_group()
     {
-        $this->markTestIncomplete();
+        $SidebarDataTranslator = m::mock('Devise\Sidebar\SidebarDataTranslator');
+        $PagesRepository = m::mock('Devise\Pages\PagesRepository');
+        $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
+        $View = m::mock('Mocked\View');
+
+        $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+        $FieldManager->shouldReceive('updateField')->once()->andReturnSelf();
+
+        $ModelMapper = m::mock('Devise\Sidebar\ModelMapper');
+        $ModelMapper->shouldReceive('update')->once()->andReturn(new \DvsUser);
+
+        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $ModelMapper, $FieldManager, $View);
+
+        $input['page_version_id'] = 1;
+        $input['groups'] = array(
+            'model' => array(
+                'type' => 'model',
+                'class_name' => 'DvsUser',
+                'key' => 'someFieldKey',
+                'forms' => 'fooForms'
+            ),
+            'group' => array(
+                'type' => 'text',
+                'forms' => array(
+                    'field_id' => 1,
+                    'field_name' => 'whatever'
+                )
+            ),
+        );
+
+        $output = $SidebarManager->updateGroup($input);
+
+        assertNull($output);
     }
+
 }

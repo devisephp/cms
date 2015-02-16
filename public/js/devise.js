@@ -73,9 +73,6 @@ devise.require.config({
         dvsCalendar:        'app/admin/calendar',
         dvsDataReplacement: 'app/bindings/data-dvs-replacement',
         dvsChangeTarget:    'app/bindings/data-change-target'
-    },
-    devise: {
-        partialLoaderPath:  '/admin/partials/'
     }
 });
 devise.define("config", function(){});

@@ -95,8 +95,6 @@ class TemplatesManager
                 'extends' => $input['extends'],
             );
 
-            $this->Config->set('devise.templates', $configContents);
-
             return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
         }
 
@@ -130,9 +128,7 @@ class TemplatesManager
 
             // overwrite template data for submitted template path/key
             $configContents[$input['template_path']] = $input['template'];
-
-            $this->Config->set('devise.templates', $configContents);
-
+            
             return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
         }
 
@@ -151,10 +147,7 @@ class TemplatesManager
         // check if key exists in config, if so unset it
         $configContents = $this->Config->get('devise.templates');
         if(isset($configContents[$templatePath])){
-            $configContents = $this->Config->get('devise.templates');
             unset($configContents[$templatePath]);
-
-            $this->Config->set('devise.templates', $configContents);
 
             return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
         }

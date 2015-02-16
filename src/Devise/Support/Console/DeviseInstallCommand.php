@@ -42,5 +42,8 @@ class DeviseInstallCommand extends Command
 
         $command = new DevisePublishAssetsCommand($this->app);
         $command->handle();
+
+        $command = new DevisePublishConfigsCommand($this->app);
+        $command->handle();
     }
 }

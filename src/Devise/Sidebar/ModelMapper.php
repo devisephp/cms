@@ -1,6 +1,7 @@
 <?php namespace Devise\Sidebar;
 
 use Devise\Support\Framework;
+use Devise\Support\DeviseException;
 
 /**
  * The model mapper's goal is to look through the config file
@@ -512,6 +513,11 @@ class ModelMapper
 		if (!$this->config)
 		{
 			$this->config = $this->Config->get('devise.model-mapping');
+		}
+
+		if (! array_key_exists($className, $this->config))
+		{
+			throw new DeviseException('No model mapping configuration found for ' . $className);
 		}
 
 		return $this->config[$className];

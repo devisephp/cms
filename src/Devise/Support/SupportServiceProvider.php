@@ -81,6 +81,11 @@ class SupportServiceProvider extends ServiceProvider
             return new Console\DevisePublishAssetsCommand($this->app);
         });
 
+        $this->app->singleton('command.devise.configs', function($app)
+        {
+            return new Console\DevisePublishConfigsCommand($this->app);
+        });
+
         $this->app->singleton('command.devise.migrate', function($app)
         {
             return new Console\DeviseMigrateCommand($this->app);
@@ -91,7 +96,7 @@ class SupportServiceProvider extends ServiceProvider
             return new Console\DeviseSeedCommand($this->app);
         });
 
-        $this->commands(['command.devise.install', 'command.devise.assets', 'command.devise.seed', 'command.devise.migrate']);
+        $this->commands(['command.devise.install', 'command.devise.assets', 'command.devise.configs', 'command.devise.seed', 'command.devise.migrate']);
     }
 
 }

@@ -18,12 +18,12 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
      * @var array
      */
     protected $configFiles = [
-        'languages',
-        'media-manager',
-        'model-mapping',
-        'permissions',
-        'templates',
-        'zencoder',
+        'devise.languages',
+        'devise.media-manager',
+        'devise.model-mapping',
+        'devise.permissions',
+        'devise.templates',
+        'devise.zencoder',
     ];
 
     /**
@@ -115,11 +115,13 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
 
         foreach ($this->configFiles as $configFile)
         {
-            $publishes[__DIR__."/../config/{$configFile}.php"] = config_path("devise/devise.{$configFile}.php");
-            $this->mergeConfigFrom(__DIR__."/../config/{$configFile}.php", "devise.{$configFile}");
+            $publishes[__DIR__."/../config/{$configFile}.php"] = config_path("devise/{$configFile}.php");
+            $this->mergeConfigFrom(__DIR__."/../config/{$configFile}.php", "{$configFile}");
         }
 
-        $this->publishes($publishes);
+        // taking out the publishes section below because we are going
+        // to publish devise configs from the command php artisan devise:configs
+        // $this->publishes($publishes);
     }
 
     /**

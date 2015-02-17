@@ -65,11 +65,75 @@ class SidebarManagerTest extends \DeviseTestCase
 
     public function test_it_updates_model_with_fields()
     {
-        $this->markTestIncomplete();
+        $SidebarDataTranslator = m::mock('Devise\Sidebar\SidebarDataTranslator');
+        $PagesRepository = m::mock('Devise\Pages\PagesRepository');
+        $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
+        $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+        $View = m::mock('Mocked\View');
+
+        $ModelMapper = m::mock('Devise\Sidebar\ModelMapper');
+        $ModelMapper->shouldReceive('update')->once()->andReturn(new \DvsUser);
+
+        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $ModelMapper, $FieldManager, $View);
+
+        $output = $SidebarManager->updateModel(['class_name' => 'DvsUser', 'key' => 'someFieldKey', 'page_version_id' => 1, 'forms' => 'fooForms']);
+
+        assertInstanceOf('DvsUser', $output);
+    }
+
+    public function test_it_can_create_model()
+    {
+        $SidebarDataTranslator = m::mock('Devise\Sidebar\SidebarDataTranslator');
+        $PagesRepository = m::mock('Devise\Pages\PagesRepository');
+        $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
+        $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+        $View = m::mock('Mocked\View');
+
+        $ModelMapper = m::mock('Devise\Sidebar\ModelMapper');
+        $ModelMapper->shouldReceive('create')->andReturn(new \DvsUser);
+
+        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $ModelMapper, $FieldManager, $View);
+
+        $output = $SidebarManager->createModel(['class_name' => 'DvsFooModel', 'key' => 'dvsFooModelKey', 'page_version_id' => 1, 'forms' => 'dvsFooForms']);
+
+        assertInstanceOf('DvsUser', $output);
     }
 
     public function test_it_updates_group()
     {
-        $this->markTestIncomplete();
+        $SidebarDataTranslator = m::mock('Devise\Sidebar\SidebarDataTranslator');
+        $PagesRepository = m::mock('Devise\Pages\PagesRepository');
+        $FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
+        $View = m::mock('Mocked\View');
+
+        $FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+        $FieldManager->shouldReceive('updateField')->once()->andReturnSelf();
+
+        $ModelMapper = m::mock('Devise\Sidebar\ModelMapper');
+        $ModelMapper->shouldReceive('update')->once()->andReturn(new \DvsUser);
+
+        $SidebarManager = new SidebarManager($SidebarDataTranslator, $PagesRepository, $FieldsRepository, $ModelMapper, $FieldManager, $View);
+
+        $input['page_version_id'] = 1;
+        $input['groups'] = array(
+            'model' => array(
+                'type' => 'model',
+                'class_name' => 'DvsUser',
+                'key' => 'someFieldKey',
+                'forms' => 'fooForms'
+            ),
+            'group' => array(
+                'type' => 'text',
+                'forms' => array(
+                    'field_id' => 1,
+                    'field_name' => 'whatever'
+                )
+            ),
+        );
+
+        $output = $SidebarManager->updateGroup($input);
+
+        assertNull($output);
     }
+
 }

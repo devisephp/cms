@@ -1,6 +1,7 @@
 /vendor
 composer.phar
 composer.lock
+npm-debug.log
 .DS_Store
 tests/_log
 tests/reports/*

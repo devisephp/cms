@@ -4,7 +4,7 @@
     <div id="dvs-media-manager">
         @if (Session::has('dvs-error-message'))
         <div id="dvs-error-message">
-            {{ Session::get('dvs-error-message') }}
+            <?= Session::get('dvs-error-message') ?>
         </div>
         @endif
         <div id="dvs-media-upload">
@@ -37,7 +37,7 @@
 	<script>
         devise.require(['app/admin/media-manager', 'app/admin/admin'],
             function(module) {
-                module.init({!! json_encode($input) !!}, {!! json_encode($finalImages) !!});
+                module.init(<?= json_encode($input) ?>, <?= json_encode($finalImages) ?>);
             }
         );
     </script>

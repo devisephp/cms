@@ -27,7 +27,7 @@
         <button type="button" class="dvs-button" id="dvs-add-param">ADD PARAM</button>
 
         <script>
-            var varName = '{{ Input::get("varName") }}';
+            var varName = '<?= Input::get("varName") ?>';
             var paramTemplate = '@include("devise::admin.templates.params._single-js")';
 
             devise.require(['app/admin/template-params']);

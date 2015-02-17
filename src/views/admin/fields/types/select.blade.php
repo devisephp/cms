@@ -3,7 +3,7 @@
 @snippet
 <select data-devise="select1, select, Select">
     @foreach ($page->select1->options as $option)
-        <option value="{{ $option->value }}">{{ $option->name }}</option>
+        <option value="<?= $option->value ?>"><?= $option->name ?></option>
     @endforeach
 </select>
 @endsnippet

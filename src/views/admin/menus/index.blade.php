@@ -35,10 +35,10 @@
     	<tbody id="menus">
     		@foreach($menus as $menu)
     			<tr>
-                    <td class="dvs-tac">{{ $menu->name }}</td>
-    				<td class="dvs-tac">{{ $menu->language->name }}</td>
+                    <td class="dvs-tac"><?= $menu->name ?></td>
+    				<td class="dvs-tac"><?= $menu->language->name ?></td>
     				<td class="dvs-tac">
-    					<a href="{{ route('dvs-menus-edit', $menu->id) }}" class="dvs-button dvs-button-small">Edit</a>
+    					<a href="<?= route('dvs-menus-edit', $menu->id) ?>" class="dvs-button dvs-button-small">Edit</a>
                         @if (!$page->dvs_admin)
     						<?php /* Form::delete(URL::route('dvs-menus-destroy', array($menu->id)), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) */ ?>
     					@endif

@@ -19,7 +19,7 @@
             <div class="dvs-form-group">
                 <?= Form::label('Group(s)') ?>
                 @foreach ($groups as $groupId => $groupName)
-                    <?= Form::checkbox('group_id[]', $groupId, in_array($groupId, array_keys($usersGroups))) ?> {{ $groupName }}
+                    <?= Form::checkbox('group_id[]', $groupId, in_array($groupId, array_keys($usersGroups))) ?> <?= $groupName ?>
                 @endforeach
             </div>
 

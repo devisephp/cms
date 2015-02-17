@@ -23,7 +23,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
     function checkContentRequested(callback) {
         $.ajax({
             type: 'get',
-            url: dvsPageData.content_requested_url,
+            url: dvsPageData.urls.content_requested,
             cache: false
         }).done(function(fieldKeysArr) {
             // set global var "contentRequestedKeysArr"

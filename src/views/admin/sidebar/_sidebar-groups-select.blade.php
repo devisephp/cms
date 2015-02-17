@@ -4,7 +4,7 @@
             <select class="dvs-select" name="groups" class="large">
                 @php $index = 0 @endphp
                 @foreach ($data->groups as $groupName => $group)
-                    <option value="{{ $index++ }}">Group: {{ $groupName }}</option>
+                    <option value="<?= $index++ ?>">Group: <?= $groupName ?></option>
                 @endforeach
             </select>
         </div>
@@ -15,7 +15,7 @@
             <select class="dvs-select" name="groups" class="large">
                 @php $index = 0 @endphp
                 @foreach ($data->groups as $groupName => $group)
-                    <option value="{{ $index++ }}">{{ $groupName }}</option>
+                    <option value="<?= $index++ ?>"><?= $groupName ?></option>
                 @endforeach
             </select>
             <button id="dvs-sidebar-manage-groups" class="dvs-button dvs-button-secondary">Manage Collection</button>

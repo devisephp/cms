@@ -1,8 +1,8 @@
-<div class="group" data-operator="{{ (isset($operator)) ? $operator : 'and' }}">
-    <button class="dvs-remove-group dvs-button dvs-button-danger" {{ (!isset($subgroup)) ? 'style="display:none"' : '' }} type="button">&minus; Subgroup</button>
+<div class="group" data-operator="<?= (isset($operator)) ? $operator : 'and' ?>">
+    <button class="dvs-remove-group dvs-button dvs-button-danger" <?= (!isset($subgroup)) ? 'style="display:none"' : '' ?> type="button">&minus; Subgroup</button>
     <button class="dvs-add-group dvs-button" type="button">&plus; Subgroup</button>
     <button class="dvs-add-rule dvs-button" type="button">&plus; Rule</button>
-    <label>Operator</label>{!! Form::select('condition', ['and' => 'And','or' => 'Or'], (isset($operator)) ? $operator : null, array('class' => 'operator-types')) !!}
+    <label>Operator</label><?= Form::select('condition', ['and' => 'And','or' => 'Or'], (isset($operator)) ? $operator : null, array('class' => 'operator-types')) ?>
     <hr />
     <div class="rules">
         @if(isset($rules))

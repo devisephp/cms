@@ -6,7 +6,7 @@
 
 @if (isset($myCollection))
     @foreach ($myCollection as $collection)
-        {{ $collection->textName->text('default value') }}
+        <?= $collection->textName->text('default value') ?>
     @endforeach
 @endif
 @endsnippet

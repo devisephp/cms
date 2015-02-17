@@ -10,16 +10,16 @@
 <div class="container">
     <div class="jumbotron" style="margin-top:30px">
         <h1>Transfer Progress</h1>
-        <p>{{ $node }} - {{ $transfer['percent'] }}% Complete</p>
+        <p><?= $node ?> - <?= $transfer['percent'] ?>% Complete</p>
         <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ $transfer['percent'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{$transfer['percent']}}%">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?= $transfer['percent'] ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$transfer['percent']?>%">
 
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <a href="{{ URL::to('/transfer/'. $node) }}" class="btn btn-success btn-lg">Run again</a>
+                <a href="<?= URL::to('/transfer/'. $node) ?>" class="btn btn-success btn-lg">Run again</a>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
     $(function() {
 
         setTimeout(function() {
-            window.location = '{{ URL::to('/transfer/'. $node . '/' . $transfer['number']) }}'
+            window.location = '<?= URL::to('/transfer/'. $node . '/' . $transfer['number']) ?>'
         }, 1000);
 
     });

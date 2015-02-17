@@ -47,12 +47,12 @@
 
 			<tr>
 				<td>
-					<strong>{{ $currentPage }}</strong> - {{ $field->page->slug }}
+					<strong><?= $currentPage ?></strong> - <?= $field->page->slug ?>
 				</td>
 				<td>&nbsp;</td>
 				<td class="cq-target light-border">&nbsp;</td>
 				<td class="cq-target">
-					<div class="cq-dot page-dot" id="cq-page-dot-{{ $field->page->id }}" data-page-group="{{ $field->page->id }}" data-cq-group="{{ $field->page->id }}">&nbsp;</div>
+					<div class="cq-dot page-dot" id="cq-page-dot-<?= $field->page->id ?>" data-page-group="<?= $field->page->id ?>" data-cq-group="<?= $field->page->id ?>">&nbsp;</div>
 				</td>
 				<td class="light-border cq-target">&nbsp;</td>
 				<td class="cq-target">&nbsp;</td>
@@ -60,12 +60,12 @@
 			</tr>
 		@endif
 			<tr>
-				<td class="tar">{{ $field->latestVersion->value->humanName }}</td>
-				<td class="tac">{{ $field->latestVersion->user->name }}</td>
+				<td class="tar"><?= $field->latestVersion->value->humanName ?></td>
+				<td class="tac"><?= $field->latestVersion->user->name ?></td>
 				<td class="cq-target light-border">&nbsp;</td>
 				<td class="cq-target">&nbsp;</td>
 				<td class="cq-target light-border">
-					<div class="cq-dot" data-field-id="{{ $field->id }}" data-page-group="{{ $field->page->id }}">&nbsp;</div>
+					<div class="cq-dot" data-field-id="<?= $field->id ?>" data-page-group="<?= $field->page->id ?>">&nbsp;</div>
 				</td>
 				<td class="cq-target">&nbsp;</td>
 				<td class="cq-target">&nbsp;</td>

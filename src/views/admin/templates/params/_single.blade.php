@@ -14,11 +14,11 @@
 @endif
 
 
-<div class="dvs-param-wrapper dvs-inline-block" data-var-type="{{$varType}}">
+<div class="dvs-param-wrapper dvs-inline-block" data-var-type="<?=$varType?>">
     <?= Form::hidden('template[vars]['.$var.'][params][]', $parameter) ?>
 
     <div class="dvs-badge">
-        {{ $parameterForShow or $parameter }}&nbsp;
+        <?= (isset($parameterForShow)) ? $parameterForShow : $parameter ?>&nbsp;
         <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-remove-param dvs-pr">X</a>
     </div>
 </div>

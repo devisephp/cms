@@ -66,13 +66,13 @@ class FileManager
         // set path to published config location
         $path = config_path() . '/devise';
 
-        if(!\File::isDirectory($path)) {
-            \File::makeDirectory($path,  755, true);
+        if(!$this->files->isDirectory($path)) {
+            $this->files->makeDirectory($path,  0755, true);
         }
 
         $file = $path . "/devise.{$filename}.php";
 
-        if(\File::isDirectory($path) ) {
+        if($this->files->isDirectory($path) ) {
             return $file;
         }
 

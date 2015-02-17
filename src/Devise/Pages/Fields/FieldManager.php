@@ -132,7 +132,7 @@ class FieldManager
         $field->content_requested = array_get($input, 'content_requested', false);
 
 		// update this field's json value
-		$field->json_value = $field->values->toJSON();
+		$field->json_value = array_get($originalInput, '_reset_values', false) ? '{}' : $field->values->toJSON();
 
 		// save this field in the database
 		$field->save();

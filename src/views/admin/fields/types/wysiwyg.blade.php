@@ -4,7 +4,7 @@
 
 @snippet
 <div data-devise="wysiwyg1, wysiwyg, Wysiwyg" style="width: 200px; height: 200px; overflow: scroll; background-color: #eee; padding: 5px;" >
-	{!! $page->wysiwyg1->text !!}
+	<?= $page->wysiwyg1->text ?>
 </div>
 @endsnippet
 

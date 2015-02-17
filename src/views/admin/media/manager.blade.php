@@ -37,7 +37,7 @@
 	<script>
         devise.require(['app/admin/media-manager', 'app/admin/admin'],
             function(module) {
-                module.init({!! json_encode($input) !!}, {!! json_encode($finalImages) !!});
+                module.init(<?= json_encode($input) ?>, <?= json_encode($finalImages) ?>);
             }
         );
     </script>

@@ -24,7 +24,7 @@
 
     @foreach ($groups as $group)
         <div id="dvs-sidebar-group-{{ $group->index }}" class="dvs-sidebar-group {{ $group->active }}" data-group-container="{{ $group->cid }}" data-group-type="{{ $group->type }}" data-group-key="{{ $group->key }}" data-group-class-name="{{ $group->class_name }}">
-            {!! $group->view !!}
+            <?= $group->view ?>
         </div>
     @endforeach
 

@@ -5,7 +5,7 @@
             <span class="sr-only">Close</span>
         </button>
 
-        <h3 class="strong mtz">{{ Session::get('message-success') }}</h3>
+        <h3 class="strong mtz">{!! Session::get('message-success') !!}</h3>
     </div>
 @endif
 
@@ -16,9 +16,9 @@
             <span class="sr-only">Close</span>
         </button>
 
-        <h3 class="strong mtz">{{ Session::get('message-errors') }}</h3>
+        <h3 class="strong mtz">{!! Session::get('message-errors') !!}</h3>
         @if($errors->any())
-            <ul class="pz">{{ implode('', $errors->all('<li class="error">:message</li>')) }}</ul>
+            <ul class="pz">{!! implode('', $errors->all('<li class="error">:message</li>')) !!}</ul>
         @endif
     </div>
 @endif

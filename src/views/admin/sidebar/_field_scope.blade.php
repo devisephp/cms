@@ -1,3 +1,19 @@
+<script>
+function confirmReset(element)
+{
+    var el = $(element);
+
+    if (el.is(':checked'))
+    {
+        var answer = confirm('Are you sure you want to reset this fields values?');
+
+        if (! answer) {
+            el.prop('checked', false);
+        }
+    }
+}
+</script>
+
 <!-- Display "Content Requested" Checkbox on all fields -->
 <div class="dvs-property fancy-sidebar-checkbox">
     <label for="content_requested">Request Content?</label>
@@ -22,3 +38,12 @@
     </div>
 
 @endif
+
+<!-- Display Reset Values Checkbox on all fields -->
+<div class="dvs-property fancy-sidebar-checkbox">
+    <label for="content_requested">Reset values for this field?</label>
+    <div class="fancyCheckbox">
+        <?= Form::checkbox('_reset_values', true, false, array('id' => '_reset_values', 'onchange' => 'confirmReset(this)')) ?>
+        <?= Form::label('_reset_values', '&nbsp;') ?>
+    </div>
+</div>

@@ -22,10 +22,10 @@
 		<tbody id="languages">
 			@foreach($languages as $language)
 				<tr>
-					<td>{{ $language->code }}</td>
-					<td>{{ $language->human_name }}</td>
+					<td><?= $language->code ?></td>
+					<td><?= $language->human_name ?></td>
 					<td>
-						<input class="js-active" data-url="{{ route('dvs-languages-patch', $language->id) }}" type="checkbox" name="is_active[]" value="{{ $language->id }}" type="checkbox" {{ $language->active ? 'checked' : ''}}>
+						<input class="js-active" data-url="<?= route('dvs-languages-patch', $language->id) ?>" type="checkbox" name="is_active[]" value="<?= $language->id ?>" type="checkbox" <?= $language->active ? 'checked' : ''?>>
 	                </td>
 				</tr>
 			@endforeach

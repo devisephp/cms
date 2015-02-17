@@ -1545,7 +1545,7 @@ table.dvs-admin-table {
         #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox]:checked + label {
           font-family: "Roboto", Tahoma, Arial, sans-serif;
           background-color: #7dbd5d; }
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-discard, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-group {
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-discard, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-group, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-model, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-model-groups {
     display: block;
     width: 100%;
     padding: 27px 15px;

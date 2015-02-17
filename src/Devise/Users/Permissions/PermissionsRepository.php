@@ -1,7 +1,6 @@
 <?php namespace Devise\Users\Permissions;
 
 use Devise\Support\Framework;
-use Devise\Users\Permissions\RuleList;
 use Illuminate\Filesystem\Filesystem as File;
 
 /**
@@ -12,13 +11,9 @@ use Illuminate\Filesystem\Filesystem as File;
 class PermissionsRepository
 {
     protected $Framework;
-    protected $RuleList;
 
-    public function __construct(PermissionsManager $PermissionsManager, RuleList $RuleList, Framework $Framework, $File = null)
+    public function __construct(Framework $Framework, $File = null)
     {
-        $this->PermissionsManager = $PermissionsManager;
-        $this->RuleList = $RuleList;
-
         $this->Config = $Framework->Config;
         $this->Input = $Framework->Input;
         $this->View = $Framework->View;
@@ -45,27 +40,33 @@ class PermissionsRepository
     public function getPermissionByPath($condition)
     {
         $rules = $this->Config->get('devise.permissions.' . $condition);
-        reset($rules);
-        $firstKey = key($rules);
-        if($firstKey == 'and' || $firstKey == 'or'){
-            return $rules;
-        } else {
-            $newRules = array();
-            if(isset($rules['redirect'])){
-                $newRules['redirect'] = $rules['redirect'];
-                unset($rules['redirect']);
-            }
-            if(isset($rules['redirect_type'])){
-                $newRules['redirect_type'] = $rules['redirect_type'];
-                unset($rules['redirect_type']);
-            }
-            if(isset($rules['redirect_message'])){
-                $newRules['redirect_message'] = $rules['redirect_message'];
-                unset($rules['redirect_message']);
-            }
 
-            $newRules['and'] = $rules;
-            return $newRules;
+        if ($rules !== null) {
+
+            reset($rules);
+            $firstKey = key($rules);
+            if($firstKey == 'and' || $firstKey == 'or'){
+                return $rules;
+            } else {
+                $newRules = array();
+                if(isset($rules['redirect'])){
+                    $newRules['redirect'] = $rules['redirect'];
+                    unset($rules['redirect']);
+                }
+                if(isset($rules['redirect_type'])){
+                    $newRules['redirect_type'] = $rules['redirect_type'];
+                    unset($rules['redirect_type']);
+                }
+                if(isset($rules['redirect_message'])){
+                    $newRules['redirect_message'] = $rules['redirect_message'];
+                    unset($rules['redirect_message']);
+                }
+
+                $newRules['and'] = $rules;
+                return $newRules;
+            }
+        } else {
+            throw new \Devise\Support\DeviseException('Unable to load the condition "'. $condition .'".');
         }
     }
 
@@ -77,6 +78,10 @@ class PermissionsRepository
      */
     public function allPermissionsPaginated($perPage = 25)
     {
+        $perPage = is_numeric($perPage) ?: 25;
+
+        $perPage = ($perPage < 300) ?: 25;
+
         $permissions = $this->getAllPermissions();
 
         $currentPage = $this->Input->get('page', 1) - 1;
@@ -84,18 +89,6 @@ class PermissionsRepository
         $pagedData = array_slice($permissions, $currentPage * $perPage, $perPage);
 
         return $this->Paginator->make($pagedData, count($permissions), $perPage);
-    }
-
-    /**
-     * Get the extends/layout string from given permission path
-     *
-     * @return array
-     */
-    protected function getPermissionSourceByPath($condition)
-    {
-        // find the file location, so we can get the file contents
-        $fileLocation = $this->View->make($condition)->getPath();
-        return File::get($fileLocation);
     }
 
     /**
@@ -125,6 +118,18 @@ class PermissionsRepository
             $map[ $value ] = \RuleManager::getNumberOfRequiredParametersForRule($value);
         }
         return $map;
+    }
+
+    /**
+     * Get the extends/layout string from given permission path
+     *
+     * @return array
+     */
+    protected function getPermissionSourceByPath($condition)
+    {
+        // find the file location, so we can get the file contents
+        $fileLocation = $this->View->make($condition)->getPath();
+        return File::get($fileLocation);
     }
 
 }

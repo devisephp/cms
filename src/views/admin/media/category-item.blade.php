@@ -1,6 +1,6 @@
-<a class="dvs-media-item" href="{{ $url }}">
+<a class="dvs-media-item" href="<?= $url ?>">
     <div class="dvs-media-thumb-cont">
-        <img src="{{ $thumb }}" width="50" />
+        <img src="<?= $thumb ?>" width="50" />
     </div>
-    <p>{{ $name }}</p>
+    <p><?= $name ?></p>
 </a>

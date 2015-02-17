@@ -154,6 +154,9 @@ devise.define(['require', 'jquery', 'dvsDatePicker', 'dvsNetwork', 'dvsPageData'
         $('#dvs-sidebar-elements-and-groups').fadeIn();
         $('[data-field-container]').hide();
         $('[data-model-field-type="attribute"]').show();
+        $('.dvs-model-creator .js-sidebar-model-attributes').fadeIn();
+        $('.dvs-model-editor .js-sidebar-model-attributes').fadeIn();
+        $('.dvs-model-group-editor .js-sidebar-model-attributes').fadeIn();
     }
 
     function openElementEditor(el) {

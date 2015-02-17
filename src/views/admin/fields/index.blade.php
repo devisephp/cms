@@ -2,8 +2,8 @@
 
 @section('css')
 
-    <link href="{{ URL::asset('/packages/devisephp/cms/css/obsidian.min.css') }}" rel="stylesheet" >
-    <script type="text/javascript" src="{{ URL::asset('/packages/devisephp/cms/js/lib/highlight.pack.js') }}"></script>
+    <link href="<?= URL::asset('/packages/devisephp/cms/css/obsidian.min.css') ?>" rel="stylesheet" >
+    <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/lib/highlight.pack.js') ?>"></script>
 
     <!-- some weird style that I'm just overriding so I can see the listed attributes -->
     <style>
@@ -28,7 +28,7 @@
 
         <tbody>
 
-        @foreach (['model', 'model-attribute', 'model-group',
+        @foreach (['model-creator', 'model', 'model-attribute', 'model-group',
             'audio', 'checkbox-group', 'checkbox', 'color',
             'datetime', 'file', 'html', 'image',
             'link', 'map', 'select', 'text', 'textarea',

@@ -23,10 +23,10 @@
 		<tbody id="permissions">
 			@foreach($permissions as $permissionName => $conditions)
                 <tr>
-                    <td>{{ $permissionName }}</td>
+                    <td><?= $permissionName ?></td>
                     <td>
                         @foreach($conditions as $conditionName => $condition)
-                            {{ $conditionName }}
+                            <?= $conditionName ?>
                         @endforeach
                     </td>
 					<td class="dvs-tac dvs-button-group">

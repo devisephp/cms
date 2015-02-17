@@ -2,7 +2,7 @@
 
 @snippet
 <p data-devise="textarea1, textarea, Text Area">
-    {{ $page->textarea1->text('This is some default text') }}
+    <?= $page->textarea1->text('This is some default text') ?>
 <p>
 @endsnippet
 

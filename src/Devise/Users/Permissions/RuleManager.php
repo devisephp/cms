@@ -56,7 +56,7 @@ class RuleManager
     /**
      * Get all rules
      *
-     * @return Array
+     * @return Integer
      */
     public function getNumberOfRequiredParametersForRule($ruleName)
     {
@@ -116,7 +116,8 @@ class RuleManager
     public function getCondition($conditionName)
     {
         $condition = json_encode($this->Config->get('devise.permissions.'.$conditionName));
-        if(!$condition) {
+
+        if(!$condition || $condition == "null") {
             throw new \Devise\Support\DeviseException($conditionName.' condition not found');
         }
         return $condition;
@@ -134,6 +135,7 @@ class RuleManager
     public function runCondition($conditionName, $redirectOnFail, $evaluateResults = true)
     {
         $condition = $this->getCondition($conditionName);
+
         $results = $this->executeCondition($condition);
 
         return ($evaluateResults) ? $this->evaluateResults($results, $redirectOnFail, $condition) : $results;
@@ -143,7 +145,7 @@ class RuleManager
      * Executes conditions one at a time and returns result
      *
      * @param object  $conditionObject
-     * @return boolean
+     * @return array
      */
     public function executeCondition($conditionObject)
     {

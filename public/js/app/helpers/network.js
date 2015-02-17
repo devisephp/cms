@@ -3,7 +3,6 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
     var target;
     var callback;
     var data;
-    var partialsPath = devise.requirejs.s.contexts._.config.devise.partialLoaderPath;
 
     var network = {
         insertTemplate: function(_view, _target, _data, _callback) {
@@ -19,7 +18,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
                 data: _data
             };
 
-            var _sidebarPartialsPath = partialsPath + 'sidebar';
+            var _sidebarPartialsPath = dvsPageData.url('sidebar_partials') + 'sidebar';
 
             network.request(_sidebarPartialsPath, data, 'POST', _target, _callback);
         },
@@ -30,7 +29,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
                 data: _data
             };
 
-            var _elementPath = partialsPath + 'element';
+            var _elementPath = dvsPageData.url('sidebar_partials') + 'element';
 
             network.request(_elementPath, data, 'POST', _target, _callback);
         },
@@ -41,16 +40,21 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
                 data: _data
             };
 
-            var _elementGridPath = partialsPath + 'element-grid';
+            var _elementGridPath = dvsPageData.url('sidebar_partials') + 'element-grid';
 
             network.request(_elementGridPath, data, 'POST', _target);
         },
         request: function(_url, _data, _method, _target, _callback) {
-            if(_data){
-                _data['_token'] = dvsPageData.csrf_token;
-            } else {
+            if (_data)
+            {
+                if (typeof _data === 'object') _data['_token'] = dvsPageData.csrf_token;
+                else _data += '&_token=' + dvsPageData.csrf_token;
+            }
+            else
+            {
                 _data = {_token: dvsPageData.csrf_token};
             }
+
             target = _target;
             callback = _callback;
 

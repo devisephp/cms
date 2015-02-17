@@ -57,11 +57,11 @@
     </div>
 
     <script>
-        var ruleParamMap = {{ json_encode($ruleParamMap) }};
-        var emptyParamInput = '{{ Form::text('', null, array('class' => 'rule-param', 'placeholder' => 'Parameter')) }}';
-        var emptyGroup = '{{ HTML::getHtmlForJsVar('devise::admin.permissions._group', array('availableRulesList'=> $availableRulesList)) }}';
-        var emptyRule = '{{ HTML::getHtmlForJsVar('devise::admin.permissions._rule', array('availableRulesList'=> $availableRulesList)) }}';
-        var operatorHtml = '{{ HTML::getHtmlForJsVar('devise::admin.permissions._operator') }}';
+        var ruleParamMap = <?= json_encode($ruleParamMap) ?>;
+        var emptyParamInput = '<?= Form::text('', null, array('class' => 'rule-param', 'placeholder' => 'Parameter')) ?>';
+        var emptyGroup = '<?= HTML::getHtmlForJsVar('devise::admin.permissions._group', array('availableRulesList'=> $availableRulesList)) ?>';
+        var emptyRule = '<?= HTML::getHtmlForJsVar('devise::admin.permissions._rule', array('availableRulesList'=> $availableRulesList)) ?>';
+        var operatorHtml = '<?= HTML::getHtmlForJsVar('devise::admin.permissions._operator') ?>';
         devise.require(['app/admin/permissions'], function(obj) {
             obj.initialize();
         });

@@ -4,8 +4,8 @@
 <div data-devise="checkboxGroup1, checkbox-group, Checkbox Group">
    @foreach ($page->checkboxGroup1->checkboxes as $checkbox)
       <label>
-         <input type="checkbox" value="{{ $checkbox->key }}" {{ $checkbox->default ? 'checked' : '' }}>
-         {{ $checkbox->label }}
+         <input type="checkbox" value="<?= $checkbox->key ?>" <?= $checkbox->default ? 'checked' : '' ?>>
+         <?= $checkbox->label ?>
       </label>
     @endforeach
 </div>

@@ -91,7 +91,7 @@ class TemplatesManager
             // setup array for config file and sets vars array to
             // blank key/value pair to prep. data for init. edit form
             $configContents[$input['file_name']] = array(
-                'human_name' => $input['file_name'],
+                'human_name' => $input['human_name'],
                 'extends' => $input['extends'],
             );
 
@@ -114,7 +114,7 @@ class TemplatesManager
         if($this->validateInputVars($input))
         {
              // current templates config contents
-            $templateContents = $this->Config->get('devise.templates');
+            $configContents = $this->Config->get('devise.templates');
 
             // if newVars exist, validate and add to vars array
             if(isset($input['template']['newVars'])) {
@@ -127,9 +127,9 @@ class TemplatesManager
             }
 
             // overwrite template data for submitted template path/key
-            $templateContents[$input['template_path']] = $input['template'];
-
-            return $this->ConfigFileManager->saveToFile($templateContents, 'templates', 'devisephp/cms');
+            $configContents[$input['template_path']] = $input['template'];
+            
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
         }
 
         return false;
@@ -145,9 +145,8 @@ class TemplatesManager
     public function destroyTemplate($templatePath)
     {
         // check if key exists in config, if so unset it
-        if($this->Config->has('devise.templates.' . $templatePath))
-        {
-            $configContents = $this->Config->get('devise.templates');
+        $configContents = $this->Config->get('devise.templates');
+        if(isset($configContents[$templatePath])){
             unset($configContents[$templatePath]);
 
             return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');

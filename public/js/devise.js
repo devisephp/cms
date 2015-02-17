@@ -66,10 +66,6 @@ devise.require.config({
         dvsLiveUpdate:      'app/helpers/live-update',
         dvsReplacement:     'app/helpers/replacement',
         dvsModal:           'app/helpers/modal',
-        dvsGlobalBus:       'app/helpers/global-bus',
-        dvsMessageBus:      'app/helpers/message-bus',
-        dvsRouter:          'app/helpers/router',
-        dvsRoutes:          'app/routes',
         dvsQueryHelper:     'app/helpers/query-helper',
         dvsPageData:        'app/helpers/page-data',
         dvsDatePicker:      'app/helpers/date-picker',
@@ -77,9 +73,6 @@ devise.require.config({
         dvsCalendar:        'app/admin/calendar',
         dvsDataReplacement: 'app/bindings/data-dvs-replacement',
         dvsChangeTarget:    'app/bindings/data-change-target'
-    },
-    devise: {
-        partialLoaderPath:  '/admin/partials/'
     }
 });
 devise.define("config", function(){});

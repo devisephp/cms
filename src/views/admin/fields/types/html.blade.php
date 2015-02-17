@@ -2,7 +2,7 @@
 
 @snippet
 <div data-devise="html1, html, Html">
-	{{ $page->html1->html }}
+	<?= $page->html1->html ?>
 </div>
 @endsnippet
 

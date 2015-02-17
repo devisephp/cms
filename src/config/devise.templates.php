@@ -97,6 +97,7 @@
 			'extends' => 'devise::admin.layouts.master',
 			'vars' => array(
 				'users' => 'Devise\Users\UsersRepository.users',
+				'groups' => 'Devise\Users\Groups\GroupsRepository.groupList',
 			),
 		),
 		'devise::admin.users.edit' => array(
@@ -277,5 +278,10 @@
 				'dvsAdminMenu' => array('Devise\Menus\MenusRepository.buildMenu' => array('Admin Menu')),
 			)
 		),
-
+		'devise::admin.settings.index' => array(
+			'human_name' => 'Devise Settings List',
+			'extends' => 'devise::admin.layouts.master',
+			'vars' => array(
+			),
+		),
 	);

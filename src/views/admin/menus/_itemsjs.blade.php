@@ -2,7 +2,7 @@
 <div style="display: none;" id="js-menu-item-template">
 	<li id="itemOrder_{cid}" class="js-menu-item">
         <div>
-            <input name="item[{cid}][page_id]" type="hidden" value="{{$page->id}}">
+            <input name="item[{cid}][page_id]" type="hidden" value="<?=$page->id?>">
 
             <input type="text" name="item[{cid}][name]" placeholder="Title" style="width: 25%; height: 25px;">
 

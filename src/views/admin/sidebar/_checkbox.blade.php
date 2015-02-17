@@ -6,7 +6,7 @@
         <div class="dvs-property fancy-sidebar-checkbox">
             <?= Form::hidden('value', 0) ?>
 
-            <label>{{ $element->human_name }}</label>
+            <label><?= $element->human_name ?></label>
             <div class="fancyCheckbox">
                 <?= Form::hidden('current_field_scope', $element->scope) ?><br>
                 <?= Form::checkbox('value', 1, ($element->value->value && $element->value->value != '') ? $element->value->value : null, array('id' => 'value-'.$element->id)) ?>

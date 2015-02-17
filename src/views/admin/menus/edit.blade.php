@@ -42,11 +42,11 @@
     @include('devise::admin.menus._itemsjs')
 
     <script>
-        var autocompletePagesUrl = "{{ URL::route('dvs-pages-list', ['includeAdmin' => 0]) }}";
+        var autocompletePagesUrl = "<?= URL::route('dvs-pages-list', ['includeAdmin' => 0]) ?>";
 
         devise.require(['app/admin/menus']);
     </script>
 
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/packages/devisephp/cms/css/jquery.nestedSortable.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/jquery.nestedSortable.css') ?>">
 
 @stop

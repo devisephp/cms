@@ -2,7 +2,7 @@
 
 @snippet
 <p data-devise="text1, text, Text">
-    {{ $page->text1->text('This is some default text') }}
+    <?= $page->text1->text('This is some default text') ?>
 <p>
 @endsnippet
 

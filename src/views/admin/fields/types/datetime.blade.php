@@ -2,7 +2,7 @@
 
 @snippet
 <p data-devise="datetime1, datetime, Datetime">
-	Concert starts at {{ $page->datetime1->datetime }}
+	Concert starts at <?= $page->datetime1->datetime ?>
 </p>
 @endsnippet
 

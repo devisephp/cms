@@ -2,7 +2,7 @@
 
 @snippet
 <p data-devise="checkbox1, checkbox, Checkbox">
-    {{ $page->checkbox1->value ? 'Do something with check' : 'Do something else' }}
+    <?= $page->checkbox1->value ? 'Do something with check' : 'Do something else' ?>
 </p>
 @endsnippet
 

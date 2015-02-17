@@ -9,20 +9,20 @@
 @section('main')
     <div class="dvs-admin-form-horizontal">
 
-		<form action="{{ route('dvs-settings-update') }}" method="post">
+		<form action="<?= route('dvs-settings-update') ?>" method="post">
 			<input type="hidden" name="_method" value="PUT">
-			<input type="hidden" name="_token" value="{{ csrf_token() }}">
+			<input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
 			<div class="dvs-settings">
 
 				<div class="dvs-form-group dvs-setting-item">
 					<label>Zencoder API Key</label>
-					<input type="text" name="settings[devise.zencoder.api-key]" value="{{ config('devise.zencoder.api-key') }}">
+					<input type="text" name="settings[devise.zencoder.api-key]" value="<?= config('devise.zencoder.api-key') ?>">
 				</div>
 
 				<div class="dvs-form-group dvs-setting-item">
 					<label>Google Maps API Key</label>
-					<input type="text" name="settings[google.maps.api-key]" value="{{ config('google.maps.api-key') }}">
+					<input type="text" name="settings[google.maps.api-key]" value="<?= config('google.maps.api-key') ?>">
 				</div>
 
 			</div>

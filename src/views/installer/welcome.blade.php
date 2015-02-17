@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $page->title }}</title>
+    <title><?= $page->title ?></title>
 
     <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
 
@@ -45,7 +45,7 @@
 
 <body>
 
-    <img src="{{ URL::asset('packages/devisephp/cms/img/devise-installer-logo.gif') }}" width="300" height="300">
+    <img src="<?= URL::asset('packages/devisephp/cms/img/devise-installer-logo.gif') ?>" width="300" height="300">
 
     <h1>Thank You</h1>
 

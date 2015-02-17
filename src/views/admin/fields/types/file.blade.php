@@ -3,7 +3,7 @@
 <p style="font-style: italic;">This field is still under development so it does not currently work as expected</p>
 
 @snippet
-<a data-devise="file1, file, File" href="{{ $page->file1->file }}">Download file</a>
+<a data-devise="file1, file, File" href="<?= $page->file1->file ?>">Download file</a>
 @endsnippet
 
 @include('devise::admin.fields.show',

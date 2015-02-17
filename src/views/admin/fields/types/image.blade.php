@@ -1,7 +1,7 @@
 <h3>Images</h3>
 
 @snippet
-<img src="{{ $page->image1->image_url( URL::asset('packages/devisephp/cms/img/devise-installer-logo.gif') )}}" class="dvs-test-frame" data-devise="image1, image, Image">
+<img src="<?= $page->image1->image_url( URL::asset('packages/devisephp/cms/img/devise-installer-logo.gif') )?>" class="dvs-test-frame" data-devise="image1, image, Image">
 @endsnippet
 
 

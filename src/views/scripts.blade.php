@@ -6,7 +6,7 @@
 		devise.define('dvsPageData', [], function() {
 			var dvsPageData = {};
 
-			dvsPageData.csrf_token = "{{ csrf_token() }}";
+			dvsPageData.csrf_token = "<?= csrf_token() ?>";
 			dvsPageData.page_id = "<?=$page->id?>";
             dvsPageData.page_version_id = "<?= $page->version->id ?>";
 			dvsPageData.models = <?= App::make("dvsPageData")->modelsJSON() ?>;
@@ -43,7 +43,7 @@
 
 		devise.require(['dvsEditor'], function(module)
 		{
-	    	module.init( <?= $page->id ?>, {{ $page->version->id or 'null' }} );
+	    	module.init( <?= $page->id ?>, <?= (isset($page->version->id)) ? $page->version->id : 'null' ?> );
 		});
 	</script>
 

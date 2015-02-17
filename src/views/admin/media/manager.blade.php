@@ -4,7 +4,7 @@
     <div id="dvs-media-manager">
         @if (Session::has('dvs-error-message'))
         <div id="dvs-error-message">
-            {{ Session::get('dvs-error-message') }}
+            <?= Session::get('dvs-error-message') ?>
         </div>
         @endif
         <div id="dvs-media-upload">

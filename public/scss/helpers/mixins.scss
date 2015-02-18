@@ -103,7 +103,7 @@
 }
 
 @mixin insetFormDude() {
-  padding:20px 14px;
+  padding:14px 14px;
   color:$french-gray;
   border:1px solid lighten($bodyBgColor, 2%);
   border-bottom:2px solid lighten($bodyBgColor, 10%);

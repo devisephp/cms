@@ -31,6 +31,7 @@
 }
 
 #dvs-admin-body {
+  position:relative;
   float:left;
   width:70%;
   margin:0 5% 0 0;
@@ -46,11 +47,12 @@
 
   h1,h2,h3,h4,h5,h6 {
     font-size:42px;
-    font-weight:100;
+    font-weight:600;
     text-transform: uppercase;
     color:darken($white, 5%);
   }
 
+  h1 { font-weight:100; }
   h2 { font-size:36px; }
   h3 { font-size:28px; }
   h4 { font-size:22px; }
@@ -163,27 +165,52 @@
 
 /* Dashboard */
 #dvs-admin {
+  .dvs-flexbox {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .dvs-admin-card {
     float:left;
+    position:relative;
     width:30%;
     margin:20px 1.5%;
     color:$dashboardCardTitleColor;
     background-color:lighten($bodyBgColor, 2%);
     border:1px solid lighten($bodyBgColor, 5%);
-    border-radius:5px;
+    border-radius:2px;
     cursor:pointer;
     transition: all 0.5s;
     overflow:hidden;
 
     .dvs-card-top {
-      height:150px;
+      height:300px;
       background-size:cover;
       background-position:center;
+      background-repeat:no-repeat;
+      transition: all 0.5s;
     }
 
     .dvs-card-bottom {
       position:relative;
-      padding:25px 20px 25px;
+      padding:40px 20px 25px;
+      height:40%;
+      text-align:center;
+
+      .dvs-icon {
+        position:absolute;
+        top: -23px;
+        left: 50%;
+        margin-left:-23px;
+        background-color:$white;
+        color:$green;
+        width:46px;
+        height:46px;
+        border-radius: 23px;
+        font-size:36px;
+        text-align:center;
+        line-height:46px;
+      }
 
       p {
         margin-top:12px;
@@ -203,7 +230,7 @@
     }
 
     &.wide {
-      width:61.5%;
+      width:63%;
     }
 
     &.tall {
@@ -265,12 +292,21 @@
     border: 1px solid $blue;
 
     @include text-gradient($light-blue, $blue);
-    @include gradient-border($light-blue, $blue)
+    @include gradient-border($light-blue, $blue);
+
+    span {
+      text-fill-color:  $blue;
+      -moz-text-fill-color:  $blue;
+      -webkit-text-fill-color:  $blue;
+    }
   }
 }
 
 .dvs-inset-text {
   @include insetFormDude();
+
+  max-width:300px;
+  overflow-x:scroll;
 
   a {
     color:$red;
@@ -295,9 +331,12 @@ table.dvs-admin-table {
   width:100%;
   font-size:13px;
   box-shadow:0 2px 12px 6px rgba(0,0,0,.1);
+  border-radius:4px;
   @include background(linear-gradient($secondaryTableBgColor, $primaryTableBgColor));
 
   thead {
+
+    border-radius:3px;
 
     th, th a {
       color:darken($tableTextColor, 10%);
@@ -678,4 +717,3 @@ table.dvs-admin-table {
   &:first-child { border-radius: 2px 0 0 2px }
   &:last-child { border-radius: 0 2px 2px 0 }
 }
-

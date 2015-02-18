@@ -45,7 +45,6 @@
 
     <div id="dvs-admin-body">
 
-
         @if(Session::has('message'))
             <div class="dvs-messages">
                 <h2>{{ Session::get('message') }}</h2>
@@ -60,5 +59,7 @@
 
         @yield('main')
     </div>
+
+    @yield('js')
 </body>
 </html>

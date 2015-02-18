@@ -6,11 +6,23 @@ $white       : #ffffff;
 $black       : #262626;
 $purple      : #965b95;
 
-// Electrics
+// Sections
+$tan         : #b8bf68;
 $green       : #7dbd5d;
 $light-blue  : #b7f0f2;
 $blue        : #5dbabd;
 $red         : #FD5F46;
+$orange      : #d68424;
+$purple      : #673f90;
+$pink        : #bc3fa0;
+
+$groups      : $tan;
+$users       : $green;
+$pages       : $blue;
+$languages   : $pink;
+$menus       : $orange;
+$permissions : $red;
+$templates   : $purple;
 
 // Grays
 $light-gray  : #ebebeb;
@@ -49,7 +61,7 @@ $sidebarBreadcrumbLink:         $sidebarRuleColor;
 $sidebarBreadcrumbActive:       #6b6b6b;
 
 // Body General
-$bodyContainerWidth:   90%;
+$bodyContainerWidth:       90%;
 
 // Body and Sidenav Colors
 $bodyBgColor:              #2D3039;

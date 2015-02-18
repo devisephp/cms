@@ -3,6 +3,8 @@ input[type=text] {
 
 	&.form-control {
 		@include insetFormDude();
+
+		padding:24px 14px;
 	}
 }
 

@@ -12,7 +12,7 @@
                     <div class="dvs-checkbox">
                         <?= Form::hidden($checkbox->key, 0) ?>
                         <label>
-                            <?= Form::checkbox($checkbox->key, 1, ($element->value->$keyname) ? $element->value->$keyname : $checkbox->default) ?> <span>{{ $checkbox->label }}</span>
+                            <?= Form::checkbox($checkbox->key, 1, ($element->value->$keyname) ? $element->value->$keyname : $checkbox->default) ?> <span><?= $checkbox->label ?></span>
                         </label>
                     </div>
                 @endforeach
@@ -53,7 +53,6 @@
 <?= Form::close() ?>
 
 <div style="display:none">
-    {{--templates will be used by js to create new table rows and checkboxes--}}
     <table><tbody class="dvs-row-template">
         <tr class="dvs-checkbox-fields">
             <td><?= Form::text('checkboxes[0][key]')?></td>

@@ -23,8 +23,8 @@
 			@foreach($templates as $templatePath => $templateName)
 				<tr>
                     <td class="dvs-stacked-col">
-                        <div>{{ $templateName }}</div>
-                        <div class="dvs-secondary-text dvs-opaque-text">Filename: {{ $templatePath }}</div>
+                        <div><?= $templateName ?></div>
+                        <div class="dvs-secondary-text dvs-opaque-text">Filename: <?= $templatePath ?></div>
                     </td>
 					<td class="dvs-tac dvs-button-group">
 						<?= link_to(URL::route('dvs-templates-edit', array($templatePath)), 'Edit', array('class'=>'dvs-button dvs-button-small')) ?>

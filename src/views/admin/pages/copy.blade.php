@@ -5,7 +5,7 @@
     <div id="dvs-admin-title">
         <h1>Copy Page</h1>
 
-        <p>COPYING PAGE: {{ $page->title }}</p>
+        <p>COPYING PAGE: <?= $page->title ?></p>
     </div>
 
     <div id="dvs-admin-actions">
@@ -70,6 +70,6 @@
 
 @endif
 
-<script data-main="{{ URL::asset('/packages/devisephp/cms/js/config') }}" src="{{ URL::asset('/packages/devisephp/cms/js/require.js') }}"></script>
+<script data-main="<?= URL::asset('/packages/devisephp/cms/js/config') ?>" src="<?= URL::asset('/packages/devisephp/cms/js/require.js') ?>"></script>
 <script>devise.require(['app/admin/pages'])</script>
 @stop

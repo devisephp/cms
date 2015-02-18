@@ -10,9 +10,9 @@
   box-sizing:border-box;
   font-size: 11px;
 
-  &.dvs-solid {
+  &.dvs-button-solid {
     background-color:$primaryButtonBgColor;
-    color: invert($primaryButtonTextColor);
+    color: ($primaryButtonTextColor);
   }
 
   &.dvs-button-small {
@@ -29,7 +29,7 @@
     border:1px solid $secondaryButtonBgColor;
     color:$secondaryButtonTextColor;
 
-    &.dvs-solid {
+    &.dvs-button-solid {
       background-color:$secondaryButtonBgColor;
       color:invert($secondaryButtonTextColor);
     }
@@ -40,7 +40,7 @@
     border:1px solid $inactiveButtonBgColor;
     color:$inactiveButtonBgColor;
 
-    &.dvs-solid {
+    &.dvs-button-solid {
       background-color:$inactiveButtonBgColor;
       color:$inactiveButtonTextColor;
     }
@@ -57,8 +57,13 @@
   }
 
   &.dvs-button-danger {
-    background-color:#666;
-    color:#fff;
+    border:1px solid $dangerButtonBgColor;
+    color:$dangerButtonBgColor;
+
+    &.dvs-button-solid {
+      background-color:$dangerButtonBgColor;
+      color:$dangerButtonTextColor;
+    }
   }
 
   &.dvs-button-outset {
@@ -81,16 +86,6 @@
     border-right-width:1px;
     border-left-width:0;
 
-    &.dvs-button-secondary {
-      border-right:1px solid #90c0dd;
-      border-left: 1px solid #ebf3f7;
-    }
-
-    &.dvs-button-danger {
-      border-right:1px solid #111;
-      border-left:1px solid #fff;
-    }
-
     &:first-child {
       border-radius:3px 0 0 3px;
       border-left-width:1px;
@@ -108,7 +103,6 @@
 
     &:last-child input[type="submit"] {
       border-radius:0 3px 3px 0;
-      border-right-width:0;
     }
   }
 }
@@ -163,5 +157,86 @@ input[type="submit"]{
       border-top-right-radius:$buttonBorderRadius;
       border-right-width:1px;
     }
+  }
+}
+
+
+.dvs-select-wrapper{
+  position         : relative;
+  display          : inline-block;
+  width            : 100%;
+  cursor           : pointer;
+  background-color : transparent;
+  border           : 1px solid $primaryButtonBgColor;
+  color            : $primaryButtonTextColor;
+  padding          : $sidebarFormPadding;
+
+  .dvs-holder {
+    display        : block;
+    float          : left;
+    margin         : 0 5px 0 12px;
+    white-space    : nowrap;
+    overflow       : hidden;
+    cursor         : pointer;
+    position       : relative;
+    text-transform : uppercase;
+    z-index        : 2;
+  }
+
+  select {
+    margin         : 0;
+    position       : absolute;
+    z-index        : 3;
+    cursor         : pointer;
+    outline        : none;
+    opacity        : 0;
+    width: 100%;
+
+    /* CSS hacks for older browsers */
+    _noFocusLine   : expression(this.hideFocus=true);
+    -ms-filter     :"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter         : alpha(opacity=0);
+    -khtml-opacity : 0;
+    -moz-opacity   : 0;
+  }
+
+  span { // This is the label for the faux select
+    width          : 75%;
+    overflow       : hidden;
+  }
+
+  &:after {
+    position       : absolute;
+    content        : " ";
+    right          : 12px;
+    top            : 48%;
+    width          : 0;
+    height         : 0;
+    border-left    : 5px solid transparent;
+    border-right   : 5px solid transparent;
+    border-top     : 5px solid $sidebarSelectArrowColor;
+  }
+
+  &.dvs-button-solid {
+    background-color:$primaryButtonBgColor;
+    color: invert($primaryButtonTextColor);
+
+    &:after {
+      border-top-color: $black;
+    }
+  }
+
+  &.dvs-select-small {
+
+    &:after {
+      border-width:0;
+    }
+
+  }
+}
+
+td {
+  .dvs-select-small {
+    margin-top:5px;
   }
 }

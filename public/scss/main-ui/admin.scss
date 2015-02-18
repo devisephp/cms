@@ -243,30 +243,37 @@
 }
 
 #dvs-admin-subnavigation {
+  position:absolute;
+  top:50px;
+  right:5%;
   text-align:right;
-  width:100%;
-  margin-bottom:25px;
 }
 
 #dvs-admin-actions {
   text-align:center;
 
   .dvs-button {
-    margin-bottom:20px;
+    clear:both;
+    float:right;
+    width:150px;
+    margin-bottom:8px;
   }
 
   a {
+    clear:both;
     margin-left:8px;
   }
 
   select {
-    float:right;
+    clear:both;
   }
 
   .dvs-select-wrapper {
+    clear:both;
+    float:right;
     width:150px;
     font-size:11px;
-    margin-bottom:5px;
+    margin-bottom:8px;
   }
 }
 
@@ -329,6 +336,7 @@ table.dvs-admin-table {
     th {
       padding:15px 20px;
       border-bottom:1px solid lighten($primaryTableBgColor, 8%);
+      vertical-align: middle;
     }
   }
 
@@ -349,6 +357,7 @@ table.dvs-admin-table {
     td {
       padding:20px 30px;
       border-right:1px solid lighten($primaryTableBgColor, 4%);
+      vertical-align: middle;
 
       a:not(.dvs-button) {
         color:$blue;

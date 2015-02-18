@@ -148,9 +148,9 @@
   border-radius: 2px;
   box-sizing: border-box;
   font-size: 11px; }
-  .dvs-button.dvs-solid {
+  .dvs-button.dvs-button-solid {
     background-color: #bcbec2;
-    color: #43413d; }
+    color: #bcbec2; }
   .dvs-button.dvs-button-small {
     padding: 8px;
     font-size: 10px; }
@@ -160,13 +160,13 @@
   .dvs-button.dvs-button-secondary {
     border: 1px solid #5dbabd;
     color: #5dbabd; }
-    .dvs-button.dvs-button-secondary.dvs-solid {
+    .dvs-button.dvs-button-secondary.dvs-button-solid {
       background-color: #5dbabd;
       color: #a24542; }
   .dvs-button.dvs-button-inactive {
     border: 1px solid #fd5f46;
     color: #fd5f46; }
-    .dvs-button.dvs-button-inactive.dvs-solid {
+    .dvs-button.dvs-button-inactive.dvs-button-solid {
       background-color: #fd5f46;
       color: #bcbec2; }
   .dvs-button.dvs-button-dark {
@@ -176,8 +176,11 @@
     background-color: #4c4c4c;
     color: #5dbabd; }
   .dvs-button.dvs-button-danger {
-    background-color: #666;
-    color: #fff; }
+    border: 1px solid #fd5f46;
+    color: #fd5f46; }
+    .dvs-button.dvs-button-danger.dvs-button-solid {
+      background-color: #fd5f46;
+      color: #bcbec2; }
   .dvs-button.dvs-button-outset {
     color: #919191;
     background-color: #262930;
@@ -194,12 +197,6 @@
     border-radius: 0;
     border-right-width: 1px;
     border-left-width: 0; }
-    .dvs-button-group .dvs-button.dvs-button-secondary {
-      border-right: 1px solid #90c0dd;
-      border-left: 1px solid #ebf3f7; }
-    .dvs-button-group .dvs-button.dvs-button-danger {
-      border-right: 1px solid #111;
-      border-left: 1px solid #fff; }
     .dvs-button-group .dvs-button:first-child {
       border-radius: 3px 0 0 3px;
       border-left-width: 1px;
@@ -210,8 +207,7 @@
   .dvs-button-group form {
     display: inline-block; }
     .dvs-button-group form:last-child input[type="submit"] {
-      border-radius: 0 3px 3px 0;
-      border-right-width: 0; }
+      border-radius: 0 3px 3px 0; }
 
 input[type="submit"].dvs-button.dvs-button-small {
   padding: 6px 7px 8px;
@@ -250,6 +246,63 @@ input[type="submit"].dvs-button.dvs-button-small {
       border-bottom-right-radius: 2px;
       border-top-right-radius: 2px;
       border-right-width: 1px; }
+
+.dvs-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #bcbec2;
+  color: #bcbec2;
+  padding: 12px 6px; }
+  .dvs-select-wrapper .dvs-holder {
+    display: block;
+    float: left;
+    margin: 0 5px 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    text-transform: uppercase;
+    z-index: 2; }
+  .dvs-select-wrapper select {
+    margin: 0;
+    position: absolute;
+    z-index: 3;
+    cursor: pointer;
+    outline: none;
+    opacity: 0;
+    width: 100%;
+    /* CSS hacks for older browsers */
+    _noFocusLine: expression(this.hideFocus=true);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -khtml-opacity: 0;
+    -moz-opacity: 0; }
+  .dvs-select-wrapper span {
+    width: 75%;
+    overflow: hidden; }
+  .dvs-select-wrapper:after {
+    position: absolute;
+    content: " ";
+    right: 12px;
+    top: 48%;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #5dbabd; }
+  .dvs-select-wrapper.dvs-button-solid {
+    background-color: #bcbec2;
+    color: #43413d; }
+    .dvs-select-wrapper.dvs-button-solid:after {
+      border-top-color: #262626; }
+  .dvs-select-wrapper.dvs-select-small:after {
+    border-width: 0; }
+
+td .dvs-select-small {
+  margin-top: 5px; }
 
 .dvs-messages {
   background-color: #17d4d2;
@@ -528,58 +581,6 @@ input[type="submit"].dvs-button.dvs-button-small {
   right: 20px;
   border-radius: 0 3px 0 0; }
 
-.dvs-select-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  cursor: pointer;
-  background-color: #333333;
-  padding: 12px 6px; }
-  .dvs-select-wrapper .dvs-holder {
-    display: block;
-    float: left;
-    margin: 0 5px 0 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    cursor: pointer;
-    position: relative;
-    text-transform: uppercase;
-    z-index: 2; }
-  .dvs-select-wrapper select {
-    margin: 0;
-    position: absolute;
-    z-index: 3;
-    cursor: pointer;
-    outline: none;
-    opacity: 0;
-    width: 100%;
-    /* CSS hacks for older browsers */
-    _noFocusLine: expression(this.hideFocus=true);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-    -khtml-opacity: 0;
-    -moz-opacity: 0; }
-  .dvs-select-wrapper span {
-    width: 75%;
-    overflow: hidden; }
-  .dvs-select-wrapper:hover {
-    border-color: #239fdb; }
-  .dvs-select-wrapper:after {
-    position: absolute;
-    content: " ";
-    right: 12px;
-    top: 48%;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #7dbd5d; }
-  .dvs-select-wrapper.dvs-select-small:after {
-    border-width: 0; }
-
-td .dvs-select-small {
-  margin-top: 5px; }
-
 #dvs-nodes {
   opacity: 0;
   -webkit-transition: opacity 2s;
@@ -850,22 +851,29 @@ td .dvs-select-small {
     height: 470px; }
 
 #dvs-admin-subnavigation {
-  text-align: right;
-  width: 100%;
-  margin-bottom: 25px; }
+  position: absolute;
+  top: 50px;
+  right: 5%;
+  text-align: right; }
 
 #dvs-admin-actions {
   text-align: center; }
   #dvs-admin-actions .dvs-button {
-    margin-bottom: 20px; }
+    clear: both;
+    float: right;
+    width: 150px;
+    margin-bottom: 8px; }
   #dvs-admin-actions a {
+    clear: both;
     margin-left: 8px; }
   #dvs-admin-actions select {
-    float: right; }
+    clear: both; }
   #dvs-admin-actions .dvs-select-wrapper {
+    clear: both;
+    float: right;
     width: 150px;
     font-size: 11px;
-    margin-bottom: 5px; }
+    margin-bottom: 8px; }
 
 #dvs-admin-title {
   clear: both;
@@ -940,7 +948,8 @@ table.dvs-admin-table {
     text-transform: uppercase; }
   table.dvs-admin-table thead th {
     padding: 15px 20px;
-    border-bottom: 1px solid #383c47; }
+    border-bottom: 1px solid #383c47;
+    vertical-align: middle; }
   table.dvs-admin-table tbody tr {
     min-height: 60px;
     color: white;
@@ -952,7 +961,8 @@ table.dvs-admin-table {
       border-bottom: 1px solid #202228; }
     table.dvs-admin-table tbody tr td {
       padding: 20px 30px;
-      border-right: 1px solid #2f323c; }
+      border-right: 1px solid #2f323c;
+      vertical-align: middle; }
       table.dvs-admin-table tbody tr td a:not(.dvs-button) {
         color: #5dbabd; }
         table.dvs-admin-table tbody tr td a:not(.dvs-button).dvs-expand-details {
@@ -1350,9 +1360,7 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups .dvs-select-wrapper, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector .dvs-select-wrapper {
       float: left;
       width: 133px;
-      margin-right: 3px;
-      color: whitesmoke;
-      font-family: "Roboto", Tahoma, Arial, sans-serif; }
+      margin-right: 3px; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups button, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector button {
       float: right;
       width: 76px;

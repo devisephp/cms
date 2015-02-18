@@ -100,13 +100,13 @@
   #dvs-sidebar-groups, #dvs-sidebar-versions-selector {
     clear: both;
     float: left;
+
     .dvs-select-wrapper {
       float: left;
       width: 133px;
       margin-right: 3px;
-      color: $sidebarTextColor;
-      font-family: $sidebarMainFont;
     }
+
     button {
       float: right;
       width: 76px;

@@ -8,9 +8,15 @@
 
 @section('subnavigation')
     <div id="dvs-admin-actions">
-
-        <?= Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select'))  ?></label>
-
+        @if(count($languages) == 1)
+            <?= Form::select(
+                        'language_id',
+                        $languages,
+                        (!Input::has('language_id')) ? 45 : Input::get('language_id'),
+                        array('id' => 'lang-select', 'class' => 'dvs-select dvs-button-solid')
+                    )
+            ?>
+        @endif
         <?= link_to(URL::route('dvs-pages-create'), 'Create New Page', array('class'=>'dvs-button'))  ?>
         <?= link_to(URL::route('dvs-calendar-index'), 'Calendar View', array('class'=>'dvs-button dvs-button-secondary'))  ?>
     </div>

@@ -74,7 +74,7 @@ $formErrorColor:            #834040;
 
 $sidebarFormBgColor :       #333333;
 $sidebarFormTextColor :     #e3e3e3;
-$sidebarSelectArrowColor:   $sidebarRuleColor;
+$sidebarSelectArrowColor:   $blue;
 $sidebarFormPadding :       12px 6px;
 
 $bodyFormBgColor:           #e3e4e5;
@@ -109,6 +109,9 @@ $secondaryButtonTextColor: #5dbabd;
 
 $inactiveButtonBgColor:    $red;
 $inactiveButtonTextColor:  $french-gray;
+
+$dangerButtonBgColor:      $red;
+$dangerButtonTextColor:    $french-gray;
 
 $smallButtonPadding:       8px 10px;
 $regularButtonPadding:     12px 20px;

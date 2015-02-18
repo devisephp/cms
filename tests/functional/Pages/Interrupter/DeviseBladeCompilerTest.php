@@ -62,7 +62,7 @@ class DeviseBladeCompilerTest extends \DeviseTestCase
 		$view = $compiler->compile($this->fixture('devise-views.view5'), $bladeExtended);
 
 		// then
-		assertContains('<div data-dvs-cid-821377269d7d99cfa97e5d5d4ff41150e29693df', $view);
+		assertContains('<div data-dvs-cid-1f19f69d01a5a9324699717592892764bd5c95bd', $view);
 	}
 
 	public function test_it_can_handle_view6_with_real_php_tags()

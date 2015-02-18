@@ -39,7 +39,7 @@
         @endforeach
 
         <div class="dvs-hide-mobile" id="dvs-devise-logo-sm">
-            <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-devise-powered-logo.png') }}">
+            <img src="<?= URL::asset('/packages/devisephp/cms/img/admin-devise-powered-logo.png') ?>">
         </div>
     </div>
 

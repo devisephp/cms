@@ -1,13 +1,3 @@
-@mixin insetFormDude() {
-  padding:12px 14px;
-  color:$french-gray;
-  border:1px solid $primaryTableBgColor;
-  border-radius:4px;
-  overflow:hidden;
-  @include background(linear-gradient(top, darken($secondaryTableBgColor, 5%), darken($primaryTableBgColor, 5%)));
-  @include placeholder { color:darken($french-gray, 25%) }
-}
-
 #dvs-admin-sidenav {
   float:left;
   width:25%;
@@ -88,24 +78,6 @@
       border-top-color:darken($primaryTableBgColor,18%);
       background-color:transparent;
       height:1px;
-    }
-  }
-
-  .alert {
-    h3 {
-      font-size:18px;
-    }
-
-    &.alert-danger {
-      h3 {
-        color : #a94442;
-      }
-    }
-
-    &.alert-success {
-      h3 {
-        color : #3c763d;
-      }
     }
   }
 

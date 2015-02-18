@@ -101,3 +101,14 @@
   border-top-color:$color1;
   border-bottom-color: $color2;
 }
+
+@mixin insetFormDude() {
+  padding:20px 14px;
+  color:$french-gray;
+  border:1px solid lighten($bodyBgColor, 2%);
+  border-bottom:2px solid lighten($bodyBgColor, 10%);
+  border-radius:4px;
+  overflow:hidden;
+  @include background(linear-gradient(top, darken($bodyBgColor, 6%), darken($bodyBgColor, 4%)));
+  @include placeholder { color:darken($french-gray, 25%) }
+}

@@ -1,0 +1,15 @@
+input[type=password],
+input[type=text] {
+
+	&.form-control {
+		@include insetFormDude();
+	}
+}
+
+.form-control {
+
+	&:focus {
+		border-color:lighten($bodyBgColor, 20%);
+		box-shadow:0 0 12px transparentize(lighten($bodyBgColor, 20%), 0.5);
+	}
+}

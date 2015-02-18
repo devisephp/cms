@@ -37,7 +37,6 @@ devise.define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $,
         });
     };
 
-
     initialize();
 
 });

@@ -116,7 +116,7 @@ class RuleList
     public function isInGroup($groupname)
     {
         if($this->isLoggedIn()) {
-            $user = $this->Auth->user();
+            $user = $this->User->find($this->Auth->user()->id);
             foreach($user->groups as $group) {
                 if(strtolower($group->name) === strtolower($groupname)) {
                     return true;
@@ -136,7 +136,7 @@ class RuleList
     public function isNotInGroup($groupname)
     {
         if($this->isLoggedIn()) {
-            $user = $this->Auth->user();
+            $user = $this->User->find($this->Auth->user()->id);
             foreach($user->groups as $group) {
                 if(strtolower($group->name) == strtolower($groupname)) {
                     return false;
@@ -183,7 +183,7 @@ class RuleList
     public function hasFieldValue($field, $value)
     {
         if($this->isLoggedIn()) {
-            $user = $this->Auth->user();
+            $user = $this->User->find($this->Auth->user()->id);
             if(isset($user->$field)) {
                 return $user->$field == $value;
             }

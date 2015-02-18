@@ -3,6 +3,9 @@
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Devise\Languages\LanguageDetector;
 use Devise\Support\Framework;
+use Devise\Users\UserHelper;
+use Illuminate\Support\Collection;
+use Devise\Support\DeviseException;
 
 /**
  * Class MenusRepository retrieves things related to
@@ -38,13 +41,14 @@ class MenusRepository
      * @param LanguageDetector $LanguageDetector
      * @param Framework $Framework
      */
-    public function __construct(\DvsMenu $Menu, \DvsMenuItem $MenuItem, LanguageDetector $LanguageDetector, Framework $Framework)
+    public function __construct(\DvsMenu $Menu, \DvsMenuItem $MenuItem, LanguageDetector $LanguageDetector, UserHelper $UserHelper, Framework $Framework)
     {
         $this->Menu = $Menu;
         $this->MenuItem = $MenuItem;
         $this->LanguageDetector = $LanguageDetector;
         $this->currentLanguage = $LanguageDetector->current();
         $this->Input = $Framework->Input;
+        $this->UserHelper = $UserHelper;
     }
 
     /**
@@ -164,19 +168,114 @@ class MenusRepository
         {
             $lazyLoadString = $this->getLazyLoadByDepth('items', $depth);
             $menu->load($lazyLoadString);
+            $menu->allowedMenuItems = $this->getAllowedMenuItemsFromMenu($menu);
 
             if ($page !== null)
             {
                 $this->activeItemSiblings = array();
                 $this->activeItemChildren = array();
-                $this->locateCurrentMenuItem($page->id, $menu->items);
+                $this->locateCurrentMenuItem($page->id, $menu->allowedMenuItems);
             }
+
             MenuCache::saveMenu($menu, $this->activeItemChildren, $this->activeItemSiblings);
         } else {
             $menu = $cache['menu'];
         }
 
-        return $menu->items;
+        return $menu->allowedMenuItems;
+    }
+
+    /**
+     * This gets us all the allowed menu items from a
+     * particular menu.
+     *
+     * @param  DvsMenu $menu
+     * @return Collection
+     */
+    private function getAllowedMenuItemsFromMenu($menu)
+    {
+        $menuItems = new Collection;
+
+        foreach ($menu->items as $menuItem)
+        {
+            $items = $this->getAllowedMenuItems($menuItem);
+            if ($items) $menuItems[] = $items;
+        }
+
+        return $menuItems;
+    }
+
+    /**
+     * A simple way to view the menu structure
+     * not in use by anything right now but here for
+     * troubleshooting menus if we need to
+     *
+     * @param  DvsMenu|DvsMenuItem  $menu
+     * @param  boolean $isRootMenu
+     * @return array
+     */
+    public function menuStructure($menu, $isRootMenu = true)
+    {
+        $structure = [];
+
+        $items = $isRootMenu ? $menu->items : $menu->children;
+
+        foreach ($items as $item)
+        {
+            $children = $this->menuStructure($item, false);
+            $structure[$item->name] = $children ?: $item->url;
+        }
+
+        return $structure;
+    }
+
+    /**
+     * This will let us know if the menu item is allowed and
+     * it also traverses all it's children (and future generations)
+     * filtering out menu items that are not allowed
+     *
+     * @param  DvsMenuItem $menuItem
+     * @return DvsMenuItem | false
+     */
+    private function getAllowedMenuItems($menuItem)
+    {
+        $shown = $this->checkMenuItemPermission($menuItem->permission);
+
+        // filter out children of this menu item for permissions too
+        if ($shown)
+        {
+            foreach ($menuItem->children as $key => $child)
+            {
+                $childShown = $this->getAllowedMenuItems($child);
+                if (! $childShown) $menuItem->children->forget($key);
+            }
+        }
+
+        return $shown ? $menuItem : false;
+    }
+
+    /**
+     * Tells us whether or not the menu item is supposed
+     * to be shown to this user
+     *
+     * @param  DvsMenuItem $menuItem
+     * @return boolean
+     */
+    private function checkMenuItemPermission($permission)
+    {
+        $passesCondition = false;
+
+        try
+        {
+            $passesCondition = empty($permission) || $this->UserHelper->checkConditions($permission);
+        }
+        catch (DeviseException $e) {
+            // do nothing, condition was likely not found
+            // this might be a place to notify the administrator
+            // that we have busted permissions...
+        }
+
+        return $passesCondition;
     }
 
     /**

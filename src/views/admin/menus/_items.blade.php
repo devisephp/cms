@@ -26,6 +26,13 @@
             <option value="url"<?= $urlSelected ?>>URL</option>
         </select>
 
+        <select name="item[<?=$item->id?>][permission]" class="form-control btn btn-default pull-left" style="width: 30%;height:34px;font-weight:normal;">
+            <option value="">No Restrictions</option>
+            @foreach ($availablePermissions as $availablePermission)
+                <option value="<?= $availablePermission ?>" <?= $availablePermission == $item->permission ? 'selected' : '' ?>><?= $availablePermission ?></option>
+            @endforeach
+        </select>
+
         <input type="text" name="item[<?= $item->id?>][url]" value="<?= $item->url ?>" placeholder="URL" style="width: 64%;">
 
         <input type="text" class="autocomplete-pages menu-item-page<?= $pageHiddenClass ?> form-control pull-left" placeholder="Page" style="width: 25%;" value="@if($item->page)<?= $item->page->title ?> (<?= $item->page->language->code  ?>) @endif">

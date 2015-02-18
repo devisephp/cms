@@ -1,14 +1,62 @@
+@mixin insetFormDude() {
+  padding:12px 14px;
+  color:$french-gray;
+  border:1px solid $primaryTableBgColor;
+  border-radius:4px;
+  overflow:hidden;
+  @include background(linear-gradient(top, darken($secondaryTableBgColor, 5%), darken($primaryTableBgColor, 5%)));
+  @include placeholder { color:darken($french-gray, 25%) }
+}
+
+#dvs-admin-sidenav {
+  float:left;
+  width:25%;
+  height:100%;
+  padding:0 5%;
+  box-sizing:border-box;
+
+  h5 {
+    color:$sidenavTitleColor;
+    font-weight:bold;
+  }
+
+  .dvs-admin-links {
+
+    margin:12px 0 40px 0;
+
+    li {
+      line-height:40px;
+
+      a {
+        display:block;
+        color:$sidenavLinkColor;
+        text-decoration:none;
+
+        &.dvs-active,
+        &:active,
+        &:hover { color:$sidenavActiveLinkColor }
+      }
+    }
+  }
+}
+
+#dvs-admin-body {
+  float:left;
+  width:70%;
+  margin:0 5% 0 0;
+}
+
+
 #dvs-admin {
   background-color:$bodyBgColor;
   color:$bodyTitleColor;
   font-size:$bodyMainFontSize;
   font-family:$bodyMainFont;
   font-weight:$bodyMainFontWeight;
-  padding:50px 0;
 
   h1,h2,h3,h4,h5,h6 {
-    font-size:38px;
-    font-weight:300;
+    font-size:42px;
+    font-weight:100;
     text-transform: uppercase;
     color:darken($white, 5%);
   }
@@ -42,54 +90,6 @@
       height:1px;
     }
   }
-
-  .dvs-card {
-    position:relative;
-    float:left;
-    width:30%;
-    margin:0 10px 10px 0;
-    padding:20px;
-    background-color:lighten($secondaryTableBgColor, 5%);
-    box-shadow:0 0 5px transparentize(#000, 0.8);
-
-    h4 {
-      margin-bottom:5px;
-      font-size:$bodyMainFontSize;
-      font-weight:$bodyMainFontWeight + 200;
-      color: $black;
-    }
-
-    select {
-      margin:10px 0;
-      width: 100%;
-    }
-
-    .dvs-badge {
-      background-color:$bodyCustomColor;
-      color:$white;
-      position:absolute;
-      display:inline-block;
-      top:17px;
-      right:10px;
-    }
-
-    input[type=text] {
-      margin-left:0;
-      width:40%;
-    }
-
-    input[type=submit] {
-      float:left;
-      margin:10px 0;
-    }
-
-    label {
-      float:right;
-      margin:5px 31px;
-      font-size:$bodyMainFontSize - 2;
-    }
-  }
-
 
   .alert {
     h3 {
@@ -189,74 +189,32 @@
   }
 }
 
-#dvs-admin-sidenav {
-  float:left;
-  width:25%;
-  height:100%;
-  padding:0 2%;
-  box-sizing:border-box;
-
-  h5 {
-    line-height:50px;
-    text-transform:none;
-    color:$sidenavTitleColor;
-  }
-
-  .dvs-admin-links li {
-    line-height:50px;
-
-    a {
-      display:block;
-      color:$sidenavLinkColor;
-      text-decoration:none;
-
-      &.dvs-active,
-      &:active,
-      &:hover { color:$sidenavActiveLinkColor }
-    }
-  }
-}
-
-#dvs-admin-body {
-  float:left;
-  width:75%;
-}
-
-#dvs-devise-logo-sm {
-  margin:50px auto 25px;
-  text-align:center;
-
-  img {
-    max-width:115px;
-    max-height:55px;
-  }
-}
-
-
 /* Dashboard */
 #dvs-admin {
   .dvs-admin-card {
     float:left;
-    width:25%;
-    margin:20px 1.6%;
+    width:30%;
+    margin:20px 1.5%;
     color:$dashboardCardTitleColor;
     background-color:lighten($bodyBgColor, 2%);
+    border:1px solid lighten($bodyBgColor, 5%);
     border-radius:5px;
     cursor:pointer;
     transition: all 0.5s;
+    overflow:hidden;
+
+    .dvs-card-top {
+      height:150px;
+      background-size:cover;
+      background-position:center;
+    }
 
     .dvs-card-bottom {
       position:relative;
-      height:150px;
       padding:25px 20px 25px;
 
-      h3 {
-        font-size:18px;
-        padding-bottom:20px;
-        font-weight:normal;
-      }
-
       p {
+        margin-top:12px;
         color:$dashboardCardTextColor;
         line-height:20px;
         transition: all 0.5s;
@@ -265,61 +223,40 @@
 
     &:hover {
       background-color:$green;
+      border-color:darken($green, 10%);
 
       h3, p {
         color:#fff;
+      }
+    }
+
+    &.wide {
+      width:61.5%;
+    }
+
+    &.tall {
+      .dvs-card-top {
+        height:470px;
       }
     }
   }
 }
 
 #dvs-admin-subnavigation {
-  float:right;
-  width:30%;
-
-  > ul {
-    @include clearfix;
-    text-align:right;
-    margin:15px 20px 0;
-
-    > li { display:inline-block }
-  }
-}
-
-#dvs-admin-title {
-  float:left;
-  width:63.3334%;
-  margin-bottom:15px;
-
-  h1 {
-    margin-top:30px;
-    padding-bottom:40px;
-    text-transform:capitalize;
-  }
-
-  p {
-    padding-bottom:25px;
-    color:$bodyTextColor;
-    font-size:$bodyMainFontSize + 4; // 18px
-    font-weight:300;
-    line-height:1.5em;
-  }
+  text-align:right;
+  width:100%;
+  margin-bottom:25px;
 }
 
 #dvs-admin-actions {
-  float:left;
-  width:36.6666%;
-  margin-bottom:25px;
+  text-align:center;
 
   .dvs-button {
-    margin-bottom:5px;
-    width:150px
+    margin-bottom:20px;
   }
 
   a {
-    clear:both;
-    float:right;
-    font-size:11px;
+    margin-left:8px;
   }
 
   select {
@@ -329,18 +266,36 @@
   .dvs-select-wrapper {
     width:150px;
     font-size:11px;
-    float:right;
     margin-bottom:5px;
   }
 }
 
+#dvs-admin-title {
+  clear:both;
+  margin-bottom:15px;
+  padding:50px 0 100px;
+  text-align:     center;
+
+  h1 {
+    display: inline-block;
+    padding: 15px 20px;
+    margin-top:     30px;
+    color: $blue;
+    font-size:50px;
+    text-transform: uppercase;
+    border: 1px solid $blue;
+
+    @include text-gradient($light-blue, $blue);
+    @include gradient-border($light-blue, $blue)
+  }
+}
+
 .dvs-inset-text {
-  padding:6px 14px;
-  background-color:#dbdfe2;
-  border-radius:4px;
-  border:1px solid #dadde2;
-  box-shadow:inset 0 1px 0 tint(#d4d5d9, 10%), 0 1px 0 #fafbff;
-  overflow:hidden;
+  @include insetFormDude();
+
+  a {
+    color:$red;
+  }
 }
 
 .dvs-opaque-text {
@@ -348,31 +303,33 @@
 }
 
 .dvs-admin-container {
-  width:$bodyContainerWidth;
+  position:relative;
   margin:0 auto;
   @include clearfix;
+
+  background-image:linear-gradient(lighten($bodyBgColor, 5%), $bodyBgColor)
 }
 
 /* Tables */
 table.dvs-admin-table {
-  margin:0 auto 50px;
-  width:$bodyContainerWidth;
+  margin:0 0 50px;
+  width:100%;
   font-size:13px;
-  border-radius:5px;
-  box-shadow:0 2px 24px 12px rgba(0,0,0,.6);
+  box-shadow:0 2px 12px 6px rgba(0,0,0,.1);
   @include background(linear-gradient($secondaryTableBgColor, $primaryTableBgColor));
 
   thead {
-    tr { border-bottom:2px solid transparentize(#c7c7c7, 0.9) }
 
     th, th a {
       color:darken($tableTextColor, 10%);
-      font-weight:$bodyMainFontWeight + 300;
-      text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
       text-decoration:none;
+      text-transform: uppercase;
     }
 
-    th { padding:15px 20px}
+    th {
+      padding:15px 20px;
+      border-bottom:1px solid lighten($primaryTableBgColor, 8%);
+    }
   }
 
   tbody tr {
@@ -381,39 +338,33 @@ table.dvs-admin-table {
     background-color:$primaryTableBgColor;
 
     &.dvs-table-row-even td {
-      border-top:1px solid transparentize(white, 0.9);
-      border-bottom:1px solid #d8dce5;
-      box-shadow:inset lighten($primaryTableBgColor,3%) 1px 1px 1px;
+      border-bottom:1px solid lighten($primaryTableBgColor, 4%);
     }
 
     &.dvs-table-row-odd td {
-      @include background(linear-gradient(#fafbff, #f5f6fa));
-      border-top:1px solid #f8f8fa;
-      border-bottom:1px solid #d8dce5;
-      box-shadow:inset 0 -10px 10px -10px #f5f7f7;
+      background-color:$secondaryTableBgColor;
+      border-bottom:1px solid darken($primaryTableBgColor, 3%);
     }
 
     td {
       padding:20px 30px;
-      border-right:1px solid transparentize(#cfd0d2, 0.75);
+      border-right:1px solid lighten($primaryTableBgColor, 4%);
 
       a:not(.dvs-button) {
-        color:$bodyActiveLinkColor;
-        font-weight:$bodyMainFontWeight + 300;
+        color:$blue;
 
         &.dvs-expand-details {
           display:inline-block;
-          margin-top:6px;
-          color:invert($bodyActiveLinkColor);
+          color:darken($blue, 20%);
           font-size:$bodyMainFontSize - 3;
           font-weight:$bodyMainFontWeight;
         }
       }
 
-      &.dvs-stacked-col > div {
-        font-weight:$bodyMainFontWeight + 300;
-        color:lighten(#34352f, 15%);
-        padding-bottom:6px;
+      &.dvs-stacked-col {
+        div {
+          margin-bottom:8px;
+        }
       }
     }
   }
@@ -426,16 +377,10 @@ table.dvs-admin-table {
   .dvs-lang-flag { margin:0 2.5px }
 
   input[type=text] {
-    min-width:260px;
+    min-width:200px;
     max-width:300px;
     margin-left:10px;
-    padding:6px 14px;
-    color:darken($tableTextColor, 10%);
-    border:1px solid #dadde2;
-    border-radius:4px;
-    overflow:hidden;
-    @include background(linear-gradient(top, #dbdce1, #dbdee0));
-    @include placeholder { color:darken($tableTextColor, 10%) }
+    @include insetFormDude();
   }
 
   .dvs-publish-dates {
@@ -678,53 +623,6 @@ table.dvs-admin-table {
   display:none;
 
   &.open { display:block }
-}
-
-.pagination {
-  margin:25px 30px;
-  border-radius:4px;
-  @include clearfix;
-
-  li {
-    display:inline-block;
-    border-bottom:1px solid darken($primaryTableBgColor, 20%);
-    border-right:1px solid darken($primaryTableBgColor, 12%);
-    border-top:1px solid darken($primaryTableBgColor, 12%);
-    background-color:$primaryTableBgColor;
-    box-shadow:0 1px 1px darken($primaryTableBgColor, 8%);
-
-    a, span {
-      display:block;
-      padding:10px;
-      color:$bodyPaginationLinkColor;
-    }
-
-    &.active {
-      background-color:darken($primaryTableBgColor,5%);
-      font-weight:$bodyMainFontWeight + 300;
-    }
-
-    &.disabled {
-      background-color:lighten($primaryTableBgColor, 2%);
-      color:darken(#ccc, 15%);
-      cursor:not-allowed;
-    }
-
-    &.dvs-more-results {
-      span { padding:10px 8px 10px 0 }
-    }
-
-    &:first-child {
-      border-bottom-left-radius:5px;
-      border-top-left-radius:5px;
-      border-left:1px solid darken($primaryTableBgColor, 12%);
-    }
-
-    &:last-child {
-      border-bottom-right-radius:5px;
-      border-top-right-radius:5px;
-    }
-  }
 }
 
 .dvs-admin-mode {

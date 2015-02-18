@@ -18,6 +18,15 @@
 </head>
 
 <body id="dvs-admin" class="dvs-default">
+
+    <div class="dvs-admin-container">
+        @yield('title')
+
+        <div id="dvs-admin-subnavigation">
+            @yield('subnavigation')
+        </div>
+    </div>
+
     <div id="dvs-admin-sidenav">
 
         @foreach ($dvsAdminMenu as $menuGroup)
@@ -30,18 +39,12 @@
         @endforeach
 
         <div class="dvs-hide-mobile" id="dvs-devise-logo-sm">
-            <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-devise-powered-logo.png') }}" width="100%">
+            <img src="{{ URL::asset('/packages/devisephp/cms/img/admin-devise-powered-logo.png') }}">
         </div>
     </div>
 
     <div id="dvs-admin-body">
-        <div id="dvs-admin-subnavigation">
-            @yield('subnavigation')
-        </div>
 
-        <div class="dvs-admin-container">
-            @yield('title')
-        </div>
 
         @if(Session::has('message'))
             <div class="dvs-messages">

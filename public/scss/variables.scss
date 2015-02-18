@@ -2,16 +2,21 @@
 @import url('http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400');
 
 // Colors - Global
-$white:   #ffffff;
-$black:   #262626;
-$gray:    #666666;
-$red:     #a33737;
-$purple:  #965b95;
-$green:   #7dbd5d;
+$white       : #ffffff;
+$black       : #262626;
+$purple      : #965b95;
 
-$light-gray:#ebebeb;
-$mid-gray: #a0a0a0;
-$gray:#5d5d5d;
+// Electrics
+$green       : #7dbd5d;
+$light-blue  : #b7f0f2;
+$blue        : #5dbabd;
+$red         : #FD5F46;
+
+// Grays
+$light-gray  : #ebebeb;
+$french-gray : #BCBEC2;
+$mid-gray    : #a0a0a0;
+$gray        : #5d5d5d;
 
 
 // Fonts
@@ -25,7 +30,6 @@ $sidebarHeaderFontSize:     18px;
 $bodyMainFont:              $sidebarMainFont;
 $bodyMainFontSize:          14px;
 $bodyMainFontWeight:        400;
-
 
 // Sidebar General
 $sidebarDistanceFromTop:   35px;
@@ -48,14 +52,14 @@ $sidebarBreadcrumbActive:       #6b6b6b;
 $bodyContainerWidth:   90%;
 
 // Body and Sidenav Colors
-$bodyBgColor:              #262424;
+$bodyBgColor:              #2D3039;
 $bodyCustomColor:          #7dbd5d;
 $bodyTitleColor:           #ffffff;
-$bodyTextColor:            #817878;
+$bodyTextColor:            #BCBEC2;
 $bodyActiveLinkColor:      darken($bodyCustomColor, 12%);
 
 $sidenavTitleColor:        #ffffff;
-$sidenavLinkColor:         #817878;
+$sidenavLinkColor:         #BCBEC2;
 $sidenavActiveLinkColor:   $bodyCustomColor;
 
 $dashboardCardTitleColor:    #787878;
@@ -79,9 +83,9 @@ $bodyFormInputBgColor:      #ffffff;
 
 
 // Tables
-$primaryTableBgColor:       #ebebeb;
-$secondaryTableBgColor:     #e3e4e5;
-$tableTextColor:            #ababab;
+$primaryTableBgColor:       darken($bodyBgColor, 3%);
+$secondaryTableBgColor:     darken($bodyBgColor, 1%);
+$tableTextColor:            $white;
 
 
 // Breadcrumbs
@@ -90,16 +94,21 @@ $sidebarCrumbsInactiveColor:  #6b6b6b;
 
 
 // Buttons / Links
-$buttonBorderRadius:        0;
+$buttonBorderRadius:       2px;
 
-$primaryButtonBgColor:     $sidebarRuleColor;
-$primaryButtonTextColor:   #ffffff;
+
+
+$defaultButtonBgColor:     darken($bodyBgColor, 10%);
+$defaultButtonTextColor:   lighten(#BCBEC2, 5%);
+
+$primaryButtonBgColor:     #BCBEC2;
+$primaryButtonTextColor:   #BCBEC2;
 
 $secondaryButtonBgColor:   #5dbabd;
-$secondaryButtonTextColor: #ffffff;
+$secondaryButtonTextColor: #5dbabd;
 
-$inactiveButtonBgColor:    #CDCDCD;
-$inactiveButtonTextColor:  #e3e3e3;
+$inactiveButtonBgColor:    $red;
+$inactiveButtonTextColor:  $french-gray;
 
 $smallButtonPadding:       8px 10px;
 $regularButtonPadding:     12px 20px;

@@ -32,7 +32,7 @@
             'audio', 'checkbox-group', 'checkbox', 'color',
             'datetime', 'file', 'html', 'image',
             'link', 'map', 'select', 'text', 'textarea',
-            'video', 'wysiwyg', 'collections', 'hidden-fields'] as $type)
+            'video', 'wysiwyg', 'groups', 'collections', 'hidden-fields'] as $type)
             <tr>
                 <td>
                     @include("devise::admin.fields.types.{$type}")

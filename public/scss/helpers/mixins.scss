@@ -81,3 +81,23 @@
   &.op5 { opacity: 0.05; }
   &.op0 { opacity: 0; }
 }
+
+@mixin text-gradient($color1, $color2) {
+
+  @include background(linear-gradient($color1, $color2));
+
+  background-clip: text;
+  -moz-background-clip: text;
+  -webkit-background-clip: text;
+
+  text-fill-color:  transparent;
+  -moz-text-fill-color:  transparent;
+  -webkit-text-fill-color:  transparent;
+}
+
+@mixin gradient-border($color1, $color2) {
+  border: 1px solid $color1;
+  @include border-image(linear-gradient($color1, $color2) 2 1%);
+  border-top-color:$color1;
+  border-bottom-color: $color2;
+}

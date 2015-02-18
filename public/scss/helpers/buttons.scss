@@ -2,12 +2,18 @@
   display:inline-block;
   padding:$regularButtonPadding;
   color:$primaryButtonTextColor;
-  background-color:$primaryButtonBgColor;
+  background-color: transparent;
+  border:1px solid $primaryButtonBgColor;
   text-transform:uppercase;
   text-decoration:none;
-  border-width:0;
   border-radius:$buttonBorderRadius;
   box-sizing:border-box;
+  font-size: 11px;
+
+  &.dvs-solid {
+    background-color:$primaryButtonBgColor;
+    color: invert($primaryButtonTextColor);
+  }
 
   &.dvs-button-small {
     padding:8px;
@@ -20,13 +26,24 @@
   }
 
   &.dvs-button-secondary {
-    background-color:$secondaryButtonBgColor;
+    border:1px solid $secondaryButtonBgColor;
     color:$secondaryButtonTextColor;
+
+    &.dvs-solid {
+      background-color:$secondaryButtonBgColor;
+      color:invert($secondaryButtonTextColor);
+    }
   }
 
   &.dvs-button-inactive {
-    background-color:$inactiveButtonBgColor;
-    color:$secondaryButtonTextColor;
+
+    border:1px solid $inactiveButtonBgColor;
+    color:$inactiveButtonBgColor;
+
+    &.dvs-solid {
+      background-color:$inactiveButtonBgColor;
+      color:$inactiveButtonTextColor;
+    }
   }
 
   &.dvs-button-dark {
@@ -61,8 +78,8 @@
     display:inline-block !important;
     margin-left:-4px;
     border-radius:0;
-    border-right:1px solid #cbe3f1;
-    border-left:1px solid #ebf3f7;
+    border-right-width:1px;
+    border-left-width:0;
 
     &.dvs-button-secondary {
       border-right:1px solid #90c0dd;
@@ -76,13 +93,13 @@
 
     &:first-child {
       border-radius:3px 0 0 3px;
-      border-left-width:0;
+      border-left-width:1px;
       margin-left:0;
     }
 
     &:last-child {
       border-radius:0 3px 3px 0;
-      border-right-width:0;
+      border-right-width:1px;
     }
   }
 
@@ -94,15 +111,6 @@
       border-right-width:0;
     }
   }
-
-  &.dvs-sort-group {
-    .dvs-button-outset {
-      border-right:1px solid darken($primaryTableBgColor, 12%);
-      border-left:1px solid darken($primaryTableBgColor, 12%);
-    }
-
-    a.page-sort { background-position:right 10px top 48% }
-  }
 }
 
 input[type="submit"]{
@@ -113,7 +121,47 @@ input[type="submit"]{
 }
 
 .pagination {
+  margin:25px 30px;
+  border-radius:$buttonBorderRadius;
+  @include clearfix;
+
   li {
     float:left;
+    display:inline-block;
+    background-color: transparent;
+    border:1px solid $defaultButtonBgColor;
+    border-right-width:0;
+
+    a, span {
+      display:block;
+      padding:$smallButtonPadding;
+      color:$defaultButtonTextColor;
+    }
+
+    &.active {
+      background-color:darken($primaryTableBgColor,5%);
+      font-weight:$bodyMainFontWeight + 300;
+    }
+
+    &.disabled {
+      background-color:lighten($primaryTableBgColor, 2%);
+      color:darken(#ccc, 15%);
+      cursor:not-allowed;
+    }
+
+    &.dvs-more-results {
+      span { padding:10px 8px 10px 0 }
+    }
+
+    &:first-child {
+      border-bottom-left-radius:$buttonBorderRadius;
+      border-top-left-radius:$buttonBorderRadius;
+    }
+
+    &:last-child {
+      border-bottom-right-radius:$buttonBorderRadius;
+      border-top-right-radius:$buttonBorderRadius;
+      border-right-width:1px;
+    }
   }
 }

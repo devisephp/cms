@@ -54,7 +54,7 @@
   .dvs-badge.gray {
     background-color: #5d5d5d; }
   .dvs-badge.red {
-    background-color: #a33737; }
+    background-color: #fd5f46; }
   .dvs-badge.purple {
     background-color: #965b95; }
   .dvs-badge .dvs-button.dvs-button-small {
@@ -140,13 +140,17 @@
 .dvs-button {
   display: inline-block;
   padding: 12px 20px;
-  color: white;
-  background-color: #7dbd5d;
+  color: #bcbec2;
+  background-color: transparent;
+  border: 1px solid #bcbec2;
   text-transform: uppercase;
   text-decoration: none;
-  border-width: 0;
-  border-radius: 0;
-  box-sizing: border-box; }
+  border-radius: 2px;
+  box-sizing: border-box;
+  font-size: 11px; }
+  .dvs-button.dvs-solid {
+    background-color: #bcbec2;
+    color: #43413d; }
   .dvs-button.dvs-button-small {
     padding: 8px;
     font-size: 10px; }
@@ -154,27 +158,33 @@
     padding: 16px 40px;
     font-size: 14px; }
   .dvs-button.dvs-button-secondary {
-    background-color: #5dbabd;
-    color: white; }
+    border: 1px solid #5dbabd;
+    color: #5dbabd; }
+    .dvs-button.dvs-button-secondary.dvs-solid {
+      background-color: #5dbabd;
+      color: #a24542; }
   .dvs-button.dvs-button-inactive {
-    background-color: #cdcdcd;
-    color: white; }
+    border: 1px solid #fd5f46;
+    color: #fd5f46; }
+    .dvs-button.dvs-button-inactive.dvs-solid {
+      background-color: #fd5f46;
+      color: #bcbec2; }
   .dvs-button.dvs-button-dark {
     background-color: #333333;
-    color: white; }
+    color: #5dbabd; }
   .dvs-button.dvs-button-gray {
     background-color: #4c4c4c;
-    color: white; }
+    color: #5dbabd; }
   .dvs-button.dvs-button-danger {
     background-color: #666;
     color: #fff; }
   .dvs-button.dvs-button-outset {
     color: #919191;
-    background-color: #ebebeb;
-    border: 1px solid #cccccc;
-    border-bottom-color: #b8b8b8;
+    background-color: #262930;
+    border: 1px solid #0b0c0e;
+    border-bottom-color: black;
     border-radius: 4px;
-    box-shadow: 0 1px 1px #d7d7d7; }
+    box-shadow: 0 1px 1px #14161a; }
 
 .dvs-button-group {
   white-space: nowrap; }
@@ -182,8 +192,8 @@
     display: inline-block !important;
     margin-left: -4px;
     border-radius: 0;
-    border-right: 1px solid #cbe3f1;
-    border-left: 1px solid #ebf3f7; }
+    border-right-width: 1px;
+    border-left-width: 0; }
     .dvs-button-group .dvs-button.dvs-button-secondary {
       border-right: 1px solid #90c0dd;
       border-left: 1px solid #ebf3f7; }
@@ -192,28 +202,54 @@
       border-left: 1px solid #fff; }
     .dvs-button-group .dvs-button:first-child {
       border-radius: 3px 0 0 3px;
-      border-left-width: 0;
+      border-left-width: 1px;
       margin-left: 0; }
     .dvs-button-group .dvs-button:last-child {
       border-radius: 0 3px 3px 0;
-      border-right-width: 0; }
+      border-right-width: 1px; }
   .dvs-button-group form {
     display: inline-block; }
     .dvs-button-group form:last-child input[type="submit"] {
       border-radius: 0 3px 3px 0;
       border-right-width: 0; }
-  .dvs-button-group.dvs-sort-group .dvs-button-outset {
-    border-right: 1px solid #cccccc;
-    border-left: 1px solid #cccccc; }
-  .dvs-button-group.dvs-sort-group a.page-sort {
-    background-position: right 10px top 48%; }
 
 input[type="submit"].dvs-button.dvs-button-small {
   padding: 6px 7px 8px;
   cursor: pointer; }
 
-.pagination li {
-  float: left; }
+.pagination {
+  margin: 25px 30px;
+  border-radius: 2px; }
+  .pagination:after {
+    content: "";
+    display: table;
+    clear: both; }
+  .pagination li {
+    float: left;
+    display: inline-block;
+    background-color: transparent;
+    border: 1px solid #17181d;
+    border-right-width: 0; }
+    .pagination li a, .pagination li span {
+      display: block;
+      padding: 8px 10px;
+      color: #c9cbce; }
+    .pagination li.active {
+      background-color: #1b1d22;
+      font-weight: 700; }
+    .pagination li.disabled {
+      background-color: #2b2e36;
+      color: #a6a6a6;
+      cursor: not-allowed; }
+    .pagination li.dvs-more-results span {
+      padding: 10px 8px 10px 0; }
+    .pagination li:first-child {
+      border-bottom-left-radius: 2px;
+      border-top-left-radius: 2px; }
+    .pagination li:last-child {
+      border-bottom-right-radius: 2px;
+      border-top-right-radius: 2px;
+      border-right-width: 1px; }
 
 .dvs-messages {
   background-color: #17d4d2;
@@ -243,17 +279,17 @@ input[type="submit"].dvs-button.dvs-button-small {
     font-size: 13px;
     border-radius: 5px;
     box-shadow: 0 2px 24px 12px rgba(0, 0, 0, 0.6);
-    background: -webkit-linear-gradient(#e3e4e5, #ebebeb);
-    background: linear-gradient(#e3e4e5, #ebebeb); }
+    background: -webkit-linear-gradient(#2b2e36, #262930);
+    background: linear-gradient(#2b2e36, #262930); }
   .dvs-calendar-container .fc-month-view thead th, .dvs-calendar-container .fc-month-view thead th a {
-    color: #919191;
+    color: #e6e6e6;
     font-weight: 700;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     text-decoration: none; }
   .dvs-calendar-container .fc-month-view thead th {
     padding: 15px 20px; }
   .dvs-calendar-container .fc-month-view tbody tr {
-    color: #ababab; }
+    color: white; }
 
 #dvs-admin #page-version-events {
   float: left;
@@ -289,7 +325,7 @@ input[type="submit"].dvs-button.dvs-button-small {
 #dvs-admin .fc-event {
   padding: 12px 20px;
   border-radius: 0;
-  background-color: #7dbd5d;
+  background-color: #bcbec2;
   border-width: 0;
   color: white; }
 #dvs-admin .fc-event-container {
@@ -652,16 +688,40 @@ td .dvs-select-small {
       .dvs-node-mode #dvs-nodes .dvs-node.right.dvs-content-requested .svg-node-arrow {
         fill: lightyellow; }
 
+#dvs-admin-sidenav {
+  float: left;
+  width: 25%;
+  height: 100%;
+  padding: 0 5%;
+  box-sizing: border-box; }
+  #dvs-admin-sidenav h5 {
+    color: white;
+    font-weight: bold; }
+  #dvs-admin-sidenav .dvs-admin-links {
+    margin: 12px 0 40px 0; }
+    #dvs-admin-sidenav .dvs-admin-links li {
+      line-height: 40px; }
+      #dvs-admin-sidenav .dvs-admin-links li a {
+        display: block;
+        color: #bcbec2;
+        text-decoration: none; }
+        #dvs-admin-sidenav .dvs-admin-links li a.dvs-active, #dvs-admin-sidenav .dvs-admin-links li a:active, #dvs-admin-sidenav .dvs-admin-links li a:hover {
+          color: #7dbd5d; }
+
+#dvs-admin-body {
+  float: left;
+  width: 70%;
+  margin: 0 5% 0 0; }
+
 #dvs-admin {
-  background-color: #262424;
+  background-color: #2d3039;
   color: white;
   font-size: 14px;
   font-family: "Roboto", Tahoma, Arial, sans-serif;
-  font-weight: 400;
-  padding: 50px 0; }
+  font-weight: 400; }
   #dvs-admin h1, #dvs-admin h2, #dvs-admin h3, #dvs-admin h4, #dvs-admin h5, #dvs-admin h6 {
-    font-size: 38px;
-    font-weight: 300;
+    font-size: 42px;
+    font-weight: 100;
     text-transform: uppercase;
     color: #f2f2f2; }
   #dvs-admin h2 {
@@ -682,47 +742,14 @@ td .dvs-select-small {
     #dvs-admin hr.dvs-thick {
       border-width: 2px; }
   #dvs-admin .dvs-admin-form-horizontal h3 {
-    color: #2b2929;
+    color: #32353f;
     text-transform: capitalize; }
   #dvs-admin .dvs-admin-form-horizontal hr {
     margin: 10px auto 45px;
-    border-bottom-color: #f3f3f3;
-    border-top-color: #bdbdbd;
+    border-bottom-color: #2d3039;
+    border-top-color: black;
     background-color: transparent;
     height: 1px; }
-  #dvs-admin .dvs-card {
-    position: relative;
-    float: left;
-    width: 30%;
-    margin: 0 10px 10px 0;
-    padding: 20px;
-    background-color: #f0f1f1;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); }
-    #dvs-admin .dvs-card h4 {
-      margin-bottom: 5px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #262626; }
-    #dvs-admin .dvs-card select {
-      margin: 10px 0;
-      width: 100%; }
-    #dvs-admin .dvs-card .dvs-badge {
-      background-color: #7dbd5d;
-      color: white;
-      position: absolute;
-      display: inline-block;
-      top: 17px;
-      right: 10px; }
-    #dvs-admin .dvs-card input[type=text] {
-      margin-left: 0;
-      width: 40%; }
-    #dvs-admin .dvs-card input[type=submit] {
-      float: left;
-      margin: 10px 0; }
-    #dvs-admin .dvs-card label {
-      float: right;
-      margin: 5px 31px;
-      font-size: 12px; }
   #dvs-admin .alert h3 {
     font-size: 18px; }
   #dvs-admin .alert.alert-danger h3 {
@@ -788,124 +815,112 @@ td .dvs-select-small {
     padding-top: 10px;
     font-size: 12px; }
 
-#dvs-admin-sidenav {
-  float: left;
-  width: 25%;
-  height: 100%;
-  padding: 0 2%;
-  box-sizing: border-box; }
-  #dvs-admin-sidenav h5 {
-    line-height: 50px;
-    text-transform: none;
-    color: white; }
-  #dvs-admin-sidenav .dvs-admin-links li {
-    line-height: 50px; }
-    #dvs-admin-sidenav .dvs-admin-links li a {
-      display: block;
-      color: #817878;
-      text-decoration: none; }
-      #dvs-admin-sidenav .dvs-admin-links li a.dvs-active, #dvs-admin-sidenav .dvs-admin-links li a:active, #dvs-admin-sidenav .dvs-admin-links li a:hover {
-        color: #7dbd5d; }
-
-#dvs-admin-body {
-  float: left;
-  width: 75%; }
-
-#dvs-devise-logo-sm {
-  margin: 50px auto 25px;
-  text-align: center; }
-  #dvs-devise-logo-sm img {
-    max-width: 115px;
-    max-height: 55px; }
-
 /* Dashboard */
 #dvs-admin .dvs-admin-card {
   float: left;
-  width: 25%;
-  margin: 20px 1.6%;
+  width: 30%;
+  margin: 20px 1.5%;
   color: #787878;
-  background-color: #2b2929;
+  background-color: #32353f;
+  border: 1px solid #383c47;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.5s; }
+  transition: all 0.5s;
+  overflow: hidden; }
+  #dvs-admin .dvs-admin-card .dvs-card-top {
+    height: 150px;
+    background-size: cover;
+    background-position: center; }
   #dvs-admin .dvs-admin-card .dvs-card-bottom {
     position: relative;
-    height: 150px;
     padding: 25px 20px 25px; }
-    #dvs-admin .dvs-admin-card .dvs-card-bottom h3 {
-      font-size: 18px;
-      padding-bottom: 20px;
-      font-weight: normal; }
     #dvs-admin .dvs-admin-card .dvs-card-bottom p {
+      margin-top: 12px;
       color: #909090;
       line-height: 20px;
       transition: all 0.5s; }
   #dvs-admin .dvs-admin-card:hover {
-    background-color: #7dbd5d; }
+    background-color: #7dbd5d;
+    border-color: #63a443; }
     #dvs-admin .dvs-admin-card:hover h3, #dvs-admin .dvs-admin-card:hover p {
       color: #fff; }
+  #dvs-admin .dvs-admin-card.wide {
+    width: 61.5%; }
+  #dvs-admin .dvs-admin-card.tall .dvs-card-top {
+    height: 470px; }
 
 #dvs-admin-subnavigation {
-  float: right;
-  width: 30%; }
-  #dvs-admin-subnavigation > ul {
-    text-align: right;
-    margin: 15px 20px 0; }
-    #dvs-admin-subnavigation > ul:after {
-      content: "";
-      display: table;
-      clear: both; }
-    #dvs-admin-subnavigation > ul > li {
-      display: inline-block; }
-
-#dvs-admin-title {
-  float: left;
-  width: 63.3334%;
-  margin-bottom: 15px; }
-  #dvs-admin-title h1 {
-    margin-top: 30px;
-    padding-bottom: 40px;
-    text-transform: capitalize; }
-  #dvs-admin-title p {
-    padding-bottom: 25px;
-    color: #817878;
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 1.5em; }
+  text-align: right;
+  width: 100%;
+  margin-bottom: 25px; }
 
 #dvs-admin-actions {
-  float: left;
-  width: 36.6666%;
-  margin-bottom: 25px; }
+  text-align: center; }
   #dvs-admin-actions .dvs-button {
-    margin-bottom: 5px;
-    width: 150px; }
+    margin-bottom: 20px; }
   #dvs-admin-actions a {
-    clear: both;
-    float: right;
-    font-size: 11px; }
+    margin-left: 8px; }
   #dvs-admin-actions select {
     float: right; }
   #dvs-admin-actions .dvs-select-wrapper {
     width: 150px;
     font-size: 11px;
-    float: right;
     margin-bottom: 5px; }
 
+#dvs-admin-title {
+  clear: both;
+  margin-bottom: 15px;
+  padding: 50px 0 100px;
+  text-align: center; }
+  #dvs-admin-title h1 {
+    display: inline-block;
+    padding: 15px 20px;
+    margin-top: 30px;
+    color: #5dbabd;
+    font-size: 50px;
+    text-transform: uppercase;
+    border: 1px solid #5dbabd;
+    background: -webkit-linear-gradient(#b7f0f2, #5dbabd);
+    background: linear-gradient(#b7f0f2, #5dbabd);
+    background-clip: text;
+    -moz-background-clip: text;
+    -webkit-background-clip: text;
+    text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+    border: 1px solid #b7f0f2;
+    -webkit-border-image: -webkit-linear-gradient(#b7f0f2, #5dbabd) 2 1%;
+    border-image: linear-gradient(#b7f0f2, #5dbabd) 2 1%;
+    border-style: solid;
+    border-top-color: #b7f0f2;
+    border-bottom-color: #5dbabd; }
+
 .dvs-inset-text {
-  padding: 6px 14px;
-  background-color: #dbdfe2;
+  padding: 12px 14px;
+  color: #bcbec2;
+  border: 1px solid #262930;
   border-radius: 4px;
-  border: 1px solid #dadde2;
-  box-shadow: inset 0 1px 0 #d8d9dc, 0 1px 0 #fafbff;
-  overflow: hidden; }
+  overflow: hidden;
+  background: -webkit-linear-gradient(top, #202228, #1b1d22);
+  background: linear-gradient(to bottom, #202228, #1b1d22); }
+  .dvs-inset-text::-webkit-input-placeholder {
+    color: #797d85; }
+  .dvs-inset-text::-moz-placeholder {
+    color: #797d85; }
+  .dvs-inset-text:-moz-placeholder {
+    color: #797d85; }
+  .dvs-inset-text:-ms-input-placeholder {
+    color: #797d85; }
+  .dvs-inset-text a {
+    color: #fd5f46; }
 
 .dvs-opaque-text {
   opacity: 0.5; }
 
 .dvs-admin-container {
-  width: 90%;
-  margin: 0 auto; }
+  position: relative;
+  margin: 0 auto;
+  background-image: linear-gradient(#383c47, #2d3039); }
   .dvs-admin-container:after {
     content: "";
     display: table;
@@ -913,52 +928,40 @@ td .dvs-select-small {
 
 /* Tables */
 table.dvs-admin-table {
-  margin: 0 auto 50px;
-  width: 90%;
+  margin: 0 0 50px;
+  width: 100%;
   font-size: 13px;
-  border-radius: 5px;
-  box-shadow: 0 2px 24px 12px rgba(0, 0, 0, 0.6);
-  background: -webkit-linear-gradient(#e3e4e5, #ebebeb);
-  background: linear-gradient(#e3e4e5, #ebebeb); }
-  table.dvs-admin-table thead tr {
-    border-bottom: 2px solid rgba(199, 199, 199, 0.1); }
+  box-shadow: 0 2px 12px 6px rgba(0, 0, 0, 0.1);
+  background: -webkit-linear-gradient(#2b2e36, #262930);
+  background: linear-gradient(#2b2e36, #262930); }
   table.dvs-admin-table thead th, table.dvs-admin-table thead th a {
-    color: #919191;
-    font-weight: 700;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    text-decoration: none; }
+    color: #e6e6e6;
+    text-decoration: none;
+    text-transform: uppercase; }
   table.dvs-admin-table thead th {
-    padding: 15px 20px; }
+    padding: 15px 20px;
+    border-bottom: 1px solid #383c47; }
   table.dvs-admin-table tbody tr {
     min-height: 60px;
-    color: #ababab;
-    background-color: #ebebeb; }
+    color: white;
+    background-color: #262930; }
     table.dvs-admin-table tbody tr.dvs-table-row-even td {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      border-bottom: 1px solid #d8dce5;
-      box-shadow: inset #f3f3f3 1px 1px 1px; }
+      border-bottom: 1px solid #2f323c; }
     table.dvs-admin-table tbody tr.dvs-table-row-odd td {
-      background: -webkit-linear-gradient(#fafbff, #f5f6fa);
-      background: linear-gradient(#fafbff, #f5f6fa);
-      border-top: 1px solid #f8f8fa;
-      border-bottom: 1px solid #d8dce5;
-      box-shadow: inset 0 -10px 10px -10px #f5f7f7; }
+      background-color: #2b2e36;
+      border-bottom: 1px solid #202228; }
     table.dvs-admin-table tbody tr td {
       padding: 20px 30px;
-      border-right: 1px solid rgba(207, 208, 210, 0.25); }
+      border-right: 1px solid #2f323c; }
       table.dvs-admin-table tbody tr td a:not(.dvs-button) {
-        color: #5f9d40;
-        font-weight: 700; }
+        color: #5dbabd; }
         table.dvs-admin-table tbody tr td a:not(.dvs-button).dvs-expand-details {
           display: inline-block;
-          margin-top: 6px;
-          color: #a062bf;
+          color: #347e80;
           font-size: 11px;
           font-weight: 400; }
-      table.dvs-admin-table tbody tr td.dvs-stacked-col > div {
-        font-weight: 700;
-        color: #5c5e53;
-        padding-bottom: 6px; }
+      table.dvs-admin-table tbody tr td.dvs-stacked-col div {
+        margin-bottom: 8px; }
   table.dvs-admin-table tfoot td {
     padding: 5px; }
   table.dvs-admin-table td:last-child,
@@ -967,24 +970,24 @@ table.dvs-admin-table {
   table.dvs-admin-table .dvs-lang-flag {
     margin: 0 2.5px; }
   table.dvs-admin-table input[type=text] {
-    min-width: 260px;
+    min-width: 200px;
     max-width: 300px;
     margin-left: 10px;
-    padding: 6px 14px;
-    color: #919191;
-    border: 1px solid #dadde2;
+    padding: 12px 14px;
+    color: #bcbec2;
+    border: 1px solid #262930;
     border-radius: 4px;
     overflow: hidden;
-    background: -webkit-linear-gradient(top, #dbdce1, #dbdee0);
-    background: linear-gradient(to bottom, #dbdce1, #dbdee0); }
+    background: -webkit-linear-gradient(top, #202228, #1b1d22);
+    background: linear-gradient(to bottom, #202228, #1b1d22); }
     table.dvs-admin-table input[type=text]::-webkit-input-placeholder {
-      color: #919191; }
+      color: #797d85; }
     table.dvs-admin-table input[type=text]::-moz-placeholder {
-      color: #919191; }
+      color: #797d85; }
     table.dvs-admin-table input[type=text]:-moz-placeholder {
-      color: #919191; }
+      color: #797d85; }
     table.dvs-admin-table input[type=text]:-ms-input-placeholder {
-      color: #919191; }
+      color: #797d85; }
   table.dvs-admin-table .dvs-publish-dates p {
     margin: 10px 0; }
   table.dvs-admin-table .dvs-publish-dates input[type=text] {
@@ -1136,7 +1139,7 @@ table.dvs-admin-table {
 .fancyCheckbox {
   width: 78px;
   height: 25px;
-  background: #6a6565;
+  background: #686e83;
   position: relative;
   border-radius: 50px;
   box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2); }
@@ -1186,41 +1189,6 @@ table.dvs-admin-table {
   display: none; }
   .simpletoggle.open {
     display: block; }
-
-.pagination {
-  margin: 25px 30px;
-  border-radius: 4px; }
-  .pagination:after {
-    content: "";
-    display: table;
-    clear: both; }
-  .pagination li {
-    display: inline-block;
-    border-bottom: 1px solid #b8b8b8;
-    border-right: 1px solid #cccccc;
-    border-top: 1px solid #cccccc;
-    background-color: #ebebeb;
-    box-shadow: 0 1px 1px #d7d7d7; }
-    .pagination li a, .pagination li span {
-      display: block;
-      padding: 10px;
-      color: #919191; }
-    .pagination li.active {
-      background-color: #dedede;
-      font-weight: 700; }
-    .pagination li.disabled {
-      background-color: #f0f0f0;
-      color: #a6a6a6;
-      cursor: not-allowed; }
-    .pagination li.dvs-more-results span {
-      padding: 10px 8px 10px 0; }
-    .pagination li:first-child {
-      border-bottom-left-radius: 5px;
-      border-top-left-radius: 5px;
-      border-left: 1px solid #cccccc; }
-    .pagination li:last-child {
-      border-bottom-right-radius: 5px;
-      border-top-right-radius: 5px; }
 
 .dvs-admin-mode {
   -webkit-perspective: 625px;
@@ -1438,7 +1406,7 @@ table.dvs-admin-table {
         float: right;
         margin-right: 0; }
       #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button.dvs-content-requested, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button.dvs-content-requested {
-        background-color: #7dbd5d;
+        background-color: #bcbec2;
         color: white; }
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements > div > div, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group > div > div {
       padding: 0 15px 18px 12px;
@@ -1524,7 +1492,7 @@ table.dvs-admin-table {
         float: left;
         margin: 2px 2px 0 0;
         padding: 15px 3px;
-        color: white;
+        color: #bcbec2;
         font-family: "Roboto", Tahoma, Arial, sans-serif;
         text-align: center;
         cursor: pointer;
@@ -1534,7 +1502,7 @@ table.dvs-admin-table {
           width: 99px; }
       #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label {
         font-family: "Roboto", Tahoma, Arial, sans-serif;
-        background-color: #8d8d8d;
+        background-color: #bfbfbf;
         -webkit-transition: all 0.4s ease;
         -moz-transition: all 0.4s ease;
         transition: all 0.4s ease; }
@@ -1544,7 +1512,7 @@ table.dvs-admin-table {
         font-family: "Roboto", Tahoma, Arial, sans-serif; }
         #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox]:checked + label {
           font-family: "Roboto", Tahoma, Arial, sans-serif;
-          background-color: #7dbd5d; }
+          background-color: #bcbec2; }
   #dvs-mode.dvs-sidebar-mode .dvs-sidebar-discard, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-group, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-model, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-model-groups {
     display: block;
     width: 100%;
@@ -1618,7 +1586,7 @@ table.dvs-admin-table {
         padding-right: 10px;
         color: whitesmoke;
         font-weight: 600;
-        background-color: #7dbd5d; }
+        background-color: #bcbec2; }
       #dvs-mode.dvs-sidebar-mode #dvs-sidebar-collections .dvs-new-collection p {
         margin-bottom: 16px; }
   #dvs-mode.dvs-sidebar-mode #dvs-collection-instances-sortable li {

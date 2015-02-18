@@ -15,7 +15,7 @@ class DeviseMenusSeeder extends DeviseSeeder
 			array(
 				'menu_id' => $menuId,
 				'parent_item_id' => null,
-				'name' => 'Website Management',
+				'name' => 'Management',
 				'url' => '#',
 				'position' => 1,
 			),
@@ -57,7 +57,7 @@ class DeviseMenusSeeder extends DeviseSeeder
 			array(
 				'menu_id' => $menuId,
 				'parent_item_id' => null,
-				'name' => 'Application Management',
+				'name' => 'Development',
 				'url' => '#',
 				'position' => 7,
 			),

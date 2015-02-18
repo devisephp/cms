@@ -108,16 +108,24 @@ input[type=text] {
   }
 
   .dvs-menu-items {
-    select,
-    input[type="text"] {
-      border: 0;
-      font-size:$bodyMainFontSize - 2; // 12px
-      padding:8px 10px;
-      border-radius:3px;
-      margin-right:3px;
-    }
 
-    select { height:30px }
+  	.ui-sortable-handle {
+	  	clear:both;
+	  	@include clearfix();
+	}
+
+  	select,
+  	input[type=text] {
+  		width:20%;
+  		float:left;
+  		height:24px;
+  		font-size:11px;
+  		margin-right: 5px;
+  	}
+
+  	select {
+  		height:31px;
+  	}
   }
 
 

@@ -3223,15 +3223,21 @@ input[type=text].form-control {
       height: 24px; }
   .dvs-admin-form-horizontal .dvs-form-group textarea.short {
     height: 100px; }
+.dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle {
+  clear: both; }
+  .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle:after {
+    content: "";
+    display: table;
+    clear: both; }
 .dvs-admin-form-horizontal .dvs-menu-items select,
-.dvs-admin-form-horizontal .dvs-menu-items input[type="text"] {
-  border: 0;
-  font-size: 12px;
-  padding: 8px 10px;
-  border-radius: 3px;
-  margin-right: 3px; }
+.dvs-admin-form-horizontal .dvs-menu-items input[type=text] {
+  width: 20%;
+  float: left;
+  height: 24px;
+  font-size: 11px;
+  margin-right: 5px; }
 .dvs-admin-form-horizontal .dvs-menu-items select {
-  height: 30px; }
+  height: 31px; }
 
 .dvs-admin-form-horizontal #dvs-permissions {
   margin: 0 auto;
@@ -3359,7 +3365,7 @@ input[type=text].form-control {
     background-color: #bcbec2;
     color: #bcbec2; }
   .dvs-button.dvs-button-small {
-    padding: 8px;
+    padding: 6px 8px;
     font-size: 10px; }
   .dvs-button.dvs-button-large {
     padding: 16px 40px;
@@ -3388,6 +3394,12 @@ input[type=text].form-control {
     .dvs-button.dvs-button-danger.dvs-button-solid {
       background-color: #fd5f46;
       color: #bcbec2; }
+  .dvs-button.dvs-button-success {
+    border: 1px solid #7dbd5d;
+    color: #7dbd5d; }
+    .dvs-button.dvs-button-success.dvs-button-solid {
+      background-color: #7dbd5d;
+      color: white; }
   .dvs-button.dvs-button-outset {
     color: #bcbec2;
     background-color: #262930;
@@ -3611,6 +3623,42 @@ td .dvs-select-small {
     padding: 12px 20px/2; }
 #dvs-admin .fc-day-number {
   padding: 5px; }
+
+#dvs-admin .ui-autocomplete.ui-menu li {
+  padding: 8px 10px;
+  font-size: 11px;
+  color: black;
+  background-color: #bcbec2; }
+
+#dvs-admin .mjs-nestedSortable-error {
+  background: #fbe3e4;
+  border-color: transparent; }
+#dvs-admin ol {
+  margin: 0;
+  padding: 0;
+  padding-left: 30px; }
+#dvs-admin ol.sortable, #dvs-admin ol.sortable ol {
+  margin: 0 0 0 25px;
+  padding: 0;
+  list-style-type: none; }
+#dvs-admin ol.sortable {
+  margin: 4em 0; }
+#dvs-admin .sortable li {
+  margin: 5px 0 0 0;
+  padding: 0; }
+#dvs-admin .sortable li div {
+  border: 1px solid #d4d4d4;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 6px;
+  margin: 0;
+  cursor: move;
+  background: #262930;
+  background-image: -webkit-linear-gradient(#2b2e36, #262930);
+  background-image: linear-gradient(#2b2e36, #262930);
+  border-color: #1d1f25;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); }
 
 #modal-blind {
   position: absolute;

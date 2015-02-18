@@ -50,7 +50,6 @@ $sidebarWidth:             328px;
 $sidebarGeneralPadding:    20px;
 $sidebarRoundedCorners:    5px;
 
-
 // Sidebar Colors
 $sidebarBgColor:                #262626;
 $sidebarTitleBgColor:           darken($sidebarBgColor, 20%);
@@ -123,6 +122,9 @@ $inactiveButtonTextColor:  $french-gray;
 
 $dangerButtonBgColor:      $red;
 $dangerButtonTextColor:    $french-gray;
+
+$successButtonBgColor:      $green;
+$successButtonTextColor:    $white;
 
 $smallButtonPadding:       8px 10px;
 $regularButtonPadding:     12px 20px;

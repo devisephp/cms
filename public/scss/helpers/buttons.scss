@@ -16,7 +16,7 @@
   }
 
   &.dvs-button-small {
-    padding:8px;
+    padding:6px 8px;
     font-size:10px;
   }
 
@@ -63,6 +63,16 @@
     &.dvs-button-solid {
       background-color:$dangerButtonBgColor;
       color:$dangerButtonTextColor;
+    }
+  }
+
+  &.dvs-button-success {
+    border:1px solid $successButtonBgColor;
+    color:$successButtonBgColor;
+
+    &.dvs-button-solid {
+      background-color:$successButtonBgColor;
+      color:$successButtonTextColor;
     }
   }
 

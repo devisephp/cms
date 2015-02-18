@@ -4,10 +4,10 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
     {
         var selector = '[name="item_order[' + itemId + ']"]';
 
-        if ($(selector).length == 0)
+        if ($(selector).length === 0)
         {
             var newInput = '<input type="hidden" name="item_order[' + itemId + ']">';
-            $('.js-menu-form').append(newInput)
+            $('.js-menu-form').append(newInput);
         }
 
         $(selector).val(parentId);
@@ -130,10 +130,10 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
         $('.menu-accordion').click(function(){
             var target = $(this).data('target');
             $(target).toggle();
-            if($(this).html() == '-'){
-                $(this).html('v');
+            if($(this).html() === '<span class="ion-android-expand"></span>'){
+                $(this).html('<span class="ion-android-contract"></span>');
             } else {
-                $(this).html('-');
+                $(this).html('<span class="ion-android-expand"></span>');
             }
         });
 

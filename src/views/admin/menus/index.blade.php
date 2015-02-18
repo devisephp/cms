@@ -24,7 +24,7 @@
                 <?= Form::hidden('language_id', (!Input::has('language_id')) ? 45 : Input::get('language_id')) ?>
     		</div>
 
-    		<?= Form::submit('Create New Menu', array('class' => 'dvs-button dvs-button-secondary')) ?>
+    		<?= Form::submit('Create New Menu', array('class' => 'dvs-button dvs-button-success dvs-button-solid')) ?>
         <?= Form::close() ?>
     </div>
 

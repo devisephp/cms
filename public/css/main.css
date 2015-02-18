@@ -3103,6 +3103,7 @@
 input[type=password].form-control,
 input[type=text].form-control {
   padding: 14px 14px;
+  font-size: 14px;
   color: #bcbec2;
   border: 1px solid #32353f;
   border-bottom: 2px solid #444856;
@@ -3127,6 +3128,221 @@ input[type=text].form-control {
 .form-control:focus {
   border-color: #5a6072;
   box-shadow: 0 0 12px rgba(90, 96, 114, 0.5); }
+
+.dvs-admin-form-horizontal,
+.dvs-admin-form-vertical {
+  padding: 50px 30px 30px;
+  box-sizing: border-box;
+  background-color: #22242b;
+  border-radius: 2px;
+  box-shadow: inset 0 2px 12px 4px rgba(0, 0, 0, 0.2); }
+  .dvs-admin-form-horizontal .dvs-helptext,
+  .dvs-admin-form-vertical .dvs-helptext {
+    clear: both;
+    width: 78%;
+    margin: 0 0 0 20%;
+    padding: 12px 10px 12px 15px;
+    color: #b7b9bd;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px; }
+
+#dvs-admin .dvs-admin-form-horizontal h3, #dvs-admin .dvs-admin-form-horizontal h4, #dvs-admin .dvs-admin-form-horizontal h5, #dvs-admin .dvs-admin-form-horizontal h6 {
+  padding-left: 22%;
+  padding-bottom: 30px;
+  font-weight: 400; }
+
+.dvs-admin-form-horizontal hr {
+  margin: 10px auto 45px;
+  border-bottom-color: #2d3039;
+  border-top-color: black;
+  background-color: transparent;
+  height: 1px; }
+.dvs-admin-form-horizontal input[type="submit"] {
+  margin-left: 22%; }
+.dvs-admin-form-horizontal .dvs-form-group {
+  clear: both;
+  margin-bottom: 35px;
+  color: #a1a4aa; }
+  .dvs-admin-form-horizontal .dvs-form-group:after {
+    content: "";
+    display: table;
+    clear: both; }
+  .dvs-admin-form-horizontal .dvs-form-group label {
+    float: left;
+    width: 20%;
+    text-align: right;
+    margin-right: 2%;
+    padding: 5px 35px 5px 0; }
+  .dvs-admin-form-horizontal .dvs-form-group input[type="text"],
+  .dvs-admin-form-horizontal .dvs-form-group input[type="password"],
+  .dvs-admin-form-horizontal .dvs-form-group textarea,
+  .dvs-admin-form-horizontal .dvs-form-group select {
+    width: 78%;
+    padding: 14px 14px;
+    font-size: 14px;
+    color: #bcbec2;
+    border: 1px solid #32353f;
+    border-bottom: 2px solid #444856;
+    border-radius: 4px;
+    overflow: hidden;
+    background: -webkit-linear-gradient(top, #202228, #24262e);
+    background: linear-gradient(to bottom, #202228, #24262e); }
+    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-webkit-input-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-webkit-input-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group textarea::-webkit-input-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group select::-webkit-input-placeholder {
+      color: #797d85; }
+    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-moz-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-moz-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group textarea::-moz-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group select::-moz-placeholder {
+      color: #797d85; }
+    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-moz-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-moz-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group textarea:-moz-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group select:-moz-placeholder {
+      color: #797d85; }
+    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-ms-input-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-ms-input-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group textarea:-ms-input-placeholder,
+    .dvs-admin-form-horizontal .dvs-form-group select:-ms-input-placeholder {
+      color: #797d85; }
+  .dvs-admin-form-horizontal .dvs-form-group select {
+    height: 31px;
+    width: 78%;
+    border-radius: 0; }
+  .dvs-admin-form-horizontal .dvs-form-group input[type=checkbox],
+  .dvs-admin-form-horizontal .dvs-form-group input[type=radio] {
+    margin-left: 2%; }
+  .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox {
+    margin-left: 22%; }
+    .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label {
+      border-radius: 50px;
+      width: 34px;
+      height: 24px; }
+  .dvs-admin-form-horizontal .dvs-form-group textarea.short {
+    height: 100px; }
+.dvs-admin-form-horizontal .dvs-menu-items select,
+.dvs-admin-form-horizontal .dvs-menu-items input[type="text"] {
+  border: 0;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  margin-right: 3px; }
+.dvs-admin-form-horizontal .dvs-menu-items select {
+  height: 30px; }
+
+.dvs-admin-form-horizontal #dvs-permissions {
+  margin: 0 auto;
+  width: 100%;
+  overflow: auto; }
+  .dvs-admin-form-horizontal #dvs-permissions hr {
+    margin-bottom: 10px; }
+  .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group {
+    float: left;
+    width: 100%; }
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="text"],
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="password"],
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group textarea,
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group select {
+      width: 150px;
+      display: inline-block; }
+      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="text"].operator-types,
+      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="password"].operator-types,
+      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group textarea.operator-types,
+      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group select.operator-types {
+        display: block;
+        float: none; }
+  .dvs-admin-form-horizontal #dvs-permissions input.rule-param {
+    margin-left: 5px; }
+  .dvs-admin-form-horizontal #dvs-permissions .dvs-button {
+    padding: 8px 6px;
+    float: right;
+    margin: 0 3px; }
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-button.dvs-enabled {
+      background-color: #7dbd5d; }
+  .dvs-admin-form-horizontal #dvs-permissions .group {
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-top: 30px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    width: 100%; }
+    .dvs-admin-form-horizontal #dvs-permissions .group .operator {
+      margin: 5px 0; }
+      .dvs-admin-form-horizontal #dvs-permissions .group .operator .dvs-button {
+        float: none; }
+
+.fancyCheckbox {
+  width: 78px;
+  height: 25px;
+  background: #686e83;
+  position: relative;
+  border-radius: 50px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2); }
+  .fancyCheckbox:after {
+    content: 'OFF';
+    color: rgba(255, 255, 255, 0.91);
+    position: absolute;
+    top: 0;
+    right: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.15); }
+  .fancyCheckbox:before {
+    content: 'ON';
+    color: rgba(255, 255, 255, 0.91);
+    position: absolute;
+    top: 0;
+    left: 10px;
+    z-index: 0;
+    font: 12px/26px Arial, sans-serif;
+    font-weight: bold; }
+  .fancyCheckbox label {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    left: 2px;
+    height: 24px;
+    width: 34px;
+    z-index: 1;
+    background: #fcfff4;
+    border-radius: 50px;
+    border-width: 0;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    transition: all 0.4s ease; }
+  .fancyCheckbox input[type=checkbox] {
+    visibility: hidden; }
+    .fancyCheckbox input[type=checkbox]:checked + label {
+      left: 43px; }
+
+.simpletoggle {
+  display: none; }
+  .simpletoggle.open {
+    display: block; }
+
+.dvs-admin-mode {
+  -webkit-perspective: 625px;
+  -moz-perspective: 625px;
+  perspective: 625px; }
+  .dvs-admin-mode #dvs-blocker {
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 10000; }
+  .dvs-admin-mode #dvs-sidebar {
+    width: 75%; }
+    .dvs-admin-mode #dvs-sidebar #dvs-admin-menu {
+      display: block;
+      width: 50%; }
+  .dvs-admin-mode #dvs-content {
+    opacity: 0.6; }
 
 .dvs-button {
   display: inline-block;
@@ -3753,15 +3969,6 @@ td .dvs-select-small {
     border-width: 1px; }
     #dvs-admin hr.dvs-thick {
       border-width: 2px; }
-  #dvs-admin .dvs-admin-form-horizontal h3 {
-    color: #32353f;
-    text-transform: capitalize; }
-  #dvs-admin .dvs-admin-form-horizontal hr {
-    margin: 10px auto 45px;
-    border-bottom-color: #2d3039;
-    border-top-color: black;
-    background-color: transparent;
-    height: 1px; }
   #dvs-admin .dvs-admin-items-wpr {
     width: 100%;
     margin: 30px auto;
@@ -3935,6 +4142,7 @@ td .dvs-select-small {
 
 .dvs-inset-text {
   padding: 14px 14px;
+  font-size: 14px;
   color: #bcbec2;
   border: 1px solid #32353f;
   border-bottom: 2px solid #444856;
@@ -4020,6 +4228,7 @@ table.dvs-admin-table {
     max-width: 300px;
     margin-left: 10px;
     padding: 14px 14px;
+    font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
@@ -4046,213 +4255,6 @@ table.dvs-admin-table {
     clear: both;
     margin-bottom: 3px;
     padding: 0 2px; }
-
-/* Forms */
-.dvs-admin-form-horizontal,
-.dvs-admin-form-vertical {
-  width: 90%;
-  margin: 0 auto 50px;
-  padding: 50px 30px 30px;
-  box-sizing: border-box;
-  background-color: #e3e4e5;
-  border-radius: 5px;
-  box-shadow: 0 2px 24px 12px rgba(0, 0, 0, 0.6); }
-  .dvs-admin-form-horizontal .dvs-helptext,
-  .dvs-admin-form-vertical .dvs-helptext {
-    clear: both;
-    width: 80%;
-    margin: 0 0 0 20%;
-    padding: 12px 10px 12px 15px;
-    color: #a6a6a6;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 18px; }
-
-.dvs-admin-form-horizontal input[type="submit"] {
-  margin-left: 25%; }
-.dvs-admin-form-horizontal .dvs-form-group {
-  clear: both;
-  margin-bottom: 35px;
-  color: #919191; }
-  .dvs-admin-form-horizontal .dvs-form-group:after {
-    content: "";
-    display: table;
-    clear: both; }
-  .dvs-admin-form-horizontal .dvs-form-group label {
-    float: left;
-    width: 20%;
-    text-align: right;
-    font-weight: 600;
-    padding: 5px 35px 5px 0;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
-  .dvs-admin-form-horizontal .dvs-form-group input[type="text"],
-  .dvs-admin-form-horizontal .dvs-form-group input[type="password"],
-  .dvs-admin-form-horizontal .dvs-form-group textarea,
-  .dvs-admin-form-horizontal .dvs-form-group select {
-    width: 80%;
-    padding: 6px 14px;
-    font-size: 12px;
-    color: #919191;
-    background-color: white;
-    border-radius: 4px;
-    border: 1px solid #dadde2;
-    box-shadow: inset 0 1px 0 #d8d9dc, 0 1px 0 #fafbff;
-    overflow: hidden; }
-    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-webkit-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-webkit-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group textarea::-webkit-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select::-webkit-input-placeholder {
-      color: #d1d1d1; }
-    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group textarea::-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select::-moz-placeholder {
-      color: #d1d1d1; }
-    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group textarea:-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select:-moz-placeholder {
-      color: #d1d1d1; }
-    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-ms-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-ms-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group textarea:-ms-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select:-ms-input-placeholder {
-      color: #d1d1d1; }
-  .dvs-admin-form-horizontal .dvs-form-group select {
-    height: 31px;
-    width: 80%;
-    border-radius: 0; }
-  .dvs-admin-form-horizontal .dvs-form-group input[type=checkbox],
-  .dvs-admin-form-horizontal .dvs-form-group input[type=radio] {
-    margin-left: 5%; }
-  .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox {
-    margin-left: 25%; }
-    .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label {
-      border-radius: 50px;
-      width: 34px;
-      height: 24px; }
-  .dvs-admin-form-horizontal .dvs-form-group textarea.short {
-    height: 100px; }
-.dvs-admin-form-horizontal .dvs-menu-items select,
-.dvs-admin-form-horizontal .dvs-menu-items input[type="text"] {
-  border: 0;
-  font-size: 12px;
-  padding: 8px 10px;
-  border-radius: 3px;
-  margin-right: 3px; }
-.dvs-admin-form-horizontal .dvs-menu-items select {
-  height: 30px; }
-
-.dvs-admin-form-horizontal #dvs-permissions {
-  margin: 0 auto;
-  width: 100%;
-  overflow: auto; }
-  .dvs-admin-form-horizontal #dvs-permissions hr {
-    margin-bottom: 10px; }
-  .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group {
-    float: left;
-    width: 100%; }
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="text"],
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="password"],
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group textarea,
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group select {
-      width: 150px;
-      display: inline-block; }
-      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="text"].operator-types,
-      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="password"].operator-types,
-      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group textarea.operator-types,
-      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group select.operator-types {
-        display: block;
-        float: none; }
-  .dvs-admin-form-horizontal #dvs-permissions input.rule-param {
-    margin-left: 5px; }
-  .dvs-admin-form-horizontal #dvs-permissions .dvs-button {
-    padding: 8px 6px;
-    float: right;
-    margin: 0 3px; }
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-button.dvs-enabled {
-      background-color: #7dbd5d; }
-  .dvs-admin-form-horizontal #dvs-permissions .group {
-    background-color: rgba(255, 255, 255, 0.5);
-    margin-top: 30px;
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
-    padding: 30px;
-    width: 100%; }
-    .dvs-admin-form-horizontal #dvs-permissions .group .operator {
-      margin: 5px 0; }
-      .dvs-admin-form-horizontal #dvs-permissions .group .operator .dvs-button {
-        float: none; }
-
-.fancyCheckbox {
-  width: 78px;
-  height: 25px;
-  background: #686e83;
-  position: relative;
-  border-radius: 50px;
-  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2); }
-  .fancyCheckbox:after {
-    content: 'OFF';
-    color: rgba(255, 255, 255, 0.91);
-    position: absolute;
-    top: 0;
-    right: 10px;
-    z-index: 0;
-    font: 12px/26px Arial, sans-serif;
-    font-weight: bold;
-    text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.15); }
-  .fancyCheckbox:before {
-    content: 'ON';
-    color: rgba(255, 255, 255, 0.91);
-    position: absolute;
-    top: 0;
-    left: 10px;
-    z-index: 0;
-    font: 12px/26px Arial, sans-serif;
-    font-weight: bold; }
-  .fancyCheckbox label {
-    display: block;
-    cursor: pointer;
-    position: absolute;
-    top: 0px;
-    left: 2px;
-    height: 24px;
-    width: 34px;
-    z-index: 1;
-    background: #fcfff4;
-    border-radius: 50px;
-    border-width: 0;
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
-    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-    background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-    -webkit-transition: all 0.4s ease;
-    -moz-transition: all 0.4s ease;
-    transition: all 0.4s ease; }
-  .fancyCheckbox input[type=checkbox] {
-    visibility: hidden; }
-    .fancyCheckbox input[type=checkbox]:checked + label {
-      left: 43px; }
-
-.simpletoggle {
-  display: none; }
-  .simpletoggle.open {
-    display: block; }
-
-.dvs-admin-mode {
-  -webkit-perspective: 625px;
-  -moz-perspective: 625px;
-  perspective: 625px; }
-  .dvs-admin-mode #dvs-blocker {
-    opacity: 1;
-    width: 100%;
-    height: 100%;
-    z-index: 10000; }
-  .dvs-admin-mode #dvs-sidebar {
-    width: 75%; }
-    .dvs-admin-mode #dvs-sidebar #dvs-admin-menu {
-      display: block;
-      width: 50%; }
-  .dvs-admin-mode #dvs-content {
-    opacity: 0.6; }
 
 .dvs-loading,
 #dvs-sidebar-loading {

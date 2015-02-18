@@ -80,8 +80,8 @@ $dashboardHexagonTextColor:  #e7e7e7;
 
 // Forms
 $formLabelColumnWidth:      20%;
-$formFieldColumnWidth:      80%;
-$formGutterWidth:           5%;
+$formFieldColumnWidth:      78%;
+$formGutterWidth:           2%;
 $formErrorColor:            #834040;
 
 $sidebarFormBgColor :       #333333;
@@ -89,9 +89,8 @@ $sidebarFormTextColor :     #e3e3e3;
 $sidebarSelectArrowColor:   $blue;
 $sidebarFormPadding :       12px 6px;
 
-$bodyFormBgColor:           #e3e4e5;
-$bodyFormTextColor:         #ababab;
-$bodyFormInputBgColor:      #ffffff;
+$bodyFormBgColor:           darken($bodyBgColor, 5%);
+$bodyFormTextColor:         $french-gray;
 
 
 // Tables

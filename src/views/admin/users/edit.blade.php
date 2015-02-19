@@ -2,13 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Editing User</h1>
-
-        <p>Update user details and set any group association(s).</p>
+        <h1><span class="ion-ios-person"></span> Editing User</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-users'), 'List of Users', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-users'), 'List of Users', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 
@@ -43,7 +43,7 @@
                 <?= Form::password('password_confirmation') ?>
             </div>
 
-            <?= Form::submit('Update User', ['class' => 'dvs-button dvs-button-large']) ?><br>
+            <?= Form::submit('Update User', ['class' => 'dvs-button dvs-button-solid dvs-button-success']) ?><br>
         <?= Form::close() ?>
     </div>
 @stop

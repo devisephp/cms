@@ -2,13 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Register New Permission</h1>
-
-        <p>Use the form below to register a new permission.</p>
+        <h1><span class="ion-ios-locked"></span> New Permission</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-permissions'), 'List of Permissions', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-permissions'), 'All Permissions', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 

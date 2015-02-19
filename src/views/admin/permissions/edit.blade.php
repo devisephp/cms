@@ -3,12 +3,12 @@
 @section('title')
     <div id="dvs-admin-title">
         <h1>Edit Permission</h1>
-
-        <p>Use the form below to update a permission and any of its related data and/or settings.</p>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-permissions'), 'List of Permissions', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-permissions'), 'All Permissions', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 

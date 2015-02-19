@@ -7,11 +7,9 @@
 @stop
 
 @section('subnavigation')
-
     <div id="dvs-admin-actions">
         <?= link_to(URL::route('dvs-users-create'), 'Create New User', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
-
 @stop
 
 @section('main')

@@ -15,29 +15,29 @@ devise.define(['jquery'], function ( $ )
             });
 
             $('#dvs-permissions').on('change', '.operator-types', function(){
-                var groupDiv = $(this).closest('.group');
+                var groupDiv = $(this).closest('.dvs-permission-group');
                 groupDiv.attr('data-operator', $(this).val());
                 refreshOperatorNames();
             });
 
 
             $('#dvs-permissions').on('click', '.dvs-add-group',function(){
-                var groupDiv = $(this).closest('.group');
+                var groupDiv = $(this).closest('.dvs-permission-group');
 
-                if(groupDiv.find('> .group').length < 2){
+                if(groupDiv.find('> .dvs-permission-group').length < 2){
                     groupDiv.append(emptyGroup);
 
-                    var topGroupDiv = $('.dvs-form-group').find('.group').first();
-                    topGroupDiv.find('.group').find('.dvs-remove-group').show();
+                    var topGroupDiv = $('.dvs-form-group').find('.dvs-permission-group').first();
+                    topGroupDiv.find('.dvs-permission-group').find('.dvs-remove-group').show();
 
                     checkGroupLimitsAndOperators(groupDiv);
                 }
             });
 
             $('#dvs-permissions').on('click', '.dvs-add-rule',function(){
-                var groupDiv = $(this).closest('.group');
+                var groupDiv = $(this).closest('.dvs-permission-group');
                 var rulesDiv = groupDiv.find('.rules').first();
-                
+
                 if(rulesDiv.children().length > 0){
                     rulesDiv.append(operatorHtml);
                     refreshOperatorNames();
@@ -57,8 +57,8 @@ devise.define(['jquery'], function ( $ )
             });
 
             $('#dvs-permissions').on('click', '.dvs-remove-group', function(){
-                var groupDiv = $(this).closest('.group');
-                var parentGroupDiv = groupDiv.parents().find('.group');
+                var groupDiv = $(this).closest('.dvs-permission-group');
+                var parentGroupDiv = groupDiv.parents().find('.dvs-permission-group');
                 groupDiv.remove();
 
                 checkGroupLimitsAndOperators(parentGroupDiv);
@@ -67,7 +67,7 @@ devise.define(['jquery'], function ( $ )
             refreshInputNames();
             inumerateRules();
             refreshOperatorNames();
-            $('.group').each(function(){
+            $('.dvs-permission-group').each(function(){
                 checkGroupLimitsAndOperators($(this));
             });
         },
@@ -93,7 +93,7 @@ devise.define(['jquery'], function ( $ )
     {
         $('.rule').each(function(){
             var keys = [];
-            $(this).parents('div.group').each(function(){
+            $(this).parents('div.dvs-permission-group').each(function(){
                 var operator = $(this).attr('data-operator');
                 keys.push(operator);
             });
@@ -124,7 +124,7 @@ devise.define(['jquery'], function ( $ )
     function refreshOperatorNames()
     {
         $('.rules').each(function(){
-            var groupDiv = $(this).closest('.group');
+            var groupDiv = $(this).closest('.dvs-permission-group');
             var operator = groupDiv.attr('data-operator');
             $(this).find('.operator .dvs-button').html( operator.toUpperCase() );
         });
@@ -132,9 +132,9 @@ devise.define(['jquery'], function ( $ )
 
     function checkGroupLimitsAndOperators(parentGroupDiv)
     {
-        if(parentGroupDiv.find('> .group').length == 2){
+        if(parentGroupDiv.find('> .dvs-permission-group').length == 2){
             var firstOperator = 'and';
-            parentGroupDiv.find('> .group').each(function(index){
+            parentGroupDiv.find('> .dvs-permission-group').each(function(index){
                 if(index == 0){
                     firstOperator = $(this).find('.operator-types').first().val();
                     $(this).find('.operator-types').first().prop('disabled', true);
@@ -146,7 +146,7 @@ devise.define(['jquery'], function ( $ )
                 }
             });
         } else {
-            parentGroupDiv.find('> .group').each(function(index){
+            parentGroupDiv.find('> .dvs-permission-group').each(function(index){
                $(this).find('.operator-types').first().prop('disabled', false);
             });
         }

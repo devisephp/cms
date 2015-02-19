@@ -106,22 +106,20 @@ $sidebarCrumbsInactiveColor:  #6b6b6b;
 // Buttons / Links
 $buttonBorderRadius:       2px;
 
-
-
 $defaultButtonBgColor:     darken($bodyBgColor, 10%);
 $defaultButtonTextColor:   lighten(#BCBEC2, 5%);
 
 $primaryButtonBgColor:     #BCBEC2;
-$primaryButtonTextColor:   #BCBEC2;
+$primaryButtonTextColor:   $bodyBgColor;
 
 $secondaryButtonBgColor:   #5dbabd;
-$secondaryButtonTextColor: #5dbabd;
+$secondaryButtonTextColor: $bodyBgColor;
 
 $inactiveButtonBgColor:    $red;
 $inactiveButtonTextColor:  $french-gray;
 
 $dangerButtonBgColor:      $red;
-$dangerButtonTextColor:    $french-gray;
+$dangerButtonTextColor:    $white;
 
 $successButtonBgColor:      $green;
 $successButtonTextColor:    $white;

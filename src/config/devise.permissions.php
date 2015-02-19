@@ -41,7 +41,7 @@ return array(
         'isLoggedIn' => array(),
         'redirect' => 'user-login',
         'redirect_type' => 'route',
-        'redirect_message' => 'You are not currently logged in.',
+        'redirect_message' => 'Please logged in.',
     ),
 
    'canAccessLogin' => array(

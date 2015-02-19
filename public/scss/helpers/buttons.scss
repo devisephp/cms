@@ -1,7 +1,7 @@
 .dvs-button {
   display:inline-block;
   padding:$regularButtonPadding;
-  color:$primaryButtonTextColor;
+  color:$primaryButtonBgColor;
   background-color: transparent;
   border:1px solid $primaryButtonBgColor;
   text-transform:uppercase;
@@ -32,11 +32,11 @@
 
   &.dvs-button-secondary {
     border:1px solid $secondaryButtonBgColor;
-    color:$secondaryButtonTextColor;
+    color:$secondaryButtonBgColor;
 
     &.dvs-button-solid {
       background-color:$secondaryButtonBgColor;
-      color:invert($secondaryButtonTextColor);
+      color:$secondaryButtonTextColor;
     }
   }
 

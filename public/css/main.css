@@ -3312,15 +3312,23 @@ input[type=text].form-control {
     margin: 0 3px; }
     .dvs-admin-form-horizontal #dvs-permissions .dvs-button.dvs-enabled {
       background-color: #7dbd5d; }
-  .dvs-admin-form-horizontal #dvs-permissions .group {
-    background-color: rgba(255, 255, 255, 0.5);
-    margin-top: 30px;
+  .dvs-admin-form-horizontal #dvs-permissions .dvs-permission-group {
+    background: -webkit-linear-gradient(#61646b, #55585d);
+    background: linear-gradient(#61646b, #55585d);
+    color: #2d3039;
+    border-radius: 3px;
+    margin-top: 15px;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
-    padding: 30px;
-    width: 100%; }
-    .dvs-admin-form-horizontal #dvs-permissions .group .operator {
+    padding: 30px; }
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-permission-group label {
+      text-align: left; }
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-permission-group hr {
+      margin-top: 20px;
+      border-bottom-color: #a1a4aa;
+      border-top: 1px solid #55585d; }
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-permission-group .operator {
       margin: 5px 0; }
-      .dvs-admin-form-horizontal #dvs-permissions .group .operator .dvs-button {
+      .dvs-admin-form-horizontal #dvs-permissions .dvs-permission-group .operator .dvs-button {
         float: none; }
 
 .fancyCheckbox {
@@ -3407,7 +3415,7 @@ input[type=text].form-control {
   font-size: 11px; }
   .dvs-button.dvs-button-solid {
     background-color: #bcbec2;
-    color: #bcbec2; }
+    color: #2d3039; }
   .dvs-button.dvs-button-tiny {
     padding: 6px;
     font-size: 10px; }
@@ -3422,7 +3430,7 @@ input[type=text].form-control {
     color: #5dbabd; }
     .dvs-button.dvs-button-secondary.dvs-button-solid {
       background-color: #5dbabd;
-      color: #a24542; }
+      color: #2d3039; }
   .dvs-button.dvs-button-inactive {
     border: 1px solid #fd5f46;
     color: #fd5f46; }
@@ -3431,16 +3439,16 @@ input[type=text].form-control {
       color: #bcbec2; }
   .dvs-button.dvs-button-dark {
     background-color: #333333;
-    color: #5dbabd; }
+    color: #2d3039; }
   .dvs-button.dvs-button-gray {
     background-color: #4c4c4c;
-    color: #5dbabd; }
+    color: #2d3039; }
   .dvs-button.dvs-button-danger {
     border: 1px solid #fd5f46;
     color: #fd5f46; }
     .dvs-button.dvs-button-danger.dvs-button-solid {
       background-color: #fd5f46;
-      color: #bcbec2; }
+      color: white; }
   .dvs-button.dvs-button-success {
     border: 1px solid #7dbd5d;
     color: #7dbd5d; }
@@ -3518,7 +3526,7 @@ input[type="submit"].dvs-button.dvs-button-small {
   cursor: pointer;
   background-color: transparent;
   border: 1px solid #bcbec2;
-  color: #bcbec2;
+  color: #2d3039;
   padding: 12px 6px; }
   .dvs-select-wrapper .dvs-holder {
     display: block;
@@ -3559,7 +3567,7 @@ input[type="submit"].dvs-button.dvs-button-small {
     border-top: 5px solid #5dbabd; }
   .dvs-select-wrapper.dvs-button-solid {
     background-color: #bcbec2;
-    color: #43413d; }
+    color: #d2cfc6; }
     .dvs-select-wrapper.dvs-button-solid:after {
       border-top-color: #262626; }
   .dvs-select-wrapper.dvs-select-small:after {
@@ -4664,7 +4672,7 @@ table.dvs-admin-table {
         float: left;
         margin: 2px 2px 0 0;
         padding: 15px 3px;
-        color: #bcbec2;
+        color: #2d3039;
         font-family: "Roboto", Tahoma, Arial, sans-serif;
         text-align: center;
         cursor: pointer;

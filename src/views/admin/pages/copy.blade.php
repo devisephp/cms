@@ -1,25 +1,23 @@
 @extends('devise::admin.layouts.master')
 
 @section('title')
-
     <div id="dvs-admin-title">
-        <h1>Copy Page</h1>
-
-        <p>COPYING PAGE: <?= $page->title ?></p>
+        <h1><span class="ion-ios-copy-outline"></span> Copy Page</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
-
 @stop
 
 @section('main')
 
 @if(!isset($input['reason']))
-    @if(isset($availableLanguages) && count($availableLanguages) == 0)
-        <div class="dvs-messages">
-            <h2>Notice</h2>
+    @if(isset($languages) && count($languages) <= 1)
+        <div class="alert">
+            <h2>Notice about copying page <?= $page->title ?></h2>
             <ul class="list"><li>Translate option is unavailable because the page has been translated to all available languages.</li></ul>
         </div>
     @endif
@@ -29,10 +27,10 @@
         <hr>
 
         <div class="dvs-form-group">
-            <?= Form::label('Select One') ?>
-                <?= link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=copy', 'Basic Page Copy', array('class'=>'dvs-button')) ?>
-                @if(isset($availableLanguages) && count($availableLanguages) > 0)
-                    <?= link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=translate', 'Translate Page', array('class'=>'dvs-button')) ?>
+            <?= Form::label('Please Select One') ?>
+                <?= link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=copy', 'Basic Page Copy', array('class'=>'dvs-button dvs-button-secondary')) ?>
+                @if(isset($languages) && count($languages) >= 1)
+                    <?= link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=translate', 'Translate Page', array('class'=>'dvs-button dvs-button-secondary')) ?>
                 @endif
             <div class="dvs-helptext">
                 <p>For what purpose are you copying this page.</p>

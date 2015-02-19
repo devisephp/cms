@@ -15,8 +15,13 @@
     color: ($primaryButtonTextColor);
   }
 
+  &.dvs-button-tiny {
+    padding:6px;
+    font-size:10px;
+  }
+
   &.dvs-button-small {
-    padding:6px 8px;
+    padding:8px;
     font-size:10px;
   }
 

@@ -13,13 +13,13 @@
 @stop
 
 @section('main')
-    <div class="dvs-admin-form-horizontal">
+    <div class="dvs-admin-form-vertical">
 
         <h4>Create New Menu</h4>
 
     	<?= Form::open(['route' => 'dvs-menus-store']) ?>
     		<div class="dvs-form-group">
-    			<?= Form::label('Menu Name') ?>
+
     	    	<?= Form::text('name', null, array('placeholder' => 'Menu Name', 'class' => 'form-control')) ?>
                 <?= Form::hidden('language_id', (!Input::has('language_id')) ? 45 : Input::get('language_id')) ?>
     		</div>

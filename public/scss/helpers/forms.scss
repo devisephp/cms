@@ -18,7 +18,7 @@ input[type=text] {
 
 .dvs-admin-form-horizontal,
 .dvs-admin-form-vertical {
-  padding:50px 30px 30px;
+  padding:50px 30px 50px;
   box-sizing:border-box;
   background-color:$bodyFormBgColor;
   border-radius:$buttonBorderRadius;
@@ -38,25 +38,31 @@ input[type=text] {
 
 #dvs-admin {
 
+	.dvs-admin-form-vertical,
 	.dvs-admin-form-horizontal {
 
 		h3, h4, h5, h6 {
-			padding-left: $formLabelColumnWidth + $formGutterWidth;
-			padding-bottom:30px;
-			font-weight:400;
+			padding-bottom:20px;
+			font-weight:300;
+		}
+
+    hr {
+      margin-top:-5px;
+      margin-bottom:50px;
+    }
+
+	}
+
+	.dvs-admin-form-vertical {
+		h3, h4, h5, h6 {
+			padding-left: 0;
 		}
 	}
 }
 
-.dvs-admin-form-horizontal {
 
-  hr {
-    margin:10px auto 45px;
-    border-bottom-color:lighten($primaryTableBgColor,3%);
-    border-top-color:darken($primaryTableBgColor,18%);
-    background-color:transparent;
-    height:1px;
-  }
+.dvs-admin-form-vertical,
+.dvs-admin-form-horizontal {
 
   input[type="submit"] {
     margin-left:$formLabelColumnWidth + $formGutterWidth;
@@ -86,7 +92,7 @@ input[type=text] {
     }
 
     select {
-      height:31px;
+      height:50px;
       width:$formFieldColumnWidth;
       border-radius: 0;
     }
@@ -128,8 +134,12 @@ input[type=text] {
   		width:15%;
   	}
   }
+}
 
-
+.dvs-admin-form-vertical {
+  input[type="submit"] {
+    margin-left:0;
+  }
 }
 
 

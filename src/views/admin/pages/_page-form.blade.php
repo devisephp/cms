@@ -29,7 +29,15 @@
     </div>
 @endif
 
-<h3>Above It</h3>
+<div class="dvs-form-group open simpletoggle" id="view-template-form">
+    <?= Form::label('View Template to Use') ?>
+    <?= Form::select('view', ['' => 'Select a Template'] + $templateList + ['custom' => 'Custom'], null, array('placeholder' => 'View Template')) ?>
+    <div class="dvs-helptext">
+        <p>You only need to select a template view file if the page is a regular page (GET).</p>
+    </div>
+</div>
+
+<h3>Routing</h3>
 <hr>
 
 <div class="dvs-form-group">
@@ -48,13 +56,7 @@
     </div>
 </div>
 
-<div class="dvs-form-group open simpletoggle" id="view-template-form">
-    <?= Form::label('View Template to Use') ?>
-    <?= Form::select('view', ['' => 'Select a Template'] + $templateList + ['custom' => 'Custom'], null, array('placeholder' => 'View Template')) ?>
-    <div class="dvs-helptext">
-        <p>You only need to select a template view file if the page is a regular page (GET).</p>
-    </div>
-</div>
+
 
 <div class="dvs-form-group simpletoggle" id="response-path-form">
     <?= Form::label('Response Path') ?>

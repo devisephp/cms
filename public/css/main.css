@@ -3131,9 +3131,9 @@ input[type=text].form-control {
 
 .dvs-admin-form-horizontal,
 .dvs-admin-form-vertical {
-  padding: 50px 30px 30px;
+  padding: 50px 30px 50px;
   box-sizing: border-box;
-  background-color: #22242b;
+  background-color: #292b33;
   border-radius: 2px;
   box-shadow: inset 0 2px 12px 4px rgba(0, 0, 0, 0.2); }
   .dvs-admin-form-horizontal .dvs-helptext,
@@ -3147,33 +3147,44 @@ input[type=text].form-control {
     font-weight: 400;
     line-height: 18px; }
 
-#dvs-admin .dvs-admin-form-horizontal h3, #dvs-admin .dvs-admin-form-horizontal h4, #dvs-admin .dvs-admin-form-horizontal h5, #dvs-admin .dvs-admin-form-horizontal h6 {
-  padding-left: 22%;
-  padding-bottom: 30px;
-  font-weight: 400; }
+#dvs-admin .dvs-admin-form-vertical h3, #dvs-admin .dvs-admin-form-vertical h4, #dvs-admin .dvs-admin-form-vertical h5, #dvs-admin .dvs-admin-form-vertical h6,
+#dvs-admin .dvs-admin-form-horizontal h3,
+#dvs-admin .dvs-admin-form-horizontal h4,
+#dvs-admin .dvs-admin-form-horizontal h5,
+#dvs-admin .dvs-admin-form-horizontal h6 {
+  padding-bottom: 20px;
+  font-weight: 300; }
+#dvs-admin .dvs-admin-form-vertical hr,
+#dvs-admin .dvs-admin-form-horizontal hr {
+  margin-top: -5px;
+  margin-bottom: 50px; }
+#dvs-admin .dvs-admin-form-vertical h3, #dvs-admin .dvs-admin-form-vertical h4, #dvs-admin .dvs-admin-form-vertical h5, #dvs-admin .dvs-admin-form-vertical h6 {
+  padding-left: 0; }
 
-.dvs-admin-form-horizontal hr {
-  margin: 10px auto 45px;
-  border-bottom-color: #2d3039;
-  border-top-color: black;
-  background-color: transparent;
-  height: 1px; }
+.dvs-admin-form-vertical input[type="submit"],
 .dvs-admin-form-horizontal input[type="submit"] {
   margin-left: 22%; }
+.dvs-admin-form-vertical .dvs-form-group,
 .dvs-admin-form-horizontal .dvs-form-group {
   clear: both;
   margin-bottom: 35px;
   color: #a1a4aa; }
+  .dvs-admin-form-vertical .dvs-form-group:after,
   .dvs-admin-form-horizontal .dvs-form-group:after {
     content: "";
     display: table;
     clear: both; }
+  .dvs-admin-form-vertical .dvs-form-group label,
   .dvs-admin-form-horizontal .dvs-form-group label {
     float: left;
     width: 20%;
     text-align: right;
     margin-right: 2%;
     padding: 5px 35px 5px 0; }
+  .dvs-admin-form-vertical .dvs-form-group input[type="text"],
+  .dvs-admin-form-vertical .dvs-form-group input[type="password"],
+  .dvs-admin-form-vertical .dvs-form-group textarea,
+  .dvs-admin-form-vertical .dvs-form-group select,
   .dvs-admin-form-horizontal .dvs-form-group input[type="text"],
   .dvs-admin-form-horizontal .dvs-form-group input[type="password"],
   .dvs-admin-form-horizontal .dvs-form-group textarea,
@@ -3188,47 +3199,73 @@ input[type=text].form-control {
     overflow: hidden;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e); }
+    .dvs-admin-form-vertical .dvs-form-group input[type="text"]::-webkit-input-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group input[type="password"]::-webkit-input-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group textarea::-webkit-input-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group select::-webkit-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-webkit-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-webkit-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group textarea::-webkit-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group select::-webkit-input-placeholder {
       color: #797d85; }
+    .dvs-admin-form-vertical .dvs-form-group input[type="text"]::-moz-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group input[type="password"]::-moz-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group textarea::-moz-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group select::-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group textarea::-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group select::-moz-placeholder {
       color: #797d85; }
+    .dvs-admin-form-vertical .dvs-form-group input[type="text"]:-moz-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group input[type="password"]:-moz-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group textarea:-moz-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group select:-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group textarea:-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group select:-moz-placeholder {
       color: #797d85; }
+    .dvs-admin-form-vertical .dvs-form-group input[type="text"]:-ms-input-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group input[type="password"]:-ms-input-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group textarea:-ms-input-placeholder,
+    .dvs-admin-form-vertical .dvs-form-group select:-ms-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-ms-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-ms-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group textarea:-ms-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group select:-ms-input-placeholder {
       color: #797d85; }
+  .dvs-admin-form-vertical .dvs-form-group select,
   .dvs-admin-form-horizontal .dvs-form-group select {
-    height: 31px;
+    height: 50px;
     width: 78%;
     border-radius: 0; }
+  .dvs-admin-form-vertical .dvs-form-group input[type=checkbox],
+  .dvs-admin-form-vertical .dvs-form-group input[type=radio],
   .dvs-admin-form-horizontal .dvs-form-group input[type=checkbox],
   .dvs-admin-form-horizontal .dvs-form-group input[type=radio] {
     margin-left: 2%; }
+  .dvs-admin-form-vertical .dvs-form-group .fancyCheckbox,
   .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox {
     margin-left: 22%; }
+    .dvs-admin-form-vertical .dvs-form-group .fancyCheckbox label,
     .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label {
       border-radius: 50px;
       width: 34px;
       height: 24px; }
+  .dvs-admin-form-vertical .dvs-form-group textarea.short,
   .dvs-admin-form-horizontal .dvs-form-group textarea.short {
     height: 100px; }
+.dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle,
 .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle {
   clear: both; }
+  .dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle:after,
   .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle:after {
     content: "";
     display: table;
     clear: both; }
+.dvs-admin-form-vertical .dvs-menu-items select,
+.dvs-admin-form-vertical .dvs-menu-items input[type=text],
 .dvs-admin-form-horizontal .dvs-menu-items select,
 .dvs-admin-form-horizontal .dvs-menu-items input[type=text] {
   width: 23%;
@@ -3236,9 +3273,13 @@ input[type=text].form-control {
   height: 24px;
   font-size: 11px;
   margin-right: 5px; }
+.dvs-admin-form-vertical .dvs-menu-items select,
 .dvs-admin-form-horizontal .dvs-menu-items select {
   height: 31px;
   width: 15%; }
+
+.dvs-admin-form-vertical input[type="submit"] {
+  margin-left: 0; }
 
 .dvs-admin-form-horizontal #dvs-permissions {
   margin: 0 auto;
@@ -3365,8 +3406,11 @@ input[type=text].form-control {
   .dvs-button.dvs-button-solid {
     background-color: #bcbec2;
     color: #bcbec2; }
+  .dvs-button.dvs-button-tiny {
+    padding: 6px;
+    font-size: 10px; }
   .dvs-button.dvs-button-small {
-    padding: 6px 8px;
+    padding: 8px;
     font-size: 10px; }
   .dvs-button.dvs-button-large {
     padding: 16px 40px;
@@ -3986,7 +4030,7 @@ td .dvs-select-small {
   position: relative;
   float: left;
   width: 70%;
-  margin: 0 5% 0 0; }
+  margin: 0 5% 100px 0; }
 
 #dvs-admin {
   background-color: #2d3039;
@@ -4013,11 +4057,12 @@ td .dvs-select-small {
     font-size: 16px; }
   #dvs-admin hr {
     margin: 20px auto;
-    border-color: #7dbd5d;
+    border-color: #347e80;
     border-style: solid;
-    border-width: 1px; }
+    border-width: 0;
+    border-bottom-width: 1px; }
     #dvs-admin hr.dvs-thick {
-      border-width: 2px; }
+      border-bottom-width: 2px; }
   #dvs-admin .dvs-admin-items-wpr {
     width: 100%;
     margin: 30px auto;

@@ -11,7 +11,7 @@
                 <option value="url">URL</option>
             </select>
 
-            <input type="text" name="item[{cid}][url]" placeholder="URL">
+            <input type="text" name="item[{cid}][url]" class="menu-item-url hidden" placeholder="URL">
 
             <input type="text" class="autocomplete-pages menu-item-page form-control pull-left" placeholder="Page" value="">
             <input type="hidden" name="item[{cid}][page_id]" value="">

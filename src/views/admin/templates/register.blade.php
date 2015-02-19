@@ -2,13 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Register New Template</h1>
-
-        <p>Use the form below to register a new template. Begin by selecting a filename from the list of unregistered filenames.</p>
+        <h1>Register Template</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-templates'), 'List of Templates', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-templates'), 'All Templates', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 
@@ -31,7 +31,7 @@
                 <?= Form::text('extends') ?>
             </div>
 
-            <?= Form::submit('Register Template', array('class' => 'dvs-button dvs-button-large')) ?>
+            <?= Form::submit('Register Template', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
         <?= Form::close() ?>
     </div>
 @stop

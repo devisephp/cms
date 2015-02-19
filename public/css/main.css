@@ -3705,30 +3705,6 @@ td .dvs-select-small {
   border-color: #1d1f25;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); }
 
-#modal-blind {
-  position: absolute;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000000; }
-
-.modal {
-  position: absolute;
-  z-index: 10000;
-  width: 400px;
-  margin-left: -200px;
-  margin-top: -124px;
-  left: -1000px;
-  top: -1000px;
-  background-color: #ffffff;
-  box-shadow: 4px 4px 80px #000;
-  -webkit-box-shadow: 4px 4px 80px #000;
-  -moz-box-shadow: 4px 4px 80px #000;
-  padding: 24px;
-  color: #333; }
-
 #dvs-admin #dvs-modal-container h1, #dvs-admin #dvs-modal-container h2, #dvs-admin #dvs-modal-container h3, #dvs-admin #dvs-modal-container h4, #dvs-admin #dvs-modal-container h5, #dvs-admin #dvs-modal-container h6 {
   color: #262626; }
 #dvs-admin #dvs-modal-container h6 {
@@ -3749,6 +3725,29 @@ td .dvs-select-small {
     padding: 8px 12px; }
 #dvs-admin #dvs-modal-container .js-save-btn {
   margin-top: 5px; }
+#dvs-admin #dvs-admin-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  margin-left: -250px;
+  margin-top: -200px;
+  z-index: 20000; }
+  #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
+    background-image: -webkit-linear-gradient(#2d3039, #22242b);
+    background-image: linear-gradient(#2d3039, #22242b);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+    padding-top: 30px; }
+    #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal h4 {
+      color: #bcbec2; }
+#dvs-admin #dvs-admin-blocker {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(38, 38, 38, 0.55);
+  z-index: 12000; }
 
 /* Main UI */
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -4075,22 +4074,6 @@ td .dvs-select-small {
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
     #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items {
       width: 100%; }
-      #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr {
-        margin: 0;
-        padding: 20px;
-        border: 1px solid #d4d4d4;
-        border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        background: #f6f6f6;
-        background: -moz-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(47%, #f6f6f6), color-stop(100%, #ededed));
-        background: -webkit-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
-        background: -o-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
-        background: -ms-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
-        background: linear-gradient(to bottom, white 0%, #f6f6f6 47%, #ededed 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); }
       #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group {
         padding: 20px 2%; }
         #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group input {
@@ -4100,24 +4083,6 @@ td .dvs-select-small {
             width: 18%; }
           #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items tr td.dvs-form-group input:nth-of-type(2n) {
             width: 42%; }
-  #dvs-admin #dvs-admin-modal {
-    position: absolute;
-    top: 42%;
-    left: 42%;
-    z-index: 20000; }
-    #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
-      padding-top: 30px; }
-      #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal h4 {
-        color: #262626;
-        margin-bottom: 15px; }
-  #dvs-admin #dvs-admin-blocker {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(38, 38, 38, 0.55);
-    z-index: 12000; }
   #dvs-admin .dvs-secondary-text {
     padding-top: 10px;
     font-size: 12px; }

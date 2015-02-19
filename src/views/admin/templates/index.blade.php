@@ -2,11 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>List of Templates</h1>
+        <h1><span class="ion-android-apps"></span> Templates</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-templates-register'), 'Register Template', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-templates-register'), 'New Template', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 

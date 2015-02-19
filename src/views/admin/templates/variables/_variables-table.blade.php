@@ -1,5 +1,7 @@
 <div class="dvs-admin-items-wpr">
-    <h4 class="fl">Variables</h4> <a class="dvs-button dvs-button-primary dvs-add-button fr" href="<?= URL::route('dvs-templates-var-create', $params['templatePath']) ?>">Add New Variable</a>
+    <h3 class="dvs-pl">Variables</h3>
+
+    <a class="dvs-button dvs-button-secondary dvs-add-button fr" href="<?= URL::route('dvs-templates-var-create', $params['templatePath']) ?>">Add New Variable</a>
 
     <table class="dvs-admin-items mt sp50">
         @if(count($template['vars']))
@@ -24,6 +26,10 @@
                     <?= Form::text('template[vars]['.$var.'][classPath]', $classPath) ?>
                     <?= Form::text('template[vars]['.$var.'][methodName]', $methodName) ?>
 
+                    <a href="<?= URL::route('dvs-templates-param-create') ?>?varName=<?=$var?>" class="dvs-button dvs-button-small dvs-add-button">Add Param</a>
+                    <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-button-danger sp10 ml dvs-remove-row">Remove</a>
+
+                    <div class="mt sp10">
                     @if(is_array($varDataArr))
 
                         @foreach($varDataArr[$fullPath] as $key => $parameter)
@@ -37,13 +43,8 @@
                         <div class="dvs-param-wrapper dvs-inline-block">&nbsp;</div>
 
                     @endif
-
-                    <div class="mt sp10">
-                        <a href="<?= URL::route('dvs-templates-param-create') ?>?varName=<?=$var?>" class="dvs-button dvs-button-small dvs-add-button">Add Param</a>
-
-
-                        <a href="javascript:void(0)" class="dvs-button dvs-button-small dvs-button-gray sp10 ml dvs-remove-row">Remove</a>
                     </div>
+
                 </td>
             </tr>
             @endforeach

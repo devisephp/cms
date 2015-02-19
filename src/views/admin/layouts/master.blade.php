@@ -60,6 +60,8 @@
         @yield('main')
     </div>
 
+    @yield('modals')
+
     @yield('js')
 </body>
 </html>

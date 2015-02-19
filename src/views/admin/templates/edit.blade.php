@@ -2,14 +2,21 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Edit Template</h1>
-
-        <p>Use the form below to update a template and any of its related data and/or settings.</p>
+        <h1><span class="ion-android-apps"></span> Edit Template</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-templates'), 'List of Templates', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-templates'), 'List of Templates', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
+@stop
+
+@section('modals')
+
+    <div class="dvs-hidden" id="dvs-admin-modal"></div>
+    <div class="dvs-hidden" id="dvs-admin-blocker"></div>
+
 @stop
 
 @section('main')
@@ -29,12 +36,9 @@
 
             @include('devise::admin.templates.variables._variables-table')
 
-            <?= Form::submit('Update Template', array('class' => 'dvs-button dvs-button-large')) ?>
+            <?= Form::submit('Update Template', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
         <?= Form::close() ?>
     </div>
-
-    <div class="dvs-hidden" id="dvs-admin-modal"></div>
-    <div class="dvs-hidden" id="dvs-admin-blocker"></div>
 
     <script>
         var target = '.dvs-add-button';

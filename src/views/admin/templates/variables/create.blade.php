@@ -15,7 +15,7 @@
                 </tr>
             </table>
 
-            <button type="submit" class="dvs-button" id="dvs-add-variable">ADD VARIABLE</button>
+            <button type="submit" class="dvs-button dvs-button-secondary mt sp30" id="dvs-add-variable">ADD VARIABLE</button>
         <?=Form::close() ?>
     </div>
 @stop

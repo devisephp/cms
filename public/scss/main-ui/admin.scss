@@ -85,24 +85,6 @@
     table.dvs-admin-items {
       width:100%;
 
-      tr  {
-        margin: 0;
-        padding:20px;
-        border: 1px solid #d4d4d4;
-        border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        background: #f6f6f6;
-        background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed));
-        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
-      }
-
       tr td.dvs-form-group {
         padding:20px 2%;
 
@@ -115,32 +97,6 @@
         }
       }
     }
-  }
-
-  #dvs-admin-modal {
-    position:absolute;
-    top:42%;
-    left:42%;
-    z-index:20000;
-
-    .dvs-admin-form-horizontal {
-      padding-top:30px;
-
-      h4 {
-        color:$black;
-        margin-bottom:15px;
-      }
-    }
-  }
-
-  #dvs-admin-blocker {
-    position:fixed;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    background-color:transparentize($black, .45);
-    z-index:12000;
   }
 
   .dvs-secondary-text {

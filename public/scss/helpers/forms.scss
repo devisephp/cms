@@ -73,12 +73,16 @@ input[type=text] {
     margin-bottom:35px;
     color:darken($bodyFormTextColor, 10%);
     @include clearfix;
+    display:table;
+    width:100%;
 
     label {
-      float:left;
+      display: table-cell;
+      vertical-align: middle;
       width:$formLabelColumnWidth;
       text-align:right;
       margin-right:$formGutterWidth;
+      line-height:1.5em;
       padding:5px 35px 5px 0;
     }
 
@@ -86,6 +90,7 @@ input[type=text] {
     input[type="password"],
     textarea,
     select {
+      display:table-cell;
       width:$formFieldColumnWidth;
 
       @include insetFormDude();
@@ -101,7 +106,6 @@ input[type=text] {
     input[type=radio] { margin-left:$formGutterWidth }
 
     .fancyCheckbox {
-      margin-left:$formLabelColumnWidth + $formGutterWidth;
 
       label {
         border-radius: 50px;
@@ -260,7 +264,7 @@ input[type=text] {
 .simpletoggle {
   display:none;
 
-  &.open { display:block }
+  &.open { display:grid }
 }
 
 .dvs-admin-mode {

@@ -3168,7 +3168,9 @@ input[type=text].form-control {
 .dvs-admin-form-horizontal .dvs-form-group {
   clear: both;
   margin-bottom: 35px;
-  color: #a1a4aa; }
+  color: #a1a4aa;
+  display: table;
+  width: 100%; }
   .dvs-admin-form-vertical .dvs-form-group:after,
   .dvs-admin-form-horizontal .dvs-form-group:after {
     content: "";
@@ -3176,10 +3178,12 @@ input[type=text].form-control {
     clear: both; }
   .dvs-admin-form-vertical .dvs-form-group label,
   .dvs-admin-form-horizontal .dvs-form-group label {
-    float: left;
+    display: table-cell;
+    vertical-align: middle;
     width: 20%;
     text-align: right;
     margin-right: 2%;
+    line-height: 1.5em;
     padding: 5px 35px 5px 0; }
   .dvs-admin-form-vertical .dvs-form-group input[type="text"],
   .dvs-admin-form-vertical .dvs-form-group input[type="password"],
@@ -3189,6 +3193,7 @@ input[type=text].form-control {
   .dvs-admin-form-horizontal .dvs-form-group input[type="password"],
   .dvs-admin-form-horizontal .dvs-form-group textarea,
   .dvs-admin-form-horizontal .dvs-form-group select {
+    display: table-cell;
     width: 78%;
     padding: 14px 14px;
     font-size: 14px;
@@ -3245,14 +3250,11 @@ input[type=text].form-control {
   .dvs-admin-form-horizontal .dvs-form-group input[type=checkbox],
   .dvs-admin-form-horizontal .dvs-form-group input[type=radio] {
     margin-left: 2%; }
-  .dvs-admin-form-vertical .dvs-form-group .fancyCheckbox,
-  .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox {
-    margin-left: 22%; }
-    .dvs-admin-form-vertical .dvs-form-group .fancyCheckbox label,
-    .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label {
-      border-radius: 50px;
-      width: 34px;
-      height: 24px; }
+  .dvs-admin-form-vertical .dvs-form-group .fancyCheckbox label,
+  .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label {
+    border-radius: 50px;
+    width: 34px;
+    height: 24px; }
   .dvs-admin-form-vertical .dvs-form-group textarea.short,
   .dvs-admin-form-horizontal .dvs-form-group textarea.short {
     height: 100px; }
@@ -3373,7 +3375,7 @@ input[type=text].form-control {
 .simpletoggle {
   display: none; }
   .simpletoggle.open {
-    display: block; }
+    display: grid; }
 
 .dvs-admin-mode {
   -webkit-perspective: 625px;

@@ -158,6 +158,7 @@
 			'human_name' => 'Devise Menu Edit',
 			'extends' => 'devise::admin.layouts.master',
 			'vars' => array(
+				'availablePermissions' => 'Devise\Users\Permissions\PermissionsRepository.availablePermissions',
 				'menu' => array(
 					'Devise\Menus\MenusRepository.findById' => array(
 						'{params.menuId}',

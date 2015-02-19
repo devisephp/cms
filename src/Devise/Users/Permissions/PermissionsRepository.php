@@ -31,6 +31,17 @@ class PermissionsRepository
     }
 
     /**
+     * Get all the available permissions we can pick from
+     * on the menu items list
+     *
+     * @return array
+     */
+    public function availablePermissions()
+    {
+        return array_keys($this->getAllPermissions());
+    }
+
+    /**
      * Get permission and any related data by using its permission path
      * to retrieve its related data from the permissions config
      *

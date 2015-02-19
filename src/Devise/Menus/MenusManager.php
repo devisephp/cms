@@ -156,12 +156,12 @@ class MenusManager
                 $item['page_id'] = NULL;
             }
 
-
 			$menuItem->parent_item_id = $order[$id] ?: null;
 			$menuItem->url = $item['url'];
 			$menuItem->page_id = $item['page_id'];
 			$menuItem->name = $item['name'];
 			$menuItem->position = $position++;
+        	$menuItem->permission = array_get($item, 'permission', null);
 			$menuItem->save();
 		}
 

@@ -2,13 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Edit Group</h1>
-
-        <p>Update group name using the form below.</p>
+        <h1><span class="ion-ios-people"></span> Edit Group</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-groups'), 'List of Groups', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-groups'), 'List of Groups', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 
@@ -20,7 +20,7 @@
     	        <?= Form::text('name', $group->name) ?>
             </div>
 
-	        <?= Form::submit('Update Group', ['class' => 'dvs-button dvs-button-large']) ?><br>
+	        <?= Form::submit('Update Group', ['class' => 'dvs-button dvs-button-solid dvs-button-success']) ?><br>
 	    <?= Form::close() ?>
 	</div>
 @stop

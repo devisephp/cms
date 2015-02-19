@@ -1,7 +1,7 @@
 <!-- template for dvs-menu-links -->
 <div style="display: none;" id="js-menu-item-template">
 	<li id="itemOrder_{cid}" class="js-menu-item">
-        <div>
+        <div class="ui-sortable-handle">
             <input name="item[{cid}][page_id]" type="hidden" value="<?=$page->id?>">
 
             <input type="text" name="item[{cid}][name]" placeholder="Title">

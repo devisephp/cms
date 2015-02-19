@@ -64,7 +64,7 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
             handle: 'div',
             items: 'li',
             toleranceElement: '> div',
-            maxLevels: 3
+            maxLevels: 5
         });
 
         //
@@ -132,8 +132,10 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
             $(target).toggle();
             if($(this).html() === '<span class="ion-android-expand"></span>'){
                 $(this).html('<span class="ion-android-contract"></span>');
+                $(this).parent().siblings('ol').addClass('hidden');
             } else {
                 $(this).html('<span class="ion-android-expand"></span>');
+                $(this).parent().siblings('ol').removeClass('hidden');
             }
         });
 

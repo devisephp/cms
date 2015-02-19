@@ -3231,13 +3231,14 @@ input[type=text].form-control {
     clear: both; }
 .dvs-admin-form-horizontal .dvs-menu-items select,
 .dvs-admin-form-horizontal .dvs-menu-items input[type=text] {
-  width: 20%;
+  width: 23%;
   float: left;
   height: 24px;
   font-size: 11px;
   margin-right: 5px; }
 .dvs-admin-form-horizontal .dvs-menu-items select {
-  height: 31px; }
+  height: 31px;
+  width: 15%; }
 
 .dvs-admin-form-horizontal #dvs-permissions {
   margin: 0 auto;
@@ -3638,7 +3639,7 @@ td .dvs-select-small {
   padding: 0;
   padding-left: 30px; }
 #dvs-admin ol.sortable, #dvs-admin ol.sortable ol {
-  margin: 0 0 0 25px;
+  margin: 0 0 0 30px;
   padding: 0;
   list-style-type: none; }
 #dvs-admin ol.sortable {

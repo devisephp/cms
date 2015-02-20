@@ -186,10 +186,9 @@ class SessionsRepository
                 return false;
 
             case \Password::REMINDER_SENT:
-                $this->message = 'Email has been sent.';
-                return true;
+                $this->message = 'Recovery email has been sent.';
+                break;
         }
-
     }
 
     /**
@@ -219,9 +218,7 @@ class SessionsRepository
                 break;
 
             case \Password::PASSWORD_RESET:
-                // login user after successful password change
                 $this->Auth->login($resetUser);
-
                 $this->message = 'Password successfully changed.';
                 return true;
                 break;
@@ -242,7 +239,7 @@ class SessionsRepository
         if($activateCode === $user->getActivateCode()) {
             $this->UserManager->activate($user); // Set activate & activate_code values
 
-            $this->Auth->login($user); // auto-log newly activated user into system
+            $this->Auth->login($user); // auto-log newly activated user
 
             $this->message = 'Account successfully activated.';
             return true;

@@ -43,6 +43,7 @@ class UsersResponseHandler
         $this->SessionsRepository = $SessionsRepository;
         $this->UserManager = $UserManager;
         $this->Redirect = $Framework->Redirect;
+        $this->URL = $Framework->URL;
     }
 
     /**
@@ -134,4 +135,48 @@ class UsersResponseHandler
 
         return $this->Redirect->route('dvs-users')->with('message', 'User successfully removed');
 	}
+
+    /**
+     * Executes recoverPassword method in SessionsRepository
+     *
+     * @param  array  $input
+     * @return Response
+     */
+    public function executeRecoverPassword($input)
+    {
+        if ($this->SessionsRepository->recoverPassword($input))
+        {
+            return $this->Redirect->route('user-recover-password')
+                ->with('message',  $this->SessionsRepository->message);
+        }
+
+        return $this->Redirect->route('user-recover-password')
+            ->withInput()
+            ->withErrors($this->SessionsRepository->errors)
+            ->with('message-errors', $this->SessionsRepository->message);
+    }
+
+    /**
+     * Executes resetPassword method in SessionsRepository
+     *
+     * @param  array  $input
+     * @return Response
+     */
+    public function executeResetPassword($input)
+    {
+        if ($this->SessionsRepository->resetPassword($input))
+        {
+            return $this->Redirect->route('user-reset-password')
+                ->with('message',  $this->SessionsRepository->message);
+        }
+
+        // makes sure token is
+        $urlWithToken = $this->URL->route('user-reset-password') . '?token=' . $input['token'];
+
+        return $this->Redirect->to($urlWithToken)
+            ->withInput(['token'])
+            ->withErrors($this->SessionsRepository->errors)
+            ->with('message-errors', $this->SessionsRepository->message);
+    }
+
 }

@@ -71,6 +71,7 @@ class SessionsRepository
         $this->Auth = $Framework->Auth;
         $this->Hash = $Framework->Hash;
         $this->Lang = $Framework->Lang;
+        $this->Password = $Framework->Password;
         $this->Validator = $Framework->Validator;
     }
 
@@ -169,37 +170,40 @@ class SessionsRepository
     }
 
     /**
-    * Handle a POST request for "remind password"
+    * Handle a POST request to recover password
     *
     * @param  array  $input
     * @return Response
     */
-    public function remind($input)
+    public function recoverPassword($input)
     {
-        switch($response = \Password::remind($input)) {
+        $input = array_except($input, '_token');
+
+        switch($response = $this->Password->sendResetLink($input)) {
             case \Password::INVALID_USER:
                 $this->message = 'There were validation errors.';
                 $this->errors = $this->Lang->get($response);
                 return false;
-                break;
 
             case \Password::REMINDER_SENT:
                 $this->message = 'Email has been sent.';
                 return true;
-                break;
         }
+
     }
 
     /**
     * Handle POST data from reset (change) password form
     *
-    * @param  array $credentials
+    * @param  array  $input
     * @return Response
     */
-    public function reset($credentials)
+    public function resetPassword($input)
     {
+        $input = array_except($input, '_token');
+
         $resetUser = null;
-        $response = \Password::reset($credentials, function($user, $password) use (&$resetUser) {
+        $response = $this->Password->reset($input, function($user, $password) use (&$resetUser) {
             $user->password = $this->Hash->make($password);
             $user->save();
             $resetUser = $user;

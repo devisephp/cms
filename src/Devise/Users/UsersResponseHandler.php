@@ -51,7 +51,7 @@ class UsersResponseHandler
      *
      * @return Response
      */
-    public function executeLogout()
+    public function requestLogout()
     {
         $this->SessionsRepository->logout();
 
@@ -65,7 +65,7 @@ class UsersResponseHandler
      * @param  array  $input
      * @return Response
      */
-    public function executeLogin($input)
+    public function requestLogin($input)
     {
         if ($this->SessionsRepository->login($input))
         {
@@ -83,7 +83,7 @@ class UsersResponseHandler
     }
 
     /**
-     * Request a new user be created
+     * Request a new user be created via admin UI.
      *
      * @param  array $input
      * @return Redirector
@@ -132,9 +132,29 @@ class UsersResponseHandler
 	public function requestDestroyUser($id)
     {
         $this->UserManager->destroyUser($id);
-
         return $this->Redirect->route('dvs-users')->with('message', 'User successfully removed');
 	}
+
+    /**
+     * Executes register method in SessionsRepository which
+     * attempt to register a new user via pulbic register form.
+     *
+     * @param  array  $input
+     * @return Response
+     */
+    public function requestRegister($input)
+    {
+       if ($this->SessionsRepository->resetPassword($input))
+        {
+            return $this->Redirect->route('user-register')
+                ->with('message',  $this->SessionsRepository->message);
+        }
+
+        return $this->Redirect->to('user-register')
+            ->withInput()
+            ->withErrors($this->SessionsRepository->errors)
+            ->with('message-errors', $this->SessionsRepository->message);
+    }
 
     /**
      * Executes recoverPassword method in SessionsRepository
@@ -142,7 +162,7 @@ class UsersResponseHandler
      * @param  array  $input
      * @return Response
      */
-    public function executeRecoverPassword($input)
+    public function requestRecoverPassword($input)
     {
         if ($this->SessionsRepository->recoverPassword($input))
         {
@@ -162,7 +182,7 @@ class UsersResponseHandler
      * @param  array  $input
      * @return Response
      */
-    public function executeResetPassword($input)
+    public function requestResetPassword($input)
     {
         if ($this->SessionsRepository->resetPassword($input))
         {
@@ -170,7 +190,6 @@ class UsersResponseHandler
                 ->with('message',  $this->SessionsRepository->message);
         }
 
-        // makes sure token is
         $urlWithToken = $this->URL->route('user-reset-password') . '?token=' . $input['token'];
 
         return $this->Redirect->to($urlWithToken)

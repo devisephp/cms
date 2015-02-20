@@ -90,7 +90,7 @@ class SessionsRepository
                 return $user;
             } else {
                 $this->message = 'There were validation errors.';
-                $this->errors = 'Incorrect email and/or password. Please try again.';
+                $this->errors = 'Incorrect email and/or password.';
                 return false;
             }
         } catch (UserNotFoundException $e) {
@@ -239,7 +239,7 @@ class SessionsRepository
         if($activateCode === $user->getActivateCode()) {
             $this->UserManager->activate($user); // Set activate & activate_code values
 
-            $this->Auth->login($user); // auto-log newly activated user
+            $this->Auth->login($user); // auto-login newly activated user
 
             $this->message = 'Account successfully activated.';
             return true;

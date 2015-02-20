@@ -22,6 +22,10 @@ devise.define(['require', 'jquery', 'app/helpers/query-params'], function (requi
 
             }
 
+            // add the add categoryListener
+            //
+            $('#dvs-open-new-category').click(handleOpenNewCategory);
+
             //
             // add the image url
             // to the opener which has a function ready to go
@@ -39,6 +43,17 @@ devise.define(['require', 'jquery', 'app/helpers/query-params'], function (requi
 
         }
     };
+
+    //
+    // Opens the add new category form
+    //
+    function handleOpenNewCategory(e) {
+        e.preventDefault();
+
+        $(this).addClass('dvs-hidden');
+
+        $('#dvs-new-category').removeClass('dvs-hidden');
+    }
 
     //
     // When the file is selected we want to pass that file

@@ -71,8 +71,8 @@ class SessionsRepository
         $this->Auth = $Framework->Auth;
         $this->Hash = $Framework->Hash;
         $this->Lang = $Framework->Lang;
-        $this->Password = $Framework->Password;
         $this->Validator = $Framework->Validator;
+        $this->Framework = $Framework;
     }
 
     /**
@@ -179,7 +179,7 @@ class SessionsRepository
     {
         $input = array_except($input, '_token');
 
-        switch($response = $this->Password->sendResetLink($input)) {
+        switch($response = $this->Framework->Password->sendResetLink($input)) {
             case \Password::INVALID_USER:
                 $this->message = 'There were validation errors.';
                 $this->errors = $this->Lang->get($response);
@@ -202,7 +202,7 @@ class SessionsRepository
         $input = array_except($input, '_token');
 
         $resetUser = null;
-        $response = $this->Password->reset($input, function($user, $password) use (&$resetUser) {
+        $response = $this->Framework->Password->reset($input, function($user, $password) use (&$resetUser) {
             $user->password = $this->Hash->make($password);
             $user->save();
             $resetUser = $user;

@@ -116,60 +116,6 @@ class SessionsRepository
     }
 
     /**
-     * Register new user
-     *
-     * @param  array  $input
-     * @return Boolean
-    */
-    public function register($input)
-    {
-        $validator = $this->Validator->make($input, $this->DvsUser->registerRules, $this->DvsUser->messages);
-
-        if($validator->fails()) {
-            $this->message = 'There were validation errors.';
-            $this->errors = $validator->errors()->all();
-            return false;
-        } else {
-            $this->UsersRepository->store(array_except($input, array('_token', 'password_confirmation')));
-            $this->message = 'User successfully created, check your email to complete the activation process.';
-            return true;
-        }
-    }
-
-    /**
-     * Resends activate email using submitted email address
-     *
-     * @param  array  $input
-     * @return Void
-    */
-    public function resendActivation($input)
-    {
-        $validator = $this->Validator->make($input, $this->DvsUser->resendActivationRules, $this->DvsUser->messages);
-
-        if($validator->fails()) {
-            $this->message = 'There were validation errors.';
-            $this->errors = $validator->errors()->all();
-            return false;
-        } else {
-            $data['user'] = $this->UsersRepository->findByEmail($input['email']);
-
-            // check user has not been activated
-            if(!$data['user']->isActivated()) {
-                // re-send activation/welcome email
-                \Mail::send('devise::emails.welcome', $data, function($message) {
-                    $message->to('testing@logicbombmedia.com')->from('info@lbm.co')->subject('Welcome to Devise!');
-                });
-
-                $this->message = 'Activation email sent, check your email to complete the activation process.';
-                return true;
-            } else {
-                $this->message = 'User has already been activated. No activation email sent.';
-                return false;
-            }
-        }
-    }
-
-    /**
     * Handle a POST request to recover password
     *
     * @param  array  $input
@@ -179,7 +125,8 @@ class SessionsRepository
     {
         $input = array_except($input, '_token');
 
-        switch($response = $this->Framework->Password->sendResetLink($input)) {
+        $response = $this->Framework->Password->sendResetLink($input);
+        switch($response) {
             case \Password::INVALID_USER:
                 $this->message = 'There were validation errors.';
                 $this->errors = $this->Lang->get($response);
@@ -226,18 +173,18 @@ class SessionsRepository
     }
 
     /**
-     * Process user activation request
+     * Process user activation request.
      *
-     * @param  int  $userId
-     * @param  string  $activateCode
+     * @param  integer  $userId
+     * @param  string   $activateCode
      * @return False | DeviseUser
     */
     public function activate($userId, $activateCode)
     {
         $user = $this->UsersRepository->findById($userId);
 
-        if($activateCode === $user->getActivateCode()) {
-            $this->UserManager->activate($user); // Set activate & activate_code values
+        if($activateCode === $user->activate_code) {
+            $this->UserManager->activate($user); // activate the user
 
             $this->Auth->login($user); // auto-login newly activated user
 
@@ -250,19 +197,31 @@ class SessionsRepository
     }
 
     /**
-     * Removes users which have been awaiting activation (after
-     * registering). Currently, default is 30 days outstanding
+     * Send activation email.
      *
-     * @return Boolean
+     * @param  DvsUser  $user
+     * @return Void
     */
-    public function removeUnactivatedUsers($daysOutstanding = 30)
+    public function sendActivationEmail($user)
     {
-        $outstandingDate = date("Y-m-d H:i:s", strtotime('now -'.$daysOutstanding.' days'));
-        if($this->DvsUser->where('activated','=',false)->where('created_at','<=',$outstandingDate)->forceDelete()) {
-                return true;
-        }
+        if($user->activated != true) // check user has not been activated
+        {
+            $data['user'] = $user; // sets user variable in welcome blade
 
-        return false;
+            $this->Framework->Mail->send('devise::emails.welcome', $data, function($message) use ($data) {
+                $message->to($data['user']->email)
+                    ->from('noreply@devisephp.com')
+                    ->subject('Welcome to Devise!');
+            });
+
+            $this->message = 'Activation email sent, check your email to complete the activation process.';
+            return true;
+        }
+        else
+        {
+            $this->message = 'User has already been activated. No activation email sent.';
+            return false;
+        }
     }
 
     /**

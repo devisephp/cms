@@ -55,7 +55,7 @@ class UsersResponseHandler
     {
         $this->SessionsRepository->logout();
 
-        return $this->Redirect->route('user-login')
+        return $this->Redirect->route('dvs-user-login')
             ->with('message-success', $this->SessionsRepository->message);
     }
 
@@ -76,7 +76,7 @@ class UsersResponseHandler
             return $this->Redirect->route('dvs-dashboard');
         }
 
-        return $this->Redirect->route('user-login')
+        return $this->Redirect->route('dvs-user-login')
             ->withInput()
             ->withErrors($this->SessionsRepository->errors)
             ->with('message-errors', $this->SessionsRepository->message);
@@ -136,7 +136,7 @@ class UsersResponseHandler
 	}
 
     /**
-     * Executes register method in SessionsRepository which
+     * Executes registerUser method in UserManager which
      * attempt to register a new user via pulbic register form.
      *
      * @param  array  $input
@@ -144,13 +144,36 @@ class UsersResponseHandler
      */
     public function requestRegister($input)
     {
-       if ($this->SessionsRepository->resetPassword($input))
+        if ($user = $this->UserManager->registerUser($input))
         {
-            return $this->Redirect->route('user-register')
-                ->with('message',  $this->SessionsRepository->message);
+            $this->SessionsRepository->sendActivationEmail($user);
+
+            return $this->Redirect->route('dvs-user-register')
+                ->with('message-success', $this->SessionsRepository->message);
         }
 
-        return $this->Redirect->to('user-register')
+        return $this->Redirect->route('dvs-user-register')
+            ->withInput()
+            ->withErrors($this->UserManager->errors)
+            ->with('message-errors', $this->UserManager->message);
+    }
+
+    /**
+     * Executes activate method in SessionsRe.
+     *
+     * @param  integer  $userId
+     * @param  string  $activateCode  Hashed activate_code value in db
+     * @return Response
+     */
+    public function requestActivation($userId, $activateCode)
+    {
+        if ($this->SessionsRepository->activate($userId, $activateCode))
+        {
+            return $this->Redirect->route('dvs-dashboard')
+                ->with('message', $this->SessionsRepository->message);
+        }
+
+        return $this->Redirect->route('dvs-user-login')
             ->withInput()
             ->withErrors($this->SessionsRepository->errors)
             ->with('message-errors', $this->SessionsRepository->message);
@@ -166,11 +189,11 @@ class UsersResponseHandler
     {
         if ($this->SessionsRepository->recoverPassword($input))
         {
-            return $this->Redirect->route('user-recover-password')
-                ->with('message',  $this->SessionsRepository->message);
+            return $this->Redirect->route('dvs-user-recover-password')
+                ->with('message-success',  $this->SessionsRepository->message);
         }
 
-        return $this->Redirect->route('user-recover-password')
+        return $this->Redirect->route('dvs-user-recover-password')
             ->withInput()
             ->withErrors($this->SessionsRepository->errors)
             ->with('message-errors', $this->SessionsRepository->message);
@@ -186,14 +209,14 @@ class UsersResponseHandler
     {
         if ($this->SessionsRepository->resetPassword($input))
         {
-            return $this->Redirect->route('user-reset-password')
-                ->with('message',  $this->SessionsRepository->message);
+            return $this->Redirect->route('dvs-user-reset-password')
+                ->with('message-success',  $this->SessionsRepository->message);
         }
 
-        $urlWithToken = $this->URL->route('user-reset-password') . '?token=' . $input['token'];
+        $urlWithToken = $this->URL->route('dvs-user-reset-password') . '?token=' . $input['token'];
 
         return $this->Redirect->to($urlWithToken)
-            ->withInput(['token'])
+            ->withInput()
             ->withErrors($this->SessionsRepository->errors)
             ->with('message-errors', $this->SessionsRepository->message);
     }

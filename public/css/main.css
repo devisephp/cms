@@ -5119,20 +5119,38 @@ table.dvs-admin-table {
   padding: 10px; }
 
 #dvs-media-manager {
-  padding: 20px;
-  margin-top: -100px; }
-  #dvs-media-manager h4 {
-    clear: both;
-    margin: 10px;
-    font-size: 18px;
-    color: #fff;
-    text-transform: none;
-    font-weight: 300;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
-  #dvs-media-manager h5.empty {
-    margin: 15px;
-    color: #7dbd5d;
-    text-align: center; }
+  position: relative;
+  padding: 40px; }
+  #dvs-media-manager:after {
+    content: "";
+    display: table;
+    clear: both; }
+  #dvs-media-manager #dvs-media-mngr-categories {
+    float: left;
+    width: 25%; }
+    #dvs-media-manager #dvs-media-mngr-categories ul {
+      padding-left: 0; }
+    #dvs-media-manager #dvs-media-mngr-categories li {
+      min-height: 30px;
+      list-style-type: none;
+      margin: 5px 0 5px 0; }
+      #dvs-media-manager #dvs-media-mngr-categories li:after {
+        content: "";
+        display: table;
+        clear: both; }
+      #dvs-media-manager #dvs-media-mngr-categories li .dvs-category-actions {
+        float: right;
+        display: none; }
+        #dvs-media-manager #dvs-media-mngr-categories li .dvs-category-actions a {
+          margin-left: 5px; }
+      #dvs-media-manager #dvs-media-mngr-categories li a {
+        float: left;
+        color: #bcbec2;
+        text-decoration: none; }
+        #dvs-media-manager #dvs-media-mngr-categories li a:hover {
+          color: #7dbd5d; }
+      #dvs-media-manager #dvs-media-mngr-categories li:hover .dvs-category-actions {
+        display: block; }
   #dvs-media-manager .container {
     width: 100%;
     padding: 10px; }
@@ -5146,77 +5164,152 @@ table.dvs-admin-table {
   #dvs-media-manager .dvs-cat-delete-btn {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px; }
-  #dvs-media-manager .crumbs {
-    margin-left: 15px;
-    font-size: .7em; }
-    #dvs-media-manager .crumbs a {
+  #dvs-media-manager #dvs-media-top-action-bar {
+    margin: -45px -45px 40px; }
+    #dvs-media-manager #dvs-media-top-action-bar:after {
+      content: "";
+      display: table;
+      clear: both; }
+  #dvs-media-manager #dvs-media-crumbs {
+    background-color: #17181d;
+    padding: 5px 40px; }
+    #dvs-media-manager #dvs-media-crumbs:after {
+      content: "";
+      display: table;
+      clear: both; }
+    #dvs-media-manager #dvs-media-crumbs a {
       text-decoration: none;
-      color: #7dbd5d; }
-      #dvs-media-manager .crumbs a:hover {
+      color: #5dbabd; }
+      #dvs-media-manager #dvs-media-crumbs a:hover {
         text-decoration: underline; }
+  #dvs-media-manager #dvs-media-manager-search {
+    clear: both;
+    text-align: right;
+    background-color: #1d1f25;
+    padding: 5px 40px; }
+    #dvs-media-manager #dvs-media-manager-search:after {
+      content: "";
+      display: table;
+      clear: both; }
   #dvs-media-manager .crop-container {
     width: 500px;
     margin: 0 auto; }
+  #dvs-media-manager #dvs-media-cropper-settings {
+    margin-top: 20px;
+    padding: 14px 14px;
+    font-size: 14px;
+    color: #bcbec2;
+    border: 1px solid #32353f;
+    border-bottom: 2px solid #444856;
+    border-radius: 4px;
+    overflow: hidden;
+    background: -webkit-linear-gradient(top, #202228, #24262e);
+    background: linear-gradient(to bottom, #202228, #24262e); }
+    #dvs-media-manager #dvs-media-cropper-settings::-webkit-input-placeholder {
+      color: #797d85; }
+    #dvs-media-manager #dvs-media-cropper-settings::-moz-placeholder {
+      color: #797d85; }
+    #dvs-media-manager #dvs-media-cropper-settings:-moz-placeholder {
+      color: #797d85; }
+    #dvs-media-manager #dvs-media-cropper-settings:-ms-input-placeholder {
+      color: #797d85; }
   #dvs-media-manager #dvs-media-upload {
-    float: left;
-    width: 45%;
-    height: 30px; }
+    padding: 14px 14px;
+    font-size: 14px;
+    color: #bcbec2;
+    border: 1px solid #32353f;
+    border-bottom: 2px solid #444856;
+    border-radius: 4px;
+    overflow: hidden;
+    background: -webkit-linear-gradient(top, #202228, #24262e);
+    background: linear-gradient(to bottom, #202228, #24262e);
+    margin-bottom: 20px; }
+    #dvs-media-manager #dvs-media-upload::-webkit-input-placeholder {
+      color: #797d85; }
+    #dvs-media-manager #dvs-media-upload::-moz-placeholder {
+      color: #797d85; }
+    #dvs-media-manager #dvs-media-upload:-moz-placeholder {
+      color: #797d85; }
+    #dvs-media-manager #dvs-media-upload:-ms-input-placeholder {
+      color: #797d85; }
     #dvs-media-manager #dvs-media-upload form {
       margin: 20px 10px; }
       #dvs-media-manager #dvs-media-upload form input[name="file"] {
         margin-left: 20px; }
   #dvs-media-manager #dvs-new-category {
-    width: 40%;
-    float: right;
-    text-align: right;
-    margin: 20px 10px; }
-  #dvs-media-manager #dvs-media-mngr-categories {
-    width: 100%; }
-    #dvs-media-manager #dvs-media-mngr-categories li {
-      display: inline-block;
-      margin: 5px 0 5px 5px; }
+    position: relative;
+    clear: both;
+    margin: 0 0 20px; }
+    #dvs-media-manager #dvs-new-category input[type=text] {
+      padding: 14px 14px;
+      font-size: 14px;
+      color: #bcbec2;
+      border: 1px solid #32353f;
+      border-bottom: 2px solid #444856;
+      border-radius: 4px;
+      overflow: hidden;
+      background: -webkit-linear-gradient(top, #202228, #24262e);
+      background: linear-gradient(to bottom, #202228, #24262e);
+      margin-bottom: 8px; }
+      #dvs-media-manager #dvs-new-category input[type=text]::-webkit-input-placeholder {
+        color: #797d85; }
+      #dvs-media-manager #dvs-new-category input[type=text]::-moz-placeholder {
+        color: #797d85; }
+      #dvs-media-manager #dvs-new-category input[type=text]:-moz-placeholder {
+        color: #797d85; }
+      #dvs-media-manager #dvs-new-category input[type=text]:-ms-input-placeholder {
+        color: #797d85; }
   #dvs-media-manager #dvs-error-message {
     background-color: #834040;
     text-align: center;
     padding: 30px; }
   #dvs-media-manager #dvs-media-mngr-gallery {
-    width: 100%; }
+    width: 70%;
+    margin-left: 5%;
+    float: right; }
     #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-item-wrapper {
+      height: 210px;
+      width: 150px;
       display: inline-block;
-      position: relative; }
-    #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-rename-item, #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-remove-item {
-      position: absolute;
-      text-decoration: none;
-      top: 8px; }
-    #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-rename-item {
-      right: 30px; }
-    #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-remove-item {
-      right: 8px; }
+      position: relative;
+      margin: 0 12px 12px 0;
+      overflow: hidden;
+      background: -webkit-linear-gradient(white, #f7f7f7);
+      background: linear-gradient(white, #f7f7f7); }
+      #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-item-wrapper button {
+        cursor: pointer; }
+      #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-item-wrapper .dvs-media-item-actions {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        margin-left: -30px;
+        display: none;
+        text-align: center; }
+      #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-item-wrapper:hover .dvs-media-item-actions {
+        display: block; }
+      #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-item-wrapper:nth-child(4n+1) {
+        margin-right: 0; }
     #dvs-media-manager #dvs-media-mngr-gallery a.dvs-media-item {
       display: inline-block;
-      margin: 10px;
-      width: 125px;
-      height: 180px;
+      width: 150px;
       vertical-align: top;
       text-decoration: none;
-      color: #e6e6e6;
+      color: #2d3039;
       font-size: 12px;
-      font-weight: 100; }
+      font-weight: 300; }
       #dvs-media-manager #dvs-media-mngr-gallery a.dvs-media-item .dvs-media-thumb-cont {
-        background-color: #333333;
-        width: 115px;
-        height: 115px; }
+        width: 150px; }
         #dvs-media-manager #dvs-media-mngr-gallery a.dvs-media-item .dvs-media-thumb-cont img {
-          width: 105px;
-          height: 105px;
-          margin: 5px; }
+          width: 130px;
+          height: 130px;
+          margin: 10px 10px; }
       #dvs-media-manager #dvs-media-mngr-gallery a.dvs-media-item p {
+        margin-top: 0;
         padding: 5px;
-        height: 40px;
-        overflow: hidden;
         text-align: center;
         line-height: 18px;
-        word-break: break-all; }
+        word-break: break-all;
+        text-align: center; }
   #dvs-media-manager input[type="text"],
   #dvs-media-manager input[type="number"] {
     border-radius: 2px;

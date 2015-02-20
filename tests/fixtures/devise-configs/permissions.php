@@ -39,7 +39,7 @@ return array(
 
    'canAccessAdmin' => array(
         'isLoggedIn' => array(),
-        'redirect' => 'user-login',
+        'redirect' => 'dvs-user-login',
         'redirect_type' => 'route',
         'redirect_message' => 'You are not currently logged in.',
     ),

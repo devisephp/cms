@@ -220,6 +220,7 @@ input[type="submit"]{
     opacity        : 0;
     width: 100%;
 
+
     /* CSS hacks for older browsers */
     _noFocusLine   : expression(this.hideFocus=true);
     -ms-filter     :"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";

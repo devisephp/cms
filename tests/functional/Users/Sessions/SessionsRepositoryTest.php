@@ -17,6 +17,7 @@ class SessionsRepositoryTest extends \DeviseTestCase
         $this->Framework->Hash = m::mock('Illuminate\Hashing\BcryptHasher');
         $this->Framework->Lang = m::mock('Illuminate\Translation\Translator');
         $this->Framework->Validator = m::mock('Illuminate\Validation\Factory');
+        $this->Framework->Password = m::mock('Illuminate\Auth\Reminders\PasswordBroker');
 
         $this->SessionsRepository = new SessionsRepository($this->DvsUser, $this->UserManager, $this->UsersRepository, $this->Framework);
     }
@@ -70,6 +71,26 @@ class SessionsRepositoryTest extends \DeviseTestCase
         $this->markTestIncomplete();
     }
 
+    public function test_it_cannot_recover_password()
+    {
+        $input = [
+            '_token' => 'someFooTokenJASdad',
+            'email' => 'foo@email.com'
+        ];
+
+        $this->Framework->Password
+            ->shouldReceive('sendResetLink')
+            ->once()
+            ->andReturn(true);
+
+        $this->Framework->Lang
+            ->shouldReceive('get')
+            ->once()
+            ->andReturnSelf();
+
+        assertFalse( $this->SessionsRepository->recoverPassword($input) );
+    }
+
     public function test_it_can_reset_password()
     {
         $this->markTestIncomplete();
@@ -77,26 +98,81 @@ class SessionsRepositoryTest extends \DeviseTestCase
 
     public function test_it_can_activate()
     {
-        $this->markTestIncomplete();
+        $this->UsersRepository
+            ->shouldReceive('findById')
+            ->once()
+            ->andReturn($this->DvsUser);
+
+        // will match the hash passed in
+        $this->DvsUser->activate_code = 'AbCDeFGhIJkLMnOP';
+
+        $this->UserManager
+            ->shouldReceive('activate')
+            ->once()
+            ->andReturnSelf();
+
+        $this->Framework->Auth
+            ->shouldReceive('login')
+            ->once()
+            ->andReturn($this->DvsUser);
+
+        assertTrue($this->SessionsRepository->activate(1, 'AbCDeFGhIJkLMnOP'));
     }
 
     public function test_it_cannot_activate()
     {
-        $this->markTestIncomplete();
+        $this->UsersRepository
+            ->shouldReceive('findById')
+            ->once()
+            ->andReturn($this->DvsUser);
+
+        // will not match hash passed in
+        $this->DvsUser->activate_code = 'NoTGoIngToMatch';
+
+        assertFalse($this->SessionsRepository->activate(1, 'AbCDeFGhIJkLMnOP'));
     }
 
     public function test_it_can_send_activation_email()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Mail = m::mock('Illuminate\Mail\Mailer');
+
+        $this->Framework->Mail
+            ->shouldReceive('send')
+            ->once()
+            ->andReturnSelf();
+
+        assertTrue($this->SessionsRepository->sendActivationEmail($this->DvsUser));
+    }
+
+    public function test_it_cannot_send_activation_email()
+    {
+        $this->DvsUser->activated = true; // this will make it fail
+
+        assertFalse($this->SessionsRepository->sendActivationEmail($this->DvsUser));
     }
 
     public function test_it_can_validate_credentials()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Auth
+            ->shouldReceive('validate')
+            ->once()
+            ->andReturn(true);
+
+        $credentials = [
+            'email' => 'noreply@devisephp.com',
+            'password' => 'secret',
+        ];
+
+        assertTrue( $this->SessionsRepository->validateCredentials($credentials) );
     }
 
     public function test_it_can_get_remember_me()
     {
-        $this->markTestIncomplete();
+        assertTrue( $this->SessionsRepository->getRememberMe(['remember_me' => 1]) );
+    }
+
+    public function test_it_cannot_get_remember_me()
+    {
+        assertFalse( $this->SessionsRepository->getRememberMe(['foo' => 'input']) );
     }
 }

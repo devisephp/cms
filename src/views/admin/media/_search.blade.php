@@ -1,5 +1,5 @@
 
-<div class="dvs-media-manager-container">
+<div id="dvs-media-manager-search">
     <?= Form::open(['route' => 'dvs-media-manager', 'method' => 'get']) ?>
         @foreach (Input::except(['search']) as $name => $value)
             <input type="hidden" name="<?= $name ?>" value="<?= $value ?>">

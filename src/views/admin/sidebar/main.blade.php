@@ -1,22 +1,23 @@
 <div id="dvs-sidebar-header" data-page-id="<?= $data->page_id ?>"  data-page-version-id="<?= $data->page_version_id ?>" >
     <div id="dvs-sidebar-title">
         <h1><?= $data->sidebarTitle ?></h1>
-        <a class="dvs-sidebar-close">Close</a>
-    </div>
 
-    <div id="dvs-sidebar-contents-container">
+        <a class="dvs-sidebar-close dvs-button dvs-button-danger dvs-button-small"><span class="ion-android-close"></span></a>
+
         @if(count($availableLanguages) > 1)
         <div id="dvs-sidebar-language-selector">
-            <select class="dvs-select" name="other_languages">
+            <select class="dvs-select dvs-select-small" name="other_languages">
                 @foreach ($availableLanguages as $language)
                 <option value="<?= $language['url']  ?>"><?= $language['code'] ?></option>
                 @endforeach
             </select>
         </div>
         @endif
+    </div>
 
+    <div id="dvs-sidebar-contents-container">
         <div id="dvs-sidebar-versions-selector">
-            <select class="dvs-select" name="page_version" id="dvs-sidebar-version-selector">
+            <select class="dvs-select dvs-select-small dvs-button-solid" name="page_version" id="dvs-sidebar-version-selector">
                 @foreach ($pageVersions as $pageVersion)
                     <option <?= $pageVersion->selected ?> value="<?= $pageVersion->name ?>"><?= $pageVersion->name ?> (<?=$pageVersion->status?>)</option>
                     @if ($pageVersion->selected)
@@ -24,8 +25,8 @@
                     @endif
                 @endforeach
             </select>
-            <button id="dvs-sidebar-add-version" class="dvs-button dvs-button-gray">Add</button>
-            <button id="dvs-sidebar-edit-version" onclick="location.href = '<?= route('dvs-pages-edit', $pageVersion->page_id) ?>'" class="dvs-button dvs-button-gray">Edit</a>
+            <button id="dvs-sidebar-add-version" class="dvs-button dvs-button-secondary dvs-button-small dvs-button-solid">Add</button>
+            <button id="dvs-sidebar-edit-version" onclick="location.href = '<?= route('dvs-pages-edit', $data->page_version_id) ?>'" class="dvs-button dvs-button-gray dvs-button-small dvs-button-solid">Edit</a>
         </div>
 
         <div id="dvs-sidebar-groups-wpr">

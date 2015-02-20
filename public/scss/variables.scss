@@ -36,8 +36,8 @@ $sidebarMainFont:           'Roboto', Tahoma, Arial, sans-serif;
 $sidebarMainFontWeight:     400;
 $sidebarMainFontSize:       12px;
 
-$sidebarHeaderFontWeight:   300;
-$sidebarHeaderFontSize:     18px;
+$sidebarHeaderFontWeight:   600;
+$sidebarHeaderFontSize:     14px;
 
 $bodyMainFont:              $sidebarMainFont;
 $bodyMainFontSize:          14px;
@@ -113,7 +113,7 @@ $primaryButtonBgColor:     #BCBEC2;
 $primaryButtonTextColor:   $bodyBgColor;
 
 $secondaryButtonBgColor:   #5dbabd;
-$secondaryButtonTextColor: $bodyBgColor;
+$secondaryButtonTextColor: $white;
 
 $inactiveButtonBgColor:    $red;
 $inactiveButtonTextColor:  $french-gray;
@@ -128,7 +128,7 @@ $smallButtonPadding:       8px 10px;
 $regularButtonPadding:     12px 20px;
 $largeButtonPadding:       12px 30px;
 
-$sidebarSaveButtonBgColor:      $sidebarRuleColor;
+$sidebarSaveButtonBgColor:      $blue;
 $sidebarSaveButtonTextColor:    $white;
 
 $sidebarDiscardButtonBgColor:   $sidebarElementsButton;

@@ -6,6 +6,7 @@
 </p>
 @endsnippet
 
+
 @include('devise::admin.fields.show',
 [
     'name' => '$page->checkbox1',

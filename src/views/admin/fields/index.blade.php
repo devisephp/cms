@@ -2,6 +2,9 @@
 
 @section('css')
 
+    <link href="<?= URL::asset('/packages/devisephp/cms/css/spectrum.css') ?>" rel="stylesheet" >
+    <link href="<?= URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') ?>" rel="stylesheet" >
+
     <link href="<?= URL::asset('/packages/devisephp/cms/css/obsidian.min.css') ?>" rel="stylesheet" >
     <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/lib/highlight.pack.js') ?>"></script>
 
@@ -12,12 +15,12 @@
         }*/
     </style>
 
-    @include('devise::styles')
+
 @stop
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Editor's Examples</h1>
+        <h1>Editor Examples</h1>
     </div>
 @stop
 

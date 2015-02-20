@@ -1,33 +1,41 @@
 // This very wide wrapper is to override the very wide public reset
 // This probably needs to be rethought out.
 #dvs-mode.dvs-sidebar-mode {
+
+
+
+
+
   #dvs-sidebar.loaded {
     opacity: 1;
     left: $sidebarDistanceFromLeft;
     @include transform(translate3d(0, 0, 0));
   }
+
   #dvs-pusher {
     @include transform(translate3d(200px, 0, -1000px) rotateY(-10deg));
   }
+
   #dvs-node-mode-button {
     bottom: -50px;
     opacity: 0;
+    font-family: $sidebarMainFont;
   }
 
-  #dvs-mode {
-    #dvs-node-mode-button,
-    #dvs-admin-mode-button {
-      font-family: $sidebarMainFont;
-    }
+  #dvs-admin-mode-button {
+    font-family: $sidebarMainFont;
   }
+
   #dvs-sidebar-contents-container {
     margin: $sidebarGeneralPadding;
     margin-top: 0;
   }
+
   #dvs-sidebar-elements-and-groups {
     clear: both;
     margin: $sidebarGeneralPadding;
   }
+
   #dvs-sidebar-container {
     overflow:hidden;
     position:fixed;
@@ -36,19 +44,21 @@
     top:0;
     left:0;
   }
+
   #dvs-sidebar-scroller {
     overflow-y: scroll;
     overflow-x:hidden;
     height:100%;
     width:$sidebarWidth + 150;
   }
+
   #dvs-sidebar {
     top: $sidebarDistanceFromTop;
     z-index: 10010;
     opacity: 0;
     width: $sidebarWidth;
     color: $sidebarTextColor;
-    background: $sidebarBgColor;
+    @include background(linear-gradient(lighten($sidebarBgColor, 3%), darken($sidebarBgColor, 3%)));
     font-size: $sidebarMainFontSize;
     font-family: $sidebarMainFont;
     font-weight: $sidebarMainFontWeight;
@@ -57,26 +67,34 @@
     margin: 35px;
     @include transition(all 0.5s);
     @include transform(translate3d(-100%, 0, 0));
+
     hr {
-      clear: both;
-      float: left;
-      width: 100%;
-      height: 3px;
-      margin: 25px 0;
-      background-color: $sidebarRuleColor;
-      border-width: 0;
+      clear:both;
+      float:left;
+      width:100%;
+
+      margin:20px auto;
+      border-color:darken($blue, 20%);
+      border-style:solid;
+      border-width:0;
+      border-bottom-width:1px;
+
+      &.dvs-thick { border-bottom-width:2px }
       @include clearfix;
     }
+
     .dvs-sidebar-group {
       display:none;
     }
+
     textarea,
     select,
     input[type=text] {
       color:$sidebarTextColor;
     }
+
     select {
-      background-color: $white;
+      background-color: $black;
       padding:$sidebarGeneralPadding;
     }
 
@@ -86,50 +104,15 @@
     }
   }
 
-  .dvs-select-wrapper {
-    padding          : $sidebarFormPadding;
-  }
-
-  #dvs-sidebar-language-selector {
-    margin-top: 15px;
-    float: right;
-    .dvs-select-wrapper {
-      width: 75px;
-    }
-  }
-  #dvs-sidebar-groups, #dvs-sidebar-versions-selector {
-    clear: both;
-    float: left;
-
-    .dvs-select-wrapper {
-      float: left;
-      width: 133px;
-      margin-right: 3px;
-    }
-
-    button {
-      float: right;
-      width: 76px;
-      padding-left: 10px;
-      padding-right: 10px;
-      color: $sidebarTextColor;
-      font-family: $sidebarMainFont;
-    }
-
-    #dvs-sidebar-manage-groups {
-      width:152px;
-    }
-  }
 
 
-  #dvs-sidebar-groups {
-    margin-top: 3px;
-  }
   #dvs-sidebar-title {
     @include clearfix;
+    clear:both;
     padding: $sidebarGeneralPadding;
     border-radius: $sidebarRoundedCorners $sidebarRoundedCorners 0 0;
     text-transform: uppercase;
+
     h1 {
       margin: 0;
       float: left;
@@ -138,28 +121,87 @@
       font-size: $sidebarHeaderFontSize;
       font-weight: $sidebarHeaderFontWeight;
     }
+
     a {
       float: right;
-      color: $sidebarTextColor;
-      font-family: $sidebarMainFont;
+      cursor:pointer;
     }
   }
-  .dvs-sidebar-close {
-    cursor:pointer;
+
+
+
+
+
+
+  #dvs-sidebar-groups, #dvs-sidebar-versions-selector {
+    clear: both;
+    float: left;
+
+    // Add / Edit Buttons next to version selector
+    button {
+      float: right;
+      width: 60px;
+      padding-left: 8px;
+      padding-right: 8px;
+      margin-left:3px;
+    }
+
+    // Version Selector
+    .dvs-select-wrapper {
+      width:160px;
+    }
+
+    #dvs-sidebar-manage-groups {
+      width:152px;
+    }
   }
+
+  #dvs-sidebar-groups {
+    margin-top: 3px;
+  }
+
+
+
+
+
+  #dvs-sidebar-breadcrumbs {
+    display:none;
+    clear:both;
+    text-transform: uppercase;
+    font-size: $sidebarMainFontSize - 2;
+    font-family: $sidebarMainFont;
+    padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
+    color: $sidebarBreadcrumbActive;
+
+    a {
+      color:$sidebarBreadcrumbLink;
+    }
+
+    span {
+      position:relative;
+      top:-3px;
+      margin:0 8px;
+      font-size:1px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 3px 0 3px 5px;
+      border-color: transparent transparent transparent $sidebarBreadcrumbLink;
+    }
+  }
+
+
+
+
+
   .dvs-sidebar-elements, .dvs-sidebar-group {
     position: relative;
 
     button {
       float: left;
       margin: 4px 4px 8px 4px;
-      border-width: 0;
       height:60px;
       padding: 20px 15px;
-      background-color: $sidebarElementsButton;
-      color: darken($sidebarTextColor, 15%);
-      font-size: $sidebarMainFontSize;
-      font-family: $sidebarMainFont;
       outline: none;
       cursor: pointer;
       width: ($sidebarWidth / 2) - 26;
@@ -169,10 +211,6 @@
       &:nth-child(even) {
         float: right;
         margin-right: 0;
-      }
-      &.dvs-content-requested {
-        background-color:$primaryButtonBgColor;
-        color:$white;
       }
     }
     > div > div {
@@ -205,31 +243,9 @@
     }
   }
 
-  #dvs-sidebar-breadcrumbs {
-    display:none;
-    clear:both;
-    text-transform: uppercase;
-    font-size: $sidebarMainFontSize - 2;
-    font-family: $sidebarMainFont;
-    padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
-    color: $sidebarBreadcrumbActive;
 
-    a {
-      color:$sidebarBreadcrumbLink;
-    }
 
-    span {
-      position:relative;
-      top:-3px;
-      margin:0 8px;
-      font-size:1px;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 3px 0 3px 5px;
-      border-color: transparent transparent transparent $sidebarBreadcrumbLink;
-    }
-  }
+
 
   #dvs-sidebar-current-element {
     clear:both;
@@ -272,8 +288,6 @@
         float:left;
         margin:2px 2px 0 0;
         padding: 15px 3px;
-        color:$primaryButtonTextColor;
-        font-family: $sidebarMainFont;
         text-align: center;
         cursor: pointer;
         width:185px;
@@ -300,7 +314,29 @@
         }
       }
     }
+
+    .dvs-options-manager,
+    .dvs-checkboxes-manager {
+      width:100%;
+
+      td {
+        vertical-align: middle;
+      }
+
+      .dvs-option-fields {
+        td {
+          padding:1px 1px 0 0;
+        }
+
+        input[type=text] {
+          background-color:lighten($sidebarBgColor, 5%);
+        }
+      }
+    }
   }
+
+
+
 
   .dvs-sidebar-discard, .dvs-sidebar-save-group, .dvs-sidebar-save-model, .dvs-sidebar-save-model-groups {
     display: block;
@@ -321,6 +357,11 @@
     font-size: $sidebarMainFontSize + 4;
     background-color: $sidebarDiscardButtonBgColor;
   }
+
+
+
+
+
   .dvs-sidebar-datetime-element {
     .xdsoft_datetimepicker {
       .xdsoft_datepicker {
@@ -340,26 +381,10 @@
     }
   }
 
-  #dvs-sidebar-current-element {
-    .dvs-options-manager,
-    .dvs-checkboxes-manager {
-      width:100%;
 
-      td {
-        vertical-align: middle;
-      }
 
-      .dvs-option-fields {
-        td {
-          padding:1px 1px 0 0;
-        }
 
-        input[type=text] {
-          background-color:lighten($sidebarBgColor, 5%);
-        }
-      }
-    }
-  }
+
 
   #dvs-sidebar-collections {
     display:none;
@@ -399,15 +424,16 @@
         margin-top: 8px;
         padding-left: 10px;
         padding-right: 10px;
-        color: $sidebarTextColor;
         font-weight: 600;
-        background-color:$primaryButtonBgColor;
       }
       p {
         margin-bottom: 16px;
       }
     }
   }
+
+
+
 
   #dvs-collection-instances-sortable {
     li {
@@ -464,7 +490,10 @@
     }
   }
 
-  /* General Editor Styles */
+
+
+
+
   .dvs-group-edit {
     h3 {
       width: 320px;
@@ -493,6 +522,10 @@
     }
   }
 
+
+
+
+
   a.page-sort {
     text-decoration: underline;
     background: no-repeat right 7px;
@@ -513,6 +546,28 @@
   .fancy-sidebar-checkbox {
     > label {
       margin:5px 0 0 90px ;
+    }
+  }
+
+
+
+
+
+
+  @include dvs-buttons;
+
+  .dvs-select-wrapper {
+    float: left;
+    width: 127px;
+    border:1px solid $french-gray;
+    padding:8px;
+  }
+
+  #dvs-sidebar-language-selector {
+    margin-right:3px;
+    float: right;
+    .dvs-select-wrapper {
+      width: 70px;
     }
   }
 

@@ -1,3 +1,5 @@
+@mixin dvs-buttons() {
+
 .dvs-button {
   display:inline-block;
   padding:$regularButtonPadding;
@@ -57,8 +59,13 @@
   }
 
   &.dvs-button-gray {
-    background-color:lighten($black, 15%);
-    color:$secondaryButtonTextColor;
+    border:1px solid $french-gray;
+    color:$french-gray;
+
+    &.dvs-button-solid {
+      background-color:$french-gray;
+      color:$black;
+    }
   }
 
   &.dvs-button-danger {
@@ -174,14 +181,15 @@ input[type="submit"]{
 }
 
 
-.dvs-select-wrapper{
+.dvs-select-wrapper {
   position         : relative;
   display          : inline-block;
   width            : 100%;
   cursor           : pointer;
   background-color : transparent;
+  border-radius    : $buttonBorderRadius;
   border           : 1px solid $primaryButtonBgColor;
-  color            : $primaryButtonTextColor;
+  color            : $french-gray;
   padding          : $sidebarFormPadding;
 
   .dvs-holder {
@@ -227,12 +235,12 @@ input[type="submit"]{
     height         : 0;
     border-left    : 5px solid transparent;
     border-right   : 5px solid transparent;
-    border-top     : 5px solid $sidebarSelectArrowColor;
+    border-top     : 5px solid $french-gray;
   }
 
   &.dvs-button-solid {
     background-color:$primaryButtonBgColor;
-    color: invert($primaryButtonTextColor);
+    color: $primaryButtonTextColor;
 
     &:after {
       border-top-color: $black;
@@ -240,11 +248,7 @@ input[type="submit"]{
   }
 
   &.dvs-select-small {
-
-    &:after {
-      border-width:0;
-    }
-
+    padding:8px 0px;
   }
 }
 
@@ -253,3 +257,7 @@ td {
     margin-top:5px;
   }
 }
+
+}
+
+@include dvs-buttons;

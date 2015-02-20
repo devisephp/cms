@@ -61,4 +61,25 @@ class UserManagerTest extends \DeviseTestCase
         $output = $this->UserManager->destroyUser(1);
         assertInternalType('boolean', $output);
     }
+
+    public function test_it_can_register_user()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_it_can_activate_user()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_it_can_generate_activate_code()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_it_can_remove_unactivated_users()
+    {
+        $this->markTestIncomplete();
+    }
+
 }

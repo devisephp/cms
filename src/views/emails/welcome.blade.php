@@ -17,12 +17,12 @@
 							<table style="background-color:#1fa7db;height:75px;padding:20px;cursor:pointer;">
 								<tr>
 									<td cellpadding="20" style="text-align:center">
-										<a href="<?= URL::action('DeviseUserController@activate', array('userId' => $user->id, 'activateCode' => urlencode($user->activate_code))) ?>" style="color:#ffffff;text-decoration:none;font-size:20px;padding:25px 30px;">Activate User Account</a>
+										<a href="<?= URL::route('dvs-user-activate', [$user->id, urlencode($user->activate_code)]) ?>" style="color:#ffffff;text-decoration:none;font-size:20px;padding:25px 30px;">Activate User Account</a>
 									</td>
 								</tr>
 							</table>
 
-							<p style="font-size:12px;padding-top:10px;">If the activation button above isn't working, paste the following link into your browser: <a href="<?= URL::action('DeviseUserController@activate', array('userId' => $user->id, 'activateCode' => urlencode($user->activate_code))) ?>" style="color:#15c;text-decoration:none;"><?=  URL::action('DeviseUserController@activate', array('userId' => $user->id, 'activateCode' => urlencode($user->activate_code))) ?></a></p>
+							<p style="font-size:12px;padding-top:10px;">If the activation button above isn't working, paste the following link into your browser: <a href="<?= URL::route('dvs-user-activate', [$user->id, urlencode($user->activate_code)]) ?>" style="color:#15c;text-decoration:none;"><?=  URL::route('dvs-user-activate', [$user->id, urlencode($user->activate_code)]) ?></a></p>
 						</td>
 					</tr>
 				</table>

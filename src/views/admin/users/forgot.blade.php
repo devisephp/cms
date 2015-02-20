@@ -16,7 +16,7 @@
 
         <div class="row">
             <div class="col-md-4 col-md-offset-4 dvs-tac">
-                <form method="POST" action="<?= URL::route('user-attempt-recover') ?>">
+                <form method="POST" action="<?= URL::route('dvs-user-attempt-recover') ?>">
                     <input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
                     <div class="form-group">

@@ -17,7 +17,7 @@
 
         <div class="row">
             <div class="col-md-4 col-md-offset-4 tac">
-                <?= Form::open(array('method' => 'POST', 'route' => 'user-attempt-reset')) ?>
+                <?= Form::open(array('method' => 'POST', 'route' => 'dvs-user-attempt-reset')) ?>
                     <input type="hidden" name="_token" value="<?= csrf_token() ?>">
                     <input type="hidden" name="token" value="<?= array_get($input, 'token', '') ?>">
 

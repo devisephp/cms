@@ -216,7 +216,7 @@ class UsersResponseHandler
         $urlWithToken = $this->URL->route('dvs-user-reset-password') . '?token=' . $input['token'];
 
         return $this->Redirect->to($urlWithToken)
-            ->withInput(['token'])
+            ->withInput()
             ->withErrors($this->SessionsRepository->errors)
             ->with('message-errors', $this->SessionsRepository->message);
     }

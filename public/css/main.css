@@ -3002,6 +3002,23 @@
   float: left;
   margin: 10px; }
 
+.dvs-fg.dvs-white {
+  color: white; }
+.dvs-fg.dvs-black {
+  color: #262626; }
+.dvs-fg.dvs-gray {
+  color: #5d5d5d; }
+.dvs-fg.dvs-light-gray {
+  color: #ebebeb; }
+.dvs-fg.dvs-mid-gray {
+  color: #a0a0a0; }
+.dvs-fg.dvs-red {
+  color: #fd5f46; }
+.dvs-fg.dvs-purple {
+  color: #673f90; }
+.dvs-fg.dvs-green {
+  color: #7dbd5d; }
+
 .dvs-badge {
   margin-right: 5px;
   padding: 5px 7px;
@@ -3029,6 +3046,16 @@
 .dvs-large {
   font-size: 1.4em;
   line-height: 1.5em; }
+
+.dvs-small {
+  font-size: 0.9em;
+  line-height: 1.0em; }
+
+a.dvs-no-decoration,
+button.dvs-no-decoration,
+a.dvs-no-decoration:hover,
+button.dvs-no-decoration:hover {
+  text-decoration: none; }
 
 .dvs-advanced {
   height: 0;
@@ -3425,6 +3452,11 @@ input[type=text].form-control {
   .dvs-button.dvs-button-large {
     padding: 16px 40px;
     font-size: 14px; }
+  .dvs-button.dvs-button-block {
+    display: block;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0; }
   .dvs-button.dvs-button-secondary {
     border: 1px solid #5dbabd;
     color: #5dbabd; }
@@ -4918,6 +4950,11 @@ table.dvs-admin-table {
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-large {
     padding: 16px 40px;
     font-size: 14px; }
+  #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-block {
+    display: block;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-secondary {
     border: 1px solid #5dbabd;
     color: #5dbabd; }

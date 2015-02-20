@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="form-group">
-                        <a href="<?= URL::route('user-recover-password') ?>">Forgot Your Password?</a>
+                        <a class="dvs-small dvs-no-decoration dvs-fg dvs-mid-gray" href="<?= URL::route('user-recover-password') ?>">Forgot Your Password?</a>
                     </div>
                 <?= Form::close() ?>
             </div>

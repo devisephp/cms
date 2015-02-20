@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container pt sp45">
-        <div class="tac mb sp75">
+        <div class="dvs-tac mb sp75">
             <img src="<?= URL::asset('/packages/devisephp/cms/img/admin-logo.png') ?>">
         </div>
 
@@ -14,10 +14,10 @@
         </div>
         @endif
 
-        <h4 class="tac mb sp15">Forgot Password</h4>
+        <h4 class="dvs-tac mb sp15">Password Recovery</h4>
 
         <div class="row">
-            <div class="col-md-4 col-md-offset-4 tac">
+            <div class="col-md-4 col-md-offset-4 dvs-tac">
                 <form method="POST" action="<?= URL::route('user-attempt-recover') ?>">
                     <input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
@@ -26,11 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button class="dvs-button dvs-button-primary">Send Recovery Email</button>
-                    </div>
-
-                    <div class="form-group">
-                        <a href="<?= URL::route('user-login') ?>">Back to Login</a>
+                        <button class="dvs-button dvs-button-primary dvs-button-block">Send Recovery Email</button>
                     </div>
                 </form>
             </div>

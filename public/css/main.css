@@ -4438,6 +4438,9 @@ table.dvs-admin-table {
   #dvs-admin .dvs-languages.dvs-admin-card:hover .dvs-card-top {
     background-color: #96327f; }
 
+#dvs-mode.dvs-sidebar-mode h1, #dvs-mode.dvs-sidebar-mode h2, #dvs-mode.dvs-sidebar-mode h3, #dvs-mode.dvs-sidebar-mode h4, #dvs-mode.dvs-sidebar-mode h5, #dvs-mode.dvs-sidebar-mode h6 {
+  font-size: 14px;
+  margin-bottom: 10px; }
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar.loaded {
   opacity: 1;
   left: 35px;
@@ -4461,9 +4464,13 @@ table.dvs-admin-table {
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-contents-container {
   margin: 20px;
   margin-top: 0; }
+#dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements-and-groups,
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-elements-and-groups {
   clear: both;
   margin: 20px; }
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements-and-groups .dvs-sidebar-elements-and-groups,
+  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-elements-and-groups .dvs-sidebar-elements-and-groups {
+    margin: 0; }
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container {
   overflow: hidden;
   position: fixed;
@@ -4556,7 +4563,7 @@ table.dvs-admin-table {
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups .dvs-select-wrapper, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector .dvs-select-wrapper {
     width: 160px; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups #dvs-sidebar-manage-groups, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector #dvs-sidebar-manage-groups {
-    width: 152px; }
+    width: 125px; }
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups {
   margin-top: 3px; }
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-breadcrumbs {
@@ -4610,13 +4617,12 @@ table.dvs-admin-table {
         display: table;
         clear: both; }
   #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements h4, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements label, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group h4, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group label {
-    width: 100%;
-    margin: 10px 0;
     color: whitesmoke;
     font-size: 12px;
     font-family: "Roboto", Tahoma, Arial, sans-serif;
     text-transform: uppercase; }
   #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements h4, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group h4 {
+    width: 100%;
     margin: 18px 0 0 0;
     color: #76cbff;
     font-size: 18px;
@@ -4624,22 +4630,42 @@ table.dvs-admin-table {
     font-weight: 600;
     text-transform: none;
     border-bottom: 1px solid #10a5ff; }
+#dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group,
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element {
   clear: both;
   padding: 0 20px 20px;
   font-size: 13px;
   font-family: "Roboto", Tahoma, Arial, sans-serif;
   display: none; }
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group label,
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element label {
     display: block;
     color: #cfcfcf;
     font-family: "Roboto", Tahoma, Arial, sans-serif;
     font-weight: 700;
     margin-bottom: 8px; }
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property,
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property {
+    clear: both;
     margin-top: 20px; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property:after,
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property:after {
+      content: "";
+      display: table;
+      clear: both; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property:first-child,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property:first-child {
       margin-top: 0; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property .dvs-select-wrapper,
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property .dvs-select-wrapper {
+      width: auto;
+      margin-left: 15px;
+      padding-right: 30px; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property span,
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property span {
+      width: auto; }
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group input[type="text"],
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group textarea,
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element input[type="text"],
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element textarea {
     width: 100%;
@@ -4647,12 +4673,16 @@ table.dvs-admin-table {
     font-family: "Roboto", Tahoma, Arial, sans-serif;
     background-color: black;
     border-width: 0; }
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid,
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid {
     margin: 20px 0; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid:after,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid:after {
       content: "";
       display: table;
       clear: both; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label,
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid button,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid button {
       float: left;
@@ -4661,34 +4691,72 @@ table.dvs-admin-table {
       text-align: center;
       cursor: pointer;
       width: 185px; }
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label.dvs-button-secondary,
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid button.dvs-button-secondary,
       #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label.dvs-button-secondary,
       #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid button.dvs-button-secondary {
         width: 99px; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label {
       font-family: "Roboto", Tahoma, Arial, sans-serif;
       background-color: #bfbfbf;
       -webkit-transition: all 0.4s ease;
       -moz-transition: all 0.4s ease;
       transition: all 0.4s ease; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox],
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox] {
       position: absolute;
       visibility: hidden;
-      font-family: "Roboto", Tahoma, Arial, sans-serif; }
+      font-family: "Roboto", Tahoma, Arial, sans-serif;
+      background-color: transparent;
+      color: #5dbabd; }
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox] + label.dvs-button-secondary,
+      #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox] + label.dvs-button-secondary {
+        width: 185px; }
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox]:checked + label,
       #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox]:checked + label {
         font-family: "Roboto", Tahoma, Arial, sans-serif;
-        background-color: #bcbec2; }
+        background-color: #5dbabd;
+        color: white; }
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager,
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager,
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager,
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager {
     width: 100%; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager td,
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager td,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager td,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager td {
       vertical-align: middle; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-checkbox-fields td,
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-option-fields td,
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-checkbox-fields td,
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-option-fields td,
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-checkbox-fields td,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-option-fields td,
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-checkbox-fields td,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-option-fields td {
       padding: 1px 1px 0 0; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-checkbox-fields input[type=text],
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-option-fields input[type=text],
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-checkbox-fields input[type=text],
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-option-fields input[type=text],
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-checkbox-fields input[type=text],
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-option-fields input[type=text],
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-checkbox-fields input[type=text],
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-option-fields input[type=text] {
       background-color: #333333; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-select-wrapper,
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-select-wrapper,
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-select-wrapper,
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-select-wrapper {
+      margin: -2px 3px 0;
+      width: 60px; }
+#dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group {
+  padding: 0;
+  margin: 0; }
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group > div {
+    margin: -20px; }
 #dvs-mode.dvs-sidebar-mode .dvs-sidebar-discard, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-group, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-model, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-model-groups {
   display: block;
   width: 100%;
@@ -5378,7 +5446,8 @@ table.dvs-admin-table {
 #dvs-admin .dvs-test-blocks h3 {
   font-size: 18px;
   font-weight: 400;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  color: #5dbabd; }
 #dvs-admin .dvs-test-blocks li {
   padding: 15px; }
 #dvs-admin .dvs-test-blocks img.dvs-test-frame {
@@ -5402,6 +5471,7 @@ table.dvs-admin-table {
 #dvs-admin .dvs-test-blocks code {
   font-family: "Courier New", Courier, monospace;
   padding: 20px;
-  width: 100%; }
+  width: 100%;
+  border-radius: 3px; }
 #dvs-admin .dvs-test-blocks p {
   margin: 8px 0 15px 0; }

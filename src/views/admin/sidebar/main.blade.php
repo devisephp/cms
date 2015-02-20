@@ -1,33 +1,10 @@
 <div id="dvs-sidebar-header" data-page-id="<?= $data->page_id ?>"  data-page-version-id="<?= $data->page_version_id ?>" >
-    <div id="dvs-sidebar-title">
-        <h1><?= $data->sidebarTitle ?></h1>
 
-        <a class="dvs-sidebar-close dvs-button dvs-button-danger dvs-button-small"><span class="ion-android-close"></span></a>
-
-        @if(count($availableLanguages) > 1)
-        <div id="dvs-sidebar-language-selector">
-            <select class="dvs-select dvs-select-small" name="other_languages">
-                @foreach ($availableLanguages as $language)
-                <option value="<?= $language['url']  ?>"><?= $language['code'] ?></option>
-                @endforeach
-            </select>
-        </div>
-        @endif
-    </div>
+    @include('devise::admin.sidebar._sidebar-header', ['title' => $data->sidebarTitle])
 
     <div id="dvs-sidebar-contents-container">
-        <div id="dvs-sidebar-versions-selector">
-            <select class="dvs-select dvs-select-small dvs-button-solid" name="page_version" id="dvs-sidebar-version-selector">
-                @foreach ($pageVersions as $pageVersion)
-                    <option <?= $pageVersion->selected ?> value="<?= $pageVersion->name ?>"><?= $pageVersion->name ?> (<?=$pageVersion->status?>)</option>
-                    @if ($pageVersion->selected)
-                        @php $selectedVersion = $pageVersion @endphp
-                    @endif
-                @endforeach
-            </select>
-            <button id="dvs-sidebar-add-version" class="dvs-button dvs-button-secondary dvs-button-small dvs-button-solid">Add</button>
-            <button id="dvs-sidebar-edit-version" onclick="location.href = '<?= route('dvs-pages-edit', $data->page_version_id) ?>'" class="dvs-button dvs-button-gray dvs-button-small dvs-button-solid">Edit</a>
-        </div>
+
+        @include('devise::admin.sidebar._sidebar-page-version-selector')
 
         <div id="dvs-sidebar-groups-wpr">
             @include("devise::admin.sidebar._sidebar-groups-select")
@@ -37,14 +14,7 @@
     </div>
 </div>
 
-
-<div class="js-datepickers dvs-hidden dvs-clearfix">
-    <span>Show live<span>
-    <input type="text" name="starts_at" value="<?= $selectedVersion->starts_at_human ?>" placeholder="Start Date" class="js-datepicker js-start-date" style="line-height: 20px;">
-    <span>thru</span>
-    <input type="text" name="ends_at" value="<?= $selectedVersion->ends_at_human ?>" placeholder="End Date" class="js-datepicker js-end-date" style="line-height: 20px;">
-    <button data-url="<?= URL::route('dvs-update-page-versions-dates', $selectedVersion->id) ?>" class="js-update-dates btn">Update</button>
-</div>
+@include('devise::admin.sidebar._sidebar-page-version-date-pickers')
 
 <div id="dvs-sidebar-breadcrumbs"></div>
 

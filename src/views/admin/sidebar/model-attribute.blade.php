@@ -1,29 +1,22 @@
 <div class="model-attribute-editor">
     <div id="dvs-sidebar-header" data-page-id="<?= $page_id ?>"  data-page-version-id="<?= $page_version_id ?>" >
-        <div id="dvs-sidebar-title">
-            <h1><?= $human_name ?></h1>
-            <a class="dvs-sidebar-close">Close</a>
-        </div>
+
+        @include('devise::admin.sidebar._sidebar-header', ['title' => $human_name])
 
         <div id="dvs-sidebar-contents-container">
 
-        	@include('devise::admin.sidebar.language-selector')
+        	@include('devise::admin.sidebar._sidebar-page-version-selector')
 
-        	@include('devise::admin.sidebar.page-version-selector')
-
-            <div id="dvs-sidebar-groups-wpr">
-
-            </div>
+            <hr class="thick">
         </div>
 
-        <hr class="thick">
     </div>
 
-    @include('devise::admin.sidebar.page-version-date-pickers')
+    @include('devise::admin.sidebar._sidebar-page-version-date-pickers')
 
     <div id="dvs-sidebar-breadcrumbs"></div>
 
-    @include('devise::admin.sidebar.validation-messages')
+    @include('devise::admin.sidebar._sidebar-validation-messages')
 
     @include('devise::admin.sidebar._attribute')
 

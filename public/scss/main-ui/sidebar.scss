@@ -3,7 +3,10 @@
 #dvs-mode.dvs-sidebar-mode {
 
 
-
+  h1, h2, h3, h4, h5, h6 {
+    font-size: $sidebarHeaderFontSize;
+    margin-bottom:10px
+  }
 
 
   #dvs-sidebar.loaded {
@@ -31,9 +34,14 @@
     margin-top: 0;
   }
 
+  .dvs-sidebar-elements-and-groups,
   #dvs-sidebar-elements-and-groups {
     clear: both;
     margin: $sidebarGeneralPadding;
+
+    .dvs-sidebar-elements-and-groups {
+      margin: 0;
+    }
   }
 
   #dvs-sidebar-container {
@@ -152,7 +160,7 @@
     }
 
     #dvs-sidebar-manage-groups {
-      width:152px;
+      width:125px;
     }
   }
 
@@ -225,14 +233,13 @@
       }
     }
     h4, label {
-      width: 100%;
-      margin: 10px 0;
       color: $sidebarTextColor;
       font-size: $sidebarMainFontSize;
       font-family: $sidebarMainFont;
       text-transform: uppercase;
     }
     h4 {
+      width:100%;
       margin: 18px 0 0 0;
       color: lighten(#10a5ff, 20%);
       font-size: $sidebarMainFontSize + 6;
@@ -246,7 +253,7 @@
 
 
 
-
+  .dvs-sidebar-collection-group,
   #dvs-sidebar-current-element {
     clear:both;
     padding: 0 $sidebarGeneralPadding $sidebarGeneralPadding;
@@ -263,10 +270,22 @@
     }
 
     .dvs-property {
+      @include clearfix;
+      clear:both;
       margin-top:20px;
 
       &:first-child {
         margin-top:0;
+      }
+
+      .dvs-select-wrapper {
+        width: auto;
+        margin-left:15px;
+        padding-right:30px;
+      }
+
+      span {
+        width: auto;
       }
     }
 
@@ -307,10 +326,17 @@
         position:absolute;
         visibility: hidden;
         font-family: $sidebarMainFont;
+        background-color:transparent;
+        color: $blue;
+
+        & + label.dvs-button-secondary {
+          width:185px;
+        }
 
         &:checked + label {
           font-family: $sidebarMainFont;
-          background-color:$primaryButtonBgColor;
+          background-color:$blue;
+          color: $white;
         }
       }
     }
@@ -323,6 +349,7 @@
         vertical-align: middle;
       }
 
+      .dvs-checkbox-fields,
       .dvs-option-fields {
         td {
           padding:1px 1px 0 0;
@@ -332,6 +359,22 @@
           background-color:lighten($sidebarBgColor, 5%);
         }
       }
+
+      .dvs-select-wrapper {
+        margin:-2px 3px 0;
+        width:60px;
+      }
+    }
+  }
+
+  // The collection "current element" work a little differently
+  // and are 'revealed' under the li of the element button.
+  .dvs-sidebar-collection-group {
+    padding: 0;
+    margin: 0;
+
+    >div {
+      margin: 0 -$sidebarGeneralPadding;
     }
   }
 

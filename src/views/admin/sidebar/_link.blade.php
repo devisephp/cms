@@ -34,7 +34,13 @@ $routes = array('' => 'Select a Page') + $pageRoutes;
 
         <div class="dvs-property">
             <?= Form::label('Target') ?>
-            <?= Form::select('target', ['_self' => 'Same Window (_self)', '_blank' => 'New Window (_blank)'], $element->value->target, array('class'=>'dvs-select')) ?>
+            <?= Form::select(
+                                'target',
+                                ['_self' => 'Same Window (_self)',
+                                '_blank' => 'New Window (_blank)'],
+                                $element->value->target,
+                                array('class'=>'dvs-select dvs-button-solid dvs-select-full')
+                            ) ?>
         </div>
 
         @include('devise::admin.sidebar._field_scope')

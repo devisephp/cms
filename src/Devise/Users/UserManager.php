@@ -180,6 +180,28 @@ class UserManager
 	}
 
     /**
+     * Register new user
+     *
+     * @param  array  $input
+     * @return Boolean
+    */
+    public function registerUser($input)
+    {
+        $input['group_id'] = 3; // default to editor group
+
+        if($user = $this->createUser($input))
+        {
+            $this->generateActivateCode($user);
+
+            $this->message = 'User successfully created, check your email to complete the activation process.';
+            return $user;
+        }
+
+        return false;
+    }
+
+
+    /**
      * Activate instance of DvsUser
      *
      * @param  DvsUser  $user
@@ -197,12 +219,28 @@ class UserManager
      *
      * @param  DvsUser  $user
      * @param  integer  $length
-     * @return string
+     * @return void
      */
     public function generateActivateCode($user, $length = 42)
     {
         $user->activate_code = Str::random($length);
-        return $user->save();
+        $user->save();
+    }
+
+    /**
+     * Removes users which have been awaiting activation (after
+     * registering). Currently, default is 30 days outstanding
+     *
+     * @return Boolean
+    */
+    public function removeUnactivatedUsers($daysOutstanding = 30)
+    {
+        $outstandingDate = date("Y-m-d H:i:s", strtotime('now -'.$daysOutstanding.' days'));
+        if($this->DvsUser->where('activated','=',false)->where('created_at','<=',$outstandingDate)->forceDelete()) {
+                return true;
+        }
+
+        return false;
     }
 
 }

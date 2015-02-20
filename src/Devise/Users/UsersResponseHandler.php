@@ -136,7 +136,7 @@ class UsersResponseHandler
 	}
 
     /**
-     * Executes register method in SessionsRepository which
+     * Executes registerUser method in UserManager which
      * attempt to register a new user via pulbic register form.
      *
      * @param  array  $input
@@ -144,13 +144,36 @@ class UsersResponseHandler
      */
     public function requestRegister($input)
     {
-       if ($this->SessionsRepository->resetPassword($input))
+        if ($user = $this->UserManager->registerUser($input))
         {
+            $this->SessionsRepository->sendActivationEmail($user);
+
             return $this->Redirect->route('user-register')
-                ->with('message',  $this->SessionsRepository->message);
+                ->with('message', $this->SessionsRepository->message);
         }
 
-        return $this->Redirect->to('user-register')
+        return $this->Redirect->route('user-register')
+            ->withInput()
+            ->withErrors($this->UserManager->errors)
+            ->with('message-errors', $this->UserManager->message);
+    }
+
+    /**
+     * Executes activate method in SessionsRe.
+     *
+     * @param  integer  $userId
+     * @param  string  $activateCode  Hashed activate_code value in db
+     * @return Response
+     */
+    public function requestActivation($userId, $activateCode)
+    {
+        if ($this->SessionsRepository->activate($userId, $activateCode))
+        {
+            return $this->Redirect->route('user-login')
+                ->with('message', $this->SessionsRepository->message);
+        }
+
+        return $this->Redirect->route('user-login')
             ->withInput()
             ->withErrors($this->SessionsRepository->errors)
             ->with('message-errors', $this->SessionsRepository->message);

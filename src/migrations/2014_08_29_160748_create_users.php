@@ -23,7 +23,7 @@ class CreateUsers extends Migration {
                 $table->string('password', 255);
                 $table->string('remember_token', 255)->nullable();
                 $table->boolean('activated')->default(false);
-                $table->boolean('activate_code')->nullable();
+                $table->string('activate_code',255)->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             });
@@ -53,7 +53,7 @@ class CreateUsers extends Migration {
                 }
 
                 if(!Schema::hasColumn('users', 'activate_code')) {
-                    $table->boolean('activate_code')->after('activated')->nullable();
+                    $table->string('activate_code',255)->after('activated')->nullable();
                 }
 
                 if(!Schema::hasColumn('users', 'created_at')) {

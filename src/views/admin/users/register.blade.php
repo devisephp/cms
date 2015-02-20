@@ -16,11 +16,12 @@
 
         <div class="row">
             <div class="col-md-4 col-md-offset-4 tac">
-                <?= Form::open(array('method' => 'POST', 'route' => 'user-attempt-login')) ?>
+                <form method="POST" action="<?= URL::route('user-attempt-register') ?>">
+                    <input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
-                    @if(URL::previous() && Request::url() != URL::previous())
-                        <input type="hidden" name="intended" value="<?= URL::previous() ?>">
-                    @endif
+                    <div class="form-group">
+                        <input name="name" type="text" class="form-control" placeholder="Name" value="<?= old('name') ?>">
+                    </div>
 
                     <div class="form-group">
                         <input name="email" type="text" class="form-control" placeholder="Email" value="<?= old('email') ?>" />
@@ -31,11 +32,13 @@
                     </div>
 
                     <div class="form-group">
-                        <button class="dvs-button dvs-button-primary dvs-button-block">Register New User</button>
+                        <input name="password_confirmation" type="password" class="form-control" placeholder="Confirm Password" />
                     </div>
 
-
-                <?= Form::close() ?>
+                    <div class="form-group">
+                        <button class="dvs-button dvs-button-primary">Register New User</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

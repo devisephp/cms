@@ -962,6 +962,23 @@ class DevisePagesSeeder extends DeviseSeeder
             array(
                 'language_id'             => '45',
                 'translated_from_page_id' => '0',
+                'view'                    => '',
+                'title'                   => 'User Activation',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-user-activate',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'canAccessLogin',
+                'after'                   => '',
+                'slug'                    => '/admin/activate/{userId}/{activateCode}',
+                'short_description'       => 'Route used to activate a newly registered user',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Users\UsersResponseHandler.requestActivation',
+                'response_params'         => 'params.userId,params.activateCode'
+            ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
                 'title'                   => 'Partial Element',
                 'http_verb'               => 'post',
                 'route_name'              => 'dvs-element-partial',

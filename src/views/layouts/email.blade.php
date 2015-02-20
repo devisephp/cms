@@ -10,8 +10,6 @@
 
 	<tr>
 		<td style="background-color:#ffffff;margin:5px 15px;">
-			<p style="font-size:10px;color:#777;">If you need technical assistance or support, please contact us. To unsubscribe from receiving emails, click here to <a href="#REPLACE_HREF">unsubscribe</a>.</p>
-
 			<p style="font-size:10px;color:#777;padding-top:8px;">&copy; <?= date('Y', strtotime('now')) ?> Devise. All Rights Reserved.</p>
 		</td>
 	</tr>

@@ -25,7 +25,7 @@ class EloquentBuilder extends BaseBuilder
 
 		Sort::handleFiltering($this->query, $this->model);
 
-		$this->callParentPagination($perPage, $columns);
+		return $this->callParentPagination($perPage, $columns);
 	}
 
 	/**

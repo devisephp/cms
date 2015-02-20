@@ -25,6 +25,20 @@ class EloquentBuilder extends BaseBuilder
 
 		Sort::handleFiltering($this->query, $this->model);
 
+		$this->callParentPagination($perPage, $columns);
+	}
+
+	/**
+	 * Wrapper method so we can call the parent's paginate method
+	 * and also mock it in mockery too so we don't have to fiddle
+	 * faddle with Eloquent underneath
+	 *
+	 * @param  int    $perPage
+	 * @param  array  $columns
+	 * @return \Illuminate\Pagination\Paginator
+	 */
+	protected function callParentPagination($perPage, $columns)
+	{
 		return parent::paginate($perPage, $columns);
 	}
 }

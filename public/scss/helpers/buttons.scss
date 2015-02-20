@@ -19,6 +19,13 @@
     font-size:14px;
   }
 
+  &.dvs-button-block {
+    display:block;
+    width:100%;
+    padding-right:0;
+    padding-left:0;
+  }
+
   &.dvs-button-secondary {
     background-color:$secondaryButtonBgColor;
     color:$secondaryButtonTextColor;

@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button class="dvs-button dvs-button-primary">Save and Reset Password</button>
+                        <button class="dvs-button dvs-button-primary dvs-button-block">Save and Reset Password</button>
                     </div>
 
                 <?= Form::close() ?>

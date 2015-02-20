@@ -218,8 +218,7 @@ input[type="submit"]{
     cursor         : pointer;
     outline        : none;
     opacity        : 0;
-    width: 100%;
-
+    width          : 100%;
 
     /* CSS hacks for older browsers */
     _noFocusLine   : expression(this.hideFocus=true);

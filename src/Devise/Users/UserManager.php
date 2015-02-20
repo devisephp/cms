@@ -183,17 +183,18 @@ class UserManager
      * Register new user
      *
      * @param  array  $input
+     * @param  integer  $groupId
      * @return Boolean
     */
-    public function registerUser($input)
+    public function registerUser($input, $groupId = 3)
     {
-        $input['group_id'] = 3; // default to editor group
+        $input['group_id'] = $groupId;
 
         if($user = $this->createUser($input))
         {
             $this->generateActivateCode($user);
 
-            $this->message = 'User successfully created, check your email to complete the activation process.';
+            $this->message = 'User successfully registered. An email has been sent with an activation link.';
             return $user;
         }
 

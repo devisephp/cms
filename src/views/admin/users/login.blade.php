@@ -17,7 +17,8 @@
 
         <div class="row">
             <div class="col-md-4 col-md-offset-4 tac">
-                <?= Form::open(array('method' => 'POST', 'route' => 'user-attempt-login')) ?>
+                <form method="POST" action="<?= URL::route('user-attempt-login') ?>">
+                    <input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
                     @if(URL::previous() && Request::url() != URL::previous())
                         <input type="hidden" name="intended" value="<?= URL::previous() ?>">
@@ -38,7 +39,7 @@
                     <div class="form-group">
                         <a class="dvs-small dvs-no-decoration dvs-fg dvs-mid-gray" href="<?= URL::route('user-recover-password') ?>">Forgot Your Password?</a>
                     </div>
-                <?= Form::close() ?>
+                </form>
             </div>
         </div>
     </div>

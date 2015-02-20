@@ -149,7 +149,7 @@ class UsersResponseHandler
             $this->SessionsRepository->sendActivationEmail($user);
 
             return $this->Redirect->route('user-register')
-                ->with('message', $this->SessionsRepository->message);
+                ->with('message-success', $this->SessionsRepository->message);
         }
 
         return $this->Redirect->route('user-register')
@@ -169,7 +169,7 @@ class UsersResponseHandler
     {
         if ($this->SessionsRepository->activate($userId, $activateCode))
         {
-            return $this->Redirect->route('user-login')
+            return $this->Redirect->route('dvs-dashboard')
                 ->with('message', $this->SessionsRepository->message);
         }
 
@@ -190,7 +190,7 @@ class UsersResponseHandler
         if ($this->SessionsRepository->recoverPassword($input))
         {
             return $this->Redirect->route('user-recover-password')
-                ->with('message',  $this->SessionsRepository->message);
+                ->with('message-success',  $this->SessionsRepository->message);
         }
 
         return $this->Redirect->route('user-recover-password')
@@ -210,7 +210,7 @@ class UsersResponseHandler
         if ($this->SessionsRepository->resetPassword($input))
         {
             return $this->Redirect->route('user-reset-password')
-                ->with('message',  $this->SessionsRepository->message);
+                ->with('message-success',  $this->SessionsRepository->message);
         }
 
         $urlWithToken = $this->URL->route('user-reset-password') . '?token=' . $input['token'];

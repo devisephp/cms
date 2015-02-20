@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div class="dvs-admin-card tall dvs-users" data-dvs-url="<?= URL::route('dvs-users') ?>">
+        <div class="dvs-admin-card dvs-users" data-dvs-url="<?= URL::route('dvs-users') ?>">
             <div class="dvs-card-top" style="background-image: url('<?= URL::asset('packages/devisephp/cms/img/default-images/sections/users.gif') ?>')"></div>
             <div class="dvs-card-bottom">
                 <div class="dvs-icon ion-ios-person"></div>
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <div class="dvs-admin-card tall dvs-groups" data-dvs-url="<?= URL::route('dvs-groups') ?>">
+        <div class="dvs-admin-card dvs-groups" data-dvs-url="<?= URL::route('dvs-groups') ?>">
             <div class="dvs-card-top" style="background-image: url('<?= URL::asset('packages/devisephp/cms/img/default-images/sections/groups.gif') ?>')"></div>
             <div class="dvs-card-bottom">
                 <div class="dvs-icon ion-ios-people"></div>

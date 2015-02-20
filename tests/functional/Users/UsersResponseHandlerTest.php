@@ -21,7 +21,7 @@ class UsersResponseHandlerTest extends \DeviseTestCase
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('with')->once()->andReturnSelf();
 
-        $this->UsersResponseHandler->executeLogout();
+        $this->UsersResponseHandler->requestLogout();
     }
 
     public function test_it_cannot_execute_login()
@@ -31,21 +31,21 @@ class UsersResponseHandlerTest extends \DeviseTestCase
         $this->Framework->Redirect->shouldReceive('withInput')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('withErrors')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('with')->once()->andReturnSelf();
-        $this->UsersResponseHandler->executeLogin(['foo' => 'input data']);
+        $this->UsersResponseHandler->requestLogin(['foo' => 'input data']);
     }
 
     public function test_it_can_execute_login()
     {
         $this->SessionsRepository->shouldReceive('login')->once()->andReturn(true);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
-        $this->UsersResponseHandler->executeLogin(['foo' => 'input data']);
+        $this->UsersResponseHandler->requestLogin(['foo' => 'input data']);
     }
 
     public function test_it_can_execute_login_with_an_intended_redirect()
     {
         $this->SessionsRepository->shouldReceive('login')->once()->andReturn(true);
         $this->Framework->Redirect->shouldReceive('to')->with('some/path')->once()->andReturnSelf();
-        $this->UsersResponseHandler->executeLogin(['intended' => 'some/path', 'foo' => 'input data']);
+        $this->UsersResponseHandler->requestLogin(['intended' => 'some/path', 'foo' => 'input data']);
     }
 
     public function test_it_cannot_request_create_user()

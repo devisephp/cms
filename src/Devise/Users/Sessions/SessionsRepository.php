@@ -71,8 +71,8 @@ class SessionsRepository
         $this->Auth = $Framework->Auth;
         $this->Hash = $Framework->Hash;
         $this->Lang = $Framework->Lang;
-        $this->Password = $Framework->Password;
         $this->Validator = $Framework->Validator;
+        $this->Framework = $Framework;
     }
 
     /**
@@ -90,7 +90,7 @@ class SessionsRepository
                 return $user;
             } else {
                 $this->message = 'There were validation errors.';
-                $this->errors = 'Incorrect email and/or password. Please try again.';
+                $this->errors = 'Incorrect email and/or password.';
                 return false;
             }
         } catch (UserNotFoundException $e) {
@@ -179,17 +179,16 @@ class SessionsRepository
     {
         $input = array_except($input, '_token');
 
-        switch($response = $this->Password->sendResetLink($input)) {
+        switch($response = $this->Framework->Password->sendResetLink($input)) {
             case \Password::INVALID_USER:
                 $this->message = 'There were validation errors.';
                 $this->errors = $this->Lang->get($response);
                 return false;
 
             case \Password::REMINDER_SENT:
-                $this->message = 'Email has been sent.';
-                return true;
+                $this->message = 'Recovery email has been sent.';
+                break;
         }
-
     }
 
     /**
@@ -203,7 +202,7 @@ class SessionsRepository
         $input = array_except($input, '_token');
 
         $resetUser = null;
-        $response = $this->Password->reset($input, function($user, $password) use (&$resetUser) {
+        $response = $this->Framework->Password->reset($input, function($user, $password) use (&$resetUser) {
             $user->password = $this->Hash->make($password);
             $user->save();
             $resetUser = $user;
@@ -219,9 +218,7 @@ class SessionsRepository
                 break;
 
             case \Password::PASSWORD_RESET:
-                // login user after successful password change
                 $this->Auth->login($resetUser);
-
                 $this->message = 'Password successfully changed.';
                 return true;
                 break;
@@ -242,7 +239,7 @@ class SessionsRepository
         if($activateCode === $user->getActivateCode()) {
             $this->UserManager->activate($user); // Set activate & activate_code values
 
-            $this->Auth->login($user); // auto-log newly activated user into system
+            $this->Auth->login($user); // auto-login newly activated user
 
             $this->message = 'Account successfully activated.';
             return true;

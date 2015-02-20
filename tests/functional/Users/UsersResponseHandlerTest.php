@@ -98,4 +98,24 @@ class UsersResponseHandlerTest extends \DeviseTestCase
         $this->UsersResponseHandler->requestDestroyUser(1);
     }
 
+    public function test_it_can_execute_recover_password()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_it_cannot_execute_recover_password()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_it_can_execute_reset_password()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_it_cannot_execute_reset_password()
+    {
+        $this->markTestIncomplete();
+    }
+
 }

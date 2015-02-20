@@ -14,19 +14,17 @@
         </div>
         @endif
 
-        <h4 class="dvs-tac mb sp15">Password Recovery</h4>
-
         <div class="row">
             <div class="col-md-4 col-md-offset-4 dvs-tac">
                 <form method="POST" action="<?= URL::route('user-attempt-recover') ?>">
                     <input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
                     <div class="form-group">
-                        <input name="email" type="text" class="form-control" placeholder="Email" value="<?= old('email') ?>" />
+                        <input name="email" type="text" class="form-control" placeholder="Recover by Email" value="<?= old('email') ?>" />
                     </div>
 
                     <div class="form-group">
-                        <button class="dvs-button dvs-button-primary dvs-button-block">Send Recovery Email</button>
+                        <button class="dvs-button dvs-button-primary">Send Recovery Email</button>
                     </div>
                 </form>
             </div>

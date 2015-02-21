@@ -1380,6 +1380,20 @@ class DevisePagesSeeder extends DeviseSeeder
                 'response_path'           => 'Devise\Support\Config\SettingsResponseHandler.executeUpdate',
                 'response_params'         => 'input'
             ),
+            array(
+                'language_id'             => '45',
+                'title'                   => 'Shows the installed page, after devise has been fully installed',
+                'http_verb'               => 'get',
+                'view'                    => 'devise::admin.settings.finished-install',
+                'route_name'              => 'dvs-admin-installed',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'canAccessAdmin',
+                'after'                   => '',
+                'slug'                    => 'admin/installed',
+                'short_description'       => 'Updates the devise configuration settings after the installer is finished',
+                'response_type'           => 'View',
+            ),
 		);
 
         $now = date('Y-m-d H:i:s', strtotime('now'));

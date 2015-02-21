@@ -574,16 +574,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.0.4",
+            "version": "v5.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b5eafda7dba3d1367a63095b83a068a73d32d97f"
+                "reference": "43637b796f1ac0b1a960984231251ff04b438006"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b5eafda7dba3d1367a63095b83a068a73d32d97f",
-                "reference": "b5eafda7dba3d1367a63095b83a068a73d32d97f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/43637b796f1ac0b1a960984231251ff04b438006",
+                "reference": "43637b796f1ac0b1a960984231251ff04b438006",
                 "shasum": ""
             },
             "require": {
@@ -695,7 +695,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-02-11 20:37:48"
+            "time": "2015-02-20 16:22:21"
         },
         {
             "name": "league/flysystem",
@@ -1088,16 +1088,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.3.4",
+            "version": "v0.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "218ea9e49c9fe21e28fce6cf77f22615af92daef"
+                "reference": "2ce0e8f3020fd292c2ad2a496c5d83939823f642"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/218ea9e49c9fe21e28fce6cf77f22615af92daef",
-                "reference": "218ea9e49c9fe21e28fce6cf77f22615af92daef",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/2ce0e8f3020fd292c2ad2a496c5d83939823f642",
+                "reference": "2ce0e8f3020fd292c2ad2a496c5d83939823f642",
                 "shasum": ""
             },
             "require": {
@@ -1147,14 +1147,14 @@
                 }
             ],
             "description": "An interactive shell for modern PHP.",
-            "homepage": "https://github.com/bobthecow/psysh",
+            "homepage": "http://psysh.org",
             "keywords": [
                 "REPL",
                 "console",
                 "interactive",
                 "shell"
             ],
-            "time": "2015-02-12 05:21:32"
+            "time": "2015-02-12 19:35:52"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2094,12 +2094,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "f770ab0cf167cccf1a701f28411fbfc9971ff90e"
+                "reference": "a04eeaf8827350566b02235a68353c3404818cdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/f770ab0cf167cccf1a701f28411fbfc9971ff90e",
-                "reference": "f770ab0cf167cccf1a701f28411fbfc9971ff90e",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/a04eeaf8827350566b02235a68353c3404818cdf",
+                "reference": "a04eeaf8827350566b02235a68353c3404818cdf",
                 "shasum": ""
             },
             "require": {
@@ -2108,8 +2108,7 @@
             },
             "require-dev": {
                 "hamcrest/hamcrest-php": "~1.1",
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "~0.7@dev"
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -2152,7 +2151,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2015-02-11 12:43:02"
+            "time": "2015-02-19 20:06:56"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -3058,7 +3057,6 @@
         "mockery/mockery": 20
     },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0",
         "ext-imagick": "*"

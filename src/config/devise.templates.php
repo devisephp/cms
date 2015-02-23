@@ -24,17 +24,23 @@
 						false,
 					),
 				),
-                'viewList' => 'Devise\Templates\TemplatesRepository.registeredTemplatesList',
-                'versionsList' => array(
-                    'Devise\Pages\PageVersionsRepository.getVersionsListForPage' => array(
-                        '{page}'
-                    )
-                ),
-                'liveVersion' => array(
-                    'Devise\Pages\PagesRepository.getLivePageVersion' => array(
-                        '{page}'
-                    )
-                ),
+				'viewList' => 'Devise\Templates\TemplatesRepository.registeredTemplatesList',
+				'versionsList' => array(
+					'Devise\Pages\PageVersionsRepository.getVersionsListForPage' => array(
+						'{page}',
+					),
+				),
+				'liveVersion' => array(
+					'Devise\Pages\PagesRepository.getLivePageVersion' => array(
+						'{page}',
+					),
+				),
+				'availableLanguages' => array(
+	                'Devise\Pages\PagesRepository.getUnUsedLanguageList' => array(
+	                    '{params.pageId}',
+	                    '{languages}'
+	                )
+	            ),
 			),
 		),
 		'devise::admin.dashboard.index' => array(

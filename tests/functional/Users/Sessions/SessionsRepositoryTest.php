@@ -22,7 +22,7 @@ class SessionsRepositoryTest extends \DeviseTestCase
         $this->SessionsRepository = new SessionsRepository($this->DvsUser, $this->UserManager, $this->UsersRepository, $this->Framework);
     }
 
-    public function test_it_can_login()
+    public function test_it_can_login_using_username()
     {
         $this->Framework->Auth
             ->shouldReceive('attempt')
@@ -30,12 +30,12 @@ class SessionsRepositoryTest extends \DeviseTestCase
             ->andReturn(true);
 
         $this->UsersRepository
-            ->shouldReceive('findByEmail')
+            ->shouldReceive('findByUsername')
             ->once()
             ->andReturn($this->DvsUser);
 
         $input = [
-            'email' => 'foo@email.com',
+            'uname_or_email' => 'deviseadmin',
             'password' => 'secret',
         ];
 
@@ -44,15 +44,39 @@ class SessionsRepositoryTest extends \DeviseTestCase
         assertInstanceOf('DvsUser', $output);
     }
 
-    public function test_it_cannot_login()
+    public function test_it_can_login_using_email()
     {
         $this->Framework->Auth
             ->shouldReceive('attempt')
             ->once()
+            ->andReturn(true);
+
+        $this->UsersRepository
+            ->shouldReceive('findByUsername')
+            ->andReturnSelf()
+            ->shouldReceive('findByEmail')
+            ->andReturn($this->DvsUser);
+
+        $input = [
+            'uname_or_email' => 'noreply@devisephp.com',
+            'password' => 'secret',
+        ];
+
+        $output = $this->SessionsRepository->login($input);
+
+        // check value of SessionsRepository message attribute
+        assertEquals('You have been logged in.', $this->SessionsRepository->message);
+    }
+
+    public function test_it_cannot_login()
+    {
+        $this->Framework->Auth
+            ->shouldReceive('attempt')
+            ->times(2)
             ->andReturn(false);
 
         $input = [
-            'email' => 'foo@email.com',
+            'uname_or_email' => 'foo@email.com',
             'password' => 'secret',
         ];
 
@@ -68,7 +92,20 @@ class SessionsRepositoryTest extends \DeviseTestCase
 
     public function test_it_can_recover_password()
     {
-        $this->markTestIncomplete();
+        $input = [
+            '_token' => 'someFooTokenJASdad',
+            'email' => 'foo@email.com'
+        ];
+
+        $this->Framework->Password
+            ->shouldReceive('sendResetLink')
+            ->andReturn('passwords.sent');
+
+        // check null is returned
+        assertNull( $this->SessionsRepository->recoverPassword($input) );
+
+        // check SessionsRepo messages attribute equals string
+        assertEquals( 'Recovery email has been sent.', $this->SessionsRepository->message );
     }
 
     public function test_it_cannot_recover_password()

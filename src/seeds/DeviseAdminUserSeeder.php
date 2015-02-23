@@ -34,7 +34,8 @@ class DeviseAdminUserSeeder extends DeviseSeeder
 	{
 		$adminUser = $this->findOrCreateRow('users', 'email', [
 			'name'           => 'Devise Administrator',
-			'email'          => 'noreply@devisephp.com',
+            'email'          => 'noreply@devisephp.com',
+			'username'       => 'deviseadmin',
 			'password'       => \Hash::make('secret'),
 			'activated'      => true,
 			'activate_code'  => null,

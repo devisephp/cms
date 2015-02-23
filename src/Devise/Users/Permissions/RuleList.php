@@ -148,18 +148,14 @@ class RuleList
     }
 
     /**
-     * Determine if a name or email is used for application login.
-     * Then checks if username/email equals specified value
+     * Check if name field equals specified name value
      *
-     * @param  string  $username  Handles username or email search
+     * @param  string  $name
      * @return boolean
      */
-    public function hasUserName($username)
+    public function hasName($name)
     {
-        if($this->hasFieldValue('name', $username)) {
-            return true;
-        }
-        return $this->hasFieldValue('email', $username);
+        return $this->hasFieldValue('name', $name);
     }
 
     /**
@@ -171,6 +167,17 @@ class RuleList
     public function hasEmail($email)
     {
         return $this->hasFieldValue('email', $email);
+    }
+
+    /**
+     * Check if username equals specified username value
+     *
+     * @param  string  $username
+     * @return boolean
+     */
+    public function hasUserName($username)
+    {
+        return $this->hasFieldValue('username', $username);
     }
 
     /**

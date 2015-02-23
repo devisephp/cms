@@ -20,6 +20,7 @@ class CreateUsers extends Migration {
                 $table->increments('id');
                 $table->string('name', 255)->nullable();
                 $table->string('email', 255)->unique();
+                $table->string('username', 255)->unique()->nullable();
                 $table->string('password', 255);
                 $table->string('remember_token', 255)->nullable();
                 $table->boolean('activated')->default(false);
@@ -34,10 +35,16 @@ class CreateUsers extends Migration {
             Schema::table('users', function($table) {
                 if(!Schema::hasColumn('users', 'name')) {
                     $table->string('name', 255)->after('id')->nullable();
+                } else {
+                    $table->string('name', 255)->nullable()->change();
                 }
 
                 if(!Schema::hasColumn('users', 'email')) {
                     $table->string('email', 255)->after('name')->unique();
+                }
+
+                if(!Schema::hasColumn('users', 'username')) {
+                    $table->string('username', 255)->after('email')->unique()->nullable();
                 }
 
                 if(!Schema::hasColumn('users', 'password')) {

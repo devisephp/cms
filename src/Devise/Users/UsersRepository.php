@@ -93,14 +93,51 @@ class UsersRepository
     }
 
     /**
-     * Find user by email address
+     * Find user by email field
      *
      * @param  string  $email
      * @return DvsUser
     */
     public function findByEmail($email)
     {
-        return $this->DvsUser->with('groups')->whereEmail($email)->first();
+        return $this->findByFieldAndValue('email', $email);
     }
 
+    /**
+     * Find user by name field
+     *
+     * @param  string  $name
+     * @return DvsUser
+    */
+    public function findByName($name)
+    {
+        return $this->findByFieldAndValue('name', $name);
+    }
+
+    /**
+     * Find user by name field
+     *
+     * @param  string  $username
+     * @return DvsUser
+    */
+    public function findByUsername($username)
+    {
+        return $this->findByFieldAndValue('username', $username);
+    }
+
+    /**
+     * Finds an instance of DvsUser using the
+     * specified fieldname and value
+     *
+     * @param  string  $fieldname
+     * @param  string  $value
+     * @return DvsUser
+    */
+    protected function findByFieldAndValue($fieldname, $value)
+    {
+        return $this->DvsUser
+            ->with('groups')
+            ->where($fieldname,'=',$value)
+            ->first();
+    }
 }

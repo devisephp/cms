@@ -57,7 +57,6 @@ class InstallWizard
 		$this->EnvironmentFileManager = $EnvironmentFileManager;
 		$this->Validator = $Framework->Validator;
 		$this->Hash = $Framework->Hash;
-		$this->basePath = $Framework->Container->basePath();
 		$this->DatabaseCreator = $DatabaseCreator;
 		$this->DeviseInstallCommand = $DeviseInstallCommand;
 		$this->DvsUser = $DvsUser;
@@ -152,7 +151,7 @@ class InstallWizard
 		];
 
 		// we will write out to the database config file one time only
-		$this->changeDatabaseConfigFile();
+		$this->DeviseInstallCommand->changeDatabaseConfigFile();
 
 		// check to see if this is valid database settings or not
 		if ($this->isValidDatabaseSettings($settings))
@@ -182,7 +181,7 @@ class InstallWizard
 
 		if (!array_key_exists('APP_KEY', $env))
 		{
-			$this->EnvironmentFileManager->merge('APP_KEY', \Str::random(42));
+			$this->EnvironmentFileManager->merge(['APP_KEY' => \Str::random(42)]);
 		}
 
 		$this->DeviseInstallCommand->handle();
@@ -280,26 +279,5 @@ class InstallWizard
 		catch (\PDOException $e) { return false; }
 
 		return $this->isValidDatabaseSettings($settings);
-	}
-
-	/**
-	 * Changes the default out of the box Laravel database
-	 * config to include other env() settings that we will
-	 * use in Devise such as 'default' and we also update
-	 * the sqlite driver stuff
-	 *
-	 * @return void
-	 */
-	protected function changeDatabaseConfigFile()
-	{
-		$databaseConfigFile = $this->basePath . '/config/database.php';
-
-		$contents = file_get_contents($databaseConfigFile);
-
-		$driver = \Config::get('database.default');
-
-		$modified = str_replace("'default' => '{$driver}',", "'default' => env('DB_DEFAULT', 'mysql'),", $contents);
-
-		if ($contents !== $modified) file_put_contents($databaseConfigFile, $modified);
 	}
 }

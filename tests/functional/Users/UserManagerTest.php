@@ -67,14 +67,21 @@ class UserManagerTest extends \DeviseTestCase
         $this->markTestIncomplete();
     }
 
+    public function test_it_cannot_register_user()
+    {
+        assertFalse( $this->UserManager->registerUser(['foo' => 'input']) );
+    }
+
     public function test_it_can_activate_user()
     {
-        $this->markTestIncomplete();
+        $user = $this->retrieveValidUserInstance();
+        assertTrue( $this->UserManager->activate($user) );
     }
 
     public function test_it_can_generate_activate_code()
     {
-        $this->markTestIncomplete();
+        $user = $this->retrieveValidUserInstance();
+        assertNull( $this->UserManager->generateActivateCode($user) );
     }
 
     public function test_it_can_remove_unactivated_users()
@@ -82,4 +89,23 @@ class UserManagerTest extends \DeviseTestCase
         $this->markTestIncomplete();
     }
 
+    public function test_it_cannot_remove_unactivated_users()
+    {
+        assertFalse( $this->UserManager->removeUnactivatedUsers() );
+    }
+
+    /**
+     * Returns a valid instance of DvsUser.
+     *
+     * @return DvsUser
+     */
+    private function retrieveValidUserInstance()
+    {
+        $UsersRepository = new \Devise\Users\UsersRepository(
+            new \DvsUser,
+            $this->Framework
+        );
+
+        return $UsersRepository->findById(1);
+    }
 }

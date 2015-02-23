@@ -35,7 +35,7 @@ class SessionsRepositoryTest extends \DeviseTestCase
             ->andReturn($this->DvsUser);
 
         $input = [
-            'username' => 'deviseadmin',
+            'uname_or_email' => 'deviseadmin',
             'password' => 'secret',
         ];
 
@@ -52,29 +52,31 @@ class SessionsRepositoryTest extends \DeviseTestCase
             ->andReturn(true);
 
         $this->UsersRepository
+            ->shouldReceive('findByUsername')
+            ->andReturnSelf()
             ->shouldReceive('findByEmail')
-            ->once()
             ->andReturn($this->DvsUser);
 
         $input = [
-            'email' => 'foo@email.com',
+            'uname_or_email' => 'noreply@devisephp.com',
             'password' => 'secret',
         ];
 
         $output = $this->SessionsRepository->login($input);
 
-        assertInstanceOf('DvsUser', $output);
+        // check value of SessionsRepository message attribute
+        assertEquals('You have been logged in.', $this->SessionsRepository->message);
     }
 
     public function test_it_cannot_login()
     {
         $this->Framework->Auth
             ->shouldReceive('attempt')
-            ->once()
+            ->times(2)
             ->andReturn(false);
 
         $input = [
-            'email' => 'foo@email.com',
+            'uname_or_email' => 'foo@email.com',
             'password' => 'secret',
         ];
 

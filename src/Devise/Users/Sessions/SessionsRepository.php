@@ -84,26 +84,14 @@ class SessionsRepository
     public function login($input)
     {
         try {
-            // find field to use for login attempt ("username" or "email")
-            $fieldname = $this->getLoginFieldName($input);
-
-            if($this->Auth->attempt(array($fieldname => $input[$fieldname], 'password' => $input['password']), $this->getRememberMe($input)))
-            {
-                if($fieldname == 'username') {
-                    $user = $this->UsersRepository->findByUsername($input['username']);
-                } else {
-                    $user = $this->UsersRepository->findByEmail($input['email']);
-                }
-
+            if($user = $this->attemptUserLogin($input)) {
                 $this->message = 'You have been logged in.';
                 return $user;
             }
-            else
-            {
-                $this->message = 'There were validation errors.';
-                $this->errors = 'Incorrect user credentials.';
-                return false;
-            }
+
+            $this->message = 'There were validation errors.';
+            $this->errors = 'Incorrect user credentials.';
+            return false;
         }
         catch (UserNotFoundException $e)
         {
@@ -260,20 +248,50 @@ class SessionsRepository
     }
 
     /**
-     * Returns proper fieldname to use for login attempt.
+     * Iterates through an array of username/email fields in the
+     * users table and attempts to authenticate an instance of DvsUser
      *
      * @param  array  $input
-     * @return string
+     * @return DvsUser | false
      */
-    protected function getLoginFieldName($input)
+    protected function attemptUserLogin($input)
     {
-        // check if "username" key exists and value is not empty
-        $username = array_get($input, 'username');
-        if($username && $username != '') {
-            return 'username';
+        // fieldnames in order or precedence
+        $fieldnames = ['username', 'email'];
+
+        foreach($fieldnames as $fieldname)
+        {
+            if($this->Auth->attempt(array(
+                $fieldname => $input['uname_or_email'],
+                'password' => $input['password']),
+                $this->getRememberMe($input)
+            )) {
+
+                return $this->retrieveUserFindMethodByField($fieldname, $input['uname_or_email']);
+
+            }
         }
 
-        return 'email';
+        return false;
+    }
+
+    /**
+     * Gets the proper UsersRepository find method for a user
+     * based on the fieldname being passed in.
+     *
+     * @param  string  $fieldname
+     * @param  string  $value
+     * @return DvsUser
+     */
+    protected function retrieveUserFindMethodByField($fieldname, $value)
+    {
+        switch($fieldname)  {
+            case "username":
+                return $this->UsersRepository->findByUsername($value);
+
+            case "email":
+                return $this->UsersRepository->findByEmail($value);
+        }
     }
 
 }

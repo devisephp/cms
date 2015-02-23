@@ -25,7 +25,7 @@
                     @endif
 
                     <div class="form-group">
-                        <input name="email" type="text" class="form-control" placeholder="Email" value="<?= old('email') ?>" />
+                        <input name="uname_or_email" type="text" class="form-control" placeholder="Username or Email" value="<?= old('uname_or_email') ?>" />
                     </div>
 
                     <div class="form-group">

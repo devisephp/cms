@@ -75,15 +75,19 @@ if(!App::runningInConsole())
     }
     catch (PDOException $e)
     {
-        App::make('Devise\Support\Installer\InstallWizard')->refreshEnvironment();
-
-        if (env('DEVISE_INSTALL') != 'ignore')
+        if ($e->getCode() == "1049" || $e->getCode() == "42S02")
         {
-            Route::get('/', function() { return Redirect::to("/install/welcome"); });
-            Route::controller('install', 'Devise\Support\Installer\InstallerController');
-            return;
+            App::make('Devise\Support\Installer\InstallWizard')->refreshEnvironment();
+
+            if (env('DEVISE_INSTALL') != 'ignore')
+            {
+                Route::get('/', function() { return Redirect::to("/install/welcome"); });
+                Route::controller('install', 'Devise\Support\Installer\InstallerController');
+                return;
+            }
         }
 
+        dd($e);
         throw $e;
     }
 }

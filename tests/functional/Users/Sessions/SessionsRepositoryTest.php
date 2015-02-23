@@ -68,7 +68,20 @@ class SessionsRepositoryTest extends \DeviseTestCase
 
     public function test_it_can_recover_password()
     {
-        $this->markTestIncomplete();
+        $input = [
+            '_token' => 'someFooTokenJASdad',
+            'email' => 'foo@email.com'
+        ];
+
+        $this->Framework->Password
+            ->shouldReceive('sendResetLink')
+            ->andReturn('passwords.sent');
+
+        // check null is returned
+        assertNull( $this->SessionsRepository->recoverPassword($input) );
+
+        // check SessionsRepo messages attribute equals string
+        assertEquals( 'Recovery email has been sent.', $this->SessionsRepository->message );
     }
 
     public function test_it_cannot_recover_password()

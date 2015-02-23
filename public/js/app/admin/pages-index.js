@@ -14,7 +14,7 @@ devise.define(['require', 'jquery', 'dvsQueryHelper'], function (require, $, que
     obj.init = function()
     {
         $('input[name="show_admin"]').change(handleShowAdminCheckbox);
-    }
+    };
 
     obj.init();
 

@@ -42,6 +42,7 @@ require.config({
         dvsInitialize:      'app/helpers/initialize-editor',
         dvsListeners:       'app/helpers/listeners',
         dvsNetwork:         'app/helpers/network',
+        dvsCsrf:            'app/helpers/csrf',
         dvsNodeView:        'app/nodes/node-view',
         dvsFloaterSidebar:  'app/nodes/floaterNodeSidebar',
         dvsAdmin:           'app/admin/admin',

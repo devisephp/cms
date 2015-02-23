@@ -180,6 +180,37 @@
         height:470px;
       }
     }
+
+    &.dvs-page-versions-card {
+
+      .dvs-card-top {
+        height:10px;
+        background-color:$blue;
+
+        &.live-card {
+          background-color:$green;
+        }
+      }
+
+
+      .dvs-card-bottom {
+        .dvs-badge {
+          color:$white;
+        }
+
+        .dvs-select-wrapper {
+          margin-top:10px;
+          font-size:9px;
+        }
+      }
+
+      &:hover {
+        .dvs-select-wrapper {
+          border-color:$white;
+          color:$white;
+        }
+      }
+    }
   }
 }
 

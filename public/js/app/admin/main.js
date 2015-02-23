@@ -1,8 +1,8 @@
-devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
+devise.define(['jquery', 'datetimepicker', 'dvsCsrf'], function ($, datetimepicker)
 {
     // make entire "dvs-admin-card" into a link
     if($('.dvs-admin-card').length > 0) {
-        $('.dvs-admin-card').click(function() {
+        $('.dvs-admin-card:not(.dvs-page-versions-card)').click(function() {
           window.location.href = $(this).data('dvs-url');
         });
     }
@@ -58,7 +58,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
             event.preventDefault();
 
             // at least one date value has been selected
-            if($form.find('.dvs-date.start').val() != '' || $form.find('.dvs-date.end').val() != '') {
+            if($form.find('.dvs-date.start').val() !== '' || $form.find('.dvs-date.end').val() !== '') {
 
                 submitAjaxForm(pageId, $form.serialize(), $form.attr('action'));
 
@@ -76,7 +76,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
 
         var confirmVal = confirm('Are you sure you want to un-publish this page version?');
 
-        if(confirmVal == true) {
+        if(confirmVal === true) {
             // since user confirmed the "un-publishing" of the page version.
             // Go ahead and hit the url and pass null "starts_at" and "ends_at" data
             submitAjaxForm(pageId, 'starts_at=&ends_at=', url);
@@ -93,7 +93,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
 
         var sharingConfirm = confirm('Are you sure you want to "'+ enableDisableText +'"?');
 
-        if(sharingConfirm == true) {
+        if(sharingConfirm === true) {
             submitAjaxForm(pageId, null, url);
             return true;
         }
@@ -107,7 +107,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
 
         var deleteConfirm = confirm('Are you sure?');
 
-        if(deleteConfirm == true) {
+        if(deleteConfirm === true) {
             submitAjaxForm(pageId, null, url, 'DELETE');
             return true;
         }
@@ -124,8 +124,12 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
         if (pageName) {
             var _data = { page_version_id: pageVersionId, name: pageName };
             submitAjaxForm(pageId, _data, url, 'POST');
+
+            return true;
         }
-    }
+
+        return false;
+    };
 
     /**
      * Shows/Hides "dvs-page-details" and other elements based on
@@ -192,7 +196,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
      * @return {integer}
      */
     function getSelectedVersionId($this) {
-        return $this.parent().data('dvs-version-id');
+        return $this.parent().parent().data('dvs-version-id');
     }
 
     /**
@@ -200,7 +204,7 @@ devise.define(['jquery', 'datetimepicker'], function ($, datetimepicker)
      * @return {integer}
      */
     function getSelectedPageId($this) {
-        return $this.parent().data('dvs-page-id');
+        return $this.parent().parent().data('dvs-page-id');
     }
 
     /**

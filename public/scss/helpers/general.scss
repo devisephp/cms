@@ -45,11 +45,12 @@
   font-size:10px;
   text-transform: uppercase;
 
-  &.white     { background-color:$white }
-  &.black     { background-color:$black }
-  &.gray      { background-color:$gray }
-  &.red       { background-color:$red }
-  &.purple    { background-color:$purple }
+  &.white     { background-color:$white; color:$bodyBgColor }
+  &.black     { background-color:$black; color:$french-gray; }
+  &.gray      { background-color:$french-gray; color:$bodyBgColor; }
+  &.red       { background-color:$red; color:$white; }
+  &.purple    { background-color:$purple; color:$white; }
+  &.green     { background-color:$green; color:$white; }
 
   .dvs-button {
     &.dvs-button-small {

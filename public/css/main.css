@@ -3028,15 +3028,23 @@
   font-size: 10px;
   text-transform: uppercase; }
   .dvs-badge.white {
-    background-color: white; }
+    background-color: white;
+    color: #2d3039; }
   .dvs-badge.black {
-    background-color: #262626; }
+    background-color: #262626;
+    color: #bcbec2; }
   .dvs-badge.gray {
-    background-color: #5d5d5d; }
+    background-color: #bcbec2;
+    color: #2d3039; }
   .dvs-badge.red {
-    background-color: #fd5f46; }
+    background-color: #fd5f46;
+    color: white; }
   .dvs-badge.purple {
-    background-color: #673f90; }
+    background-color: #673f90;
+    color: white; }
+  .dvs-badge.green {
+    background-color: #7dbd5d;
+    color: white; }
   .dvs-badge .dvs-button.dvs-button-small {
     padding: 1px 3px 1px 2px;
     font-weight: bold;
@@ -4187,6 +4195,19 @@ td .dvs-select-small {
     width: 63%; }
   #dvs-admin .dvs-admin-card.tall .dvs-card-top {
     height: 470px; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-top {
+    height: 10px;
+    background-color: #5dbabd; }
+    #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-top.live-card {
+      background-color: #7dbd5d; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-badge {
+    color: white; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-select-wrapper {
+    margin-top: 10px;
+    font-size: 9px; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card:hover .dvs-select-wrapper {
+    border-color: white;
+    color: white; }
 
 #dvs-admin-subnavigation {
   position: absolute;

@@ -16,7 +16,7 @@ class UsersResponseHandlerTest extends \DeviseTestCase
         $this->UsersResponseHandler = new UsersResponseHandler($this->SessionsRepository, $this->UserManager, $this->Framework);
     }
 
-    public function test_it_can_execute_logout()
+    public function test_it_can_request_logout()
     {
         $this->SessionsRepository->shouldReceive('logout')->andReturn(true);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
@@ -25,7 +25,7 @@ class UsersResponseHandlerTest extends \DeviseTestCase
         $this->UsersResponseHandler->requestLogout();
     }
 
-    public function test_it_cannot_execute_login()
+    public function test_it_cannot_request_login()
     {
         $this->SessionsRepository->shouldReceive('login')->once()->andReturn(false);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
@@ -35,14 +35,14 @@ class UsersResponseHandlerTest extends \DeviseTestCase
         $this->UsersResponseHandler->requestLogin(['foo' => 'input data']);
     }
 
-    public function test_it_can_execute_login()
+    public function test_it_can_request_login()
     {
         $this->SessionsRepository->shouldReceive('login')->once()->andReturn(true);
         $this->Framework->Redirect->shouldReceive('route')->once()->andReturnSelf();
         $this->UsersResponseHandler->requestLogin(['foo' => 'input data']);
     }
 
-    public function test_it_can_execute_login_with_an_intended_redirect()
+    public function test_it_can_request_login_with_an_intended_redirect()
     {
         $this->SessionsRepository->shouldReceive('login')->once()->andReturn(true);
         $this->Framework->Redirect->shouldReceive('to')->with('some/path')->once()->andReturnSelf();

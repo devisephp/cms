@@ -22,7 +22,29 @@ class SessionsRepositoryTest extends \DeviseTestCase
         $this->SessionsRepository = new SessionsRepository($this->DvsUser, $this->UserManager, $this->UsersRepository, $this->Framework);
     }
 
-    public function test_it_can_login()
+    public function test_it_can_login_using_username()
+    {
+        $this->Framework->Auth
+            ->shouldReceive('attempt')
+            ->once()
+            ->andReturn(true);
+
+        $this->UsersRepository
+            ->shouldReceive('findByUsername')
+            ->once()
+            ->andReturn($this->DvsUser);
+
+        $input = [
+            'username' => 'deviseadmin',
+            'password' => 'secret',
+        ];
+
+        $output = $this->SessionsRepository->login($input);
+dd($output);
+        assertInstanceOf('DvsUser', $output);
+    }
+
+    public function test_it_can_login_using_email()
     {
         $this->Framework->Auth
             ->shouldReceive('attempt')

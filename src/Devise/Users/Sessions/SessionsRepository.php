@@ -84,19 +84,35 @@ class SessionsRepository
     public function login($input)
     {
         try {
-            if($this->Auth->attempt(array('email' => $input['email'], 'password' => $input['password']), $this->getRememberMe($input))) {
-                $user = $this->UsersRepository->findByEmail($input['email']);
+            // find field to use for login attempt ("username" or "email")
+            $fieldname = $this->getLoginFieldName($input);
+
+            if($this->Auth->attempt(array($fieldname => $input[$fieldname], 'password' => $input['password']), $this->getRememberMe($input)))
+            {
+
+                if($fieldname == 'username') {
+                    $user = $this->UsersRepository->findByUsername($input['username']);
+                } else {
+                    $user = $this->UsersRepository->findByEmail($input['email']);
+                }
+
                 $this->message = 'You have been logged in.';
                 return $user;
-            } else {
+            }
+            else
+            {
                 $this->message = 'There were validation errors.';
-                $this->errors = 'Incorrect email and/or password.';
+                $this->errors = 'Incorrect user credentials.';
                 return false;
             }
-        } catch (UserNotFoundException $e) {
+        }
+        catch (UserNotFoundException $e)
+        {
             $this->message = 'User not found.' ;
             return false;
-        } catch (UserNotActivatedException $e) {
+        }
+        catch (UserNotActivatedException $e)
+        {
             $this->message = 'User has not been activated.' ;
             return false;
         }
@@ -242,6 +258,23 @@ class SessionsRepository
     public function getRememberMe($input)
     {
         return (in_array('remember_me', array_keys($input))) ? true : false;
+    }
+
+    /**
+     * Returns proper fieldname to use for login attempt.
+     *
+     * @param  array  $input
+     * @return string
+     */
+    protected function getLoginFieldName($input)
+    {
+        // check if "username" key exists and value is not empty
+        $username = array_get($input, 'username');
+        if($username && $username != '') {
+            return 'username';
+        }
+
+        return 'email';
     }
 
 }

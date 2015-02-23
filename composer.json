@@ -14,7 +14,8 @@
         "zencoder/zencoder-php": "*",
         "ext-imagick": "*",
         "symfony/console": "~2.0",
-        "illuminate/html": "5.0.*"
+        "illuminate/html": "5.0.*",
+        "doctrine/dbal": "~2.3"
     },
     "require-dev": {
         "laravel/framework": "5.0.*",

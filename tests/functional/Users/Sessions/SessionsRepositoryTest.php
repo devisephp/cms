@@ -40,7 +40,7 @@ class SessionsRepositoryTest extends \DeviseTestCase
         ];
 
         $output = $this->SessionsRepository->login($input);
-dd($output);
+
         assertInstanceOf('DvsUser', $output);
     }
 

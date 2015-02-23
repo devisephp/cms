@@ -89,7 +89,6 @@ class SessionsRepository
 
             if($this->Auth->attempt(array($fieldname => $input[$fieldname], 'password' => $input['password']), $this->getRememberMe($input)))
             {
-
                 if($fieldname == 'username') {
                     $user = $this->UsersRepository->findByUsername($input['username']);
                 } else {

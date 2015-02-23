@@ -77,14 +77,14 @@ class RuleListTest extends \DeviseTestCase
         assertFalse( $this->RuleList->isNotInGroup('Devise Administrator') );
     }
 
-    public function test_it_tells_us_if_we_have_a_username()
+    public function test_it_tells_us_if_we_have_a_name()
     {
         $this->Framework->Auth->shouldReceive('check')->andReturn(true);
 
         $currentUser = $this->DvsUser->find(1);
         $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
 
-        assertTrue( $this->RuleList->hasUserName('noreply@devisephp.com') );
+        assertTrue( $this->RuleList->hasName('Devise Administrator') );
     }
 
     public function test_it_tells_us_if_we_have_an_email()
@@ -95,6 +95,16 @@ class RuleListTest extends \DeviseTestCase
         $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
 
         assertTrue( $this->RuleList->hasEmail('noreply@devisephp.com') );
+    }
+
+    public function test_it_tells_us_if_we_have_a_username()
+    {
+        $this->Framework->Auth->shouldReceive('check')->andReturn(true);
+
+        $currentUser = $this->DvsUser->find(1);
+        $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
+
+        assertTrue( $this->RuleList->hasUserName('deviseadmin') );
     }
 
     public function test_it_tells_us_if_we_have_a_field_value()

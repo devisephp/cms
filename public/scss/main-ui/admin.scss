@@ -205,6 +205,8 @@
       }
 
       &:hover {
+        background-color:$blue;
+
         .dvs-select-wrapper {
           border-color:$white;
           color:$white;

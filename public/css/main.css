@@ -4205,9 +4205,11 @@ td .dvs-select-small {
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-select-wrapper {
     margin-top: 10px;
     font-size: 9px; }
-  #dvs-admin .dvs-admin-card.dvs-page-versions-card:hover .dvs-select-wrapper {
-    border-color: white;
-    color: white; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card:hover {
+    background-color: #5dbabd; }
+    #dvs-admin .dvs-admin-card.dvs-page-versions-card:hover .dvs-select-wrapper {
+      border-color: white;
+      color: white; }
 
 #dvs-admin-subnavigation {
   position: absolute;

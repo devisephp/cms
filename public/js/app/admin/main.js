@@ -1,4 +1,4 @@
-devise.define(['jquery', 'datetimepicker', 'dvsCsrf'], function ($, datetimepicker)
+devise.define(['jquery', 'datetimepicker', 'dvsSelectSurrogate', 'dvsCsrf'], function ($, datetimepicker, selectSurrogate)
 {
     // make entire "dvs-admin-card" into a link
     if($('.dvs-admin-card').length > 0) {
@@ -168,6 +168,7 @@ devise.define(['jquery', 'datetimepicker', 'dvsCsrf'], function ($, datetimepick
             var reloadUrl = $('#page-'+_pageId).data('dvs-reload-url');
             $.get(reloadUrl, function(responseHtml) {
                  $('#page-'+_pageId).html(responseHtml);
+                 selectSurrogate();
             });
 
         }).fail(function() {

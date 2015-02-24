@@ -3,8 +3,14 @@
 
 @section('title')
 
-	<div id="dvs-admin-title"></div>
-    <div id="dvs-admin-actions">
+	<div id="dvs-admin-title">
+        <h1><span class="ion-android-calendar"></span> Calendar</h1>
+    </div>
+
+@stop
+
+@section('subnavigation')
+	<div id="dvs-admin-actions">
         <?= Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select')) ?></label>
         <?= link_to(URL::route('dvs-pages-create'), 'Create New Page', array('class'=>'dvs-button')) ?>
         <?= link_to(URL::route('dvs-pages'), 'All Pages', array('class'=>'dvs-button dvs-button-secondary')) ?>

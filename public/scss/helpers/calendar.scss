@@ -1,37 +1,43 @@
-.dvs-calendar-container {
-    width:96%;
+#dvs-admin {
+  .dvs-calendar-container {
+      width:96%;
 
-    .fc-month-view {
-
-      > table {
-          margin:0 auto 50px;
-          width:100%;
-          font-size:13px;
-          border-radius:5px;
-          box-shadow:0 2px 24px 12px rgba(0,0,0,.6);
-          @include background(linear-gradient($secondaryTableBgColor, $primaryTableBgColor));
+      h2 {
+        font-size:28px;
+        font-weight:300;
+        margin-bottom:30px;
+        color:$blue;
       }
 
+      .fc-month-view {
 
-    thead {
+        > table {
+            margin:0 auto 50px;
+            width:100%;
+            font-size:13px;
+            border-radius:5px;
+            @include background(linear-gradient($secondaryTableBgColor, $primaryTableBgColor));
+        }
 
-      th, th a {
-        color:darken($tableTextColor, 10%);
-        font-weight:$bodyMainFontWeight + 300;
-        text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
-        text-decoration:none;
+
+      thead {
+
+        th, th a {
+          color:darken($tableTextColor, 10%);
+          font-weight:$bodyMainFontWeight + 300;
+          text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
+          text-decoration:none;
+        }
+
+        th { padding:15px 20px}
       }
 
-      th { padding:15px 20px}
-    }
-
-    tbody tr {
-      color:$tableTextColor;
+      tbody tr {
+        color:$tableTextColor;
+      }
     }
   }
-}
 
-#dvs-admin {
   #page-version-events {
     float:left;
     width:100%;
@@ -65,7 +71,9 @@
 }
 
 .external-events .fc-event {
+  float:left;
   margin: 10px 0;
+  width:auto;
   cursor: pointer;
 }
 
@@ -75,9 +83,9 @@
   }
 
   .fc-event {
-    padding:$regularButtonPadding;
-    border-radius:0;
-    background-color:$primaryButtonBgColor;
+    padding:4px 6px;
+    border-radius:$buttonBorderRadius;
+    background-color:$blue;
     border-width:0;
     color:$white;
   }

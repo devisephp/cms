@@ -30,13 +30,13 @@ devise.define(['require', 'jquery', 'app/helpers/query-params'], function (requi
             // add the image url
             // to the opener which has a function ready to go
             //
-            $('a.dvs-media-item').click(handleFileSelected);
+            $('.js-media-items').on('click', 'a.dvs-media-item', handleFileSelected);
 
             //
             // handle renaming and removing
             //
-            $('.js-rename-item').click(handleFileRename);
-            $('.js-remove-item').click(handleFileRemove);
+            $('.js-media-items').on('click', '.js-rename-item', handleFileRename);
+            $('.js-media-items').on('click', '.js-remove-item', handleFileRemove);
 
             $('a.dvs-cat-delete-btn').click(handleCategoryRemove);
             $('a.dvs-cat-rename-btn').click(handleCategoryRename);

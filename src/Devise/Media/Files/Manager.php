@@ -62,6 +62,8 @@ class Manager
         $file->move($serverPath, $originalName);
 
         $this->Image->makeThumbnailImage($serverPath . $originalName, $serverPath . $this->getNewThumbName($originalName), $file->getClientMimeType());
+
+        return $localPath . '/' . $originalName;
     }
 
     /**

@@ -19,10 +19,11 @@ class ResponseHandler
      * @param Manager $FileManager
      * @param null $Redirect
      */
-    public function __construct(Manager $FileManager, $Redirect = null)
+    public function __construct(Manager $FileManager, $Redirect = null, $Request = null)
     {
         $this->FileManager = $FileManager;
         $this->Redirect = $Redirect ?: \Redirect::getFacadeRoot();
+        $this->Request = $Request ?: \Request::getFacadeRoot();
     }
 
     /**
@@ -33,7 +34,12 @@ class ResponseHandler
      */
     public function requestUpload($input)
     {
-        $this->FileManager->saveUploadedFile($input);
+        $path = $this->FileManager->saveUploadedFile($input);
+
+        if ($this->Request->ajax())
+        {
+            return array('path' => $path);
+        }
 
         return $this->Redirect->back();
     }

@@ -186,10 +186,18 @@
       .dvs-card-top {
         height:10px;
         background-color:$blue;
+      }
 
-        &.live-card {
+      &.live-card {
+
+        .dvs-card-top {
           background-color:$green;
         }
+
+        &:hover {
+          background-color:$green;
+        }
+
       }
 
 
@@ -392,11 +400,11 @@ table.dvs-admin-table {
 
   .dvs-badge {
     &.dvs-content-requested {
+      margin:0 auto;
+      margin-bottom:20px;
+      padding:6px;
       text-align:center;
-      width:40%;
       clear:both;
-      margin-bottom:3px;
-      padding:0 2px;
     }
   }
 }

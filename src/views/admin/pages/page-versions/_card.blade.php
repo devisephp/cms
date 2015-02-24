@@ -1,7 +1,7 @@
 <div class="dvs-flexbox">
 @foreach($page->versions as $version)
-    <div class="dvs-admin-card dvs-page-versions-card">
-        <div class="dvs-card-top @if ($version->status == 'live') live-card @endif"></div>
+    <div class="dvs-admin-card dvs-page-versions-card @if ($version->status == 'live') live-card @endif">
+        <div class="dvs-card-top"></div>
         <div class="dvs-card-bottom">
             <h4><?= $version->name ?></h4>
 

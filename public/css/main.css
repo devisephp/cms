@@ -3659,29 +3659,27 @@ td .dvs-select-small {
 @media (min-width: 1200px) {
   .dvs-hide-large {
     display: none; } }
-#dvs-admin .dvs-calendar-container {
-  width: 96%; }
-  #dvs-admin .dvs-calendar-container h2 {
-    font-size: 28px;
-    font-weight: 300;
-    margin-bottom: 30px;
-    color: #5dbabd; }
-  #dvs-admin .dvs-calendar-container .fc-month-view > table {
-    margin: 0 auto 50px;
-    width: 100%;
-    font-size: 13px;
-    border-radius: 5px;
-    background: -webkit-linear-gradient(#2b2e36, #262930);
-    background: linear-gradient(#2b2e36, #262930); }
-  #dvs-admin .dvs-calendar-container .fc-month-view thead th, #dvs-admin .dvs-calendar-container .fc-month-view thead th a {
-    color: #e6e6e6;
-    font-weight: 700;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    text-decoration: none; }
-  #dvs-admin .dvs-calendar-container .fc-month-view thead th {
-    padding: 15px 20px; }
-  #dvs-admin .dvs-calendar-container .fc-month-view tbody tr {
-    color: white; }
+#dvs-admin .dvs-calendar-container h2 {
+  font-size: 28px;
+  font-weight: 300;
+  margin-bottom: 30px;
+  color: #5dbabd; }
+#dvs-admin .dvs-calendar-container .fc-month-view > table {
+  margin: 0 auto 50px;
+  width: 100%;
+  font-size: 13px;
+  border-radius: 5px;
+  background: -webkit-linear-gradient(#2b2e36, #262930);
+  background: linear-gradient(#2b2e36, #262930); }
+#dvs-admin .dvs-calendar-container .fc-month-view thead th, #dvs-admin .dvs-calendar-container .fc-month-view thead th a {
+  color: #e6e6e6;
+  font-weight: 700;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-decoration: none; }
+#dvs-admin .dvs-calendar-container .fc-month-view thead th {
+  padding: 15px 20px; }
+#dvs-admin .dvs-calendar-container .fc-month-view tbody tr {
+  color: white; }
 #dvs-admin #page-version-events {
   float: left;
   width: 100%;

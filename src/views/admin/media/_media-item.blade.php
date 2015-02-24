@@ -1,4 +1,4 @@
-<div class="dvs-media-item-wrapper">
+<div class="dvs-media-item-wrapper dropzone-preview-item">
 
 	<div class="dvs-media-item-actions">
 		<button type="button"

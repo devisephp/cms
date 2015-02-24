@@ -17,6 +17,14 @@
     </div>
 @stop
 
+@section('modals')
+
+
+    <div id="dvs-admin-blocker" class="dvs-hidden"></div>
+    <div id="dvs-admin-modal" class="modal dvs-hidden"></div>
+
+@stop
+
 @section('main')
 
 <link href="<?= URL::asset('/packages/devisephp/cms/css/fullcalendar.min.css') ?>" rel="stylesheet">
@@ -39,34 +47,29 @@
 		</div>
     </div>
 
-<!-- place to put our modal -->
-<div id="dvs-modal-container" class="modal"></div>
-
 <!-- when events are edited we want to use this template -->
 <div class="edit-page-version js-template">
-	<form method="POST" action="{event.update_url}">
-		<input type="hidden" name="_method" value="PATCH">
-		<input type="hidden" name="_token" value="<?= csrf_token() ?>">
+	<div class="dvs-admin-form-horizontal ">
+		<form method="POST" action="{event.update_url}">
+			<input type="hidden" name="_method" value="PATCH">
+			<input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
-		<h3>{event.title}</h3>
-		<h6>{event.page.slug}</h6>
+			<h3>{event.title}</h3>
+			<h6>{event.page.slug}</h6>
 
-		<div>
-			<label>Starts On</label>
-			<input type="text" class="datetimepicker" name="start" value="{event.start}">
-		</div>
+			<div class="dvs-form-group">
+				<input type="text" placehodler="Starts On" class="datetimepicker" name="start" value="{event.start}">
+				<input type="text" placeholder="Ends On" class="datetimepicker" name="end" value="{event.end}">
+			</div>
 
-		<div>
-			<label>Ends On</label>
-			<input type="text" class="datetimepicker" name="end" value="{event.end}">
-		</div>
+			<div class="dvs-form-group">
+					<label>Published</label>
+					<input type="checkbox" name="published" value="1" checked>
+			</div>
 
-		<div>
-			<label>Published</label>
-			<input type="checkbox" name="published" value="1" checked>
-		</div>
-		<button class="js-save-btn dvs-button">Update</button>
-	</form>
+			<button class="js-save-btn dvs-button dvs-button-secondary">Update</button>
+		</form>
+	</div>
 </div>
 
 <!-- script gets the calendar started -->

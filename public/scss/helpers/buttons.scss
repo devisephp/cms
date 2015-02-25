@@ -257,6 +257,57 @@ input[type="submit"]{
   &.dvs-select-small {
     padding:8px 0px;
   }
+
+  &.dvs-select-secondary {
+    border:1px solid $secondaryButtonBgColor;
+    color:$secondaryButtonBgColor;
+
+    &.dvs-select-solid {
+      background-color:$secondaryButtonBgColor;
+      color:$secondaryButtonTextColor;
+    }
+  }
+
+  &.dvs-select-inactive {
+
+    border:1px solid $inactiveButtonBgColor;
+    color:$inactiveButtonBgColor;
+
+    &.dvs-select-solid {
+      background-color:$inactiveButtonBgColor;
+      color:$inactiveButtonTextColor;
+    }
+  }
+
+  &.dvs-select-gray {
+    border:1px solid $french-gray;
+    color:$french-gray;
+
+    &.dvs-select-solid {
+      background-color:$french-gray;
+      color:$black;
+    }
+  }
+
+  &.dvs-select-danger {
+    border:1px solid $dangerButtonBgColor;
+    color:$dangerButtonBgColor;
+
+    &.dvs-select-solid {
+      background-color:$dangerButtonBgColor;
+      color:$dangerButtonTextColor;
+    }
+  }
+
+  &.dvs-select-success {
+    border:1px solid $successButtonBgColor;
+    color:$successButtonBgColor;
+
+    &.dvs-select-solid {
+      background-color:$successButtonBgColor;
+      color:$successButtonTextColor;
+    }
+  }
 }
 
 td {

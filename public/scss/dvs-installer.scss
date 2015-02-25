@@ -1,0 +1,66 @@
+$installerBgColor : #F0F0F0;
+$installerFgColor : lighten(invert($installerBgColor), 35%);
+$linkColor        : #5dbabd;
+$french-gray      : #BCBEC2;
+
+#dvs-installer {
+	background-color: $installerBgColor;
+	text-align:center;
+	font-family:'Lato';
+	color:$installerFgColor;
+
+	h1,h2,h3 {
+		text-transform: uppercase;
+		margin-bottom:1em;
+		font-weight:200;
+		font-size:24px;
+	}
+
+	p {
+		line-height:1.8em;
+	}
+
+	label {
+		display:inline-block;
+		padding:8px;
+		vertical-align: top;
+		width:200px;
+		text-align:right;
+	}
+
+	input[type=text] {
+		border:1px solid $french-gray;
+    	color:$installerFgColor;
+    	padding:7px 13px;
+    	background-color:lighten($installerBgColor, 2%);
+    	border-radius:2px;
+    	font-size:12px;
+    	width:200px;
+	}
+
+	.main-content {
+		width:70%;
+		max-width:550px;
+		padding:40px 50px;
+		margin-left:15%;
+		background-color: lighten($installerBgColor, 3%);
+	}
+
+	a:not(.dvs-button) {
+		color:$linkColor;
+	}
+
+	.dvs-select-wrapper {
+		width:150px;
+		margin-left:20px;
+		font-size:12px;
+	}
+
+	.dvs-form-group {
+		margin-bottom:10px;
+	}
+
+	.dvs-form-actions {
+		margin-top:30px;
+	}
+}

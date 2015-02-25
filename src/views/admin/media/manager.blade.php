@@ -59,11 +59,18 @@
             success: function(file, response) {
                 if (! file.previewElement) return;
 
+                var path = response.path || '';
                 var updateElements = file.previewElement.querySelectorAll('[data-filepath]');
+
+                var paths = path.split('/');
+                var filename = paths[paths.length - 1];
+                file.previewElement.querySelector('[data-dz-name]').innerText = filename;
 
                 for (var i = 0; i < updateElements.length; i++)
                 {
-                    updateElements[i].dataset.filepath = response.path.substring(0, 1) == '/' ? '' : '/' + response.path;
+                    if (typeof updateElements[i].dataset.filepath !== 'undefined' && path !== '') {
+                        updateElements[i].dataset.filepath = path.substring(0, 1) == '/' ? '' : '/' + path;
+                    }
                 }
 
                 file.previewElement.classList.add("dz-success");

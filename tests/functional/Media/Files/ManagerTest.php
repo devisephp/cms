@@ -23,6 +23,7 @@ class ManagerTest extends \DeviseTestCase
         $file->shouldReceive('getClientMimeType')->times(1)->andReturn('image');
         $this->CategoryPaths->shouldReceive('serverPath')->andReturn('server/path');
         $this->Config->shouldReceive('get')->andReturn('yep');
+        $this->Image->shouldReceive('canMakeThumbnailFromFile')->andReturn(true);
         $this->Image->shouldReceive('makeThumbnailImage');
         $this->Manager->saveUploadedFile(['file' => $file]);
     }

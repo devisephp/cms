@@ -43,8 +43,14 @@ class ImagesTest extends \DeviseTestCase
         assertEquals(100, $image->getImageWidth());
     }
 
+    public function test_it_can_tell_me_if_a_file_has_thumbnail()
+    {
+        $this->markTestIncomplete();
+    }
+
     public function test_it_saves_image()
     {
+        $this->markTestIncomplete();
         // $image = new \Imagick('vfs://baseImagePath/test.png');
         // $this->Images->saveImage($image, );
         // assertFileExists('vfs://baseImagePath/test2.png');
@@ -52,6 +58,7 @@ class ImagesTest extends \DeviseTestCase
 
     public function test_it_makes_thumbnail_images()
     {
+        $this->markTestIncomplete();
         // $image = $this->Images->makeThumbnailImage('vfs://baseImagePath/test.png', 'vfs://baseImagePath.new-test.png');
         // assertEquals(200, $image->getImageWidth());
         // assertFileExists('vfs://baseImagePath.new-test.png');

@@ -61,6 +61,17 @@ class Images
 	}
 
     /**
+     * Lets us know if we can make a thumbnail from this file objet
+     *
+     * @param  File $file
+     * @return boolean
+     */
+    public function canMakeThumbnailFromFile($file)
+    {
+        return true;
+    }
+
+    /**
      * Resize this image path to specified width and height
      *
      * @param string|Imagick  $imagePath

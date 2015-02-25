@@ -26,13 +26,16 @@
           font-weight:$bodyMainFontWeight + 300;
           text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
           text-decoration:none;
+          border-color:lighten($bodyBgColor, 12%);
         }
 
         th { padding:15px 20px}
       }
 
-      tbody tr {
-        color:$tableTextColor;
+      tbody {
+        tr {
+          color:$tableTextColor;
+        }
       }
     }
   }
@@ -77,8 +80,12 @@
 }
 
 #dvs-admin {
+  .fc-widget-header {
+    border-color:lighten($bodyBgColor, 12%);
+  }
   .fc-widget-content {
     padding:0;
+    border-color:lighten($bodyBgColor, 10%);
   }
 
   .fc-event {

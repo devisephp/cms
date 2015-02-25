@@ -1,24 +1,30 @@
-@extends('devise::installer.layout')
+@extends('devise::layouts.installer')
 
 @section('content')
-    <h3>Select Environment</h3>
 
-    <div class="dvs-form-group">
-        <label>Environment</label>
+    <img src="<?= url('packages/devisephp/cms/img/devise-installer-logo.gif') ?>" width="300" height="300">
 
-        <select name="environment">
-            <option value="local" <?= $selectedEnvironment('local') ?>>Local</option>
-            <option value="staging" <?= $selectedEnvironment('staging') ?>>Staging</option>
-            <option value="production" <?= $selectedEnvironment('production') ?>>Production</option>
-            <option value="custom" <?= $selectedEnvironment('custom') ?>>Custom</option>
-        </select>
+    <div class="main-content">
 
-        <input type="text" name="custom_environment" placeholder="Enter custom environment name" <?= $selectedEnvironment('custom', '', 'style="display: none;"') ?> value="<?= $environment ?>">
-    </div>
+        <h1>Select Environment</h1>
 
-    <div class="dvs-form-group">
-        <button class="back btn" type="button" onclick="location.href='welcome'">Back</button>
-        <button class="next btn">Next</button>
+        <div class="dvs-form-group">
+            <label>Environment</label>
+
+            <select name="environment" class="dvs-select dvs-select-success dvs-select-small">
+                <option value="local" <?= $selectedEnvironment('local') ?>>Local</option>
+                <option value="staging" <?= $selectedEnvironment('staging') ?>>Staging</option>
+                <option value="production" <?= $selectedEnvironment('production') ?>>Production</option>
+                <option value="custom" <?= $selectedEnvironment('custom') ?>>Custom</option>
+            </select>
+            <br><br>
+            <input type="text" name="custom_environment" placeholder="Enter custom environment name" <?= $selectedEnvironment('custom', '', 'style="display: none;"') ?> value="<?= $environment ?>">
+        </div>
+
+        <div class="dvs-form-group dvs-form-actions">
+            <button class="back dvs-button-secondary dvs-button" type="button" onclick="location.href='welcome'">Back</button>
+            <button class="next dvs-button-success dvs-button">Next</button>
+        </div>
     </div>
 @stop
 

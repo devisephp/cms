@@ -13,9 +13,16 @@ devise.define(['require', 'jquery'], function (require, $)
         $.each(elements, function(index, el) {
             if($(this).parents('.dvs-select-wrapper').length === 0){
 
-                var additionalClasses = $(this).attr('class');
+                var additionalClass = '';
+                if($(this).hasClass('dvs-select-small')) {
+                    additionalClass += ' dvs-select-small';
+                }
 
-                $(this).wrap("<span class='dvs-select-wrapper " + additionalClasses + "'></span>");
+                if($(this).hasClass('dvs-button-solid')) {
+                    additionalClass += ' dvs-button-solid';
+                }
+
+                $(this).wrap("<span class='dvs-select-wrapper " + additionalClass + "'></span>");
                 $(this).after("<span class='dvs-holder'></span>");
 
                 addListeners(this);

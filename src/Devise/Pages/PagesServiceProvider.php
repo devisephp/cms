@@ -49,8 +49,12 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * [registerInterpreter description]
-     * @return [type]
+     * Registers the extended blade compiler with our application.
+     * This takes care not to forget any previously attached extensions
+     * of the blade compiler. We are doing so by decorating the old
+     * blade compiler and then adding in our functionality on top.
+     *
+     * @return void
      */
     private function registerInterpreter()
     {
@@ -67,10 +71,14 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
             return new CompilerEngine($extended, $app['files']);
         });
 
-        \Blade::extend(function($view, $compiler)
-        {
-            return \App::make('Devise\Pages\Interrupter\DeviseBladeCompiler')->compile($view, $compiler);
-        });
+
+
+
+
+        // \Blade::extend(function($view, $compiler)
+        // {
+        //     return \App::make('Devise\Pages\Interrupter\DeviseBladeCompiler')->compile($view, $compiler);
+        // });
     }
 
     /**

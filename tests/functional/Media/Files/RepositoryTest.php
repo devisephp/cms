@@ -27,9 +27,10 @@ class RepositoryTest extends \DeviseTestCase
             ]
         ];
 
+        $this->MediaPaths = m::mock('Devise\Media\MediaPaths');
         $this->Request = m::mock('Illuminate\Http\Request');
         $this->URL = m::mock('Illuminate\Routing\UrlGenerator');
-        $this->Repository = new Repository($this->Filesystem, $this->Config, $this->Request, $this->URL);
+        $this->Repository = new Repository($this->Filesystem, $this->MediaPaths, $this->Config, $this->Request, $this->URL);
     }
 
     /**
@@ -38,6 +39,7 @@ class RepositoryTest extends \DeviseTestCase
     public function test_it_compiles_index_data()
     {
         $this->Request->shouldReceive('url')->andReturn('someUrl');
+        $this->markTestIncomplete();
         // $this->Repository->compileIndexData(['capable' => true]);
     }
 }

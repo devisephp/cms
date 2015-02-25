@@ -4780,7 +4780,8 @@ table.dvs-admin-table {
       width: auto;
       margin-left: 15px;
       padding-right: 30px;
-      height: 20px; }
+      height: 30px;
+      font-size: 10px; }
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property span,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property span {
       width: auto; }

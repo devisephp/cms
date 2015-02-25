@@ -257,7 +257,7 @@ class SessionsRepository
     protected function attemptUserLogin($input)
     {
         // fieldnames in order or precedence
-        $fieldnames = ['username', 'email'];
+        $fieldnames = ($this->checkFieldExists('username')) ? ['username', 'email'] : ['email'];
 
         foreach($fieldnames as $fieldname)
         {
@@ -292,6 +292,10 @@ class SessionsRepository
             case "email":
                 return $this->UsersRepository->findByEmail($value);
         }
+    }
+
+    private function checkFieldExists($field) {
+        return \Schema::hasColumn('users', $field);
     }
 
 }

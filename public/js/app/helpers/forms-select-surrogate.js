@@ -15,6 +15,10 @@ devise.define(['require', 'jquery'], function (require, $)
 
                 var additionalClasses = $(this).attr('class');
 
+                additionalClasses = additionalClasses.replace(/dvs-select/g, '');
+
+                console.log(additionalClasses);
+
                 $(this).wrap("<span class='dvs-select-wrapper " + additionalClasses + "'></span>");
                 $(this).after("<span class='dvs-holder'></span>");
 

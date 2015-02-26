@@ -4720,6 +4720,12 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button:hover, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button:hover {
       background-color: #5dbabd;
       color: white; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button.dvs-content-requested, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button.dvs-content-requested {
+      background-color: rgba(253, 95, 70, 0.6);
+      border: 1px solid rgba(253, 95, 70, 0.8);
+      color: white; }
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button.dvs-content-requested:hover, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button.dvs-content-requested:hover {
+        background-color: #fd5f46; }
   #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements > div > div, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group > div > div {
     padding: 0 15px 18px 12px;
     box-sizing: content-box;

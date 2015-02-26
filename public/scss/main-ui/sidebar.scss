@@ -266,6 +266,16 @@
         background-color:$blue;
         color:$white;
       }
+
+      &.dvs-content-requested {
+        background-color:transparentize($red, 0.4);
+        border:1px solid transparentize($red, 0.2);
+        color:$white;
+
+        &:hover {
+          background-color:$red;
+        }
+      }
     }
     > div > div {
       @include clearfix;

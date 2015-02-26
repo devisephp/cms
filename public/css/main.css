@@ -4532,9 +4532,6 @@ table.dvs-admin-table {
   #dvs-admin .dvs-languages.dvs-admin-card:hover .dvs-card-top {
     background-color: #96327f; }
 
-#dvs-mode.dvs-sidebar-mode h1, #dvs-mode.dvs-sidebar-mode h2, #dvs-mode.dvs-sidebar-mode h3, #dvs-mode.dvs-sidebar-mode h4, #dvs-mode.dvs-sidebar-mode h5, #dvs-mode.dvs-sidebar-mode h6 {
-  font-size: 14px;
-  margin-bottom: 10px; }
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar.loaded {
   opacity: 1;
   left: 35px;
@@ -4555,6 +4552,13 @@ table.dvs-admin-table {
   font-family: "Roboto", Tahoma, Arial, sans-serif; }
 #dvs-mode.dvs-sidebar-mode #dvs-admin-mode-button {
   font-family: "Roboto", Tahoma, Arial, sans-serif; }
+#dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h1, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h2, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h3, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h4, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h5, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h6 {
+  font-size: 14px;
+  margin-bottom: 10px; }
+#dvs-mode.dvs-sidebar-mode #dvs-sidebar-container label {
+  float: left; }
+#dvs-mode.dvs-sidebar-mode #dvs-sidebar-container .fancy-sidebar-checkbox > label {
+  margin: 5px 0 0 90px; }
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-contents-container {
   margin: 20px;
   margin-top: 0; }
@@ -4776,7 +4780,8 @@ table.dvs-admin-table {
       width: auto;
       margin-left: 15px;
       padding-right: 30px;
-      height: 20px; }
+      height: 30px;
+      font-size: 10px; }
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property span,
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property span {
       width: auto; }
@@ -5007,10 +5012,6 @@ table.dvs-admin-table {
   #dvs-mode.dvs-sidebar-mode a.page-sort.asc {
     padding-right: 30px;
     background-image: url(../img/sort-asc.png); }
-#dvs-mode.dvs-sidebar-mode label {
-  float: left; }
-#dvs-mode.dvs-sidebar-mode .fancy-sidebar-checkbox > label {
-  margin: 5px 0 0 90px; }
 #dvs-mode.dvs-sidebar-mode .dvs-button {
   display: inline-block;
   padding: 12px 20px;

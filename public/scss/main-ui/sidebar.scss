@@ -2,10 +2,6 @@
 // This probably needs to be rethought out.
 #dvs-mode.dvs-sidebar-mode {
 
-  h1, h2, h3, h4, h5, h6 {
-    font-size: $sidebarHeaderFontSize;
-    margin-bottom:10px
-  }
 
   #dvs-sidebar.loaded {
     opacity: 1;
@@ -25,6 +21,30 @@
 
   #dvs-admin-mode-button {
     font-family: $sidebarMainFont;
+  }
+
+  // Only items inside
+  // the sidebar are effected here.
+  // Trying to contain the styles of
+  // the sidebar to prevent it from
+  // effecting the layout of the page.
+  #dvs-sidebar-container {
+
+    h1, h2, h3, h4, h5, h6 {
+      font-size: $sidebarHeaderFontSize;
+      margin-bottom:10px
+    }
+
+    label {
+      float:left;
+    }
+
+    .fancy-sidebar-checkbox {
+      > label {
+        margin:5px 0 0 90px ;
+      }
+    }
+
   }
 
   #dvs-sidebar-contents-container {
@@ -311,7 +331,8 @@
         width: auto;
         margin-left:15px;
         padding-right:30px;
-        height:20px;
+        height:30px;
+        font-size:10px;
       }
 
       span {
@@ -612,18 +633,6 @@
     }
   }
 
-  label {
-    float:left;
-  }
-
-  .fancy-sidebar-checkbox {
-    > label {
-      margin:5px 0 0 90px ;
-    }
-  }
-
-
-
 
 
 
@@ -643,6 +652,5 @@
       width: 70px;
     }
   }
-
 
 }

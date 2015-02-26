@@ -66,7 +66,7 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $resolver->register('blade', function() use ($app, $compiler)
         {
-            $extended = new Interrupter\ExtendedBladeCompiler($compiler, $app['files']);
+            $extended = new Interpreter\ExtendedBladeCompiler($compiler, $app['files']);
 
             return new CompilerEngine($extended, $app['files']);
         });
@@ -75,10 +75,10 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
 
 
 
-        // \Blade::extend(function($view, $compiler)
-        // {
-        //     return \App::make('Devise\Pages\Interrupter\DeviseBladeCompiler')->compile($view, $compiler);
-        // });
+        \Blade::extend(function($view, $compiler)
+        {
+            return \App::make('Devise\Pages\Interpreter\DeviseBladeCompiler')->compile($view, $compiler);
+        });
     }
 
     /**
@@ -122,7 +122,7 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     private function registerDeviseDataContainer()
     {
-        $this->app->instance("dvsPageData", new \Devise\Pages\Interrupter\DvsPageData);
+        $this->app->instance("dvsPageData", new \Devise\Pages\Interpreter\DvsPageData);
     }
 
     /**

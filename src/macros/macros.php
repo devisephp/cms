@@ -187,7 +187,7 @@ if (!function_exists('devise_model'))
 {
     function devise_model($chain, $humanName, $collection)
     {
-        $extractor = new Devise\Pages\Interrupter\DeviseModelExtractor($chain);
+        $extractor = new Devise\Pages\Interpreter\DeviseModelExtractor($chain);
 
         return $extractor->attribute()
             ? App::make('dvsPageData')->addModelAttribute($extractor->model(), $extractor->attribute(), $humanName, $collection)['cid']

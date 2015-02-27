@@ -84,7 +84,7 @@ class TemplatesRepository
      */
     public function registeredTemplatesList($showHumanName = true)
     {
-        $templatesArr = $this->Config->get('devise.devise.templates');
+        $templatesArr = $this->Config->get('devise.templates');
         $templateKeysArr = array_keys($templatesArr);
 
         $results = array();

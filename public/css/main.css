@@ -4317,8 +4317,7 @@ td .dvs-select-small {
   overflow: hidden;
   background: -webkit-linear-gradient(top, #202228, #24262e);
   background: linear-gradient(to bottom, #202228, #24262e);
-  max-width: 300px;
-  overflow-x: scroll; }
+  max-width: 300px; }
   .dvs-inset-text::-webkit-input-placeholder {
     color: #797d85; }
   .dvs-inset-text::-moz-placeholder {

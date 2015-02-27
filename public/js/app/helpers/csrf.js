@@ -1,4 +1,4 @@
-devise.define(['jquery'], function ($, datetimepicker)
+devise.define(['jquery'], function ($)
 {
     $.ajaxSetup({
         headers: {

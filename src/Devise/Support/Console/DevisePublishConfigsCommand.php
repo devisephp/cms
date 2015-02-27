@@ -24,6 +24,6 @@ class DevisePublishConfigsCommand extends Command
      */
     public function handle()
     {
-        \File::copyDirectory(__DIR__ . '/../../../config', base_path() . '/config/devise');
+        \File::copyDirectory(__DIR__ . '/../../../config', base_path() . '/config');
     }
 }

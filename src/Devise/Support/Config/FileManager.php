@@ -70,7 +70,7 @@ class FileManager
             $this->files->makeDirectory($path,  0755, true);
         }
 
-        $file = $path . "/devise.{$filename}.php";
+        $file = $path . "/{$filename}.php";
 
         if($this->files->isDirectory($path) ) {
             return $file;

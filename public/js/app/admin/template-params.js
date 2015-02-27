@@ -71,9 +71,17 @@ devise.define(['jquery'], function ( $ )
 
         // format values according to param type
         if(paramTypeValue === 'params') {
-            paramValue = 'params.' + paramValue;
+            if(paramValue != ''){
+                paramValue = 'params.' + paramValue;
+            } else {
+                paramValue = 'params';
+            }
         } else if(paramTypeValue === 'input' && paramValue !== 'input') {
-            paramValue = 'input.' + paramValue;
+            if(paramValue != ''){
+                paramValue = 'input.' + paramValue;
+            } else {
+                paramValue = 'input';
+            }
         }
 
         paramForShow = paramValue; // keep a display version of param

@@ -13,13 +13,13 @@ $loadDefaults = (!isset($element->value->text) || $element->value->text == '') ?
                                 'data-dvs-index' => $element->index,
                                 'data-dvs-alternate-target' => $element->alternateTarget,
                                 'data-dvs-key' => $element->key,
-                                'maxlength' => ($element->value->maxlength && $element->value->maxlength != '') ? $element->value->maxlength : 50)
+                                'maxlength' => ($element->value->maxlength && $element->value->maxlength != '') ? $element->value->maxlength : 255)
                             ) ?>
         </div>
 
         <div class="dvs-property">
             <?= Form::label('Max Length') ?>
-            <?= Form::text('maxlength', ($element->value->maxlength && $element->value->maxlength != '') ? $element->value->maxlength : 50) ?>
+            <?= Form::text('maxlength', ($element->value->maxlength && $element->value->maxlength != '') ? $element->value->maxlength : 255) ?>
         </div>
 
         @include('devise::admin.sidebar._collection_instance_id')

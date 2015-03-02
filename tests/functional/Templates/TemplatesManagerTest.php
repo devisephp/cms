@@ -42,7 +42,7 @@ class TemplatesManagerTest extends \DeviseTestCase
         );
         $this->ConfigFileManager
             ->shouldReceive('saveToFile')
-            ->with($configContents, 'templates', 'devisephp/cms')
+            ->with($configContents, 'templates')
             ->times(1)->andReturn(true);
 
         assertTrue($this->TemplatesManager->storeTemplate( $input ));
@@ -77,7 +77,7 @@ class TemplatesManagerTest extends \DeviseTestCase
         );
         $this->ConfigFileManager
             ->shouldReceive('saveToFile')
-            ->with($configContents, 'templates', 'devisephp/cms')
+            ->with($configContents, 'templates')
             ->times(1)->andReturn(true);
 
         assertTrue($this->TemplatesManager->updateTemplate( $input ));
@@ -109,7 +109,7 @@ class TemplatesManagerTest extends \DeviseTestCase
         $emptyArray = array();
         $this->ConfigFileManager
             ->shouldReceive('saveToFile')
-            ->with($emptyArray, 'templates', 'devisephp/cms')
+            ->with($emptyArray, 'templates')
             ->times(1)->andReturn(true);
 
         assertTrue($this->TemplatesManager->destroyTemplate( 'templates.name' ));
@@ -154,7 +154,7 @@ class TemplatesManagerTest extends \DeviseTestCase
         );
         $this->ConfigFileManager
             ->shouldReceive('saveToFile')
-            ->with($configContents, 'templates', 'devisephp/cms')
+            ->with($configContents, 'templates')
             ->times(1)->andReturn(true);
 
         assertTrue($this->TemplatesManager->storeNewVariable($name, $var));

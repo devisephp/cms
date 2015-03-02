@@ -18,11 +18,10 @@ class FileManagerTest extends \DeviseTestCase
     {
         $content = 'blammo';
         $filename = 'randofile';
-        $package = 'devisephp';
 
         $this->Filesystem->shouldReceive('put')->andReturn(true);
         $this->Filesystem->shouldReceive('isDirectory')->times(2)->andReturn(true);
 
-        assertEquals($content, $this->FileManager->saveToFile($content, $filename, $package));
+        assertEquals($content, $this->FileManager->saveToFile($content, $filename));
     }
 }

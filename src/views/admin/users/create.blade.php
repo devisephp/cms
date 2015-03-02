@@ -17,7 +17,7 @@
         <?= Form::open(array('route' => 'dvs-users-store')) ?>
             <div class="dvs-form-group">
                 <?= Form::label('User Group') ?>
-                <?= Form::select('group_id', array_merge(array(0 => 'Choose an option'), $groups)) ?>
+                <?= Form::select('group_id', ['Choose an option'] + $groups) ?>
             </div>
 
             <div class="dvs-form-group">

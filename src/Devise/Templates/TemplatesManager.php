@@ -95,7 +95,7 @@ class TemplatesManager
                 'extends' => $input['extends'],
             );
 
-            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates');
         }
 
         $this->errors = $validator->errors()->all();
@@ -129,7 +129,7 @@ class TemplatesManager
             // overwrite template data for submitted template path/key
             $configContents[$input['template_path']] = $input['template'];
             
-            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates');
         }
 
         return false;
@@ -149,7 +149,7 @@ class TemplatesManager
         if(isset($configContents[$templatePath])){
             unset($configContents[$templatePath]);
 
-            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates');
         }
 
         $this->errors = 'Failed to remove template, path unrecognized.';
@@ -197,7 +197,7 @@ class TemplatesManager
                 );
             }
 
-            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates');
         }
 
         $this->errors = $validator->errors()->all();

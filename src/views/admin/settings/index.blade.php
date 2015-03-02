@@ -27,7 +27,7 @@
 
 			</div>
 
-			<button type="submit" class="dvs-button dvs-button-large">Update Settings</button>
+			<input type="submit" class="dvs-button dvs-button-success dvs-button-solid" value="Update Settings">
 		</form>
 
     </div>

@@ -56,6 +56,23 @@ class RuleManagerTest extends \DeviseTestCase
         assertInstanceOf('Closure', $this->RuleManager->getClosure('whatever2'));
     }
 
+    public function test_it_can_overwrite_existing_rules()
+    {
+        $this->RuleManager->overwriteRule('showDeviseSpan', function(){
+            return 'yes';
+        });
+
+        assertEquals('yes', $this->RuleManager->getClosure('showDeviseSpan')->__invoke());
+    }
+
+    public function test_it_cant_overwrite_nonexisting_rules()
+    {
+        $this->setExpectedException('Devise\Support\DeviseException');
+        $this->RuleManager->overwriteRule('doesnotexits', function(){
+            return true;
+        });
+    }
+
     public function test_it_can_get_conditions()
     {
         assertEquals('{"isInGroup":["Devise Administrator"]}', $this->RuleManager->getCondition('isDeviseAdmin'));

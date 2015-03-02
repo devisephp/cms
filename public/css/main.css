@@ -3135,35 +3135,6 @@ button.dvs-no-decoration:hover {
 .col12 {
   width: 98.66667%; }
 
-input[type=password].form-control,
-input[type=text].form-control {
-  padding: 14px 14px;
-  font-size: 14px;
-  color: #bcbec2;
-  border: 1px solid #32353f;
-  border-bottom: 2px solid #444856;
-  border-radius: 4px;
-  overflow: hidden;
-  background: -webkit-linear-gradient(top, #202228, #24262e);
-  background: linear-gradient(to bottom, #202228, #24262e);
-  padding: 24px 14px; }
-  input[type=password].form-control::-webkit-input-placeholder,
-  input[type=text].form-control::-webkit-input-placeholder {
-    color: #797d85; }
-  input[type=password].form-control::-moz-placeholder,
-  input[type=text].form-control::-moz-placeholder {
-    color: #797d85; }
-  input[type=password].form-control:-moz-placeholder,
-  input[type=text].form-control:-moz-placeholder {
-    color: #797d85; }
-  input[type=password].form-control:-ms-input-placeholder,
-  input[type=text].form-control:-ms-input-placeholder {
-    color: #797d85; }
-
-.form-control:focus {
-  border-color: #5a6072;
-  box-shadow: 0 0 12px rgba(90, 96, 114, 0.5); }
-
 .dvs-admin-form-horizontal,
 .dvs-admin-form-vertical {
   padding: 50px 30px 50px;
@@ -3182,6 +3153,33 @@ input[type=text].form-control {
     font-weight: 400;
     line-height: 18px; }
 
+#dvs-admin input[type=password].form-control,
+#dvs-admin input[type=text].form-control {
+  padding: 14px 14px;
+  font-size: 14px;
+  color: #bcbec2;
+  border: 1px solid #32353f;
+  border-bottom: 2px solid #444856;
+  border-radius: 4px;
+  overflow: hidden;
+  background: -webkit-linear-gradient(top, #202228, #24262e);
+  background: linear-gradient(to bottom, #202228, #24262e);
+  padding: 24px 14px; }
+  #dvs-admin input[type=password].form-control::-webkit-input-placeholder,
+  #dvs-admin input[type=text].form-control::-webkit-input-placeholder {
+    color: #797d85; }
+  #dvs-admin input[type=password].form-control::-moz-placeholder,
+  #dvs-admin input[type=text].form-control::-moz-placeholder {
+    color: #797d85; }
+  #dvs-admin input[type=password].form-control:-moz-placeholder,
+  #dvs-admin input[type=text].form-control:-moz-placeholder {
+    color: #797d85; }
+  #dvs-admin input[type=password].form-control:-ms-input-placeholder,
+  #dvs-admin input[type=text].form-control:-ms-input-placeholder {
+    color: #797d85; }
+#dvs-admin .form-control:focus {
+  border-color: #5a6072;
+  box-shadow: 0 0 12px rgba(90, 96, 114, 0.5); }
 #dvs-admin .dvs-admin-form-vertical h3, #dvs-admin .dvs-admin-form-vertical h4, #dvs-admin .dvs-admin-form-vertical h5, #dvs-admin .dvs-admin-form-vertical h6,
 #dvs-admin .dvs-admin-form-horizontal h3,
 #dvs-admin .dvs-admin-form-horizontal h4,

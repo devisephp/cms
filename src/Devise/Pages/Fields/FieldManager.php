@@ -148,6 +148,15 @@ class FieldManager
 	}
 
 	/**
+	 * Sets a series of fields content requested to false
+	 * @param  array $fieldIds Array of field ids
+	 * @return bool
+	 */
+	public function markNoContentRequested($fieldIds) {
+		return $this->Field->whereIn('id', $fieldIds)->update(['content_requested' => 0]);
+	}
+
+	/**
 	 * This function will do see if $shouldChangeGlobally is set
 	 *
 	 * @param  integer $fieldId

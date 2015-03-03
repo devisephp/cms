@@ -399,10 +399,13 @@ table.dvs-admin-table {
 
   .dvs-badge {
     &.dvs-content-requested {
+      @include clearfix;
+
       margin:0 auto;
       margin-bottom:20px;
       padding:6px;
       text-align:center;
+      line-height:18px;
       clear:both;
     }
   }

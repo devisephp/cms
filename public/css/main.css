@@ -4418,7 +4418,12 @@ table.dvs-admin-table {
     margin-bottom: 20px;
     padding: 6px;
     text-align: center;
+    line-height: 18px;
     clear: both; }
+    table.dvs-admin-table .dvs-badge.dvs-content-requested:after {
+      content: "";
+      display: table;
+      clear: both; }
 
 .dvs-loading,
 #dvs-sidebar-loading {

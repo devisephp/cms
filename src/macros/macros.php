@@ -143,7 +143,12 @@ HTML::macro('showPagesWithRequestedContent', function($page)
 
         foreach($fieldsArr as $field) {
             if(isset($field['content_requested']) && $field['content_requested'] == '1') {
-                return '<div class="dvs-badge dvs-content-requested fg red">Needs Content</div>';
+                return '<div class="dvs-badge dvs-content-requested fg red">
+                			Needs Content
+                			<button class="dvs-button-tiny dvs-button-primary dvs-pr dvs-content-requested-mark-done" data-url="'. URL::route('dvs-fields-content-requested-mark-all-complete', $page->id) .'">
+                				<span class="ion-android-close"></span>
+                			</button>
+                		</div>';
             }
         }
     }

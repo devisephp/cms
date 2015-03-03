@@ -56,7 +56,8 @@ class InstallWizard
 		$this->SettingsManager = $SettingsManager;
 		$this->EnvironmentFileManager = $EnvironmentFileManager;
 		$this->Validator = $Framework->Validator;
-		$this->Hash = $Framework->Hash;
+        $this->Hash = $Framework->Hash;
+		$this->Schema = $Framework->Schema;
 		$this->DatabaseCreator = $DatabaseCreator;
 		$this->DeviseInstallCommand = $DeviseInstallCommand;
 		$this->DvsUser = $DvsUser;
@@ -68,7 +69,6 @@ class InstallWizard
 	 *
 	 * @param  string $email
 	 * @param  string $password
-	 * @param  string $password_confirmation
 	 * @return void
 	 */
 	public function validateAdminUser($email, $password)
@@ -175,13 +175,13 @@ class InstallWizard
 	 */
 	public function installDevise()
 	{
-		if (\Schema::hasTable('dvs_pages')) return;
+		if ($this->Schema->hasTable('dvs_pages')) return;
 
 		$env = $this->EnvironmentFileManager->get();
 
 		if (!array_key_exists('APP_KEY', $env))
 		{
-			$this->EnvironmentFileManager->merge(['APP_KEY' => \Str::random(42)]);
+			$this->EnvironmentFileManager->merge(['APP_KEY' => str_random(42)]);
 		}
 
 		$this->DeviseInstallCommand->handle();

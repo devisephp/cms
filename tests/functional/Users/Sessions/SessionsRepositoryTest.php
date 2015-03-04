@@ -12,7 +12,8 @@ class SessionsRepositoryTest extends \DeviseTestCase
         $this->UserManager = m::mock('Devise\Users\UserManager');
         $this->UsersRepository = m::mock('Devise\Users\UsersRepository');
 
-        $this->Framework = m::mock('Devise\Support\Framework');
+        // $this->Framework = m::mock('Devise\Support\Framework');
+        $this->Framework = new \Devise\Support\Framework;
         $this->Framework->Auth = m::mock('Illuminate\Auth\Guard');
         $this->Framework->Hash = m::mock('Illuminate\Hashing\BcryptHasher');
         $this->Framework->Lang = m::mock('Illuminate\Translation\Translator');
@@ -128,9 +129,26 @@ class SessionsRepositoryTest extends \DeviseTestCase
         assertFalse( $this->SessionsRepository->recoverPassword($input) );
     }
 
-    public function test_it_can_reset_password()
+    public function test_it_cannot_reset_password()
     {
-        $this->markTestIncomplete();
+        $input = [
+            '_token' => 'someFooTokenJASdad',
+            'email' => 'foo@email.com'
+        ];
+
+        $this->Framework->Password
+            ->shouldReceive('reset')
+            ->once()
+            ->andReturn('passwords.password');
+
+        $this->Framework->Lang
+            ->shouldReceive('get')
+            ->once()
+            ->andReturnSelf();
+
+        $output = $this->SessionsRepository->resetPassword($input);
+
+        assertEquals('There were validation errors.', $this->SessionsRepository->message);
     }
 
     public function test_it_can_activate()

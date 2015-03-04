@@ -12,7 +12,6 @@ class SessionsRepositoryTest extends \DeviseTestCase
         $this->UserManager = m::mock('Devise\Users\UserManager');
         $this->UsersRepository = m::mock('Devise\Users\UsersRepository');
 
-        // $this->Framework = m::mock('Devise\Support\Framework');
         $this->Framework = new \Devise\Support\Framework;
         $this->Framework->Auth = m::mock('Illuminate\Auth\Guard');
         $this->Framework->Hash = m::mock('Illuminate\Hashing\BcryptHasher');

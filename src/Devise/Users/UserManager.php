@@ -237,8 +237,9 @@ class UserManager
     public function removeUnactivatedUsers($daysOutstanding = 30)
     {
         $outstandingDate = date("Y-m-d H:i:s", strtotime('now -'.$daysOutstanding.' days'));
+
         if($this->DvsUser->where('activated','=',false)->where('created_at','<=',$outstandingDate)->forceDelete()) {
-                return true;
+            return true;
         }
 
         return false;

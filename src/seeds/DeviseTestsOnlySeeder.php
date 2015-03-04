@@ -14,7 +14,8 @@ class DeviseTestsOnlySeeder extends DeviseSeeder
 		$this->fields();
 		$this->collectionInstances();
 		$this->collectionSets();
-		$this->globalFields();
+        $this->globalFields();
+		$this->users();
 	}
 
 	/**
@@ -123,5 +124,31 @@ class DeviseTestsOnlySeeder extends DeviseSeeder
 
         DB::table('dvs_global_fields')->insert($data);
 	}
+
+    /**
+     * User records
+     *
+     * @return void
+     */
+    public function users()
+    {
+        // adds a user records which is unactivated and created_at over 30 days ago
+        $unactivedUser = $this->findOrCreateRow('users', 'email', [
+            'name'           => 'Foo Guy',
+            'email'          => 'fooguy@devisephp.com',
+            'username'       => 'fooguy',
+            'password'       => \Hash::make('secret'),
+            'activated'      => false,
+            'activate_code'  => null,
+            'remember_token' => null,
+            'created_at'     => date('Y-m-d H:i:s', strtotime('-2 Months')),
+            'deleted_at'     => null
+        ]);
+
+        DB::table('group_user')->insert([
+            'group_id'       => 1,
+            'user_id'        => $unactivedUser->id,
+        ]);
+    }
 
 }

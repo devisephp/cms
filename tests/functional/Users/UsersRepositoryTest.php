@@ -35,8 +35,7 @@ class UsersRepositoryTest extends \DeviseTestCase
     public function test_it_can_get_paginated_list_of_users()
     {
         $output = $this->UsersRepository->users();
-
-        assertCount(1, $output); // 1 users in seeds
+        assertGreaterThanOrEqual(1, $output->count()); // atleast 1 user in seeds
     }
 
     public function test_it_can_get_user_with_find_by_id()

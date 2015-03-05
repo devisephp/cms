@@ -183,15 +183,11 @@ if (!function_exists('isActiveLink'))
 | information.
 |
 */
-if (!function_exists('devise_model'))
+if (!function_exists('devise_tag_cid'))
 {
-    function devise_model($chain, $humanName, $collection)
+    function devise_tag_cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
     {
-        $extractor = new Devise\Pages\Interpreter\DeviseModelExtractor($chain);
-
-        return $extractor->attribute()
-            ? App::make('dvsPageData')->addModelAttribute($extractor->model(), $extractor->attribute(), $humanName, $collection)['cid']
-            : App::make('dvsPageData')->addModel($extractor->model(), $humanName, $collection)['cid'];
+    	return App::make('dvsPageData')->cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults);
     }
 }
 

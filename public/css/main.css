@@ -3291,6 +3291,11 @@ button.dvs-no-decoration:hover {
   .dvs-admin-form-vertical .dvs-form-group textarea.short,
   .dvs-admin-form-horizontal .dvs-form-group textarea.short {
     height: 100px; }
+  .dvs-admin-form-vertical .dvs-form-group input[type=text]:disabled,
+  .dvs-admin-form-vertical .dvs-form-group textarea:disabled,
+  .dvs-admin-form-horizontal .dvs-form-group input[type=text]:disabled,
+  .dvs-admin-form-horizontal .dvs-form-group textarea:disabled {
+    color: #797d85; }
 .dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle,
 .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle {
   clear: both; }

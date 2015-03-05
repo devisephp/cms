@@ -21,6 +21,7 @@ class DeviseBladeCompilerTest extends \DeviseTestCase
 		// given
 		$viewOpener = $this->getMock('Devise\Pages\Interpreter\ViewOpener');
 		$viewOpener->method('open')->willReturn($this->fixture('devise-views.view2'));
+
 		list($compiler, $bladeExtended) = $this->newCompiler($viewOpener);
 
 		// when

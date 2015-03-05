@@ -113,10 +113,12 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $publishes = [];
 
-        foreach ($this->configFiles as $configFile)
+        foreach ($this->configFiles as $key)
         {
-            $publishes[__DIR__."/../config/{$configFile}.php"] = config_path("devise/{$configFile}.php");
-            $this->mergeConfigFrom(__DIR__."/../config/{$configFile}.php", "{$configFile}");
+            $configFile = str_replace('.', DIRECTORY_SEPARATOR, $key);
+
+            $publishes[__DIR__."/../config/{$configFile}.php"] = config_path("{$configFile}.php");
+            $this->mergeConfigFrom(__DIR__."/../config/{$configFile}.php", "{$key}");
         }
 
         // taking out the publishes section below because we are going

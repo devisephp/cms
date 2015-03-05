@@ -8,6 +8,11 @@
             <table class="dvs-admin-items">
                 <tr class="dvs-edit-item">
                     <td class="dvs-form-group">
+                        <p><label>Select an existing var</label></p>
+                        <?= Form::select('copy_var', ['Existing variables'] + $usedVariables) ?>
+                    </td>
+                    <td class="dvs-form-group">
+                        <p><label>Or create a custom one</label></p>
                         <?= Form::text('var_name', null, ['placeholder' => 'Variable Name']) ?>
                         <?= Form::text('class_path', null, ['placeholder' => 'Class Path']) ?>
                         <?= Form::text('method_name', null, ['placeholder' => 'Method Name']) ?>

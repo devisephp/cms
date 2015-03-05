@@ -9,6 +9,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
+        "laravel/framework": ">=5.0.7",
         "masterminds/html5": "1.*",
         "guzzlehttp/guzzle": "~4.0",
         "zencoder/zencoder-php": "*",
@@ -18,7 +19,6 @@
         "doctrine/dbal": "~2.3"
     },
     "require-dev": {
-        "laravel/framework": "5.0.*",
         "mockery/mockery": "dev-master",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*"

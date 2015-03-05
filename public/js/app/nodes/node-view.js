@@ -74,6 +74,8 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
             });
         });
 
+
+
         // Regular groups and other nodes
         $.each(dvsPageData.bindings, buildBinding);
         $.each(dvsPageData.models, buildModelNode);
@@ -155,7 +157,6 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         var props = {};
 
         props.coordinates = null;
-        props.contentRequested = '';
 
         if (typeof collectionName == 'undefined') {
             collectionName = '';
@@ -169,6 +170,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         props.categoryName = binding.category;
         props.group = binding.group;
         props.collection = collectionName;
+        props.contentRequested = isContentRequestedInBinding(binding) ? ' dvs-content-requested' : '';
 
         var inCategory = isInCategory(props);
         var inGroup = isInGroup(props);
@@ -340,6 +342,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
     }
 
     function makeSimpleElementNode(props) {
+
         var _index = nodes.push({
                 coordinates: props.coordinates,
                 collection: props.collection,

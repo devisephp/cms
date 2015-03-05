@@ -133,7 +133,7 @@ class FieldsRepository
 
     /**
      * Find all fields where content requested is true for given
-     * page version id and builds a list of field ids => keys
+     * page version id and builds a list of field keys
      *
      * @param  integer $pageVersionId
      * @return Field

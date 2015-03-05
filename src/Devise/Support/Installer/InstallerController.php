@@ -3,7 +3,6 @@
 use Devise\Support\Framework;
 use Illuminate\Routing\Controller;
 use Devise\Support\DeviseValidationException;
-use Auth;
 
 class InstallerController extends Controller
 {
@@ -15,9 +14,10 @@ class InstallerController extends Controller
 	public function __construct(Framework $Framework, InstallWizard $InstallWizard)
 	{
 		$this->InstallWizard = $InstallWizard;
-		$this->View = $Framework->View;
-		$this->Redirect = $Framework->Redirect;
+        $this->Auth = $Framework->Auth;
 		$this->Input = $Framework->Input;
+        $this->Redirect = $Framework->Redirect;
+        $this->View = $Framework->View;
 	}
 
 	/**
@@ -163,7 +163,7 @@ class InstallerController extends Controller
 
 		$newUser = $this->InstallWizard->createAdminUser($email, $password);
 
-		Auth::loginUsingId($newUser->id, true);
+		$this->Auth->loginUsingId($newUser->id, true);
 
 		return $this->Redirect->to('admin/installed');
 	}

@@ -244,7 +244,11 @@ class SidebarDataTranslator
         //
         foreach ($instances as $index => $instance)
         {
-            $keyName = ($index + 1) . ') ' .$instance->name;
+            $keyName = $instance->name;
+
+            if($this->hasContentRequestedFields($instance->fields)) {
+                $keyName = '[ ! ] ' . $instance->name;
+            }
 
             $groups[$keyName] = array();
 
@@ -256,6 +260,24 @@ class SidebarDataTranslator
 
         return $groups;
 	}
+
+    /**
+     * Determines if a collection instance has fields
+     * with "content_rquested" equal to true
+     *
+     * @param  Collection   $collection
+     * @return boolean
+     */
+    protected function hasContentRequestedFields($fields)
+    {
+        foreach($fields as $field) {
+            if($field->content_requested == true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 	/**
 	 * Get the elements array for this input data

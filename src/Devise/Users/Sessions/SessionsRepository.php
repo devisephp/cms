@@ -135,7 +135,7 @@ class SessionsRepository
                 $this->errors = $this->Lang->get($response);
                 return false;
 
-            case \Password::REMINDER_SENT:
+            case \Password::RESET_LINK_SENT:
                 $this->message = 'Recovery email has been sent.';
                 break;
         }

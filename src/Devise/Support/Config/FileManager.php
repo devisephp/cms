@@ -22,12 +22,11 @@ class FileManager
      *
      * @param  string $content
      * @param  string $filename
-     * @param  string $package  Vendor/Package string (ex: devisephp/cms)
      * @return string | boolean
      */
-    public function saveToFile($content, $filename, $package)
+    public function saveToFile($content, $filename)
     {
-        $configFile = $this->getFileByEnvironment($filename, $package);
+        $configFile = $this->getFileByEnvironment($filename);
 
         $this->files->put($configFile, '<?php return ' . $this->prettyVarExport($content) . ';');
 
@@ -53,15 +52,12 @@ class FileManager
     }
 
     /**
-     * Retrieves config file by using the environment and/or
-     * vendor/package to build file paths to check; the paths are
-     * ordered with app dirs first, workbench second and vendor third
+     * Retrieves config file
      *
      * @param  string $filename
-     * @param  string $package
      * @return \Exception
      */
-    private function getFileByEnvironment($filename, $package = null)
+    private function getFileByEnvironment($filename)
     {
         // set path to published config location
         $path = config_path() . '/devise';
@@ -70,7 +66,7 @@ class FileManager
             $this->files->makeDirectory($path,  0755, true);
         }
 
-        $file = $path . "/devise.{$filename}.php";
+        $file = $path . "/{$filename}.php";
 
         if($this->files->isDirectory($path) ) {
             return $file;

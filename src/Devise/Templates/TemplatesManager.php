@@ -95,7 +95,7 @@ class TemplatesManager
                 'extends' => $input['extends'],
             );
 
-            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates');
         }
 
         $this->errors = $validator->errors()->all();
@@ -129,7 +129,7 @@ class TemplatesManager
             // overwrite template data for submitted template path/key
             $configContents[$input['template_path']] = $input['template'];
             
-            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates');
         }
 
         return false;
@@ -149,7 +149,7 @@ class TemplatesManager
         if(isset($configContents[$templatePath])){
             unset($configContents[$templatePath]);
 
-            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates');
         }
 
         $this->errors = 'Failed to remove template, path unrecognized.';
@@ -180,28 +180,75 @@ class TemplatesManager
     public function storeNewVariable($templatePath, $input)
     {
         $validator = $this->Validator->make($input, $this->createVarRules(), $this->messages);
-
-        if($validator->passes())
+        $copyVar = (isset($input['copy_var']) && $input['copy_var'] !== '0') ? $input['copy_var'] : false;
+        
+        if($copyVar || $validator->passes())
         {
             $configContents = $this->Config->get('devise.templates');
 
-            $pathAndMethod = $input['class_path'] . '.' . $input['method_name'];
-
-            //  if array vars array is not empty, push into vars array.
-            //  If it is empty then set vars array to input data
-            if(!empty($configContents[$templatePath]['vars'])) {
-                $configContents[$templatePath]['vars'][$input['var_name']] = $pathAndMethod;
+            if($copyVar){
+                $configContents = $this->copyExistingVariable($configContents, $templatePath, $copyVar);
             } else {
-                $configContents[$templatePath]['vars'] = array(
-                    $input['var_name'] => $pathAndMethod
-                );
+                $configContents = $this->addNewVariable($configContents, $templatePath, $input);
             }
 
-            return $this->ConfigFileManager->saveToFile($configContents, 'templates', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'templates');
         }
 
         $this->errors = $validator->errors()->all();
         return false;
+    }
+
+    /**
+     * takes an existing var path and copies it to the template path
+     *
+     * @param  array  $configContents
+     * @param  string   $templatePath
+     * @param  array   $input
+     * @return array
+     */
+    private function copyExistingVariable($configContents, $templatePath, $path)
+    {
+        $parts = explode('.', $path);
+        $varName = array_pop($parts);
+        array_pop($parts);
+        $copyFrom = implode('.', $parts);
+        $varSettings = $configContents[ $copyFrom ]['vars'][$varName];
+
+        if(!empty($configContents[$templatePath]['vars'])) {
+            $configContents[$templatePath]['vars'][$varName] = $varSettings;
+        } else {
+            $configContents[$templatePath]['vars'] = array(
+                $varName => $varSettings
+            );
+        }
+
+        return $configContents;
+    }
+
+    /**
+     * adds a brand new variable to the location specified in the form
+     *
+     * @param  array  $configContents
+     * @param  string   $templatePath
+     * @param  array   $input
+     * @return array
+     */
+    private function addNewVariable($configContents, $templatePath, $input)
+    {
+        $pathAndMethod = $input['class_path'] . '.' . $input['method_name'];
+
+        //  if array vars array is not empty, push into vars array.
+        //  If it is empty then set vars array to input data
+        if(!empty($configContents[$templatePath]['vars'])) {
+            $configContents[$templatePath]['vars'][$input['var_name']] = $pathAndMethod;
+        } else {
+            $configContents[$templatePath]['vars'] = array(
+                $input['var_name'] => $pathAndMethod
+            );
+        }
+
+        return $configContents;
     }
 
     /**

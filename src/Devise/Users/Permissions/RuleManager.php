@@ -60,13 +60,14 @@ class RuleManager
      */
     public function getNumberOfRequiredParametersForRule($ruleName)
     {
+        $rc = new \ReflectionClass($this->RuleList);
+        try{ $rm = $rc->getMethod($ruleName); } catch (\Exception $e){}
 
-        if(in_array($ruleName, get_class_methods($this->RuleList))) {
-            $fct = new \ReflectionMethod($this->RuleList, $ruleName);
-            return $fct->getNumberOfRequiredParameters();
-        } else {
-            $fct = new \ReflectionFunction($this->RuleList->closures[ $ruleName ]);
-            return $fct->getNumberOfRequiredParameters();
+        if(isset($rm)) {
+            return $rm->getNumberOfRequiredParameters();
+        } else if(isset($this->RuleList->closures[ $ruleName ])) {
+            $rf = new \ReflectionFunction($this->RuleList->closures[ $ruleName ]);
+            return $rf->getNumberOfRequiredParameters();
         }
 
         return 0;
@@ -103,6 +104,24 @@ class RuleManager
             $this->RuleList->closures[$rule] = $closure;
         } else {
             throw new \Devise\Support\DeviseException('Rule name "'.$rule.'" already in use.');
+        }
+    }
+
+    /**
+     * Add replaces element in rules array
+     *
+     * @param  string $rule
+     * @param  callback $closure
+     * @throws \Devise\Support\DeviseException
+     * @return Void
+     */
+    public function overwriteRule($rule, $closure = null)
+    {
+        if(!$this->ruleNameAvailable($rule)) {
+            $this->RuleList->rules[] = $rule;
+            $this->RuleList->closures[$rule] = $closure;
+        } else {
+            throw new \Devise\Support\DeviseException('Rule name "'.$rule.'" does not exist.');
         }
     }
 

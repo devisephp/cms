@@ -72,6 +72,7 @@ class CollectionsRepository
 	public function getInstances($pageVersionId, $collectionSetId)
 	{
 		return $this->CollectionInstance
+            ->with('fields')
             ->where('page_version_id', '=', $pageVersionId)
             ->where('collection_set_id', '=', $collectionSetId)
             ->orderBy('sort')

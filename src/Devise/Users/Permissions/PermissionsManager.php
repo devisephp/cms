@@ -105,7 +105,7 @@ class PermissionsManager
 
                 $configContents[ $input['permission_name'] ] = $input[ $input['permission_name'] ];
 
-                return $this->ConfigFileManager->saveToFile($configContents, 'permissions', 'devisephp/cms');
+                return $this->ConfigFileManager->saveToFile($configContents, 'permissions');
             }
 
             $this->errors[] = 'At least 1 rule must be present to save the condition.';
@@ -142,7 +142,7 @@ class PermissionsManager
 
                 $configContents[ $input['permission_name_edit'] ] = $input[ $input['permission_name_edit'] ];
 
-                return $this->ConfigFileManager->saveToFile($configContents, 'permissions', 'devisephp/cms');
+                return $this->ConfigFileManager->saveToFile($configContents, 'permissions');
             }
 
             $this->errors[] = 'At least 1 rule must be present to save the condition.';
@@ -168,7 +168,7 @@ class PermissionsManager
             $configContents = $this->Config->get('devise.permissions');
             unset($configContents[$condition]);
 
-            return $this->ConfigFileManager->saveToFile($configContents, 'permissions', 'devisephp/cms');
+            return $this->ConfigFileManager->saveToFile($configContents, 'permissions');
         }
 
         $this->errors[] = 'Failed to remove permission, path unrecognized.';

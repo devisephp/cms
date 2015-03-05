@@ -36,12 +36,17 @@
     <?= Form::select('http_verb', array('get' => 'Regular Page (GET)', 'post' => 'Create (POST)', 'put' => 'Update (PUT)', 'delete' => 'Delete (DELETE)', 'any' => 'Any Method'), null, array('id' => 'http-verb')) ?>
 </div>
 
+@if ($method == 'update')
+    <div class="dvs-form-group">
+        <?= Form::label('Route Name') ?>
+        <?= Form::text('route_name', null, array('disabled' => 'disabled')) ?>
+    </div>
+@endif
+
 <div class="dvs-form-group">
     <?= Form::label('Page Slug') ?>
     <?= Form::text('slug', null, array('placeholder' => 'e.g. /about-us')) ?>
 </div>
-
-
 
 <div class="dvs-form-group simpletoggle" id="response-path-form">
     <?= Form::label('Response Path') ?>

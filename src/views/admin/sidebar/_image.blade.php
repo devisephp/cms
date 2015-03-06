@@ -9,7 +9,7 @@
 
         <?= Form::label('Image Path')?>
         <?= Form::text('image',
-                        $element->value->image,
+                        $element->value->original,
                         array('class'=>'dvs-liveupdate-listen ' . $loadDefaults,
                                  'data-dvs-type' => 'image',
                                  'data-dvs-index' => $element->index,

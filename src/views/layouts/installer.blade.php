@@ -22,18 +22,18 @@
         </div>
 
         @if(Session::has('message-success') || Session::has('message-errors'))
-        <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-sm-offset-4 col-md-offset-4">
-                @include('devise::admin.elements.validation')
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
+                    @include('devise::admin.elements.validation')
+                </div>
             </div>
-        </div>
         @endif
 
         <div class="row">
             <div class="col-md-6 col-md-offset-3 tal">
 
                 @yield('content')
-                
+
             </div>
         </div>
     </div>

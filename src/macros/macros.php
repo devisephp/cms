@@ -227,8 +227,8 @@ if (!function_exists('deviseDocs'))
 	function deviseDocs($view_name)
 	{
         $view_name = str_replace('devise::', '', $view_name);
-        $markdown_file = str_replace('.', DIRECTORY_SEPARATOR, $view_name) . '.md';
-        $markdown_file = base_path() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'devisephp' . DIRECTORY_SEPARATOR . 'cms' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'docs' . DIRECTORY_SEPARATOR . $markdown_file;
+        $markdown_file = str_replace('.', '/', $view_name) . '.md';
+        $markdown_file = base_path() . '/vendor/devisephp/cms/src/docs/' . $markdown_file;
 
         if(\File::exists($markdown_file))  {
             $file = File::get($markdown_file);
@@ -245,14 +245,19 @@ if (!function_exists('deviseDocs'))
 
             $document = $parser->parse($file);
 
-            foreach($document->getChildren() as $element) {
-                if(get_class($element) == "League\CommonMark\Block\Element\FencedCode") {
-                    $parser->parse($element->getStringContent());
-                }
-            }
-
-            dd( $htmlRenderer->renderBlock($document));
+            $contents = $htmlRenderer->renderBlock($document);
+            echo $contents;exit;
         }
 
 	}
+}
+
+/*
+*/
+if (!function_exists('deviseLiveCode'))
+{
+    function deviseLiveCode($target, $default)
+    {
+        echo '<span data-dvs-docs-target="' . $target .'" data-dvs-docs-default="' . $default .'"></span>';
+    }
 }

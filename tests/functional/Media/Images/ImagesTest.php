@@ -10,7 +10,7 @@ class ImagesTest extends \DeviseTestCase
         parent::setUp();
 
         vfsStream::setup('baseImagePath', null, [
-            'test.png' => file_get_contents($this->fixture('images.awesome'))
+            'test.png' => file_get_contents($this->fixture('images.awesome')),
         ]);
 
         $this->Images = new Images;
@@ -43,24 +43,28 @@ class ImagesTest extends \DeviseTestCase
         assertEquals(100, $image->getImageWidth());
     }
 
-    public function test_it_can_tell_me_if_a_file_has_thumbnail()
-    {
-        $this->markTestIncomplete();
-    }
-
     public function test_it_saves_image()
     {
-        $this->markTestIncomplete();
-        // $image = new \Imagick('vfs://baseImagePath/test.png');
-        // $this->Images->saveImage($image, );
-        // assertFileExists('vfs://baseImagePath/test2.png');
+        $testImageFile =  __DIR__ . '/../../test.png';
+        if (file_exists($testImageFile)) unlink($testImageFile);
+        $image = new \Imagick( vfsStream::url('baseImagePath/test.png') );
+        $this->Images->saveImage($image, $testImageFile);
+        assertFileExists($testImageFile);
+        unlink($testImageFile);
     }
 
     public function test_it_makes_thumbnail_images()
     {
-        $this->markTestIncomplete();
-        // $image = $this->Images->makeThumbnailImage('vfs://baseImagePath/test.png', 'vfs://baseImagePath.new-test.png');
-        // assertEquals(200, $image->getImageWidth());
-        // assertFileExists('vfs://baseImagePath.new-test.png');
+        $testImageFile =  __DIR__ . '/../../test.png';
+        if (file_exists($testImageFile)) unlink($testImageFile);
+        $image = $this->Images->makeThumbnailImage('vfs://baseImagePath/test.png', $testImageFile);
+        assertEquals(200, $image->getImageWidth());
+        assertFileExists($testImageFile);
+        unlink($testImageFile);
+    }
+
+    public function test_it_can_tell_me_if_this_file_can_have_thumbnails()
+    {
+        assertTrue($this->Images->canMakeThumbnailFromFile('vfs://baseImagePath/test.png'));
     }
 }

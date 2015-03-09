@@ -163,7 +163,8 @@ class Images
         $image = new Imagick($originalPath);
         $image->cropThumbnailImage(200,200);
         $image->setImageCompressionQuality(80);
-        $image->writeImage($newPath);
+
+        $this->saveImage($image, $newPath);
 
         return $image;
     }

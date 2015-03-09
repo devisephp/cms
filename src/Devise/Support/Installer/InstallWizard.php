@@ -4,6 +4,7 @@ use Devise\Support\Framework;
 use Devise\Support\Config\SettingsManager;
 use Devise\Support\Console\DeviseInstallCommand;
 use Devise\Support\Config\EnvironmentFileManager;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\MessageBag;
 use DvsUser;
 use DvsGroup;
@@ -21,6 +22,12 @@ class InstallWizard
 	 * @var [type]
 	 */
 	protected $SettingsManager;
+
+	/**
+	 * [$File description]
+	 * @var [type]
+	 */
+	protected $File;
 
 	/**
 	 * [$EnvironmentFileManager description]
@@ -51,11 +58,12 @@ class InstallWizard
 	 *
 	 * @param SettingsManager $SettingsManager
 	 */
-	public function __construct(SettingsManager $SettingsManager, EnvironmentFileManager $EnvironmentFileManager, Framework $Framework, DatabaseCreator $DatabaseCreator, DeviseInstallCommand $DeviseInstallCommand, DvsUser $DvsUser, DvsGroup $DvsGroup)
+	public function __construct(SettingsManager $SettingsManager, EnvironmentFileManager $EnvironmentFileManager, Filesystem $File, Framework $Framework, DatabaseCreator $DatabaseCreator, DeviseInstallCommand $DeviseInstallCommand, DvsUser $DvsUser, DvsGroup $DvsGroup)
 	{
 		$this->SettingsManager = $SettingsManager;
 		$this->EnvironmentFileManager = $EnvironmentFileManager;
 		$this->Validator = $Framework->Validator;
+        $this->File = $File;
         $this->Hash = $Framework->Hash;
 		$this->Framework = $Framework;
 		$this->DatabaseCreator = $DatabaseCreator;
@@ -185,6 +193,15 @@ class InstallWizard
 		}
 
 		$this->DeviseInstallCommand->handle();
+	}
+
+	public function checkAssets()
+	{
+		$deviseJs = public_path() . '/packages/devisephp/cms/js/devise.min.js';
+
+		if ($this->File->exists($deviseJs)) {
+
+		}
 	}
 
 	/**

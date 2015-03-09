@@ -112,4 +112,10 @@ class InstallWizardTest extends \DeviseTestCase
 		$this->markTestIncomplete();
 	}
 
+    public function test_devise_min_js_file_exists()
+    {
+        dd(public_path());
+        $fileexists = file_exists ( public_path() );
+    }
+
 }

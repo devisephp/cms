@@ -21,5 +21,6 @@ class DeviseSeeder extends \Devise\Support\DeviseSeeder
 		// need to add more. Same thing for menus
 		$this->call('DevisePagesSeeder');
 		$this->call('DeviseMenusSeeder');
+		$this->call('DeviseTestModelSeeder');
 	}
 }

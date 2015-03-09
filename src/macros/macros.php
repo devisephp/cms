@@ -1,5 +1,9 @@
 <?php
 
+use League\CommonMark\DocParser;
+use League\CommonMark\Environment;
+use League\CommonMark\HtmlRenderer;
+
 /*
 |--------------------------------------------------------------------------
 | Delete form macro
@@ -208,14 +212,51 @@ if (!function_exists('devise_model'))
 */
 if (!function_exists('getLinkRouteOrUrl'))
 {
-	function getLinkRouteOrUrl($linkValue, $default = '/#')
-	{
+    function getLinkRouteOrUrl($linkValue, $default = '/#')
+    {
         $link = ($linkValue->url != '') ? $linkValue->url : $default;
 
-		if($linkValue->route != '') {
+        if($linkValue->route != '') {
             $link = URL::route($linkValue->route);
         }
 
         return $link;
+    }
+}
+
+/*
+*/
+if (!function_exists('deviseDocs'))
+{
+	function deviseDocs($view_name)
+	{
+        $view_name = str_replace('devise::', '', $view_name);
+        $markdown_file = str_replace('.', DIRECTORY_SEPARATOR, $view_name) . '.md';
+        $markdown_file = base_path() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'devisephp' . DIRECTORY_SEPARATOR . 'cms' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'docs' . DIRECTORY_SEPARATOR . $markdown_file;
+
+        if(\File::exists($markdown_file))  {
+            $file = File::get($markdown_file);
+
+            $environment = Environment::createCommonMarkEnvironment();
+
+            $environment->addInlineParser(new \Devise\Pages\LiveCodeHandleParser());
+            $parser = new DocParser($environment);
+            $htmlRenderer = new HtmlRenderer($environment);
+
+            // $replacement = '<span class="dvs-live-code" data-devise-doc-target="$1" data-devise-doc-default="$2"></span>';
+
+            // $file = preg_replace('/@live-code\([\"|\'](.*)\|(.*)[\"|\']\)/', $replacement, $file);
+
+            $document = $parser->parse($file);
+
+            foreach($document->getChildren() as $element) {
+                if(get_class($element) == "League\CommonMark\Block\Element\FencedCode") {
+                    $parser->parse($element->getStringContent());
+                }
+            }
+
+            dd( $htmlRenderer->renderBlock($document));
+        }
+
 	}
 }

@@ -16,7 +16,8 @@
         "ext-imagick": "*",
         "symfony/console": "~2.0",
         "illuminate/html": "5.0.*",
-        "doctrine/dbal": "~2.3"
+        "doctrine/dbal": "~2.3",
+        "graham-campbell/markdown": "~3.0"
     },
     "require-dev": {
         "mockery/mockery": "dev-master",

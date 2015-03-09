@@ -1,5 +1,6 @@
+#Title
+
 ```
-@if(DeviseUser::checkRule('isLoggedIn'))
-    @live-code("permission-name|canAccessAdmin")
+@if(DeviseUser::checkRule('@php deviseLiveCode('#target-form-id', 'default value'); @endphp'))
 @endif
 ```

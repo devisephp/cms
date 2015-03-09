@@ -81,7 +81,7 @@ class InstallWizardTest extends \DeviseTestCase
             ->andReturn(false);
 
         $this->EnvironmentFileManager
-            ->shouldReceive('merge')
+            ->shouldReceive('merge', 'createIfNotExists')
             ->once()
             ->andReturnNull();
 

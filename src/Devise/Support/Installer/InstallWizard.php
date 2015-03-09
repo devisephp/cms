@@ -3,6 +3,7 @@
 use Devise\Support\Framework;
 use Devise\Support\Config\SettingsManager;
 use Devise\Support\Console\DeviseInstallCommand;
+use Devise\Support\Console\DevisePublishAssetsCommand;
 use Devise\Support\Config\EnvironmentFileManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\MessageBag;
@@ -58,8 +59,16 @@ class InstallWizard
 	 *
 	 * @param SettingsManager $SettingsManager
 	 */
-	public function __construct(SettingsManager $SettingsManager, EnvironmentFileManager $EnvironmentFileManager, Framework $Framework, DatabaseCreator $DatabaseCreator, DeviseInstallCommand $DeviseInstallCommand, DvsUser $DvsUser, DvsGroup $DvsGroup)
-	{
+	public function __construct(
+		SettingsManager $SettingsManager,
+		EnvironmentFileManager $EnvironmentFileManager,
+		Framework $Framework,
+		DatabaseCreator $DatabaseCreator,
+		DeviseInstallCommand $DeviseInstallCommand,
+		DevisePublishAssetsCommand $DevisePublishAssetsCommand,
+		DvsUser $DvsUser,
+		DvsGroup $DvsGroup
+	){
 		$this->SettingsManager = $SettingsManager;
 		$this->EnvironmentFileManager = $EnvironmentFileManager;
 		$this->Validator = $Framework->Validator;
@@ -199,8 +208,9 @@ class InstallWizard
 	{
 		$deviseJs = public_path() . '/packages/devisephp/cms/js/devise.min.js';
 
-		if ($this->File->exists($deviseJs)) {
-
+		if (!$this->File->exists($deviseJs)) {
+			dd('here');
+			$this->DevisePublishAssetsCommand->handle();
 		}
 	}
 

@@ -20,6 +20,7 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_gets_index()
     {
+        $this->InstallWizard->shouldReceive('checkAssets')->once()->andReturnNull();
         $this->Framework->Redirect->shouldReceive('to')->once()->andReturnSelf();
         $this->InstallerController->getIndex();
     }

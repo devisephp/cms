@@ -143,7 +143,7 @@ class ModelMapper
 	 * Update a given model that has been mapped
 	 *
 	 * @param  string $className
-	 * @param  string $key
+	 * @param  string $key The dvs_model_fields id
 	 * @param  string $pageVersionId
 	 * @param  array  $attributes
 	 * @param  array  $picked
@@ -153,7 +153,9 @@ class ModelMapper
 	{
         $validationInput = [];
 
-        $model = $this->App->make($className)->findOrFail($key);
+        $modelField = $this->DvsModelField->find($key);
+
+        $model = $this->App->make($className)->findOrFail($modelField->model_id);
 
         $picks = $this->picks($className);
 

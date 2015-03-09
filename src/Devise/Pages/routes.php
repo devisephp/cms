@@ -64,7 +64,7 @@ if (!function_exists('loadDeviseRoutes'))
 
             Route::$verb($page->slug, $routeData);
         }
-        
+
     }
 }
 
@@ -82,7 +82,9 @@ if(!App::runningInConsole())
 
             if (env('DEVISE_INSTALL') != 'ignore')
             {
-                Route::get('/', function() { return Redirect::to("/install/welcome"); });
+                Route::any('{any?}', function() { return Redirect::to("/install/welcome"); })
+                    ->where('any', '^((?!install).)*$');
+
                 Route::controller('install', 'Devise\Support\Installer\InstallerController');
                 return;
             }

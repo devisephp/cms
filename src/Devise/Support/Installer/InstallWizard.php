@@ -199,6 +199,8 @@ class InstallWizard
 	 */
 	public function refreshEnvironment(array $settings = array())
 	{
+        $this->EnvironmentFileManager->createIfNotExists();
+
 		\Dotenv::makeMutable();
 		\Dotenv::load(base_path(), '.env');
 		\Dotenv::makeImmutable();

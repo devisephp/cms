@@ -4,6 +4,7 @@ use Devise\Support\Framework;
 use Devise\Support\Config\SettingsManager;
 use Devise\Support\Console\DeviseInstallCommand;
 use Devise\Support\Config\EnvironmentFileManager;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\MessageBag;
 use DvsUser;
 use DvsGroup;
@@ -21,6 +22,12 @@ class InstallWizard
 	 * @var [type]
 	 */
 	protected $SettingsManager;
+
+	/**
+	 * [$File description]
+	 * @var [type]
+	 */
+	protected $File;
 
 	/**
 	 * [$EnvironmentFileManager description]
@@ -56,6 +63,7 @@ class InstallWizard
 		$this->SettingsManager = $SettingsManager;
 		$this->EnvironmentFileManager = $EnvironmentFileManager;
 		$this->Validator = $Framework->Validator;
+        $this->File = $Framework->File;
         $this->Hash = $Framework->Hash;
         $this->Config = $Framework->Config;
 		$this->Framework = $Framework;
@@ -186,6 +194,15 @@ class InstallWizard
 		}
 
 		$this->DeviseInstallCommand->handle();
+	}
+
+	public function checkAssets()
+	{
+		$deviseJs = public_path() . '/packages/devisephp/cms/js/devise.min.js';
+
+		if ($this->File->exists($deviseJs)) {
+
+		}
 	}
 
 	/**

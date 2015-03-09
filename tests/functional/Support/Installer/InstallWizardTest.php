@@ -122,4 +122,12 @@ class InstallWizardTest extends \DeviseTestCase
         $this->InstallWizard->refreshEnvironment();
 	}
 
+    // This is the test file for whether or not assets should
+    // be published during the installation.
+    public function test_devise_min_js_file_exists()
+    {
+        $fileexists = file_exists ( public_path() . '/../../../public/js/devise.min.js' );
+        $this->assertTrue($fileexists);
+    }
+
 }

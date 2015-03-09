@@ -27,6 +27,8 @@ class InstallerController extends Controller
 	 */
 	public function getIndex()
 	{
+		$this->InstallWizard->checkAssets();
+
 		return $this->Redirect->to('install/welcome');
 	}
 

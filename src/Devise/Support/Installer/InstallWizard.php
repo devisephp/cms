@@ -58,12 +58,12 @@ class InstallWizard
 	 *
 	 * @param SettingsManager $SettingsManager
 	 */
-	public function __construct(SettingsManager $SettingsManager, EnvironmentFileManager $EnvironmentFileManager, Filesystem $File, Framework $Framework, DatabaseCreator $DatabaseCreator, DeviseInstallCommand $DeviseInstallCommand, DvsUser $DvsUser, DvsGroup $DvsGroup)
+	public function __construct(SettingsManager $SettingsManager, EnvironmentFileManager $EnvironmentFileManager, Framework $Framework, DatabaseCreator $DatabaseCreator, DeviseInstallCommand $DeviseInstallCommand, DvsUser $DvsUser, DvsGroup $DvsGroup)
 	{
 		$this->SettingsManager = $SettingsManager;
 		$this->EnvironmentFileManager = $EnvironmentFileManager;
 		$this->Validator = $Framework->Validator;
-        $this->File = $File;
+        $this->File = $Framework->File;
         $this->Hash = $Framework->Hash;
 		$this->Framework = $Framework;
 		$this->DatabaseCreator = $DatabaseCreator;

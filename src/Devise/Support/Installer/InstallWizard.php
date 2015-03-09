@@ -89,14 +89,15 @@ class InstallWizard
 	 * @param  string $password
 	 * @return void
 	 */
-	public function validateAdminUser($email, $password)
+	public function validateAdminUser($email, $username, $password)
 	{
 		$rules = [
-			'email' => 'required|email',
+            'email' => 'required|email',
+			'username' => 'required',
 			'password' => 'required|min:8'
 		];
 
-		$validator = $this->Validator->make(compact('email', 'password'), $rules);
+		$validator = $this->Validator->make(compact('email', 'username', 'password'), $rules);
 
 		if ($validator->fails())
 		{
@@ -114,11 +115,12 @@ class InstallWizard
 	 * @param  string $password
 	 * @return \DvsUser
 	 */
-	public function createAdminUser($email, $password)
+	public function createAdminUser($email, $username, $password)
 	{
 		// create the user
 		$user = $this->DvsUser->newInstance();
-		$user->email = $email;
+        $user->email = $email;
+		$user->username = $username;
 		$user->password = $this->Hash->make($password);
 		$user->save();
 
@@ -210,7 +212,6 @@ class InstallWizard
 		$deviseJs = public_path() . '/packages/devisephp/cms/js/devise.min.js';
 
 		if (!$this->File->exists($deviseJs)) {
-			dd('here');
 			$this->DevisePublishAssetsCommand->handle();
 		}
 	}

@@ -13,6 +13,11 @@
         </div>
 
         <div class="dvs-form-group">
+            <label>Admin Username</label>
+            <input type="text" class="form-control" name="username" placeholder="Admin Username" value="<?= $username ?>">
+        </div>
+
+        <div class="dvs-form-group">
             <label>Admin Password</label>
             <input type="text" class="form-control" name="password" placeholder="Admin Password" value="">
         </div>
@@ -23,7 +28,6 @@
         </div>
     </form>
 @stop
-
 
 @section('scripts')
 

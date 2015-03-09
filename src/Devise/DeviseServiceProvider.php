@@ -40,6 +40,8 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
+        ini_set('xdebug.max_nesting_level', 3000);
+
         $this->registerLaravelFormAndHtmlProvider();
         $this->registerConfigPublisher();
         $this->registerDeviseViews();

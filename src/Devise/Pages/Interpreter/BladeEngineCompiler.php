@@ -2,26 +2,26 @@
 
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Compilers\CompilerInterface;
-use Illuminate\Filesystem\Filesystem;
 
 /**
- * This class merely decorates the blade compiler
+ * This class merely decorates the another compiler
  * and thus giving us the extra functionality we need
  * to work properly...
  *
  */
-class ExtendedBladeCompiler implements CompilerInterface
+class BladeEngineCompiler implements CompilerInterface
 {
 	/**
 	 * Construct a new blade compiler
 	 *
 	 * @param CompilerInterface $compiler
-	 * @param  \Illuminate\Filesystem\Filesystem  $files
+	 * @param DeviseCompiler    $DeviseCompiler
 	 */
-	public function __construct(CompilerInterface $compiler, Filesystem $files)
+	public function __construct(CompilerInterface $compiler, DeviseCompiler $DeviseCompiler, DeviseParser $DeviseParser)
 	{
 		$this->compiler = $compiler;
-		$this->files = $files;
+		$this->DeviseCompiler = $DeviseCompiler;
+		$this->DeviseParser = $DeviseParser;
 	}
 
 	/**
@@ -52,15 +52,21 @@ class ExtendedBladeCompiler implements CompilerInterface
 	 * @param  string  $path
 	 * @return void
 	 */
-	public function compile($path)
+	public function compile($path = null)
 	{
-		$this->compiler->afterCompiled = [];
+		$this->compiler->compile($path);
 
-		$result = $this->compiler->compile($path);
+		$path = $this->getCompiledPath($path);
 
-		$this->runAfterCompiledClosures($path);
+		if (! file_exists($path)) return;
 
-		return $result;
+		$html = file_get_contents($path);
+
+		if (! $this->DeviseParser->hasDeviseTags($html)) return;
+
+		$html = $this->DeviseCompiler->compile($html);
+
+		file_put_contents($path, $html);
 	}
 
 	/**
@@ -83,23 +89,5 @@ class ExtendedBladeCompiler implements CompilerInterface
 	public function __call($method, $arguments)
 	{
 		return call_user_func_array(array($this->compiler, $method), $arguments);
-	}
-
-	/**
-	 * [runAfterCompiledClosures description]
-	 * @return void
-	 */
-	public function runAfterCompiledClosures($path)
-	{
-		$compiledPath = $this->compiler->getCompiledPath($path);
-
-		$view = $this->files->get($compiledPath);
-
-		foreach ($this->compiler->afterCompiled as $hook)
-		{
-			$view = $hook($view, $this->compiler);
-
-			$this->files->put($compiledPath, $view);
-		}
 	}
 }

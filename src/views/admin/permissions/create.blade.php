@@ -1,11 +1,5 @@
 @extends('devise::admin.layouts.master')
 
-@section('css')
-
-    <link href="{{ URL::asset('/packages/devisephp/cms/css/highlighter-default.css') }}" type="text/css" rel="stylesheet">
-
-@stop
-
 @section('title')
     <div id="dvs-admin-title">
         <h1><span class="ion-ios-locked"></span> New Permission</h1>
@@ -56,7 +50,6 @@
 @stop
 
 @section('js')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
         var ruleParamMap = <?= json_encode($ruleParamMap) ?>;
         var emptyParamInput = '<?= Form::text('', null, array('class' => 'rule-param', 'placeholder' => 'Parameter')) ?>';
@@ -66,18 +59,6 @@
         devise.require(['app/admin/permissions'], function(obj) {
             obj.initialize();
         });
-    </script>
-
-    <script src="{{ URL::asset('/packages/devisephp/cms/js/lib/highlight.pack.js') }}"></script>
-
-    <script>
-
-
-        $('pre code').each(function(i, block) {
-            hljs.initHighlighting();
-        });
-
-
     </script>
 @stop
 

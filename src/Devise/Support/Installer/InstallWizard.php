@@ -57,6 +57,7 @@ class InstallWizard
 		$this->EnvironmentFileManager = $EnvironmentFileManager;
 		$this->Validator = $Framework->Validator;
         $this->Hash = $Framework->Hash;
+        $this->Config = $Framework->Config;
 		$this->Framework = $Framework;
 		$this->DatabaseCreator = $DatabaseCreator;
 		$this->DeviseInstallCommand = $DeviseInstallCommand;
@@ -241,7 +242,7 @@ class InstallWizard
 
 		foreach ($configToEnvMapping as $config => $env)
 		{
-			\Config::set($config, $merged[$env]);
+			$this->Config->set($config, $merged[$env]);
 		}
 
 		app()['env'] = $merged['APP_ENV'];

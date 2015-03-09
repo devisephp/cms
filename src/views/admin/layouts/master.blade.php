@@ -45,7 +45,6 @@
     </div>
 
     <div id="dvs-admin-body">
-
         @if(Session::has('message'))
             <div class="dvs-messages">
                 <h2>{{ Session::get('message') }}</h2>

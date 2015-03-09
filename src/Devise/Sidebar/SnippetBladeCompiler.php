@@ -12,6 +12,7 @@
  */
 class SnippetBladeCompiler
 {
+
     /**
      * Runs the compile on this view
      *
@@ -20,6 +21,7 @@ class SnippetBladeCompiler
      */
     public function compile($view)
     {
+
         $replacements = [];
 
         $pattern = '/@snippet(.+?)@endsnippet/s';
@@ -35,15 +37,33 @@ class SnippetBladeCompiler
         // loop through all the replacements
         foreach ($replacements as $replace => $with)
         {
-            $original = $with;
+            // $original = $with;
             $with = htmlentities($with);
+
+    // $with = $this->compileSnippetVar($with);
+
+
             $with = str_replace('@', '&#64;', $with);
             $with = str_replace('{', '&#123;', $with);
             $with = str_replace('}', '&#125;', $with);
             $with = str_replace(' data-devise=', ' data&#45;devise=', $with);
-            $view = str_replace($replace, "{$original} <pre><code class=\"html\">{$with}</code></pre>", $view);
+
+            // $view = str_replace($replace, "{$original} <pre><code class=\"html\">{$with}</code></pre>", $view);
+            // $view = str_replace($replace, "<pre><code class=\"html\">{$with}</code></pre>", $view);
+
+        // $view = $with;
+            $view = "<pre><code>{$with}</code></pre>";
+
         }
 
         return $view;
     }
+
+    private function compileSnippetVar($with)
+    {
+        $replacement = '<span class="dvs-live-code" data-devise-doc-target="$1" data-devise-doc-default="$2">';
+
+        return preg_replace('/@snippetvar\(\'(.*)|(.*)\'\)/', $replacement, $with);
+    }
+
 }

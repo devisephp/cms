@@ -56,6 +56,19 @@ class EnvironmentFileManager
 		return $this->save($merged);
 	}
 
+    /**
+     * Checks for existence of .env file, if not
+     * it creates a new one.
+     *
+     * @return void
+     */
+    public function createIfNotExists()
+    {
+        if(!$this->files->exists($this->envFile)) {
+            $this->save(['APP_DEBUG' => true]);
+        }
+    }
+
 	/**
 	 * Extract the settings from the env file
 	 * it should be in format DB_HOST=something

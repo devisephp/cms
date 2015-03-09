@@ -3,6 +3,26 @@
 class DatabaseCreator
 {
 	/**
+	 * For mocking...
+	 *     ...you suck connection...
+	 *        ...see...
+	 *               ... I mock you!
+	 *
+	 * @var \PDO
+	 */
+	protected $connection;
+
+	/**
+	 * Create a new database creator
+	 *
+	 * @param \PDO $connection
+	 */
+	public function __construct(\PDO $connection = null)
+	{
+		$this->connection = $connection;
+	}
+
+	/**
 	 * Create a new database from given settings
 	 *
 	 * @param  string $driver
@@ -48,6 +68,8 @@ class DatabaseCreator
 	 */
 	protected function findPdoConnection($driver, $host, $username, $password)
 	{
+		if (! is_null($this->connection)) return $this->connection;
+
 		switch ($driver)
 		{
 			case 'sqlite':

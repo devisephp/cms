@@ -5,7 +5,15 @@
                 @php $index = 0 @endphp
 
                 @foreach ($data->groups as $groupName => $group)
-                    <option value="<?= $index++ ?>"><?= $groupName ?></option>
+                    @php $contentRequested = false; @endphp
+
+                    @foreach($group as $element)
+                        @if(isset($element->content_requested) && $element->content_requested)
+                            @php $contentRequested = true; @endphp
+                        @endif
+                    @endforeach
+
+                    <option value="<?= $index++ ?>"><?= ($contentRequested) ? '[ ! ] ' : null ?><?= $groupName ?></option>
                 @endforeach
             </select>
         </div>

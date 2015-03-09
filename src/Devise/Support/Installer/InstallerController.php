@@ -77,7 +77,11 @@ class InstallerController extends Controller
 
 		if ($this->InstallWizard->errors)
 		{
-			return $this->Redirect->to('install/environment')->withErrors($this->InstallWizard->errors)->withInput();
+			return $this->Redirect
+						->to('install/environment')
+						->withErrors($this->InstallWizard->errors)
+            			->with('message-errors', 'Error')
+						->withInput();
 		}
 
 		return $this->Redirect->to('install/database');
@@ -122,7 +126,11 @@ class InstallerController extends Controller
 
 		if ($this->InstallWizard->errors)
 		{
-			return $this->Redirect->to('install/database')->withErrors($this->InstallWizard->errors)->withInput();
+			return $this->Redirect
+						->to('install/database')
+						->withErrors($this->InstallWizard->errors)
+            			->with('message-errors', 'Error')
+            			->withInput();
 		}
 
 		return $this->Redirect->to('install/create-user');
@@ -156,7 +164,11 @@ class InstallerController extends Controller
 
 		if ($this->InstallWizard->errors)
 		{
-			return $this->Redirect->to('install/create-user')->withErrors($this->InstallWizard->errors)->withInput();
+			return $this->Redirect
+						->to('install/create-user')
+						->withErrors($this->InstallWizard->errors)
+            			->with('message-errors', 'Error')
+						->withInput();
 		}
 
 		$this->InstallWizard->installDevise();

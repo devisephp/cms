@@ -47,9 +47,24 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->registerInterpreter();
+        // $this->registerSnippetBladeExtensions();
         $this->registerPhpBladeExtensions();
         $this->registerDeviseDataContainer();
         $this->registerTemplateComposer();
+        $this->registerViewName();
+
+    }
+
+    /**
+
+     */
+    private function registerViewName()
+    {
+        \View::composer('*', function($view){
+
+            \View::share('view_name', $view->getName());
+
+        });
     }
 
     /**
@@ -77,6 +92,19 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
             $extended = new BladeEngineCompiler($compiler, $deviseCompiler, $deviseParser);
 
             return new CompilerEngine($extended, $app['files']);
+        });
+    }
+
+    /**
+     * Registers @php and @endphp recognition to blade
+     *
+     * @return void
+     */
+    private function registerSnippetBladeExtensions()
+    {
+        \Blade::extend(function($view, $compiler)
+        {
+            return \App::make('Devise\Sidebar\SnippetBladeCompiler')->compile($view);
         });
     }
 

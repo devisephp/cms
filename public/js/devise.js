@@ -49,6 +49,7 @@ devise.require.config({
         fullCalendar:       'lib/fullcalendar.min',
         async:              'lib/millermedeiros-plugins/async',
         goog:               'lib/millermedeiros-plugins/goog',
+        highlighterJs:      'lib/highlight.pack',
         propertyParser :    'lib/millermedeiros-plugins/propertyParser',
         dvsEditor:          'app/devise',
         dvsPublic:          'app/public/preview',

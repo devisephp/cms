@@ -179,6 +179,6 @@ class InstallerController extends Controller
 
 		$this->Auth->loginUsingId($newUser->id, true);
 
-		return $this->Redirect->to('admin/installed');
+		return $this->Redirect->to('/admin?=installed=true');
 	}
 }

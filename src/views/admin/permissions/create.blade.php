@@ -47,7 +47,9 @@
 
         <?= Form::close() ?>
     </div>
+@stop
 
+@section('js')
     <script>
         var ruleParamMap = <?= json_encode($ruleParamMap) ?>;
         var emptyParamInput = '<?= Form::text('', null, array('class' => 'rule-param', 'placeholder' => 'Parameter')) ?>';
@@ -59,3 +61,4 @@
         });
     </script>
 @stop
+

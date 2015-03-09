@@ -1,175 +1,347 @@
 <?php namespace Devise\Pages\Interpreter;
 
-/**
- *  convert this node data into useful key, type, humanName, group, collection, alternateTarget?
- *  assert key is valid for collection or binding both
- *  assert that there is a type
- *  no human name present, make one from key
- */
 class DeviseTag
 {
 	/**
-	 * node that created this tag
-	 * @var Node
-	 */
-	protected $node;
-
-	/**
-	 * public fields for this devise tag
+	 * Identifier of the devise tag
+	 *
 	 * @var string
 	 */
-	public $collection, $key, $type,
-		   $humanName, $group,
-		   $category, $alternateTarget;
+	public $id;
 
 	/**
-	 * Create DeviseTag from this DeviseTag Node
+	 * This could be a model, field or collection binding type
 	 *
-	 * @param NodesDeviseTagNode $node [description]
+	 * @var string
 	 */
-	public function __construct(Nodes\DeviseTagNode $node)
+	public $bindingType;
+
+	/**
+	 * Collection name
+	 *
+	 * @var string
+	 */
+	public $collection;
+
+	/**
+	 * Key name
+	 *
+	 * @var string
+	 */
+	public $key;
+
+	/**
+	 * Type of the devise tag (text, image, etc)
+	 * @var string
+	 */
+	public $type;
+
+	/**
+	 * Human name of the devise tag
+	 *
+	 * @var string
+	 */
+	public $humanName;
+
+	/**
+	 * Group name of the tag
+	 *
+	 * @var string
+	 */
+	public $group;
+
+	/**
+	 * Category name (also doubles as collection name)
+	 *
+	 * @var string
+	 */
+	public $category;
+
+	/**
+	 * Alternate target for live updates
+	 *
+	 * @var string
+	 */
+	public $alternateTarget;
+
+	/**
+	 * Default values to set on this devise tag
+	 *
+	 * @var string
+	 */
+	public $defaults;
+
+	/**
+	 * String value of the entire matched string that was
+	 * regex out. This parameters above are extracted from
+	 * this value
+	 *
+	 * @var string
+	 */
+	public $value;
+
+	/**
+	 * The chain array of string value pairs for a model
+	 * or attribute
+	 *
+	 * @var string
+	 */
+	public $chain;
+
+	/**
+	 * Create a new devise tag
+	 *
+	 * @param string $str
+	 */
+	public function __construct($str, $parsed = null)
 	{
-		$this->node = $node;
-		$this->extractParameters($node);
+		$this->value = $str;
+
+		$parsed = ($parsed === null) ? $this->isStringParsed($str) : $parsed;
+
+		if ($parsed === 'parsed') $this->extractParametersFromParsedStr($str);
+		else if ($parsed === 'creator') $this->extractParametersFromUnparsedCreatorStr($str);
+		else $this->extractParametersFromUnparsedStr($str);
 	}
 
 	/**
-	 * DeviseTags can be either collections
-	 * or simple bindings depending on the key
-	 * being key or key[something]
+	 * Convert this object to a string
 	 *
 	 * @return string
 	 */
-	public function tagBindingType()
+	public function __toString()
 	{
-		return $this->collection ? 'Collection' : 'Binding';
+		return $this->value;
 	}
 
 	/**
-	 * String for this devise tag placeholder
+	 * Converts our devise tag into a giant ass array
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function hiddenPlaceHolderStr()
+	public function toArray($escaped = '', $hasKeys = false)
 	{
-		$tagType = $this->tagBindingType();
+		$arrayFormat = array(
+			'id' => $this->id,
+			'bindingType' => $this->bindingType,
+			'collection' => $this->collection,
+			'key' => $this->key,
+			'type' => $this->type,
+			'humanName' => $this->humanName,
+			'group' => $this->group,
+			'category' => $this->category,
+			'alternateTarget' => $this->alternateTarget,
+			'defaults' => $this->defaults,
+			'chain' => $this->chain,
+		);
 
-		return $tagType == 'Binding'
-			? "<?php if (Devise\Users\DeviseUser::showDeviseSpan(\"{$this->key}\", null)): ?><span style=\"display:none;\" data-dvs-placeholder-{$this->key}-id=\"{$this->key}\"></span><?php endif ?>"
-			: "<?php if (Devise\Users\DeviseUser::showDeviseSpan(\"{$this->key}\", \"{$this->collection}\")): ?><span style=\"display:none;\" data-dvs-placeholder-{$this->collection}-{$this->key}-id=\"{$this->key}\"></span><?php endif ?>";
-	}
-
-	/**
-	 * The string which adds this to the
-	 * devise container, depending on the
-	 * tagBindingType
-	 */
-	public function addToDevisePageStr()
-	{
-		$tagType = $this->tagBindingType();
-
-		$collection = "'{$this->collection}'";
-		$key = "'{$this->key}'";
-		$type = "'{$this->type}'";
-		$humanName = "'{$this->humanName}'";
-		$group = $this->group ? "'{$this->group}'" :'null';
-		$category = $this->category ? "'{$this->category}'" : 'null';
-		$alternateTarget = $this->alternateTarget ? "'{$this->alternateTarget}'" : 'null';
-
-		return $tagType == 'Binding'
-			? "App::make('dvsPageData')->add{$tagType}({$key}, {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget});"
-			: "App::make('dvsPageData')->add{$tagType}({$collection}, {$key}, {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget});";
-	}
-
-	/**
-	 * Replaces this tag inside of this
-	 * view. Changes data-devise="..." into
-	 * data-dvs-key-id="key"
-	 *
-	 * @param  string $view
-	 * @return string
-	 */
-	public function replaceTagInView($view)
-	{
-		$tagType = $this->tagBindingType();
-
-		$searchFor = $this->node->matched;
-
-		$replacement = $tagType == 'Binding'
-			? " data-dvs-{$this->key}-id=\"{$this->key}\""
-			: " data-dvs-{$this->collection}-{$this->key}-id=\"{$this->key}\"";
-
-		return str_replace($searchFor, $replacement, $view);
-	}
-
-
-    /**
-     * Assert this key is valid
-     *
-     * @param  string $key
-     * @param  string $message
-     * @throws Exceptions\InvalidDeviseKeyException
-     * @return void
-     */
-	public function assertValidKey($key, $message = null)
-	{
-		$message = $message ?: "Invalid key provided " . $key;
-
-		// is this key is valid php?
-		if (preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $key)) return;
-
-		// see if this is a collection field type
-		// which is something like collectionName[fieldName]
-		list($collection, $keyname) = $this->collectionAndKey($key);
-
-		if ($collection && $keyname)
+		// walk over the array and churn out a list of string values
+		// for each thing and make sure to enclose in \" quotes \"
+		array_walk($arrayFormat, function(&$value, $index) use ($escaped)
 		{
-			$this->assertValidKey($collection, $message);
-			$this->assertValidKey($keyname, $message);
+			if ($value === '' || is_null($value)) $value = 'null';
 
-			return;
-		}
+			if ($value !== 'null' && !empty($escaped) && !in_array($index, ['id', 'defaults', 'chain']))
+			{
+				$value = str_replace($escaped, "\\" . $escaped, $value);
+				$value = "{$escaped}{$value}{$escaped}";
+			}
+		});
 
-		// we made it here so we have an invalid key
-		throw new Exceptions\InvalidDeviseKeyException($message);
+		return $hasKeys ? $arrayFormat : array_values($arrayFormat);
 	}
 
 	/**
-	 * Extract parameters from node
+	 * Extracts out the parameters from a parsed devise string
 	 *
-	 * @param  Node $node
 	 * @return void
 	 */
-	protected function extractParameters($node)
+	protected function extractParametersFromParsedStr($params)
 	{
-		$paramsStr = $this->convertToParametersString($node);
+		$params = str_replace('data-devise-<?php echo devise_tag_cid(', '', $params);
 
-		$params = str_getcsv($paramsStr, ',', '\'');
+		$params = substr($params, 1);
 
-		// trim away unwanted white space...
-		foreach($params as $index => $param)
-		{
-			$params[$index] = trim($param);
-		}
+		$params = substr($params, 0, -4);
 
-		$this->assertParametersValid($params);
+		$params = str_getcsv($params);
 
-		list($this->collection, $this->key) = $this->collectionAndKey($params[0]);
+		array_walk($params, function(&$value) { $value = ltrim(rtrim($value)); });
 
-		$this->type = $params[1];
-		$this->humanName = isset($params[2]) && $params[2] && $params[2] !== 'null' ? $params[2] : ucwords(str_replace('_', ' ', $this->key));
-		$this->group = isset($params[3]) && $params[3] && $params[3] !== 'null' ? $params[3] : null;
-		$this->category = isset($params[4]) && $params[4] && $params[4] !== 'null' ? $params[4] : null;
-		$this->alternateTarget = isset($params[5]) && $params[5] && $params[5] !== 'null' ? $params[5] : null;
+		$this->id = $this->stripquotes($params[0]);
+
+		$this->bindingType = $this->stripquotes($params[1]);
+
+		$this->collection = $this->stripquotes($params[2]);
+
+		$this->key = $this->stripquotes($params[3]);
+
+		$this->type = $this->stripquotes($params[4]);
+
+		$this->humanName = $this->stripquotes($params[5]);
+
+		$this->group = $this->stripquotes($params[6]);
+
+		$this->category = $this->stripquotes($params[7]);
+
+		$this->alternateTarget = $this->stripquotes($params[8]);
+
+		$this->defaults = $this->stripquotes($params[9]);
 	}
 
 	/**
-	 * get the collection and key for this string
+	 * Extracts out the parameters from an unparsed devise create model
+	 *
+	 * @param  string $params
+	 * @return void
+	 */
+	protected function extractParametersFromUnparsedCreatorStr($params)
+	{
+		$params = str_replace(' data-devise-create-model=', '', $params);
+
+		$params = substr($params, 1);
+
+		$params = substr($params, 0, -1);
+
+		$params = str_getcsv($params);
+
+		// trim away extra white space off each value
+		array_walk($params, function(&$value) { $value = ltrim(rtrim($value)); });
+
+		$this->id = 'creator.' . md5($params[0]);
+
+		$this->collection = null;
+
+		$this->bindingType = 'creator';
+
+		$this->key = $params[0];
+
+		$this->type = 'creator';
+
+		$this->humanName = isset($params[1]) && $params[1] !== 'null' && $params[1] ? $params[1] : $this->humanize($key);
+
+		$this->group = null;
+
+		$this->category = null;
+
+		$this->alternateTarget = null;
+
+		$this->defaults = null;
+	}
+
+	/**
+	 * Extracts out the parameters from an unparsed devise string
+	 *
+	 * @return void
+	 */
+	protected function extractParametersFromUnparsedStr($params)
+	{
+		$params = str_replace(' data-devise=', '', $params);
+
+		$params = substr($params, 1);
+
+		$params = substr($params, 0, -1);
+
+		$params = str_getcsv($params);
+
+		// trim away extra white space off each value
+		array_walk($params, function(&$value) { $value = ltrim(rtrim($value)); });
+
+		if (!isset($params[0])) {
+			throw new InvalidDeviseKeyException('Cannot have an empty key');
+		}
+
+		// below we list out all the params and defaults too
+		list($collection, $key) = $this->extractKeyAndCollection($params[0]);
+
+		$this->id = $params[0];
+
+		$this->collection = $collection ?: null;
+
+		$this->bindingType = $this->extractBindingType($collection, $key);
+
+		$this->key = $key;
+
+		$this->type = isset($params[1]) ? $params[1] : null;
+
+		$this->humanName = isset($params[2]) && $params[2] !== 'null' && $params[2] ? $params[2] : $this->humanize($key);
+
+		$this->group = isset($params[3]) && $params[3] !== 'null' && $params[3] ? $params[3] : null;
+
+		$this->category = isset($params[4]) && $params[4] !== 'null' && $params[4] ? $params[4] : null;
+
+		$this->alternateTarget = isset($params[5]) && $params[5] !== 'null' && $params[5] ? $params[5] : null;
+
+		$this->defaults = isset($params[6]) && $params[6] !== 'null' && $params[6] ? $params[6] : null;
+
+		if ($this->bindingType === 'variable')
+		{
+			$this->extractParametersForVariable($key, $params);
+		}
+	}
+
+	/**
+	 * Extracts out parameters for a variable binding type
+	 * which is essentially a model or model attribute type
+	 *
+	 * @param  string $key
+	 * @param  array $params
+	 * @return void
+	 */
+	protected function extractParametersForVariable($key, $params)
+	{
+		$this->chain = $this->createChainArray($key);
+
+		$this->type = 'variable';
+
+		$this->humanName = isset($params[1]) && $params[1] !== 'null' && $params[1] ? $params[1] : $this->humanize($key);
+
+		$this->group = isset($params[2]) && $params[2] !== 'null' && $params[2] ? $params[2] : null;
+
+		$this->category = null;
+
+		$this->alternateTarget = null;
+
+		$this->defaults = null;
+	}
+
+	/**
+	 * Strips off the quotes from the beginning and end of string
 	 *
 	 * @param  string $str
-	 * @return array(collection, key)
+	 * @return string
 	 */
-	protected function collectionAndKey($str)
+	protected function stripquotes($str)
+	{
+		$newstr = rtrim(ltrim(rtrim(ltrim($str, '"'), '"'), "'"), "'");
+
+		if ($newstr === "null") return null;
+
+		return $newstr;
+	}
+
+	/**
+	 * Create a human version name of this string
+	 *
+	 * @param  string $str
+	 * @return string
+	 */
+	protected function humanize($str)
+	{
+		$str = str_replace('$', '', $str);
+
+		$str = str_replace('_', ' ', $str);
+
+		return ucwords($str);
+	}
+
+	/**
+	 * Extracts out the key and collection from a string
+	 *
+	 * @param  string $str
+	 * @return array
+	 */
+	protected function extractKeyAndCollection($str)
 	{
 		if (strpos($str, '[') === false)
 		{
@@ -191,48 +363,85 @@ class DeviseTag
 		return array($collection, $key);
 	}
 
-    /**
-     * Assert that the parameters for this node
-     * are valid
-     *
-     * @param  array $params
-     * @throws Exceptions\InvalidDeviseKeyException
-     * @throws Exceptions\InvalidDeviseTagException
-     * @return void
-     */
-	protected function assertParametersValid($params)
+	/**
+	 * [extractBindingType description]
+	 * @param  [type] $collection
+	 * @param  [type] $key
+	 * @return [type]
+	 */
+	protected function extractBindingType($collection, $key)
 	{
-		if (count($params) < 2)
-		{
-			throw new Exceptions\InvalidDeviseTagException('No key and type parameters found for match:' . $this->node->matched);
-		}
+		if ($collection !== null) return 'collection';
 
-		$this->assertValidKey($params[0], "Invalid key '{$params[0]}' found at match:" . $this->node->matched);
+		if (strpos($key, '$') === 0) return 'variable';
+
+		return 'field';
 	}
 
-    /**
-     * Convert this node into some csv string
-     * that we can break apart and get the
-     * parts from: key, type, humanName, etc...
-     *
-     * @param  Node $node
-     * @throws Exceptions\InvalidDeviseTagException
-     * @return string
-     */
-	protected function convertToParametersString($node)
+	/**
+	 * Checks the string to see if it is parsed or not
+	 *
+	 * @param  string  $str
+	 * @return boolean
+	 */
+	protected function isStringParsed($str)
 	{
-		$matched = $node->matched;
-		$pattern = ' data-devise="';
-
-		$offset = strpos($matched, $pattern);
-		$size = strlen($pattern);
-		$end = strlen($matched) - $offset - $size - 1;
-
-		if ($offset === false)
+		if (strpos($str, 'data-devise-<?php echo devise_tag_cid(') !== false)
 		{
-			throw new Exceptions\InvalidDeviseTagException('Could not find data-devise in this node:' . $matched);
+			return 'parsed';
 		}
 
-		return substr($matched, $offset + $size, $end);
+		return 'unparsed';
+	}
+
+	/**
+	 * We can't assume that the model will just be a single variable
+	 * it might be nested inside of another variable such as
+	 * $page->someModel
+	 *
+	 * Furthermore we cannot assume that this is a model, we will
+	 * have to check to ensure it is a Eloquent model later when
+	 * the code is actually running. At this point we are just
+	 * passing variables, the check actually happens in the
+	 * devise_model method which is an alias for
+	 * dvsPageData->addModel.
+	 *
+	 * @param  string $key
+	 * @return string
+	 */
+	protected function createChainArray($key)
+	{
+		$chain = [];
+
+		$index = '';
+
+		$split = explode('->', $key);
+
+		foreach ($split as $name)
+		{
+			$index .= $index ? '->' . $name : $name;
+			$chain["$name"] = "$index";
+		}
+
+		return $this->arrayAsString(array_reverse($chain));
+	}
+
+	/**
+	 * Converts this array to a string version that
+	 * we can read in a blade php view later
+	 *
+	 * @param  array $array
+	 * @return string
+	 */
+	protected function arrayAsString($array)
+	{
+		$arrayAsString = '[';
+
+		foreach ($array as $key => $value)
+		{
+			$arrayAsString .= "'$key' => $value,";
+		}
+
+		return $arrayAsString . ']';
 	}
 }

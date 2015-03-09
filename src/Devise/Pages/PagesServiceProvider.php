@@ -2,6 +2,10 @@
 
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Compilers\BladeCompiler;
+use Devise\Pages\Interpreter\ViewOpener;
+use Devise\Pages\Interpreter\DeviseCompiler;
+use Devise\Pages\Interpreter\DeviseParser;
+use Devise\Pages\Interpreter\BladeEngineCompiler;
 
 /**
  * Registers the Pages service provider. This allows us to manage our pages
@@ -79,20 +83,15 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $compiler = $resolver->resolve('blade')->getCompiler();
 
-        $resolver->register('blade', function() use ($app, $compiler)
+        $deviseCompiler = new DeviseCompiler(new ViewOpener);
+
+        $deviseParser = new DeviseParser;
+
+        $resolver->register('blade', function() use ($app, $compiler, $deviseCompiler, $deviseParser)
         {
-            $extended = new Interpreter\ExtendedBladeCompiler($compiler, $app['files']);
+            $extended = new BladeEngineCompiler($compiler, $deviseCompiler, $deviseParser);
 
             return new CompilerEngine($extended, $app['files']);
-        });
-
-
-
-
-
-        \Blade::extend(function($view, $compiler)
-        {
-            return \App::make('Devise\Pages\Interpreter\DeviseBladeCompiler')->compile($view, $compiler);
         });
     }
 

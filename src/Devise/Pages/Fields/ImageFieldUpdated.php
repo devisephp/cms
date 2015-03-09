@@ -36,9 +36,13 @@ class ImageFieldUpdated
 	 */
 	public function handle($field, $input, $beforeChanges)
 	{
+		$imageVersion = $this->createVersionOfImage($field, $input);
+
 		$field->values->merge([
 			'has_thumbnail' => array_get($input, 'has_thumbnail', false),
-			'image_url' => $this->createVersionOfImage($field, $input),
+			'original' => array_get($input, 'image', ''),
+			'image' => $imageVersion,
+			'image_url' => $imageVersion,
 			'thumbnail_url' => $this->createThumbnailOfImage($field, $input),
 		]);
 

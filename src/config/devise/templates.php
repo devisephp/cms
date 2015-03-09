@@ -244,6 +244,13 @@
 				'unregisteredTemplatesList' => 'Devise\Templates\TemplatesRepository.unregisteredTemplatesList',
 			),
 		),
+		'devise::admin.templates.variables.create' => array(
+			'human_name' => 'Devise Admin New Variable Form',
+			'extends' => 'devise::admin.layouts.master',
+			'vars' => array(
+				'usedVariables' => 'Devise\Templates\TemplatesRepository.compileAllUsedVars',
+			),
+		),
         'devise::admin.permissions.index' => array(
             'human_name' => 'Devise Permissions List',
             'extends' => 'devise::admin.layouts.master',

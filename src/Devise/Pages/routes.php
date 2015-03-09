@@ -64,6 +64,7 @@ if (!function_exists('loadDeviseRoutes'))
 
             Route::$verb($page->slug, $routeData);
         }
+        
     }
 }
 
@@ -75,7 +76,7 @@ if(!App::runningInConsole())
     }
     catch (PDOException $e)
     {
-        if ($e->getCode() == "1049" || $e->getCode() == "42S02")
+        if ($e->getCode() == "1045" || $e->getCode() == "1049" || $e->getCode() == "42S02")
         {
             App::make('Devise\Support\Installer\InstallWizard')->refreshEnvironment();
 
@@ -87,7 +88,6 @@ if(!App::runningInConsole())
             }
         }
 
-        dd($e);
         throw $e;
     }
 }

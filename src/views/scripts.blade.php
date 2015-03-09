@@ -11,7 +11,7 @@
             dvsPageData.page_version_id = "<?= $page->version->id ?>";
 			dvsPageData.models = <?= App::make("dvsPageData")->modelsJSON() ?>;
 			dvsPageData.model_attributes = <?= App::make("dvsPageData")->modelAttributesJSON() ?>;
-			dvsPageData.bindings = <?= App::make("dvsPageData")->bindingsJSON() ?>;
+			dvsPageData.bindings = <?= App::make("dvsPageData")->fieldsJSON() ?>;
 			dvsPageData.collections = <?= App::make("dvsPageData")->collectionsJSON() ?>;
 			dvsPageData.model_creators = <?= App::make("dvsPageData")->modelCreatorsJSON() ?>;
 

@@ -141,6 +141,44 @@ class TemplatesRepository
         return array_diff($templates, $regisHumanNames);
     }
 
+
+     /**
+     * compiles an array of all of the variables used in the application
+     *
+     * @return array
+     */
+    public function compileAllUsedVars()
+    {
+        $templatesArr = $this->Config->get('devise.templates');
+        $usedVars = array();
+        $usedClassMethod = array();
+        foreach ($templatesArr as $templateName => $template) {
+            if(isset($template['vars']) && count($template['vars'])){
+                foreach ($template['vars'] as $varName => $classMethod) {
+                    $params = '';
+                    if(!is_string($classMethod)){
+                        reset($classMethod);
+                        $key = key($classMethod);
+                        $params = str_replace('}', '', str_replace('{', '', implode(', ', $classMethod[ $key ])));
+                        $classMethod = $key;
+                    }
+                    if(!in_array($classMethod, $usedClassMethod)){
+                        $path = $templateName . '.vars.' . $varName;
+                        $classMethod = str_replace('.', '->', $classMethod);
+                        if(($lastSlashPos = strrpos($classMethod, '\\')) !== false){
+                            $classMethod = '...' . substr($classMethod, $lastSlashPos);
+                        }
+                        $usedClassMethod[] = $classMethod;
+                        $name = '$' . $varName . ' = ' . $classMethod . '(' . $params .')';
+                        $usedVars[ $path ] = $name;
+                    }
+                }
+            }
+        }
+        ksort($usedVars);
+        return $usedVars;
+    }
+
     /**
      * Get the extends/layout string from given template path
      *

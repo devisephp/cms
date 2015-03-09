@@ -94,7 +94,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         props.type = 'model';
         props.element = model;
         props.element.index = index;
-        props.coordinates = getCoordinatesFromCid(model.cid);
+        props.coordinates = getCoordinates(model.tid, model.cid);
         props.collection = model.collection;
         props.categoryName = null;
         props.group = model.collection;
@@ -115,7 +115,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         props.type = 'attribute';
         props.element = modelAttribute;
         props.element.index = index;
-        props.coordinates = getCoordinatesFromCid(modelAttribute.cid);
+        props.coordinates = getCoordinates(modelAttribute.tid, modelAttribute.cid);
         props.collection = modelAttribute.collection;
         props.categoryName = null;
         props.group = modelAttribute.collection;
@@ -140,7 +140,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         props.type = 'model_creator';
         props.element = modelCreator;
         props.element.index = index;
-        props.coordinates = getCoordinatesFromCid(modelCreator.cid);
+        props.coordinates = getCoordinates(modelCreator.tid, modelCreator.cid);
         props.collection = null;
         props.categoryName = null;
         props.group = null;
@@ -166,7 +166,7 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         props.element = binding;
         props.element.index = index;
         props.element.alternateTarget = binding.alternateTarget;
-        props.coordinates = getCoordinates(binding, index, collectionName);
+        props.coordinates = getCoordinates(binding.tid, binding.cid);
         props.categoryName = binding.category;
         props.group = binding.group;
         props.collection = collectionName;
@@ -180,38 +180,49 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
         addToNodesArray(inGroup, categoryNode, groupNode, props);
     }
 
-    function getCoordinates(binding, index, collectionName) {
-        var collection = collectionName ? collectionName + '-' : '';
-        var selector = '[data-dvs-' + collection + binding.key + '-id="' + binding.key + '"]';
-        var coords = $(selector).first().offset();
+    function getCoordinates(tid, cid)
+    {
+        var hidden, coordinates;
+        var placeholder = $('[data-dvs-placeholder="' + tid + '"]').last();
+        var element = $('[data-devise-' + cid + ']').first();
 
-        // attempt to find the hidden placeholder for
-        // this binding/collection since we do not see
-        // it on the page. This could be a devise-tag
-        // inside of @if or @foreach blocks
-        if (typeof coords === 'undefined') {
-            selector = '[data-dvs-placeholder-' + collection + binding.key + '-id="' + binding.key + '"]';
-            $(selector).first().show();
-            coords = $(selector).first().offset();
-            $(selector).first().hide();
+        if (element.length)
+        {
+            hidden = !element.is(':visible');
+
+            if (hidden) element.show();
+            coordinates = element.offset();
+            if (hidden) element.hide();
+
+            if (typeof coordinates === 'object' && coordinates.top) return coordinates;
+            return getCoordinatesFromParent(element, tid, cid);
         }
 
-        return coords;
+        placeholder.show();
+        coordinates = placeholder.offset();
+        placeholder.hide();
+
+        if (typeof coordinates === 'object' && coordinates.top) return coordinates;
+        return getCoordinatesFromParent(placeholder, tid, cid);
     }
 
-    function getCoordinatesFromCid(cid)
+    function getCoordinatesFromParent(el, tid, cid)
     {
-        var selector = '[data-dvs-cid-' + cid + ']';
-        var coords = $(selector).first().offset();
+        var sanity = 50;
+        var child = el;
+        var parent = el.parent();
+        var coordinates;
 
-        if (typeof coords === 'undefined')
+        while (child !== parent && sanity--)
         {
-            $(selector).first().show();
-            coords = $(selector).first().offset();
-            $(selector).first().hide();
+            coordinates = parent.offset();
+            if (typeof coordinates === 'object' && coordinates.top) return coordinates;
+            child = parent;
+            parent = child.parent();
         }
 
-        return coords;
+        console.log(tid, cid);
+        return { top: 0, left: 0 };
     }
 
     function isInCategory(props) {

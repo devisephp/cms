@@ -53,9 +53,10 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'dvsPageData
         dvsSidebarView.refresh();
     };
 
-    var addItem = function(_id, _name, _sort) {
+    var addItem = function(_id, _name, _sort, _relatedFields) {
         var _fieldName = 'id-'+_id;
         var _sort = _sort || null;
+        var _relatedFields = _relatedFields || null;
 
         var _input = $('<input>').attr({
             name: _fieldName,
@@ -63,6 +64,12 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'dvsPageData
             value: _name,
             placeholder: "Instance Name"
         }).addClass('dvs-collection-instance-name');
+
+         // add class "dvs-content-requested" to inputs which
+        // are related fields with content requested
+        if(checkForContentRequestedFields(_relatedFields) == true) {
+            _input.addClass('dvs-content-requested');
+        }
 
         var _link = $('<a>').addClass('dvs-collection-instance-remove').html('&#10006;');
         _link.data('id', _id);
@@ -86,7 +93,7 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'dvsPageData
 
     var drawSortable = function(response, _data) {
         $.each(_data, function(index, instance) {
-            addItem(instance.id, instance.name);
+            addItem(instance.id, instance.name, null, instance.fields);
         });
 
         resetSortable();
@@ -138,6 +145,27 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'dvsPageData
         $('#dvs-collection-instances-sortable').sortable('refresh');
     }
 
+    /**
+     * Iterates over fields related to collection instance
+     * and checks for content_requested equal to "true"
+     *
+     * @param  {object} _fields  Fields related to collection instance
+     * @return {boolean}
+     */
+    function checkForContentRequestedFields(_fields) {
+        var _hasContentRequested = false;
+
+        if(_fields != null) {
+            $.each(_fields, function(index, field) {
+                if(field.content_requested == '1') {
+                    _hasContentRequested = true;
+                }
+            });
+        }
+
+        return _hasContentRequested;
+    }
+
     var updateGroupSelect = function(_sortNum) {
         var _sortNum = _sortNum || null;
         var _el = $('#dvs-sidebar-groups').find('.dvs-select');
@@ -146,17 +174,22 @@ devise.define(['require', 'jquery', 'dvsNetwork', 'dvsSidebarView', 'dvsPageData
             _el.html(''); // empty all select options then start appending
         }
 
-        $('#dvs-collection-instances-sortable li').each(function(key, value){
-
+        $('#dvs-collection-instances-sortable li').each(function(key, value) {
             var _option = $('<option value="'+key+'">');
-            var _value = $(value).find('input').val();
+            var _input = $(value).find('input');
+            var _value = _input.val();
+
+            // prepend "[ ! ]" to option label
+            if(_input.hasClass('dvs-content-requested')) {
+                _value = '[ ! ] ' + _value;
+            }
 
             _option.html(_value);
             _el.append(_option);
 
-            // set span html so styled select displays the first value's text
+            // set the styled select/span to the first value's text
             if (key == 0 && _sortNum > 1) {
-                $('#dvs-sidebar-groups span.dvs-holder').html('1) '+_value);
+                $('#dvs-sidebar-groups span.dvs-holder').html(_value);
             }
         });
     };

@@ -9,7 +9,8 @@ class UserManagerTest extends \DeviseTestCase
         parent::setUp();
 
         $this->Framework = new \Devise\Support\Framework;
-        $this->UserManager = new UserManager(new \DvsUser, $this->Framework);
+        $this->DvsUser = new \DvsUser;
+        $this->UserManager = new UserManager($this->DvsUser, $this->Framework);
     }
 
     public function test_it_has_create_rules()
@@ -64,7 +65,18 @@ class UserManagerTest extends \DeviseTestCase
 
     public function test_it_can_register_user()
     {
-        $this->markTestIncomplete();
+        $groupId = 3;
+
+        $input = [
+            '_token' => 'someFooToken',
+            'name' => 'Foo Name',
+            'email' => 'foo@email.com',
+            'password' => 'foo_pass',
+            'password_confirmation' => 'foo_pass'
+        ];
+
+        $output = $this->UserManager->registerUser( $input, $groupId );
+        assertInstanceOf('DvsUser', $output);
     }
 
     public function test_it_cannot_register_user()
@@ -86,12 +98,14 @@ class UserManagerTest extends \DeviseTestCase
 
     public function test_it_can_remove_unactivated_users()
     {
-        $this->markTestIncomplete();
+        assertTrue( $this->UserManager->removeUnactivatedUsers() );
     }
 
     public function test_it_cannot_remove_unactivated_users()
     {
-        assertFalse( $this->UserManager->removeUnactivatedUsers() );
+        // by passing thru daysOutstanding value of 90, no users
+        // should be found with a created_at date greater
+        assertFalse( $this->UserManager->removeUnactivatedUsers(90) );
     }
 
     /**

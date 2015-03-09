@@ -47,24 +47,25 @@
         );
 
         var myDropzone = new Dropzone("html", {
-            clickable: false,
+            clickable: true,
             method: 'POST',
             url: "<?= route('dvs-media-upload') ?>",
             previewsContainer: '.dropzone-previews',
             previewTemplate: document.querySelector('template[name="dropzone-preview-item"]').innerHTML,
             sending: function(file, xhr, formdata) {
                 formdata.append('category', "<?= array_get($input, 'category', '') ?>");
-                 xhr.setRequestHeader("X-XSRF-TOKEN", "<?= Crypt::encrypt(csrf_token()) ?>");
+                xhr.setRequestHeader("X-XSRF-TOKEN", "<?= Crypt::encrypt(csrf_token()) ?>");
             },
             success: function(file, response) {
                 if (! file.previewElement) return;
 
                 var path = response.path || '';
                 var updateElements = file.previewElement.querySelectorAll('[data-filepath]');
-
                 var paths = path.split('/');
                 var filename = paths[paths.length - 1];
+
                 file.previewElement.querySelector('[data-dz-name]').innerText = filename;
+                file.previewElement.querySelector('a.dvs-media-item').href = '/media/' + path;
 
                 for (var i = 0; i < updateElements.length; i++)
                 {
@@ -74,6 +75,7 @@
                 }
 
                 file.previewElement.classList.add("dz-success");
+                file.previewElement.classList.remove("dz-processing");
             }
         });
 

@@ -18,6 +18,7 @@ var fs = require('fs')
 gulp.task('phpunit', function()
 {
     var options = {debug: false, notify: true, configurationFile: 'phpunit.xml'};
+    if (process.env.GULP_PHPUNIT_FILTER) options['filter'] = process.env.GULP_PHPUNIT_FILTER;
     gulp.src('tests/*.php')
         .pipe(phpunit('vendor/bin/phpunit', options))
         .on('error', notify.onError({

@@ -169,7 +169,7 @@ class MenusRepository
             $lazyLoadString = $this->getLazyLoadByDepth('items', $depth);
             $menu->load($lazyLoadString);
             $menu->allowedMenuItems = $this->getAllowedMenuItemsFromMenu($menu);
-
+            
             if ($page !== null)
             {
                 $this->activeItemSiblings = array();
@@ -242,7 +242,7 @@ class MenusRepository
         $shown = $this->checkMenuItemPermission($menuItem->permission);
 
         // filter out children of this menu item for permissions too
-        if ($shown)
+        if ($shown && $this->childrenLoaded($menuItem))
         {
             foreach ($menuItem->children as $key => $child)
             {
@@ -279,7 +279,7 @@ class MenusRepository
     }
 
     /**
-     * Loads children for this menu
+     * generates the lazy load string based off the requested depth
      *
      * @param $startingRelation
      * @param $depth
@@ -289,7 +289,7 @@ class MenusRepository
     {
         $relations = $startingRelation;
 
-        for ($i=0; $i < $depth; $i++)
+        for ($i=0; $i < $depth - 1; $i++)
         {
             $relations .= '.children';
         }
@@ -298,8 +298,10 @@ class MenusRepository
     }
 
     /**
-     * Not sure what this does...
-     * @todo determine what this thing does
+     * recursively traverses the menu items and their children
+     * finds the item that matches the current page, marks it as an 'activeItem'
+     * and marks it's parents as 'activeAncestor'
+     * @todo should not just rely on the page_id. what i the menuitem is a url?
      *
      * @param $pageId
      * @param $menuItems
@@ -309,7 +311,9 @@ class MenusRepository
     {
         foreach ($menuItems as $key => $menuItem)
         {
-            if ($this->locateCurrentMenuItem($pageId, $menuItem->children))
+            $childrenLoaded = $this->childrenLoaded($menuItem);
+
+            if ($childrenLoaded && $this->locateCurrentMenuItem($pageId, $menuItem->children))
             {
                 // the active item was found in the children
                 $menuItem->activeAncestor = true;
@@ -321,13 +325,29 @@ class MenusRepository
                 // this item is the active item
                 $menuItem->activeItem = true;
 
-                $this->activeItemChildren = $menuItem->children;
+                $this->activeItemChildren = ($childrenLoaded) ? $menuItem->children : array();
                 $this->activeItemSiblings = $menuItems;
-
                 return true;
             }
         }
 
         return false;
+    }
+
+        // check if ->children has been lazy loaded
+        // respecting the 'depth' value that was passed when the menu was built
+
+    /**
+     * checks if the children relation has been lazy loaded
+     * the goal is to respect the 'depth' value requested
+     * when the menu was built
+     *
+     * @param MenuItem $item
+     * @return bool
+     */
+    private function childrenLoaded($item)
+    {
+        $relations = $item->getRelations();
+        return isset($relations['children']);
     }
 }

@@ -8,12 +8,12 @@
                     @php $contentRequested = false; @endphp
 
                     @foreach($group as $element)
-                        @if($element->content_requested)
-                            @php $contentRequested = true;  @endphp
+                        @if(isset($element->content_requested) && $element->content_requested)
+                            @php $contentRequested = true; @endphp
                         @endif
                     @endforeach
 
-                    <option class="<?= ($contentRequested) ? 'dvs-content-request' : '' ?>" value="<?= $index++ ?>">Group: <?= $groupName ?></option>
+                    <option value="<?= $index++ ?>"><?= ($contentRequested) ? '[ ! ] ' : null ?><?= $groupName ?></option>
                 @endforeach
             </select>
         </div>
@@ -25,15 +25,7 @@
                 @php $index = 0 @endphp
 
                 @foreach($data->groups as $groupName => $group)
-                    @php $contentRequested = false; @endphp
-
-                    @foreach($group as $element)
-                        @if($element->content_requested)
-                            @php $contentRequested = true;  @endphp
-                        @endif
-                    @endforeach
-
-                    <option class="<?= ($contentRequested) ? 'dvs-content-request' : '' ?>" value="<?= $index++ ?>"><?= $groupName ?></option>
+                    <option value="<?= $index++ ?>"><?= $groupName ?></option>
                 @endforeach
             </select>
             <button id="dvs-sidebar-manage-groups" class="dvs-button dvs-button-secondary dvs-button-small dvs-button-solid">Collections</button>

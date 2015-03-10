@@ -27,8 +27,6 @@ class InstallerController extends Controller
 	 */
 	public function getIndex()
 	{
-		$this->InstallWizard->checkAssets();
-
 		return $this->Redirect->to('install/welcome');
 	}
 
@@ -39,7 +37,24 @@ class InstallerController extends Controller
 	 */
 	public function getWelcome()
 	{
+		if(!$this->InstallWizard->checkAssets()){
+			return $this->Redirect->to('install/inform-install-assets');
+		}
+
 		return $this->View->make('devise::installer.welcome');
+	}
+
+	public function getInformInstallAssets()
+	{
+		return $this->View->make('devise::installer.assets');
+	}
+
+	public function getAssets()
+	{
+		if(!$this->InstallWizard->checkAssets()){
+			$this->InstallWizard->installAssets();
+		}
+		return $this->Redirect->to('install/welcome');
 	}
 
 	/**

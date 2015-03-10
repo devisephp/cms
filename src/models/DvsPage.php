@@ -12,6 +12,7 @@ class DvsPage extends Eloquent
     protected $table = 'dvs_pages';
 
     public $createRules = array(
+        'view'              => 'required_if:response_type,View|min:3',
         'title'              => 'required|min:3',
         'slug'               => 'required|min:1',
         'http_verb'          => 'required|min:1',
@@ -21,6 +22,7 @@ class DvsPage extends Eloquent
     );
 
     public $updateRules = array(
+        'view'              => 'min:3',
         'title'              => 'min:1',
         'slug'               => 'min:1',
         'http_verb'          => 'required|min:1',

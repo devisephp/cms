@@ -65,5 +65,12 @@
     @yield('modals')
 
     @yield('js')
+
+    <script>
+        devise.require(['dvsLiveSpan'], function(livespan)
+        {
+            livespan.init();
+        });
+    </script>
 </body>
 </html>

@@ -1,176 +1,215 @@
-devise.define(['require', 'jquery'], { getInstance: function() {
+devise.define(['require', 'jquery'], {
 
-    var changes    = {};
-    var instance   = {};
-    var jquery     = null;
-    var editorType = null;
+    getInstance: function()
+    {
+        var changes    = {};
+        var instance   = {};
+        var jquery     = null;
+        var editorType = null;
 
-    function resetProperty(el, name, type, value) {
-        switch(type) {
-            case 'css':
-                el.css(name, value);
-                break;
-            case 'attr':
-                el.attr(name, value);
-                break;
-            // case 'html':
-            default:
-                el.html(value);
-                break;
-        }
-    }
-
-    function addAdminCloseListener() {
-
-        jQuery('#dvs-mode').on('closeAdmin', function() {
-            jQuery.each(changes, function(updateElement, properties){
-                var _el = jQuery(updateElement);
-                jQuery.each(properties, function(propertyType, values){
-                    jQuery.each(values, function(propertyName, value){
-                        resetProperty(_el, propertyName, propertyType, value);
-                    });
-                });
-            });
-        });
-
-    }
-
-    instance.init = function($, listenTo, type) {
-
-        jQuery     = $;
-        editorType = type;
-
-        var updateSelector  = null;
-        var alternateTarget = null;
-        var newValue        = '';
-
-        function getCurrentValue(_type, _property) {
-            var _currentValue = null;
-
-            switch (_type) {
+        function resetProperty(el, name, type, value) {
+            switch(type) {
                 case 'css':
-                    _currentValue = $(updateSelector).css(_property);
+                    el.css(name, value);
                     break;
                 case 'attr':
-                    _currentValue = $(updateSelector).attr(_property);
-                    break;
-                case 'wysiwyg':
-                    _currentValue = _property.getData();
+                    el.attr(name, value);
                     break;
                 // case 'html':
                 default:
-                    _currentValue = $(updateSelector).html();
+                    el.html(value);
                     break;
             }
-
-            if (typeof _currentValue == 'undefined') {
-                _currentValue = null;
-            }
-
-            return _currentValue;
         }
 
-        function logChange(_type, _property) {
-            if(typeof changes[updateSelector] == 'undefined') {
-                changes[updateSelector] = {};
-            }
-            if(typeof changes[updateSelector][_type] == 'undefined') {
-                changes[updateSelector][_type] = {};
-            }
-            if(typeof changes[updateSelector][_type][_property] == 'undefined') {
-                changes[updateSelector][_type][_property] = getCurrentValue(_type, _property);
-            }
+        function addAdminCloseListener() {
+    // console.log( jQuery._data( jQuery('#dvs-mode')[0], "events" ) );
+            jQuery('#dvs-mode').on('closeAdmin', function() {
+
+                jQuery.each(changes, function(updateElement, properties){
+                    var _el = jQuery(updateElement);
+                    jQuery.each(properties, function(propertyType, values){
+                        jQuery.each(values, function(propertyName, value){
+                            resetProperty(_el, propertyName, propertyType, value);
+                        });
+                    });
+                });
+            });
+
         }
 
-        function updateImage() {
-            logChange('image', 'value');
-            $(updateSelector).attr('src', newValue);
-        }
+        instance.init = function($, listenTo, type) {
 
-        function updateColor() {
-            logChange('color', 'value');
-            $(updateSelector).css('color', newValue);
-        }
+            jQuery     = $;
+            editorType = type;
 
-        function updateHTML() {
-            logChange('html', 'value');
-            $(updateSelector).html(newValue);
-        }
+            var updateSelector  = null;
+            var alternateTarget = null;
+            var newValue        = '';
 
-        function updateAlternateTarget() {
+            function getCurrentValue(_type, _property) {
+                var _currentValue = null;
 
-            var re = /(attribute.)(.+)/;
-            var matches = re.exec(alternateTarget);
-
-            if (matches !== null && matches.length > 1) {
-                logChange('attr', matches[2]);
-                $(updateSelector).attr(matches[2], newValue);
-            } else {
-                logChange('css', alternateTarget);
-                $(updateSelector).css(alternateTarget, newValue);
-            }
-        }
-
-        function updateTarget()
-        {
-            if (typeof alternateTarget === 'undefined' || alternateTarget === null)
-            {
-                switch (type) {
-                    case 'image':
-                        updateImage();
+                switch (_type) {
+                    case 'css':
+                        _currentValue = $(updateSelector).css(_property);
                         break;
-                    case 'color':
-                        updateColor();
+                    case 'attr':
+                        _currentValue = $(updateSelector).attr(_property);
                         break;
-                    // case 'link':
-                    // case 'text':
-                    // case 'textarea':
+                    case 'wysiwyg':
+                        _currentValue = _property.getData();
+                        break;
+                    // case 'html':
                     default:
-                        updateHTML();
+                        _currentValue = $(updateSelector).html();
                         break;
                 }
 
-            } else {
-                updateAlternateTarget();
+                if (typeof _currentValue == 'undefined') {
+                    _currentValue = null;
+                }
+
+                return _currentValue;
             }
-        }
 
-        if (editorType !== 'wysiwyg') {
-            listenTo.bind('input', function() {
-                newValue = listenTo.val();
+            function logChange(_type, _property) {
+                if(typeof changes[updateSelector] == 'undefined') {
+                    changes[updateSelector] = {};
+                }
+                if(typeof changes[updateSelector][_type] == 'undefined') {
+                    changes[updateSelector][_type] = {};
+                }
+                if(typeof changes[updateSelector][_type][_property] == 'undefined') {
+                    changes[updateSelector][_type][_property] = getCurrentValue(_type, _property);
+                }
+            }
 
-                var _index           = listenTo.data('dvs-index');
-                var _key             = listenTo.data('dvs-key');
-                var _alternateTarget = listenTo.data('dvs-alternate-target');
+            function updateImage() {
+                logChange('image', 'value');
+                $(updateSelector).attr('src', newValue);
+            }
 
-                updateSelector       = '[data-dvs-' + _key + '-id="' + _key + '"]';
+            function updateColor() {
+                logChange('color', 'value');
+                $(updateSelector).css('color', newValue);
+            }
 
-                alternateTarget      = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+            function updateHTML() {
+                logChange('html', 'value');
+                $(updateSelector).html(newValue);
+            }
 
-                updateTarget();
-            });
-        } else {
-            listenTo.on('change', function() {
+            function updateDatetime() {
+                logChange('datetime', 'value');
+                $(updateSelector).html(newValue);
+            }
+
+            function updateAlternateTarget()
+            {
+                var re = /(attribute.)(.+)/;
+                var matches = re.exec(alternateTarget);
+
+                if (matches !== null && matches.length > 1) {
+                    logChange('attr', matches[2]);
+                    $(updateSelector).attr(matches[2], newValue);
+                } else {
+                    logChange('css', alternateTarget);
+                    $(updateSelector).css(alternateTarget, newValue);
+                }
+            }
+
+            function updateTarget()
+            {
+console.log('updateTarget');
+                if (typeof alternateTarget === 'undefined' || alternateTarget === null)
+                {
+                    switch (type) {
+                        case 'image':
+                            updateImage();
+                            break;
+                        case 'color':
+                            updateColor();
+                            break;
+                        // case 'link':
+                        // case 'text':
+                        // case 'textarea':
+                        default:
+                            updateHTML();
+                            break;
+                    }
+
+                } else {
+                    updateAlternateTarget();
+                }
+            }
+
+console.log('editorType', editorType);
 
 
-                newValue = listenTo.getData();
 
-                var _textArea = jQuery('textarea.dvs-wysiwyg');
+            // currently for input, textarea, link
+            if (editorType !== 'wysiwyg' && editorType !== 'datetime')
+            {
 
-                var _index           = _textArea.data('dvs-index');
-                var _key             = _textArea.data('dvs-key');
-                var _alternateTarget = _textArea.data('dvs-alternate-target');
+                listenTo.bind('input', function() {
+                    newValue = listenTo.val();
 
-                updateSelector       = '[data-dvs-' + _key + '-id="' + _key + '"]';
-                alternateTarget      = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+                    var _index           = listenTo.data('dvs-index');
+                    var _key             = listenTo.data('dvs-key');
+                    var _alternateTarget = listenTo.data('dvs-alternate-target');
 
-                updateTarget();
+                    updateSelector = '[data-devise-field' + _index + '="' + _key + '"]';
 
-            });
-        }
+                    alternateTarget = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
 
-        addAdminCloseListener();
-    };
+                    updateTarget();
+                });
 
-    return instance;
-}});
+            }
+            else if(editorType == 'datetime')
+            {
+
+                 $('.dvs-sidebar-datetime-element').on('change', listenTo, function() {
+                    newValue = listenTo.val();
+
+                    var _index           = listenTo.data('dvs-index');
+                    var _key             = listenTo.data('dvs-key');
+                    var _alternateTarget = listenTo.data('dvs-alternate-target');
+
+                    updateSelector = '[data-devise-field' + _index + '="' + _key + '"]';
+
+                    updateTarget();
+                 });
+
+            }
+            else
+            {
+                // wysiwyg's
+
+                listenTo.on('change', function() {
+                    newValue = listenTo.getData();
+
+                    var _textArea = jQuery('textarea.dvs-wysiwyg');
+
+                    var _index           = _textArea.data('dvs-index');
+                    var _key             = _textArea.data('dvs-key');
+                    var _alternateTarget = _textArea.data('dvs-alternate-target');
+
+                    updateSelector = '[data-devise-field' + _index + '="' + _key + '"]';
+console.log(updateSelector);
+                    alternateTarget = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+
+                    updateTarget();
+
+                });
+
+            }
+
+            addAdminCloseListener();
+        };
+
+        return instance;
+
+    }
+});

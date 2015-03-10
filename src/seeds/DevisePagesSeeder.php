@@ -171,7 +171,7 @@ class DevisePagesSeeder extends DeviseSeeder
                 'slug'                    => '/admin/api',
                 'short_description'       => 'Stores the data from the API create form',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\ApiPageResponseHandler.requestCreateNewPage',
+                'response_path'           => 'Devise\Pages\ApiPagesResponseHandler.requestCreateNewPage',
                 'response_params'         => 'input'
             ),
             array(
@@ -199,7 +199,7 @@ class DevisePagesSeeder extends DeviseSeeder
                 'slug'                    => '/admin/api/{pageId}',
                 'short_description'       => 'Updates the API request record using the form data',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\ApiPageResponseHandler.requestUpdatePage',
+                'response_path'           => 'Devise\Pages\ApiPagesResponseHandler.requestUpdatePage',
                 'response_params'         => 'params.pageId, input'
             ),
             array(
@@ -214,7 +214,7 @@ class DevisePagesSeeder extends DeviseSeeder
                 'slug'                    => '/admin/api/{pageId}',
                 'short_description'       => 'Destroys a page record',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\ApiPageResponseHandler.requestDestroyPage',
+                'response_path'           => 'Devise\Pages\ApiPagesResponseHandler.requestDestroyPage',
                 'response_params'         => 'params.pageId'
             ),
 			array(

@@ -31,6 +31,13 @@ class InstallerControllerTest extends \DeviseTestCase
         $this->InstallerController->getWelcome();
     }
 
+    public function test_welcome_gets_assets()
+    {
+        $this->InstallWizard->shouldReceive('checkAssets')->once()->andReturn(false);
+        $this->Framework->Redirect->shouldReceive('to')->once()->andReturnSelf();
+        $this->InstallerController->getWelcome();
+    }
+
     public function test_it_can_get_environment()
     {
         $this->Framework->Input->shouldReceive('old')->once()->andReturn('production');

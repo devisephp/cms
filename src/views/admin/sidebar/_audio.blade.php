@@ -32,7 +32,7 @@
 
         <div class="dvs-property">
             <label>Audio Channels</label>
-            <?= Form::select('audio_channels', [1, 2], $element->audio_channels, array('class' => 'dvs-select')) ?>
+            <?= Form::select('audio_channels', [1, 2], $element->audio_channels, array('class' => 'dvs-select dvs-button-solid')) ?>
         </div>
 
         <div class="dvs-property">

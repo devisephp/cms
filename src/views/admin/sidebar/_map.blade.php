@@ -24,22 +24,22 @@
 
         <div class="dvs-property">
         <?= Form::label('Mode') ?>
-        <?= Form::select('mode', [ 'roadmap' => 'Road Map', 'satellite' => 'Satellite', 'hybrid' => 'Hybrid', 'terrain' => 'Terrain' ], $element->value->mode, array('class' => 'dvs-select')) ?>
+        <?= Form::select('mode', [ 'roadmap' => 'Road Map', 'satellite' => 'Satellite', 'hybrid' => 'Hybrid', 'terrain' => 'Terrain' ], $element->value->mode, array('class' => 'dvs-select dvs-button-solid')) ?>
         </div>
 
         <div class="dvs-property">
         <?= Form::label('Starting Zoom') ?>
-        <?= Form::selectRange('startingZoom', 1, 19, $element->value->startingZoom, array('class' => 'dvs-select')) ?>
+        <?= Form::selectRange('startingZoom', 1, 19, $element->value->startingZoom, array('class' => 'dvs-select dvs-button-solid')) ?>
         </div>
 
         <div class="dvs-property">
         <?= Form::label('Min Zoom') ?>
-        <?= Form::selectRange('minZoom', 1, 19, $element->value->minZoom, array('class' => 'dvs-select')) ?>
+        <?= Form::selectRange('minZoom', 1, 19, $element->value->minZoom, array('class' => 'dvs-select dvs-button-solid')) ?>
         </div>
 
         <div class="dvs-property">
         <?= Form::label('Max Zoom') ?>
-        <?= Form::selectRange('maxZoom', 1, 19, $element->value->maxZoom(19), array('class' => 'dvs-select')) ?>
+        <?= Form::selectRange('maxZoom', 1, 19, $element->value->maxZoom(19), array('class' => 'dvs-select dvs-button-solid')) ?>
         </div>
 
         @include('devise::admin.sidebar._field_scope')

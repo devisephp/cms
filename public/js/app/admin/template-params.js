@@ -4,7 +4,7 @@ devise.define(['jquery'], function ( $ )
     function initialize()
     {
         addListeners();
-    };
+    }
 
     function addListeners()
     {
@@ -17,7 +17,7 @@ devise.define(['jquery'], function ( $ )
         $('#dvs-admin').on('click', '#dvs-add-param', function(e) {
             attemptParamAdd();
         });
-    };
+    }
 
     /**
      * Changes value of placeholder text based-on selected param type
@@ -52,7 +52,7 @@ devise.define(['jquery'], function ( $ )
         }
 
         return $('#dvs-param-value').attr('placeholder', placeholderText);
-    };
+    }
 
     /**
      * Processes submission of param create form
@@ -71,9 +71,17 @@ devise.define(['jquery'], function ( $ )
 
         // format values according to param type
         if(paramTypeValue === 'params') {
-            paramValue = 'params.' + paramValue;
+            if(paramValue != ''){
+                paramValue = 'params.' + paramValue;
+            } else {
+                paramValue = 'params';
+            }
         } else if(paramTypeValue === 'input' && paramValue !== 'input') {
-            paramValue = 'input.' + paramValue;
+            if(paramValue != ''){
+                paramValue = 'input.' + paramValue;
+            } else {
+                paramValue = 'input';
+            }
         }
 
         paramForShow = paramValue; // keep a display version of param
@@ -86,7 +94,7 @@ devise.define(['jquery'], function ( $ )
         // now add new param element to DOM by using the varName;
         // FYI: varName defined in admin/templates/params/create
        insertParamTemplateInDOM(varName, paramValue, paramForShow);
-    };
+    }
 
 
     /**
@@ -122,9 +130,9 @@ devise.define(['jquery'], function ( $ )
         $(templateHtml).insertAfter(lastParamDiv);
 
         // remove modal and blocker
-         $('#dvs-admin-modal').html('').addClass('dvs-hidden');
-         $('#dvs-admin-blocker').addClass('dvs-hidden');
-    };
+        $('#dvs-admin-modal').html('').addClass('dvs-hidden');
+        $('#dvs-admin-blocker').addClass('dvs-hidden');
+    }
 
     initialize();
 });

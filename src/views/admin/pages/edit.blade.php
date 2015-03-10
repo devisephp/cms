@@ -2,13 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Edit Page</h1>
-
-        <p>Use the form below to update a page and/or any page-related settings.</p>
+        <h1><span class="ion-ios-copy-outline"></span> Edit Page</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-pages'), 'List of Pages', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 
@@ -18,7 +18,7 @@
 
             @include('devise::admin.pages._page-form', ['method' => 'update'])
 
-            <?= Form::submit('Edit Page', array('class' => 'dvs-button dvs-button-large')) ?>
+            <?= Form::submit('Edit Page', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
         <?= Form::close() ?>
     </div>
 

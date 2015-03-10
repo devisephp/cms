@@ -1,0 +1,139 @@
+// Roboto Font
+@import url('http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400');
+
+// Colors - Global
+$white       : #ffffff;
+$black       : #262626;
+$purple      : #965b95;
+
+// Sections
+$tan         : #b8bf68;
+$green       : #7dbd5d;
+$light-blue  : #b7f0f2;
+$blue        : #5dbabd;
+$red         : #FD5F46;
+$orange      : #d68424;
+$purple      : #673f90;
+$pink        : #bc3fa0;
+
+$groups      : $tan;
+$users       : $green;
+$pages       : $blue;
+$languages   : $pink;
+$menus       : $orange;
+$permissions : $red;
+$templates   : $purple;
+
+// Grays
+$light-gray  : #ebebeb;
+$french-gray : #BCBEC2;
+$mid-gray    : #a0a0a0;
+$gray        : #5d5d5d;
+
+
+// Fonts
+$sidebarMainFont:           'Roboto', Tahoma, Arial, sans-serif;
+$sidebarMainFontWeight:     400;
+$sidebarMainFontSize:       12px;
+
+$sidebarHeaderFontWeight:   600;
+$sidebarHeaderFontSize:     14px;
+
+$bodyMainFont:              $sidebarMainFont;
+$bodyMainFontSize:          14px;
+$bodyMainFontWeight:        400;
+
+// Sidebar General
+$sidebarDistanceFromTop:   35px;
+$sidebarDistanceFromLeft:  35px;
+$sidebarWidth:             328px;
+$sidebarGeneralPadding:    20px;
+$sidebarRoundedCorners:    5px;
+
+// Sidebar Colors
+$sidebarBgColor:                #262626;
+$sidebarTitleBgColor:           darken($sidebarBgColor, 20%);
+$sidebarTextColor:              #f5f5f5;
+$sidebarRuleColor:              #7dbd5d;
+$sidebarElementsButton:         #333333;
+$sidebarBreadcrumbLink:         $sidebarRuleColor;
+$sidebarBreadcrumbActive:       #6b6b6b;
+
+// Body General
+$bodyContainerWidth:       90%;
+
+// Body and Sidenav Colors
+$bodyBgColor:              #2D3039;
+$bodyCustomColor:          #7dbd5d;
+$bodyTitleColor:           #ffffff;
+$bodyTextColor:            #BCBEC2;
+$bodyActiveLinkColor:      darken($bodyCustomColor, 12%);
+
+$sidenavTitleColor:        #ffffff;
+$sidenavLinkColor:         #BCBEC2;
+$sidenavActiveLinkColor:   $bodyCustomColor;
+
+$dashboardCardTitleColor:    #787878;
+$dashboardCardTextColor:     lighten($dashboardCardTitleColor, 9.25%);
+$dashboardHexagonTextColor:  #e7e7e7;
+
+// Forms
+$formLabelColumnWidth:      20%;
+$formFieldColumnWidth:      78%;
+$formGutterWidth:           2%;
+$formErrorColor:            #834040;
+
+$sidebarFormBgColor :       #333333;
+$sidebarFormTextColor :     #e3e3e3;
+$sidebarSelectArrowColor:   $blue;
+$sidebarFormPadding :       12px 6px;
+
+$bodyFormBgColor:           darken($bodyBgColor, 2%);
+$bodyFormTextColor:         $french-gray;
+
+
+// Tables
+$primaryTableBgColor:       darken($bodyBgColor, 3%);
+$secondaryTableBgColor:     darken($bodyBgColor, 1%);
+$tableTextColor:            $white;
+
+
+// Breadcrumbs
+$sidebarCrumbsActiveColor:    $sidebarRuleColor;
+$sidebarCrumbsInactiveColor:  #6b6b6b;
+
+
+// Buttons / Links
+$buttonBorderRadius:       2px;
+
+$defaultButtonBgColor:     darken($bodyBgColor, 10%);
+$defaultButtonTextColor:   lighten(#BCBEC2, 5%);
+
+$primaryButtonBgColor:     #BCBEC2;
+$primaryButtonTextColor:   $bodyBgColor;
+
+$secondaryButtonBgColor:   #5dbabd;
+$secondaryButtonTextColor: $white;
+
+$inactiveButtonBgColor:    $red;
+$inactiveButtonTextColor:  $french-gray;
+
+$dangerButtonBgColor:      $red;
+$dangerButtonTextColor:    $white;
+
+$successButtonBgColor:      $green;
+$successButtonTextColor:    $white;
+
+$smallButtonPadding:       8px 10px;
+$regularButtonPadding:     12px 20px;
+$largeButtonPadding:       12px 30px;
+
+$sidebarSaveButtonBgColor:      $blue;
+$sidebarSaveButtonTextColor:    $white;
+
+$sidebarDiscardButtonBgColor:   $sidebarElementsButton;
+$sidebarDiscardButtonTextColor: $white;
+
+$linkTextColor:            $primaryButtonBgColor;
+
+$bodyPaginationLinkColor:        darken($tableTextColor, 10%);

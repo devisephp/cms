@@ -6,14 +6,17 @@
     <div class="dvs-editor-values">
 
         <?= Form::label('File Path')?>
-        <?= Form::text('file', $element->value->file, array('class'=>'dvs-liveupdate-listen ' . $loadDefaults,
-                                                             'data-dvs-type' => 'file',
-                                                             'data-dvs-index' => $element->index,
-                                                             'data-dvs-alternate-target' => $element->alternateTarget,
-                                                             'data-dvs-key' => $element->key)) ?>
+        <?= Form::text('file',
+                        $element->value->file,
+                        array('class'=>'dvs-liveupdate-listen ' . $loadDefaults,
+                                 'data-dvs-type' => 'file',
+                                 'data-dvs-index' => $element->index,
+                                 'data-dvs-alternate-target' => $element->alternateTarget,
+                                 'data-dvs-key' => $element->key
+                        )) ?>
 
         <div class="dvs-sidebar-button-grid dvs-property">
-            <button type="button" data-target="file" class="browse dvs-button">Select or Upload File</button>
+            <button type="button" data-target="file" class="browse dvs-button dvs-button-solid dvs-button-success">Select or Upload File</button>
         </div>
 
         @include('devise::admin.sidebar._collection_instance_id')

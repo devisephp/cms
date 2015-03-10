@@ -6,8 +6,8 @@
     <title><?= $page->title ?></title>
 
 	<link href="<?= URL::asset('/packages/devisephp/cms/css/dvs-admin.css') ?>" type="text/css" rel="stylesheet">
-    <link href="<?= URL::asset('/packages/devisephp/cms/css/main.css') ?>" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/bootstrap.min.css') ?>">
+    <link href="<?= URL::asset('/packages/devisephp/cms/css/main.css') ?>" rel="stylesheet">
 
     <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/devise.min.js') ?>"></script>
 </head>

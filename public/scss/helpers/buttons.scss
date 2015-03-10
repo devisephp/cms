@@ -1,13 +1,26 @@
+@mixin dvs-buttons() {
+
 .dvs-button {
   display:inline-block;
   padding:$regularButtonPadding;
-  color:$primaryButtonTextColor;
-  background-color:$primaryButtonBgColor;
+  color:$primaryButtonBgColor;
+  background-color: transparent;
+  border:1px solid $primaryButtonBgColor;
   text-transform:uppercase;
   text-decoration:none;
-  border-width:0;
   border-radius:$buttonBorderRadius;
   box-sizing:border-box;
+  font-size: 11px;
+
+  &.dvs-button-solid {
+    background-color:$primaryButtonBgColor;
+    color: ($primaryButtonTextColor);
+  }
+
+  &.dvs-button-tiny {
+    padding:6px;
+    font-size:10px;
+  }
 
   &.dvs-button-small {
     padding:8px;
@@ -19,14 +32,32 @@
     font-size:14px;
   }
 
+  &.dvs-button-block {
+    display:block;
+    width:100%;
+    padding-right:0;
+    padding-left:0;
+  }
+
   &.dvs-button-secondary {
-    background-color:$secondaryButtonBgColor;
-    color:$secondaryButtonTextColor;
+    border:1px solid $secondaryButtonBgColor;
+    color:$secondaryButtonBgColor;
+
+    &.dvs-button-solid {
+      background-color:$secondaryButtonBgColor;
+      color:$secondaryButtonTextColor;
+    }
   }
 
   &.dvs-button-inactive {
-    background-color:$inactiveButtonBgColor;
-    color:$secondaryButtonTextColor;
+
+    border:1px solid $inactiveButtonBgColor;
+    color:$inactiveButtonBgColor;
+
+    &.dvs-button-solid {
+      background-color:$inactiveButtonBgColor;
+      color:$inactiveButtonTextColor;
+    }
   }
 
   &.dvs-button-dark {
@@ -35,22 +66,40 @@
   }
 
   &.dvs-button-gray {
-    background-color:lighten($black, 15%);
-    color:$secondaryButtonTextColor;
+    border:1px solid $french-gray;
+    color:$french-gray;
+
+    &.dvs-button-solid {
+      background-color:$french-gray;
+      color:$black;
+    }
   }
 
   &.dvs-button-danger {
-    background-color:#666;
-    color:#fff;
+    border:1px solid $dangerButtonBgColor;
+    color:$dangerButtonBgColor;
+
+    &.dvs-button-solid {
+      background-color:$dangerButtonBgColor;
+      color:$dangerButtonTextColor;
+    }
+  }
+
+  &.dvs-button-success {
+    border:1px solid $successButtonBgColor;
+    color:$successButtonBgColor;
+
+    &.dvs-button-solid {
+      background-color:$successButtonBgColor;
+      color:$successButtonTextColor;
+    }
   }
 
   &.dvs-button-outset {
-    color:darken(#ababab, 10%);
+    color:$french-gray;
     background-color:$primaryTableBgColor;
-    border:1px solid darken($primaryTableBgColor, 12%);
-    border-bottom-color:darken($primaryTableBgColor, 20%);
+    border:1px solid darken($primaryTableBgColor, 3%);
     border-radius:4px;
-    box-shadow:0 1px 1px darken($primaryTableBgColor, 8%);
   }
 }
 
@@ -61,28 +110,18 @@
     display:inline-block !important;
     margin-left:-4px;
     border-radius:0;
-    border-right:1px solid #cbe3f1;
-    border-left:1px solid #ebf3f7;
-
-    &.dvs-button-secondary {
-      border-right:1px solid #90c0dd;
-      border-left: 1px solid #ebf3f7;
-    }
-
-    &.dvs-button-danger {
-      border-right:1px solid #111;
-      border-left:1px solid #fff;
-    }
+    border-right-width:1px;
+    border-left-width:0;
 
     &:first-child {
       border-radius:3px 0 0 3px;
-      border-left-width:0;
+      border-left-width:1px;
       margin-left:0;
     }
 
     &:last-child {
       border-radius:0 3px 3px 0;
-      border-right-width:0;
+      border-right-width:1px;
     }
   }
 
@@ -91,17 +130,7 @@
 
     &:last-child input[type="submit"] {
       border-radius:0 3px 3px 0;
-      border-right-width:0;
     }
-  }
-
-  &.dvs-sort-group {
-    .dvs-button-outset {
-      border-right:1px solid darken($primaryTableBgColor, 12%);
-      border-left:1px solid darken($primaryTableBgColor, 12%);
-    }
-
-    a.page-sort { background-position:right 10px top 48% }
   }
 }
 
@@ -113,7 +142,180 @@ input[type="submit"]{
 }
 
 .pagination {
+  margin:25px 30px;
+  border-radius:$buttonBorderRadius;
+  @include clearfix;
+
   li {
     float:left;
+    display:inline-block;
+    background-color: transparent;
+    border:1px solid $defaultButtonBgColor;
+    border-right-width:0;
+
+    a, span {
+      display:block;
+      padding:$smallButtonPadding;
+      color:$defaultButtonTextColor;
+    }
+
+    &.active {
+      background-color:darken($primaryTableBgColor,5%);
+      font-weight:$bodyMainFontWeight + 300;
+    }
+
+    &.disabled {
+      background-color:lighten($primaryTableBgColor, 2%);
+      color:darken(#ccc, 15%);
+      cursor:not-allowed;
+    }
+
+    &.dvs-more-results {
+      span { padding:10px 8px 10px 0 }
+    }
+
+    &:first-child {
+      border-bottom-left-radius:$buttonBorderRadius;
+      border-top-left-radius:$buttonBorderRadius;
+    }
+
+    &:last-child {
+      border-bottom-right-radius:$buttonBorderRadius;
+      border-top-right-radius:$buttonBorderRadius;
+      border-right-width:1px;
+    }
   }
 }
+
+
+.dvs-select-wrapper {
+  position         : relative;
+  display          : inline-block;
+  width            : 100%;
+  cursor           : pointer;
+  background-color : transparent;
+  border-radius    : $buttonBorderRadius;
+  border           : 1px solid $primaryButtonBgColor;
+  color            : $french-gray;
+  padding          : $sidebarFormPadding;
+
+  .dvs-holder {
+    display        : block;
+    float          : left;
+    margin         : 0 5px 0 12px;
+    white-space    : nowrap;
+    overflow       : hidden;
+    cursor         : pointer;
+    position       : relative;
+    text-transform : uppercase;
+    z-index        : 2;
+  }
+
+  select {
+    margin         : 0;
+    position       : absolute;
+    z-index        : 3;
+    cursor         : pointer;
+    outline        : none;
+    opacity        : 0;
+    width          : 100%;
+
+    /* CSS hacks for older browsers */
+    _noFocusLine   : expression(this.hideFocus=true);
+    -ms-filter     :"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter         : alpha(opacity=0);
+    -khtml-opacity : 0;
+    -moz-opacity   : 0;
+  }
+
+  span { // This is the label for the faux select
+    width          : 75%;
+    overflow       : hidden;
+  }
+
+  &:after {
+    position       : absolute;
+    content        : " ";
+    right          : 12px;
+    top            : 48%;
+    width          : 0;
+    height         : 0;
+    border-left    : 5px solid transparent;
+    border-right   : 5px solid transparent;
+    border-top     : 5px solid $french-gray;
+  }
+
+  &.dvs-button-solid {
+    background-color:$primaryButtonBgColor;
+    color: $primaryButtonTextColor;
+
+    &:after {
+      border-top-color: $black;
+    }
+  }
+
+  &.dvs-select-small {
+    padding:8px 0px;
+  }
+
+  &.dvs-select-secondary {
+    border:1px solid $secondaryButtonBgColor;
+    color:$secondaryButtonBgColor;
+
+    &.dvs-select-solid {
+      background-color:$secondaryButtonBgColor;
+      color:$secondaryButtonTextColor;
+    }
+  }
+
+  &.dvs-select-inactive {
+
+    border:1px solid $inactiveButtonBgColor;
+    color:$inactiveButtonBgColor;
+
+    &.dvs-select-solid {
+      background-color:$inactiveButtonBgColor;
+      color:$inactiveButtonTextColor;
+    }
+  }
+
+  &.dvs-select-gray {
+    border:1px solid $french-gray;
+    color:$french-gray;
+
+    &.dvs-select-solid {
+      background-color:$french-gray;
+      color:$black;
+    }
+  }
+
+  &.dvs-select-danger {
+    border:1px solid $dangerButtonBgColor;
+    color:$dangerButtonBgColor;
+
+    &.dvs-select-solid {
+      background-color:$dangerButtonBgColor;
+      color:$dangerButtonTextColor;
+    }
+  }
+
+  &.dvs-select-success {
+    border:1px solid $successButtonBgColor;
+    color:$successButtonBgColor;
+
+    &.dvs-select-solid {
+      background-color:$successButtonBgColor;
+      color:$successButtonTextColor;
+    }
+  }
+}
+
+td {
+  .dvs-select-small {
+    margin-top:5px;
+  }
+}
+
+}
+
+@include dvs-buttons;

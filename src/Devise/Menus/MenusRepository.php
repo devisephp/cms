@@ -3,6 +3,9 @@
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Devise\Languages\LanguageDetector;
 use Devise\Support\Framework;
+use Devise\Users\UserHelper;
+use Illuminate\Support\Collection;
+use Devise\Support\DeviseException;
 
 /**
  * Class MenusRepository retrieves things related to
@@ -38,13 +41,14 @@ class MenusRepository
      * @param LanguageDetector $LanguageDetector
      * @param Framework $Framework
      */
-    public function __construct(\DvsMenu $Menu, \DvsMenuItem $MenuItem, LanguageDetector $LanguageDetector, Framework $Framework)
+    public function __construct(\DvsMenu $Menu, \DvsMenuItem $MenuItem, LanguageDetector $LanguageDetector, UserHelper $UserHelper, Framework $Framework)
     {
         $this->Menu = $Menu;
         $this->MenuItem = $MenuItem;
         $this->LanguageDetector = $LanguageDetector;
         $this->currentLanguage = $LanguageDetector->current();
         $this->Input = $Framework->Input;
+        $this->UserHelper = $UserHelper;
     }
 
     /**
@@ -164,23 +168,118 @@ class MenusRepository
         {
             $lazyLoadString = $this->getLazyLoadByDepth('items', $depth);
             $menu->load($lazyLoadString);
-
+            $menu->allowedMenuItems = $this->getAllowedMenuItemsFromMenu($menu);
+            
             if ($page !== null)
             {
                 $this->activeItemSiblings = array();
                 $this->activeItemChildren = array();
-                $this->locateCurrentMenuItem($page->id, $menu->items);
+                $this->locateCurrentMenuItem($page->id, $menu->allowedMenuItems);
             }
+
             MenuCache::saveMenu($menu, $this->activeItemChildren, $this->activeItemSiblings);
         } else {
             $menu = $cache['menu'];
         }
 
-        return $menu->items;
+        return $menu->allowedMenuItems;
     }
 
     /**
-     * Loads children for this menu
+     * This gets us all the allowed menu items from a
+     * particular menu.
+     *
+     * @param  DvsMenu $menu
+     * @return Collection
+     */
+    private function getAllowedMenuItemsFromMenu($menu)
+    {
+        $menuItems = new Collection;
+
+        foreach ($menu->items as $menuItem)
+        {
+            $items = $this->getAllowedMenuItems($menuItem);
+            if ($items) $menuItems[] = $items;
+        }
+
+        return $menuItems;
+    }
+
+    /**
+     * A simple way to view the menu structure
+     * not in use by anything right now but here for
+     * troubleshooting menus if we need to
+     *
+     * @param  DvsMenu|DvsMenuItem  $menu
+     * @param  boolean $isRootMenu
+     * @return array
+     */
+    public function menuStructure($menu, $isRootMenu = true)
+    {
+        $structure = [];
+
+        $items = $isRootMenu ? $menu->items : $menu->children;
+
+        foreach ($items as $item)
+        {
+            $children = $this->menuStructure($item, false);
+            $structure[$item->name] = $children ?: $item->url;
+        }
+
+        return $structure;
+    }
+
+    /**
+     * This will let us know if the menu item is allowed and
+     * it also traverses all it's children (and future generations)
+     * filtering out menu items that are not allowed
+     *
+     * @param  DvsMenuItem $menuItem
+     * @return DvsMenuItem | false
+     */
+    private function getAllowedMenuItems($menuItem)
+    {
+        $shown = $this->checkMenuItemPermission($menuItem->permission);
+
+        // filter out children of this menu item for permissions too
+        if ($shown && $this->childrenLoaded($menuItem))
+        {
+            foreach ($menuItem->children as $key => $child)
+            {
+                $childShown = $this->getAllowedMenuItems($child);
+                if (! $childShown) $menuItem->children->forget($key);
+            }
+        }
+
+        return $shown ? $menuItem : false;
+    }
+
+    /**
+     * Tells us whether or not the menu item is supposed
+     * to be shown to this user
+     *
+     * @param  DvsMenuItem $menuItem
+     * @return boolean
+     */
+    private function checkMenuItemPermission($permission)
+    {
+        $passesCondition = false;
+
+        try
+        {
+            $passesCondition = empty($permission) || $this->UserHelper->checkConditions($permission);
+        }
+        catch (DeviseException $e) {
+            // do nothing, condition was likely not found
+            // this might be a place to notify the administrator
+            // that we have busted permissions...
+        }
+
+        return $passesCondition;
+    }
+
+    /**
+     * generates the lazy load string based off the requested depth
      *
      * @param $startingRelation
      * @param $depth
@@ -190,7 +289,7 @@ class MenusRepository
     {
         $relations = $startingRelation;
 
-        for ($i=0; $i < $depth; $i++)
+        for ($i=0; $i < $depth - 1; $i++)
         {
             $relations .= '.children';
         }
@@ -199,8 +298,10 @@ class MenusRepository
     }
 
     /**
-     * Not sure what this does...
-     * @todo determine what this thing does
+     * recursively traverses the menu items and their children
+     * finds the item that matches the current page, marks it as an 'activeItem'
+     * and marks it's parents as 'activeAncestor'
+     * @todo should not just rely on the page_id. what i the menuitem is a url?
      *
      * @param $pageId
      * @param $menuItems
@@ -210,7 +311,9 @@ class MenusRepository
     {
         foreach ($menuItems as $key => $menuItem)
         {
-            if ($this->locateCurrentMenuItem($pageId, $menuItem->children))
+            $childrenLoaded = $this->childrenLoaded($menuItem);
+
+            if ($childrenLoaded && $this->locateCurrentMenuItem($pageId, $menuItem->children))
             {
                 // the active item was found in the children
                 $menuItem->activeAncestor = true;
@@ -222,13 +325,29 @@ class MenusRepository
                 // this item is the active item
                 $menuItem->activeItem = true;
 
-                $this->activeItemChildren = $menuItem->children;
+                $this->activeItemChildren = ($childrenLoaded) ? $menuItem->children : array();
                 $this->activeItemSiblings = $menuItems;
-
                 return true;
             }
         }
 
         return false;
+    }
+
+        // check if ->children has been lazy loaded
+        // respecting the 'depth' value that was passed when the menu was built
+
+    /**
+     * checks if the children relation has been lazy loaded
+     * the goal is to respect the 'depth' value requested
+     * when the menu was built
+     *
+     * @param MenuItem $item
+     * @return bool
+     */
+    private function childrenLoaded($item)
+    {
+        $relations = $item->getRelations();
+        return isset($relations['children']);
     }
 }

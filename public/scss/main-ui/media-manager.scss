@@ -5,23 +5,50 @@
 
 #dvs-media-manager {
 
-    padding:20px;
-    margin-top: -100px;
+    @include clearfix;
+    position:relative;
+    padding:40px;
 
-    h4 {
-        clear:both;
-        margin: 10px;
-        font-size: 18px;
-        color: #fff;
-        text-transform: none;
-        font-weight: 300;
-        border-bottom: 1px solid transparentize(#fff, 0.85);
-    }
+    #dvs-media-mngr-categories {
+        float:left;
+        width:25%;
 
-    h5.empty {
-        margin: 15px;
-        color: $green;
-        text-align:center;
+        ul {
+            padding-left:0;
+        }
+
+        li {
+            @include clearfix;
+
+            min-height:30px;
+            list-style-type:none;
+            margin: 5px 0 5px 0;
+
+            .dvs-category-actions {
+                float:right;
+                display:none;
+
+                a {
+                    margin-left:5px;
+                }
+            }
+
+            a {
+                float:left;
+                color:$french-gray;
+                text-decoration:none;
+
+                &:hover {
+                    color:$green;
+                }
+            }
+
+            &:hover {
+                .dvs-category-actions {
+                    display:block;
+                }
+            }
+        }
     }
 
     .container {
@@ -44,16 +71,32 @@
         border-bottom-left-radius: 0px;
     }
 
-    .crumbs {
-        margin-left: 15px;
-        font-size: .7em;
+    #dvs-media-top-action-bar {
+        @include clearfix;
+        margin: -45px -45px 40px;
+    }
+
+    #dvs-media-crumbs {
+        @include clearfix;
+        background-color:darken($bodyBgColor, 10%);
+        padding: 5px 40px;
+
         a {
             text-decoration: none;
-            color: $green;
+            color: $blue;
+
             &:hover {
                 text-decoration:underline;
             }
         }
+    }
+
+    #dvs-media-manager-search {
+        @include clearfix;
+        clear:both;
+        text-align:right;
+        background-color:darken($bodyBgColor, 7%);
+        padding: 5px 40px;
     }
 
     .crop-container {
@@ -61,10 +104,16 @@
         margin: 0 auto;
     }
 
+    #dvs-media-cropper-settings {
+        margin-top:20px;
+
+        @include insetFormDude;
+    }
+
     #dvs-media-upload {
-        float:left;
-        width: 45%;
-        height: 30px;
+
+        @include insetFormDude;
+        margin-bottom:20px;
 
         form {
             margin: 20px 10px;
@@ -75,75 +124,88 @@
         }
     }
     #dvs-new-category {
-        width: 40%;
-        float:right;
-        text-align:right;
-        margin: 20px 10px;
-    }
-    #dvs-media-mngr-categories {
-        width: 100%;
-        li {
-            display:inline-block;
-            margin: 5px 0 5px 5px;
+        position:relative;
+        clear:both;
+        margin: 0 0 20px;
+
+        input[type=text] {
+            @include insetFormDude;
+            margin-bottom:8px;
         }
     }
+
     #dvs-error-message {
         background-color: $formErrorColor;
         text-align: center;
         padding: 30px;
     }
     #dvs-media-mngr-gallery {
-        width: 100%;
+
+        width:70%;
+        margin-left:5%;
+        float:right;
 
         .dvs-media-item-wrapper {
+            height:210px;
+            width:150px;
             display: inline-block;
             position: relative;
-        }
+            margin: 0 12px 12px 0;
+            overflow:hidden;
 
-        .dvs-media-rename-item, .dvs-media-remove-item {
-            position: absolute;
-            text-decoration: none;
-            top: 8px;
-        }
+            @include background(linear-gradient($white, darken($white, 3%)));
 
-        .dvs-media-rename-item {
-            right: 30px;
-        }
+            button {
+                cursor: pointer;
+            }
 
-        .dvs-media-remove-item {
-            right: 8px;
+            .dvs-media-item-actions {
+                position:absolute;
+                bottom:8px;
+                left:50%;
+                margin-left:-30px;
+                display:none;
+                text-align:center;
+            }
+
+            &:hover {
+                .dvs-media-item-actions {
+                    display:block;
+                }
+            }
+
+            &:nth-child(4n+1) {
+                margin-right:0;
+            }
         }
 
         a.dvs-media-item {
             display:inline-block;
-            margin: 10px;
-            width: 125px;
-            height: 180px;
+            width: 150px;
             vertical-align: top;
             text-decoration:none;
-            color: darken($white, 10%);
+            color: $bodyBgColor;
             font-size: 12px;
-            font-weight:100;
+            font-weight:300;
 
             .dvs-media-thumb-cont {
-                background-color: lighten($black, 5%);
-                width: 115px;
-                height: 115px;
+
+                width: 150px;
 
                 img {
-                    width: 105px;
-                    height: 105px;
-                    margin: 5px;
+                    width: 130px;
+                    height: 130px;
+                    margin: 10px 10px;
                 }
             }
 
             p {
+                margin-top:0;
                 padding: 5px;
-                height: 40px;
-                overflow:hidden;
                 text-align:center;
                 line-height: 18px;
                 word-break: break-all;
+                text-align:center;
             }
         }
     }
@@ -157,4 +219,42 @@
         background-color:lighten($black, 13%);
         color: darken($white, 10%);
     }
+}
+
+html.dz-drag-hover div#dvs-admin {
+    opacity: 0;
+}
+
+html.dz-drag-hover body {
+    background-color: $light-blue !important;
+}
+
+.dropzone-previews .dz-processing {
+    opacity: 0.5;
+}
+
+.dropzone-previews .dz-processing.dz-complete {
+    opacity: 1;
+}
+
+// Error when uploading
+.dropzone-previews .dz-processing.dz-error {
+    background: hotpink !important;
+    opacity: 0.25;
+}
+
+.dropzone-previews .dz-processing .dvs-media-item-actions {
+    display: none;
+}
+
+.dropzone-previews .dz-processing.dz-success .dvs-media-item-actions {
+    display: inherit;
+}
+
+.dropzone-previews .empty {
+    display: none;
+}
+
+.dropzone-previews .empty:only-child {
+    display: inherit;
 }

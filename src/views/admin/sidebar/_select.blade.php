@@ -24,7 +24,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Value</th>
-                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-option dvs-button-secondary">New Option</button></th>
+                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-option dvs-button-secondary">New</button></th>
                 </tr>
             </thead>
             <tbody>

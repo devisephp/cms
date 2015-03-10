@@ -11,10 +11,35 @@ devise.define(['require', 'jquery', 'dvsQueryHelper'], function (require, $, que
         location.href = location.origin + location.pathname + query.toQueryString(params);
     }
 
+    function addContentRequestedListeners()
+    {
+        $('.dvs-content-requested-mark-done').click(function(){
+
+            var action = $(this).data('url');
+            var _this = this;
+
+            $.ajax(
+            {
+                url: action,
+                type: 'GET',
+                success: function(data, textStatus, jqXHR)
+                {
+                    $(_this).parent().fadeOut();
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    alert('There was a problem with your request');
+                }
+            });
+        });
+    }
+
     obj.init = function()
     {
         $('input[name="show_admin"]').change(handleShowAdminCheckbox);
-    }
+
+        addContentRequestedListeners();
+    };
 
     obj.init();
 

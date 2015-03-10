@@ -1,34 +1,27 @@
 <div class="dvs-model-editor">
-    <div id="dvs-sidebar-header" data-page-id="<?= $page_id ?>"  data-page-version-id="<?= $page_version_id ?>">
-        <div id="dvs-sidebar-title">
-            <h1><?= $human_name ?></h1>
-            <a class="dvs-sidebar-close">Close</a>
-        </div>
+<div id="dvs-sidebar-header" data-page-id="<?= $page_id ?>"  data-page-version-id="<?= $page_version_id ?>">
 
-        <div id="dvs-sidebar-contents-container">
+    @include('devise::admin.sidebar._sidebar-header', ['title' => $human_name])
 
-        	@include('devise::admin.sidebar.language-selector')
+    <div id="dvs-sidebar-contents-container">
 
-        	@include('devise::admin.sidebar.page-version-selector')
-
-            <div id="dvs-sidebar-groups-wpr">
-
-            </div>
-        </div>
+        @include('devise::admin.sidebar._sidebar-page-version-selector')
 
         <hr class="thick">
     </div>
 
-    @include('devise::admin.sidebar.page-version-date-pickers')
+</div>
 
-    <div id="dvs-sidebar-breadcrumbs"></div>
+@include('devise::admin.sidebar._sidebar-page-version-date-pickers')
 
-    @include('devise::admin.sidebar.validation-messages')
+<div id="dvs-sidebar-breadcrumbs"></div>
 
-    @include('devise::admin.sidebar._model')
+@include('devise::admin.sidebar._sidebar-validation-messages')
 
-    <div class="dvs-model-forms" id="dvs-sidebar-element-forms">
-        <div id="dvs-sidebar-current-element"></div>
-        <button type="button" data-submit-action="/admin/sidebar/models" data-submit-method="put" data-model="<?= $class_name ?>" data-key="<?= $key ?>" data-page-version-id="<?= $page_version_id ?>" class="dvs-sidebar-save-model">Save Changes</button>
-    </div>
+@include('devise::admin.sidebar._model')
+
+<div class="dvs-model-forms" id="dvs-sidebar-element-forms">
+    <div id="dvs-sidebar-current-element"></div>
+    <button type="button" data-submit-action="/admin/sidebar/models" data-submit-method="put" data-model="<?= $class_name ?>" data-key="<?= $key ?>" data-page-version-id="<?= $page_version_id ?>" class="dvs-sidebar-save-model">Save Changes</button>
+</div>
 </div>

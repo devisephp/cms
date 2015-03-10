@@ -11,8 +11,9 @@ class ManagerTest extends \DeviseTestCase
         $this->Filesystem = m::mock('Devise\Media\Files\Filesystem');
         $this->CategoryPaths = m::mock('Devise\Media\Categories\CategoryPaths');
         $this->Image = m::mock('Devise\Media\Images\Images');
+        $this->MediaPaths = m::mock('Devise\Media\MediaPaths');
         $this->Config = m::mock('Illuminate\Config\Repository');
-        $this->Manager = new Manager($this->Filesystem, $this->CategoryPaths, $this->Image, $this->Config);
+        $this->Manager = new Manager($this->Filesystem, $this->CategoryPaths, $this->MediaPaths, $this->Image, $this->Config);
     }
 
     public function test_it_saves_uploaded_files()
@@ -23,6 +24,9 @@ class ManagerTest extends \DeviseTestCase
         $file->shouldReceive('getClientMimeType')->times(1)->andReturn('image');
         $this->CategoryPaths->shouldReceive('serverPath')->andReturn('server/path');
         $this->Config->shouldReceive('get')->andReturn('yep');
+        $this->MediaPaths->thumbnail = "mythumbnail";
+        $this->MediaPaths->shouldReceive('fileVersionInfo')->andReturnSelf();
+        $this->Image->shouldReceive('canMakeThumbnailFromFile')->andReturn(true);
         $this->Image->shouldReceive('makeThumbnailImage');
         $this->Manager->saveUploadedFile(['file' => $file]);
     }
@@ -35,7 +39,6 @@ class ManagerTest extends \DeviseTestCase
 
     public function test_removes_uploaded_file()
     {
-        $this->Config->shouldReceive('get')->times(1)->andReturn('something');
         $this->Filesystem->shouldReceive('delete')->times(1)->andReturn(true);
         $this->Manager->removeUploadedFile('some/file');
     }

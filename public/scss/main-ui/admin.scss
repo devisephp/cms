@@ -1,18 +1,58 @@
+#dvs-admin-sidenav {
+  float:left;
+  width:25%;
+  height:100%;
+  padding:0 5%;
+  box-sizing:border-box;
+
+  h5 {
+    color:$sidenavTitleColor;
+    font-weight:bold;
+  }
+
+  .dvs-admin-links {
+
+    margin:12px 0 40px 0;
+
+    li {
+      line-height:40px;
+
+      a {
+        display:block;
+        color:$sidenavLinkColor;
+        text-decoration:none;
+
+        &.dvs-active,
+        &:active,
+        &:hover { color:$sidenavActiveLinkColor }
+      }
+    }
+  }
+}
+
+#dvs-admin-body {
+  position:relative;
+  float:left;
+  width:70%;
+  margin:0 5% 100px 0;
+}
+
+
 #dvs-admin {
   background-color:$bodyBgColor;
   color:$bodyTitleColor;
   font-size:$bodyMainFontSize;
   font-family:$bodyMainFont;
   font-weight:$bodyMainFontWeight;
-  padding:50px 0;
 
   h1,h2,h3,h4,h5,h6 {
-    font-size:38px;
-    font-weight:300;
+    font-size:42px;
+    font-weight:600;
     text-transform: uppercase;
     color:darken($white, 5%);
   }
 
+  h1 { font-weight:100; }
   h2 { font-size:36px; }
   h3 { font-size:28px; }
   h4 { font-size:22px; }
@@ -21,92 +61,12 @@
 
   hr {
     margin:20px auto;
-    border-color:$bodyCustomColor;
+    border-color:darken($blue, 20%);
     border-style:solid;
-    border-width:1px;
+    border-width:0;
+    border-bottom-width:1px;
 
-    &.dvs-thick { border-width:2px }
-  }
-
-  .dvs-admin-form-horizontal {
-    h3 {
-      color:lighten($bodyBgColor, 2%);
-      text-transform:capitalize;
-    }
-
-    hr {
-      margin:10px auto 45px;
-      border-bottom-color:lighten($primaryTableBgColor,3%);
-      border-top-color:darken($primaryTableBgColor,18%);
-      background-color:transparent;
-      height:1px;
-    }
-  }
-
-  .dvs-card {
-    position:relative;
-    float:left;
-    width:30%;
-    margin:0 10px 10px 0;
-    padding:20px;
-    background-color:lighten($secondaryTableBgColor, 5%);
-    box-shadow:0 0 5px transparentize(#000, 0.8);
-
-    h4 {
-      margin-bottom:5px;
-      font-size:$bodyMainFontSize;
-      font-weight:$bodyMainFontWeight + 200;
-      color: $black;
-    }
-
-    select {
-      margin:10px 0;
-      width: 100%;
-    }
-
-    .dvs-badge {
-      background-color:$bodyCustomColor;
-      color:$white;
-      position:absolute;
-      display:inline-block;
-      top:17px;
-      right:10px;
-    }
-
-    input[type=text] {
-      margin-left:0;
-      width:40%;
-    }
-
-    input[type=submit] {
-      float:left;
-      margin:10px 0;
-    }
-
-    label {
-      float:right;
-      margin:5px 31px;
-      font-size:$bodyMainFontSize - 2;
-    }
-  }
-
-
-  .alert {
-    h3 {
-      font-size:18px;
-    }
-
-    &.alert-danger {
-      h3 {
-        color : #a94442;
-      }
-    }
-
-    &.alert-success {
-      h3 {
-        color : #3c763d;
-      }
-    }
+    &.dvs-thick { border-bottom-width:2px }
   }
 
   .dvs-admin-items-wpr {
@@ -125,24 +85,6 @@
     table.dvs-admin-items {
       width:100%;
 
-      tr  {
-        margin: 0;
-        padding:20px;
-        border: 1px solid #d4d4d4;
-        border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        background: #f6f6f6;
-        background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed));
-        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
-      }
-
       tr td.dvs-form-group {
         padding:20px 2%;
 
@@ -157,106 +99,63 @@
     }
   }
 
-  #dvs-admin-modal {
-    position:absolute;
-    top:42%;
-    left:42%;
-    z-index:20000;
-
-    .dvs-admin-form-horizontal {
-      padding-top:30px;
-
-      h4 {
-        color:$black;
-        margin-bottom:15px;
-      }
-    }
-  }
-
-  #dvs-admin-blocker {
-    position:fixed;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    background-color:transparentize($black, .45);
-    z-index:12000;
-  }
-
   .dvs-secondary-text {
     padding-top:10px;
     font-size:$bodyMainFontSize - 2;
   }
 }
 
-#dvs-admin-sidenav {
-  float:left;
-  width:25%;
-  height:100%;
-  padding:0 2%;
-  box-sizing:border-box;
-
-  h5 {
-    line-height:50px;
-    text-transform:none;
-    color:$sidenavTitleColor;
-  }
-
-  .dvs-admin-links li {
-    line-height:50px;
-
-    a {
-      display:block;
-      color:$sidenavLinkColor;
-      text-decoration:none;
-
-      &.dvs-active,
-      &:active,
-      &:hover { color:$sidenavActiveLinkColor }
-    }
-  }
-}
-
-#dvs-admin-body {
-  float:left;
-  width:75%;
-}
-
-#dvs-devise-logo-sm {
-  margin:50px auto 25px;
-  text-align:center;
-
-  img {
-    max-width:115px;
-    max-height:55px;
-  }
-}
-
-
 /* Dashboard */
 #dvs-admin {
+  .dvs-flexbox {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .dvs-admin-card {
     float:left;
-    width:25%;
-    margin:20px 1.6%;
+    position:relative;
+    width:30%;
+    margin:20px 1.5%;
     color:$dashboardCardTitleColor;
     background-color:lighten($bodyBgColor, 2%);
-    border-radius:5px;
+    border:1px solid lighten($bodyBgColor, 5%);
+    border-radius:2px;
     cursor:pointer;
     transition: all 0.5s;
+    overflow:hidden;
+
+    .dvs-card-top {
+      height:300px;
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      transition: all 0.5s;
+    }
 
     .dvs-card-bottom {
       position:relative;
-      height:150px;
-      padding:25px 20px 25px;
+      padding:40px 20px 25px;
+      height:40%;
+      text-align:center;
 
-      h3 {
-        font-size:18px;
-        padding-bottom:20px;
-        font-weight:normal;
+      .dvs-icon {
+        position:absolute;
+        top: -23px;
+        left: 50%;
+        margin-left:-23px;
+        background-color:$white;
+        color:$green;
+        width:46px;
+        height:46px;
+        border-radius: 23px;
+        font-size:36px;
+        text-align:center;
+        line-height:46px;
       }
 
       p {
+        margin-top:12px;
         color:$dashboardCardTextColor;
         line-height:20px;
         transition: all 0.5s;
@@ -265,82 +164,135 @@
 
     &:hover {
       background-color:$green;
+      border-color:darken($green, 10%);
 
       h3, p {
         color:#fff;
+      }
+    }
+
+    &.wide {
+      width:63%;
+    }
+
+    &.tall {
+      .dvs-card-top {
+        height:470px;
+      }
+    }
+
+    &.dvs-page-versions-card {
+
+      .dvs-card-top {
+        height:10px;
+        background-color:$blue;
+      }
+
+      &.live-card {
+
+        .dvs-card-top {
+          background-color:$green;
+        }
+
+        &:hover {
+          background-color:$green;
+        }
+
+      }
+
+
+      .dvs-card-bottom {
+        .dvs-badge {
+          color:$white;
+        }
+
+        .dvs-select-wrapper {
+          margin-top:10px;
+          font-size:9px;
+        }
+      }
+
+      &:hover {
+        background-color:$blue;
+
+        .dvs-select-wrapper {
+          border-color:$white;
+          color:$white;
+        }
       }
     }
   }
 }
 
 #dvs-admin-subnavigation {
-  float:right;
-  width:30%;
-
-  > ul {
-    @include clearfix;
-    text-align:right;
-    margin:15px 20px 0;
-
-    > li { display:inline-block }
-  }
-}
-
-#dvs-admin-title {
-  float:left;
-  width:63.3334%;
-  margin-bottom:15px;
-
-  h1 {
-    margin-top:30px;
-    padding-bottom:40px;
-    text-transform:capitalize;
-  }
-
-  p {
-    padding-bottom:25px;
-    color:$bodyTextColor;
-    font-size:$bodyMainFontSize + 4; // 18px
-    font-weight:300;
-    line-height:1.5em;
-  }
+  position:absolute;
+  top:50px;
+  right:5%;
+  text-align:right;
 }
 
 #dvs-admin-actions {
-  float:left;
-  width:36.6666%;
-  margin-bottom:25px;
+  text-align:center;
 
   .dvs-button {
-    margin-bottom:5px;
-    width:150px
+    clear:both;
+    float:right;
+    width:150px;
+    margin-bottom:8px;
   }
 
   a {
     clear:both;
-    float:right;
-    font-size:11px;
+    margin-left:8px;
   }
 
   select {
-    float:right;
+    clear:both;
   }
 
   .dvs-select-wrapper {
+    clear:both;
+    float:right;
     width:150px;
     font-size:11px;
-    float:right;
-    margin-bottom:5px;
+    margin-bottom:8px;
+  }
+}
+
+#dvs-admin-title {
+  clear:both;
+  margin-bottom:15px;
+  padding:50px 0 100px;
+  text-align:     center;
+
+  h1 {
+    display: inline-block;
+    padding: 15px 20px;
+    margin-top:     30px;
+    color: $blue;
+    font-size:50px;
+    text-transform: uppercase;
+    border: 1px solid $blue;
+
+    @include text-gradient($light-blue, $blue);
+    @include gradient-border($light-blue, $blue);
+
+    span {
+      text-fill-color:  $blue;
+      -moz-text-fill-color:  $blue;
+      -webkit-text-fill-color:  $blue;
+    }
   }
 }
 
 .dvs-inset-text {
-  padding:6px 14px;
-  background-color:#dbdfe2;
-  border-radius:4px;
-  border:1px solid #dadde2;
-  box-shadow:inset 0 1px 0 tint(#d4d5d9, 10%), 0 1px 0 #fafbff;
-  overflow:hidden;
+  @include insetFormDude();
+
+  max-width:300px;
+
+  a {
+    color:$red;
+  }
 }
 
 .dvs-opaque-text {
@@ -348,31 +300,37 @@
 }
 
 .dvs-admin-container {
-  width:$bodyContainerWidth;
+  position:relative;
   margin:0 auto;
   @include clearfix;
+
+  background-image:linear-gradient(lighten($bodyBgColor, 5%), $bodyBgColor)
 }
 
 /* Tables */
 table.dvs-admin-table {
-  margin:0 auto 50px;
-  width:$bodyContainerWidth;
+  margin:0 0 50px;
+  width:100%;
   font-size:13px;
-  border-radius:5px;
-  box-shadow:0 2px 24px 12px rgba(0,0,0,.6);
+  box-shadow:0 2px 12px 6px rgba(0,0,0,.1);
+  border-radius:4px;
   @include background(linear-gradient($secondaryTableBgColor, $primaryTableBgColor));
 
   thead {
-    tr { border-bottom:2px solid transparentize(#c7c7c7, 0.9) }
+
+    border-radius:3px;
 
     th, th a {
       color:darken($tableTextColor, 10%);
-      font-weight:$bodyMainFontWeight + 300;
-      text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
       text-decoration:none;
+      text-transform: uppercase;
     }
 
-    th { padding:15px 20px}
+    th {
+      padding:15px 20px;
+      border-bottom:1px solid lighten($primaryTableBgColor, 8%);
+      vertical-align: middle;
+    }
   }
 
   tbody tr {
@@ -381,39 +339,34 @@ table.dvs-admin-table {
     background-color:$primaryTableBgColor;
 
     &.dvs-table-row-even td {
-      border-top:1px solid transparentize(white, 0.9);
-      border-bottom:1px solid #d8dce5;
-      box-shadow:inset lighten($primaryTableBgColor,3%) 1px 1px 1px;
+      border-bottom:1px solid lighten($primaryTableBgColor, 4%);
     }
 
     &.dvs-table-row-odd td {
-      @include background(linear-gradient(#fafbff, #f5f6fa));
-      border-top:1px solid #f8f8fa;
-      border-bottom:1px solid #d8dce5;
-      box-shadow:inset 0 -10px 10px -10px #f5f7f7;
+      background-color:$secondaryTableBgColor;
+      border-bottom:1px solid darken($primaryTableBgColor, 3%);
     }
 
     td {
       padding:20px 30px;
-      border-right:1px solid transparentize(#cfd0d2, 0.75);
+      border-right:1px solid lighten($primaryTableBgColor, 4%);
+      vertical-align: middle;
 
       a:not(.dvs-button) {
-        color:$bodyActiveLinkColor;
-        font-weight:$bodyMainFontWeight + 300;
+        color:$blue;
 
         &.dvs-expand-details {
           display:inline-block;
-          margin-top:6px;
-          color:invert($bodyActiveLinkColor);
+          color:darken($blue, 20%);
           font-size:$bodyMainFontSize - 3;
           font-weight:$bodyMainFontWeight;
         }
       }
 
-      &.dvs-stacked-col > div {
-        font-weight:$bodyMainFontWeight + 300;
-        color:lighten(#34352f, 15%);
-        padding-bottom:6px;
+      &.dvs-stacked-col {
+        div {
+          margin-bottom:8px;
+        }
       }
     }
   }
@@ -426,16 +379,10 @@ table.dvs-admin-table {
   .dvs-lang-flag { margin:0 2.5px }
 
   input[type=text] {
-    min-width:260px;
+    min-width:200px;
     max-width:300px;
     margin-left:10px;
-    padding:6px 14px;
-    color:darken($tableTextColor, 10%);
-    border:1px solid #dadde2;
-    border-radius:4px;
-    overflow:hidden;
-    @include background(linear-gradient(top, #dbdce1, #dbdee0));
-    @include placeholder { color:darken($tableTextColor, 10%) }
+    @include insetFormDude();
   }
 
   .dvs-publish-dates {
@@ -452,302 +399,18 @@ table.dvs-admin-table {
 
   .dvs-badge {
     &.dvs-content-requested {
+      @include clearfix;
+
+      margin:0 auto;
+      margin-bottom:20px;
+      padding:6px;
       text-align:center;
-      width:40%;
+      line-height:18px;
       clear:both;
-      margin-bottom:3px;
-      padding:0 2px;
     }
   }
 }
 
-
-/* Forms */
-.dvs-admin-form-horizontal,
-.dvs-admin-form-vertical {
-  width:$bodyContainerWidth;
-  margin:0 auto 50px;
-  padding:50px 30px 30px;
-  box-sizing:border-box;
-  background-color:$bodyFormBgColor;
-  border-radius:5px;
-  box-shadow:0 2px 24px 12px rgba(0,0,0,.6);
-
-  .dvs-helptext {
-    clear:both;
-    width:$formFieldColumnWidth;
-    margin:0 0 0 $formLabelColumnWidth;
-    padding:12px 10px 12px 15px;
-    color:darken($bodyFormTextColor, 2%);
-    font-size:$bodyMainFontSize - 2; // 12px
-    font-weight:$bodyMainFontWeight;
-    line-height:$bodyMainFontSize + 4; // 18px
-  }
-}
-
-.dvs-admin-form-horizontal {
-  input[type="submit"] {
-    margin-left:$formLabelColumnWidth + $formGutterWidth;
-  }
-
-  .dvs-form-group {
-    clear:both;
-    margin-bottom:35px;
-    color:darken($bodyFormTextColor, 10%);
-    @include clearfix;
-
-    label {
-      float:left;
-      width:$formLabelColumnWidth;
-      text-align:right;
-      font-weight:600;
-      padding:5px 35px 5px 0;
-      text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
-    }
-
-    input[type="text"],
-    input[type="password"],
-    textarea,
-    select {
-      width:$formFieldColumnWidth;
-      padding: 6px 14px;
-      font-size:$bodyMainFontSize - 2; // 12px
-      color:darken($bodyFormTextColor, 10%);
-      background-color:$bodyFormInputBgColor;
-      border-radius: 4px;
-      border: 1px solid #dadde2;
-      box-shadow: inset 0 1px 0 #d8d9dc, 0 1px 0 #fafbff;
-      overflow: hidden;
-      @include placeholder { color:lighten($bodyFormTextColor, 15%) }
-    }
-
-    select {
-      height:31px;
-      width:$formFieldColumnWidth;
-      border-radius: 0;
-    }
-
-    input[type=checkbox],
-    input[type=radio] { margin-left:$formGutterWidth }
-
-    .fancyCheckbox {
-      margin-left:$formLabelColumnWidth + $formGutterWidth;
-
-      label {
-        border-radius: 50px;
-        width: 34px;
-        height: 24px;
-      }
-    }
-
-    textarea.short { height:100px }
-  }
-
-  .dvs-menu-items {
-    select,
-    input[type="text"] {
-      border: 0;
-      font-size:$bodyMainFontSize - 2; // 12px
-      padding:8px 10px;
-      border-radius:3px;
-      margin-right:3px;
-    }
-
-    select { height:30px }
-  }
-
-
-}
-
-
-.dvs-admin-form-horizontal #dvs-permissions {
-  margin:0 auto;
-  width:100%;
-  overflow:auto;
-
-  hr {
-    margin-bottom: 10px;
-  }
-
-  .dvs-form-group {
-    float:left;
-    width:100%;
-
-    input[type="text"],
-    input[type="password"],
-    textarea,
-    select {
-      width:150px;
-
-      display:inline-block;
-
-      &.operator-types {
-        display:block;
-        float:none;
-      }
-    }
-  }
-
-  input {
-    &.rule-param {
-      margin-left:5px;
-    }
-  }
-
-  .dvs-button {
-      padding:8px 6px;
-      float: right;
-      margin: 0 3px;
-      &.dvs-enabled {
-        background-color:$bodyCustomColor;
-      }
-  }
-
-  .group {
-    background-color:rgba(255, 255, 255, 0.5);
-    margin-top:30px;
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
-    padding: 30px;
-    width: 100%;
-
-    .operator {
-      margin: 5px 0;
-      .dvs-button {
-        float:none;
-      }
-    }
-  }
-}
-
-.fancyCheckbox {
-  width:78px;
-  height:25px;
-  background:lighten($bodyBgColor, 26%);
-  position: relative;
-  border-radius: 50px;
-  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
-
-  &:after {
-    content: 'OFF';
-    color:transparentize(white, 0.09);
-    position: absolute;
-    top:0;
-    right: 10px;
-    z-index: 0;
-    font: 12px/26px Arial, sans-serif;
-    font-weight: bold;
-    text-shadow: -1px -1px 0px rgba(255,255,255,.15);
-  }
-
-  &:before {
-    content: 'ON';
-    color:transparentize(white, 0.09);
-    position: absolute;
-    top:0;
-    left: 10px;
-    z-index: 0;
-    font: 12px/26px Arial, sans-serif;
-    font-weight: bold;
-  }
-
-  label {
-    display: block;
-    cursor: pointer;
-    position: absolute;
-    top: 0px;
-    left: 2px;
-    height:24px;
-    width:34px;
-    z-index: 1;
-    background: #fcfff4;
-    border-radius: 50px;
-    border-width:0;
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
-    @include background( linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%) );
-    @include transition( all .4s ease );
-  }
-
-  input[type=checkbox] {
-    visibility: hidden;
-
-    &:checked + label { left: 43px }
-  }
-}
-
-.simpletoggle {
-  display:none;
-
-  &.open { display:block }
-}
-
-.pagination {
-  margin:25px 30px;
-  border-radius:4px;
-  @include clearfix;
-
-  li {
-    display:inline-block;
-    border-bottom:1px solid darken($primaryTableBgColor, 20%);
-    border-right:1px solid darken($primaryTableBgColor, 12%);
-    border-top:1px solid darken($primaryTableBgColor, 12%);
-    background-color:$primaryTableBgColor;
-    box-shadow:0 1px 1px darken($primaryTableBgColor, 8%);
-
-    a, span {
-      display:block;
-      padding:10px;
-      color:$bodyPaginationLinkColor;
-    }
-
-    &.active {
-      background-color:darken($primaryTableBgColor,5%);
-      font-weight:$bodyMainFontWeight + 300;
-    }
-
-    &.disabled {
-      background-color:lighten($primaryTableBgColor, 2%);
-      color:darken(#ccc, 15%);
-      cursor:not-allowed;
-    }
-
-    &.dvs-more-results {
-      span { padding:10px 8px 10px 0 }
-    }
-
-    &:first-child {
-      border-bottom-left-radius:5px;
-      border-top-left-radius:5px;
-      border-left:1px solid darken($primaryTableBgColor, 12%);
-    }
-
-    &:last-child {
-      border-bottom-right-radius:5px;
-      border-top-right-radius:5px;
-    }
-  }
-}
-
-.dvs-admin-mode {
-  #dvs-blocker {
-    opacity: 1;
-    width: 100%;
-    height: 100%;
-    z-index: 10000;
-  }
-
-  @include perspective(625px);
-
-  #dvs-sidebar {
-    width: 75%;
-
-    #dvs-admin-menu {
-      display: block;
-      width: 50%;
-    }
-  }
-
-  #dvs-content { opacity:.6 }
-}
 
 .dvs-loading,
 #dvs-sidebar-loading {
@@ -799,4 +462,3 @@ table.dvs-admin-table {
   &:first-child { border-radius: 2px 0 0 2px }
   &:last-child { border-radius: 0 2px 2px 0 }
 }
-

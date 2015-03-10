@@ -2,13 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Create New User</h1>
-
-        <p>Add new users and define their group association.</p>
+        <h1><span class="ion-ios-person"></span> New User</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-users'), 'List of Users', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-users'), 'List of Users', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 
@@ -17,7 +17,7 @@
         <?= Form::open(array('route' => 'dvs-users-store')) ?>
             <div class="dvs-form-group">
                 <?= Form::label('User Group') ?>
-                <?= Form::select('group_id', array_merge(array(0 => 'Choose an option'), $groups)) ?>
+                <?= Form::select('group_id', ['Choose an option'] + $groups) ?>
             </div>
 
             <div class="dvs-form-group">
@@ -40,7 +40,7 @@
                 <?= Form::password('password_confirmation') ?>
             </div>
 
-            <?= Form::submit('Create User', ['class' => 'dvs-button dvs-button-large']) ?>
+            <?= Form::submit('Create User', ['class' => 'dvs-button dvs-button-solid dvs-button-success']) ?>
         <?= Form::close() ?>
     </div>
 @stop

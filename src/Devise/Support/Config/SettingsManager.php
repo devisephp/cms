@@ -17,6 +17,7 @@ class SettingsManager
 	public function __construct(Framework $Framework, $overridesFile = null)
 	{
 		$this->files = $Framework->File;
+		$this->basePath = $Framework->Container->basePath();
 		$this->overridesFile = $overridesFile ?: $Framework->Container->make('config.overrides.file');
 	}
 
@@ -54,9 +55,34 @@ class SettingsManager
 	}
 
 	/**
-	 * [prettyVarExport description]
-	 * @param  [type] $content
-	 * @return [type]
+	 * Removes these overrides from the overrides config
+	 * so we can go back to whatever defaults we need. Not
+	 * being used as far as I know yet, but it could come
+	 * in handy soon...
+	 *
+	 * @param  array  $settings
+	 * @return void
+	 */
+	public function remove(array $settings)
+	{
+		$overrides = array_merge(require $this->overridesFile);
+
+		foreach ($settings as $setting)
+		{
+			unset($overrides[$setting]);
+		}
+
+		$contents = $this->prettyVarExport($overrides);
+
+		$this->files->put($this->overridesFile, $contents);
+	}
+
+	/**
+	 * Makes the variable export to the config file look
+	 * pretty and human readable...
+	 *
+	 * @param  array $content
+	 * @return string
 	 */
     protected function prettyVarExport($content)
     {

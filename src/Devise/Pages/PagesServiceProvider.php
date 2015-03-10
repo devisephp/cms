@@ -2,6 +2,10 @@
 
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Compilers\BladeCompiler;
+use Devise\Pages\Interpreter\ViewOpener;
+use Devise\Pages\Interpreter\DeviseCompiler;
+use Devise\Pages\Interpreter\DeviseParser;
+use Devise\Pages\Interpreter\BladeEngineCompiler;
 
 /**
  * Registers the Pages service provider. This allows us to manage our pages
@@ -43,14 +47,33 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->registerInterpreter();
+        // $this->registerSnippetBladeExtensions();
         $this->registerPhpBladeExtensions();
         $this->registerDeviseDataContainer();
         $this->registerTemplateComposer();
+        $this->registerViewName();
+
     }
 
     /**
-     * [registerInterpreter description]
-     * @return [type]
+
+     */
+    private function registerViewName()
+    {
+        \View::composer('*', function($view){
+
+            \View::share('view_name', $view->getName());
+
+        });
+    }
+
+    /**
+     * Registers the extended blade compiler with our application.
+     * This takes care not to forget any previously attached extensions
+     * of the blade compiler. We are doing so by decorating the old
+     * blade compiler and then adding in our functionality on top.
+     *
+     * @return void
      */
     private function registerInterpreter()
     {
@@ -60,16 +83,28 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $compiler = $resolver->resolve('blade')->getCompiler();
 
-        $resolver->register('blade', function() use ($app, $compiler)
+        $deviseCompiler = new DeviseCompiler(new ViewOpener);
+
+        $deviseParser = new DeviseParser;
+
+        $resolver->register('blade', function() use ($app, $compiler, $deviseCompiler, $deviseParser)
         {
-            $extended = new Interrupter\ExtendedBladeCompiler($compiler, $app['files']);
+            $extended = new BladeEngineCompiler($compiler, $deviseCompiler, $deviseParser);
 
             return new CompilerEngine($extended, $app['files']);
         });
+    }
 
+    /**
+     * Registers @php and @endphp recognition to blade
+     *
+     * @return void
+     */
+    private function registerSnippetBladeExtensions()
+    {
         \Blade::extend(function($view, $compiler)
         {
-            return \App::make('Devise\Pages\Interrupter\DeviseBladeCompiler')->compile($view, $compiler);
+            return \App::make('Devise\Sidebar\SnippetBladeCompiler')->compile($view);
         });
     }
 
@@ -114,7 +149,7 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     private function registerDeviseDataContainer()
     {
-        $this->app->instance("dvsPageData", new \Devise\Pages\Interrupter\DvsPageData);
+        $this->app->instance("dvsPageData", new \Devise\Pages\Interpreter\DvsPageData);
     }
 
     /**

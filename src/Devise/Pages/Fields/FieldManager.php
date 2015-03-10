@@ -132,7 +132,7 @@ class FieldManager
         $field->content_requested = array_get($input, 'content_requested', false);
 
 		// update this field's json value
-		$field->json_value = $field->values->toJSON();
+		$field->json_value = array_get($originalInput, '_reset_values', false) ? '{}' : $field->values->toJSON();
 
 		// save this field in the database
 		$field->save();
@@ -145,6 +145,15 @@ class FieldManager
 
 		// finally!
 		return $field;
+	}
+
+	/**
+	 * Sets a series of fields content requested to false
+	 * @param  array $fieldIds Array of field ids
+	 * @return bool
+	 */
+	public function markNoContentRequested($fieldIds) {
+		return $this->Field->whereIn('id', $fieldIds)->update(['content_requested' => 0]);
 	}
 
 	/**

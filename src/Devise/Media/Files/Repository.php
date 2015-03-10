@@ -1,6 +1,7 @@
 <?php namespace Devise\Media\Files;
 
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
+use Devise\Media\MediaPaths;
 
 /**
  * Class Repository builds a complex array of data around the file structure
@@ -36,9 +37,10 @@ class Repository
      * @param null $Request
      * @param null $URL
      */
-    public function __construct(Filesystem $Filesystem, $Config = null, $Request = null, $URL = null)
+    public function __construct(Filesystem $Filesystem, MediaPaths $MediaPaths, $Config = null, $Request = null, $URL = null)
     {
         $this->Filesystem = $Filesystem;
+        $this->MediaPaths = $MediaPaths;
         $this->config = $Config ?: \Config::get('devise.media-manager');
         $this->Request = $Request?: \Request::getFacadeRoot();
         $this->URL = $URL ?: \URL::getFacadeRoot();
@@ -277,15 +279,11 @@ class Repository
      */
     private function getThumbName($pathName, $possibleThumbPathName)
     {
-        $pathinfo = pathinfo($pathName);
-        $dirname = $pathinfo['dirname'];
-        $filename = $pathinfo['filename'];
-        $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
-        $thumbnailFile = "{$dirname}/{$filename}.{$this->config['thumb-key']}.{$ext}";
+        $relativePath = $this->MediaPaths->makeRelativePath($pathName);
 
-        return file_exists($thumbnailFile)
-            ? $this->getPath($thumbnailFile, $media = false)
-            : $this->getDefaultThumb($pathName);
+        $paths = $this->MediaPaths->fileVersionInfo($relativePath);
+
+        return file_exists($paths->thumbnail) ? $paths->thumbnail_url : $this->getDefaultThumb($pathName);
     }
 
     /**

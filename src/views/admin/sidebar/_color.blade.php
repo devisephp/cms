@@ -9,7 +9,7 @@
 
         <div class="dvs-property">
 
-          <?= Form::label($element->human_name) ?>
+          <h3><?= $element->human_name ?></h3>
           <?= Form::text('color', ($element->value->color) ? $element->value->color : '#428bca',
           array(
                'class'=>'color dvs-liveupdate-listen ' . $loadDefaults,

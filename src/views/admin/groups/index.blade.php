@@ -2,11 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>List of Groups</h1>
+        <h1><span class="ion-ios-people"></span> Groups</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-groups-create'), 'Create New Group', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-groups-create'), 'Create New Group', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 

@@ -7,10 +7,15 @@ class PageManagerTest extends \DeviseTestCase
     public function setUp()
     {
         parent::setUp();
+
         $Framework = new \Devise\Support\Framework;
         $this->DvsPage = new \DvsPage;
         $this->PageVersionManager = m::mock('Devise\Pages\PageVersionManager');
-        $this->PageManager = new PageManager($this->DvsPage, $this->PageVersionManager, $Framework);
+        $this->PageVersionsRepository = m::mock('Devise\Pages\PageVersionsRepository');
+        $this->FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
+        $this->FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+
+        $this->PageManager = new PageManager($this->DvsPage, $this->PageVersionManager, $this->PageVersionsRepository, $this->FieldsRepository, $this->FieldManager, $Framework);
     }
 
     public function test_it_creates_new_page()

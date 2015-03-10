@@ -2,11 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>List of Permissions</h1>
+        <h1><span class="ion-ios-locked"></span> Permissions</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-permissions-create'), 'Create New Permission', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-permissions-create'), 'New Permission', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 

@@ -148,7 +148,7 @@ return [
 		/*
 		 * Devise Service Provider...
 		 */
-		'Devise\DeviseServiceProvider',
+        'Devise\DeviseServiceProvider',
 	],
 
 	/*
@@ -197,14 +197,14 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-		/*
-		 * Devise Facades...
-		 */
+        /*
+         * Devise Facades...
+         */
         'Sort'            => 'Devise\Support\Sortable\SortableFacade',
         'DeviseUser'      => 'Devise\Users\DeviseUser',
         'RuleManager'     => 'Devise\Users\Permissions\RuleManagerFacade',
-        'Form'			  => 'Illuminate\Html\FormFacade',
-        'HTML'			  => 'Illuminate\Html\HtmlFacade',
+        'Form'            => 'Illuminate\Html\FormFacade',
+        'HTML'            => 'Illuminate\Html\HtmlFacade',
 	],
 
 ];

@@ -1,5 +1,9 @@
 <?php
 
+use League\CommonMark\DocParser;
+use League\CommonMark\Environment;
+use League\CommonMark\HtmlRenderer;
+
 /*
 |--------------------------------------------------------------------------
 | Delete form macro
@@ -143,7 +147,12 @@ HTML::macro('showPagesWithRequestedContent', function($page)
 
         foreach($fieldsArr as $field) {
             if(isset($field['content_requested']) && $field['content_requested'] == '1') {
-                return '<div class="dvs-badge dvs-content-requested fg red">Needs Content</div>';
+                return '<div class="dvs-badge dvs-content-requested fg red">
+                			Needs Content
+                			<button class="dvs-button-tiny dvs-button-primary dvs-pr dvs-content-requested-mark-done" data-url="'. URL::route('dvs-fields-content-requested-mark-all-complete', $page->id) .'">
+                				<span class="ion-android-close"></span>
+                			</button>
+                		</div>';
             }
         }
     }
@@ -183,15 +192,11 @@ if (!function_exists('isActiveLink'))
 | information.
 |
 */
-if (!function_exists('devise_model'))
+if (!function_exists('devise_tag_cid'))
 {
-    function devise_model($chain, $humanName, $collection)
+    function devise_tag_cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
     {
-        $extractor = new Devise\Pages\Interrupter\DeviseModelExtractor($chain);
-
-        return $extractor->attribute()
-            ? App::make('dvsPageData')->addModelAttribute($extractor->model(), $extractor->attribute(), $humanName, $collection)['cid']
-            : App::make('dvsPageData')->addModel($extractor->model(), $humanName, $collection)['cid'];
+    	return App::make('dvsPageData')->cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults);
     }
 }
 
@@ -203,14 +208,56 @@ if (!function_exists('devise_model'))
 */
 if (!function_exists('getLinkRouteOrUrl'))
 {
-	function getLinkRouteOrUrl($linkValue, $default = '/#')
-	{
+    function getLinkRouteOrUrl($linkValue, $default = '/#')
+    {
         $link = ($linkValue->url != '') ? $linkValue->url : $default;
 
-		if($linkValue->route != '') {
+        if($linkValue->route != '') {
             $link = URL::route($linkValue->route);
         }
 
         return $link;
+    }
+}
+
+/*
+*/
+if (!function_exists('deviseDocs'))
+{
+	function deviseDocs($view_name)
+	{
+        $view_name = str_replace('devise::', '', $view_name);
+        $markdown_file = str_replace('.', '/', $view_name) . '.md';
+        $markdown_file = base_path() . '/vendor/devisephp/cms/src/docs/' . $markdown_file;
+
+        if(\File::exists($markdown_file))  {
+            $file = File::get($markdown_file);
+
+            $environment = Environment::createCommonMarkEnvironment();
+
+            $environment->addInlineParser(new \Devise\Pages\LiveCodeHandleParser());
+            $parser = new DocParser($environment);
+            $htmlRenderer = new HtmlRenderer($environment);
+
+            // $replacement = '<span class="dvs-live-code" data-devise-doc-target="$1" data-devise-doc-default="$2"></span>';
+
+            // $file = preg_replace('/@live-code\([\"|\'](.*)\|(.*)[\"|\']\)/', $replacement, $file);
+
+            $document = $parser->parse($file);
+
+            $contents = $htmlRenderer->renderBlock($document);
+            echo $contents;exit;
+        }
+
 	}
+}
+
+/*
+*/
+if (!function_exists('deviseLiveCode'))
+{
+    function deviseLiveCode($target, $default)
+    {
+        echo '<span data-dvs-docs-target="' . $target .'" data-dvs-docs-default="' . $default .'"></span>';
+    }
 }

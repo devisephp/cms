@@ -9,6 +9,7 @@ class RepositoryTest extends \DeviseTestCase
         parent::setUp();
 
         $this->Filesystem = m::mock('Devise\Media\Files\Filesystem');
+
         $this->Config = [
             'root-dir' => 'media',
             'thumb-key' => 'dvs-thumb',
@@ -27,17 +28,36 @@ class RepositoryTest extends \DeviseTestCase
             ]
         ];
 
+        $this->MediaPaths = m::mock('Devise\Media\MediaPaths');
         $this->Request = m::mock('Illuminate\Http\Request');
         $this->URL = m::mock('Illuminate\Routing\UrlGenerator');
-        $this->Repository = new Repository($this->Filesystem, $this->Config, $this->Request, $this->URL);
+        $this->Repository = new Repository($this->Filesystem, $this->MediaPaths, $this->Config, $this->Request, $this->URL);
     }
 
     /**
      * @todo come back to testing this...
      */
-    public function test_it_compiles_index_data()
+    public function test_it_can_compile_index_data()
     {
-        $this->Request->shouldReceive('url')->andReturn('someUrl');
-        // $this->Repository->compileIndexData(['capable' => true]);
+        $this->Request->shouldReceive('url')
+            ->andReturn('someUrl');
+
+        $this->Filesystem->shouldReceive('exists')
+            ->once()
+            ->andReturn(true)
+            ->shouldReceive('directories')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('files')
+            ->once()
+            ->andReturnSelf();
+
+        $output = $this->Repository->compileIndexData(['capable' => true]);
+
+        assertInternalType('array', $output);
+        assertArrayHasKey('crumbs', $output);
+        assertArrayHasKey('categories', $output);
+        assertArrayHasKey('media-items', $output);
+        assertArrayHasKey('searched-items', $output);
     }
 }

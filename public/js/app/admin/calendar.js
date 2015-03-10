@@ -13,20 +13,10 @@ devise.define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], functio
     //
     function showModal()
     {
-        $('.modal')
-            .css('opacity', '0')
-            .css('top', '50%')
-            .css('left', '50%')
-            .fadeTo(500, 1);
+        $('#dvs-admin-modal').removeClass('dvs-hidden');
+        $('#dvs-admin-blocker').removeClass('dvs-hidden');
 
-        $('body')
-            .append('<div id="modal-blind" />')
-            .find('#modal-blind')
-            .css('opacity', '0')
-            .fadeTo(500, 0.8)
-            .click(function(e){ closeModal(); });
-
-        $('.modal .close,.btn-close').click(function(e)
+        $('.modal .close,.btn-close, #dvs-admin-blocker').click(function(e)
         {
             e.preventDefault();
             closeModal();
@@ -39,15 +29,8 @@ devise.define(['jquery', 'fullCalendar', 'jquery-ui', 'datetimepicker'], functio
     //
     function closeModal()
     {
-        $('.modal').fadeOut(250, function()
-        {
-            $(this).css('top', '-1000px').css('left', '-1000px');
-        });
-
-        $('#modal-blind').fadeOut(250, function()
-        {
-            $(this).remove();
-        });
+        $('#dvs-admin-modal').addClass('dvs-hidden');
+        $('#dvs-admin-blocker').addClass('dvs-hidden');
     }
 
 

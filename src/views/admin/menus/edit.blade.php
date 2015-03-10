@@ -2,13 +2,14 @@
 
 @section('title')
      <div id="dvs-admin-title">
-        <h1>Editing Menu</h1>
-
-        <p>Update menu details and set order and parent/child item(s).</p>
+        <h1><span class="ion-android-menu"></span> Edit Menu</h1>
     </div>
 
+@stop
+
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-menus'), 'List of Menus', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-menus'), 'Back to all Menus', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 
@@ -23,7 +24,7 @@
 
     		<div class="dvs-form-group">
     		    <?= Form::label('Menu Items') ?>
-    		    <button type="button" class="dvs-button js-add-menu-item">Add Item</button>
+    		    <button type="button" class="dvs-button dvs-button-secondary js-add-menu-item">Add Item</button>
     		</div>
 
     		<div class="dvs-form-group">
@@ -35,7 +36,7 @@
     			</ol>
     		</div>
 
-    		<?= Form::submit('Update Menu', array('class' => 'dvs-button dvs-button-large')) ?>
+    		<?= Form::submit('Update Menu', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
         <?= Form::close() ?>
     </div>
 
@@ -46,7 +47,5 @@
 
         devise.require(['app/admin/menus']);
     </script>
-
-    <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/jquery.nestedSortable.css') ?>">
 
 @stop

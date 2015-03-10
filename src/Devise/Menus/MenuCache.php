@@ -17,4 +17,9 @@ class MenuCache
 	{
 		return (isset(self::$menus[ $name ])) ? self::$menus[ $name ] : false;
 	}
+
+	public static function forgetMenu($name)
+	{
+		unset(self::$menus[$name]);
+	}
 }

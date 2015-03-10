@@ -2,6 +2,8 @@
 
     @include('devise::admin.sidebar._collection_instance_id')
 
+    <h3>Available Values</h3>
+
     <div class="dvs-editor-values">
         <div class="dvs-checkboxes">
             @if($element->value->checkboxes)
@@ -30,7 +32,7 @@
                     <th>Key</th>
                     <th>Label</th>
                     <th>Default</th>
-                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-checkbox dvs-button-secondary">New Option</button></th>
+                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-checkbox dvs-button-secondary">New</button></th>
                 </tr>
             </thead>
             <tbody>

@@ -22,23 +22,38 @@ devise.define(['require', 'jquery', 'app/helpers/query-params'], function (requi
 
             }
 
+            // add the add categoryListener
+            //
+            $('#dvs-open-new-category').click(handleOpenNewCategory);
+
             //
             // add the image url
             // to the opener which has a function ready to go
             //
-            $('a.dvs-media-item').click(handleFileSelected);
+            $('.js-media-items').on('click', 'a.dvs-media-item', handleFileSelected);
 
             //
             // handle renaming and removing
             //
-            $('.js-rename-item').click(handleFileRename);
-            $('.js-remove-item').click(handleFileRemove);
+            $('.js-media-items').on('click', '.js-rename-item', handleFileRename);
+            $('.js-media-items').on('click', '.js-remove-item', handleFileRemove);
 
             $('a.dvs-cat-delete-btn').click(handleCategoryRemove);
             $('a.dvs-cat-rename-btn').click(handleCategoryRename);
 
         }
     };
+
+    //
+    // Opens the add new category form
+    //
+    function handleOpenNewCategory(e) {
+        e.preventDefault();
+
+        $(this).addClass('dvs-hidden');
+
+        $('#dvs-new-category').removeClass('dvs-hidden');
+    }
 
     //
     // When the file is selected we want to pass that file

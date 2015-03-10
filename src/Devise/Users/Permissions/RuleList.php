@@ -71,16 +71,14 @@ class RuleList
     public function __call($method, $arguments = array())
     {
         if(in_array($method, $this->rules)) {
-            // check if function is a class method, if it is then execute it
-            if(in_array($method, get_class_methods($this))) {
+            // check if closer exists allowing methods to be overwritten
+            if(isset($this->closures[$method])) {
+                return call_user_func_array($this->closures[$method], $arguments);
+            } else if(in_array($method, get_class_methods($this))) {
+                // check if function is a class method, if it is then execute it
                 return call_user_func_array(array($this, $method), $arguments);
             } else {
-                // run closure since the "method" is not a class method
-                if(isset($this->closures[$method])) {
-                    return call_user_func_array($this->closures[$method], $arguments);
-                } else {
-                   throw new Exception('Unknown Function "'.$method.'" in RuleList');
-                }
+                throw new Exception('Unknown Function "'.$method.'" in RuleList');
             }
         } else {
             throw new Exception('Unknown Function "'.$method.'" in RuleList');
@@ -92,7 +90,7 @@ class RuleList
      *
      * @return boolean
      */
-    public function isLoggedIn()
+    protected function isLoggedIn()
     {
         return $this->Auth->check();
     }
@@ -102,7 +100,7 @@ class RuleList
      *
      * @return boolean
      */
-    public function isNotLoggedIn()
+    protected function isNotLoggedIn()
     {
         return !$this->Auth->check();
     }
@@ -113,10 +111,10 @@ class RuleList
      * @param  string  $groupname
      * @return boolean
      */
-    public function isInGroup($groupname)
+    protected function isInGroup($groupname)
     {
         if($this->isLoggedIn()) {
-            $user = $this->Auth->user();
+            $user = $this->User->find($this->Auth->user()->id);
             foreach($user->groups as $group) {
                 if(strtolower($group->name) === strtolower($groupname)) {
                     return true;
@@ -133,10 +131,10 @@ class RuleList
      * @param  string  $groupname
      * @return boolean
      */
-    public function isNotInGroup($groupname)
+    protected function isNotInGroup($groupname)
     {
         if($this->isLoggedIn()) {
-            $user = $this->Auth->user();
+            $user = $this->User->find($this->Auth->user()->id);
             foreach($user->groups as $group) {
                 if(strtolower($group->name) == strtolower($groupname)) {
                     return false;
@@ -148,18 +146,14 @@ class RuleList
     }
 
     /**
-     * Determine if a name or email is used for application login.
-     * Then checks if username/email equals specified value
+     * Check if name field equals specified name value
      *
-     * @param  string  $username  Handles username or email search
+     * @param  string  $name
      * @return boolean
      */
-    public function hasUserName($username)
+    protected function hasName($name)
     {
-        if($this->hasFieldValue('name', $username)) {
-            return true;
-        }
-        return $this->hasFieldValue('email', $username);
+        return $this->hasFieldValue('name', $name);
     }
 
     /**
@@ -168,9 +162,20 @@ class RuleList
      * @param  string  $email
      * @return boolean
      */
-    public function hasEmail($email)
+    protected function hasEmail($email)
     {
         return $this->hasFieldValue('email', $email);
+    }
+
+    /**
+     * Check if username equals specified username value
+     *
+     * @param  string  $username
+     * @return boolean
+     */
+    protected function hasUserName($username)
+    {
+        return $this->hasFieldValue('username', $username);
     }
 
     /**
@@ -180,10 +185,10 @@ class RuleList
      * @param  string  $value
      * @return boolean
      */
-    public function hasFieldValue($field, $value)
+    protected function hasFieldValue($field, $value)
     {
         if($this->isLoggedIn()) {
-            $user = $this->Auth->user();
+            $user = $this->User->find($this->Auth->user()->id);
             if(isset($user->$field)) {
                 return $user->$field == $value;
             }
@@ -197,7 +202,7 @@ class RuleList
      * @param  [type] $key
      * @return [type]
      */
-    public function showDeviseSpan($key, $collection)
+    protected function showDeviseSpan($key, $collection)
     {
         return $this->isLoggedIn();
     }

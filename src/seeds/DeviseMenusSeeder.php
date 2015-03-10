@@ -15,7 +15,7 @@ class DeviseMenusSeeder extends DeviseSeeder
 			array(
 				'menu_id' => $menuId,
 				'parent_item_id' => null,
-				'name' => 'Website Management',
+				'name' => 'Management',
 				'url' => '#',
 				'position' => 1,
 			),
@@ -43,8 +43,8 @@ class DeviseMenusSeeder extends DeviseSeeder
 			array(
 				'menu_id' => $menuId,
 				'parent_item_id' => 1,
-				'name' => 'Templates',
-				'url' => '/admin/templates',
+				'name' => 'Languages',
+				'url' => '/admin/languages',
 				'position' => 5,
 			),
 			array(
@@ -57,7 +57,7 @@ class DeviseMenusSeeder extends DeviseSeeder
 			array(
 				'menu_id' => $menuId,
 				'parent_item_id' => null,
-				'name' => 'Application Management',
+				'name' => 'Development',
 				'url' => '#',
 				'position' => 7,
 			),
@@ -85,8 +85,8 @@ class DeviseMenusSeeder extends DeviseSeeder
 			array(
 				'menu_id' => $menuId,
 				'parent_item_id' => 7,
-				'name' => 'Languages',
-				'url' => '/admin/languages',
+				'name' => 'Templates',
+				'url' => '/admin/templates',
 				'position' => 11,
 			),
 			array(

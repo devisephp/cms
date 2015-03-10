@@ -2,12 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Create Group</h1>
-        <p>Use the form below to create a new group.</p>
+        <h1><span class="ion-ios-people"></span> New Group</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-groups'), 'List of Groups', array('class'=>'dvs-button')) ?>
+        <?= link_to(URL::route('dvs-groups'), 'List of Groups', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 
@@ -15,11 +16,11 @@
 	<div class="dvs-admin-form-horizontal">
 	    <?= Form::open(array('route' => array('dvs-groups-store'))) ?>
 		    <div class="dvs-form-group">
-		        <?= Form::label('Name') ?><br>
-		        <?= Form::text('name') ?><br>
+		        <?= Form::label('Name') ?>
+		        <?= Form::text('name') ?>
 			</div>
 
-	        <?= Form::submit('Create Group', array('class' => 'dvs-button dvs-button-large')) ?><br>
+	        <?= Form::submit('Create Group', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?><br>
 	    <?= Form::close() ?>
 	</div>
 @stop

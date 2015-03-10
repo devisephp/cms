@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Str;
 use Devise\Support\Framework;
+use Devise\Pages\Fields\FieldsRepository;
+use Devise\Pages\Fields\FieldManager;
 
 /**
  * Class PageManager manages the creating of new pages,
@@ -29,6 +31,20 @@ class PageManager
      * @var PageVersionManager
      */
     private $PageVersionManager;
+
+    /**
+     * FieldsRepository returns information about fields
+     *
+     * @var FieldsRepository
+     */
+    private $FieldsRepository;
+
+    /**
+     * FieldManager lets us manage the fields
+     *
+     * @var FieldManager
+     */
+    private $FieldManager;
 
     /**
      * List of database fields/columns for a dvs_page
@@ -83,12 +99,24 @@ class PageManager
      * @param \DvsPage $Page
      * @param Validator $Validator
      * @param PageVersionManager $PageVersionManager
+     * @param FieldsRepository $FieldsRepository
+     * @param FieldManager $FieldManager
+     * @param Framework $Framework
      */
-	public function __construct(\DvsPage $Page, PageVersionManager $PageVersionManager, Framework $Framework)
-    {
+	public function __construct(
+        \DvsPage $Page,
+        PageVersionManager $PageVersionManager,
+        PageVersionsRepository $PageVersionsRepository,
+        FieldsRepository $FieldsRepository,
+        FieldManager $FieldManager,
+        Framework $Framework
+    ){
         $this->Page = $Page;
         $this->Validator = $Framework->Validator;
         $this->PageVersionManager = $PageVersionManager;
+        $this->PageVersionsRepository = $PageVersionsRepository;
+        $this->FieldsRepository = $FieldsRepository;
+        $this->FieldManager = $FieldManager;
         $this->now = new \DateTime;
     }
 
@@ -257,5 +285,28 @@ class PageManager
     public function updatePageVersionDates($pageVersionId, $input)
     {
         return $this->PageVersionManager->updatePageVersionDates($pageVersionId, $input);
+    }
+
+    public function markContentRequestedFieldsComplete($pageId)
+    {
+        $page = $this->Page->findOrFail($pageId);
+
+        $pageVersions = $this->PageVersionsRepository->getVersionsListForPage($page);
+
+        foreach($pageVersions as $pageVersion => $name) {
+
+            $contentRequestedFieldList = $this->FieldsRepository->findContentRequestedFieldsList($pageVersion);
+
+            $contentRequestedFields = [];
+            foreach($contentRequestedFieldList as $id => $field) {
+                $contentRequestedFields[] = $id;
+            }
+
+            if(!$this->FieldManager->markNoContentRequested($contentRequestedFields)) {
+                return json_encode(false);
+            }
+        }
+
+        return json_encode(true);
     }
 }

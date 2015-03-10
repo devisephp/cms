@@ -2,24 +2,29 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>List of Menus</h1>
+        <h1><span class="ion-android-menu"></span> Menus</h1>
     </div>
+@stop
 
+@section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select')) ?></label>
+        <?= Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select dvs-button-solid')) ?></label>
     </div>
 @stop
 
 @section('main')
-    <div class="dvs-admin-form-horizontal">
+    <div class="dvs-admin-form-vertical">
+
+        <h4>Create New Menu</h4>
+
     	<?= Form::open(['route' => 'dvs-menus-store']) ?>
     		<div class="dvs-form-group">
-    			<?= Form::label('Menu Name') ?>
+
     	    	<?= Form::text('name', null, array('placeholder' => 'Menu Name', 'class' => 'form-control')) ?>
                 <?= Form::hidden('language_id', (!Input::has('language_id')) ? 45 : Input::get('language_id')) ?>
     		</div>
 
-    		<?= Form::submit('Create New Menu', array('class' => 'dvs-button dvs-button-large')) ?>
+    		<?= Form::submit('Create New Menu', array('class' => 'dvs-button dvs-button-success dvs-button-solid')) ?>
         <?= Form::close() ?>
     </div>
 

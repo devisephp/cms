@@ -2,6 +2,7 @@
 
 use Devise\Media\Categories\CategoryPaths;
 use Devise\Media\Images\Images;
+use Devise\Media\MediaPaths;
 
 /**
  * Class Manager
@@ -31,10 +32,11 @@ class Manager
      * @param CategoryPaths $CategoryPaths
      * @param Image $Image
      */
-    public function __construct(Filesystem $Filesystem, CategoryPaths $CategoryPaths, Images $Image, $Config = null)
+    public function __construct(Filesystem $Filesystem, CategoryPaths $CategoryPaths, MediaPaths $MediaPaths, Images $Image, $Config = null)
     {
         $this->Filesystem = $Filesystem;
         $this->CategoryPaths = $CategoryPaths;
+        $this->MediaPaths = $MediaPaths;
         $this->Image = $Image;
         $this->basepath = public_path() . '/media/';
         $this->Config = $Config ?: \Config::getFacadeRoot();
@@ -59,9 +61,16 @@ class Manager
         $localPath = (isset($input['category'])) ? $this->CategoryPaths->fromDot($input['category']) : '';
         $serverPath = $this->CategoryPaths->serverPath($localPath);
 
-        $file->move($serverPath, $originalName);
+        $newName = $this->createFile($file, $serverPath, $originalName);
 
-        $this->Image->makeThumbnailImage($serverPath . $originalName, $serverPath . $this->getNewThumbName($originalName), $file->getClientMimeType());
+        if ($this->Image->canMakeThumbnailFromFile($file))
+        {
+            $thumbnailPath = $this->getThumbnailPath($localPath . '/' . $newName);
+            if (! is_dir(dirname($thumbnailPath))) mkdir(dirname($thumbnailPath), 0755, true);
+            $this->Image->makeThumbnailImage($serverPath . $newName, $thumbnailPath, $file->getClientMimeType());
+        }
+
+        return $localPath . '/' . $newName;
     }
 
     /**
@@ -85,14 +94,6 @@ class Manager
     public function removeUploadedFile($filepath)
     {
         $this->Filesystem->delete($this->basepath . $filepath);
-
-        // remove the thumbnail if there is one
-        $thumbnail = $this->basepath . dirname($filepath) . '/' . $this->getNewThumbName(basename($filepath));
-
-        if (is_file($thumbnail))
-        {
-            $this->Filesystem->delete($thumbnail);
-        }
     }
 
     /**
@@ -100,11 +101,38 @@ class Manager
      * @param $currentName
      * @return string
      */
-    private function getNewThumbName($currentName)
+    private function getThumbnailPath($currentName)
     {
-        $nameArr = explode('.', $currentName);
-        $inject = $this->Config->get('devise.media-manager.thumb-key');
-        array_splice($nameArr, count($nameArr) - 1, 0, $inject);
-        return implode('.', $nameArr);
+        return $this->MediaPaths->fileVersionInfo('/media/' . $currentName)->thumbnail;
+    }
+
+    /**
+     * Checks for file existence and then creates file.. if the file
+     * already exists we create a new file (clone)
+     *
+     * @param  File $file
+     * @param  string $serverPath
+     * @param  string $originalName
+     * @return string
+     */
+    private function createFile($file, $serverPath, $originalName)
+    {
+        $newName = $originalName;
+
+        $info = pathinfo($newName);
+
+        $sanity = 0;
+
+        while (file_exists($serverPath . '/' . $newName))
+        {
+            $dir = $info['dirname'] === '.' ? '' : $info['dirname'];
+            $newName = $dir . $info['filename'] . '.copy.' . $info['extension'];
+
+            if ($sanity++ > 5) throw new \Exception("You've got a lot of copies of this file... I'm going to stop trying to make copies...");
+        }
+
+        $file->move($serverPath, $newName);
+
+        return $newName;
     }
 }

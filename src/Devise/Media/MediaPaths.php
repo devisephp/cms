@@ -1,5 +1,7 @@
 <?php namespace Devise\Media;
 
+use Devise\Media\Files\InvalidFileException;
+
 use stdClass;
 
 /**
@@ -91,6 +93,9 @@ class MediaPaths
 		$obj->versionname = pathinfo($obj->versionpath, PATHINFO_FILENAME);
 		$obj->versiondir = "{$this->basepath}/media-versions/{$obj->partition}";
 
+		$obj->thumbnail = "{$this->basepath}/media-versions/{$obj->partition}/thumbnail.{$obj->ext}";
+		$obj->thumbnail_url = "/media-versions/{$obj->partition}/thumbnail.{$obj->ext}";
+
 		return $obj;
 	}
 
@@ -148,6 +153,9 @@ class MediaPaths
 		$obj->versionpath = "{$this->basepath}/media-versions/{$obj->partition}/{$obj->filename}.{$obj->ext}";
 		$obj->versionname = pathinfo($obj->versionpath, PATHINFO_FILENAME);
 		$obj->versiondir = "{$this->basepath}/media-versions/{$obj->partition}";
+
+		$obj->thumbnail = "{$this->basepath}/media-versions/{$obj->partition}/thumbnail.{$obj->ext}";
+		$obj->thumbnail_url = "/media-versions/{$obj->partition}/thumbnail.{$obj->ext}";
 
 		return $obj;
 	}

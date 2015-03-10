@@ -2,7 +2,10 @@
 
 @section('css')
 
-    <link href="<?= URL::asset('/packages/devisephp/cms/css/obsidian.min.css') ?>" rel="stylesheet" >
+    <link href="<?= URL::asset('/packages/devisephp/cms/css/spectrum.css') ?>" rel="stylesheet" >
+    <link href="<?= URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') ?>" rel="stylesheet" >
+
+    <link href="<?= URL::asset('/packages/devisephp/cms/css/highlight-js/github.css') ?>" rel="stylesheet" >
     <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/lib/highlight.pack.js') ?>"></script>
 
     <!-- some weird style that I'm just overriding so I can see the listed attributes -->
@@ -12,12 +15,12 @@
         }*/
     </style>
 
-    @include('devise::styles')
+
 @stop
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Editor's Examples</h1>
+        <h1>Editor Examples</h1>
     </div>
 @stop
 
@@ -28,11 +31,11 @@
 
         <tbody>
 
-        @foreach (['model-creator', 'model', 'model-attribute', 'model-group',
+        @foreach (['model-with-page-version', 'model-creator', 'model', 'model-attribute', 'model-group',
             'audio', 'checkbox-group', 'checkbox', 'color',
             'datetime', 'file', 'html', 'image',
             'link', 'map', 'select', 'text', 'textarea',
-            'video', 'wysiwyg', 'collections', 'hidden-fields'] as $type)
+            'video', 'wysiwyg', 'groups', 'collections', 'hidden-fields'] as $type)
             <tr>
                 <td>
                     @include("devise::admin.fields.types.{$type}")

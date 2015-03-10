@@ -10,7 +10,13 @@
   text-decoration:none;
   border-radius:$buttonBorderRadius;
   box-sizing:border-box;
-  font-size: 11px;
+  font-size: 12px;
+  font-weight:400;
+
+  &:hover {
+    color:lighten($primaryButtonBgColor, 10%);
+  }
+
 
   &.dvs-button-solid {
     background-color:$primaryButtonBgColor;
@@ -256,6 +262,15 @@ input[type="submit"]{
 
   &.dvs-select-small {
     padding:8px 0px;
+  }
+
+  &.dvs-select-inline {
+    width:auto;
+    padding-right:35px;
+
+    span {
+      width:100%;
+    }
   }
 
   &.dvs-select-secondary {

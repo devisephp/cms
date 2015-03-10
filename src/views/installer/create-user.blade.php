@@ -2,22 +2,22 @@
 
 @section('content')
 
-    <h1>Create Admin User</h1>
+    <h1 class="mb sp30">Create Admin User</h1>
 
     <form method="post">
         <input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
-        <div class="form-group">
+        <div class="form-group tal">
             <label>Admin Email</label>
             <input type="text" class="form-control" name="email" placeholder="Admin Email" value="<?= $email ?>">
         </div>
 
-        <div class="form-group">
+        <div class="form-group tal">
             <label>Admin Username</label>
             <input type="text" class="form-control" name="username" placeholder="Admin Username" value="<?= $username ?>">
         </div>
 
-        <div class="form-group">
+        <div class="form-group tal">
             <label>Admin Password</label>
             <input type="text" class="form-control" name="password" placeholder="Admin Password" value="">
         </div>

@@ -15,9 +15,9 @@
 </head>
 
 <body id="dvs-admin">
-    <div class="container pt sp45">
+    <div class="container pt sp75">
 
-        <div class="tac mb sp75">
+        <div class="tac mb sp50">
             <img src="<?= URL::asset('/packages/devisephp/cms/img/admin-logo.png') ?>">
         </div>
 
@@ -30,7 +30,7 @@
         @endif
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 tal">
+            <div class="col-md-6 col-md-offset-3 tac">
 
                 @yield('content')
 

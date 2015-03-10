@@ -133,7 +133,20 @@ class DeviseTestsOnlySeeder extends DeviseSeeder
     public function users()
     {
         // adds a user records which is unactivated and created_at over 30 days ago
-        $unactivedUser = $this->findOrCreateRow('users', 'email', [
+        $activatedUser = $this->findOrCreateRow('users', 'email', [
+            'name'           => 'Devise Administrator',
+            'email'          => 'noreply@devisephp.com',
+            'username'       => 'deviseadmin',
+            'password'       => \Hash::make('secret'),
+            'activated'      => true,
+            'activate_code'  => null,
+            'remember_token' => null,
+            'created_at'     => date('Y-m-d H:i:s', strtotime('now')),
+            'deleted_at'     => null
+        ]);
+
+         // adds a user records which is unactivated and created_at over 30 days ago
+        $unactivatedUser = $this->findOrCreateRow('users', 'email', [
             'name'           => 'Foo Guy',
             'email'          => 'fooguy@devisephp.com',
             'username'       => 'fooguy',
@@ -145,10 +158,16 @@ class DeviseTestsOnlySeeder extends DeviseSeeder
             'deleted_at'     => null
         ]);
 
-        DB::table('group_user')->insert([
-            'group_id'       => 1,
-            'user_id'        => $unactivedUser->id,
-        ]);
+        DB::table('group_user')->insert(
+            [
+                'group_id' => 1,
+                'user_id'  => $activatedUser->id,
+            ],
+            [
+                'group_id' => 1,
+                'user_id' => $unactivatedUser->id
+            ]
+        );
     }
 
 }

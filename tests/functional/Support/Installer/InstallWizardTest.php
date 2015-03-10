@@ -7,7 +7,7 @@ class InstallWizardTest extends \DeviseTestCase
     public function setUp()
     {
         parent::setUp();
-
+        $this->previousEnv = app()['env'];
         $this->SettingsManager = m::mock('\Devise\Support\Config\SettingsManager');
         $this->EnvironmentFileManager = m::mock('\Devise\Support\Config\EnvironmentFileManager');
         $this->Framework = m::mock('\Devise\Support\Framework');
@@ -16,6 +16,8 @@ class InstallWizardTest extends \DeviseTestCase
         $this->Framework->Schema = m::mock('\Illuminate\Database\Schema\Builder');
         $this->DatabaseCreator = m::mock('\Devise\Support\Installer\DatabaseCreator');
         $this->DeviseInstallCommand = m::mock('\Devise\Support\Console\DeviseInstallCommand');
+        $this->DevisePublishAssetsCommand = m::mock('\Devise\Support\Console\DevisePublishAssetsCommand');
+        $this->Framework->Config = m::mock('Illuminate\Config\Repository');
 
         $this->InstallWizard = new InstallWizard(
             $this->SettingsManager,
@@ -23,10 +25,16 @@ class InstallWizardTest extends \DeviseTestCase
             $this->Framework,
             $this->DatabaseCreator,
             $this->DeviseInstallCommand,
+            $this->DevisePublishAssetsCommand,
             new \DvsUser,
             new \DvsGroup
         );
+    }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+        app()['env'] = $this->previousEnv;
     }
 
 	public function test_it_validates_admin_user()
@@ -39,7 +47,7 @@ class InstallWizardTest extends \DeviseTestCase
             ->once()
             ->andReturn(false);
 
-		$this->InstallWizard->validateAdminUser('foo@email.com', 'fooPass');
+		$this->InstallWizard->validateAdminUser('foo@email.com', 'foouser', 'fooPass');
 
         $this->assertCount(0, $this->InstallWizard->errors);
         $this->assertInternalType('array', $this->InstallWizard->errors);
@@ -52,7 +60,7 @@ class InstallWizardTest extends \DeviseTestCase
             ->once()
             ->andReturn('&5y$21%lIpwAOghJs2pjLGIoCfsGwiWryIlNQcBejtRrv0/RRjLiyEnVO\9P');
 
-        $output = $this->InstallWizard->createAdminUser('admin@email.com', 'fooAdminPass');
+        $output = $this->InstallWizard->createAdminUser('admin@email.com', 'adminuser', 'fooAdminPass');
 
         $this->assertEquals('admin@email.com', $output->email);
         $this->assertInstanceOf('DvsUser', $output);
@@ -75,6 +83,8 @@ class InstallWizardTest extends \DeviseTestCase
 
 	public function test_it_saves_database()
 	{
+        $this->Framework->Config->shouldReceive('set');
+
         $this->DeviseInstallCommand
             ->shouldReceive('changeDatabaseConfigFile')
             ->once()
@@ -109,7 +119,9 @@ class InstallWizardTest extends \DeviseTestCase
 
 	public function test_it_refreshes_environment()
 	{
-		$this->markTestIncomplete();
+        $this->EnvironmentFileManager->shouldReceive('createIfNotExists')->once()->andReturnNull();
+        $this->Framework->Config->shouldReceive('set')->times(17);
+        $this->InstallWizard->refreshEnvironment();
 	}
 
     // This is the test file for whether or not assets should

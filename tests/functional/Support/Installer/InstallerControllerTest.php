@@ -20,6 +20,7 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_gets_index()
     {
+        $this->InstallWizard->shouldReceive('checkAssets')->once()->andReturnNull();
         $this->Framework->Redirect->shouldReceive('to')->once()->andReturnSelf();
         $this->InstallerController->getIndex();
     }
@@ -66,7 +67,7 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_gets_create_user()
     {
-        $this->Framework->Input->shouldReceive('old')->once()->andReturn('foo@email.com');
+        $this->Framework->Input->shouldReceive('old')->andReturn('foo@email.com');
         $this->Framework->View->shouldReceive('make')->once()->andReturnSelf();
 
         $this->InstallerController->getCreateUser();
@@ -74,7 +75,7 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_posts_create_user()
     {
-        $this->Framework->Input->shouldReceive('get')->twice()->andReturn('foo@email.com', 'fooPass');
+        $this->Framework->Input->shouldReceive('get')->times(3)->andReturn('foo@email.com', 'foouser', 'fooPass');
         $this->InstallWizard
             ->shouldReceive('validateAdminUser', 'installDevise')
             ->once()

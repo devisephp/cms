@@ -14,16 +14,25 @@ class DvsPage extends Eloquent
     public $createRules = array(
         'title'              => 'required|min:3',
         'slug'               => 'required|min:1',
-        'http_verb'          => 'required|min:1'
+        'http_verb'          => 'required|min:1',
+
+        'response_path'      => 'required_if:response_type,Function|min:1',
+        'response_params'    => 'required_if:response_type,Function|min:1',
     );
 
     public $updateRules = array(
         'title'              => 'min:1',
         'slug'               => 'min:1',
-        'http_verb'          => 'required|min:1'
+        'http_verb'          => 'required|min:1',
+
+        'response_path'      => 'required|min:1',
+        'response_params'    => 'required|min:1',
     );
 
-    public $messages = array();
+    public $messages = array(
+        'response_path.required_if' => 'The response path is required',
+        'response_params.required_if' => 'The response parameters is required'
+    );
 
 
     public function versions()

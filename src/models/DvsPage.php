@@ -17,8 +17,8 @@ class DvsPage extends Eloquent
         'slug'               => 'required|min:1',
         'http_verb'          => 'required|min:1',
 
-        'response_path'      => 'required_if:response_type,Function|min:1',
-        'response_params'    => 'required_if:response_type,Function|min:1',
+        'response_path'      => 'required_if:response_type,Function',
+        'response_params'    => 'required_if:response_type,Function',
     );
 
     public $updateRules = array(
@@ -27,8 +27,8 @@ class DvsPage extends Eloquent
         'slug'               => 'min:1',
         'http_verb'          => 'required|min:1',
 
-        'response_path'      => 'required|min:1',
-        'response_params'    => 'required|min:1',
+        'response_path'      => 'min:1',
+        'response_params'    => 'min:1',
     );
 
     public $messages = array(

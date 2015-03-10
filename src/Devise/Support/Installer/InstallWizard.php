@@ -77,6 +77,7 @@ class InstallWizard
 		$this->Framework = $Framework;
 		$this->DatabaseCreator = $DatabaseCreator;
 		$this->DeviseInstallCommand = $DeviseInstallCommand;
+		$this->DevisePublishAssetsCommand = $DevisePublishAssetsCommand;
 		$this->DvsUser = $DvsUser;
 		$this->DvsGroup = $DvsGroup;
 	}
@@ -209,9 +210,15 @@ class InstallWizard
 		$deviseJs = public_path() . '/packages/devisephp/cms/js/devise.min.js';
 
 		if (!$this->File->exists($deviseJs)) {
-			dd('here');
-			$this->DevisePublishAssetsCommand->handle();
+			return false;
 		}
+
+		return true;
+	}
+
+	public function installAssets()
+	{
+		return $this->DevisePublishAssetsCommand->handle();
 	}
 
 	/**

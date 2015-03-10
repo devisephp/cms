@@ -122,7 +122,8 @@ class InstallWizard
 		$user = $this->DvsUser->newInstance();
         $user->email = $email;
 		$user->username = $username;
-		$user->password = $this->Hash->make($password);
+        $user->password = $this->Hash->make($password);
+        $user->activated = true;
 		$user->save();
 
 		// add the user to the admin group

@@ -16,35 +16,35 @@ class PageManager
      *
 	 * @var Page
 	 */
-	private $Page;
+	protected $Page;
 
     /**
      * Validator is used to validate page rules
      *
      * @var Illuminate\Validation\Factory
      */
-    private $Validator;
+    protected $Validator;
 
     /**
      * PageVersionManager lets us manage versions of a page
      *
      * @var PageVersionManager
      */
-    private $PageVersionManager;
+    protected $PageVersionManager;
 
     /**
      * FieldsRepository returns information about fields
      *
      * @var FieldsRepository
      */
-    private $FieldsRepository;
+    protected $FieldsRepository;
 
     /**
      * FieldManager lets us manage the fields
      *
      * @var FieldManager
      */
-    private $FieldManager;
+    protected $FieldManager;
 
     /**
      * List of database fields/columns for a dvs_page
@@ -128,6 +128,7 @@ class PageManager
 	 */
 	public function createNewPage($input)
 	{
+        $input['response_type'] = 'View';
 		$page = $this->createPageFromInput($input);
 
         if ($page)
@@ -152,10 +153,6 @@ class PageManager
         $page = $this->Page->findOrFail($id);
 
         $this->validator = $this->Validator->make($input, $this->Page->updateRules, $this->Page->messages);
-        $this->validator->sometimes('view', 'required|min:3', function($input)
-        {
-            return $input->http_verb == 'get';
-        });
 
         if ($this->validator->passes())
         {
@@ -256,10 +253,6 @@ class PageManager
 
         // validate the input given before we create the page
         $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);
-        $this->validator->sometimes('view', 'required|min:3', function($input)
-        {
-            return $input->http_verb == 'get';
-        });
 
         if ($this->validator->passes())
         {

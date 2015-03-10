@@ -84,6 +84,24 @@
 				),
 			),
 		),
+		'devise::admin.api.index' => array(
+			'human_name' => 'Devise API Request List',
+			'extends' => 'devise::admin.layouts.master',
+			'vars' => array(
+				'pages' => 'Devise\Pages\ApiPagesRepository.pages',
+			),
+		),
+		'devise::admin.api.edit' => array(
+			'human_name' => 'Devise API Request Edit',
+			'extends' => 'devise::admin.layouts.master',
+			'vars' => array(
+				'page' => array(
+					'Devise\Pages\ApiPagesRepository.find' => array(
+						'id' => '{params.pageId}',
+					),
+				),
+			),
+		),
 		'devise::admin.content.queue' => array(
 			'human_name' => 'Devise Content Queue',
 			'extends' => 'devise::admin.layouts.master',

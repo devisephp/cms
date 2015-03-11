@@ -105,6 +105,9 @@ devise.define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, live
                         $(input).attr('name', newName);
                     });
                 });
+
+                // manually trigger change for live updating
+                sampleSelect.trigger('change');
             }
 
             /**

@@ -34,7 +34,6 @@ devise.define(['require', 'jquery'], {
                     });
                 });
             });
-
         }
 
         instance.init = function($, listenTo, type) {
@@ -53,12 +52,15 @@ devise.define(['require', 'jquery'], {
                     case 'css':
                         _currentValue = $(updateSelector).css(_property);
                         break;
+
                     case 'attr':
                         _currentValue = $(updateSelector).attr(_property);
                         break;
+
                     case 'wysiwyg':
                         _currentValue = _property.getData();
                         break;
+
                     // case 'html':
                     default:
                         _currentValue = $(updateSelector).html();
@@ -87,6 +89,11 @@ devise.define(['require', 'jquery'], {
             function updateImage() {
                 logChange('image', 'value');
                 $(updateSelector).attr('src', newValue);
+            }
+
+            function updateFile() {
+                logChange('file', 'value');
+                $(updateSelector).attr('value', newValue);
             }
 
             function updateColor() {
@@ -126,9 +133,16 @@ devise.define(['require', 'jquery'], {
                         case 'image':
                             updateImage();
                             break;
+
+                        case 'file':
+                            updateFile();
+                            updateHTML();
+                            break;
+
                         case 'color':
                             updateColor();
                             break;
+
                         // case 'link':
                         // case 'text':
                         // case 'textarea':
@@ -141,7 +155,6 @@ devise.define(['require', 'jquery'], {
                     updateAlternateTarget();
                 }
             }
-
 
             /**
              * Set value of "newValue" variable
@@ -177,7 +190,6 @@ devise.define(['require', 'jquery'], {
             }
 
 
-            // wysiwyg's
             if (editorType === 'wysiwyg')
             {
 
@@ -206,7 +218,7 @@ devise.define(['require', 'jquery'], {
 
              } else if(editorType == 'select') {
 
-                 $('#dvs-sidebar-select-element').on('input change keyup', listenTo, function() {
+                 $('#dvs-sidebar-select-element').on('input change', listenTo, function() {
                     setNewValue( listenTo.html() );
 
                     setUpdateSelector( listenTo.data('dvs-index'), listenTo.data('dvs-key') );
@@ -214,16 +226,25 @@ devise.define(['require', 'jquery'], {
                     updateTarget();
                  });
 
+             } else if(editorType == 'checkbox-group') {
+
+                 // $('#dvs-sample-checkbox-group').on('change', listenTo, function() {
+                 //    setNewValue( listenTo.html() );
+
+                 //    setUpdateSelector( listenTo.data('dvs-index'), listenTo.data('dvs-key') );
+
+                 //    updateTarget();
+                 // });
+
             } else {
 
-                // currently supports: input, textarea, link, color,
+                // currently: input, textarea, link, color,
                  listenTo.on('input', function() {
                     setNewValue( listenTo.val() );
 
                     setUpdateSelector( listenTo.data('dvs-index'), listenTo.data('dvs-key') );
 
                     setAlternateTarget( listenTo.data('dvs-alternate-target') );
-
 
                     updateTarget();
                 });

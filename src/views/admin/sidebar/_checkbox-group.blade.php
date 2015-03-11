@@ -1,3 +1,12 @@
+@php
+    $elementOptionsArr = [
+        'class' => 'dvs-liveupdate-listen',
+        'data-dvs-index' => $element->index,
+        'data-dvs-alternate-target' => $element->alternateTarget,
+        'data-dvs-key' => $element->key,
+    ];
+@endphp
+
 <?= Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-checkbox-group', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type, 'id' => 'dvs-sidebar-field-form')) ?>
 
     @include('devise::admin.sidebar._collection_instance_id')
@@ -5,16 +14,15 @@
     <h3>Available Values</h3>
 
     <div class="dvs-editor-values">
-        <div class="dvs-checkboxes">
+        <div class="dvs-checkboxes" id="dvs-sample-checkbox-group">
             @if($element->value->checkboxes)
                 @foreach ($element->value->checkboxes as $checkbox)
-                    @php
-                        $keyname = $checkbox->key;
-                    @endphp
+                    @php $keyname = $checkbox->key; @endphp
+
                     <div class="dvs-checkbox">
                         <?= Form::hidden($checkbox->key, 0) ?>
                         <label>
-                            <?= Form::checkbox($checkbox->key, 1, ($element->value->$keyname) ? $element->value->$keyname : $checkbox->default) ?> <span><?= $checkbox->label ?></span>
+                            <?= Form::checkbox($checkbox->key, 1, ($element->value->$keyname) ? $element->value->$keyname : $checkbox->default, $elementOptionsArr) ?> <span><?= $checkbox->label ?></span>
                         </label>
                     </div>
                 @endforeach
@@ -52,6 +60,7 @@
         @include('devise::admin.sidebar._field_scope')
 
     </div>
+
 <?= Form::close() ?>
 
 <div style="display:none">

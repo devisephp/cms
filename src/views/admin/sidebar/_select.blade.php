@@ -1,6 +1,4 @@
-@php
-    $options = array();
-@endphp
+@php $options = []; @endphp
 
 <div id="dvs-sidebar-select-element">
     <?= Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-select-group', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type, 'id' => 'dvs-sidebar-field-form')) ?>

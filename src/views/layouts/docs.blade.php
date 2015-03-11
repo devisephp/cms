@@ -4,7 +4,6 @@
 	<button id="dvs-docs-close"><span class="dvs-icon ion-android-close"></span></button>
 
 	<div id="dvs-docs-inner-contents">
-
 		<a href="#" id="dvs-docs-toc-expand">
 			<span class="dvs-toc-arrow"></span>Table of Contents
 		</a>

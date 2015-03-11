@@ -61,7 +61,8 @@ gulp.task('build:js', function()
         'datetimepicker',
         'dvsPublic',
         'fullCalendar',
-        'scrollTo'
+        'scrollTo',
+        'localScroll'
     ]
   })
   .pipe(concat.header(fs.readFileSync('public/js/devise.require.js', 'utf8') + '\n'))

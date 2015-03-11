@@ -1,4 +1,4 @@
-devise.define(['jquery', 'scrollTo'], function($) {
+devise.define(['jquery', 'scrollTo', 'localScroll'], function($) {
 
     var expandContractDocs = function() {
         if ($('#devise-documentation-container').hasClass('dvs-expanded')){
@@ -23,8 +23,10 @@ devise.define(['jquery', 'scrollTo'], function($) {
         $('#dvs-docs-inner-contents').scrollTo( '#' + target, 800 );
     };
 
-    var toggleToc = function()
+    var toggleToc = function(e)
     {
+        e.preventDefault();
+
         if ($('#dvs-docs-toc').hasClass('dvs-hidden')) {
             $('#dvs-docs-toc').removeClass('dvs-hidden');
         } else {
@@ -50,7 +52,14 @@ devise.define(['jquery', 'scrollTo'], function($) {
     var addTocListener = function()
     {
         $('#dvs-docs-toc-expand').click(toggleToc);
-    }
+    };
+
+    var addTocScrollTos = function()
+    {
+        $.localScroll({
+            target: '#dvs-docs-inner-contents'
+        });
+    };
 
     var addInlineAnchors = function()
     {
@@ -81,6 +90,7 @@ devise.define(['jquery', 'scrollTo'], function($) {
             addOpenListener();
             addCloseListener();
             addTocListener();
+            addTocScrollTos();
         }
     };
 

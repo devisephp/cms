@@ -23,7 +23,6 @@ devise.define(['require', 'jquery'], {
         }
 
         function addAdminCloseListener() {
-    // console.log( jQuery._data( jQuery('#dvs-mode')[0], "events" ) );
             jQuery('#dvs-mode').on('closeAdmin', function() {
 
                 jQuery.each(changes, function(updateElement, properties){
@@ -121,7 +120,6 @@ devise.define(['require', 'jquery'], {
 
             function updateTarget()
             {
-console.log('updateTarget');
                 if (typeof alternateTarget === 'undefined' || alternateTarget === null)
                 {
                     switch (type) {
@@ -144,64 +142,90 @@ console.log('updateTarget');
                 }
             }
 
-console.log('editorType', editorType);
+
+            /**
+             * Set value of "newValue" variable
+             *
+             * @return {void}
+             */
+            function setNewValue(_value)
+            {
+                newValue = _value;
+            }
+
+            /**
+             * Set value of "updateSelector" variable
+             *
+             * @param {integer}  _index
+             * @param {string}  _key  Unique devise field key
+             * @return {void}
+             */
+            function setUpdateSelector(_index, _key)
+            {
+                updateSelector = '[data-devise-field' + _index + '="' + _key + '"]';
+            }
+
+            /**
+             * Set value of "alternateTarget" variable
+             *
+             * @param {string}  _alternateTarget
+             * @return {void}
+             */
+            function setAlternateTarget(_alternateTarget)
+            {
+                alternateTarget = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+            }
 
 
-
-            // currently for input, textarea, link
-            if (editorType !== 'wysiwyg' && editorType !== 'datetime')
+            // wysiwyg's
+            if (editorType === 'wysiwyg')
             {
 
-                listenTo.bind('input', function() {
-                    newValue = listenTo.val();
+                listenTo.on('change', function() {
+                    setNewValue( listenTo.getData() );
 
-                    var _index           = listenTo.data('dvs-index');
-                    var _key             = listenTo.data('dvs-key');
-                    var _alternateTarget = listenTo.data('dvs-alternate-target');
+                    var _textArea = jQuery('textarea.dvs-wysiwyg');
 
-                    updateSelector = '[data-devise-field' + _index + '="' + _key + '"]';
+                    setUpdateSelector( _textArea.data('dvs-index'), _textArea.data('dvs-key') );
 
-                    alternateTarget = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+                    setAlternateTarget( _textArea.data('dvs-alternate-target') );
 
                     updateTarget();
+
                 });
 
-            }
-            else if(editorType == 'datetime')
-            {
+            } else if(editorType == 'datetime') {
 
                  $('.dvs-sidebar-datetime-element').on('change', listenTo, function() {
-                    newValue = listenTo.val();
+                    setNewValue( listenTo.val() );
 
-                    var _index           = listenTo.data('dvs-index');
-                    var _key             = listenTo.data('dvs-key');
-                    var _alternateTarget = listenTo.data('dvs-alternate-target');
-
-                    updateSelector = '[data-devise-field' + _index + '="' + _key + '"]';
+                    setUpdateSelector( listenTo.data('dvs-index'), listenTo.data('dvs-key') );
 
                     updateTarget();
                  });
 
-            }
-            else
-            {
-                // wysiwyg's
+             } else if(editorType == 'select') {
 
-                listenTo.on('change', function() {
-                    newValue = listenTo.getData();
+                 $('#dvs-sidebar-select-element').on('input change keyup', listenTo, function() {
+                    setNewValue( listenTo.html() );
 
-                    var _textArea = jQuery('textarea.dvs-wysiwyg');
-
-                    var _index           = _textArea.data('dvs-index');
-                    var _key             = _textArea.data('dvs-key');
-                    var _alternateTarget = _textArea.data('dvs-alternate-target');
-
-                    updateSelector = '[data-devise-field' + _index + '="' + _key + '"]';
-console.log(updateSelector);
-                    alternateTarget = (_alternateTarget !== null && _alternateTarget !== '') ? _alternateTarget : null;
+                    setUpdateSelector( listenTo.data('dvs-index'), listenTo.data('dvs-key') );
 
                     updateTarget();
+                 });
 
+            } else {
+
+                // currently supports: input, textarea, link, color,
+                 listenTo.on('input', function() {
+                    setNewValue( listenTo.val() );
+
+                    setUpdateSelector( listenTo.data('dvs-index'), listenTo.data('dvs-key') );
+
+                    setAlternateTarget( listenTo.data('dvs-alternate-target') );
+
+
+                    updateTarget();
                 });
 
             }

@@ -4,17 +4,20 @@
 
         <div class="dvs-property">
             <label>Plaintext formatted date</label>
-            <?= Form::text('datetime', (
+            <?= Form::text('datetime',
+                (
                     $element->value->datetime &&
                     $element->value->datetime != ''
                 ) ?
                 $element->value->datetime :
-                date('F jS Y h:i A', strtotime('now')), array(
-                                                            'class' => 'dvs-liveupdate-listen',
-                                                            'data-dvs-index' => $element->index,
-                                                            'data-dvs-alternate-target' => $element->alternateTarget,
-                                                            'data-dvs-key' => $element->key,
-                                                        )) ?>
+                date('F jS Y h:i A', strtotime('now')),
+                array(
+                    'class' => 'dvs-liveupdate-listen',
+                    'data-dvs-index' => $element->index,
+                    'data-dvs-alternate-target' => $element->alternateTarget,
+                    'data-dvs-key' => $element->key,
+                ))
+            ?>
         </div>
 
         <div class="dvs-property">

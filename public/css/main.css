@@ -1,6 +1,5 @@
 @charset "UTF-8";
-/* Packages, Fonts, Tools, Libs and Other Goodies */
-@import url("http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700,800");
+/* Packages, Libs and Other Goodies */
 /*!
   Ionicons, v2.0.0
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -12,7 +11,7 @@
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
-@import url("http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400");
+@import url("http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400&Open+Sans:400italic,400,300,600,700,800");
 @font-face {
   font-family: "Ionicons";
   src: url("../fonts/ionicons.eot?v=2.0.0");
@@ -3149,9 +3148,9 @@ button.dvs-no-decoration:hover {
     margin: 0 0 0 20%;
     padding: 12px 10px 12px 15px;
     color: #b7b9bd;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 18px; }
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px; }
 
 #dvs-admin input[type=password].form-control,
 #dvs-admin input[type=text].form-control {
@@ -3450,7 +3449,10 @@ button.dvs-no-decoration:hover {
   text-decoration: none;
   border-radius: 2px;
   box-sizing: border-box;
-  font-size: 11px; }
+  font-size: 12px;
+  font-weight: 400; }
+  .dvs-button:hover {
+    color: #d7d8da; }
   .dvs-button.dvs-button-solid {
     background-color: #bcbec2;
     color: #2d3039; }
@@ -3550,7 +3552,7 @@ input[type="submit"].dvs-button.dvs-button-small {
       color: #c9cbce; }
     .pagination li.active {
       background-color: #1b1d22;
-      font-weight: 700; }
+      font-weight: 600; }
     .pagination li.disabled {
       background-color: #2b2e36;
       color: #a6a6a6;
@@ -3619,6 +3621,11 @@ input[type="submit"].dvs-button.dvs-button-small {
       border-top-color: #262626; }
   .dvs-select-wrapper.dvs-select-small {
     padding: 8px 0px; }
+  .dvs-select-wrapper.dvs-select-inline {
+    width: auto;
+    padding-right: 35px; }
+    .dvs-select-wrapper.dvs-select-inline span {
+      width: 100%; }
   .dvs-select-wrapper.dvs-select-secondary {
     border: 1px solid #5dbabd;
     color: #5dbabd; }
@@ -3706,7 +3713,7 @@ td .dvs-select-small {
   background: linear-gradient(#2b2e36, #262930); }
 #dvs-admin .dvs-calendar-container .fc-month-view thead th, #dvs-admin .dvs-calendar-container .fc-month-view thead th a {
   color: #e6e6e6;
-  font-weight: 700;
+  font-weight: 600;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   text-decoration: none;
   border-color: #484d5b; }
@@ -4128,13 +4135,13 @@ td .dvs-select-small {
 #dvs-admin {
   background-color: #2d3039;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
   font-family: "Roboto", Tahoma, Arial, sans-serif;
-  font-weight: 400; }
+  font-weight: 300;
+  line-height: 1.8em; }
   #dvs-admin h1, #dvs-admin h2, #dvs-admin h3, #dvs-admin h4, #dvs-admin h5, #dvs-admin h6 {
     font-size: 42px;
     font-weight: 600;
-    text-transform: uppercase;
     color: #f2f2f2; }
   #dvs-admin h1 {
     font-weight: 100; }
@@ -4163,7 +4170,7 @@ td .dvs-select-small {
     #dvs-admin .dvs-admin-items-wpr > h4 {
       margin-bottom: 12px;
       color: #919191;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
     #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items {
@@ -4179,7 +4186,9 @@ td .dvs-select-small {
             width: 42%; }
   #dvs-admin .dvs-secondary-text {
     padding-top: 10px;
-    font-size: 12px; }
+    font-size: 14px; }
+  #dvs-admin a:not(.dvs-button) {
+    color: #bc3fa0; }
 
 /* Dashboard */
 #dvs-admin .dvs-flexbox {
@@ -4381,8 +4390,8 @@ table.dvs-admin-table {
         table.dvs-admin-table tbody tr td a:not(.dvs-button).dvs-expand-details {
           display: inline-block;
           color: #347e80;
-          font-size: 11px;
-          font-weight: 400; }
+          font-size: 13px;
+          font-weight: 300; }
       table.dvs-admin-table tbody tr td.dvs-stacked-col div {
         margin-bottom: 8px; }
   table.dvs-admin-table tfoot td {
@@ -5035,7 +5044,10 @@ table.dvs-admin-table {
   text-decoration: none;
   border-radius: 2px;
   box-sizing: border-box;
-  font-size: 11px; }
+  font-size: 12px;
+  font-weight: 400; }
+  #dvs-mode.dvs-sidebar-mode .dvs-button:hover {
+    color: #d7d8da; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-solid {
     background-color: #bcbec2;
     color: #2d3039; }
@@ -5132,7 +5144,7 @@ table.dvs-admin-table {
       color: #c9cbce; }
     #dvs-mode.dvs-sidebar-mode .pagination li.active {
       background-color: #1b1d22;
-      font-weight: 700; }
+      font-weight: 600; }
     #dvs-mode.dvs-sidebar-mode .pagination li.disabled {
       background-color: #2b2e36;
       color: #a6a6a6;
@@ -5200,6 +5212,11 @@ table.dvs-admin-table {
       border-top-color: #262626; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-small {
     padding: 8px 0px; }
+  #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-inline {
+    width: auto;
+    padding-right: 35px; }
+    #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-inline span {
+      width: 100%; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-secondary {
     border: 1px solid #5dbabd;
     color: #5dbabd; }

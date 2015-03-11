@@ -189,7 +189,7 @@ class PagesRepository
 
         $showAdmin = $this->Input->get('show_admin', false);
 
-        $pages = $this->Page->where('language_id', '=', $languageId);
+        $pages = $this->Page->where('response_type', 'View')->where('language_id', $languageId);
 
         if ($showAdmin !== 'true')
         {

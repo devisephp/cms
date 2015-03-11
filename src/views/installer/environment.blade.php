@@ -1,14 +1,13 @@
 @extends('devise::layouts.installer')
 
 @section('content')
-    <h1>Select Environment</h1>
+    <h1 class="mb sp30">Select Environment</h1>
 
     <form method="post">
         <input type="hidden" name="_token" value="<?= csrf_token() ?>">
             <div class="dvs-form-group">
-                <label>Environment</label>
 
-                <select name="environment" class="dvs-select dvs-select-success dvs-select-small">
+                <select name="environment" class="dvs-select dvs-select-success dvs-select-solid dvs-select-inline dvs-select-small">
                     <option value="local" <?= $selectedEnvironment('local') ?>>Local</option>
                     <option value="staging" <?= $selectedEnvironment('staging') ?>>Staging</option>
                     <option value="production" <?= $selectedEnvironment('production') ?>>Production</option>

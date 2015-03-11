@@ -44,11 +44,11 @@
   font-size:$bodyMainFontSize;
   font-family:$bodyMainFont;
   font-weight:$bodyMainFontWeight;
+  line-height:1.8em;
 
   h1,h2,h3,h4,h5,h6 {
     font-size:42px;
     font-weight:600;
-    text-transform: uppercase;
     color:darken($white, 5%);
   }
 
@@ -102,6 +102,10 @@
   .dvs-secondary-text {
     padding-top:10px;
     font-size:$bodyMainFontSize - 2;
+  }
+
+  a:not(.dvs-button) {
+    color:$pink;
   }
 }
 

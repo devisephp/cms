@@ -118,8 +118,13 @@ class InstallWizard
 	 */
 	public function createAdminUser($email, $username, $password)
 	{
-		// create the user
-		$user = $this->DvsUser->newInstance();
+		$user = $this->DvsUser->whereEmail($email)->first();
+
+		if (!$user)
+		{
+			$user = $this->DvsUser->newInstance();
+		}
+
         $user->email = $email;
 		$user->username = $username;
         $user->password = $this->Hash->make($password);
@@ -172,6 +177,9 @@ class InstallWizard
 			'DB_PASSWORD' => $password,
 		];
 
+		// no errors at the moment
+		$this->errors = null;
+
 		// we will write out to the database config file one time only
 		$this->DeviseInstallCommand->changeDatabaseConfigFile();
 
@@ -206,9 +214,13 @@ class InstallWizard
 			$this->EnvironmentFileManager->merge(['APP_KEY' => str_random(32)]);
 		}
 
-		$this->DeviseInstallCommand->handle();
+		$this->DeviseInstallCommand->runInstallCommands();
 	}
 
+	/**
+	 * [checkAssets description]
+	 * @return [type]
+	 */
 	public function checkAssets()
 	{
 		$deviseJs = public_path() . '/packages/devisephp/cms/js/devise.min.js';
@@ -220,6 +232,10 @@ class InstallWizard
 		return true;
 	}
 
+	/**
+	 * [installAssets description]
+	 * @return [type]
+	 */
 	public function installAssets()
 	{
 		return $this->DevisePublishAssetsCommand->handle();

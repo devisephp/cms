@@ -112,7 +112,7 @@ class InstallWizardTest extends \DeviseTestCase
             ->once()
             ->andReturn(['foo' => 'settings']);
 
-        $this->DeviseInstallCommand->shouldReceive('handle')->once()->andReturnNull();
+        $this->DeviseInstallCommand->shouldReceive('runInstallCommands')->once()->andReturnNull();
 
         $this->assertNull( $this->InstallWizard->installDevise() );
 	}
@@ -132,4 +132,14 @@ class InstallWizardTest extends \DeviseTestCase
         $this->assertTrue($fileexists);
     }
 
+    public function test_it_installs_assets()
+    {
+        $this->DevisePublishAssetsCommand->shouldReceive('handle')->once();
+        $this->InstallWizard->installAssets();
+    }
+
+    public function test_it_checks_assets()
+    {
+        $this->assertFalse($this->InstallWizard->checkAssets());
+    }
 }

@@ -4,39 +4,28 @@ use Closure;
 
 class Str
 {
-	protected function closetag($str)
-	{
-		$str = ltrim($str);
-		$closetag = substr($str, 0, 1);
-
-		if ($closetag == '(') $closetag = ')';
-		if ($closetag == '[') $closetag = ']';
-		if ($closetag == '{') $closetag = '}';
-		if ($closetag == '<') $closetag = '>';
-
-		return $closetag;
-	}
-
-	protected function opentag($str)
-	{
-		$str = ltrim($str);
-		return substr($str, 0, 1);
-	}
-
-	protected function escaped($str)
-	{
-		$lookingback = true;
-		$count = 1;
-
-		while ($lookingback && $count < strlen($str))
-		{
-			if (substr($str, $count * -1, 1) === '\\') $count++;
-			else $lookingback = false;
-		}
-
-		return --$count;
-	}
-
+	/**
+	 * Replace the $needle strings within the $haystack with whatever the
+	 * $replacementMethod tells us. Replacement method will be given a
+	 * $between variable
+	 *
+	 * Usage:
+	 *
+	 *   replaceBetween('something @here(...) and @here(...)', '@here', function($between) {
+	 *     return "[ $between ]";"
+	 *   });
+	 *
+	 * Returns
+	 *
+	 *   something [ ... ] and [ ... ]
+	 *
+	 * This method is used by Devise\Pages\Docs\LiveSpan.
+	 *
+	 * @param  string  $haystack
+	 * @param  string  $needle
+	 * @param  Closure $replacementMethod
+	 * @return string
+	 */
 	public function replaceBetween($haystack, $needle, Closure $replacementMethod)
 	{
 		$parts = explode($needle, $haystack);
@@ -67,4 +56,58 @@ class Str
 
 		return $sumOfParts;
 	}
+
+	/**
+	 * Gets the closing tag for a string
+	 *
+	 * @param  string $str
+	 * @return char
+	 */
+	protected function closetag($str)
+	{
+		$str = ltrim($str);
+		$closetag = substr($str, 0, 1);
+
+		if ($closetag == '(') $closetag = ')';
+		if ($closetag == '[') $closetag = ']';
+		if ($closetag == '{') $closetag = '}';
+		if ($closetag == '<') $closetag = '>';
+
+		return $closetag;
+	}
+
+	/**
+	 * Gets opening tag for a string
+	 *
+	 * @param  string $str
+	 * @return char
+	 */
+	protected function opentag($str)
+	{
+		$str = ltrim($str);
+		return substr($str, 0, 1);
+	}
+
+	/**
+	 * Gets escaped string. If the string has
+	 * '\' char then it is considered to be escaped...
+	 *
+	 * @param  string $str
+	 * @return integer
+	 */
+	protected function escaped($str)
+	{
+		$lookingback = true;
+		$count = 1;
+
+		while ($lookingback && $count < strlen($str))
+		{
+			if (substr($str, $count * -1, 1) === '\\') $count++;
+			else $lookingback = false;
+		}
+
+		return --$count;
+	}
+
+
 }

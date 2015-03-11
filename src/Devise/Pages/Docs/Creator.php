@@ -54,7 +54,7 @@ class Creator
 
 		$viewPath = "devise::docs.{$viewPath}";
 
-		try { return \View::make($viewPath); }
+		try { return $this->View->make($viewPath); }
 
 		catch (\Exception $e) { }
 

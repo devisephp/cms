@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/bootstrap.min.css') ?>">
     <link href="<?= URL::asset('/packages/devisephp/cms/css/main.css') ?>" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/devise.min.js') ?>"></script>
     <script>devise.require(['app/admin/main'])</script>
 </head>

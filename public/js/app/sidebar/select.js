@@ -1,7 +1,12 @@
-devise.define(['require', 'jquery'], function (require, $) {
+devise.define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate) {
+
     return {
         init: function()
         {
+            var sampleSelect = $('#dvs-sample-select');
+            var _liveUpdate = liveUpdate.getInstance();
+            _liveUpdate.init($, sampleSelect, 'select');
+
             /*
                 Event Handlers
             */
@@ -28,7 +33,7 @@ devise.define(['require', 'jquery'], function (require, $) {
 
                 addNewTableRow(parentForm);
                 addNewselect(parentForm);
-                redefindselectIndexes(parentForm);
+                redefindSelectIndexes(parentForm);
 
                 $( ".dvs-accordion" ).accordion("refresh");
                 bindEvents(parentForm);
@@ -44,8 +49,13 @@ devise.define(['require', 'jquery'], function (require, $) {
                 $(this).closest('tr').remove();
                 $( ".dvs-accordion" ).accordion("refresh");
 
-                redefindselectIndexes(parentForm);
+                redefindSelectIndexes(parentForm);
                 bindEvents(parentForm);
+
+                if(index == 0) {
+                    var newOptionText = getTopOptionText(parentForm);
+                    updateHolderSpanText(parentForm, newOptionText);
+                }
             }
 
             function onInputChange()
@@ -56,7 +66,12 @@ devise.define(['require', 'jquery'], function (require, $) {
 
                 if($(this).attr('name').indexOf('name') > -1){
                     target.html( $(this).val() );
+
+                    if(index == 0) {
+                        updateHolderSpanText(parentForm, $(this).val());
+                    }
                 }
+
                 if($(this).attr('name').indexOf('value') > -1){
                     target.attr('value', $(this).val());
                 }
@@ -67,6 +82,7 @@ devise.define(['require', 'jquery'], function (require, $) {
             */
             function addNewTableRow(parentForm)
             {
+
                 var newRow = $('.dvs-row-template').html();
                 var index = $('.dvs-option-fields').length;
 
@@ -80,7 +96,7 @@ devise.define(['require', 'jquery'], function (require, $) {
                 parentForm.find('select[name="value"]').append('<option value=""></option>');
             }
 
-            function redefindselectIndexes(parentForm)
+            function redefindSelectIndexes(parentForm)
             {
                 parentForm.find('.dvs-option-fields').each(function(i, row){
                     $(row).find('[name^="options"]').each(function(j, input){
@@ -89,6 +105,34 @@ devise.define(['require', 'jquery'], function (require, $) {
                         $(input).attr('name', newName);
                     });
                 });
+
+                // manually trigger change for live updating
+                sampleSelect.trigger('change');
+            }
+
+            /**
+             * Update text in .dvs-holder span; it's the span displaying
+             * the first select option's text
+             *
+             * @param  {object}  parentForm  Form containing span.dvs-holder
+             * @param  {string}  _text  New, updated text for span
+             * @return {void}
+             */
+            function updateHolderSpanText(parentForm, _text)
+            {
+                parentForm.find('span.dvs-holder').text(_text);
+            }
+
+            /**
+             * Gets the first option from main/sample select at the
+             * top of the sidebar.
+             *
+             * @param  {object}  parentForm
+             * @return {string}
+             */
+            function getTopOptionText(parentForm)
+            {
+              return parentForm.find('select[name="value"] option').first().text();
             }
 
             /*

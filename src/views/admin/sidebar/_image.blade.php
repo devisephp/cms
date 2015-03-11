@@ -8,15 +8,15 @@
         @include('devise::admin.sidebar._collection_instance_id')
 
         <?= Form::label('Image Path')?>
-        <?= Form::text('image',
-                        $element->value->original,
-                        array('class'=>'dvs-liveupdate-listen ' . $loadDefaults,
-                                 'data-dvs-type' => 'image',
-                                 'data-dvs-index' => $element->index,
-                                 'data-dvs-alternate-target' => $element->alternateTarget,
-                                 'data-dvs-key' => $element->key
-                            )
-                        ) ?>
+        <?= Form::text('image', $element->value->original,
+                array(
+                    'class' => 'dvs-liveupdate-listen ' . $loadDefaults,
+                    'data-dvs-type' => 'image',
+                    'data-dvs-index' => $element->index,
+                    'data-dvs-alternate-target' => $element->alternateTarget,
+                    'data-dvs-key' => $element->key
+                )
+        ) ?>
 
         <div class="dvs-sidebar-button-grid dvs-property">
             <button type="button" data-target="image" class="browse dvs-button">Select or Upload Image</button>

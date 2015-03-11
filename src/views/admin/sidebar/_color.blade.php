@@ -11,13 +11,14 @@
 
           <h3><?= $element->human_name ?></h3>
           <?= Form::text('color', ($element->value->color) ? $element->value->color : '#428bca',
-          array(
-               'class'=>'color dvs-liveupdate-listen ' . $loadDefaults,
-               'data-dvs-type' => 'color',
-               'data-dvs-index' => $element->index,
-               'data-dvs-alternate-target' => $element->alternateTarget,
-               'data-dvs-key' => $element->key,
-           )) ?>
+              array(
+                     'class'=>'color dvs-liveupdate-listen ' . $loadDefaults,
+                     'data-dvs-type' => 'color',
+                     'data-dvs-index' => $element->index,
+                     'data-dvs-alternate-target' => $element->alternateTarget,
+                     'data-dvs-key' => $element->key,
+                 ))
+              ?>
         </div>
 
         @include('devise::admin.sidebar._field_scope')

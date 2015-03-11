@@ -23,6 +23,17 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'dvsPageD
                 document.onMediaManagerSelect = function(video, target, settings) { onMediaManagerSelect(parentForm, video, target, settings); }
                 window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");
             });
+
+             // init. live update functionality for video(s)
+            $('form.dvs-element-video').each(function()
+            {
+                var parentForm = $(this);
+                var videoPath = parentForm.find('input[name="video"]');
+
+                var _liveUpdate = liveUpdate.getInstance();
+                _liveUpdate.init($, videoPath, 'video');
+            });
+
         }
     };
 });

@@ -47,13 +47,16 @@
 
 @section('scripts')
 
-    <script>
+<script>
+    devise.require(['jquery'], function($)
+    {
         $('[name="database_default"]').change(function()
         {
             var selected = '.' + $(this).val();
             $('.database').hide();
             $(selected).show();
         });
-    </script>
+    });
+</script>
 
 @stop

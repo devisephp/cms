@@ -2,14 +2,14 @@
 
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Devise\Media\MediaPaths;
+use Devise\Media\Images\Images;
 
 /**
  * Class Repository builds a complex array of data around the file structure
- * of the media manager? This let's us fetch a lot of things regarding the
+ * of the media manager. This let's us fetch a lot of things regarding the
  * file system around the media manager
  *
  * @todo investigate repo, might be room for refactor
-
  * @package Devise\Media\Files
  */
 class Repository
@@ -37,7 +37,7 @@ class Repository
      * @param null $Request
      * @param null $URL
      */
-    public function __construct(Filesystem $Filesystem, MediaPaths $MediaPaths, $Config = null, $Request = null, $URL = null)
+    public function __construct(Filesystem $Filesystem, MediaPaths $MediaPaths, Images $Image, $Config = null, $Request = null, $URL = null)
     {
         $this->Filesystem = $Filesystem;
         $this->MediaPaths = $MediaPaths;
@@ -45,7 +45,8 @@ class Repository
         $this->Request = $Request?: \Request::getFacadeRoot();
         $this->URL = $URL ?: \URL::getFacadeRoot();
         $this->guesser = MimeTypeGuesser::getInstance();
-        $this->basepath = public_path().'/'.$this->config['root-dir'] . '/';
+        $this->basepath = public_path() . '/' . $this->config['root-dir'] . '/';
+        $this->Image = $Image;
     }
 
     /**
@@ -283,7 +284,26 @@ class Repository
 
         $paths = $this->MediaPaths->fileVersionInfo($relativePath);
 
-        return file_exists($paths->thumbnail) ? $paths->thumbnail_url : $this->getDefaultThumb($pathName);
+        if(!file_exists($paths->thumbnail) && !$this->attemptThumbGeneration($pathName, $paths->thumbnail)){
+            return $this->getDefaultThumb($pathName);
+        }
+
+        return $paths->thumbnail_url;
+    }
+
+    /**
+     * @param $path
+     * @return string
+     */
+    private function attemptThumbGeneration($path, $thumbnailPath)
+    {
+        $type = $this->guesser->guess($path);
+        if(strpos($type, 'image') !== false){
+            if (! is_dir(dirname($thumbnailPath))) mkdir(dirname($thumbnailPath), 0755, true);
+            return $this->Image->makeThumbnailImage($path, $thumbnailPath, $type);
+        }
+
+        return false;
     }
 
     /**
@@ -305,7 +325,6 @@ class Repository
      */
     private function getPath($path, $imageName = null)
     {
-        $type = $this->guesser->guess($path);
         $startIndex = strlen(public_path());
         $length = strlen($path); - strlen(public_path());
         return substr($path, $startIndex, $length);

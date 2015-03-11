@@ -29,7 +29,7 @@
   }
 
   &.dvs-button-small {
-    padding:8px;
+    padding:0px 8px;
     font-size:10px;
   }
 
@@ -204,6 +204,8 @@ input[type="submit"]{
   border           : 1px solid $primaryButtonBgColor;
   color            : $french-gray;
   padding          : $sidebarFormPadding;
+  font-size        : 12px;
+  font-weight      : 400;
 
   .dvs-holder {
     display        : block;
@@ -321,6 +323,10 @@ input[type="submit"]{
     &.dvs-select-solid {
       background-color:$successButtonBgColor;
       color:$successButtonTextColor;
+
+      &:after {
+        border-top-color: $successButtonTextColor;
+      }
     }
   }
 }

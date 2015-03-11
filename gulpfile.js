@@ -60,7 +60,8 @@ gulp.task('build:js', function()
         'jqNestedSortable',
         'datetimepicker',
         'dvsPublic',
-        'fullCalendar'
+        'fullCalendar',
+        'scrollTo'
     ]
   })
   .pipe(concat.header(fs.readFileSync('public/js/devise.require.js', 'utf8') + '\n'))

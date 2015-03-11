@@ -11,14 +11,19 @@
     <link href="{{ URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('/packages/devisephp/cms/css/dvs-admin.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ URL::asset('/packages/devisephp/cms/css/main.css') }}" type="text/css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/tomorrow.min.css" type="text/css" rel="stylesheet" >
 
     @yield('css')
 
     <script src="{{ URL::asset('/packages/devisephp/cms/js/devise.min.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+
     <script>devise.require(['app/admin/main'])</script>
 </head>
 
 <body id="dvs-admin" class="dvs-default">
+
+    <?= deviseDocs($view_name) ?>
 
     <div class="dvs-admin-container">
         @yield('title')
@@ -45,7 +50,6 @@
     </div>
 
     <div id="dvs-admin-body">
-        <?= deviseDocs($view_name) ?>
 
         @if(Session::has('message'))
             <div class="dvs-messages">
@@ -67,9 +71,11 @@
     @yield('js')
 
     <script>
-        devise.require(['dvsLiveSpan'], function(livespan)
+        devise.require(['dvsLiveSpan', 'dvsDocumentation'], function(livespan, documentation)
         {
             livespan.init();
+            documentation.init();
+            hljs.initHighlightingOnLoad();
         });
     </script>
 </body>

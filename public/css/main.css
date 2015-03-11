@@ -11,7 +11,7 @@
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
-@import url("http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400&Open+Sans:400italic,400,300,600,700,800");
+@import url("http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400|Source+Code+Pro:400,600");
 @font-face {
   font-family: "Ionicons";
   src: url("../fonts/ionicons.eot?v=2.0.0");
@@ -3460,7 +3460,7 @@ button.dvs-no-decoration:hover {
     padding: 6px;
     font-size: 10px; }
   .dvs-button.dvs-button-small {
-    padding: 8px;
+    padding: 0px 8px;
     font-size: 10px; }
   .dvs-button.dvs-button-large {
     padding: 16px 40px;
@@ -3576,7 +3576,9 @@ input[type="submit"].dvs-button.dvs-button-small {
   border-radius: 2px;
   border: 1px solid #bcbec2;
   color: #bcbec2;
-  padding: 12px 6px; }
+  padding: 12px 6px;
+  font-size: 12px;
+  font-weight: 400; }
   .dvs-select-wrapper .dvs-holder {
     display: block;
     float: left;
@@ -3656,6 +3658,8 @@ input[type="submit"].dvs-button.dvs-button-small {
     .dvs-select-wrapper.dvs-select-success.dvs-select-solid {
       background-color: #7dbd5d;
       color: white; }
+      .dvs-select-wrapper.dvs-select-success.dvs-select-solid:after {
+        border-top-color: white; }
 
 td .dvs-select-small {
   margin-top: 5px; }
@@ -3998,6 +4002,71 @@ td .dvs-select-small {
   right: 20px;
   border-radius: 0 3px 0 0; }
 
+#dvs-admin #devise-documentation-container a {
+  color: #673f90; }
+
+#devise-documentation-container {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  padding: 25px;
+  overflow: hidden;
+  background-color: #bcbec2;
+  color: #2d3039;
+  -webkit-transition: width 0.1s;
+  -moz-transition: width 0.1s;
+  transition: width 0.1s;
+  -webkit-transition: left 0.2s;
+  -moz-transition: left 0.2s;
+  transition: left 0.2s; }
+  #devise-documentation-container.dvs-closed {
+    left: -80%; }
+  #devise-documentation-container.dvs-expanded {
+    width: 60%; }
+  #devise-documentation-container a {
+    color: #673f90; }
+  #devise-documentation-container code {
+    font-family: "Source Code Pro", "Courier New", Courier, monospace;
+    font-weight: 400;
+    line-height: 1.5em;
+    padding: 15px;
+    border-radius: 4px;
+    letter-spacing: -0.05em; }
+
+#dvs-docs-inner-contents {
+  width: 120%;
+  height: 100%;
+  padding-right: 20%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+  #dvs-docs-inner-contents h1, #dvs-docs-inner-contents h2, #dvs-docs-inner-contents h3, #dvs-docs-inner-contents h4, #dvs-docs-inner-contents h5, #dvs-docs-inner-contents h6 {
+    margin-top: 50px;
+    margin-bottom: 30px; }
+  #dvs-docs-inner-contents p, #dvs-docs-inner-contents pre, #dvs-docs-inner-contents blockquote {
+    margin-top: 10px;
+    margin-bottom: 30px; }
+
+#dvs-docs-close,
+#dvs-docs-expand {
+  position: absolute;
+  top: 20px;
+  right: 20px; }
+
+#dvs-docs-expand {
+  right: 45px; }
+
+#dvs-docs-toc-expand {
+  font-weight: bold; }
+
+#dvs-docs-toc {
+  list-style-type: disc;
+  padding-left: 35px; }
+  #dvs-docs-toc a {
+    text-decoration: none; }
+
 #dvs-nodes {
   opacity: 0;
   -webkit-transition: opacity 2s;
@@ -4146,11 +4215,14 @@ td .dvs-select-small {
   #dvs-admin h1 {
     font-weight: 100; }
   #dvs-admin h2 {
-    font-size: 36px; }
+    font-size: 36px;
+    font-weight: 300; }
   #dvs-admin h3 {
-    font-size: 28px; }
+    font-size: 28px;
+    font-weight: 300; }
   #dvs-admin h4 {
-    font-size: 22px; }
+    font-size: 22px;
+    font-weight: 400; }
   #dvs-admin h5 {
     font-size: 18px; }
   #dvs-admin h6 {
@@ -4188,7 +4260,7 @@ td .dvs-select-small {
     padding-top: 10px;
     font-size: 14px; }
   #dvs-admin a:not(.dvs-button) {
-    color: #bc3fa0; }
+    color: #5dbabd; }
 
 /* Dashboard */
 #dvs-admin .dvs-flexbox {
@@ -5055,7 +5127,7 @@ table.dvs-admin-table {
     padding: 6px;
     font-size: 10px; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-small {
-    padding: 8px;
+    padding: 0px 8px;
     font-size: 10px; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-large {
     padding: 16px 40px;
@@ -5167,7 +5239,9 @@ table.dvs-admin-table {
   border-radius: 2px;
   border: 1px solid #bcbec2;
   color: #bcbec2;
-  padding: 12px 6px; }
+  padding: 12px 6px;
+  font-size: 12px;
+  font-weight: 400; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper .dvs-holder {
     display: block;
     float: left;
@@ -5247,6 +5321,8 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-success.dvs-select-solid {
       background-color: #7dbd5d;
       color: white; }
+      #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-success.dvs-select-solid:after {
+        border-top-color: white; }
 #dvs-mode.dvs-sidebar-mode td .dvs-select-small {
   margin-top: 5px; }
 #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper {

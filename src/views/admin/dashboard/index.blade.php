@@ -2,11 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1><span class="ion-ios-speedometer-outline"></span> Dashboard</h1>
+        <h1><span class="ion-speedometer"></span> Dashboard</h1>
     </div>
 @stop
 
 @section('main')
+
+    <button class="dvs-document" data-dvs-document="Section 3">Documentation</button>
 
     <div class="dvs-flexbox">
         <div class="dvs-admin-card wide dvs-pages" data-dvs-url="<?= URL::route('dvs-pages') ?>">

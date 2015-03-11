@@ -60,6 +60,7 @@ require.config({
         dvsSelectSurrogate: 'app/helpers/forms-select-surrogate',
         dvsCalendar:        'app/admin/calendar',
         dvsDataReplacement: 'app/bindings/data-dvs-replacement',
-        dvsChangeTarget:    'app/bindings/data-change-target'
+        dvsChangeTarget:    'app/bindings/data-change-target',
+        dvsLiveSpan:        'app/helpers/livespan'
     }
 });

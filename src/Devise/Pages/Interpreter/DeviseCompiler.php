@@ -19,6 +19,8 @@ class DeviseCompiler
 	 */
 	public function compile($view)
 	{
+        ini_set('xdebug.max_nesting_level', env('XDEBUG_MAX_NESTING_LEVEL', 3000));
+
 		$this->parser = new DeviseParser;
 
 		$prettyPrinter = new Standard;

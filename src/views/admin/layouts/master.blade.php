@@ -45,7 +45,7 @@
     </div>
 
     <div id="dvs-admin-body">
-        {{ deviseDocs($view_name) }}
+        <?= deviseDocs($view_name) ?>
 
         @if(Session::has('message'))
             <div class="dvs-messages">
@@ -65,5 +65,12 @@
     @yield('modals')
 
     @yield('js')
+
+    <script>
+        devise.require(['dvsLiveSpan'], function(livespan)
+        {
+            livespan.init();
+        });
+    </script>
 </body>
 </html>

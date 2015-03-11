@@ -1,5 +1,3 @@
-// Roboto Font
-@import url('http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400');
 
 // Colors - Global
 $white       : #ffffff;
@@ -39,9 +37,9 @@ $sidebarMainFontSize:       12px;
 $sidebarHeaderFontWeight:   600;
 $sidebarHeaderFontSize:     14px;
 
-$bodyMainFont:              $sidebarMainFont;
-$bodyMainFontSize:          14px;
-$bodyMainFontWeight:        400;
+$bodyMainFont:              'Roboto', Tahoma, Arial, sans-serif;
+$bodyMainFontSize:          16px;
+$bodyMainFontWeight:        300;
 
 // Sidebar General
 $sidebarDistanceFromTop:   35px;

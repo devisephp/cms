@@ -221,7 +221,6 @@ devise.define(['require', 'jquery', 'dvsPageData'], function (require, $, dvsPag
             parent = child.parent();
         }
 
-        console.log(tid, cid);
         return { top: 0, left: 0 };
     }
 

@@ -29,14 +29,17 @@
 
 @section('scripts')
 <script>
-    $('[name="environment"]').change(function()
+    devise.require(['jquery'], function($)
     {
-        if ($(this).val() === 'custom')
+        $('[name="environment"]').change(function()
         {
-            return $('[name="custom_environment"]').show();
-        }
+            if ($(this).val() === 'custom')
+            {
+                return $('[name="custom_environment"]').show();
+            }
 
-        $('[name="custom_environment"]').hide();
+            $('[name="custom_environment"]').hide();
+        });
     });
 </script>
 @stop

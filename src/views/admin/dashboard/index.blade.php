@@ -20,16 +20,18 @@
             </div>
         </div>
 
-        <div class="dvs-admin-card dvs-api" data-dvs-url="<?= URL::route('dvs-api') ?>">
-            <div class="dvs-card-top">
-                <span class="dvs-icon ion-code-working"></span>
+        @if (DeviseUser::checkConditions('isDeveloper'))
+            <div class="dvs-admin-card dvs-api" data-dvs-url="<?= URL::route('dvs-api') ?>">
+                <div class="dvs-card-top">
+                    <span class="dvs-icon ion-code-working"></span>
+                </div>
+                <div class="dvs-card-bottom">
+                    <div class="dvs-icon ion-code-working"></div>
+                    <h5>APIs</h5>
+                    <p>Where your application does stuff.</p>
+                </div>
             </div>
-            <div class="dvs-card-bottom">
-                <div class="dvs-icon ion-code-working"></div>
-                <h5>APIs</h5>
-                <p>Where your application does stuff.</p>
-            </div>
-        </div>
+        @endif
 
         <div class="dvs-admin-card dvs-menus" data-dvs-url="<?= URL::route('dvs-menus') ?>">
             <div class="dvs-card-top">
@@ -42,16 +44,18 @@
             </div>
         </div>
 
-        <div class="dvs-admin-card dvs-templates" data-dvs-url="<?= URL::route('dvs-templates') ?>">
-            <div class="dvs-card-top">
-                <span class="dvs-icon ion-android-apps"></span>
+        @if (DeviseUser::checkConditions('isDeveloper'))
+            <div class="dvs-admin-card dvs-templates" data-dvs-url="<?= URL::route('dvs-templates') ?>">
+                <div class="dvs-card-top">
+                    <span class="dvs-icon ion-android-apps"></span>
+                </div>
+                <div class="dvs-card-bottom">
+                    <div class="dvs-icon ion-android-apps"></div>
+                    <h5>Templates</h5>
+                    <p>Manage templates your pages can use.</p>
+                </div>
             </div>
-            <div class="dvs-card-bottom">
-                <div class="dvs-icon ion-android-apps"></div>
-                <h5>Templates</h5>
-                <p>Manage templates your pages can use.</p>
-            </div>
-        </div>
+        @endif
 
         <div class="dvs-admin-card dvs-users" data-dvs-url="<?= URL::route('dvs-users') ?>">
             <div class="dvs-card-top">
@@ -64,27 +68,29 @@
             </div>
         </div>
 
-        <div class="dvs-admin-card dvs-groups" data-dvs-url="<?= URL::route('dvs-groups') ?>">
-            <div class="dvs-card-top">
-                <span class="dvs-icon ion-ios-people"></span>
+        @if (DeviseUser::checkConditions('isDeveloper'))
+            <div class="dvs-admin-card dvs-groups" data-dvs-url="<?= URL::route('dvs-groups') ?>">
+                <div class="dvs-card-top">
+                    <span class="dvs-icon ion-ios-people"></span>
+                </div>
+                <div class="dvs-card-bottom">
+                    <div class="dvs-icon ion-ios-people"></div>
+                    <h5>Groups</h5>
+                    <p>Manage groups and related details.</p>
+                </div>
             </div>
-            <div class="dvs-card-bottom">
-                <div class="dvs-icon ion-ios-people"></div>
-                <h5>Groups</h5>
-                <p>Manage groups and related details.</p>
-            </div>
-        </div>
 
-        <div class="dvs-admin-card dvs-permissions" data-dvs-url="<?= URL::route('dvs-permissions') ?>">
-            <div class="dvs-card-top">
-                <span class="dvs-icon ion-lock-combination"></span>
+            <div class="dvs-admin-card dvs-permissions" data-dvs-url="<?= URL::route('dvs-permissions') ?>">
+                <div class="dvs-card-top">
+                    <span class="dvs-icon ion-lock-combination"></span>
+                </div>
+                <div class="dvs-card-bottom">
+                    <div class="dvs-icon ion-lock-combination"></div>
+                    <h5>Permissions</h5>
+                    <p>Manage permission conditions.</p>
+                </div>
             </div>
-            <div class="dvs-card-bottom">
-                <div class="dvs-icon ion-lock-combination"></div>
-                <h5>Permissions</h5>
-                <p>Manage permission conditions.</p>
-            </div>
-        </div>
+        @endif
 
         <div class="dvs-admin-card dvs-languages" data-dvs-url="<?= URL::route('dvs-languages') ?>">
             <div class="dvs-card-top">

@@ -51,4 +51,8 @@
 		@include dvs-sections($languages);
 	}
 
+	.dvs-api {
+		@include dvs-sections($api);
+	}
+
 }

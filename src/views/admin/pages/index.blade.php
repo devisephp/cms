@@ -2,7 +2,7 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1><span class="ion-ios-copy-outline"></span> Pages</h1>
+        <h1><span class="ion-document"></span> Pages</h1>
     </div>
 @stop
 

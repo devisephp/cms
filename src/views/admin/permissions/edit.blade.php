@@ -2,7 +2,7 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Edit Permission</h1>
+        <h1><span class="ion-lock-combination"></span> Edit Permission</h1>
     </div>
 @stop
 

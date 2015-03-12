@@ -49,7 +49,7 @@ class DeviseMenusSeeder extends DeviseSeeder
 			),
 			array(
 				'menu_id' => $menuId,
-				'parent_item_id' => 7,
+				'parent_item_id' => 1,
 				'name' => 'Users',
 				'url' => '/admin/users',
 				'position' => 6,

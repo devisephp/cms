@@ -75,7 +75,7 @@ class RuleManagerTest extends \DeviseTestCase
 
     public function test_it_can_get_conditions()
     {
-        assertEquals('{"isInGroup":["Developer"]}', $this->RuleManager->getCondition('isDeveloper'));
+        assertEquals('{"isInGroup":["Developer"],"redirect":"dvs-dashboard","redirect_type":"route","redirect_message":""}', $this->RuleManager->getCondition('isDeveloper'));
     }
 
     public function test_it_cannot_get_conditions()
@@ -88,7 +88,7 @@ class RuleManagerTest extends \DeviseTestCase
 
     public function test_it_can_run_condition_without_type_goes_back()
     {
-        $conditionName = 'isDeveloper';
+        $conditionName = 'canUseDeviseEditor';
         assertInstanceOf('Illuminate\Http\RedirectResponse', $this->RuleManager->runCondition($conditionName, true));
     }
 

@@ -84,6 +84,7 @@ class PagesRepositoryTest extends \DeviseTestCase
     public function test_it_gets_route_list()
     {
         $this->createTestPage([]);
+        $this->Config->shouldReceive('get')->times(1)->andReturn(45);
         $list = $this->PagesRepository->getRouteList();
         assertContains(' Test', array_keys($list));
     }

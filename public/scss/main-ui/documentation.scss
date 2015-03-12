@@ -104,3 +104,49 @@
 		text-decoration:none;
 	}
 }
+
+.dvs-document {
+	position:relative;
+	background-color:transparent;
+	color:$french-gray;
+	border-width:0;
+	font-size:20px;
+	cursor: pointer;
+
+	&:before {
+		content: $ionicon-var-help-circled;
+		@include ion;
+	}
+
+	&.invert {
+		color:$purple;
+	}
+
+	// mouse over info
+	span {
+		display:inline-block;
+		position:absolute;
+		opacity: 0;
+		bottom: 20px;
+		left:-70px;
+		width:175px;
+		padding:15px;
+		text-align: center;
+		font-size:14px;
+		vertical-align: middle;
+		background-color:$purple;
+		color:$white;
+		border-radius:3px;
+		font-family: $bodyMainFont;
+		font-weight:400;
+
+		@include transition(all 0.5s);
+	}
+
+	&:hover {
+		span {
+			opacity: 1;
+			bottom:30px;
+		}
+	}
+}

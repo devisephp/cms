@@ -8,7 +8,7 @@
 
 @section('main')
 
-    <button class="dvs-document" data-dvs-document="Section 3">Documentation</button>
+    {{ deviseDocsLink('Section 1', 'This is the help text') }}
 
     <div class="dvs-flexbox">
         <div class="dvs-admin-card wide dvs-pages" data-dvs-url="<?= URL::route('dvs-pages') ?>">

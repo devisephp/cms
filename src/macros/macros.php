@@ -239,3 +239,14 @@ if (!function_exists('deviseLiveCode'))
         echo '<span data-dvs-docs-target="' . $target .'" data-dvs-docs-default="' . $default .'"></span>';
     }
 }
+
+if (!function_exists('deviseDocsLink'))
+{
+	function deviseDocsLink($section = null, $helptext = null)
+	{
+		$section = ($section !== null) ? ' data-dvs-document="'. $section . '"' : null;
+		$helptext = ($helptext !== null) ? '<span>'. $helptext . '</span>' : null;
+
+		echo '<button class="dvs-document"'.$section.'>'.$helptext.'</button>';
+	}
+}

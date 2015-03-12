@@ -10,11 +10,17 @@
     <link href="<?= URL::asset('/packages/devisephp/cms/css/main.css') ?>" rel="stylesheet">
 
     <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/devise.min.js') ?>"></script>
+
+    {{-- Add this include and the scripts for the devise editor. --}}
+    @include('devise::styles')
 </head>
 
 <body id="dvs-admin">
 
     @yield('content')
+
+    {{-- Yup, this guy too. --}}
+    @include('devise::scripts')
 
 </body>
 </html>

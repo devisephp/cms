@@ -1,0 +1,152 @@
+#dvs-admin {
+	#devise-documentation-container {
+		a {
+			color:$purple;
+		}
+	}
+}
+
+#devise-documentation-container {
+	position:fixed;
+	z-index:1000;
+	left:0;
+	top:0;
+	width:25%;
+	height:100%;
+	padding:25px;
+	overflow:hidden;
+	background-color:$french-gray;
+	color: $bodyBgColor;
+
+	@include transition(width 0.1s);
+	@include transition(left 0.2s);
+
+	&.dvs-closed {
+		left:-80%;
+	}
+
+	&.dvs-expanded {
+		width:60%;
+	}
+
+	a {
+		color:$purple;
+	}
+
+	code {
+		font-family: "Source Code Pro", "Courier New", Courier, monospace;
+		font-weight:400;
+		line-height:1.5em;
+		padding:15px;
+		border-radius:4px;
+		letter-spacing:-0.05em;
+	}
+}
+
+#dvs-docs-inner-contents {
+	width:120%;
+	height:100%;
+	padding-right:20%;
+	overflow-y:scroll;
+	overflow-x:hidden;
+
+	h1,h2,h3,h4,h5,h6 {
+		margin-top:50px;
+		margin-bottom:30px;
+	}
+
+	p,pre,blockquote
+	{
+		margin-top:10px;
+		margin-bottom:30px;
+	}
+}
+
+#dvs-docs-close,
+#dvs-docs-expand {
+	position:absolute;
+	top:20px;
+	right:20px;
+}
+
+#dvs-docs-expand {
+	right:45px;
+}
+
+.dvs-toc-arrow {
+	width: 0;
+	height: 0;
+	border-bottom: 5px solid transparent;  /* left arrow slant */
+	border-top: 5px solid transparent; /* right arrow slant */
+	border-left: 5px solid $purple; /* bottom, add background color here */
+	font-size: 0;
+	line-height: 0;
+	display:inline-block;
+	margin-right:5px;
+
+	&.down {
+		border-bottom-width:0;
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		border-top: 5px solid $purple;
+	}
+}
+
+#dvs-docs-toc-expand {
+	font-weight:bold;
+}
+
+#dvs-docs-toc {
+	list-style-type: disc;
+	padding-left:35px;
+
+	a {
+		text-decoration:none;
+	}
+}
+
+.dvs-document {
+	position:relative;
+	background-color:transparent;
+	color:$french-gray;
+	border-width:0;
+	font-size:20px;
+	cursor: pointer;
+
+	&:before {
+		content: $ionicon-var-help-circled;
+		@include ion;
+	}
+
+	&.invert {
+		color:$purple;
+	}
+
+	// mouse over info
+	span {
+		display:inline-block;
+		position:absolute;
+		opacity: 0;
+		bottom: 20px;
+		left:-70px;
+		width:175px;
+		padding:15px;
+		text-align: center;
+		font-size:14px;
+		vertical-align: middle;
+		background-color:$purple;
+		color:$white;
+		border-radius:3px;
+		font-family: $bodyMainFont;
+		font-weight:400;
+
+		@include transition(all 0.5s);
+	}
+
+	&:hover {
+		span {
+			opacity: 1;
+			bottom:30px;
+		}
+	}
+}

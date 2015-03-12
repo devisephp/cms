@@ -1,7 +1,12 @@
-devise.define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $, dvsSelectSurrogate) {
+devise.define(['require', 'jquery', 'dvsSelectSurrogate', 'dvsLiveUpdate'], function (require, $, dvsSelectSurrogate, liveUpdate) {
+
     return {
         init: function()
         {
+            // var sampleCheckboxGroup = $('#dvs-sample-checkbox-group');
+            // var _liveUpdate = liveUpdate.getInstance();
+            // _liveUpdate.init($, sampleCheckboxGroup, 'checkbox-group');
+
             /*
                 Event Handlers
             */

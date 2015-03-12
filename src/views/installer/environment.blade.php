@@ -1,20 +1,21 @@
 @extends('devise::layouts.installer')
 
 @section('content')
-    <h1>Select Environment</h1>
+    <h1 class="mb sp30">Select Environment</h1>
+
+    <p>If you're not familiar with what the "environment" name should be then select the one that makes the most sense based on where this application is. If you're working on your local machine then select "local". If this is where the final site will live, select production.</p>
 
     <form method="post">
         <input type="hidden" name="_token" value="<?= csrf_token() ?>">
             <div class="dvs-form-group">
-                <label>Environment</label>
 
-                <select name="environment" class="dvs-select dvs-select-success dvs-select-small">
+                <select name="environment" class="dvs-select dvs-select-success dvs-select-solid dvs-select-inline dvs-select-small">
                     <option value="local" <?= $selectedEnvironment('local') ?>>Local</option>
                     <option value="staging" <?= $selectedEnvironment('staging') ?>>Staging</option>
                     <option value="production" <?= $selectedEnvironment('production') ?>>Production</option>
                     <option value="custom" <?= $selectedEnvironment('custom') ?>>Custom</option>
                 </select>
-                <br><br>
+                <br>
             </div>
             <div class="dvs-form-group">
                 <input type="text" name="custom_environment" class="form-control" placeholder="Enter custom environment name" <?= $selectedEnvironment('custom', '', 'style="display: none;"') ?> value="<?= $environment ?>">
@@ -30,14 +31,17 @@
 
 @section('scripts')
 <script>
-    $('[name="environment"]').change(function()
+    devise.require(['jquery'], function($)
     {
-        if ($(this).val() === 'custom')
+        $('[name="environment"]').change(function()
         {
-            return $('[name="custom_environment"]').show();
-        }
+            if ($(this).val() === 'custom')
+            {
+                return $('[name="custom_environment"]').show();
+            }
 
-        $('[name="custom_environment"]').hide();
+            $('[name="custom_environment"]').hide();
+        });
     });
 </script>
 @stop

@@ -2,7 +2,7 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>Register Template</h1>
+        <h1><span class="ion-android-apps"></span> Register Template</h1>
     </div>
 @stop
 

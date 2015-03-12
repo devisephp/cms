@@ -2,6 +2,9 @@
 		'devise::installer.welcome' => array(
       		'human_name' => 'Devise: Welcome Page',
     	),
+    	'devise::installer.index-post-install' => array(
+      		'human_name' => 'Devise: You Have Arrived',
+    	),
 		'devise::admin.layouts.master' => array(
 			'human_name' => 'Devise Admin Master Layout',
 			'extends' => '',
@@ -80,6 +83,24 @@
 				'templateList' => array(
 					'Devise\Templates\TemplatesRepository.registeredTemplatesList' => array(
 						true,
+					),
+				),
+			),
+		),
+		'devise::admin.api.index' => array(
+			'human_name' => 'Devise API Request List',
+			'extends' => 'devise::admin.layouts.master',
+			'vars' => array(
+				'pages' => 'Devise\Pages\ApiPagesRepository.pages',
+			),
+		),
+		'devise::admin.api.edit' => array(
+			'human_name' => 'Devise API Request Edit',
+			'extends' => 'devise::admin.layouts.master',
+			'vars' => array(
+				'page' => array(
+					'Devise\Pages\ApiPagesRepository.find' => array(
+						'id' => '{params.pageId}',
 					),
 				),
 			),

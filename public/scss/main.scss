@@ -1,9 +1,9 @@
-/* Packages, Fonts, Tools, Libs and Other Goodies */
-@import url('http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700,800');
+/* Packages, Libs and Other Goodies */
 @import "bourbon/bourbon";
 @import "ionicons/ionicons";
 
 /* Modules and Variables */
+@import "helpers/fonts";
 @import "helpers/variables";
 
 /* Helpers */
@@ -22,6 +22,7 @@
 /* Main UI */
 @import "main-ui/frontend-reset";
 @import "main-ui/devise";
+@import "main-ui/documentation";
 @import "main-ui/nodes";
 @import "main-ui/admin";
 @import "main-ui/sections";

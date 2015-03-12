@@ -82,6 +82,9 @@ if(!App::runningInConsole())
 
             if (env('DEVISE_INSTALL') != 'ignore')
             {
+                Route::get('/', function() { return Redirect::to("/install/welcome"); });
+
+                // any route non containing string "install"
                 Route::any('{any?}', function() { return Redirect::to("/install/welcome"); })
                     ->where('any', '^((?!install).)*$');
 

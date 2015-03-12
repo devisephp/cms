@@ -44,18 +44,18 @@
   font-size:$bodyMainFontSize;
   font-family:$bodyMainFont;
   font-weight:$bodyMainFontWeight;
+  line-height:1.8em;
 
   h1,h2,h3,h4,h5,h6 {
     font-size:42px;
     font-weight:600;
-    text-transform: uppercase;
     color:darken($white, 5%);
   }
 
   h1 { font-weight:100; }
-  h2 { font-size:36px; }
-  h3 { font-size:28px; }
-  h4 { font-size:22px; }
+  h2 { font-size:36px; font-weight:300; }
+  h3 { font-size:28px; font-weight:300; }
+  h4 { font-size:22px; font-weight:400; }
   h5 { font-size:18px; }
   h6 { font-size:16px; }
 
@@ -103,6 +103,10 @@
     padding-top:10px;
     font-size:$bodyMainFontSize - 2;
   }
+
+  a:not(.dvs-button) {
+    color:$blue;
+  }
 }
 
 /* Dashboard */
@@ -131,6 +135,16 @@
       background-position:center;
       background-repeat:no-repeat;
       transition: all 0.5s;
+
+      span {
+        display:block;
+        width:100%;
+        height:100%;
+        text-align:center;
+        color:$white;
+        font-size:90px;
+        line-height:300px;
+      }
     }
 
     .dvs-card-bottom {
@@ -271,8 +285,10 @@
     margin-top:     30px;
     color: $blue;
     font-size:50px;
+    font-weight:400;
     text-transform: uppercase;
-    border: 1px solid $blue;
+    border: 3px solid $blue;
+    border-radius:3px;
 
     @include text-gradient($light-blue, $blue);
     @include gradient-border($light-blue, $blue);

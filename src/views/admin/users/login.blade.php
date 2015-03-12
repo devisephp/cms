@@ -20,7 +20,7 @@
                 <form method="POST" action="<?= URL::route('dvs-user-attempt-login') ?>">
                     <input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
-                    @if(URL::previous() && Request::url() != URL::previous())
+                    @if(URL::previous() && Request::url() != URL::previous() && !Request::is('install/*'))
                         <input type="hidden" name="intended" value="<?= URL::previous() ?>">
                     @endif
 

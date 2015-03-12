@@ -9,15 +9,14 @@
     <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/bootstrap.min.css') ?>">
     <link href="<?= URL::asset('/packages/devisephp/cms/css/main.css') ?>" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/devise.min.js') ?>"></script>
     <script>devise.require(['app/admin/main'])</script>
 </head>
 
 <body id="dvs-admin">
-    <div class="container pt sp45">
+    <div class="container pt sp75">
 
-        <div class="tac mb sp75">
+        <div class="tac mb sp50">
             <img src="<?= URL::asset('/packages/devisephp/cms/img/admin-logo.png') ?>">
         </div>
 
@@ -30,7 +29,7 @@
         @endif
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 tal">
+            <div class="col-md-6 col-md-offset-3 tac">
 
                 @yield('content')
 

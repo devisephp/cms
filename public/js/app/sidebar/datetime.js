@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery', 'datetimepicker', 'moment'], function (require, $) {
+devise.define(['require', 'jquery', 'datetimepicker', 'moment', 'dvsLiveUpdate'], function (require, $, datetimepicker, moment, liveUpdate) {
     var formatMap = {
         'F jS Y h:i A': 'MMMM Do YYYY h:mm A',
         'F jS Y': 'MMMM Do YYYY',
@@ -12,9 +12,13 @@ devise.define(['require', 'jquery', 'datetimepicker', 'moment'], function (requi
             $('.dvs-datetime').each(function(){
                 var parentForm = $(this).closest('form');
                 var input = $(this);
+
                 var formatInput = parentForm.find('select[name="format"]');
 
                 var sample = parentForm.find('input[name="datetime"]');
+
+                var _liveUpdate = liveUpdate.getInstance();
+                _liveUpdate.init($, sample, 'datetime');
 
                 $(this).datetimepicker({
                     inline:true

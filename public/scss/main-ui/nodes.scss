@@ -69,8 +69,9 @@
       }
 
       > span {
-        font-family: "Open Sans", Arial, Verdana, Tahoma, sans-serif;
-        font-weight: 700;
+        font-family: $sidebarMainFont;
+        font-weight: 400;
+        font-size: 13px;
         text-transform: uppercase;
         position: relative;
         z-index: 10;
@@ -102,7 +103,7 @@
         > span {
           position: relative;
           padding: 0 40px 0 20px;
-          top: 40px;
+          top: 34px;
         }
 
         &:hover {

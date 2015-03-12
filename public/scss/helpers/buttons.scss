@@ -10,7 +10,13 @@
   text-decoration:none;
   border-radius:$buttonBorderRadius;
   box-sizing:border-box;
-  font-size: 11px;
+  font-size: 12px;
+  font-weight:400;
+
+  &:hover {
+    color:lighten($primaryButtonBgColor, 10%);
+  }
+
 
   &.dvs-button-solid {
     background-color:$primaryButtonBgColor;
@@ -23,7 +29,7 @@
   }
 
   &.dvs-button-small {
-    padding:8px;
+    padding:0px 8px;
     font-size:10px;
   }
 
@@ -198,6 +204,8 @@ input[type="submit"]{
   border           : 1px solid $primaryButtonBgColor;
   color            : $french-gray;
   padding          : $sidebarFormPadding;
+  font-size        : 12px;
+  font-weight      : 400;
 
   .dvs-holder {
     display        : block;
@@ -258,6 +266,15 @@ input[type="submit"]{
     padding:8px 0px;
   }
 
+  &.dvs-select-inline {
+    width:auto;
+    padding-right:35px;
+
+    span {
+      width:100%;
+    }
+  }
+
   &.dvs-select-secondary {
     border:1px solid $secondaryButtonBgColor;
     color:$secondaryButtonBgColor;
@@ -306,6 +323,10 @@ input[type="submit"]{
     &.dvs-select-solid {
       background-color:$successButtonBgColor;
       color:$successButtonTextColor;
+
+      &:after {
+        border-top-color: $successButtonTextColor;
+      }
     }
   }
 }

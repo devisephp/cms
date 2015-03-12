@@ -31,6 +31,16 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsLiveUpdate', 'ckeditor
                 document.onMediaManagerSelect = function(file, target, settings) { onMediaManagerSelect(parentForm, file, target, settings); }
                 window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");
             });
+
+            // initializes live update of file input(s)
+            $('form.dvs-element-file').each(function()
+            {
+                var parentForm = $(this);
+                var filePath = parentForm.find('input[name="file"]');
+
+                var _liveUpdate = liveUpdate.getInstance();
+                _liveUpdate.init($, filePath, 'file');
+            });
         }
     };
 });

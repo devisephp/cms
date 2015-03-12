@@ -2,7 +2,7 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1>List of Languages</h1>
+        <h1><span class="ion-android-globe"> List of Languages</h1>
     </div>
 @stop
 

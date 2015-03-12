@@ -16,35 +16,35 @@ class PageManager
      *
 	 * @var Page
 	 */
-	private $Page;
+	protected $Page;
 
     /**
      * Validator is used to validate page rules
      *
      * @var Illuminate\Validation\Factory
      */
-    private $Validator;
+    protected $Validator;
 
     /**
      * PageVersionManager lets us manage versions of a page
      *
      * @var PageVersionManager
      */
-    private $PageVersionManager;
+    protected $PageVersionManager;
 
     /**
      * FieldsRepository returns information about fields
      *
      * @var FieldsRepository
      */
-    private $FieldsRepository;
+    protected $FieldsRepository;
 
     /**
      * FieldManager lets us manage the fields
      *
      * @var FieldManager
      */
-    private $FieldManager;
+    protected $FieldManager;
 
     /**
      * List of database fields/columns for a dvs_page
@@ -117,6 +117,7 @@ class PageManager
         $this->PageVersionsRepository = $PageVersionsRepository;
         $this->FieldsRepository = $FieldsRepository;
         $this->FieldManager = $FieldManager;
+        $this->Config = $Framework->config;
         $this->now = new \DateTime;
     }
 
@@ -128,6 +129,7 @@ class PageManager
 	 */
 	public function createNewPage($input)
 	{
+        $input['response_type'] = 'View';
 		$page = $this->createPageFromInput($input);
 
         if ($page)
@@ -152,10 +154,6 @@ class PageManager
         $page = $this->Page->findOrFail($id);
 
         $this->validator = $this->Validator->make($input, $this->Page->updateRules, $this->Page->messages);
-        $this->validator->sometimes('view', 'required|min:3', function($input)
-        {
-            return $input->http_verb == 'get';
-        });
 
         if ($this->validator->passes())
         {
@@ -248,18 +246,15 @@ class PageManager
      */
     protected function createPageFromInput($input)
     {
+        $primaryLanguageId = $this->Config->get('devise.languages.primary_language_id');
         // fill in some default values
         $input = array_only($input, static::$PageFields);
         $input['is_admin'] = array_get($input, 'is_admin', false);
         $input['dvs_admin'] = array_get($input, 'dvs_admin', false);
-        $input['language_id'] = array_get($input, 'language_id', 45);
+        $input['language_id'] = array_get($input, 'language_id', $primaryLanguageId);
 
         // validate the input given before we create the page
         $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);
-        $this->validator->sometimes('view', 'required|min:3', function($input)
-        {
-            return $input->http_verb == 'get';
-        });
 
         if ($this->validator->passes())
         {

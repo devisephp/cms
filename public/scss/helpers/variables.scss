@@ -1,5 +1,3 @@
-// Roboto Font
-@import url('http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400');
 
 // Colors - Global
 $white       : #ffffff;
@@ -10,6 +8,7 @@ $purple      : #965b95;
 $tan         : #b8bf68;
 $green       : #7dbd5d;
 $light-blue  : #b7f0f2;
+$blue-green  : #5dbd8c;
 $blue        : #5dbabd;
 $red         : #FD5F46;
 $orange      : #d68424;
@@ -23,6 +22,7 @@ $languages   : $pink;
 $menus       : $orange;
 $permissions : $red;
 $templates   : $purple;
+$api         : $blue-green;
 
 // Grays
 $light-gray  : #ebebeb;
@@ -39,9 +39,9 @@ $sidebarMainFontSize:       12px;
 $sidebarHeaderFontWeight:   600;
 $sidebarHeaderFontSize:     14px;
 
-$bodyMainFont:              $sidebarMainFont;
-$bodyMainFontSize:          14px;
-$bodyMainFontWeight:        400;
+$bodyMainFont:              'Roboto', Tahoma, Arial, sans-serif;
+$bodyMainFontSize:          16px;
+$bodyMainFontWeight:        300;
 
 // Sidebar General
 $sidebarDistanceFromTop:   35px;

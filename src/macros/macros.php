@@ -1,9 +1,5 @@
 <?php
 
-use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
-
 /*
 |--------------------------------------------------------------------------
 | Delete form macro
@@ -221,34 +217,16 @@ if (!function_exists('getLinkRouteOrUrl'))
 }
 
 /*
+|--------------------------------------------------------------------------
+| Gets proper url/link in the order precedence, 1) route or 2) url
+|--------------------------------------------------------------------------
+|
 */
 if (!function_exists('deviseDocs'))
 {
-	function deviseDocs($view_name)
+	function deviseDocs($viewName)
 	{
-        $view_name = str_replace('devise::', '', $view_name);
-        $markdown_file = str_replace('.', '/', $view_name) . '.md';
-        $markdown_file = base_path() . '/vendor/devisephp/cms/src/docs/' . $markdown_file;
-
-        if(\File::exists($markdown_file))  {
-            $file = File::get($markdown_file);
-
-            $environment = Environment::createCommonMarkEnvironment();
-
-            $environment->addInlineParser(new \Devise\Pages\LiveCodeHandleParser());
-            $parser = new DocParser($environment);
-            $htmlRenderer = new HtmlRenderer($environment);
-
-            // $replacement = '<span class="dvs-live-code" data-devise-doc-target="$1" data-devise-doc-default="$2"></span>';
-
-            // $file = preg_replace('/@live-code\([\"|\'](.*)\|(.*)[\"|\']\)/', $replacement, $file);
-
-            $document = $parser->parse($file);
-
-            $contents = $htmlRenderer->renderBlock($document);
-            echo $contents;exit;
-        }
-
+		return App::make('Devise\Pages\Docs\Creator')->deviseDocs($viewName);
 	}
 }
 
@@ -260,4 +238,15 @@ if (!function_exists('deviseLiveCode'))
     {
         echo '<span data-dvs-docs-target="' . $target .'" data-dvs-docs-default="' . $default .'"></span>';
     }
+}
+
+if (!function_exists('deviseDocsLink'))
+{
+	function deviseDocsLink($section = null, $helptext = null)
+	{
+		$section = ($section !== null) ? ' data-dvs-document="'. $section . '"' : null;
+		$helptext = ($helptext !== null) ? '<span>'. $helptext . '</span>' : null;
+
+		echo '<button class="dvs-document"'.$section.'>'.$helptext.'</button>';
+	}
 }

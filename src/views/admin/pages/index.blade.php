@@ -12,7 +12,7 @@
             <?= Form::select(
                         'language_id',
                         $languages,
-                        (!Input::has('language_id')) ? 45 : Input::get('language_id'),
+                        (!Input::has('language_id')) ? Config::get('devise.languages.primary_language_id') : Input::get('language_id'),
                         array('id' => 'lang-select', 'class' => 'dvs-select dvs-button-solid')
                     )
             ?>

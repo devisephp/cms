@@ -8,7 +8,7 @@
 
 @section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= Form::select('language_id', $languages, (!Input::has('language_id')) ? 45 : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select dvs-button-solid')) ?></label>
+        <?= Form::select('language_id', $languages, (!Input::has('language_id')) ? Config::get('devise.languages.primary_language_id') : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select dvs-button-solid')) ?></label>
     </div>
 @stop
 
@@ -21,7 +21,7 @@
     		<div class="dvs-form-group">
 
     	    	<?= Form::text('name', null, array('placeholder' => 'Menu Name', 'class' => 'form-control')) ?>
-                <?= Form::hidden('language_id', (!Input::has('language_id')) ? 45 : Input::get('language_id')) ?>
+                <?= Form::hidden('language_id', (!Input::has('language_id')) ? Config::get('devise.languages.primary_language_id') : Input::get('language_id')) ?>
     		</div>
 
     		<?= Form::submit('Create New Menu', array('class' => 'dvs-button dvs-button-success dvs-button-solid')) ?>

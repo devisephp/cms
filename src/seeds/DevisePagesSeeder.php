@@ -1478,6 +1478,20 @@ class DevisePagesSeeder extends DeviseSeeder
                 'response_type'           => 'Function',
                 'response_path'           => 'Devise\Support\Config\SettingsResponseHandler.executeUpdate',
                 'response_params'         => 'input'
+            ),
+            array(
+                'language_id'             => '45',
+                'title'                   => 'You Have Arrived',
+                'view'                    => 'devise::installer.index-post-install',
+                'http_verb'               => 'get',
+                'route_name'              => 'you-have-arrived',
+                'is_admin'                => '0',
+                'dvs_admin'               => '0',
+                'before'                  => '',
+                'after'                   => '',
+                'slug'                    => '/',
+                'short_description'       => 'A welcome page and example to see how pages work',
+                'response_type'           => 'View'
             )
 		);
 

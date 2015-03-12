@@ -65,7 +65,7 @@ class UserManagerTest extends \DeviseTestCase
 
     public function test_it_can_register_user()
     {
-        $groupId = 3;
+        $groupId = 2;
 
         $input = [
             '_token' => 'someFooToken',

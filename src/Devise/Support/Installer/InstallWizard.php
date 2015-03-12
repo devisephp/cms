@@ -132,7 +132,7 @@ class InstallWizard
 		$user->save();
 
 		// add the user to the admin group
-		$adminGroup = $this->DvsGroup->whereName('Devise Administrator')->firstOrFail();
+		$adminGroup = $this->DvsGroup->whereName('Developer')->firstOrFail();
 		$user->groups()->sync([$adminGroup->id]);
 
 		return $user;

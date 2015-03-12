@@ -19,9 +19,8 @@ class DeviseGroupsSeeder extends DeviseSeeder
     {
         return $this->findOrCreateRows('groups', 'name',
         [
-            [ 'name' => 'Devise Administrator' ],
-            [ 'name' => 'Application Administrator' ],
-            [ 'name' => 'Editor' ],
+            [ 'name' => 'Developer' ],
+            [ 'name' => 'Administrator' ],
         ]);
     }
 

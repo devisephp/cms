@@ -1,63 +1,32 @@
 <?php
 return array(
-
-   'isDeviseAdmin' => array(
+   'isDeveloper' => array(
         'isInGroup' => array(
-            'Devise Administrator'
+            'Developer'
         ),
     ),
 
-   'isAppAdmin' => array(
+   'isAdministrator' => array(
         'isInGroup' => array(
-            'Application Administrator'
+            'Administrator'
         ),
     ),
 
-   'isEditor' => array(
-        'isInGroup' => array(
-            'Editor'
-        ),
-    ),
-
-   'isNotDeviseAdmin' => array(
-        'isNotInGroup' => array(
-            'Devise Administrator'
-        ),
-    ),
-
-   'isNotAppAdmin' => array(
-        'isNotInGroup' => array(
-            'Application Administrator'
-        ),
-    ),
-
-   'isNotEditor' => array(
-        'isNotInGroup' => array(
-            'Editor'
-        ),
-    ),
-
-   'canAccessAdmin' => array(
+   'ifNotLoggedInGoToLogin' => array(
         'isLoggedIn' => array(),
         'redirect' => 'dvs-user-login',
         'redirect_type' => 'route',
-        'redirect_message' => 'You are not currently logged in.',
+        'redirect_message' => 'Please log in.',
     ),
 
-   'canAccessLogin' => array(
+   'ifLoggedInGoToDash' => array(
         'isNotLoggedIn' => array(),
         'redirect' => 'dvs-dashboard',
         'redirect_type' => 'route',
         'redirect_message' => '',
     ),
 
-   'showDeviseEditor' => array(
+   'canUseDeviseEditor' => array(
         'isLoggedIn' => array()
     ),
-
-   'showAnnotationEditor' => array(
-        'isNotInGroup' => array(
-            'Editor'
-        )
-    )
 );

@@ -64,7 +64,7 @@ class RuleListTest extends \DeviseTestCase
         $currentUser = $this->DvsUser->find(1);
         $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
 
-        assertTrue( $this->RuleList->isInGroup('Devise Administrator') );
+        assertTrue( $this->RuleList->isInGroup('Developer') );
     }
 
     public function test_it_tells_us_if_we_are_not_in_a_group()
@@ -74,7 +74,7 @@ class RuleListTest extends \DeviseTestCase
         $currentUser = $this->DvsUser->find(1);
         $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
 
-        assertFalse( $this->RuleList->isNotInGroup('Devise Administrator') );
+        assertFalse( $this->RuleList->isNotInGroup('Developer') );
     }
 
     public function test_it_tells_us_if_we_have_a_name()

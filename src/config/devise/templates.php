@@ -2,6 +2,9 @@
 		'devise::installer.welcome' => array(
       		'human_name' => 'Devise: Welcome Page',
     	),
+    	'devise::installer.index-post-install' => array(
+      		'human_name' => 'Devise: You Have Arrived',
+    	),
 		'devise::admin.layouts.master' => array(
 			'human_name' => 'Devise Admin Master Layout',
 			'extends' => '',

@@ -19,6 +19,7 @@ class CreateDvsGlobalFields extends Migration {
             $table->string('human_name', 255)->nullable();
             $table->string('key', 100);
             $table->longText('json_value');
+            $table->boolean('content_requested')->default(false);
             $table->timestamp('created_at')->default('0000-00-00 00:00:00');
             $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
             $table->dateTime('deleted_at')->nullable();

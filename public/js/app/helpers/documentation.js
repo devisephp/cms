@@ -15,12 +15,15 @@ devise.define(['jquery', 'scrollTo', 'localScroll'], function($) {
         $('#devise-documentation-container').addClass('dvs-closed');
     };
 
-    var openDocs = function(el)
+    var openDocs = function()
     {
-        var target = slugifyString($(this).data('dvs-document'));
-
+        var docTarget = $(this).data('dvs-document');
         $('#devise-documentation-container').removeClass('dvs-closed');
-        $('#dvs-docs-inner-contents').scrollTo( '#' + target, 800 );
+
+        if (typeof docTarget !== 'undefined') {
+            var target = slugifyString(docTarget);
+            $('#dvs-docs-inner-contents').scrollTo( '#' + target, 800 );
+        }
     };
 
     var toggleToc = function(e)
@@ -28,9 +31,11 @@ devise.define(['jquery', 'scrollTo', 'localScroll'], function($) {
         e.preventDefault();
 
         if ($('#dvs-docs-toc').hasClass('dvs-hidden')) {
+            $('#dvs-docs-toc-expand > .dvs-toc-arrow').addClass('down');
             $('#dvs-docs-toc').removeClass('dvs-hidden');
         } else {
             $('#dvs-docs-toc').addClass('dvs-hidden');
+            $('#dvs-docs-toc-expand > .dvs-toc-arrow').removeClass('down');
         }
     };
 
@@ -83,7 +88,7 @@ devise.define(['jquery', 'scrollTo', 'localScroll'], function($) {
     };
 
     return {
-        init: function()
+        init: function(show)
         {
             addInlineAnchors();
             addExpandContractListner();
@@ -91,6 +96,10 @@ devise.define(['jquery', 'scrollTo', 'localScroll'], function($) {
             addCloseListener();
             addTocListener();
             addTocScrollTos();
+
+            if (show === 'true') {
+                openDocs();
+            }
         }
     };
 

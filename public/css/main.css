@@ -4058,6 +4058,25 @@ td .dvs-select-small {
 #dvs-docs-expand {
   right: 45px; }
 
+.dvs-toc-arrow {
+  width: 0;
+  height: 0;
+  border-bottom: 5px solid transparent;
+  /* left arrow slant */
+  border-top: 5px solid transparent;
+  /* right arrow slant */
+  border-left: 5px solid #673f90;
+  /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  display: inline-block;
+  margin-right: 5px; }
+  .dvs-toc-arrow.down {
+    border-bottom-width: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #673f90; }
+
 #dvs-docs-toc-expand {
   font-weight: bold; }
 

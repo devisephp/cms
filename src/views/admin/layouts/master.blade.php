@@ -71,10 +71,12 @@
     @yield('js')
 
     <script>
+        var docs = '{{ Input::get('docs') }}';
+
         devise.require(['dvsLiveSpan', 'dvsDocumentation'], function(livespan, documentation)
         {
             livespan.init();
-            documentation.init();
+            documentation.init(docs);
             hljs.initHighlightingOnLoad();
         });
     </script>

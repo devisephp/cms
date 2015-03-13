@@ -35,7 +35,7 @@
                         <input name="password_confirmation" type="password" class="form-control" placeholder="Confirm Password" />
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mt sp30">
                         <button class="dvs-button dvs-button-primary">Register New User</button>
                     </div>
                 </form>

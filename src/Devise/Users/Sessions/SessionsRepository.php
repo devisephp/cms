@@ -263,7 +263,8 @@ class SessionsRepository
         {
             if($this->Auth->attempt(array(
                 $fieldname => $input['uname_or_email'],
-                'password' => $input['password']),
+                'password' => $input['password'],
+                'activated' => 1),
                 $this->getRememberMe($input)
             )) {
 

@@ -36,6 +36,8 @@ if (!function_exists('loadDeviseRoutes'))
         Route::filter('*', function($route, $request){
             $beforeFilters = $route->beforeFilters();
             foreach ($beforeFilters as $name => $value) {
+                // because this filter is '*' every listener name is registered again
+                // that's why it will be in there once if it doesn't exist anywhere else
                 if(count(Event::getListeners('router.filter: ' . $name)) == 1){
                     App::abort(403, 'Unauthorized action.');
                 }

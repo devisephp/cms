@@ -72,6 +72,23 @@ class DvsPage extends Eloquent
         return in_array($key, ['softDelete']) ? null : new FieldValue('{}');
     }
 
+    public function getResponseClassAttribute()
+    {
+        $parts = explode('.', $this->attributes['response_path']);
+        return (isset($parts[0])) ? $parts[0] : '';
+    }
+
+    public function getResponseMethodAttribute()
+    {
+        $parts = explode('.', $this->attributes['response_path']);
+        return (isset($parts[1])) ? $parts[1] : '';
+    }
+
+    public function getResponseParamsArrayAttribute()
+    {
+        return explode(',', $this->attributes['response_params']);
+    }
+
     public function hasAttribute($key)
     {
          return array_key_exists($key, $this->attributes)

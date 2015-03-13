@@ -2,17 +2,18 @@
     $loadDefaults = (!isset($element->value->video) || $element->value->video == '') ? 'dvs-editor-load-defaults' : '';
 @endphp
 
-<?= Form::open(array('class' => 'dvs-element-video', 'route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type, 'id' => 'dvs-sidebar-field-form')) ?>
+<?= Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type, 'id' => 'dvs-sidebar-field-form')) ?>
     <div class="dvs-editor-values">
         <div class="dvs-property">
             <?= Form::label('Video Path')?>
             <?= Form::text('video', $element->value->video, array(
-                                                                'class'=>'dvs-liveupdate-listen ' . $loadDefaults,
+                                                                'class'=> $loadDefaults,
                                                                 'data-dvs-type' => 'video',
                                                                 'data-dvs-index' => $element->index,
                                                                 'data-dvs-alternate-target' => $element->alternateTarget,
                                                                 'data-dvs-key' => $element->key)) ?>
         </div>
+
 
         <div class="dvs-property">
             <button type="button" data-target="video" class="browse dvs-button dvs-button-success dvs-button-solid">Browse</button>

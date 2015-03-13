@@ -1,12 +1,8 @@
-devise.define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, liveUpdate) {
+devise.define(['require', 'jquery'], function (require, $) {
 
     return {
         init: function()
         {
-            var sampleSelect = $('#dvs-sample-select');
-            var _liveUpdate = liveUpdate.getInstance();
-            _liveUpdate.init($, sampleSelect, 'select');
-
             /*
                 Event Handlers
             */
@@ -105,9 +101,6 @@ devise.define(['require', 'jquery', 'dvsLiveUpdate'], function (require, $, live
                         $(input).attr('name', newName);
                     });
                 });
-
-                // manually trigger change for live updating
-                sampleSelect.trigger('change');
             }
 
             /**

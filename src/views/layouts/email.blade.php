@@ -13,7 +13,7 @@
 	</tr>
 	<tr>
 		<td style="padding:0 40px;font-size:12px;line-height:18px;color:#9498a7;">
-			<p style="text-align:left;">Powered by <img src="<?= URL::asset('/packages/devisephp/cms/img/email-legal-logo.png') ?>" width="83" style="margin-bottom:-12px;" /></p>
+			<p style="text-align:left;">Powered by <a href="http://devisephp.com/"><img src="<?= URL::asset('/packages/devisephp/cms/img/email-legal-logo.png') ?>" width="83" style="margin-bottom:-12px;" /></p></a>
 
 			<p style="text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea</p>
 		</td>

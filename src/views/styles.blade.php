@@ -1,4 +1,4 @@
-@if (DeviseUser::checkConditions('showDeviseEditor'))
+@if (DeviseUser::checkConditions('canUseDeviseEditor'))
 
     <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/main.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/spectrum.css') ?>">

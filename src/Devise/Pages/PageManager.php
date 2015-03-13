@@ -117,6 +117,7 @@ class PageManager
         $this->PageVersionsRepository = $PageVersionsRepository;
         $this->FieldsRepository = $FieldsRepository;
         $this->FieldManager = $FieldManager;
+        $this->Config = $Framework->config;
         $this->now = new \DateTime;
     }
 
@@ -245,11 +246,12 @@ class PageManager
      */
     protected function createPageFromInput($input)
     {
+        $primaryLanguageId = $this->Config->get('devise.languages.primary_language_id');
         // fill in some default values
         $input = array_only($input, static::$PageFields);
         $input['is_admin'] = array_get($input, 'is_admin', false);
         $input['dvs_admin'] = array_get($input, 'dvs_admin', false);
-        $input['language_id'] = array_get($input, 'language_id', 45);
+        $input['language_id'] = array_get($input, 'language_id', $primaryLanguageId);
 
         // validate the input given before we create the page
         $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);

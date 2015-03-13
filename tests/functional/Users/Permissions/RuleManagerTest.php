@@ -75,7 +75,7 @@ class RuleManagerTest extends \DeviseTestCase
 
     public function test_it_can_get_conditions()
     {
-        assertEquals('{"isInGroup":["Devise Administrator"]}', $this->RuleManager->getCondition('isDeviseAdmin'));
+        assertEquals('{"isInGroup":["Developer"],"redirect":"dvs-dashboard","redirect_type":"route","redirect_message":""}', $this->RuleManager->getCondition('isDeveloper'));
     }
 
     public function test_it_cannot_get_conditions()
@@ -88,13 +88,13 @@ class RuleManagerTest extends \DeviseTestCase
 
     public function test_it_can_run_condition_without_type_goes_back()
     {
-        $conditionName = 'isDeviseAdmin';
+        $conditionName = 'canUseDeviseEditor';
         assertInstanceOf('Illuminate\Http\RedirectResponse', $this->RuleManager->runCondition($conditionName, true));
     }
 
     public function test_it_can_run_condition()
     {
-        $conditionName = 'canAccessAdmin';
+        $conditionName = 'ifNotLoggedInGoToLogin';
         $RedirectHandlerMock = m::mock('Devise\Users\Permissions\RedirectHandler');
         $RedirectHandlerMock->shouldReceive('redirect')->once()->andReturn(true);
 
@@ -105,14 +105,14 @@ class RuleManagerTest extends \DeviseTestCase
 
     public function test_it_can_execute_condition()
     {
-        $conditionName = 'isDeviseAdmin';
+        $conditionName = 'isDeveloper';
         $conditionObject = $this->RuleManager->getCondition($conditionName);
         assertInternalType('array', $this->RuleManager->executeCondition($conditionObject));
     }
 
     public function test_it_can_evaluate_results()
     {
-        $conditionName = 'isDeviseAdmin';
+        $conditionName = 'isDeveloper';
         $conditionObject = $this->RuleManager->getCondition($conditionName);
         $results = $this->RuleManager->executeCondition($conditionObject);
         assertInternalType('boolean', $this->RuleManager->evaluateResults($results, false, $conditionObject));

@@ -96,7 +96,7 @@
 }
 
 @mixin gradient-border($color1, $color2) {
-  border: 1px solid $color1;
+  border-color: $color1;
   @include border-image(linear-gradient($color1, $color2) 2 1%);
   border-top-color:$color1;
   border-bottom-color: $color2;

@@ -15,7 +15,7 @@ class PermissionsRepositoryTest extends \DeviseTestCase
 
     public function test_it_can_get_all_permissions()
     {
-        assertArrayHasKey('isDeviseAdmin', $this->PermissionsRepository->getAllPermissions());
+        assertArrayHasKey('isDeveloper', $this->PermissionsRepository->getAllPermissions());
     }
 
     public function test_it_cannot_get_permission_by_path()
@@ -28,7 +28,7 @@ class PermissionsRepositoryTest extends \DeviseTestCase
 
     public function test_it_can_get_permission_by_path()
     {
-        $path = 'isDeviseAdmin';
+        $path = 'isDeveloper';
 
         $results = $this->PermissionsRepository->getPermissionByPath($path);
         assertInternalType('array', $results);

@@ -11,7 +11,7 @@
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
-@import url("http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400&Open+Sans:400italic,400,300,600,700,800");
+@import url("http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400|Source+Code+Pro:400,600");
 @font-face {
   font-family: "Ionicons";
   src: url("../fonts/ionicons.eot?v=2.0.0");
@@ -3460,7 +3460,7 @@ button.dvs-no-decoration:hover {
     padding: 6px;
     font-size: 10px; }
   .dvs-button.dvs-button-small {
-    padding: 8px;
+    padding: 0px 8px;
     font-size: 10px; }
   .dvs-button.dvs-button-large {
     padding: 16px 40px;
@@ -3576,7 +3576,9 @@ input[type="submit"].dvs-button.dvs-button-small {
   border-radius: 2px;
   border: 1px solid #bcbec2;
   color: #bcbec2;
-  padding: 12px 6px; }
+  padding: 12px 6px;
+  font-size: 12px;
+  font-weight: 400; }
   .dvs-select-wrapper .dvs-holder {
     display: block;
     float: left;
@@ -3656,6 +3658,8 @@ input[type="submit"].dvs-button.dvs-button-small {
     .dvs-select-wrapper.dvs-select-success.dvs-select-solid {
       background-color: #7dbd5d;
       color: white; }
+      .dvs-select-wrapper.dvs-select-success.dvs-select-solid:after {
+        border-top-color: white; }
 
 td .dvs-select-small {
   margin-top: 5px; }
@@ -3998,6 +4002,135 @@ td .dvs-select-small {
   right: 20px;
   border-radius: 0 3px 0 0; }
 
+#dvs-admin #devise-documentation-container a {
+  color: #673f90; }
+
+#devise-documentation-container {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  padding: 25px;
+  overflow: hidden;
+  background-color: #bcbec2;
+  color: #2d3039;
+  -webkit-transition: width 0.1s;
+  -moz-transition: width 0.1s;
+  transition: width 0.1s;
+  -webkit-transition: left 0.2s;
+  -moz-transition: left 0.2s;
+  transition: left 0.2s; }
+  #devise-documentation-container.dvs-closed {
+    left: -80%; }
+  #devise-documentation-container.dvs-expanded {
+    width: 60%; }
+  #devise-documentation-container a {
+    color: #673f90; }
+  #devise-documentation-container code {
+    font-family: "Source Code Pro", "Courier New", Courier, monospace;
+    font-weight: 400;
+    line-height: 1.5em;
+    padding: 15px;
+    border-radius: 4px;
+    letter-spacing: -0.05em; }
+
+#dvs-docs-inner-contents {
+  width: 120%;
+  height: 100%;
+  padding-right: 20%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+  #dvs-docs-inner-contents h1, #dvs-docs-inner-contents h2, #dvs-docs-inner-contents h3, #dvs-docs-inner-contents h4, #dvs-docs-inner-contents h5, #dvs-docs-inner-contents h6 {
+    margin-top: 50px;
+    margin-bottom: 30px; }
+  #dvs-docs-inner-contents p, #dvs-docs-inner-contents pre, #dvs-docs-inner-contents blockquote {
+    margin-top: 10px;
+    margin-bottom: 30px; }
+
+#dvs-docs-close,
+#dvs-docs-expand {
+  position: absolute;
+  top: 20px;
+  right: 20px; }
+
+#dvs-docs-expand {
+  right: 45px; }
+
+.dvs-toc-arrow {
+  width: 0;
+  height: 0;
+  border-bottom: 5px solid transparent;
+  /* left arrow slant */
+  border-top: 5px solid transparent;
+  /* right arrow slant */
+  border-left: 5px solid #673f90;
+  /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  display: inline-block;
+  margin-right: 5px; }
+  .dvs-toc-arrow.down {
+    border-bottom-width: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #673f90; }
+
+#dvs-docs-toc-expand {
+  font-weight: bold; }
+
+#dvs-docs-toc {
+  list-style-type: disc;
+  padding-left: 35px; }
+  #dvs-docs-toc a {
+    text-decoration: none; }
+
+.dvs-document {
+  position: relative;
+  background-color: transparent;
+  color: #bcbec2;
+  border-width: 0;
+  font-size: 20px;
+  cursor: pointer; }
+  .dvs-document:before {
+    content: "\f142";
+    display: inline-block;
+    font-family: "Ionicons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }
+  .dvs-document.invert {
+    color: #673f90; }
+  .dvs-document span {
+    display: inline-block;
+    position: absolute;
+    opacity: 0;
+    bottom: 20px;
+    left: -70px;
+    width: 175px;
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    vertical-align: middle;
+    background-color: #673f90;
+    color: white;
+    border-radius: 3px;
+    font-family: "Roboto", Tahoma, Arial, sans-serif;
+    font-weight: 400;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s; }
+  .dvs-document:hover span {
+    opacity: 1;
+    bottom: 30px; }
+
 #dvs-nodes {
   opacity: 0;
   -webkit-transition: opacity 2s;
@@ -4056,8 +4189,9 @@ td .dvs-select-small {
       z-index: 1;
       width: 470px; }
     .dvs-node-mode #dvs-nodes .dvs-node > span {
-      font-family: "Open Sans", Arial, Verdana, Tahoma, sans-serif;
-      font-weight: 700;
+      font-family: "Roboto", Tahoma, Arial, sans-serif;
+      font-weight: 400;
+      font-size: 13px;
       text-transform: uppercase;
       position: relative;
       z-index: 10; }
@@ -4080,7 +4214,7 @@ td .dvs-select-small {
       .dvs-node-mode #dvs-nodes .dvs-node.left > span, .dvs-node-mode #dvs-nodes .dvs-node.column > span, .dvs-node-mode #dvs-nodes .dvs-node.col1 > span, .dvs-node-mode #dvs-nodes .dvs-node.col2 > span, .dvs-node-mode #dvs-nodes .dvs-node.col3 > span, .dvs-node-mode #dvs-nodes .dvs-node.col4 > span, .dvs-node-mode #dvs-nodes .dvs-node.col5 > span, .dvs-node-mode #dvs-nodes .dvs-node.col6 > span, .dvs-node-mode #dvs-nodes .dvs-node.col7 > span, .dvs-node-mode #dvs-nodes .dvs-node.col8 > span, .dvs-node-mode #dvs-nodes .dvs-node.col9 > span, .dvs-node-mode #dvs-nodes .dvs-node.col10 > span, .dvs-node-mode #dvs-nodes .dvs-node.col11 > span, .dvs-node-mode #dvs-nodes .dvs-node.col12 > span {
         position: relative;
         padding: 0 40px 0 20px;
-        top: 40px; }
+        top: 34px; }
       .dvs-node-mode #dvs-nodes .dvs-node.left:hover, .dvs-node-mode #dvs-nodes .dvs-node.column:hover, .dvs-node-mode #dvs-nodes .dvs-node.col1:hover, .dvs-node-mode #dvs-nodes .dvs-node.col2:hover, .dvs-node-mode #dvs-nodes .dvs-node.col3:hover, .dvs-node-mode #dvs-nodes .dvs-node.col4:hover, .dvs-node-mode #dvs-nodes .dvs-node.col5:hover, .dvs-node-mode #dvs-nodes .dvs-node.col6:hover, .dvs-node-mode #dvs-nodes .dvs-node.col7:hover, .dvs-node-mode #dvs-nodes .dvs-node.col8:hover, .dvs-node-mode #dvs-nodes .dvs-node.col9:hover, .dvs-node-mode #dvs-nodes .dvs-node.col10:hover, .dvs-node-mode #dvs-nodes .dvs-node.col11:hover, .dvs-node-mode #dvs-nodes .dvs-node.col12:hover {
         left: -5px; }
       .dvs-node-mode #dvs-nodes .dvs-node.left.dvs-content-requested .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.column .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col1 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col2 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col3 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col4 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col5 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col6 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col7 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col8 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col9 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col10 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col11 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col12 .svg-node-arrow {
@@ -4146,11 +4280,14 @@ td .dvs-select-small {
   #dvs-admin h1 {
     font-weight: 100; }
   #dvs-admin h2 {
-    font-size: 36px; }
+    font-size: 36px;
+    font-weight: 300; }
   #dvs-admin h3 {
-    font-size: 28px; }
+    font-size: 28px;
+    font-weight: 300; }
   #dvs-admin h4 {
-    font-size: 22px; }
+    font-size: 22px;
+    font-weight: 400; }
   #dvs-admin h5 {
     font-size: 18px; }
   #dvs-admin h6 {
@@ -4188,7 +4325,7 @@ td .dvs-select-small {
     padding-top: 10px;
     font-size: 14px; }
   #dvs-admin a:not(.dvs-button) {
-    color: #bc3fa0; }
+    color: #5dbabd; }
 
 /* Dashboard */
 #dvs-admin .dvs-flexbox {
@@ -4212,6 +4349,14 @@ td .dvs-select-small {
     background-position: center;
     background-repeat: no-repeat;
     transition: all 0.5s; }
+    #dvs-admin .dvs-admin-card .dvs-card-top span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      color: white;
+      font-size: 90px;
+      line-height: 300px; }
   #dvs-admin .dvs-admin-card .dvs-card-bottom {
     position: relative;
     padding: 40px 20px 25px;
@@ -4298,8 +4443,10 @@ td .dvs-select-small {
     margin-top: 30px;
     color: #5dbabd;
     font-size: 50px;
+    font-weight: 400;
     text-transform: uppercase;
-    border: 1px solid #5dbabd;
+    border: 3px solid #5dbabd;
+    border-radius: 3px;
     background: -webkit-linear-gradient(#b7f0f2, #5dbabd);
     background: linear-gradient(#b7f0f2, #5dbabd);
     background-clip: text;
@@ -4308,7 +4455,7 @@ td .dvs-select-small {
     text-fill-color: transparent;
     -moz-text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
-    border: 1px solid #b7f0f2;
+    border-color: #b7f0f2;
     -webkit-border-image: -webkit-linear-gradient(#b7f0f2, #5dbabd) 2 1%;
     border-image: linear-gradient(#b7f0f2, #5dbabd) 2 1%;
     border-style: solid;
@@ -4547,6 +4694,15 @@ table.dvs-admin-table {
   border-color: #96327f; }
   #dvs-admin .dvs-languages.dvs-admin-card:hover .dvs-card-top {
     background-color: #96327f; }
+#dvs-admin .dvs-api .dvs-card-top {
+  background-color: #5dbd8c; }
+#dvs-admin .dvs-api .dvs-card-bottom .dvs-icon {
+  color: #5dbd8c; }
+#dvs-admin .dvs-api.dvs-admin-card:hover {
+  background-color: #5dbd8c;
+  border-color: #43a472; }
+  #dvs-admin .dvs-api.dvs-admin-card:hover .dvs-card-top {
+    background-color: #43a472; }
 
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar.loaded {
   opacity: 1;
@@ -5055,7 +5211,7 @@ table.dvs-admin-table {
     padding: 6px;
     font-size: 10px; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-small {
-    padding: 8px;
+    padding: 0px 8px;
     font-size: 10px; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-large {
     padding: 16px 40px;
@@ -5167,7 +5323,9 @@ table.dvs-admin-table {
   border-radius: 2px;
   border: 1px solid #bcbec2;
   color: #bcbec2;
-  padding: 12px 6px; }
+  padding: 12px 6px;
+  font-size: 12px;
+  font-weight: 400; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper .dvs-holder {
     display: block;
     float: left;
@@ -5247,6 +5405,8 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-success.dvs-select-solid {
       background-color: #7dbd5d;
       color: white; }
+      #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-success.dvs-select-solid:after {
+        border-top-color: white; }
 #dvs-mode.dvs-sidebar-mode td .dvs-select-small {
   margin-top: 5px; }
 #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper {

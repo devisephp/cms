@@ -278,7 +278,8 @@ class PagesRepository
      */
     public function getRouteList()
     {
-        $routes = $this->Page->where('dvs_admin', '<>', 1)->where('language_id',45)->orderBy('slug')->get();
+        $primaryLanguageId = $this->Config->get('devise.languages.primary_language_id');
+        $routes = $this->Page->where('dvs_admin', '<>', 1)->where('language_id',$primaryLanguageId)->orderBy('slug')->get();
         $list = array();
         $slugName = null;
 

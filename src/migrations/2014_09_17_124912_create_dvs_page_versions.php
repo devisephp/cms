@@ -19,6 +19,7 @@ class CreateDvsPageVersions extends Migration
             $table->string('name', 255);
             $table->timestamp('starts_at')->nullable();
             $table->timestamp('ends_at')->nullable();
+            $table->string('preview_hash', 255)->nullable();
 			$table->softDeletes();
             $table->timestamp('created_at')->default('0000-00-00 00:00:00');
             $table->timestamp('updated_at')->default('0000-00-00 00:00:00');

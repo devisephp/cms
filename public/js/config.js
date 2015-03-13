@@ -37,6 +37,8 @@ require.config({
         async:              'lib/millermedeiros-plugins/async',
         goog:               'lib/millermedeiros-plugins/goog',
         propertyParser :    'lib/millermedeiros-plugins/propertyParser',
+        scrollTo:           'lib/jquery.scrollTo',
+        localScroll:        'lib/jquery.localScroll.min',
         dvsEditor:          'app/devise',
         dvsPublic:          'app/public/preview',
         dvsInitialize:      'app/helpers/initialize-editor',
@@ -61,6 +63,7 @@ require.config({
         dvsCalendar:        'app/admin/calendar',
         dvsDataReplacement: 'app/bindings/data-dvs-replacement',
         dvsChangeTarget:    'app/bindings/data-change-target',
-        dvsLiveSpan:        'app/helpers/livespan'
+        dvsLiveSpan:        'app/helpers/livespan',
+        dvsDocumentation:    'app/helpers/documentation'
     }
 });

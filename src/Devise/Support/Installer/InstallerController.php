@@ -72,7 +72,7 @@ class InstallerController extends Controller
 		{
 			if (!in_array($environment, [ 'local', 'staging', 'production' ]))
 			{
-				return $env == 'custom' ? $yes : $no;
+				return $env == 'local' ? $yes : $no;
 			}
 
 			return $env == $environment ? $yes : $no;
@@ -197,6 +197,6 @@ class InstallerController extends Controller
 
 		$this->Auth->loginUsingId($newUser->id, true);
 
-		return $this->Redirect->to('/admin?installed=true');
+		return $this->Redirect->to('/admin?docs=true');
 	}
 }

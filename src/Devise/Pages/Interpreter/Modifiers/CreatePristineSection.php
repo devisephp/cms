@@ -67,7 +67,7 @@ class CreatePristineSection extends NodeVisitorAbstract
 	 */
 	public function afterTraverse(array $nodes)
 	{
-		$stmts = $this->DeviseParser->parse("<?php if (DeviseUser::checkConditions('showDeviseEditor')): ?>{{ devisehere }}<?php else: ?>{{ pristinehere}}<?php endif ?>");
+		$stmts = $this->DeviseParser->parse("<?php if (DeviseUser::checkConditions('canUseDeviseEditor')): ?>{{ devisehere }}<?php else: ?>{{ pristinehere}}<?php endif ?>");
 
 		$stmts[0]->stmts = $this->cloned;
 

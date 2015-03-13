@@ -1,6 +1,8 @@
 {
     "name": "devisephp/cms",
     "description": "Content Management System riding on top of the Laravel Framework",
+    "keywords": ["cms", "devise", "devisephp", "laravel", "content management system"],
+    "license": "MIT",
     "authors": [
         {
             "name": "DevisePHP Team",

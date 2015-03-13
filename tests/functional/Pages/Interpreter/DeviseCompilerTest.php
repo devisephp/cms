@@ -9,7 +9,7 @@ class DeviseCompilerTest extends \DeviseTestCase
 		$compiler = new DeviseCompiler;
 		$outcome = $compiler->compile($this->fixture('devise-views.interpret1'));
 		assertContains('	<div>Something here</div>', $outcome);
-		assertContains("if (DeviseUser::checkConditions('showDeviseEditor'))", $outcome);
+		assertContains("if (DeviseUser::checkConditions('canUseDeviseEditor'))", $outcome);
 	}
 
 	public function test_it_registers_app_makes()

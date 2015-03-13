@@ -129,7 +129,6 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $provider = new \Illuminate\Html\HtmlServiceProvider($this->app);
         $this->app->register($provider);
-        $provider->boot();
     }
 
     /**
@@ -141,7 +140,6 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $provider = new Support\SupportServiceProvider($this->app);
         $this->app->register($provider);
-        $provider->boot();
     }
 
     /**
@@ -153,7 +151,6 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $provider = new Pages\PagesServiceProvider($this->app);
         $this->app->register($provider);
-        $provider->boot();
     }
 
     /**
@@ -165,7 +162,6 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $EncodingProvider = new Media\Encoding\EncodingServiceProvider($this->app);
         $this->app->register($EncodingProvider);
-        $EncodingProvider->boot();
     }
 
     /**
@@ -176,7 +172,6 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $SidebarProvider = new Sidebar\SidebarServiceProvider($this->app);
         $this->app->register($SidebarProvider);
-        $SidebarProvider->boot();
     }
     /**
      * Register universal search service provider
@@ -187,7 +182,6 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $DeviseUniversalSearchProvider = new Search\UniversalSearchProvider($this->app);
         $this->app->register($DeviseUniversalSearchProvider);
-        $DeviseUniversalSearchProvider->boot();
     }
 
     /**
@@ -199,6 +193,5 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $UsersProvider = new Users\UserServiceProvider($this->app);
         $this->app->register($UsersProvider);
-        $UsersProvider->boot();
     }
 }

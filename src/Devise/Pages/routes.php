@@ -18,23 +18,29 @@ if (!function_exists('loadDeviseRoutes'))
         $names = array_keys( $filters );
 
         foreach ($names as $name) {
-            Route::filter($name, function($route, $request, $response = null) use ($filters, $name) {
-                if(isset($filters[ $name ]['redirect_type'])){
-                    $result = DeviseUser::checkConditions($name, true);
-                    if($result !== true){
-                        if(!\Request::ajax()){
-                            return $result;
-                        } else {
-                            App::abort(403, 'Unauthorized action.');
-                        }
-                    }
-                } else {
-                    if(!DeviseUser::checkConditions($name)){
+            Route::filter($name, function($route, $request) use ($filters, $name) {
+                $result = DeviseUser::checkConditions($name, true);
+                if($result !== true){
+                    if(!\Request::ajax()){
+                        return $result;
+                    } else {
                         App::abort(403, 'Unauthorized action.');
                     }
                 }
             });
         }
+
+        // LAST LINE OF DEFENSE: checks the route's before filters
+        // against registered filters (Event::getListeners)
+        // if the filter is not found 403 error will be thrown
+        Route::filter('*', function($route, $request){
+            $beforeFilters = $route->beforeFilters();
+            foreach ($beforeFilters as $name => $value) {
+                if(count(Event::getListeners('router.filter: ' . $name)) == 1){
+                    App::abort(403, 'Unauthorized action.');
+                }
+            }
+        });
 
         $pages = DB::table('dvs_pages')->select('http_verb','slug','route_name','before','after')->get();
 
@@ -52,13 +58,11 @@ if (!function_exists('loadDeviseRoutes'))
                 'uses' => 'Devise\Pages\PageController@show',
             );
 
-            if ($page->before)
-            {
+            if ($page->before) {
                 $routeData['before'] = $page->before;
             }
 
-            if ($page->after)
-            {
+            if ($page->after) {
                 $routeData['after'] = $page->after;
             }
 

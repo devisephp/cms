@@ -35,7 +35,7 @@ class DevisePublishConfigsCommand extends Command
 
         $appDeviseConfigpath = config_path() . '/devise';
         foreach ($this->emptyTargets as $fileName) {
-            \File::put($appDeviseConfigpath . '/' . $fileName, "<?php return array();\n// will merge with devise " . $fileName);
+            \File::put($appDeviseConfigpath . '/' . $fileName, "<?php return array();\n// data will merge with Devise " . $fileName);
         }
     }
 }

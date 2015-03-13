@@ -43,7 +43,6 @@ class TemplatesManager
 	public function __construct(ConfigFileManager $ConfigFileManager, Framework $Framework)
     {
         $this->ConfigFileManager = $ConfigFileManager;
-        $this->Config = $Framework->Config;
         $this->Validator = $Framework->Validator;
     }
 

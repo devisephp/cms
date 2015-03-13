@@ -118,13 +118,8 @@ class InstallWizard
 	 */
 	public function createAdminUser($email, $username, $password)
 	{
-		$user = $this->DvsUser->whereEmail($email)->first();
-
-		if (!$user)
-		{
-			$user = $this->DvsUser->newInstance();
-		}
-
+		// create the user
+		$user = $this->DvsUser->newInstance();
         $user->email = $email;
 		$user->username = $username;
         $user->password = $this->Hash->make($password);

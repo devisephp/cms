@@ -6,7 +6,7 @@
 			<td>
 				<table>
 					<tr>
-						<td><p style="margin-bottom:16px;font-size:40px;">Password Reset</p></td>
+						<td><p style="margin-bottom:8px;font-size:40px;">Password Reset</p></td>
 					</tr>
 					<tr>
 						<td>

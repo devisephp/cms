@@ -1,7 +1,7 @@
-<table style="margin-left:auto;margin-right:auto;padding:12px 40px;font-family:'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;font-size:14px;font-weight:100;background-color:#e9eaec;text-align:center;" width="600">
+<table style="margin-left:auto;margin-right:auto;padding:0 40px 12px;font-family:'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;font-size:14px;font-weight:100;background-color:#e9eaec;text-align:center;" width="600">
 	<tr>
-		<td style="padding:8px 10px 16px;">
-			<img src="<?= URL::asset('/packages/devisephp/cms/img/email-header-logo-lg.png') ?>" />
+		<td style="padding-bottom:16px;">
+			<img src="<?= URL::asset('/packages/devisephp/cms/img/email-header-logo-huge.png') ?>" />
 		</td>
 	</tr>
 	<tr>

@@ -15,22 +15,22 @@
 
             <div class="form-group tal">
                 <label>Admin Email</label>
-                <input type="text" class="form-control" name="email" placeholder="Admin Email" value="<?= $email ?>">
+                <input tabindex="0" type="text" class="form-control" name="email" placeholder="Admin Email" value="<?= $email ?>">
             </div>
 
             <div class="form-group tal">
                 <label>Admin Username</label>
-                <input type="text" class="form-control" name="username" placeholder="Admin Username" value="<?= $username ?>">
+                <input tabindex="1" type="text" class="form-control" name="username" placeholder="Admin Username" value="<?= $username ?>">
             </div>
 
             <div class="form-group tal">
                 <label>Admin Password</label>
-                <input type="text" class="form-control" name="password" placeholder="Admin Password" value="">
+                <input tabindex="2" type="text" class="form-control" name="password" placeholder="Admin Password" value="">
             </div>
 
             <div class="form-group dvs-form-actions mt sp30">
-                <button class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='database'">Back</button>
-                <button class="next dvs-button dvs-button-success">Next</button>
+                <button tabindex="4" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='database'">Back</button>
+                <button tabindex="3" class="next dvs-button dvs-button-success">Next</button>
             </div>
         </form>
     </div>

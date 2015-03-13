@@ -8,7 +8,7 @@
         <input type="hidden" name="_token" value="<?= csrf_token() ?>">
 
         <div class="form-group">
-            <select name="database_default"  class="dvs-select dvs-select-success dvs-select-solid dvs-select-inline dvs-select-small">
+            <select tabindex="0" name="database_default"  class="dvs-select dvs-select-success dvs-select-solid dvs-select-inline dvs-select-small">
                 <option <?= $selected('mysql') ?> value="mysql">mySQL</option>
                 <option <?= $selected('pgsql') ?> value="pgsql">postgresSQL</option>
                 <option <?= $selected('sqlite') ?> value="sqlite">sqlite</option>
@@ -18,27 +18,27 @@
 
         <div class="form-group database mysql pgsql sqlsrv tal">
             <label>Database Host</label>
-            <input type="text" class="form-control" name="database_host" placeholder="Database Host" value="<?= $database->host ?>">
+            <input tabindex="1" type="text" class="form-control" name="database_host" placeholder="Database Host" value="<?= $database->host ?>">
         </div>
 
         <div class="form-group database mysql pgsql sqlsrv tal">
             <label>Database Name</label>
-            <input type="text" class="form-control" name="database_name" placeholder="Database Name" value="<?= $database->name ?>">
+            <input tabindex="2" type="text" class="form-control" name="database_name" placeholder="Database Name" value="<?= $database->name ?>">
         </div>
 
         <div class="form-group database mysql pgsql sqlsrv tal">
             <label>Database Username</label>
-            <input type="text" class="form-control" name="database_username" placeholder="Database Username" value="<?= $database->username ?>">
+            <input tabindex="3" type="text" class="form-control" name="database_username" placeholder="Database Username" value="<?= $database->username ?>">
         </div>
 
         <div class="form-group database mysql pgsql sqlsrv tal">
             <label>Database Password</label>
-            <input type="text" class="form-control" name="database_password" placeholder="Database Password" value="<?= $database->password ?>">
+            <input tabindex="4" type="text" class="form-control" name="database_password" placeholder="Database Password" value="<?= $database->password ?>">
         </div>
 
         <div class="form-group dvs-form-actions mt sp30">
-            <button class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
-            <button class="next dvs-button-success dvs-button">Next</button>
+            <button tabindex="6" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
+            <button tabindex="5" class="next dvs-button-success dvs-button">Next</button>
         </div>
 
     </form>

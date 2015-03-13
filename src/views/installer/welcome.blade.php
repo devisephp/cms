@@ -8,6 +8,6 @@
         <img src="<?= URL::asset('/packages/devisephp/cms/img/install-signature.png') ?>">
     </p>
     <p class="mt sp40">
-    	<a class="get-started dvs-button" href="environment">Get Started With Install</a>
+    	<a tabindex="0" class="get-started dvs-button" href="environment">Get Started With Install</a>
     </p>
 @stop

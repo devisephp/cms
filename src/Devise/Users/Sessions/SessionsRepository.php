@@ -217,7 +217,7 @@ class SessionsRepository
                     ->subject('Welcome to Devise!');
             });
 
-            $this->message = 'Activation email sent, check your email to complete the activation process.';
+            $this->message = 'Activation email sent! Check your mail to complete the registration process.';
             return true;
         }
         else

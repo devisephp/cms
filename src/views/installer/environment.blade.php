@@ -9,7 +9,7 @@
         <input type="hidden" name="_token" value="<?= csrf_token() ?>">
             <div class="dvs-form-group">
 
-                <select tabindex="0" name="environment" class="dvs-select dvs-select-success dvs-select-solid dvs-select-inline dvs-select-small">
+                <select tabindex="1" name="environment" class="dvs-select dvs-select-success dvs-select-solid dvs-select-inline dvs-select-small">
                     <option value="local" <?= $selectedEnvironment('local') ?>>Local</option>
                     <option value="staging" <?= $selectedEnvironment('staging') ?>>Staging</option>
                     <option value="production" <?= $selectedEnvironment('production') ?>>Production</option>
@@ -18,12 +18,12 @@
                 <br>
             </div>
             <div class="dvs-form-group">
-                <input tabindex="1" type="text" name="custom_environment" class="form-control" placeholder="Enter custom environment name" <?= $selectedEnvironment('custom', '', 'style="display: none;"') ?> value="<?= $environment ?>">
+                <input tabindex="2" type="text" name="custom_environment" class="form-control" placeholder="Enter custom environment name" <?= $selectedEnvironment('custom', '', 'style="display: none;"') ?> value="<?= $environment ?>">
             </div>
 
             <div class="dvs-form-group dvs-form-actions mt sp30">
-                <button tabindex="3" class="back dvs-button-secondary dvs-button" type="button" onclick="location.href='welcome'">Back</button>
-                <button tabindex="2" class="next dvs-button-success dvs-button">Next</button>
+                <button tabindex="4" class="back dvs-button-secondary dvs-button" type="button" onclick="location.href='welcome'">Back</button>
+                <button tabindex="3" class="next dvs-button-success dvs-button">Next</button>
             </div>
     </form>
 @stop

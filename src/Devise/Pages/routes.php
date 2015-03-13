@@ -82,7 +82,7 @@ if(!App::runningInConsole())
     }
     catch (PDOException $e)
     {
-        if ($e->getCode() == "1045" || $e->getCode() == "1049" || $e->getCode() == "42S02")
+        if ( in_array($e->getCode(), array("1044", "1045", "1049", "42S02")) )
         {
             App::make('Devise\Support\Installer\InstallWizard')->refreshEnvironment();
 

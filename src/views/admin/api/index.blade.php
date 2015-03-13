@@ -2,13 +2,13 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1><span class="ion-ios-copy-outline"></span> API Requests</h1>
+        <h1><span class="ion-code-working"></span> API Requests</h1>
     </div>
 @stop
 
 @section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-api-create'), 'Create New Page', array('class'=>'dvs-button'))  ?>
+        <?= link_to(URL::route('dvs-api-create'), 'Create New API Requests', array('class'=>'dvs-button'))  ?>
     </div>
 @stop
 

@@ -2,7 +2,7 @@
 
 @section('title')
     <div id="dvs-admin-title">
-        <h1><span class="ion-ios-copy-outline"></span> Edit API Request</h1>
+        <h1><span class="ion-code-working"></span> Edit API Request</h1>
     </div>
 @stop
 

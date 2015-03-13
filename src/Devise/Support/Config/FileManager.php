@@ -18,6 +18,22 @@ class FileManager
     }
 
     /**
+     * Retrives only the config array from the app's file. exclude's the package's config
+     *
+     * @param  string $dothPath
+     * @return array
+     */
+    public function getAppOnly($dotPath)
+    {
+        $filePathFromConfig = implode('/', explode('.', $dotPath)) . '.php';
+        $path = config_path($filePathFromConfig);
+        if($this->files->exists($path)){
+            return require $path;
+        }
+        return array();
+    }
+
+    /**
      * Retrives and writes/saves supplied content to specified config file
      *
      * @param  string $content
@@ -30,7 +46,7 @@ class FileManager
 
         $this->files->put($configFile, '<?php return ' . $this->prettyVarExport($content) . ';');
 
-        sleep(1); // hack to force the file to update on the next request. @todo look at asap
+        sleep(2); // hack to force the file to update on the next request. @todo look at asap
 
         return $content;
     }

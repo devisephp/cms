@@ -41,7 +41,7 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->registerLaravelFormAndHtmlProvider();
-        $this->registerConfigPublisher();
+        $this->registerConfigMerging();
         $this->registerDeviseViews();
 
         // support must be booted first since many
@@ -104,26 +104,19 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * Handles publishing all the config files for devise
-     * package
+     * handles the merging of the devise package configs and the app configs
      *
      * @return void
      */
-    private function registerConfigPublisher()
+    private function registerConfigMerging()
     {
         $publishes = [];
 
         foreach ($this->configFiles as $key)
         {
             $configFile = str_replace('.', DIRECTORY_SEPARATOR, $key);
-
-            $publishes[__DIR__."/../config/{$configFile}.php"] = config_path("{$configFile}.php");
             $this->mergeConfigFrom(__DIR__."/../config/{$configFile}.php", "{$key}");
         }
-
-        // taking out the publishes section below because we are going
-        // to publish devise configs from the command php artisan devise:configs
-        // $this->publishes($publishes);
     }
 
     /**

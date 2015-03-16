@@ -41,6 +41,8 @@ class UserManager
         'email.required' => 'Email address required.',
         'email.email' => 'Email address invalid.',
         'email.unique' => 'Email address already in use.',
+        'username.required' => 'Username required.',
+        'username.unique' => 'Username already in use.',
         'password.required' => 'Password required.',
         'password_confirmation.required' => 'Password confirmation required.',
         'password_confirmation.same:password' => 'Password confirmation does not match password.',
@@ -75,6 +77,7 @@ class UserManager
 	{
 		return array(
         	'email' => 'required|email|unique:users',
+			'username' => 'required|unique:users',
         	'password' => 'required|min:6',
         	'password_confirmation' => 'required|min:6|same:password',
         	'group_id' => 'required|exists:groups,id'
@@ -94,8 +97,10 @@ class UserManager
         if ($validator->passes())
         {
     		$user = $this->DvsUser;
+    		$user->activated = array_get($input, 'activated', false);
             $user->name = array_get($input, 'name', null);
     		$user->email = array_get($input, 'email');
+    		$user->username = array_get($input, 'username', null);
     		$user->password = $this->Hash->make(array_get($input, 'password'));
     		$user->save();
 
@@ -120,10 +125,11 @@ class UserManager
 	{
 		$updateRules = array(
         	'email' => "required|email|unique:users,email,{$id}",
+			'username' => "required|unique:users,username,{$id}",
         	'group_id' => 'required|exists:groups,id',
 		);
 
-		$password = array_get($input, 'password', '');
+		$password = array_get($input, 'password', null);
 
 		if ($password)
         {
@@ -148,8 +154,10 @@ class UserManager
         if ($validator->passes())
         {
     		$user = $this->DvsUser->findOrFail($id);
-            $user->name = array_get($input, 'name', '');
+    		$user->activated = array_get($input, 'activated', false);
+            $user->name = array_get($input, 'name', null);
     		$user->email = array_get($input, 'email');
+    		$user->username = array_get($input, 'username', null);
 
     		if(array_get($input, 'password', null)) {
     			$user->password = $this->Hash->make(array_get($input, 'password'));

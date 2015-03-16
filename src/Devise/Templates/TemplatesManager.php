@@ -43,7 +43,6 @@ class TemplatesManager
 	public function __construct(ConfigFileManager $ConfigFileManager, Framework $Framework)
     {
         $this->ConfigFileManager = $ConfigFileManager;
-        $this->Config = $Framework->Config;
         $this->Validator = $Framework->Validator;
     }
 
@@ -86,7 +85,7 @@ class TemplatesManager
 
         if($validator->passes())
         {
-            $configContents = $this->Config->get('devise.templates');
+            $configContents = $this->ConfigFileManager->getAppOnly('devise.templates');
 
             // setup array for config file and sets vars array to
             // blank key/value pair to prep. data for init. edit form
@@ -113,8 +112,7 @@ class TemplatesManager
 	{
         if($this->validateInputVars($input))
         {
-             // current templates config contents
-            $configContents = $this->Config->get('devise.templates');
+            $configContents = $this->ConfigFileManager->getAppOnly('devise.templates');
 
             // if newVars exist, validate and add to vars array
             if(isset($input['template']['newVars'])) {
@@ -145,7 +143,8 @@ class TemplatesManager
     public function destroyTemplate($templatePath)
     {
         // check if key exists in config, if so unset it
-        $configContents = $this->Config->get('devise.templates');
+        $configContents = $this->ConfigFileManager->getAppOnly('devise.templates');
+        
         if(isset($configContents[$templatePath])){
             unset($configContents[$templatePath]);
 
@@ -184,7 +183,7 @@ class TemplatesManager
         
         if($copyVar || $validator->passes())
         {
-            $configContents = $this->Config->get('devise.templates');
+            $configContents = $this->ConfigFileManager->getAppOnly('devise.templates');
 
             if($copyVar){
                 $configContents = $this->copyExistingVariable($configContents, $templatePath, $copyVar);

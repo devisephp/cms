@@ -12,8 +12,6 @@ class TemplatesManagerTest extends \DeviseTestCase
         parent::setUp();
 
         $this->Framework = new \Devise\Support\Framework;
-        $this->Config = m::mock('Illuminate\Config\Repository');
-        $this->Framework->Config = $this->Config;
 
         $this->Filesystem = new Filesystem;
 
@@ -28,11 +26,6 @@ class TemplatesManagerTest extends \DeviseTestCase
             'human_name' => 'Test Store',
             'extends' => 'test.view'
         );
-        $this->Config
-            ->shouldReceive('get')
-            ->with('devise.templates')
-            ->times(1)
-            ->andReturn(array());
 
         $configContents = array(
             'new.name' => array(
@@ -41,6 +34,10 @@ class TemplatesManagerTest extends \DeviseTestCase
             )
         );
         $this->ConfigFileManager
+            ->shouldReceive('getAppOnly')
+            ->times(1)
+            ->with('devise.templates')
+            ->andReturn(array())
             ->shouldReceive('saveToFile')
             ->with($configContents, 'templates')
             ->times(1)->andReturn(true);
@@ -63,11 +60,6 @@ class TemplatesManagerTest extends \DeviseTestCase
                 'extends' => 'test.view'
             )
         );
-        $this->Config
-            ->shouldReceive('get')
-            ->with('devise.templates')
-            ->times(1)
-            ->andReturn(array('new.name'=>array()));
 
         $configContents = array(
             'new.name' => array(
@@ -76,6 +68,10 @@ class TemplatesManagerTest extends \DeviseTestCase
             )
         );
         $this->ConfigFileManager
+            ->shouldReceive('getAppOnly')
+            ->times(1)
+            ->with('devise.templates')
+            ->andReturn(array('new.name'=>array()))
             ->shouldReceive('saveToFile')
             ->with($configContents, 'templates')
             ->times(1)->andReturn(true);
@@ -100,14 +96,13 @@ class TemplatesManagerTest extends \DeviseTestCase
         $configContents = array(
             'templates.name' => array()
         );
-        $this->Config
-            ->shouldReceive('get')
-            ->with('devise.templates')
-            ->times(1)
-            ->andReturn($configContents);
 
         $emptyArray = array();
         $this->ConfigFileManager
+            ->shouldReceive('getAppOnly')
+            ->times(1)
+            ->with('devise.templates')
+            ->andReturn($configContents)
             ->shouldReceive('saveToFile')
             ->with($emptyArray, 'templates')
             ->times(1)->andReturn(true);
@@ -117,10 +112,10 @@ class TemplatesManagerTest extends \DeviseTestCase
     
     public function test_it_cant_destroy()
     {
-        $this->Config
-            ->shouldReceive('get')
-            ->with('devise.templates')
+        $this->ConfigFileManager
+            ->shouldReceive('getAppOnly')
             ->times(1)
+            ->with('devise.templates')
             ->andReturn(array());
 
         assertFalse($this->TemplatesManager->destroyTemplate( 'not.real' ));
@@ -136,15 +131,6 @@ class TemplatesManagerTest extends \DeviseTestCase
             'method_name' => 'find',
             'params' => array()
         );
-
-        $this->Config
-            ->shouldReceive('get')
-            ->with('devise.templates')
-            ->times(1)
-            ->andReturn(array(
-                'template.name' => array('vars' => array())
-            ));
-
         $configContents = array(
             'template.name' => array(
                 'vars' => array(
@@ -153,6 +139,12 @@ class TemplatesManagerTest extends \DeviseTestCase
             )
         );
         $this->ConfigFileManager
+            ->shouldReceive('getAppOnly')
+            ->times(1)
+            ->with('devise.templates')
+            ->andReturn(array(
+                'template.name' => array('vars' => array())
+            ))
             ->shouldReceive('saveToFile')
             ->with($configContents, 'templates')
             ->times(1)->andReturn(true);

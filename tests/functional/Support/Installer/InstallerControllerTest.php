@@ -49,7 +49,14 @@ class InstallerControllerTest extends \DeviseTestCase
     public function test_it_can_post_environment()
     {
         $this->Framework->Input->shouldReceive('get')->twice()->andReturn('production');
-        $this->InstallWizard->shouldReceive('saveEnvironment')->once()->andReturnNull();
+        $this->InstallWizard
+        	->shouldReceive('saveNewApplicationKey')
+        	->once()
+        	->andReturnSelf()
+        	->shouldReceive('saveEnvironment')
+        	->once()
+        	->andReturnNull();
+
         $this->Framework->Redirect->shouldReceive('to')->once()->andReturnSelf();
 
         $this->InstallerController->postEnvironment();

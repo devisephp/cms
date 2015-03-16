@@ -11,14 +11,12 @@ class DeviseInstallCommand extends Command
      * @param string
      */
     protected $name = 'devise:install';
-
     /**
      * The Devise install wizard
      *
      * @var Devise\Support\Installer\InstallWizard
      */
     public $wizard;
-
     /**
      * This input output object for
      * writing to console
@@ -26,14 +24,12 @@ class DeviseInstallCommand extends Command
      * @var Devise\Support\Console\DeviseInstallCommand
      */
     public $io;
-
     /**
      * Mocks the environment
      *
      * @var Mockery
      */
     public $envMock;
-
     /**
      * Necessary to let people know, in case the name wasn't clear enough.
      *
@@ -47,19 +43,12 @@ class DeviseInstallCommand extends Command
     public function __construct(Container $app)
     {
         parent::__construct();
-
         $this->app = $app;
-
         $this->basePath = $this->app->basePath();
-
         $this->Config = $this->app->make('config');
-
         $this->DeviseMigrateCommand = new DeviseMigrateCommand($this->app);
-
         $this->DeviseSeedCommand = new DeviseSeedCommand($this->app);
-
         $this->DevisePublishAssetsCommand = new DevisePublishAssetsCommand($this->app);
-
         $this->DevisePublishConfigsCommand = new DevisePublishConfigsCommand($this->app);
     }
 
@@ -69,19 +58,12 @@ class DeviseInstallCommand extends Command
     public function handle()
     {
         $this->setupEnvironment();
-
         $this->setupDatabase();
-
         list($email, $user, $pass) = $this->setupAdminUser();
-
         $this->io()->comment('');
-
         $this->io()->comment("Please wait while devise is installing...");
-
         $this->io()->comment('');
-
         $this->runInstallCommands();
-
         $this->wizard()->createAdminUser($email, $user, $pass);
     }
 
@@ -94,15 +76,10 @@ class DeviseInstallCommand extends Command
     public function runInstallCommands()
     {
         $this->changeDatabaseConfigFile();
-
         $this->changeEmailConfigFile();
-
         $this->DeviseMigrateCommand->handle();
-
         $this->DeviseSeedCommand->handle();
-
         $this->DevisePublishAssetsCommand->handle();
-
         $this->DevisePublishConfigsCommand->handle();
     }
 
@@ -117,13 +94,9 @@ class DeviseInstallCommand extends Command
     public function changeDatabaseConfigFile()
     {
         $databaseConfigFile = $this->basePath . '/config/database.php';
-
         $contents = file_get_contents($databaseConfigFile);
-
         $driver = $this->Config->get('database.default');
-
         $modified = str_replace("'default' => '{$driver}',", "'default' => env('DB_DEFAULT', 'mysql'),", $contents);
-
         if ($contents !== $modified) file_put_contents($databaseConfigFile, $modified);
     }
 
@@ -137,11 +110,8 @@ class DeviseInstallCommand extends Command
     public function changeEmailConfigFile()
     {
         $authConfigFile = $this->basePath . '/config/auth.php';
-
         $contents = file_get_contents($authConfigFile);
-
         $modified = str_replace("'email' => 'emails.password',", "'email' => 'devise::emails.recover-password',", $contents);
-
         if ($contents !== $modified) file_put_contents($authConfigFile, $modified);
     }
 
@@ -152,17 +122,11 @@ class DeviseInstallCommand extends Command
     protected function setupEnvironment()
     {
         $this->wizard()->refreshEnvironment();
-
         $default = $this->env('APP_ENV', 'local');
-
         $answer = $this->io()->ask("What environment is this? [{$default}]");
-
         $answer = $answer ?: $default;
-
         $this->wizard()->saveEnvironment($answer);
-
         $this->io()->comment('');
-
         return $answer ?: $default;
     }
 
@@ -173,13 +137,11 @@ class DeviseInstallCommand extends Command
     protected function setupDatabase()
     {
         $databaseNotInstalled = true;
-
         $type = $this->env('DB_DEFAULT', 'mysql');
         $host = $this->env('DB_HOST', 'localhost');
         $name = $this->env('DB_DATABASE', 'devisephp');
         $user = $this->env('DB_USERNAME', 'root');
         $pass = $this->env('DB_PASSWORD', '');
-
         while ($databaseNotInstalled)
         {
             $type = $this->io()->askAboutDatabaseType($type);
@@ -187,9 +149,7 @@ class DeviseInstallCommand extends Command
             $name = $this->io()->askAboutDatabaseName($name);
             $user = $this->io()->askAboutDatabaseUser($user);
             $pass = $this->io()->askAboutDatabasePass($pass);
-
             $this->wizard()->saveDatabase($type, $host, $name, $user, $pass);
-
             if ($this->wizard()->errors)
             {
                 $this->io()->comment('');
@@ -201,7 +161,6 @@ class DeviseInstallCommand extends Command
                 $databaseNotInstalled = false;
             }
         }
-
         $this->io()->comment('');
     }
 
@@ -214,11 +173,9 @@ class DeviseInstallCommand extends Command
         $email = "no-reply@devisephp.com";
         $user = "devise";
         $pass = "secret";
-
         $email = $this->io()->ask("Admin email [{$email}]") ?: $email;
         $user = $this->io()->ask("Admin username [{$user}]") ?: $user;
         $pass = $this->io()->ask("Admin password [{$pass}]") ?: $pass;
-
         return array($email, $user, $pass);
     }
 
@@ -229,22 +186,16 @@ class DeviseInstallCommand extends Command
     protected function askAboutDatabaseType($default)
     {
         $types = ['mysql', 'pgsql', 'sqlite', 'sqlsrv'];
-
         $typeslist = implode(', ', $types);
-
         $answer = $this->io()->ask("What database type are you using? {$typeslist} [{$default}]");
-
         $answer = $answer ?: $default;
-
         if (!in_array($answer, $types))
         {
             $this->io()->comment('');
             $this->io()->error("Invalid database type: {$answer}");
             $this->io()->comment('');
-
             return $this->io()->askAboutDatabaseType($default);
         }
-
         return $answer ?: $default;
     }
 
@@ -256,7 +207,6 @@ class DeviseInstallCommand extends Command
     protected function askAboutDatabaseHost($default)
     {
         $answer = $this->io()->ask("What is your database host? [{$default}]");
-
         return $answer ?: $default;
     }
 
@@ -268,7 +218,6 @@ class DeviseInstallCommand extends Command
     protected function askAboutDatabaseName($default)
     {
         $answer = $this->io()->ask("What is your database name? [{$default}]");
-
         return $answer ?: $default;
     }
 
@@ -280,7 +229,6 @@ class DeviseInstallCommand extends Command
     protected function askAboutDatabaseUser($default)
     {
         $answer = $this->io()->ask("What is your database username? [{$default}]");
-
         return $answer ?: $default;
     }
 
@@ -292,7 +240,6 @@ class DeviseInstallCommand extends Command
     protected function askAboutDatabasePass($default)
     {
         $answer = $this->io()->ask("What is your database password? [{$default}]");
-
         return $answer ?: $default;
     }
 
@@ -320,7 +267,6 @@ class DeviseInstallCommand extends Command
         {
             $this->wizard = $this->app->make('Devise\Support\Installer\InstallWizard');
         }
-
         return $this->wizard;
     }
 
@@ -343,8 +289,6 @@ class DeviseInstallCommand extends Command
     protected function env($setting, $default = null)
     {
         if ($this->envMock) return $default;
-
         return env($setting, $default);
     }
-
 }

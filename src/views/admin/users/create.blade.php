@@ -16,6 +16,11 @@
     <div class="dvs-admin-form-horizontal">
         <?= Form::open(array('route' => 'dvs-users-store')) ?>
             <div class="dvs-form-group">
+                <?= Form::label('Active') ?>
+                <?= Form::checkbox('activated', true, true) ?>
+            </div>
+
+            <div class="dvs-form-group">
                 <?= Form::label('User Group') ?>
                 <?= Form::select('group_id', ['Choose an option'] + $groups) ?>
             </div>
@@ -28,6 +33,11 @@
             <div class="dvs-form-group">
                 <?= Form::label('Email') ?>
                 <?= Form::text('email') ?>
+            </div>
+
+            <div class="dvs-form-group">
+                <?= Form::label('Username') ?>
+                <?= Form::text('username') ?>
             </div>
 
             <div class="dvs-form-group">

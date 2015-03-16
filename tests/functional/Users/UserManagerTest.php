@@ -71,6 +71,7 @@ class UserManagerTest extends \DeviseTestCase
             '_token' => 'someFooToken',
             'name' => 'Foo Name',
             'email' => 'foo@email.com',
+            'username' => 'foo_user',
             'password' => 'foo_pass',
             'password_confirmation' => 'foo_pass'
         ];

@@ -99,7 +99,7 @@ class PermissionsManager
             if(isset($input[ $input['permission_name'] ])){
                 $this->cleanInput($input[ $input['permission_name'] ]);
 
-                $configContents = $this->Config->get('devise.permissions');
+                $configContents = $this->ConfigFileManager->getAppOnly('devise.permissions');
 
                 $this->includeRedirect($input, $input[ $input['permission_name'] ]);
 
@@ -132,7 +132,7 @@ class PermissionsManager
             if(isset($input[ $input['permission_name_edit'] ])){
                 $this->cleanInput($input[ $input['permission_name_edit'] ]);
 
-                $configContents = $this->Config->get('devise.permissions');
+                $configContents = $this->ConfigFileManager->getAppOnly('devise.permissions');
 
                 if($input['permission_name'] != $input['permission_name_edit']){
                     unset($configContents[ $input['permission_name'] ]);
@@ -165,7 +165,7 @@ class PermissionsManager
         // check if key exists in config, if so unset it
         if($this->Config->has('devise.permissions.' . $condition))
         {
-            $configContents = $this->Config->get('devise.permissions');
+            $configContents = $this->ConfigFileManager->getAppOnly('devise.permissions');
             unset($configContents[$condition]);
 
             return $this->ConfigFileManager->saveToFile($configContents, 'permissions');

@@ -33,8 +33,8 @@
                         <input name="password_confirmation" type="password" class="form-control" placeholder="Password Confirm" />
                     </div>
 
-                    <div class="form-group">
-                        <button class="dvs-button dvs-button-primary dvs-button-block">Save and Reset Password</button>
+                    <div class="form-group mt sp30">
+                        <button class="dvs-button dvs-button-primary">Save and Reset Password</button>
                     </div>
                 </form>
             </div>

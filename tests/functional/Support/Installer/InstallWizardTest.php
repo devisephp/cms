@@ -104,14 +104,6 @@ class InstallWizardTest extends \DeviseTestCase
 	{
         $this->Framework->Schema->shouldReceive('hasTable')->once()->andReturn(false);
 
-        $this->EnvironmentFileManager
-            ->shouldReceive('get')
-            ->once()
-            ->andReturnSelf()
-            ->shouldReceive('merge')
-            ->once()
-            ->andReturn(['foo' => 'settings']);
-
         $this->DeviseInstallCommand->shouldReceive('runInstallCommands')->once()->andReturnNull();
 
         $this->assertNull( $this->InstallWizard->installDevise() );

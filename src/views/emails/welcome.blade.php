@@ -6,23 +6,24 @@
 			<td>
 				<table>
 					<tr>
-						<td><p style="font-size:24px;margin:10px 0 4px 0;">Welcome to Devise!</p></td>
+						<td>
+							<p style="margin-bottom:8px;font-size:40px;line-height:44px;">Welcome to Devise!</p>
+						</td>
 					</tr>
 					<tr>
-                        <td style="color:#3e3e3e;font-size:14px">
-							<p>Your user account was successfully created using the email address:<br> <span style="font-weight:bold;font-size:16px;"><?= $user->email ?></span></p>
-
-							<p>Please click on the activation link below to activate your account.</p>
-
-							<table style="background-color:#1fa7db;height:75px;padding:20px;cursor:pointer;">
+						<td>
+							<p style="padding-bottom:20px;">A user account was successfully created for the email address:<br><strong><?= $user->email ?></strong>. To complete the activation process, please click on the button below:</p>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-bottom:36px;">
+							<table width="100%">
 								<tr>
-									<td cellpadding="20" style="text-align:center">
-										<a href="<?= URL::route('dvs-user-activate', [$user->id, urlencode($user->activate_code)]) ?>" style="color:#ffffff;text-decoration:none;font-size:20px;padding:25px 30px;">Activate User Account</a>
+									<td style="width:50%;text-align:center;">
+										<a href="<?= URL::route('dvs-user-activate', [$user->id, urlencode($user->activate_code)]) ?>" style="display:block;width:80%;max-width:220px;margin:auto;padding:25px 20px;font-weight:500;color:#59babe;text-decoration:none;background-color:transparent;border:2px solid #59babe;border-radius:4px;cursor:pointer;">Activate User Account</a>
 									</td>
 								</tr>
 							</table>
-
-							<p style="font-size:12px;padding-top:10px;">If the activation button above isn't working, paste the following link into your browser: <a href="<?= URL::route('dvs-user-activate', [$user->id, urlencode($user->activate_code)]) ?>" style="color:#15c;text-decoration:none;"><?=  URL::route('dvs-user-activate', [$user->id, urlencode($user->activate_code)]) ?></a></p>
 						</td>
 					</tr>
 				</table>

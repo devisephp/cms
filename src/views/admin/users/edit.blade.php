@@ -14,7 +14,12 @@
 
 @section('main')
     <div class="dvs-admin-form-horizontal">
-        <?= Form::open(array('method' => 'PUT', 'route' => array('dvs-users-update', $user->id))) ?>
+        <?php /* Form::open(array('method' => 'PUT', 'route' => array('dvs-users-update', $user->id)))  */ ?>
+        <?= Form::model($user, array('method' => 'PUT', 'route' => array('dvs-users-update', $user->id))) ?>
+        	<div class="dvs-form-group">
+                <?= Form::label('Active') ?>
+                <?= Form::checkbox('activated') ?>
+            </div>
 
             <div class="dvs-form-group">
                 <?= Form::label('Group(s)') ?>
@@ -25,12 +30,17 @@
 
             <div class="dvs-form-group">
                 <?= Form::label('Name') ?>
-                <?= Form::text('name', $user->name) ?>
+                <?= Form::text('name') ?>
             </div>
 
             <div class="dvs-form-group">
                 <?= Form::label('Email') ?>
-                <?= Form::text('email', $user->email) ?>
+                <?= Form::text('email') ?>
+            </div>
+
+            <div class="dvs-form-group">
+                <?= Form::label('Username') ?>
+                <?= Form::text('username') ?>
             </div>
 
             <div class="dvs-form-group">
@@ -43,7 +53,7 @@
                 <?= Form::password('password_confirmation') ?>
             </div>
 
-            <?= Form::submit('Update User', ['class' => 'dvs-button dvs-button-solid dvs-button-success']) ?><br>
+            <?= Form::submit('Update User', ['class' => 'dvs-button dvs-button-solid dvs-button-success']) ?>
         <?= Form::close() ?>
     </div>
 @stop

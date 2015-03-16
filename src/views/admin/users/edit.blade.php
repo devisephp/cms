@@ -14,7 +14,6 @@
 
 @section('main')
     <div class="dvs-admin-form-horizontal">
-        <?php /* Form::open(array('method' => 'PUT', 'route' => array('dvs-users-update', $user->id)))  */ ?>
         <?= Form::model($user, array('method' => 'PUT', 'route' => array('dvs-users-update', $user->id))) ?>
         	<div class="dvs-form-group">
                 <?= Form::label('Active') ?>

@@ -90,7 +90,7 @@ class SessionsRepository
             }
 
             $this->message = 'There were validation errors.';
-            $this->errors = 'Incorrect user credentials.';
+            $this->errors = 'Invalid credentials or user is not active.';
             return false;
         }
         catch (UserNotFoundException $e)

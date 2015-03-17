@@ -44,11 +44,19 @@ class InstallerController extends Controller
 		return $this->View->make('devise::installer.welcome');
 	}
 
+	/**
+	 * [getInformInstallAssets description]
+	 * @return [type]
+	 */
 	public function getInformInstallAssets()
 	{
 		return $this->View->make('devise::installer.assets');
 	}
 
+	/**
+	 * [getAssets description]
+	 * @return [type]
+	 */
 	public function getAssets()
 	{
 		if(!$this->InstallWizard->checkAssets()){
@@ -88,6 +96,8 @@ class InstallerController extends Controller
 	 */
 	public function postEnvironment()
 	{
+		$this->InstallWizard->saveNewApplicationKey();
+
 		$environment = $this->Input->get('environment') === 'custom' ? $this->Input->get('custom_environment') : $this->Input->get('environment');
 
 		$this->InstallWizard->saveEnvironment($environment);
@@ -197,6 +207,6 @@ class InstallerController extends Controller
 
 		$this->Auth->loginUsingId($newUser->id, true);
 
-		return $this->Redirect->to('/admin?docs=true');
+		return $this->Redirect->to('/admin');
 	}
 }

@@ -225,21 +225,23 @@ class MenusManager
 		}
 
 		// replace all the order ids with newly created ids
-		foreach ($items as $item)
+		$newOrder = array();
+
+		foreach ($order as $key => $value)
 		{
-			foreach ($newlyCreated as $cid => $newId)
-			{
-				$replacementId = strpos($order[$cid], 'cid') === 0 ? $newlyCreated[$order[$cid]] : $order[$cid];
-				$order[$newId] = $replacementId;
-			}
+			$id = array_key_exists($key, $newlyCreated) ? $newlyCreated[$key] : $key;
+			$nestedId = array_key_exists($value, $newlyCreated) ? $newlyCreated[$value] : $value;
+			$newOrder[$id] = $nestedId;
 		}
 
-		// unset the orders now that we've replaced everything
-		foreach ($newlyCreated as $cid => $newId)
+		$newItems = array();
+
+		// rearrange items to be in the correct order listed
+		foreach ($newOrder as $id => $parentId)
 		{
-			unset($order[$cid]);
+			$newItems[$id] = $items[$id];
 		}
 
-		return array($items, $order);
+		return array($newItems, $newOrder);
 	}
 }

@@ -216,26 +216,6 @@ devise.define(['require', 'jquery'], {
                     updateTarget();
                  });
 
-             } else if(editorType == 'select') {
-
-                 $('#dvs-sidebar-select-element').on('input change', listenTo, function() {
-                    setNewValue( listenTo.html() );
-
-                    setUpdateSelector( listenTo.data('dvs-index'), listenTo.data('dvs-key') );
-
-                    updateTarget();
-                 });
-
-             } else if(editorType == 'checkbox-group') {
-
-                 // $('#dvs-sample-checkbox-group').on('change', listenTo, function() {
-                 //    setNewValue( listenTo.html() );
-
-                 //    setUpdateSelector( listenTo.data('dvs-index'), listenTo.data('dvs-key') );
-
-                 //    updateTarget();
-                 // });
-
             } else {
 
                 // currently: input, textarea, link, color,

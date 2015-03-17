@@ -118,13 +118,8 @@ class InstallWizard
 	 */
 	public function createAdminUser($email, $username, $password)
 	{
-		$user = $this->DvsUser->whereEmail($email)->first();
-
-		if (!$user)
-		{
-			$user = $this->DvsUser->newInstance();
-		}
-
+		// create the user
+		$user = $this->DvsUser->newInstance();
         $user->email = $email;
 		$user->username = $username;
         $user->password = $this->Hash->make($password);
@@ -136,6 +131,23 @@ class InstallWizard
 		$user->groups()->sync([$adminGroup->id]);
 
 		return $user;
+	}
+
+	/**
+	 * Saves the new application key if there isn't already one set
+	 * We need this set early on so it doesn't screw up our tokens
+	 * and password hashes.
+	 *
+	 * @return void
+	 */
+	public function saveNewApplicationKey()
+	{
+		$env = $this->EnvironmentFileManager->get();
+
+		if (!array_key_exists('APP_KEY', $env))
+		{
+			$this->EnvironmentFileManager->merge(['APP_KEY' => str_random(32)]);
+		}
 	}
 
 	/**
@@ -206,13 +218,6 @@ class InstallWizard
 	public function installDevise()
 	{
 		if ($this->Framework->Schema->hasTable('dvs_pages')) return;
-
-		$env = $this->EnvironmentFileManager->get();
-
-		if (!array_key_exists('APP_KEY', $env))
-		{
-			$this->EnvironmentFileManager->merge(['APP_KEY' => str_random(32)]);
-		}
 
 		$this->DeviseInstallCommand->runInstallCommands();
 	}

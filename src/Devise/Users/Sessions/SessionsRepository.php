@@ -90,7 +90,7 @@ class SessionsRepository
             }
 
             $this->message = 'There were validation errors.';
-            $this->errors = 'Incorrect user credentials.';
+            $this->errors = 'Invalid credentials or user is not active.';
             return false;
         }
         catch (UserNotFoundException $e)
@@ -217,7 +217,7 @@ class SessionsRepository
                     ->subject('Welcome to Devise!');
             });
 
-            $this->message = 'Activation email sent, check your email to complete the activation process.';
+            $this->message = 'Activation email sent! Check your mail to complete the registration process.';
             return true;
         }
         else
@@ -263,7 +263,8 @@ class SessionsRepository
         {
             if($this->Auth->attempt(array(
                 $fieldname => $input['uname_or_email'],
-                'password' => $input['password']),
+                'password' => $input['password'],
+                'activated' => 1),
                 $this->getRememberMe($input)
             )) {
 

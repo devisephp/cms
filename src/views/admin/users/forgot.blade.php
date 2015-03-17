@@ -7,11 +7,11 @@
         </div>
 
         @if(Session::has('message-success') || Session::has('message-errors'))
-        <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-sm-offset-4 col-md-offset-4">
-                @include('devise::admin.elements.validation')
-            </div>
-        </div>
+	        <div class="row">
+	            <div class="col-xs-12 col-sm-4 col-md-4 col-sm-offset-4 col-md-offset-4">
+	                @include('devise::admin.elements.validation')
+	            </div>
+	        </div>
         @endif
 
         <div class="row">
@@ -23,7 +23,7 @@
                         <input name="email" type="text" class="form-control" placeholder="Recover by Email" value="<?= old('email') ?>" />
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mt sp30">
                         <button class="dvs-button dvs-button-primary">Send Recovery Email</button>
                     </div>
                 </form>

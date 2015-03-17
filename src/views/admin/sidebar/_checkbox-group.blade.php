@@ -1,12 +1,3 @@
-@php
-    $elementOptionsArr = [
-        'class' => 'dvs-liveupdate-listen',
-        'data-dvs-index' => $element->index,
-        'data-dvs-alternate-target' => $element->alternateTarget,
-        'data-dvs-key' => $element->key,
-    ];
-@endphp
-
 <?= Form::open(array('route' => array('dvs-fields-update', $element->id), 'method' => 'put', 'class' => 'dvs-element-checkbox-group', 'data-dvs-field-id' => $element->id, 'data-dvs-field-type' => $element->dvs_type, 'id' => 'dvs-sidebar-field-form')) ?>
 
     @include('devise::admin.sidebar._collection_instance_id')
@@ -22,7 +13,7 @@
                     <div class="dvs-checkbox">
                         <?= Form::hidden($checkbox->key, 0) ?>
                         <label>
-                            <?= Form::checkbox($checkbox->key, 1, ($element->value->$keyname) ? $element->value->$keyname : $checkbox->default, $elementOptionsArr) ?> <span><?= $checkbox->label ?></span>
+                            <?= Form::checkbox($checkbox->key, 1, ($element->value->$keyname) ? $element->value->$keyname : $checkbox->default) ?> <span><?= $checkbox->label ?></span>
                         </label>
                     </div>
                 @endforeach

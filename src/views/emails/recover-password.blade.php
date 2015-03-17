@@ -6,23 +6,30 @@
 			<td>
 				<table>
 					<tr>
-						<td><p style="font-size:24px;margin:10px 0 4px 0;">DevisePHP Password Reset</p></td>
+						<td>
+							<p style="margin-bottom:8px;font-size:40px;line-height:44px;">Password Reset</p>
+						</td>
 					</tr>
 					<tr>
-						<td style="color:#3e3e3e;font-size:14px">
-							<p>A password reset was requested for this email. Click the button to proceed with the password recovery process.</p>
-
-							<table style="background-color:#1FA7DB;height:75px;padding:20px;cursor:pointer;">
+						<td>
+							<p style="padding-bottom:20px;">A password reset was requested for this email address. Continue on to the password reset form by clicking the button below:</p>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-bottom:36px;">
+							<table width="100%">
 								<tr>
-									<td cellpadding="20" style="text-align:center">
-										<a href="<?= URL::route('dvs-user-reset-password') . '?token=' . $token ?>" style="color:#ffffff;text-decoration:none;font-size:24px;padding:25px 40px;">Go To Change Password</a>
+									<td style="width:50%;text-align:center;">
+										<a href="<?= URL::route('dvs-user-reset-password') . '?token=' . $token ?>" style="display:block;width:80%;max-width:220px;margin:auto;padding:25px 20px;font-weight:500;color:#59babe;text-decoration:none;background-color:transparent;border:2px solid #59babe;border-radius:4px;cursor:pointer;">Reset Your Password</a>
 									</td>
+
+									<!--
+									<td style="width:50%;text-align:center;">
+										<a href="#REPLACE_HREF" style="display:block;width:80%;max-width:220px;margin:auto;padding:25px 20px;font-weight:500;color:#a1a1a1;text-decoration:none;background-color:transparent;border:2px solid #a1a1a1;border-radius:4px;cursor:pointer;">Secondary Button</a>
+									</td>
+									-->
 								</tr>
 							</table>
-
-							<p style="font-size:12px;padding-top:10px;">If the button above isn't working, paste the following link into your browser: <a href="<?= URL::route('dvs-user-reset-password') . '?token=' . $token ?>" style="color:#15c;text-decoration:none;"><?= URL::route('dvs-user-reset-password') . '?token=' . $token ?></a></p>
-
-                            <p>If you did not request a password reset, please contact support.</p>
 						</td>
 					</tr>
 				</table>

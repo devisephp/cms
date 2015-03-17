@@ -44,7 +44,9 @@ class ApiPagesResponseHandler
      */
     public function requestCreateNewPage($input)
     {
-        $input['response_path'] = $input['response_class'] .'.'. $input['response_method'];
+        if(isset($input['response_class']) && isset($input['response_method'])){
+            $input['response_path'] = $input['response_class'] .'.'. $input['response_method'];
+        }
         $page = $this->ApiPagesManager->createNewPage($input);
 
         if ($page)
@@ -67,7 +69,9 @@ class ApiPagesResponseHandler
      */
     public function requestUpdatePage($id, $input)
     {
-        $input['response_path'] = $input['response_class'] .'.'. $input['response_method'];
+        if(isset($input['response_class']) && isset($input['response_method'])){
+            $input['response_path'] = $input['response_class'] .'.'. $input['response_method'];
+        }
         $page = $this->ApiPagesManager->updatePage($id, $input);
 
         if ($page)

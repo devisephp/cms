@@ -35,7 +35,7 @@
 
         <input type="text" name="item[<?= $item->id?>][url]" class="menu-item-url" value="<?= $item->url ?>" placeholder="URL">
 
-        <input type="text" class="autocomplete-pages menu-item-page<?= $pageHiddenClass ?> form-control pull-left" placeholder="Page" value="@if($item->page)<?= $item->page->title ?> (<?= $item->page->language->code  ?>) @endif">
+        <input type="text" class="autocomplete-pages menu-item-page<?= $pageHiddenClass ?> pull-left" placeholder="Page" value="@if($item->page)<?= $item->page->title ?> (<?= $item->page->language->code  ?>) @endif">
         <input type="hidden" name="item[<?= $item->id  ?>][page_id]" value="<?= (isset($item->page_id)) ? $item->page_id : '' ?>">
 
         <button type="button" class="dvs-button dvs-button-danger dvs-button-tiny js-remove-menu-item dvs-pr"><span class="ion-android-close"></span></button>

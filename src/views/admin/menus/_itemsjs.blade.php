@@ -22,7 +22,7 @@
 
             <input type="text" name="item[{cid}][url]" class="menu-item-url hidden" placeholder="URL">
 
-            <input type="text" class="autocomplete-pages menu-item-page form-control pull-left" placeholder="Page" value="">
+            <input type="text" class="autocomplete-pages menu-item-page pull-left" placeholder="Page" value="">
             <input type="hidden" name="item[{cid}][page_id]" value="">
             <button type="button" class="dvs-button dvs-button-danger dvs-button-tiny js-remove-menu-item dvs-pr"><span class="ion-android-close"></span></button>
         </div>

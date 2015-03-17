@@ -1,7 +1,7 @@
 @if(!$data->isCollection)
     @if ($data->groups && count($data->groups) >= 2)
         <div id="dvs-sidebar-groups">
-            <select class="dvs-select" id="dvs-groups-select" name="groups" class="large">
+            <select class="dvs-select large" id="dvs-groups-select" name="groups">
                 @php $index = 0 @endphp
 
                 @foreach ($data->groups as $groupName => $group)
@@ -21,7 +21,7 @@
 @else
     @if ($data->groups)
         <div id="dvs-sidebar-groups">
-            <select class="dvs-select dvs-button-solid" id="dvs-groups-select" name="groups" class="large">
+            <select class="dvs-select dvs-button-solid large" id="dvs-groups-select" name="groups">
                 @php $index = 0 @endphp
 
                 @foreach($data->groups as $groupName => $group)
@@ -32,7 +32,7 @@
         </div>
     @else
         <div id="dvs-sidebar-groups">
-            <select class="dvs-select" id="dvs-groups-select" name="groups" class="large">
+            <select class="dvs-select large" id="dvs-groups-select" name="groups">
                 <option value="0">None</option>
             </select>
             <button id="dvs-sidebar-manage-groups" class="dvs-button dvs-button-secondary dvs-button-small dvs-button-solid">Collections</button>

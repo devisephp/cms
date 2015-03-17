@@ -1,7 +1,7 @@
 <li id="itemOrder_<?= $item->id ?>" class="js-menu-item">
     <div>
         @if(count($item->items))
-            <button type="button" class="dvs-button dvs-button-small menu-accordion dvs-pl mr sp5" data-target="#children-<?= $item->id ?>"><span class="ion-android-expand"></span></button>
+            <button type="button" class="dvs-button dvs-button-tiny menu-accordion dvs-pl mt mr sp5" data-target="#children-<?= $item->id ?>"><span class="ion-android-expand"></span></button>
         @endif
 
         <input type="text" name="item[<?=$item->id?>][name]" value="<?= $item->name ?>" class="dvs-pl" placeholder="Title">

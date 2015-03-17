@@ -1,7 +1,7 @@
     <div id="dvs-sidebar-title">
         <h1><?= $title ?></h1>
 
-        <a class="dvs-sidebar-close dvs-button dvs-button-danger dvs-button-small"><span class="ion-android-close"></span></a>
+        <a class="dvs-sidebar-close dvs-button dvs-button-danger dvs-button-solid dvs-button-tiny"><span class="ion-android-close"></span></a>
 
         @if(isset($availableLanguages) && count($availableLanguages) > 1)
         <div id="dvs-sidebar-language-selector">

@@ -12,6 +12,7 @@
   box-sizing:border-box;
   font-size: 12px;
   font-weight:400;
+  line-height:1em;
 
   &:hover {
     color:lighten($primaryButtonBgColor, 10%);
@@ -29,7 +30,7 @@
   }
 
   &.dvs-button-small {
-    padding:0px 8px;
+    padding:10px 8px;
     font-size:10px;
   }
 

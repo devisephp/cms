@@ -178,6 +178,7 @@
     .dvs-select-wrapper {
       width:160px;
       height:32px;
+      padding:3px;
 
       .dvs-holder {
         font-size:10px;
@@ -192,7 +193,6 @@
   #dvs-sidebar-groups {
     margin-top: 3px;
   }
-
 
 
 
@@ -340,6 +340,7 @@
       .dvs-select-wrapper {
         width: auto;
         margin-left:15px;
+        padding-top:2px;
         padding-right:30px;
         height:30px;
         font-size:10px;

@@ -760,7 +760,7 @@
   font-variant: normal;
   text-transform: none;
   text-rendering: auto;
-  line-height: 1;
+  line-height: 1em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
@@ -3450,7 +3450,8 @@ button.dvs-no-decoration:hover {
   border-radius: 2px;
   box-sizing: border-box;
   font-size: 12px;
-  font-weight: 400; }
+  font-weight: 400;
+  line-height: 1em; }
   .dvs-button:hover {
     color: #d7d8da; }
   .dvs-button.dvs-button-solid {
@@ -3460,7 +3461,7 @@ button.dvs-no-decoration:hover {
     padding: 6px;
     font-size: 10px; }
   .dvs-button.dvs-button-small {
-    padding: 0px 8px;
+    padding: 10px 8px;
     font-size: 10px; }
   .dvs-button.dvs-button-large {
     padding: 16px 40px;
@@ -4103,7 +4104,7 @@ td .dvs-select-small {
     font-variant: normal;
     text-transform: none;
     text-rendering: auto;
-    line-height: 1;
+    line-height: 1em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
   .dvs-document.invert {
@@ -4832,7 +4833,8 @@ table.dvs-admin-table {
     margin-left: 3px; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups .dvs-select-wrapper, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector .dvs-select-wrapper {
     width: 160px;
-    height: 32px; }
+    height: 32px;
+    padding: 3px; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups .dvs-select-wrapper .dvs-holder, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector .dvs-select-wrapper .dvs-holder {
       font-size: 10px; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups #dvs-sidebar-manage-groups, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector #dvs-sidebar-manage-groups {
@@ -4957,6 +4959,7 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property .dvs-select-wrapper {
       width: auto;
       margin-left: 15px;
+      padding-top: 2px;
       padding-right: 30px;
       height: 30px;
       font-size: 10px; }
@@ -5201,7 +5204,8 @@ table.dvs-admin-table {
   border-radius: 2px;
   box-sizing: border-box;
   font-size: 12px;
-  font-weight: 400; }
+  font-weight: 400;
+  line-height: 1em; }
   #dvs-mode.dvs-sidebar-mode .dvs-button:hover {
     color: #d7d8da; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-solid {
@@ -5211,7 +5215,7 @@ table.dvs-admin-table {
     padding: 6px;
     font-size: 10px; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-small {
-    padding: 0px 8px;
+    padding: 10px 8px;
     font-size: 10px; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-large {
     padding: 16px 40px;

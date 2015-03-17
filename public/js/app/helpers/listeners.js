@@ -201,7 +201,7 @@ devise.define(['jquery', 'dvsNodeView', 'dvsSidebarView', 'dvsCollectionsView', 
 
     function addSidebarGroupsChangeListener() {
         $('#dvs-sidebar-groups').change(function() {
-            var _selectedGroup = $(this).find('.dvs-select').val();
+            var _selectedGroup =  $(this).find('select').val();
 
             $('.dvs-sidebar-group').removeClass('dvs-active');
             $('#dvs-sidebar-group-' + _selectedGroup).addClass('dvs-active');

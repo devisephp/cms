@@ -3513,8 +3513,8 @@ button.dvs-no-decoration:hover {
 .dvs-button-group {
   white-space: nowrap; }
   .dvs-button-group .dvs-button {
+    float: left;
     display: inline-block !important;
-    margin-left: -4px;
     border-radius: 0;
     border-right-width: 1px;
     border-left-width: 0; }
@@ -3526,13 +3526,7 @@ button.dvs-no-decoration:hover {
       border-radius: 0 3px 3px 0;
       border-right-width: 1px; }
   .dvs-button-group form {
-    display: inline-block; }
-    .dvs-button-group form:last-child input[type="submit"] {
-      border-radius: 0 3px 3px 0; }
-
-input[type="submit"].dvs-button.dvs-button-small {
-  padding: 6px 7px 8px;
-  cursor: pointer; }
+    display: inline; }
 
 .pagination {
   margin: 25px 30px;
@@ -4273,7 +4267,7 @@ td .dvs-select-small {
   font-size: 16px;
   font-family: "Roboto", Tahoma, Arial, sans-serif;
   font-weight: 300;
-  line-height: 1.8em; }
+  line-height: 1; }
   #dvs-admin h1, #dvs-admin h2, #dvs-admin h3, #dvs-admin h4, #dvs-admin h5, #dvs-admin h6 {
     font-size: 42px;
     font-weight: 600;
@@ -4293,6 +4287,8 @@ td .dvs-select-small {
     font-size: 18px; }
   #dvs-admin h6 {
     font-size: 16px; }
+  #dvs-admin p {
+    line-height: 1.8em; }
   #dvs-admin hr {
     margin: 20px auto;
     border-color: #347e80;
@@ -4301,6 +4297,8 @@ td .dvs-select-small {
     border-bottom-width: 1px; }
     #dvs-admin hr.dvs-thick {
       border-bottom-width: 2px; }
+  #dvs-admin code {
+    line-height: 1.5em; }
   #dvs-admin .dvs-admin-items-wpr {
     width: 100%;
     margin: 30px auto;
@@ -5266,8 +5264,8 @@ table.dvs-admin-table {
 #dvs-mode.dvs-sidebar-mode .dvs-button-group {
   white-space: nowrap; }
   #dvs-mode.dvs-sidebar-mode .dvs-button-group .dvs-button {
+    float: left;
     display: inline-block !important;
-    margin-left: -4px;
     border-radius: 0;
     border-right-width: 1px;
     border-left-width: 0; }
@@ -5279,12 +5277,7 @@ table.dvs-admin-table {
       border-radius: 0 3px 3px 0;
       border-right-width: 1px; }
   #dvs-mode.dvs-sidebar-mode .dvs-button-group form {
-    display: inline-block; }
-    #dvs-mode.dvs-sidebar-mode .dvs-button-group form:last-child input[type="submit"] {
-      border-radius: 0 3px 3px 0; }
-#dvs-mode.dvs-sidebar-mode input[type="submit"].dvs-button.dvs-button-small {
-  padding: 6px 7px 8px;
-  cursor: pointer; }
+    display: inline; }
 #dvs-mode.dvs-sidebar-mode .pagination {
   margin: 25px 30px;
   border-radius: 2px; }
@@ -5936,8 +5929,8 @@ html.dz-drag-hover body {
   word-wrap: break-word;
   /* Internet Explorer 5.5+ */ }
 #dvs-admin .dvs-test-blocks code {
-  font-family: "Courier New", Courier, monospace;
-  padding: 20px;
+  font-family: "Source Code Pro", "Courier New", Courier, monospace;
+  padding: 5px 20px;
   width: 100%;
   border-radius: 3px; }
 #dvs-admin .dvs-test-blocks p {

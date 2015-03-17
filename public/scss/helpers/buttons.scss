@@ -114,8 +114,8 @@
   white-space:nowrap;
 
   .dvs-button {
+    float:left;
     display:inline-block !important;
-    margin-left:-4px;
     border-radius:0;
     border-right-width:1px;
     border-left-width:0;
@@ -133,18 +133,7 @@
   }
 
   form {
-    display:inline-block;
-
-    &:last-child input[type="submit"] {
-      border-radius:0 3px 3px 0;
-    }
-  }
-}
-
-input[type="submit"]{
-  &.dvs-button.dvs-button-small {
-    padding:6px 7px 8px;
-    cursor:pointer;
+    display:inline;
   }
 }
 

@@ -12,10 +12,9 @@ devise.define(['require', 'jquery'], function (require, $)
     {
         $.each(elements, function(index, el) {
             if($(this).parents('.dvs-select-wrapper').length === 0){
+                $(this).removeClass('dvs-select');
 
                 var additionalClasses = $(this).attr('class');
-
-                additionalClasses = additionalClasses.replace(/dvs-select /g, '');
 
                 $(this).wrap("<span class='dvs-select-wrapper " + additionalClasses + "'></span>");
                 $(this).after("<span class='dvs-holder'></span>");

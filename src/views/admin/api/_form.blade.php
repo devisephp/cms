@@ -27,13 +27,18 @@
 </div>
 
 <div class="dvs-form-group simpletoggle" id="response-path-form">
-    <?= Form::label('Response Path') ?>
-    <?= Form::text('response_path', null, array('placeholder' => 'Response Path')) ?>
+    <?= Form::label('Response Class') ?>
+    <?= Form::text('response_class', null, array('placeholder' => 'Response Class')) ?>
+</div>
+
+<div class="dvs-form-group simpletoggle" id="response-path-form">
+    <?= Form::label('Response Method') ?>
+    <?= Form::text('response_method', null, array('placeholder' => 'Response Method')) ?>
 </div>
 
 <div class="dvs-form-group simpletoggle" id="response-params-form">
     <?= Form::label('Response Parameters') ?>
-    <?= Form::text('response_params', null, array('placeholder' => 'Response Params')) ?>
+    <?= Form::text('response_params', null, array('placeholder' => 'Response Params (Comma Separated)')) ?>
 </div>
 
 <h3>Filters</h3>

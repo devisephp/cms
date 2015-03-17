@@ -4209,7 +4209,7 @@ td .dvs-select-small {
       .dvs-node-mode #dvs-nodes .dvs-node.left > span, .dvs-node-mode #dvs-nodes .dvs-node.column > span, .dvs-node-mode #dvs-nodes .dvs-node.col1 > span, .dvs-node-mode #dvs-nodes .dvs-node.col2 > span, .dvs-node-mode #dvs-nodes .dvs-node.col3 > span, .dvs-node-mode #dvs-nodes .dvs-node.col4 > span, .dvs-node-mode #dvs-nodes .dvs-node.col5 > span, .dvs-node-mode #dvs-nodes .dvs-node.col6 > span, .dvs-node-mode #dvs-nodes .dvs-node.col7 > span, .dvs-node-mode #dvs-nodes .dvs-node.col8 > span, .dvs-node-mode #dvs-nodes .dvs-node.col9 > span, .dvs-node-mode #dvs-nodes .dvs-node.col10 > span, .dvs-node-mode #dvs-nodes .dvs-node.col11 > span, .dvs-node-mode #dvs-nodes .dvs-node.col12 > span {
         position: relative;
         padding: 0 40px 0 20px;
-        top: 34px; }
+        top: 37px; }
       .dvs-node-mode #dvs-nodes .dvs-node.left:hover, .dvs-node-mode #dvs-nodes .dvs-node.column:hover, .dvs-node-mode #dvs-nodes .dvs-node.col1:hover, .dvs-node-mode #dvs-nodes .dvs-node.col2:hover, .dvs-node-mode #dvs-nodes .dvs-node.col3:hover, .dvs-node-mode #dvs-nodes .dvs-node.col4:hover, .dvs-node-mode #dvs-nodes .dvs-node.col5:hover, .dvs-node-mode #dvs-nodes .dvs-node.col6:hover, .dvs-node-mode #dvs-nodes .dvs-node.col7:hover, .dvs-node-mode #dvs-nodes .dvs-node.col8:hover, .dvs-node-mode #dvs-nodes .dvs-node.col9:hover, .dvs-node-mode #dvs-nodes .dvs-node.col10:hover, .dvs-node-mode #dvs-nodes .dvs-node.col11:hover, .dvs-node-mode #dvs-nodes .dvs-node.col12:hover {
         left: -5px; }
       .dvs-node-mode #dvs-nodes .dvs-node.left.dvs-content-requested .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.column .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col1 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col2 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col3 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col4 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col5 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col6 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col7 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col8 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col9 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col10 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col11 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col12 .svg-node-arrow {
@@ -4832,7 +4832,7 @@ table.dvs-admin-table {
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups .dvs-select-wrapper, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector .dvs-select-wrapper {
     width: 160px;
     height: 32px;
-    padding: 3px; }
+    padding: 8px; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups .dvs-select-wrapper .dvs-holder, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector .dvs-select-wrapper .dvs-holder {
       font-size: 10px; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-groups #dvs-sidebar-manage-groups, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-versions-selector #dvs-sidebar-manage-groups {

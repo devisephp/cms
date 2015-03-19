@@ -9,11 +9,13 @@
 			dvsPageData.csrf_token = "<?= csrf_token() ?>";
 			dvsPageData.page_id = "<?=$page->id?>";
             dvsPageData.page_version_id = "<?= $page->version->id ?>";
-			dvsPageData.models = <?= App::make("dvsPageData")->modelsJSON() ?>;
-			dvsPageData.model_attributes = <?= App::make("dvsPageData")->modelAttributesJSON() ?>;
-			dvsPageData.bindings = <?= App::make("dvsPageData")->fieldsJSON() ?>;
-			dvsPageData.collections = <?= App::make("dvsPageData")->collectionsJSON() ?>;
-			dvsPageData.model_creators = <?= App::make("dvsPageData")->modelCreatorsJSON() ?>;
+            dvsPageData.nodes = <?= App::make('dvsPageData')->nodesJSON() ?>;
+
+			// dvsPageData.models = <?= App::make("dvsPageData")->modelsJSON() ?>;
+			// dvsPageData.model_attributes = <?= App::make("dvsPageData")->modelAttributesJSON() ?>;
+			// dvsPageData.fields = <?= App::make("dvsPageData")->fieldsJSON() ?>;
+			// dvsPageData.collections = <?= App::make("dvsPageData")->collectionsJSON() ?>;
+			// dvsPageData.model_creators = <?= App::make("dvsPageData")->modelCreatorsJSON() ?>;
 
 			dvsPageData.urls = {};
 			dvsPageData.urls.content_requested = "<?= URL::route('dvs-fields-content-requested', $page->version->id) ?>";

@@ -65,7 +65,21 @@ class RegisterDeviseTags extends NodeVisitorAbstract
 			}
 		}
 
+		$nodes[] = $this->addDvsPageDataInitializeStmt();
+
 		return array_reverse($nodes);
+	}
+
+	/**
+	 * [addDvsPageDataInitializeStmt description]
+	 */
+	protected function addDvsPageDataInitializeStmt()
+	{
+		$init = '<?php App::make(\'dvsPageData\')->initialize($page->id, $page->version->id); ?>';
+
+		$initStmt = $this->DeviseParser->parse($init);
+
+		return $initStmt[0];
 	}
 
 	/**

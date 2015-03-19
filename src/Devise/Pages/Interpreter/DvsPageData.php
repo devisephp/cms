@@ -15,6 +15,18 @@ use Devise\Pages\Interpreter\Exceptions\DuplicateDeviseKeyException;
 class DvsPageData
 {
 	/**
+	 * [$pageId description]
+	 * @var [type]
+	 */
+	protected $pageId = null;
+
+	/**
+	 * [$pageVersionId description]
+	 * @var [type]
+	 */
+	protected $pageVersionId = null;
+
+	/**
 	 * Keeps track of cids for given types
 	 *
 	 * @var array
@@ -28,53 +40,32 @@ class DvsPageData
 	protected $tags = [];
 
 	/**
-	 * Collections as json output
-	 *
-	 * @return string
+	 * [__construct description]
+	 * @param FieldCreator     $FieldCreator
 	 */
-	public function collectionsJSON()
+	public function __construct(FieldCreator $FieldCreator)
 	{
-		return $this->jsonEncode($this->buildCollections());
+		$this->FieldCreator = $FieldCreator;
 	}
 
 	/**
-	 * Bindings as json output
+	 * Creates a json object that we use for editing a
+	 * devise page
 	 *
 	 * @return string
 	 */
-	public function fieldsJSON()
+	public function tagsJSON()
 	{
-		return $this->jsonEncode($this->buildFields());
-	}
+		// $tags = [];
 
-	/**
-	 * Models as json output
-	 *
-	 * @return string
-	 */
-	public function modelsJSON()
-	{
-		return $this->jsonEncode($this->buildModels());
-	}
+		// $tags = array_merge($tags, $this->buildCollections());
+		// $tags = array_merge($tags, $this->buildFields());
+		// $tags = array_merge($tags, $this->buildModels());
+		// $tags = array_merge($tags, $this->buildModelAttributes());
+		// $tags = array_merge($tags, $this->buildModelCreators());
 
-	/**
-	 * Model attributes as json output
-	 *
-	 * @return string
-	 */
-	public function modelAttributesJSON()
-	{
-		return $this->jsonEncode($this->buildModelAttributes());
-	}
-
-	/**
-	 * Model creators as json output
-	 *
-	 * @return string
-	 */
-	public function modelCreatorsJSON()
-	{
-		return $this->jsonEncode($this->buildModelCreators());
+		// dd($this->tags);
+		return $this->jsonEncode($this->tags);
 	}
 
 	/**
@@ -85,7 +76,27 @@ class DvsPageData
 	 */
 	public function tags()
 	{
+		$tags = [];
+
+
+
+
 		return $this->tags;
+	}
+
+	/**
+	 * The dvs page data cannot create fields and collection objects
+	 * without knowing what page we are on. This is injected in on every
+	 * view that uses dvsPageData...
+	 *
+	 * @param  integer $pageId
+	 * @param  integer $pageVersionId
+	 * @return void
+	 */
+	public function initialize($pageId, $pageVersionId)
+	{
+		$this->pageId = $pageId;
+		$this->pageVersionId = $pageVersionId;
 	}
 
 	/**
@@ -105,12 +116,14 @@ class DvsPageData
 	 */
 	public function register($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget)
 	{
+
+		if ($bindingType == "collection")
 		if ($bindingType !== 'variable')
 		{
 			$this->assertNoDuplicateTags($id);
 		}
 
-		$this->tags[$id] = [
+		$this->registered[$id] = [
 			'id' => $id,
 			'cid' => $this->getCidForType($bindingType),
 			'bindingType' => $bindingType,
@@ -175,11 +188,24 @@ class DvsPageData
 	{
 		$this->assertTagExists($id);
 
-		$tag = $bindingType === 'variable'
-			? $this->findVariableTag($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
-			: $this->findRegularTag($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults);
+		if ($bindingType === 'variable')
+		{
+			// resolve the variable...
+		}
+		else
+		{
+			$tag = $this->tags[$id]['id'];
+		}
 
-		return $tag['cid'];
+		// $this->tags[$id] = [
+
+		// ];
+
+		// $tag = $bindingType === 'variable'
+		// 	? $this->findVariableTag($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
+		// 	: $this->findRegularTag($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults);
+
+		// return $this->tag['cid'];
 	}
 
 	/**

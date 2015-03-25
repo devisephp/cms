@@ -8,7 +8,8 @@
 
 @section('subnavigation')
     <div id="dvs-admin-actions">
-        @if(count($languages) == 1)
+        @if(count($languages) > 1)
+
             <?= Form::select(
                         'language_id',
                         $languages,

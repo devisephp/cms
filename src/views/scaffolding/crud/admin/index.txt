@@ -1,0 +1,63 @@
+@extends('devise::admin.layouts.master')
+
+@section('title')
+    <div id="dvs-admin-title">
+        <h1><span class=""></span>Spotlights</h1>
+    </div>
+@stop
+
+@section('subnavigation')
+    <div id="dvs-admin-actions">
+        <?= link_to(URL::route('spotlights-create'), 'Create New Spotlight', array('class' => 'dvs-button dvs-button-secondary')) ?>
+    </div>
+@stop
+
+@section('main')
+
+   @if (!$spotlights->count())
+
+        <h3>No Spotlight Entries Found.</h3>
+
+    @else
+
+        <table class="dvs-admin-table">
+            <thead>
+                <tr>
+                    <th class="dvs-tal"><?= Sort::link('category', 'Category') ?></th>
+                    <th class="dvs-tal"><?= Sort::link('title','Title') ?></th>
+                    <th class="dvs-tal"><?= Sort::link('published','Published') ?></th>
+                    <th><?= Sort::clearSortLink('Clear Sort', array('class'=>'dvs-button dvs-button-small dvs-button-outset')) ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($spotlights as $spotlight)
+                    <tr>
+                        <td><?= $spotlight->category ?></td>
+                        <td><?= $spotlight->title ?></td>
+                        <td>
+                            <?= date("F j, Y, g:i a", strtotime($spotlight->published)) ?>
+                            (<?= \Carbon\Carbon::createFromTimeStamp(strtotime($spotlight->published))->diffForHumans() ?>)
+                        </td>
+                        <td class="dvs-tac dvs-button-group">
+                            <a class="dvs-button dvs-button-small" href="<?= route('spotlights-edit', $spotlight->id) ?>">Edit</a>
+                            <?= Form::delete(route('spotlight-destroy', $spotlight->id), 'Delete', null, array('class' => 'dvs-button dvs-button-small dvs-button-danger')) ?>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td><?= $spotlights->appends(Input::except(['page']))->render() ?></td>
+                </tr>
+            </tfoot>
+        </table>
+
+    @endif
+
+@stop
+
+@section('js')
+    <script>devise.require(['app/admin/admin'])</script>
+@stop

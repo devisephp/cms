@@ -1,5 +1,6 @@
 <?php namespace Devise\Support\Config;
 
+use Devise\Support\Framework;
 use \Illuminate\Filesystem\Filesystem as Filesystem;
 
 /**
@@ -12,8 +13,11 @@ class FileManager
 {
     protected $Filesystem;
 
-    public function __construct(Filesystem $Filesystem)
+    protected $Container;
+
+    public function __construct(Filesystem $Filesystem, Framework $Framework)
     {
+        $this->Container = $Framework->Container;
         $this->files = $Filesystem;
     }
 
@@ -42,13 +46,28 @@ class FileManager
      */
     public function saveToFile($content, $filename)
     {
+        $this->clearCache();
+
         $configFile = $this->getFileByEnvironment($filename);
 
         $this->files->put($configFile, '<?php return ' . $this->prettyVarExport($content) . ';');
 
-        sleep(2); // hack to force the file to update on the next request. @todo look at asap
-
         return $content;
+    }
+
+    /**
+     * Deletes cache in PHP caching module(s)
+     * @return boolean 
+     */
+    private function clearCache()
+    {
+        // Prevent caching if opcache is present
+        if(function_exists('opcache_reset')) {
+            opcache_reset();
+            return true;
+        }
+
+        return false;
     }
 
     /**

@@ -87,18 +87,26 @@ class TemplatesRepository
         $templatesArr = $this->Config->get('devise.templates');
         $templateKeysArr = array_keys($templatesArr);
 
+        $deviseResults = array();
         $results = array();
+
         foreach($templateKeysArr as $template) {
             if($showHumanName) {
                 $results[$template] = array_get($templatesArr[$template], 'human_name', $template);
             } else {
                 $results[$template] = $template;
             }
+
+            if (strpos($template, 'devise') !== false) {
+                $deviseResults[$template] = $results[$template];
+                unset($results[$template]);
+            }
         }
 
         asort($results);
+        asort($deviseResults);
 
-        return array_reverse($results);
+        return array_reverse($deviseResults + $results);
     }
 
 

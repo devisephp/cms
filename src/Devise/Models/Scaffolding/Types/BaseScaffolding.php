@@ -1,36 +1,76 @@
 <?php namespace Devise\Models\Scaffolding\Types;
 
 use Devise\Support\Framework;
+use Devise\Support\DeviseSeeder;
+use Devise\Models\Scaffolding\TemplateScaffolding;
+use Devise\Models\Scaffolding\SanityChecksHelper;
+use Devise\Models\Scaffolding\MigrationScaffolding;
 
-class BaseScaffolding
+class BaseScaffolding 
 {
+	use \Illuminate\Console\AppNamespaceDetectorTrait;
+
 	public $constants;
 
 	public $viewFiles;
 
+	public $templates;
+
 	public $srcFiles;
 
-	public function __construct(Framework $Framework)
+	public $pages;
+
+	public $apis;
+
+	protected $fields;
+
+	public function __construct(TemplateScaffolding $TemplateScaffolding, DeviseSeeder $Seeder, SanityChecksHelper $SanityChecksHelper, MigrationScaffolding $MigrationScaffolding, Framework $Framework)
 	{
-		$this->Framework = $Framework;
-		$this->viewFiles = [];
-		$this->srcFiles = [];
+		$this->TemplateScaffolding   = $TemplateScaffolding;
+		$this->SanityChecksHelper    = $SanityChecksHelper;
+		$this->MigrationScaffolding  = $MigrationScaffolding;
+		$this->Seeder      	         = $Seeder;
+		$this->Framework             = $Framework;
+		$this->viewFiles             = [];
+		$this->templates             = [];
+		$this->srcFiles              = [];
+		$this->pages                 = [];
+		$this->apis                  = [];
 	}
 
-	public function scaffold($modelName)
+	public function scaffold($modelName, $fields = [])
 	{
-		// Make View Files from templates
-		// Make App Src Files from templates
-		// Create Templates in Devise
-		// Create Pages in Devise
-		// Create APIs in Devise
-		
+		$this->fields = $fields;
+
 		$this->hydrateConstants($modelName);
 		$this->setViewFiles();
+		$this->setSrcFiles();
+		$this->setPages();
+		$this->setApis();
 
-		if ($this->runSanityCheck()) {
-			
+		if ($this->SanityChecksHelper->runSanityCheck(
+				$this->constants, 
+				$this->viewFiles, 
+				$this->srcFiles
+			)) {
+
+			// Make View Files from templates
 			$this->makeViewFiles();
+
+			// Make App Src Files from templates
+			$this->makeSrcFiles();
+
+			// Build and run the migration for the new model
+			$this->MigrationScaffolding->buildAndRun($this->constants, $this->fields);
+
+			// Insert template configuration in Devise templates.php config
+			$this->TemplateScaffolding->insertTemplateConfiguration($this->viewFiles);
+
+			// Create Pages in Database
+			$this->createPages($this->pages);
+
+			// Create Pages in Database
+			$this->createPages($this->apis);
 
 			return true;
 
@@ -42,87 +82,51 @@ class BaseScaffolding
 	protected function hydrateConstants($modelName)
 	{
 		$this->constants = [
-			'original'  => $modelName,
-			'singular'  => str_singular($modelName),
-			'plural'    => str_plural($modelName),
-			'snakeCase' => snake_case($modelName),
-			'camelCase' => camel_case($modelName)
+			
+			'original'        => $modelName, //little Widget
+			'singular'        => strtolower(str_singular($modelName)), // little widget
+			'singularCase'    => ucwords(str_singular($modelName)), // Little Widget
+			'plural'          => strtolower(str_plural($modelName)), // little widgets
+			'pluralCase'      => ucwords(str_plural($modelName)), // Little Widgets
+			'snakeCase'       => str_replace(' ', '', snake_case(str_singular($modelName))), // little_widget
+			'snakeCasePlural' => str_replace(' ', '', snake_case(str_plural($modelName))), // little_widgets
+			'camelCase'       => camel_case(str_singular($modelName)), // littleWidget
+			'camelCasePlural' => camel_case(str_plural($modelName)), // littleWidgets
+			'viewsDirectory'  => str_replace(' ', '', snake_case(str_plural($modelName))), // little_widgets
+			'srcDirectory'    => ucfirst(camel_case(str_plural($modelName))), // LittleWidgets
+			'modelName'       => ucfirst(camel_case(str_singular($modelName))), // LittleWidget
+			'className'       => studly_case(str_plural($modelName)), // LittleWidgets
+			'slug'            => str_slug(str_plural($modelName)), //little-widgets
+			'singularVar'     => lcfirst(camel_case(str_singular($modelName))), // littleWidget
+			'pluralVar'       => lcfirst(camel_case(str_plural($modelName))), // littleWidgets
+			'namespace'       => trim($this->getAppNamespace(), '\\')
 		];
 	}
-
-	protected function runSanityCheck()
-	{
-		$checks = [
-			$this->checkViewsDirectory(),
-			$this->checkSrcDirectory(),
-		];
-
-		if(!in_array(false, $checks)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected function setViewFiles() {}
-
-	protected function checkViewsDirectory()
-	{
-		$path = base_path() . '/resources/views/admin/' . $this->constants['snakeCase'];
-
-		return $this->checkDirectoryAndFileStatus($path, $this->viewFiles);
-	}
-
-	protected function checkSrcDirectory() 
-	{
-		$path = app_path() . '/' . $this->constants['camelCase'];
-
-		return $this->checkDirectoryAndFileStatus($path, $this->srcFiles);
-	}
-
-	protected function checkDirectoryAndFileStatus($path, $files) 
-	{
-		if (!$this->Framework->File->isDirectory($path)) {
-
-			// Directory doesn't exist so let's make it
-			return $this->Framework->File->makeDirectory($path,  $mode = 0766, $recursive = true);
-
-		} else {
-			// Check to see if any of the view files
-			// are already present. If they are return 
-			// false and bomb out.
-			foreach ($files as $template => $file) {
-
-				if ($this->Framework->File->isFile($file)) {
-					return false;
-				}
-			}
-		}
-
-		return true;
-	}
-
 
 	protected function makeViewFiles() 
 	{
-		$path = base_path() . '/resources/views/admin/' . $this->constants['snakeCase'];
-
-		return $this->convertTemplatesAndSave($path, $this->viewFiles);
+		return $this->TemplateScaffolding->convertTemplatesAndSave($this->viewFiles, $this->constants, $this->fields);
 	}
 
-	protected function convertTemplatesAndSave($path, $files)
+	protected function makeSrcFiles() 
 	{
-		foreach ($files as $template => $file) {
-			$template = $this->Framework->File->get($template);
-
-			foreach($this->constants as $key => $value) {
-				$template = str_replace('*|'.$key.'|*', $value, $template);
-			}
-
-			$this->Framework->File->put($file, $template);
-		}
-
-		return true;
+		return $this->TemplateScaffolding->convertTemplatesAndSave($this->srcFiles, $this->constants, $this->fields);
 	}
 
+	protected function createPages($pagesOrApis)
+	{
+		$now = date('Y-m-d H:i:s', strtotime('now'));
+		
+		foreach($pagesOrApis as $page) {
+
+	        $dvsPage = $this->Seeder->findOrCreateRow('dvs_pages', 'route_name', $page);
+
+            $this->Seeder->findOrCreateRow('dvs_page_versions', 'page_id', [
+                'page_id'            => $dvsPage->id,
+                'created_by_user_id' => 1,
+                'name'               => 'Default',
+                'starts_at'          => $now,
+            ]);
+		}
+	}
 }

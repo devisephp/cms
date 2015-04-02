@@ -74,8 +74,10 @@ class DeviseSeeder extends \Illuminate\Database\Seeder
 	 * @param  array  $data
 	 * @return StdObject
 	 */
-	protected function findOrCreateRow($tableName, $uniqueKeys , $data, $timestamps = true)
+	public function findOrCreateRow($tableName, $uniqueKeys , $data, $timestamps = true)
 	{
+		if (!is_array($data)) { dd($tableName, $uniqueKeys, $data); }
+
 		// merge in created_at and updated_at timestamps
 		$data = $timestamps ? array_merge(['created_at' => new DateTime, 'updated_at' => new DateTime], $data) : $data;
 

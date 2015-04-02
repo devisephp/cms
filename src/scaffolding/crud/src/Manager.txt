@@ -1,0 +1,130 @@
+<?php namespace *|namespace|*\*|className|*;
+
+use *|namespace|*\*|modelName|*;
+use Devise\Support\Framework;
+
+class *|className|*Manager
+{
+
+    /**
+     * Framework components being used from Laravel's framework
+     *
+     * @var Framework
+     */
+    protected $Framework;
+
+    /**
+     * Errors are kept in an array and can be
+     * used later if validation fails and we want to
+     * know why
+     *
+     * @var array
+     */
+    public $errors;
+
+    /**
+     * Validation messages
+     */
+    public $messages = array(
+        // 'title.required' => 'Title required.',
+    );
+
+	function __construct(*|modelName|* $*|singularVar|*, Framework $Framework)
+	{
+		$this->*|modelName|* = $*|singularVar|*;
+		$this->Validator = $Framework->Validator;
+	}
+
+	/**
+     * Create validation rules
+     *
+     * @return array
+     */
+	public function createRules()
+	{
+ 		return array(
+        	// 'title' => 'required',
+    	);
+	}
+
+	/**
+	 * Create a new *|singular|*
+	 *
+	 * @param  array $input
+	 * @return *|modelName|* $*|singularVar|*
+	 */
+	public function create*|modelName|*($input)
+	{
+        $validator = $this->Validator->make($input, $this->createRules(), array("Could not create new *|singular|*"));
+
+        if ($validator->passes())
+        {
+    		$*|singularVar|* = $this->*|modelName|*;
+
+*|createFields|*
+
+    		$*|singularVar|*->save();
+
+    		return $*|singularVar|*;
+        }
+
+        $this->errors = $validator->errors()->all();
+        $this->message = "There were validation errors.";
+        return false;
+	}
+
+	/**
+     * Update validation rules
+     *
+     * @return array
+     */
+	public function updateRules()
+	{
+ 		return array(
+        	'category' => 'required',
+        	'title' => 'min:3'
+    	);
+	}
+
+	/**
+	 * Update a *|singular|*
+	 *
+	 * @param  integer $id
+	 * @param  array $input
+	 * @return *|modelName|* $*|singularVar|*
+	 */
+	public function update*|modelName|*($id, $input)
+	{
+        $validator = $this->Validator->make($input, $this->updateRules($id, $input), array("Could not update *|singular|*"));
+
+		if ($validator->passes())
+        {
+    		$*|singularVar|* = $this->*|modelName|*->findOrFail($id);
+
+*|updateFields|*
+
+    		$*|singularVar|*->save();
+
+    		return $*|singularVar|*;
+        }
+
+        $this->errors = $validator->errors()->all();
+        $this->message = "There were validation errors.";
+        return false;
+	}
+
+	/**
+	 * Delete a Spotlight
+	 *
+	 * @param  integer $id
+	 * @return Spotlight $Spotlight
+	 */
+	public function destroy*|modelName|*($id)
+	{
+		$*|singularVar|* = $this->*|modelName|*->findOrFail($id);
+		$*|singularVar|*->delete();
+		
+		return $*|singularVar|*;
+	}
+
+}

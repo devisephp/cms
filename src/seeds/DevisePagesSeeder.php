@@ -1465,7 +1465,7 @@ class DevisePagesSeeder extends DeviseSeeder
 
         $now = date('Y-m-d H:i:s', strtotime('now'));
 
-        $dvsPages = $this->findOrCreateRows('dvs_pages', 'route_name', $pages);
+        $dvsPages = $this->findOrCreateRow('dvs_pages', 'route_name', $pages);
 
 		foreach ( $dvsPages as $dvsPage )
         {

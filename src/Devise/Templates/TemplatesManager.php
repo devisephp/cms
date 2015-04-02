@@ -101,6 +101,43 @@ class TemplatesManager
         return false;
     }
 
+    /**
+     * Validate and store multiple template entries to templates config
+     *
+     * @param  array   $input
+     * @return bool
+     */
+    public function storeMultipleTemplates($inputs)
+    {
+        foreach($inputs as $input) {
+            $validator = $this->Validator->make($input, $this->registerRules(), $this->messages);
+
+            if($validator->fails())
+            {
+                $this->errors = $validator->errors()->all();
+                return false;
+            }
+        } 
+
+        $configContents = $this->ConfigFileManager->getAppOnly('devise.templates');
+
+        foreach($inputs as $input) {
+            $configContents[$input['file_name']] = array(
+                'human_name' => $input['human_name'],
+                'extends' => $input['extends'],
+            );
+
+            if (isset($input['vars'])) {
+                $configContents[$input['file_name']]['vars'] = $input['vars'];
+            }
+        }
+
+        return $this->ConfigFileManager->saveToFile($configContents, 'templates');
+
+        $this->errors = $validator->errors()->all();
+        return false;
+    }
+
 	/**
 	 * Validates and updates a template with the given input
      *

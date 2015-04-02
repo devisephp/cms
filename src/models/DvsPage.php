@@ -17,8 +17,7 @@ class DvsPage extends Eloquent
         'slug'               => 'required|min:1',
         'http_verb'          => 'required|min:1',
 
-        'response_path'      => 'required_if:response_type,Function',
-        'response_params'    => 'required_if:response_type,Function',
+        'response_path'      => 'required_if:response_type,Function'
     );
 
     public $updateRules = array(
@@ -32,8 +31,7 @@ class DvsPage extends Eloquent
     );
 
     public $messages = array(
-        'response_path.required_if' => 'The response path is required',
-        'response_params.required_if' => 'The response parameters is required'
+        'response_path.required_if' => 'The response path is required'
     );
 
 

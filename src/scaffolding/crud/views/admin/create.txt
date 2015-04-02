@@ -1,0 +1,34 @@
+@extends('devise::admin.layouts.master')
+
+@section('title')
+    <div id="dvs-admin-title">
+        <h1><span class=""></span> New *|singularCase|*</h1>
+    </div>
+@stop
+
+@section('subnavigation')
+    <div id="dvs-admin-actions">
+        <?= link_to(URL::route('admin-*|slug|*-index'), 'All *|pluralCase|*', array('class' => 'dvs-button dvs-button-secondary')) ?>
+    </div>
+@stop
+
+@section('main')
+    <div class="dvs-admin-form-horizontal">
+        <?= Form::open(array('method' => 'POST', 'route' => 'admin-*|slug|*-store')) ?>
+
+            @include('admin.*|snakeCasePlural|*._form-fields')
+
+            <?= Form::submit('Create *|singularCase|*', ['class' => 'dvs-button dvs-button-solid dvs-button-success']) ?>
+        <?= Form::close() ?>
+    </div>
+@stop
+
+@section('js')
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    {{-- CKEditor - Uncomment if you want to use ckeditor --}}
+    {{-- 
+    <script src="{{ URL::asset('/js/lib/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ URL::asset('/js/lib/ckeditor/adapters/jquery.js') }}"></script> 
+    --}}
+@stop

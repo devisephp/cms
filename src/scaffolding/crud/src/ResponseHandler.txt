@@ -1,0 +1,49 @@
+<?php namespace *|namespace|*\*|className|*;
+
+use Illuminate\Routing\Redirector;
+
+class *|className|*ResponseHandler
+{
+	function __construct(Redirector $Redirect, *|className|*Manager $*|className|*Manager)
+	{
+		$this->Redirect = $Redirect;
+		$this->Manager  = $*|className|*Manager;
+	}
+
+	function requestCreate($input)
+	{
+		if ($this->Manager->create*|modelName|*($input))
+        {
+            return $this->Redirect->route('admin-*|slug|*-index')
+                ->with('message', '*|singularCase|* successfully created');
+        }
+
+        return $this->Redirect->route('admin-*|slug|*-create')
+                ->withInput()
+                ->withErrors($this->Manager->errors)
+                ->with('message', $this->Manager->message);
+	}
+
+	function requestUpdate($id, $input)
+	{
+		if ($this->Manager->update*|modelName|*($id, $input))
+        {
+            return $this->Redirect->route('admin-*|slug|*-index')
+                ->with('message', '*|singularCase|* successfully updated');
+        }
+
+        return $this->Redirect->route('admin-*|slug|*-edit', $id)
+                ->withInput()
+                ->withErrors($this->Manager->errors)
+                ->with('message', $this->Manager->message);
+	}
+
+	function requestDestroy($id)
+	{
+		$this->Manager->destroy*|modelName|*($id);
+
+        return $this->Redirect->route('admin-*|slug|*-index')
+                ->with('message', '*|singularCase|* successfully removed');
+	}
+
+}

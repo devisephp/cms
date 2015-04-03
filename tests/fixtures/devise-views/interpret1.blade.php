@@ -20,13 +20,13 @@
 
 	<?php $defaultValues = [] ?>
 
-	<div data-devise="$key">Something here</div>
+	<div data-devise="$key, human, group, category, alternate">Something here</div>
 
 	<div data-devise="key3, text, null, , null, null, null">Something here</div>
 
-	<div data-devise="col[key1], text, human, group, category, alternate, $defaultValues">Something here</div>
+	<div data-devise="col[key1], text, human, collection human, group, category, alternate, $defaultValues">Something here</div>
 
-	<div data-devise="col[key2], text, human, group, category, alternate, ['value' => 'durka']">Something here</div>
+	<div data-devise="col[key2], text, human, collection human, group, category, alternate, ['value' => 'durka']">Something here</div>
 
 	<p>
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

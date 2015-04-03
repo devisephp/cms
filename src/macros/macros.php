@@ -190,9 +190,9 @@ if (!function_exists('isActiveLink'))
 */
 if (!function_exists('devise_tag_cid'))
 {
-    function devise_tag_cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
+    function devise_tag_cid($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults)
     {
-    	return App::make('dvsPageData')->cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults);
+    	return App::make('dvsPageData')->cid($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults);
     }
 }
 

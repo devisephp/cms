@@ -19,6 +19,8 @@ class DvsModelField extends Eloquent
 
     protected $dates = ['deleted_at'];
 
+    protected $appends = ['values', 'scope', 'rules', 'picks', 'type'];
+
     /**
      * Accessor on this model to get value
      * for the latestVersion of this field
@@ -44,12 +46,92 @@ class DvsModelField extends Eloquent
     }
 
     /**
+     * Get the rules for this field type
+     *
+     * @return []
+     */
+    public function getRulesAttribute()
+    {
+        $config = config('devise.model-mapping');
+
+        $config = array_get($config, $this->model_type, []);
+
+        $config = array_get($config, 'rules', []);
+
+        return $config;
+    }
+
+    /**
+     * Get the picks for this field type
+     *
+     * @return []
+     */
+    public function getPicksAttribute()
+    {
+        $config = config('devise.model-mapping');
+
+        $config = array_get($config, $this->model_type, []);
+
+        $config = array_get($config, 'picks', []);
+
+        $config = array_get($config, $this->mapping, []);
+
+        return $config;
+    }
+
+    /**
+     * Get the field type this field type represetnts
+     *
+     * @return string
+     */
+    public function getTypeAttribute()
+    {
+        $config = config('devise.model-mapping');
+
+        $config = array_get($config, $this->model_type, []);
+
+        $config = array_get($config, 'types', []);
+
+        $config = array_get($config, $this->mapping, '');
+
+        return $config;
+    }
+
+    /**
      * Let's us know if the scope of this field is global or page
      *
      * @return string
      */
     public function getScopeAttribute()
     {
-        return 'page';
+        return 'model';
+    }
+
+    /**
+     * This syncs the model values with all this fields values
+     * which is useful in case the user updates the model outside
+     * of the context of the model field
+     *
+     * @param  Eloquent $model
+     * @return void
+     */
+    public function syncValuesWithModelValues($model = null)
+    {
+        $model = ($model === null) ? $this->model : $model;
+
+        foreach ($this->picks as $modelAttribute => $fieldAttribute)
+        {
+            $this->values->merge([ $fieldAttribute => $model->{$modelAttribute} ]);
+        }
+    }
+
+    /**
+     * A field belongs to a model
+     *
+     * @return Eloquent\Relationships\MorphTo
+     */
+    public function model()
+    {
+        return $this->morphTo();
     }
 }

@@ -47,7 +47,6 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->registerInterpreter();
-        // $this->registerSnippetBladeExtensions();
         $this->registerPhpBladeExtensions();
         $this->registerDeviseDataContainer();
         $this->registerTemplateComposer();
@@ -56,7 +55,8 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-
+     * [registerViewName description]
+     * @return [type]
      */
     private function registerViewName()
     {
@@ -92,19 +92,6 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
             $extended = new BladeEngineCompiler($compiler, $deviseCompiler, $deviseParser);
 
             return new CompilerEngine($extended, $app['files']);
-        });
-    }
-
-    /**
-     * Registers @php and @endphp recognition to blade
-     *
-     * @return void
-     */
-    private function registerSnippetBladeExtensions()
-    {
-        \Blade::extend(function($view, $compiler)
-        {
-            return \App::make('Devise\Sidebar\SnippetBladeCompiler')->compile($view);
         });
     }
 
@@ -149,7 +136,8 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     private function registerDeviseDataContainer()
     {
-        $this->app->instance("dvsPageData", new \Devise\Pages\Interpreter\DvsPageData);
+        $dvsPageData = $this->app->make('Devise\Pages\Interpreter\DvsPageData');
+        $this->app->instance("dvsPageData", $dvsPageData);
     }
 
     /**

@@ -1,10 +1,16 @@
 <h3>Link</h3>
 
-@snippet
 <a data-devise="link1, link, Link" href="<?= $page->link1->url ?>" target="<?= $page->link1->target ?>">
     <?= $page->link1->text ?>
 </a>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<a data-devise="link1, link, Link" href="{{ $page->link1->url }}" target="{{ $page->link1->target }}">
+    {{ $page->link1->text }}
+</a>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

@@ -1,0 +1,11 @@
+<select class="dvs-select dvs-select-small dvs-button-solid" name="page_version" id="dvs-sidebar-version-selector">
+    {{#select page.pageVersionId}}
+        {{#each page.pageVersions }}
+            <option value="{{ id }}">{{ name }}</option>
+        {{/each}}
+    {{/select}}
+</select>
+
+<button id="dvs-sidebar-add-version" class="dvs-button dvs-button-secondary dvs-button-small dvs-button-solid">Add</button>
+
+<button id="dvs-sidebar-edit-version" onclick="location.href = '/admin/pages/{{ page.pageId }}/edit'" class="dvs-button dvs-button-gray dvs-button-small dvs-button-solid">Edit</button>

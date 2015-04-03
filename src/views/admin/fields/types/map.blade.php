@@ -1,8 +1,16 @@
 <h3>Map</h3>
 
-@snippet
-<p data-devise="map1, map, Map">figure out how to display google map here</p>
-@endsnippet
+<p data-devise="map1, map, Map">
+    figure out how to display google map here
+</p>
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<p data-devise="map1, map, Map">
+    figure out how to display google map here
+</p>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

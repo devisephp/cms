@@ -1,0 +1,115 @@
+@mixin makespace($type) {
+  &.sp1 { #{$type}: 1px; }
+  &.sp2 { #{$type}: 2px; }
+  &.sp3 { #{$type}: 3px; }
+  &.sp5 { #{$type}: 5px; }
+  &.sp6 { #{$type}: 6px; }
+  &.sp8 { #{$type}: 8px; }
+  &.sp10 { #{$type}: 10px; }
+  &.sp12 { #{$type}: 12px; }
+  &.sp13 { #{$type}: 13px; }
+  &.sp15 { #{$type}: 15px; }
+  &.sp18 { #{$type}: 18px; }
+  &.sp20 { #{$type}: 20px; }
+  &.sp25 { #{$type}: 25px; }
+  &.sp30 { #{$type}: 30px; }
+  &.sp35 { #{$type}: 35px; }
+  &.sp40 { #{$type}: 40px; }
+  &.sp45 { #{$type}: 45px; }
+  &.sp50 { #{$type}: 50px; }
+  &.sp55 { #{$type}: 50px; }
+  &.sp60 { #{$type}: 60px; }
+  &.sp65 { #{$type}: 65px; }
+  &.sp70 { #{$type}: 70px; }
+  &.sp75 { #{$type}: 70px; }
+  &.sp80 { #{$type}: 80px; }
+  &.sp85 { #{$type}: 80px; }
+  &.sp90 { #{$type}: 80px; }
+  &.sp95 { #{$type}: 80px; }
+  &.sp100 { #{$type}: 100px; }
+  &.sp115 { #{$type}: 115px; }
+  &.sp135 { #{$type}: 135px; }
+  &.sp150 { #{$type}: 135px; }
+  &.sp200 { #{$type}: 135px; }
+  &.sp500 { #{$type}: 500px; }
+}
+
+@mixin bgopacity($color) {
+  &.op100 { background-color: transparentize($color, 0) }
+  &.op95 { background-color: transparentize($color, 0.05); }
+  &.op90 { background-color: transparentize($color, 0.10); }
+  &.op85 { background-color: transparentize($color, 0.15); }
+  &.op80 { background-color: transparentize($color, 0.20); }
+  &.op75 { background-color: transparentize($color, 0.25); }
+  &.op70 { background-color: transparentize($color, 0.30); }
+  &.op65 { background-color: transparentize($color, 0.35); }
+  &.op60 { background-color: transparentize($color, 0.40); }
+  &.op55 { background-color: transparentize($color, 0.45); }
+  &.op50 { background-color: transparentize($color, 0.50); }
+  &.op45 { background-color: transparentize($color, 0.55); }
+  &.op40 { background-color: transparentize($color, 0.60); }
+  &.op35 { background-color: transparentize($color, 0.65); }
+  &.op30 { background-color: transparentize($color, 0.70); }
+  &.op25 { background-color: transparentize($color, 0.75); }
+  &.op20 { background-color: transparentize($color, 0.80); }
+  &.op15 { background-color: transparentize($color, 0.85); }
+  &.op10 { background-color: transparentize($color, 0.90); }
+  &.op5 { background-color: transparentize($color, 0.95); }
+  &.op0 { background-color: transparentize($color, 1); }
+}
+
+@mixin opacity() {
+  &.op100 { opacity: 1; }
+  &.op95 { opacity: 0.95; }
+  &.op90 { opacity: 0.90; }
+  &.op85 { opacity: 0.85; }
+  &.op80 { opacity: 0.80; }
+  &.op75 { opacity: 0.75; }
+  &.op70 { opacity: 0.70; }
+  &.op65 { opacity: 0.65; }
+  &.op60 { opacity: 0.60; }
+  &.op55 { opacity: 0.55; }
+  &.op50 { opacity: 0.50; }
+  &.op45 { opacity: 0.45; }
+  &.op40 { opacity: 0.40; }
+  &.op35 { opacity: 0.35; }
+  &.op30 { opacity: 0.30; }
+  &.op25 { opacity: 0.25; }
+  &.op20 { opacity: 0.20; }
+  &.op15 { opacity: 0.15; }
+  &.op10 { opacity: 0.10; }
+  &.op5 { opacity: 0.05; }
+  &.op0 { opacity: 0; }
+}
+
+@mixin text-gradient($color1, $color2) {
+
+  @include background(linear-gradient($color1, $color2));
+
+  background-clip: text;
+  -moz-background-clip: text;
+  -webkit-background-clip: text;
+
+  text-fill-color:  transparent;
+  -moz-text-fill-color:  transparent;
+  -webkit-text-fill-color:  transparent;
+}
+
+@mixin gradient-border($color1, $color2) {
+  border-color: $color1;
+  @include border-image(linear-gradient($color1, $color2) 2 1%);
+  border-top-color:$color1;
+  border-bottom-color: $color2;
+}
+
+@mixin insetFormDude() {
+  padding:14px 14px;
+  font-size:14px;
+  color:$french-gray;
+  border:1px solid lighten($bodyBgColor, 2%);
+  border-bottom:2px solid lighten($bodyBgColor, 10%);
+  border-radius:4px;
+  overflow:hidden;
+  @include background(linear-gradient(top, darken($bodyBgColor, 6%), darken($bodyBgColor, 4%)));
+  @include placeholder { color:darken($french-gray, 25%) }
+}

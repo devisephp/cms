@@ -33,8 +33,8 @@ class RegisterDeviseTagsTest extends \DeviseTestCase
 		$nodes = $traverser->traverse($nodes);
 	 	assertContains('<body>', $nodes[9]->value);
 	 	assertInstanceOf('PhpParser\Node\Stmt\Foreach_', $nodes[10]);
-	 	assertContains('<div data-devise-<?php echo devise_tag_cid(\'key1\', "field", null, "key1", "type", "Human name 1", null, null, null, null) ?>="key1">Hello there #1</div>', $nodes[10]->stmts[0]->value);
-	 	assertContains('<div data-devise-<?php echo devise_tag_cid(\'key2\', "field", null, "key2", "type", "Human name 2", null, null, null, null) ?>="key2">Hello there #2</div>', $nodes[10]->stmts[1]->stmts[0]->value);
-	 	assertContains('<p data-devise-<?php echo devise_tag_cid(\'outside\', "field", null, "outside", "type", "Outside Key", null, null, null, null) ?>="outside">', $nodes[11]->value);
+	 	assertContains('<div data-devise-<?php echo devise_tag_cid(\'key1\', "field", null, "key1", "type", "Human name 1", null, null, null, null, null) ?>="key1">Hello there #1</div>', $nodes[10]->stmts[0]->value);
+	 	assertContains('<div data-devise-<?php echo devise_tag_cid(\'key2\', "field", null, "key2", "type", "Human name 2", null, null, null, null, null) ?>="key2">Hello there #2</div>', $nodes[10]->stmts[1]->stmts[0]->value);
+	 	assertContains('<p data-devise-<?php echo devise_tag_cid(\'outside\', "field", null, "outside", "type", "Outside Key", null, null, null, null, null) ?>="outside">', $nodes[11]->value);
 	}
 }

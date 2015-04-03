@@ -1,5 +1,7 @@
 <?php namespace Devise\Pages\Interpreter;
 
+use Devise\Pages\Collections\CollectionsRepository;
+use Devise\Pages\PagesRepository;
 use Devise\Pages\Interpreter\Exceptions\InvalidDeviseKeyException;
 use Devise\Pages\Interpreter\Exceptions\DuplicateDeviseKeyException;
 
@@ -15,23 +17,28 @@ use Devise\Pages\Interpreter\Exceptions\DuplicateDeviseKeyException;
 class DvsPageData
 {
 	/**
-	 * [$pageId description]
-	 * @var [type]
+	 * Page id
+	 * @var integer
 	 */
-	protected $pageId = null;
+	protected $pageId;
 
 	/**
-	 * [$pageVersionId description]
-	 * @var [type]
+	 * Page version id
+	 * @var integer
 	 */
-	protected $pageVersionId = null;
+	protected $pageVersionId;
 
 	/**
-	 * Keeps track of cids for given types
-	 *
-	 * @var array
+	 * Language id
+	 * @var integer
 	 */
-	protected $cids = [];
+	protected $languageId;
+
+	/**
+	 * Csrf token
+	 * @var string
+	 */
+	protected $csrfToken;
 
 	/**
 	 * Keep track of all the page tags
@@ -40,12 +47,46 @@ class DvsPageData
 	protected $tags = [];
 
 	/**
-	 * [__construct description]
-	 * @param FieldCreator     $FieldCreator
+	 * Keeps track of some cids for variable tags
+	 * @var array
 	 */
-	public function __construct(FieldCreator $FieldCreator)
+	protected $cids = [];
+
+	/**
+	 * Tag manager that creates and finds
+	 * fields for our tags
+	 *
+	 * @var TagManager
+	 */
+	protected $TagManager;
+
+	/**
+	 * The collections repository gets a list
+	 * of collections for us
+	 *
+	 * @var CollectionRepository
+	 */
+	protected $CollectionsRepository;
+
+	/**
+	 * The pages repository fetches additional
+	 * information we need for our page
+	 *
+	 * @var PagesRepository
+	 */
+	protected $PagesRepository;
+
+	/**
+	 * Create a new page data object
+	 *
+	 * @param TagManager     $TagManager
+	 */
+	public function __construct(TagManager $TagManager, CollectionsRepository $CollectionsRepository, PagesRepository $PagesRepository)
 	{
-		$this->FieldCreator = $FieldCreator;
+		$this->TagManager = $TagManager;
+		$this->CollectionsRepository = $CollectionsRepository;
+		$this->cids = ['hidden' => 0, 'model' => 0, 'attribute' => 0, 'creator' => 0, 'field' => 0, 'variable' => 0, 'collection' => 0];
+		$this->PagesRepository = $PagesRepository;
 	}
 
 	/**
@@ -54,34 +95,23 @@ class DvsPageData
 	 *
 	 * @return string
 	 */
-	public function tagsJSON()
+	public function toJSON()
 	{
-		// $tags = [];
+		$pageVersionId = $this->pageVersionId;
+		$pageId = $this->pageId;
+		$languageId = $this->languageId;
+		$csrfToken = $this->csrfToken;
+		$availableLanguages = $this->PagesRepository->availableLanguagesForPage($pageId);
+	    $pageRoutes = $this->PagesRepository->getRouteList();
+		$pageVersions = $this->PagesRepository->getPageVersions($pageId, $pageVersionId);
+		$collections = $this->filterTags('collection');
+		$fields = $this->filterTags('field');
+		$models = $this->filterTags('model');
+		$attributes = $this->filterTags('attribute');
+		$creators = $this->filterTags('creator');
+		$nodes = $this->buildNodes($collections, $fields, $models, $attributes, $creators);
 
-		// $tags = array_merge($tags, $this->buildCollections());
-		// $tags = array_merge($tags, $this->buildFields());
-		// $tags = array_merge($tags, $this->buildModels());
-		// $tags = array_merge($tags, $this->buildModelAttributes());
-		// $tags = array_merge($tags, $this->buildModelCreators());
-
-		// dd($this->tags);
-		return $this->jsonEncode($this->tags);
-	}
-
-	/**
-	 * Get the list of all the tags. This is used for introspection
-	 * for testing
-	 *
-	 * @return array
-	 */
-	public function tags()
-	{
-		$tags = [];
-
-
-
-
-		return $this->tags;
+		return $this->jsonEncode(compact('nodes', 'pageId', 'pageVersionId', 'languageId', 'csrfToken', 'availableLanguages', 'pageRoutes', 'pageVersions'));
 	}
 
 	/**
@@ -91,12 +121,16 @@ class DvsPageData
 	 *
 	 * @param  integer $pageId
 	 * @param  integer $pageVersionId
+	 * @param  integer $languageId
 	 * @return void
 	 */
-	public function initialize($pageId, $pageVersionId)
+	public function initialize($pageId, $pageVersionId, $languageId, $csrfToken)
 	{
 		$this->pageId = $pageId;
 		$this->pageVersionId = $pageVersionId;
+		$this->languageId = $languageId;
+		$this->csrfToken = $csrfToken;
+		$this->TagManager->initialize($pageId, $pageVersionId, $languageId);
 	}
 
 	/**
@@ -114,27 +148,27 @@ class DvsPageData
 	 * @param  string $alternateTarget
 	 * @return void
 	 */
-	public function register($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget)
+	public function register($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget)
 	{
-
-		if ($bindingType == "collection")
 		if ($bindingType !== 'variable')
 		{
 			$this->assertNoDuplicateTags($id);
 		}
 
-		$this->registered[$id] = [
+		$this->tags[$id] = [
 			'id' => $id,
-			'cid' => $this->getCidForType($bindingType),
+			'cid' => 'hidden' . $this->cids['hidden']++,
 			'bindingType' => $bindingType,
 			'collection' => $collection,
 			'key' => $key,
 			'type' => $type,
 			'humanName' => $humanName,
+			'collectionName' => $collectionName,
 			'group' => $group,
 			'category' => $category,
 			'alternateTarget' => $alternateTarget,
 			'defaults' => null,
+			'data' => [],
 		];
 	}
 
@@ -184,32 +218,17 @@ class DvsPageData
 	 * @param  mixed $defaults
 	 * @return string
 	 */
-	public function cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
+	public function cid($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults)
 	{
 		$this->assertTagExists($id);
 
-		if ($bindingType === 'variable')
-		{
-			// resolve the variable...
-		}
-		else
-		{
-			$tag = $this->tags[$id]['id'];
-		}
+		$tag = $this->resolveTag($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults);
 
-		// $this->tags[$id] = [
-
-		// ];
-
-		// $tag = $bindingType === 'variable'
-		// 	? $this->findVariableTag($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
-		// 	: $this->findRegularTag($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults);
-
-		// return $this->tag['cid'];
+		return $tag['cid'];
 	}
 
 	/**
-	 * Find the variable tags and add them to our array
+	 * Resolve the tag
 	 *
 	 * @param  string $id
 	 * @param  string $bindingType
@@ -220,90 +239,85 @@ class DvsPageData
 	 * @param  string $group
 	 * @param  string $category
 	 * @param  string $alternateTarget
-	 * @param  string $defaults
-	 * @return array
+	 * @param  mixed $defaults
+	 * @return string
 	 */
-	protected function findVariableTag($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
+	protected function resolveTag($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults)
+	{
+		if ($bindingType === 'variable')
+		{
+			return $this->resolveVariableTag($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults);
+		}
+
+		$tag = $this->tags[$id];
+
+		$tag['id'] = $id;
+		$tag['bindingType'] = $bindingType;
+		$tag['collection'] = $collection;
+		$tag['key'] = $key;
+		$tag['type'] = $type;
+		$tag['humanName'] = $humanName;
+		$tag['collectionName'] = $collectionName;
+		$tag['group'] = $group;
+		$tag['category'] = $category;
+		$tag['alternateTarget'] = $alternateTarget;
+		$tag['defaults'] = $defaults;
+		$tag['data'] = $this->resolveInstance($tag);
+		$tag['cid'] = $tag['bindingType'] . $tag['data']->id;
+
+		$this->tags[$id] = $tag;
+
+		return $tag;
+	}
+
+	/**
+	 * Resolve the variable tag
+	 * @param  string $id
+	 * @param  string $bindingType
+	 * @param  string $collection
+	 * @param  string $key
+	 * @param  string $type
+	 * @param  string $humanName
+	 * @param  string $group
+	 * @param  string $category
+	 * @param  string $alternateTarget
+	 * @param  mixed $defaults
+	 * @return string
+	 */
+	protected function resolveVariableTag($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults)
 	{
 		list($model, $attribute) = $this->extractModelFromKey($key);
 
+		$tag = $this->tags[$id];
+
+		$tag['id'] = $id;
+		$tag['bindingType'] = $attribute ? 'attribute' : 'model';
+		$tag['collection'] = $collection;
+		$tag['key'] = $model->getKey();
+		$tag['type'] = get_class($model);
+		$tag['humanName'] = $humanName;
+		$tag['collectionName'] = $collectionName;
+		$tag['group'] = $group;
+		$tag['category'] = $category;
+		$tag['alternateTarget'] = $alternateTarget;
+		$tag['defaults'] = $defaults;
+		$tag['model'] = $model;
+
 		if ($attribute)
 		{
-			return $this->findModelAttributeTag($id, 'attribute', $collection, $model, $attribute, 'attribute', $humanName, $group, $category, $alternateTarget, $defaults);
+			$tag['attribute'] = $attribute;
 		}
 
-		return $this->findModelTag($id, 'model', $collection, $model, 'model', $humanName, $group, $category, $alternateTarget, $defaults);
-	}
+		$tag['data'] = $this->resolveInstance($tag);
 
-	/**
-	 * Find the regular tag and add it to our array
-	 *
-	 * @param  string $id
-	 * @param  string $bindingType
-	 * @param  string $collection
-	 * @param  string $key
-	 * @param  string $type
-	 * @param  string $humanName
-	 * @param  string $group
-	 * @param  string $category
-	 * @param  string $alternateTarget
-	 * @param  mixed  $defaults
-	 * @return array
-	 */
-	protected function findRegularTag($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
-	{
-		$cid = strpos($this->tags[$id]['cid'], 'tag') !== 0 ? $this->tags[$id]['cid'] : $this->getCidForType($bindingType);
-
-		$this->tags[$id] = [
-			'id' => $id,
-			'cid' => $cid,
-			'bindingType' => $bindingType,
-			'collection' => $collection,
-			'key' => $key,
-			'type' => $type,
-			'humanName' => $humanName,
-			'group' => $group,
-			'category' => $category,
-			'alternateTarget' => $alternateTarget,
-			'defaults' => $defaults,
-		];
-
-		return $this->tags[$id];
-	}
-
-	/**
-	 * Adds the model tag for us
-	 *
-	 * @param  string $id
-	 * @param  string $bindingType
-	 * @param  string $collection
-	 * @param  Model  $model
-	 * @param  string $type
-	 * @param  string $humanName
-	 * @param  string $group
-	 * @param  string $category
-	 * @param  string $alternateTarget
-	 * @param  mixed  $defaults
-	 * @return array
-	 */
-	protected function findModelTag($id, $bindingType, $collection, $model, $type, $humanName, $group, $category, $alternateTarget, $defaults)
-	{
-		$tag = [
-			'id' => $id,
-			'cid' => $this->getCidForType('model'),
-			'bindingType' => 'model',
-			'collection' => $collection,
-			'table' => $model->getTable(),
-			'class' => get_class($model),
-			'key' => $model->getKey(),
-			'model' => $model,
-			'type' => $type,
-			'humanName' => $humanName,
-			'group' => $group,
-			'category' => $category,
-			'alternateTarget' => $alternateTarget,
-			'defaults' => $defaults,
-		];
+		if ($attribute)
+		{
+			$tag['cid'] = $tag['bindingType'] . $tag['data']->id;
+		}
+		else
+		{
+			$tag['cid'] = $tag['bindingType'] . $this->cids[$tag['bindingType']]++;
+		}
 
 		$this->tags[] = $tag;
 
@@ -311,43 +325,14 @@ class DvsPageData
 	}
 
 	/**
-	 * Adds the model attribute tag for us
+	 * Get the instance for this tag
 	 *
-	 * @param  string $id
-	 * @param  string $bindingType
-	 * @param  string $collection
-	 * @param  Model  $model
-	 * @param  string $attribute
-	 * @param  string $type
-	 * @param  string $humanName
-	 * @param  string $group
-	 * @param  string $category
-	 * @param  string $alternateTarget
-	 * @param  mixed  $defaults
-	 * @return array
+	 * @param  array $tag
+	 * @return DvsField|DvsModel|DvsCollectionSet|DvsGlobalField
 	 */
-	protected function findModelAttributeTag($id, $bindingType, $collection, $model, $attribute, $type, $humanName, $group, $category, $alternateTarget, $defaults)
+	protected function resolveInstance($tag)
 	{
-		$tag = [
-			'id' => $id,
-			'cid' => $this->getCidForType('attribute'),
-			'bindingType' => $type,
-			'collection' => $collection,
-			'key' => $model->getKey(),
-			'table' => $model->getTable(),
-			'class' => get_class($model),
-			'attribute' => $attribute,
-			'type' => $type,
-			'humanName' => $humanName,
-			'group' => $group,
-			'category' => $category,
-			'alternateTarget' => $alternateTarget,
-			'defaults' => $defaults,
-		];
-
-		$this->tags[] = $tag;
-
-		return $tag;
+		return $this->TagManager->getInstanceForTag($tag);
 	}
 
 	/**
@@ -425,162 +410,248 @@ class DvsPageData
 	}
 
 	/**
-	 * Builds out list of collections from our
-	 * registered tags
+	 * Build the node structure for this json. This takes
+	 * into account groups too. Nodes that are grouped together
+	 * we will take that into account too...
+	 *
+	 * Loop through all collections, fields, models,
+	 * attributes and creators and create the node
+	 * structure for them.
 	 *
 	 * @return array
 	 */
-	protected function buildCollections()
+	protected function buildNodes($collections, $fields, $models, $attributes, $creators)
 	{
-		$collections = [];
+		$nodes = [];
 
-		$tags = $this->filterTags('collection');
+		$groups = [];
 
-		foreach ($tags as $tag)
-		{
-			$collection = $tag['collection'];
+		list($groups, $nodes) = $this->addNodesIntoGroupsOrNodes($fields, $groups, $nodes);
 
-			$collections[$collection] = isset($collections[$collection]) ? $collections[$collection] : array();
+		list($groups, $nodes) = $this->addCollectionNodesIntoGroupsOrNodes($collections, $groups, $nodes);
 
-			$collections[$collection][] = [
-				'tid' => $tag['id'],
-				'cid' => $tag['cid'],
-				'collection' => $collection,
-				'key' => $tag['key'],
-				'type' => $tag['type'],
-				'humanName' => $tag['humanName'],
-				'group' => $tag['group'],
-				'category' => $tag['category'],
-				'alternateTarget' => $tag['alternateTarget'],
-				'defaults' => $tag['defaults'],
-			];
-		}
+		list($groups, $nodes) = $this->addNodesIntoGroupsOrNodes($models, $groups, $nodes);
 
-		return $collections;
+		list($groups, $nodes) = $this->addNodesIntoGroupsOrNodes($attributes, $groups, $nodes);
+
+		list($groups, $nodes) = $this->addNodesIntoGroupsOrNodes($creators, $groups, $nodes);
+
+		list($groups, $nodes) = $this->addGroupNodes($groups, $nodes);
+
+		return $nodes;
 	}
 
 	/**
-	 * Builds out a list of fields from our
-	 * registered tags
+	 * Adds collections into the existing nodes or groups array
 	 *
+	 * @param array $collections
+	 * @param array $groups
+	 * @param array $nodes
+	 */
+	protected function addCollectionNodesIntoGroupsOrNodes($collections, $groups, $nodes)
+	{
+		$normalCollections = [];
+
+		$groupCollections = [];
+
+		foreach ($collections as $collection)
+		{
+			$group = $collection['group'];
+			$name = $collection['collectionName'];
+
+			if ($group) $groupCollections = $this->appendToArray($groupCollections, $group, $collection);
+			else $normalCollections = $this->appendToArray($normalCollections, $name, $collection);
+		}
+
+		foreach ($normalCollections as $collectionName => $collectionFields)
+		{
+			$nodes[] = $this->buildCollectionNode($collectionName, $collectionFields);
+		}
+
+		foreach ($groupCollections as $groupName => $collectionFields)
+		{
+			$builtCollections = [];
+			$insideCollectionFields = [];
+
+			foreach ($collectionFields as $collectionField)
+			{
+				$name = $collectionField['collectionName'];
+				$insideCollectionFields = $this->appendToArray($insideCollectionFields, $name, $collection);
+			}
+
+			foreach ($insideCollectionFields as $collectionName => $insideFields)
+			{
+				$builtCollections = $this->buildCollectionNode($collectionName, $insideFields);
+			}
+
+			$groups = $this->appendToArray($builtCollections, $groupName, $groups);
+		}
+
+		return array($groups, $nodes);
+	}
+
+	/**
+	 * Adds the groups into the nodes
+	 *
+	 * @param array $groups
+	 * @param array $nodes
+	 */
+	protected function addGroupNodes($groups, $nodes)
+	{
+		$index = 0;
+
+		foreach ($groups as $name => $items)
+		{
+			$nodes[] = $this->buildGroupNode('group' . $index++, $name, $items);
+		}
+
+		return array($groups, $nodes);
+	}
+
+	/**
+	 * Adds nodes into the existing nodes or groups array
+	 *
+	 * @param array $nodes
+	 * @param array $groups
+	 * @param array $existingNodes
+	 * @return  array
+	 */
+	protected function addNodesIntoGroupsOrNodes($nodes, $groups, $allNodes)
+	{
+		foreach ($nodes as $node)
+		{
+			$key = $node['group'];
+
+			$built = $this->buildNode($node);
+
+			if ($key) $groups = $this->appendToArray($groups, $key, $built);
+
+			else $allNodes = $this->appendToArray($allNodes, false, $built);
+		}
+
+		return array($groups, $allNodes);
+	}
+
+	/**
+	 * Group nodes are just a bunch of node items
+	 *
+	 * @param  string $cid
+	 * @param  array $items
 	 * @return array
 	 */
-	protected function buildFields()
+	protected function buildGroupNode($cid, $name, $items)
 	{
-		$fields = [];
+		$node = $items[0];
 
-		$tags = $this->filterTags('field');
-
-		foreach ($tags as $tag)
-		{
-			$fields[] = [
-				'tid' => $tag['id'],
-				'cid' => $tag['cid'],
-				'key' => $tag['key'],
-				'type' => $tag['type'],
-				'humanName' => $tag['humanName'],
-				'group' => $tag['group'],
-				'category' => $tag['category'],
-				'alternateTarget' => $tag['alternateTarget'],
-				'defaults' => $tag['defaults'],
-			];
-		}
-
-		return $fields;
+		return [
+			'cid' => $cid,
+			'key' => $node['key'],
+			'binding' => 'group',
+			'human_name' => $name,
+			'template' => $this->buildTemplateForNode(['bindingType' => 'group']),
+			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
+			'data' => $items,
+		];
 	}
 
 	/**
-	 * Builds out the models
+	 * Collection nodes are grouped together
 	 *
+	 * @param  string $collectionName
+	 * @param  array  $collectionFields
 	 * @return array
 	 */
-	protected function buildModels()
+	protected function buildCollectionNode($collectionName, $collectionFields)
 	{
-		$models = [];
+		$node = $collectionFields[0];
 
-		$tags = $this->filterTags('model');
-
-		foreach ($tags as $tag)
-		{
-			$models[] = [
-				'tid' => $tag['id'],
-				'cid' => $tag['cid'],
-				'key' => $tag['key'],
-				'table' => $tag['table'],
-				'class' => $tag['class'],
-				'humanName' => $tag['humanName'],
-				'collection' => $tag['group'],
-			];
-		}
-
-		return $models;
+		return [
+			'cid' => $node['cid'],
+			'key' => $node['collection'],
+			'binding' => 'collection',
+			'human_name' => $collectionName,
+			'template' => $this->buildTemplateForNode($node),
+			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
+			'schema' => $collectionFields,
+			'data' => $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($node['data']->id, $this->pageVersionId),
+		];
 	}
 
 	/**
-	 * Builds out the model attributes
+	 * Build a node
 	 *
+	 * @param  array $node
 	 * @return array
 	 */
-	protected function buildModelAttributes()
+	protected function buildNode($node)
 	{
-		$attributes = [];
+		$binding = $node['bindingType'];
 
-		$tags = $this->filterTags('attribute');
+		$built = [
+			'cid' => $node['cid'],
+			'key' => $node['id'],
+			'binding' => $binding,
+			'human_name' => $node['humanName'],
+			'template' => $this->buildTemplateForNode($node),
+			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
+			'data' => $node['data'],
+		];
 
-		foreach ($tags as $tag)
+		if ($binding === 'model' || $binding === 'attribute')
 		{
-			$attributes[] = [
-				'tid' => $tag['id'],
-				'cid' => $tag['cid'],
-				'key' => $tag['key'],
-				'table' => $tag['table'],
-				'class' => $tag['class'],
-				'humanName' => $tag['humanName'],
-				'collection' => $tag['group'],
-				'attribute' => $tag['attribute'],
-			];
+			$built['model'] = $node['model'];
 		}
-		return $attributes;
+
+		return $built;
 	}
 
 	/**
-	 * Builds out the model creators
+	 * Gets us the template path for this node. The
+	 * path depends on the type of node this is...
 	 *
-	 * @return array
-	 */
-	protected function buildModelCreators()
-	{
-		$creators = [];
-
-		$tags = $this->filterTags('creator');
-
-		foreach ($tags as $tag)
-		{
-			$creators[] = [
-				'tid' => $tag['id'],
-				'cid' => $tag['cid'],
-				'model_name' => $tag['key'],
-				'human_name' => $tag['humanName'],
-			];
-		}
-
-		return $creators;
-	}
-
-	/**
-	 * Gets the cids broken down by types
-	 *
-	 * @param  string $type
+	 * @param  array $node
 	 * @return string
 	 */
-	protected function getCidForType($type)
+	protected function buildTemplateForNode($node)
 	{
-		if (!isset($this->cids[$type]))
+		switch ($node['bindingType'])
 		{
-			$this->cids[$type] = 0;
+			case 'field': return 'sidebar.layouts.field';
+			case 'collection': return 'sidebar.layouts.collection';
+			case 'model': return 'sidebar.layouts.model';
+			case 'attribute': return 'sidebar.layouts.attribute';
+			case 'creator': return 'sidebar.layouts.creator';
+			case 'group': return 'sidebar.layouts.group';
 		}
 
-		return $type . $this->cids[$type]++;
+		return null;
+	}
+
+	/**
+	 * Helper method so that I don't have to put this logic
+	 * inside of another foreach loop
+	 *
+	 * @param  array $container
+	 * @param  string $key
+	 * @param  mixed $item
+	 * @return array
+	 */
+	protected function appendToArray(array $container, $key, $item)
+	{
+		if ($key === false)
+		{
+			$container[] = $item;
+			return $container;
+		}
+
+		if (!isset($container[$key]))
+		{
+			$container[$key] = [];
+		}
+
+		$container[$key][] = $item;
+
+		return $container;
 	}
 
 	/**

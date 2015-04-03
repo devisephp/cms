@@ -46,6 +46,27 @@ After clicking next Devise installs it's migrations and seeds into your database
 
 From the root of your project: ```php artisan devise:install``` and follow the prompts which are very similar to the steps above.
 
+### Testing
+
+Devise has functional and acceptance tests. We have over 500 functional tests.
+
+To run unit tests
+
+```
+phpunit
+```
+
+To run acceptance tests you will have to start Laravel server
+
+- `cd tests/bootstrap`
+- `composer install`.
+- `php artisan serve`
+- `cd ../..`
+
+Finally run codeception acceptance tests. This checks a lot of the devise front-end editor and javascript.
+
+- `codecept run acceptance`
+
 ###License
 
 Devise is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

@@ -1,13 +1,24 @@
 <h3>Collections</h3>
 
-@snippet
-<div data-devise="myCollection[imageName], image, Image For Collection, groupName1, catName1"></div>
-<div data-devise="myCollection[textName], text, Text For Collection, groupName1, catName1"></div>
+<div data-devise="myCollection[imageName], image, Image For Collection, Collection Name"></div>
+<div data-devise="myCollection[textName], text, Text For Collection, Collection Name"></div>
 
 @if (isset($myCollection))
     @foreach ($myCollection as $collection)
         <?= $collection->textName->text('default value') ?>
     @endforeach
 @endif
-@endsnippet
 
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<div data-devise="myCollection[imageName], image, Image For Collection, Collection Name"></div>
+<div data-devise="myCollection[textName], text, Text For Collection, Collection Name"></div>
+
+@if (isset($myCollection))
+    @foreach ($myCollection as $collection)
+        {{ $collection->textName->text(\'default value\') }}
+    @endforeach
+@endif
+') ?>
+</code></pre>

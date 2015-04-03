@@ -24,7 +24,9 @@
     "require-dev": {
         "mockery/mockery": "dev-master",
         "phpunit/phpunit": "*",
-        "mikey179/vfsStream": "*"
+        "mikey179/vfsStream": "*",
+        "codeception/codeception": "*",
+        "site5/phantoman": "~1.0"
     },
     "autoload": {
         "classmap": [
@@ -38,7 +40,8 @@
         }
     },
     "scripts": {
-        "docs" : "vendor/bin/sami.php update sami.php"
+        "docs" : "vendor/bin/sami.php update sami.php",
+        "acceptance": "tests/bootstrap/acceptance.sh"
     },
     "minimum-stability": "stable"
 }

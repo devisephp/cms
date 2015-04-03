@@ -1,0 +1,61 @@
+<form id="dvs-sidebar-field-form">
+
+	<div class="dvs-property">
+		<input type="file" value="{{ field.file }}">
+	</div>
+
+	<div class="dvs-property fancy-sidebar-checkbox">
+	    <label for="mp3">MP3</label>
+	    <div class="fancyCheckbox">
+		    <input id="mp3" type="checkbox" name="mp3" value="1" {{checked field.mp3 }}>
+		    <label for="mp3">&nbsp;</label>
+	    </div>
+	</div>
+
+	<div class="dvs-property fancy-sidebar-checkbox">
+	    <label for="ogg">OGG</label>
+	    <div class="fancyCheckbox">
+		    <input id="ogg" type="checkbox" name="ogg" value="1" {{checked field.ogg }}>
+		    <label for="ogg">&nbsp;</label>
+	    </div>
+	</div>
+
+	<div class="dvs-property fancy-sidebar-checkbox">
+	    <label for="wav">WAV</label>
+	    <div class="fancyCheckbox">
+		    <input id="wav" type="checkbox" name="wav" value="1" {{checked field.wav }}>
+		    <label for="wav">&nbsp;</label>
+	    </div>
+	</div>
+
+	<div class="dvs-property">
+	    <label>Audio Channels</label>
+	    <select name="audio_channels" class="dvs-select-dvs-button-solid">
+	    	{{#select field.audio_channels}}
+			    <option>1</option>
+			    <option>2</option>
+			{{/select}}
+	    </select>
+	</div>
+
+	<div class="dvs-property">
+	    <label>Audio Bit Depth</label>
+	    <select name="audio_bit_depth" class="dvs-select-dvs-button-solid">
+	    	{{#select field.audio_bit_depth}}
+			    <option value="16">16</option>
+			    <option value="24">24</option>
+			    <option value="32">32</option>
+			{{/select}}
+	    </select>
+	</div>
+
+	<div data-view="site-wide-field"></div>
+
+	<div data-view="content-requested"></div>
+
+	<div data-view="reset-values"></div>
+</form>
+
+{{#script}}
+    devise.require(['app/editor/fields/audio'], function(obj) { obj.init(); });
+{{/script}}

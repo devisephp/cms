@@ -106,6 +106,16 @@ class FieldValue
 	}
 
 	/**
+	 * Returns this object as array
+	 *
+	 * @return array
+	 */
+	public function toArray()
+	{
+		return (array) json_decode($this->json);
+	}
+
+	/**
 	 * Allows us to set default values on a key
 	 * if we do not have that key set in this
 	 * FieldValue object

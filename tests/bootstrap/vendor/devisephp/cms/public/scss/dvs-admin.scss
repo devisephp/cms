@@ -1,0 +1,15 @@
+@import "main-ui/reset";
+@import "helpers/mixins";
+@import "helpers/helpers";
+
+.hide,
+.cantsee,
+.hidden {
+  display:none !important;
+}
+
+.show,
+.cansee,
+.nothidden {
+  display:inherit !important;
+}

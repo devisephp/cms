@@ -19,6 +19,8 @@ class DvsField extends Eloquent
 
     protected $dates = ['deleted_at'];
 
+    protected $appends = ['values', 'scope'];
+
     /**
      * This field belongs to a page
      *

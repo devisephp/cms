@@ -1,10 +1,16 @@
 <h3>HTML</h3>
 
-@snippet
 <div data-devise="html1, html, Html">
 	<?= $page->html1->html ?>
 </div>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<div data-devise="html1, html, Html">
+	{{ $page->html1->html }}
+</div>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

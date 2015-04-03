@@ -17,6 +17,8 @@ class DvsGlobalField extends Eloquent
 
     protected $dates = ['deleted_at'];
 
+    protected $appends = ['values', 'scope'];
+
     /**
      * Accessor on this model to get value
      * for the latestVersion of this field

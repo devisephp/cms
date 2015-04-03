@@ -75,7 +75,7 @@ class RegisterDeviseTags extends NodeVisitorAbstract
 	 */
 	protected function addDvsPageDataInitializeStmt()
 	{
-		$init = '<?php App::make(\'dvsPageData\')->initialize($page->id, $page->version->id); ?>';
+		$init = '<?php App::make(\'dvsPageData\')->initialize($page->id, $page->version->id, $page->language_id, csrf_token()); ?>';
 
 		$initStmt = $this->DeviseParser->parse($init);
 
@@ -123,11 +123,11 @@ class RegisterDeviseTags extends NodeVisitorAbstract
 	 */
 	protected function getAppMakeRegisterString(DeviseTag $tag)
 	{
-		list($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults) = $tag->toArray("'");
+		list($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults) = $tag->toArray("'");
 
 		$register = $bindingType === "'variable'"
-			? "<?php App::make('dvsPageData')->register('{$id}', {$bindingType}, {$collection}, '{$id}', {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget}); ?>"
-			: "<?php App::make('dvsPageData')->register('{$id}', {$bindingType}, {$collection}, {$key}, {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget}); ?>";
+			? "<?php App::make('dvsPageData')->register('{$id}', {$bindingType}, {$collection}, '{$id}', {$type}, {$humanName}, {$collectionName}, {$group}, {$category}, {$alternateTarget}); ?>"
+			: "<?php App::make('dvsPageData')->register('{$id}', {$bindingType}, {$collection}, {$key}, {$type}, {$humanName}, {$collectionName}, {$group}, {$category}, {$alternateTarget}); ?>";
 
 		$register = "<?php try { App::make('dvsPageData')->setDefaults('{$id}', {$defaults}); } catch (Exception \$e) {} ?>" . $register;
 
@@ -143,13 +143,13 @@ class RegisterDeviseTags extends NodeVisitorAbstract
 	 */
 	protected function getNewDeviseTagString(DeviseTag $tag)
 	{
-		list($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults, $chain) = $tag->toArray('"');
+		list($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults, $chain) = $tag->toArray('"');
 
 		if ($bindingType === '"variable"')
 		{
 			$key = $chain;
 		}
 
-		return " data-devise-<?php echo devise_tag_cid('{$id}', {$bindingType}, {$collection}, {$key}, {$type}, {$humanName}, {$group}, {$category}, {$alternateTarget}, $defaults) ?>=\"{$id}\"";
+		return " data-devise-<?php echo devise_tag_cid('{$id}', {$bindingType}, {$collection}, {$key}, {$type}, {$humanName}, {$collectionName}, {$group}, {$category}, {$alternateTarget}, $defaults) ?>=\"{$id}\"";
 	}
 }

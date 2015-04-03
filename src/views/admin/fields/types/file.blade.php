@@ -1,10 +1,12 @@
 <h3>File</h3>
 
-<p style="font-style: italic;">This field is still under development so it does not currently work as expected</p>
-
-@snippet
 <a data-devise="file1, file, File" href="<?= $page->file1->file ?>">Download file</a>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<a data-devise="file1, file, File" href="{{ $page->file1->file }}">Download file</a>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

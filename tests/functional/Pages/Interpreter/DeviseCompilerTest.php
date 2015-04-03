@@ -16,24 +16,24 @@ class DeviseCompilerTest extends \DeviseTestCase
 	{
 		$compiler = new DeviseCompiler;
 		$outcome = $compiler->compile($this->fixture('devise-views.interpret1'));
-		assertContains("App::make('dvsPageData')->register('col[key2]', 'collection', 'col', 'key2', 'text', 'human', 'group', 'category', 'alternate');", $outcome);
-		assertContains("App::make('dvsPageData')->register('col[key1]', 'collection', 'col', 'key1', 'text', 'human', 'group', 'category', 'alternate');", $outcome);
-		assertContains("App::make('dvsPageData')->register('key3', 'field', null, 'key3', 'text', 'Key3', null, null, null);", $outcome);
-		assertContains("App::make('dvsPageData')->register('key2', 'field', null, 'key2', 'type', 'Human name 2', null, null, null);", $outcome);
-		assertContains("App::make('dvsPageData')->register('key1', 'field', null, 'key1', 'type', 'Human name 1', null, null, null);", $outcome);
-		assertContains("App::make('dvsPageData')->register('\$key', 'variable', null, '\$key', 'variable', 'Key', null, null, null);", $outcome);
+		assertContains("App::make('dvsPageData')->register('col[key2]', 'collection', 'col', 'key2', 'text', 'human', 'collection human', 'group', 'category', 'alternate');", $outcome);
+		assertContains("App::make('dvsPageData')->register('col[key1]', 'collection', 'col', 'key1', 'text', 'human', 'collection human', 'group', 'category', 'alternate');", $outcome);
+		assertContains("App::make('dvsPageData')->register('key3', 'field', null, 'key3', 'text', 'Key3', null, null, null, null);", $outcome);
+		assertContains("App::make('dvsPageData')->register('key2', 'field', null, 'key2', 'type', 'Human name 2', null, null, null, null);", $outcome);
+		assertContains("App::make('dvsPageData')->register('key1', 'field', null, 'key1', 'type', 'Human name 1', null, null, null, null);", $outcome);
+		assertContains("App::make('dvsPageData')->register('\$key', 'variable', null, '\$key', 'variable', 'human', null, 'group', 'category', 'alternate');", $outcome);
 	}
 
 	public function test_it_renames_devise_tags_properly()
 	{
 		$compiler = new DeviseCompiler;
 		$outcome = $compiler->compile($this->fixture('devise-views.interpret1'));
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'key1\', "field", null, "key1", "type", "Human name 1", null, null, null, null) ?>="key1"', $outcome);
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'key2\', "field", null, "key2", "type", "Human name 2", null, null, null, null) ?>="key2"', $outcome);
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'$key\', "variable", null, [\'$key\' => $key,], "variable", "Key", null, null, null, null) ?>="$key">Something here</div>', $outcome);
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'key3\', "field", null, "key3", "text", "Key3", null, null, null, null) ?>="key3">Something here</div>', $outcome);
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'col[key1]\', "collection", "col", "key1", "text", "human", "group", "category", "alternate", $defaultValues) ?>="col[key1]">Something here</div>', $outcome);
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'col[key2]\', "collection", "col", "key2", "text", "human", "group", "category", "alternate", [\'value\' => \'durka\']) ?>="col[key2]">Something here</div>', $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'key1\', "field", null, "key1", "type", "Human name 1", null, null, null, null, null) ?>="key1"', $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'key2\', "field", null, "key2", "type", "Human name 2", null, null, null, null, null) ?>="key2"', $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'$key\', "variable", null, [\'$key\' => $key,], "variable", "human", null, "group", "category", "alternate", null) ?>="$key">Something here</div>', $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'key3\', "field", null, "key3", "text", "Key3", null, null, null, null, null) ?>="key3">Something here</div>', $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'col[key1]\', "collection", "col", "key1", "text", "human", "collection human", "group", "category", "alternate", $defaultValues) ?>="col[key1]">Something here</div>', $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'col[key2]\', "collection", "col", "key2", "text", "human", "collection human", "group", "category", "alternate", [\'value\' => \'durka\']) ?>="col[key2]">Something here</div>', $outcome);
 	}
 
 	public function test_it_creates_placeholder_tags_for_conditions()
@@ -68,8 +68,8 @@ class DeviseCompilerTest extends \DeviseTestCase
 	{
 		$compiler = new DeviseCompiler;
 		$outcome = $compiler->compile($this->fixture('devise-views.interpret4'));
-		assertContains("App::make('dvsPageData')->register('\$page', 'variable', null, '\$page', 'variable', 'The Page Man!', null, null, null);", $outcome);
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'$page\', "variable", null, [\'$page\' => $page,], "variable", "The Page Man!", null, null, null, null) ?>="$page"></div>', $outcome);
+		assertContains("App::make('dvsPageData')->register('\$page', 'variable', null, '\$page', 'variable', 'The Page Man!', null, null, null, null);", $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'$page\', "variable", null, [\'$page\' => $page,], "variable", "The Page Man!", null, null, null, null, null) ?>="$page"></div>', $outcome);
 		assertContains('App::make(\'dvsPageData\')->setDefaults(\'$page\', null);', $outcome);
 	}
 
@@ -77,18 +77,18 @@ class DeviseCompilerTest extends \DeviseTestCase
 	{
 		$compiler = new DeviseCompiler;
 		$outcome = $compiler->compile($this->fixture('devise-views.interpret5'));
-		assertContains("App::make('dvsPageData')->register('\$page->view', 'variable', null, '\$page->view', 'variable', 'The Page View', null, null, null);", $outcome);
+		assertContains("App::make('dvsPageData')->register('\$page->view', 'variable', null, '\$page->view', 'variable', 'The Page View', null, null, null, null);", $outcome);
 		assertContains('App::make(\'dvsPageData\')->setDefaults(\'$page->view\', null);', $outcome);
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'$page->view\', "variable", null, [\'view\' => $page->view,\'$page\' => $page,], "variable", "The Page View", null, null, null, null) ?>="$page->view"></div>', $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'$page->view\', "variable", null, [\'view\' => $page->view,\'$page\' => $page,], "variable", "The Page View", null, null, null, null, null) ?>="$page->view"></div>', $outcome);
 	}
 
 	public function test_it_can_handle_create_model_tags()
 	{
 		$compiler = new DeviseCompiler;
 		$outcome = $compiler->compile($this->fixture('devise-views.interpret6'));
-		assertContains("App::make('dvsPageData')->register('creator.07bc2f9dadb7314768a55b1f9cd404dc', 'creator', null, 'DvsPage', 'creator', 'The Page Creator', null, null, null);", $outcome);
-		assertContains("App::make('dvsPageData')->setDefaults('creator.07bc2f9dadb7314768a55b1f9cd404dc', null);", $outcome);
-		assertContains('<div data-devise-<?php echo devise_tag_cid(\'creator.07bc2f9dadb7314768a55b1f9cd404dc\', "creator", null, "DvsPage", "creator", "The Page Creator", null, null, null, null) ?>="creator.07bc2f9dadb7314768a55b1f9cd404dc"></div>', $outcome);
+		assertContains("App::make('dvsPageData')->register('creator-07bc2f9dadb7314768a55b1f9cd404dc', 'creator', null, 'DvsPage', 'creator', 'The Page Creator', null, null, null, null);", $outcome);
+		assertContains("App::make('dvsPageData')->setDefaults('creator-07bc2f9dadb7314768a55b1f9cd404dc', null);", $outcome);
+		assertContains('<div data-devise-<?php echo devise_tag_cid(\'creator-07bc2f9dadb7314768a55b1f9cd404dc\', "creator", null, "DvsPage", "creator", "The Page Creator", null, null, null, null, null) ?>="creator-07bc2f9dadb7314768a55b1f9cd404dc"></div>', $outcome);
 	}
 
 	public function test_it_handles_random1_view()

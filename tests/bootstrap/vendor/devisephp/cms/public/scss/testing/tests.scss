@@ -1,0 +1,54 @@
+.dvs-test-title {
+  text-transform: uppercase;
+  font-size:16px;
+  letter-spacing: 0.2em;
+  color:#444;
+}
+
+#dvs-admin {
+  .dvs-test-blocks {
+    @include clearfix;
+
+    h3 {
+      font-size:18px;
+      font-weight:400;
+      margin-bottom:15px;
+      color:$blue;
+    }
+
+    li {
+      padding:15px;
+    }
+
+    img.dvs-test-frame {
+      border:8px solid white;
+      box-shadow: 0 0 14px rgba(0,0,0,0.3);
+    }
+
+    tbody {
+      border-radius: 5px 0 0 5px;
+    }
+
+    pre {
+      margin:15px 0;
+      width:100%;
+      white-space: pre-wrap;       /* css-3 */
+      white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+      white-space: -pre-wrap;      /* Opera 4-6 */
+      white-space: -o-pre-wrap;    /* Opera 7 */
+      word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    }
+
+    code {
+      font-family:"Source Code Pro", "Courier New", Courier, monospace;
+      padding:5px 20px;
+      width:100%;
+      border-radius:3px;
+    }
+
+    p {
+      margin:8px 0 15px 0;
+    }
+
+  }
+}

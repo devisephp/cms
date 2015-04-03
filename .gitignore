@@ -3,9 +3,12 @@ composer.phar
 npm-debug.log
 .DS_Store
 tests/_log
+tests/log
 tests/reports/*
 tests/bootstrap/app/storage
 node_modules
 /.sami
 /.idea
 
+
+tests/_output/*

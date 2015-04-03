@@ -44,14 +44,24 @@ class DeviseTag
 	public $humanName;
 
 	/**
-	 * Group name of the tag
+	 * The human name of the collection
+	 *
+	 * @var string
+	 */
+	public $collectionName;
+
+	/**
+	 * Group name of the tag. We can
+	 * group together different nodes.
 	 *
 	 * @var string
 	 */
 	public $group;
 
 	/**
-	 * Category name (also doubles as collection name)
+	 * Category name provides us with
+	 * a dropdown in the sidebar for a
+	 * group.
 	 *
 	 * @var string
 	 */
@@ -128,6 +138,7 @@ class DeviseTag
 			'key' => $this->key,
 			'type' => $this->type,
 			'humanName' => $this->humanName,
+			'collectionName' => $this->collectionName,
 			'group' => $this->group,
 			'category' => $this->category,
 			'alternateTarget' => $this->alternateTarget,
@@ -180,13 +191,15 @@ class DeviseTag
 
 		$this->humanName = $this->stripquotes($params[5]);
 
-		$this->group = $this->stripquotes($params[6]);
+		$this->collectionName = $this->stripquotes($params[6]);
 
-		$this->category = $this->stripquotes($params[7]);
+		$this->group = $this->stripquotes($params[7]);
 
-		$this->alternateTarget = $this->stripquotes($params[8]);
+		$this->category = $this->stripquotes($params[8]);
 
-		$this->defaults = $this->stripquotes($params[9]);
+		$this->alternateTarget = $this->stripquotes($params[9]);
+
+		$this->defaults = $this->stripquotes($params[10]);
 	}
 
 	/**
@@ -208,7 +221,7 @@ class DeviseTag
 		// trim away extra white space off each value
 		array_walk($params, function(&$value) { $value = ltrim(rtrim($value)); });
 
-		$this->id = 'creator.' . md5($params[0]);
+		$this->id = 'creator-' . md5($params[0]);
 
 		$this->collection = null;
 
@@ -219,6 +232,8 @@ class DeviseTag
 		$this->type = 'creator';
 
 		$this->humanName = isset($params[1]) && $params[1] !== 'null' && $params[1] ? $params[1] : $this->humanize($key);
+
+		$this->collectionName = null;
 
 		$this->group = null;
 
@@ -266,6 +281,8 @@ class DeviseTag
 
 		$this->humanName = isset($params[2]) && $params[2] !== 'null' && $params[2] ? $params[2] : $this->humanize($key);
 
+		$this->collectionName = null;
+
 		$this->group = isset($params[3]) && $params[3] !== 'null' && $params[3] ? $params[3] : null;
 
 		$this->category = isset($params[4]) && $params[4] !== 'null' && $params[4] ? $params[4] : null;
@@ -278,6 +295,34 @@ class DeviseTag
 		{
 			$this->extractParametersForVariable($key, $params);
 		}
+
+		if ($this->bindingType === 'collection')
+		{
+			$this->extractParametersForCollection($key, $params);
+		}
+	}
+
+	/**
+	 * Extracts out parameters for collection. They are different
+	 * because collections have a collection name in the place
+	 * where a group name should be. So this throws everything off
+	 * by one
+	 *
+	 * @param  string $key
+	 * @param  array $params
+	 * @return void
+	 */
+	protected function extractParametersForCollection($key, $params)
+	{
+		$this->collectionName = isset($params[3]) && $params[3] !== 'null' && $params[3] ? $params[3] : $this->humanize($this->collection);
+
+		$this->group = isset($params[4]) && $params[4] !== 'null' && $params[4] ? $params[4] : null;
+
+		$this->category = isset($params[5]) && $params[5] !== 'null' && $params[5] ? $params[5] : null;
+
+		$this->alternateTarget = isset($params[6]) && $params[6] !== 'null' && $params[6] ? $params[6] : null;
+
+		$this->defaults = isset($params[7]) && $params[7] !== 'null' && $params[7] ? $params[7] : null;
 	}
 
 	/**
@@ -298,11 +343,11 @@ class DeviseTag
 
 		$this->group = isset($params[2]) && $params[2] !== 'null' && $params[2] ? $params[2] : null;
 
-		$this->category = null;
+		$this->category = isset($params[3]) && $params[3] !== 'null' && $params[3] ? $params[3] : null;
 
-		$this->alternateTarget = null;
+		$this->alternateTarget = isset($params[4]) && $params[4] !== 'null' && $params[4] ? $params[4] : null;
 
-		$this->defaults = null;
+		$this->defaults = isset($params[5]) && $params[5] !== 'null' && $params[5] ? $params[5] : null;
 	}
 
 	/**

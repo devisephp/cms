@@ -2,12 +2,13 @@
 
 <p style="font-style: italic;">This field is still under development so it does not currently work as expected</p>
 
-@snippet
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
 <audio data-devise="audio1, audio, Audio" src="<?= $page->audio1->file ?>" controls loop>
     HTML5 audio not supported
-</audio>
-@endsnippet
-
+</audio>')
+?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

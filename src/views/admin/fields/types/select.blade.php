@@ -1,12 +1,20 @@
 <h3>Select</h3>
 
-@snippet
 <select data-devise="select1, select, Select">
     @foreach ($page->select1->options as $option)
         <option value="<?= $option->value ?>"><?= $option->name ?></option>
     @endforeach
 </select>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<select data-devise="select1, select, Select">
+    @foreach ($page->select1->options as $option)
+        <option value="{{ $option->value }}">{{ $option->name }}</option>
+    @endforeach
+</select>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

@@ -29,7 +29,7 @@ class ScaffoldingManager
 			break;
 		}
 
-        $this->processInputData($input);
+        $this->interpretInputData($input);
 
 		echo $this->scaffolding->scaffold($input['model_name'], $input['fields']);
 	}
@@ -46,7 +46,7 @@ class ScaffoldingManager
      * @param  array $input
      * @return array
      */
-    private function processInputData(&$input)
+    private function interpretInputData(&$input)
     {
         $input = array_except($input, ['_token']);
 
@@ -55,6 +55,10 @@ class ScaffoldingManager
         $this->appendSoftDelete($input);
 
         $this->appendTimestamps($input);
+
+        $this->interpretFieldsArray($input);
+
+        array_walk_recursive($input, 'self::castToBoolean');
     }
 
     /**
@@ -111,5 +115,51 @@ class ScaffoldingManager
     private function cleanseModelName(&$input)
     {
         $input['model_name'] = preg_replace('/[^A-Za-z0-9\-]/', '', $input['model_name']);
+    }
+
+    /**
+     * Fields input array "choices" and builds/formats
+     * array as a properly formatted choices array
+     *
+     * @return array
+     */
+    private function interpretFieldsArray(&$input)
+    {
+        foreach ($input['fields'] as $fIndex => $field) {
+            if (isset($field['choices'])) {
+                foreach($field['choices'] as $cIndex => $choice) {
+                    $input['fields'][$fIndex]['choices'][$choice['value']] = $choice['key'];
+
+                    unset($input['fields'][$fIndex]['choices'][$cIndex]);
+                }
+            }
+
+            if(array_get($field, 'formType') == '') {
+                unset($input['fields'][$fIndex]['formType']);
+            }
+
+            if(array_get($field, 'default') == '') {
+                unset($input['fields'][$fIndex]['default']);
+            }
+
+            if(array_get($field, 'label') == '') {
+                unset($input['fields'][$fIndex]['label']);
+            }
+        }
+    }
+
+    /**
+     * Ensures checkbox values are set as "true" or "false"
+     *
+     * @param  string &$value
+     * @return void
+     */
+    private function castToBoolean(&$value)
+    {
+        if($value == 'on') {
+            $value = true;
+        } else if($value == 'off') {
+            $value = false;
+        }
     }
 }

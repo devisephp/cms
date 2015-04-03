@@ -9,7 +9,7 @@
 @section('main')
 
     <div class="dvs-admin-form-horizontal">
-        <?= Form::open(array('method' => 'POST', 'route' => array('dvs-model-creator-store'), 'class' => 'dvs-model-creator-form')) ?>
+        <?= Form::open(array('method' => 'POST', 'route' => array('dvs-model-creator-store'), 'id' => 'dvs-model-creator-form')) ?>
 
             <div class="dvs-form-group">
                 <?= Form::label('Model Name') ?>
@@ -44,14 +44,21 @@
                             <?= Form::text('fields[0][name]', 'id', ['class' => 'dvs-pl', 'placeholder' => 'Name']) ?>
                             <?= Form::select('fields[0][type]', $fieldTypesList, 'increments', ['class' => '']) ?>
                             <?= Form::text('fields[0][label]', 'Id', ['class' => 'dvs-pl', 'placeholder' => 'Label']) ?>
-                            <?= Form::text('fields[0][default]', null, ['class' => 'dvs-pl', 'placeholder' => 'Default Value']) ?>
-                            <?= Form::select('fields[0][formType]', [0 => 'Form Type'] + $formTypesList, null, ['class' => 'dvs-form-type']) ?>
+                            <?= Form::select('fields[0][formType]', ['' => 'Form Type'] + $formTypesList, null, ['class' => 'dvs-form-type dvs-not-null']) ?>
                             <?= Form::button('<span class="ion-android-close"></span>', array('class' => 'dvs-remove-field dvs-button dvs-button-danger dvs-button-tiny dvs-pr')) ?>
 
                             <div class="dvs-form-group dvs-borderless">
                                 <button class="dvs-hidden dvs-add-choice dvs-button dvs-button-secondary dvs-button-tiny" type="button">Add Choice</button>
-                                <label><?= Form::checkbox('fields[0][displayForm]', true, false) ?> On Form</label>
-                                <label><?= Form::checkbox('fields[0][displayIndex]', true, true) ?> On Index</label>
+                                <label>
+                                    <?= Form::hidden('fields[0][displayForm]', 'off') ?>
+                                    <?= Form::checkbox('fields[0][displayForm]', 'on', false) ?> On Form
+                                </label>
+
+                                <label>
+                                    <?= Form::hidden('fields[0][displayIndex]', 'off') ?>
+                                    <?= Form::checkbox('fields[0][displayIndex]', 'on', true) ?> On Index
+                                </label>
+
                                 <label><?= Form::checkbox('fields[0][index]', 'index', true) ?> Is Index</label>
                             </div>
 

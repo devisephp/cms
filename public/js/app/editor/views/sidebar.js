@@ -26,6 +26,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 		this.datePickers = null;
 		this.breadcrumbs = null;
 		this.grid = null;
+		this.manageCollection = null;
 		this.content = null;
 		this.saveButton = null;
 	}
@@ -46,6 +47,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 		this.datePickers = this.layout.find('[data-view="date-pickers"]');
 		this.breadcrumbs = this.layout.filter('[data-view="breadcrumbs"]');
 		this.grid = this.layout.filter('[data-view="grid"]');
+		this.manageCollection = this.layout.filter('[data-view="manage-collection"]');
 		this.content = this.layout.find('[data-view="content"]');
 		this.saveButton = this.layout.find('[data-view="save-button"]');
 
@@ -76,6 +78,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 		this.versionsSelector = null;
 		this.datePickers = null;
 		this.breadcrumbs = null;
+		this.manageCollection = null;
 		this.content = null;
 		this.saveButton = null;
 	}

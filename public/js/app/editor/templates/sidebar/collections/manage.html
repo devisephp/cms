@@ -4,4 +4,8 @@
     <button id="dvs-new-collection-instance" class="dvs-button">Add to Stack</button>
 </div>
 
-<ul id="dvs-collection-instances-sortable"></ul>
+<ul id="dvs-collection-instances-sortable">
+	{{#each instances}}
+		<li>{{name}}</li>
+	{{/each}}
+</ul>

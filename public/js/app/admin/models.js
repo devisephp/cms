@@ -16,7 +16,6 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
         //
         // Add a new field row on click of add field button
         //
-
         $('.dvs-add-model-field').click(function() {
             var _fid = $('#dvs-fields-list li').length;
             var itemHtml = newFieldHtml.replace(/\{fid\}/g, _fid++);
@@ -29,9 +28,7 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
         //
         $('#dvs-fields-list').on('click', '.dvs-remove-field', function(event)
         {
-            $(event.currentTarget)
-                .closest('.dvs-field')
-                .remove();
+            $(event.currentTarget).closest('.dvs-field').remove();
         });
 
         //
@@ -53,12 +50,14 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
         // Toggle visibility of button to add new option
         //
         $('.dvs-model-creator-form').on('change', '.dvs-form-type', function() {
-            var _addOptionBtn = $(this).next('.dvs-add-option');
 
+            var _addChoiceBtn = $(this).nextAll('.dvs-form-group:first').find('button');
+
+console.log(_addChoiceBtn);
             if ($(this).val() != 0) {
-                _addOptionBtn.removeClass('dvs-hidden');
+                _addChoiceBtn.removeClass('dvs-hidden');
             } else {
-                _addOptionBtn.addClass('dvs-hidden');
+                _addChoiceBtn.addClass('dvs-hidden');
             }
         });
 

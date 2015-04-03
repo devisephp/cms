@@ -14,11 +14,11 @@
             ),
 
             'model-form-types' => array(
-                'checkboxGroup' => 'Checkbox Group',
-                'radio' => 'Radio Group',
-                'select' => 'Select',
-                'text' => 'Text',
-                'textarea' => 'area',
+                'text' => 'text',
+                'checkbox' => 'checkbox group',
+                'radio' => 'radio group',
+                'select' => 'select',
+                'textarea' => 'textarea',
             )
         )
     );

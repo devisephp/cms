@@ -48,17 +48,15 @@
                             <?= Form::select('fields[0][formType]', [0 => 'Form Type'] + Config::get('devise.select-options.admin.model-form-types'), null, ['class' => 'dvs-form-type']) ?>
                             <?= Form::button('<span class="ion-android-close"></span>', array('class' => 'dvs-remove-field dvs-button dvs-button-danger dvs-button-tiny dvs-pr')) ?>
 
-
                             <div class="dvs-form-group dvs-borderless">
-                                <button type="button" class="dvs-add-choice dvs-button dvs-button-secondary dvs-button-tiny">Add Choice</button>
+                                <button class="dvs-hidden dvs-add-choice dvs-button dvs-button-secondary dvs-button-tiny" type="button">Add Choice</button>
 
-                                <label><?= Form::checkbox('fields[0][displayForm]', 'on', false) ?> On Form</label>
-                                <label><?= Form::checkbox('fields[0][displayIndex]', 'on', true) ?> On Index</label>
+                                <label><?= Form::checkbox('fields[0][displayForm]', true, false) ?> On Form</label>
+                                <label><?= Form::checkbox('fields[0][displayIndex]', true, true) ?> On Index</label>
                                 <label><?= Form::checkbox('fields[0][index]', 'index', true) ?> Is Index</label>
                             </div>
 
                             <ol class="dvs-choices-list">
-
                             </ol>
                         </div>
                     </li>

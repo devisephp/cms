@@ -29,61 +29,33 @@ class ScaffoldingManager
 			break;
 		}
 
-		$fields = [
-			[
-				'name' => 'id',
-				'type' => 'increments',
-				'index' => 'index',
-				'displayForm' => false,
-				'displayIndex' => true,
-			],
-			[
-				'name' => 'title',
-				'type' => ['string', 100],
-				'label' => 'The Title Of It All!',
-				'options' => ['class' => 'whatever'],
-				'displayIndex' => true
-			],
-			[
-				'name' => 'author_of_the_article',
-				'type' => 'string',
-				'choices' => ['jimmy' => 'Jimmy', 'sarah' => 'Sarah'],
-				'formType' => 'select',
-				'displayIndex' => true
-			],
-			[
-				'name' => 'deleted_at',
-				'type' => 'timestamp',
-				'nullable' => true,
-				'displayForm' => false
-			],
-			[
-				'name' => 'created_at',
-				'type' => 'timestamp',
-				'default' => '0000-00-00 00:00:00',
-				'displayForm' => false
-			],
-			[
-				'name' => 'updated_at',
-				'type' => 'timestamp',
-				'default' => '0000-00-00 00:00:00',
-				'displayForm' => false
-			]
-		];
+        $this->processInputData($input);
 
-        $modelName = $this->cleanseString( $input['model_name'] );
-
-        $this->appendSoftDelete($input);
-
-        $this->appendTimestamps($input);
-
-		echo $this->scaffolding->scaffold($modelName, $input['fields']);
+		echo $this->scaffolding->scaffold($input['model_name'], $input['fields']);
 	}
 
 	public function setScaffoldingType($type)
 	{
 		$this->scaffoldingType = $type;
 	}
+
+    /**
+     * Takes in input array and sets/unsets data
+     * according to form input.
+     *
+     * @param  array $input
+     * @return array
+     */
+    private function processInputData(&$input)
+    {
+        $input = array_except($input, ['_token']);
+
+        $this->cleanseModelName($input);
+
+        $this->appendSoftDelete($input);
+
+        $this->appendTimestamps($input);
+    }
 
     /**
      * Checks for deleted_at key in input array
@@ -101,6 +73,8 @@ class ScaffoldingManager
                 'nullable' => true,
                 'displayForm' => false
             ];
+
+            unset($input['deleted_at']);
         }
     }
 
@@ -124,16 +98,18 @@ class ScaffoldingManager
                     'displayForm' => false
                 ];
             }
+
+            unset($input['timestamps']);
         }
     }
 
     /**
-     * Removes special characters from string
+     * Removes special characters from input['model_name']
      *
-     * @return string
+     * @return array
      */
-    private function cleanseString($string)
+    private function cleanseModelName(&$input)
     {
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+        $input['model_name'] = preg_replace('/[^A-Za-z0-9\-]/', '', $input['model_name']);
     }
 }

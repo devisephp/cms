@@ -28,12 +28,15 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		this.data['node'] = node;
 		this.data['instances'] = node.data;
 
-		this.layout = View.make('sidebar.collections.layout', this.data);
+		this.grid = View.make('sidebar.collections.grid', this.data);
+		this.manage = View.make('sidebar.collections.manage', this.data);
+		this.groupSelector = View.make('sidebar.collections.selector', this.data);
+		this.field = $('<div/>');
 
-		// this.headerView = this.layout.filter('[data-view="header"]');
-		// this.gridsView = this.layout.filter('[data-view="grids"]');
-		// this.breadcrumbsView = this.layout.filter('[data-view="breadcrumbs"]');
-		// this.manageView = this.layout.filter('[data-view="manage"]');
+		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showModelView');
+		this.sidebar.grid.append(this.grid);
+		this.sidebar.groupSelector.append(this.groupSelector);
+
 		// this.selectedInstanceView = this.layout.filter('[data-view="selected-instance"]');
 		// this.fieldView = this.layout.find('[data-view="field"]');
 		// this.saveButtonView = this.layout.find('[data-view="save-button"]');
@@ -42,9 +45,12 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		// this.manageView.append(View.make('sidebar.collections.manage'), this.data);
 		// this.headerView.append(View.make('sidebar.collections.header', this.data));
 
-		View.registerEvents(this.layout, events, this);
+		View.registerEvents(this.grid, events, this);
+		View.registerEvents(this.groupSelector, events, this);
 
-		return this.layout;
+		// if there are no instances... then
+		// show the manage view
+		return this.manage;
 	};
 
 	/**

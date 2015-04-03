@@ -14,7 +14,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	{
 		this.sidebar = sidebar;
 		this.data = { page: sidebar.page };
-		this.grids = null;
+		this.grid = null;
 		this.field = null;
 	};
 
@@ -29,12 +29,12 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		this.data['model'] = node.model;
 
 		this.field = $('<div/>');
-		this.grids = View.make('sidebar.models.grid-view', this.data);
+		this.grid = View.make('sidebar.models.grid', this.data);
 
 		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showModelView');
-		this.sidebar.grids.append(this.grids);
+		this.sidebar.grid.append(this.grid);
 
-		View.registerEvents(this.grids, events, this);
+		View.registerEvents(this.grid, events, this);
 
 		return this.field;
 	}
@@ -45,7 +45,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	ModelView.prototype.close = function()
 	{
 		this.data = null;
-		this.grids = null;
+		this.grid = null;
 		this.field = null;
 	}
 
@@ -63,7 +63,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		this.field.empty();
 		this.field.append(html);
 		this.field.show();
-		this.grids.hide();
+		this.grid.hide();
 		this.sidebar.saveButton.show();
 	}
 
@@ -73,7 +73,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	ModelView.prototype.showModelView = function()
 	{
 		this.field.empty();
-		this.grids.show();
+		this.grid.show();
 		this.sidebar.saveButton.hide();
 	}
 

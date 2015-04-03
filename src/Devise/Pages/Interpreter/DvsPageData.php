@@ -262,7 +262,7 @@ class DvsPageData
 		$tag['category'] = $category;
 		$tag['alternateTarget'] = $alternateTarget;
 		$tag['defaults'] = $defaults;
-		$tag['data'] = $this->resolveInstance($tag);
+		$tag['data'] = $this->TagManager->getInstanceForTag($tag);
 		$tag['cid'] = $tag['bindingType'] . $tag['data']->id;
 
 		$this->tags[$id] = $tag;
@@ -308,7 +308,7 @@ class DvsPageData
 			$tag['attribute'] = $attribute;
 		}
 
-		$tag['data'] = $this->resolveInstance($tag);
+		$tag['data'] = $this->TagManager->getInstanceForTag($tag);
 
 		if ($attribute)
 		{
@@ -322,17 +322,6 @@ class DvsPageData
 		$this->tags[] = $tag;
 
 		return $tag;
-	}
-
-	/**
-	 * Get the instance for this tag
-	 *
-	 * @param  array $tag
-	 * @return DvsField|DvsModel|DvsCollectionSet|DvsGlobalField
-	 */
-	protected function resolveInstance($tag)
-	{
-		return $this->TagManager->getInstanceForTag($tag);
 	}
 
 	/**
@@ -548,7 +537,6 @@ class DvsPageData
 			'key' => $node['key'],
 			'binding' => 'group',
 			'human_name' => $name,
-			'template' => $this->buildTemplateForNode(['bindingType' => 'group']),
 			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
 			'data' => $items,
 		];
@@ -570,7 +558,6 @@ class DvsPageData
 			'key' => $node['collection'],
 			'binding' => 'collection',
 			'human_name' => $collectionName,
-			'template' => $this->buildTemplateForNode($node),
 			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
 			'schema' => $collectionFields,
 			'data' => $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($node['data']->id, $this->pageVersionId),
@@ -592,7 +579,6 @@ class DvsPageData
 			'key' => $node['id'],
 			'binding' => $binding,
 			'human_name' => $node['humanName'],
-			'template' => $this->buildTemplateForNode($node),
 			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
 			'data' => $node['data'],
 		];
@@ -603,28 +589,6 @@ class DvsPageData
 		}
 
 		return $built;
-	}
-
-	/**
-	 * Gets us the template path for this node. The
-	 * path depends on the type of node this is...
-	 *
-	 * @param  array $node
-	 * @return string
-	 */
-	protected function buildTemplateForNode($node)
-	{
-		switch ($node['bindingType'])
-		{
-			case 'field': return 'sidebar.layouts.field';
-			case 'collection': return 'sidebar.layouts.collection';
-			case 'model': return 'sidebar.layouts.model';
-			case 'attribute': return 'sidebar.layouts.attribute';
-			case 'creator': return 'sidebar.layouts.creator';
-			case 'group': return 'sidebar.layouts.group';
-		}
-
-		return null;
 	}
 
 	/**

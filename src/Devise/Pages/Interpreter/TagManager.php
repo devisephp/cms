@@ -3,6 +3,7 @@
 use Devise\Pages\Models\ModelMapper;
 use Devise\Pages\Collections\CollectionsRepository;
 use Devise\Pages\Interpreter\Exceptions\PageDataNotInitializedException;
+use Devise\Pages\Interpreter\Exceptions\InvalidModelMappingException;
 
 /**
  * Create and find tags in the database. A tag could be a model, field,
@@ -166,13 +167,20 @@ class TagManager
 	 */
 	protected function getInstanceForModel($tag)
 	{
-		$fields = $this->DvsModelField
-			->newInstance()
-			->where('model_id', $tag['key'])
-			->where('model_type', $tag['type'])
-			->get();
+		$mappings = $this->fetchMappingsForModelField($tag);
 
-		$model = count($fields) > 0 ? $fields[0]->model : null;
+		$fields = $this->fetchModelFields($tag['key'], $tag['type'], $mappings);
+
+		// if the count doesn't add up
+		// then create more model fields in DB
+		if (count($fields) != count($mappings))
+		{
+			$this->createMissingModelFields($tag, $fields, $mappings);
+			$fields = $this->fetchModelFields($tag['key'], $tag['type'], $mappings);
+		}
+
+		// sync over model values into the json values
+		$model = $fields[0]->model;
 
 		foreach ($fields as $field)
 		{
@@ -190,15 +198,9 @@ class TagManager
 	 */
 	protected function getInstanceForAttribute($tag)
 	{
-		$fields = $this->DvsModelField
-			->newInstance()
-			->where('model_id', $tag['key'])
-			->where('model_type', $tag['type'])
-			->get();
+		$fields = $this->getInstanceForModel($tag);
 
 		$field = $this->filterModelFieldByAttribute($fields, $tag['attribute']);
-
-		$field->syncValuesWithModelValues();
 
 		return $field;
 	}
@@ -216,7 +218,21 @@ class TagManager
 	{
 		$creator = new \StdClass;
 
+		$config = config('devise.model-mapping');
+
+		$config = array_key_exists($tag['key'], $config) ? $config[$tag['key']] : [];
+
 		$creator->id = $tag['id'];
+
+		$creator->model_type = $tag['key'];
+
+		$creator->defaults = $tag['defaults'] ?: new \StdClass;
+
+		$creator->picks = array_key_exists('picks', $config) ? $config['picks'] : [];
+
+		$creator->rules = array_key_exists('rules', $config) ? $config['rules'] : [];
+
+		$creator->types = array_key_exists('types', $config) ? $config['types'] : [];
 
 		return $creator;
 	}
@@ -315,6 +331,130 @@ class TagManager
 	}
 
 	/**
+	 * Fetch all the model fields
+	 *
+	 * @param  integer $modelId
+	 * @param  string  $modelType
+	 * @param  array   $mappings
+	 * @return Collection
+	 */
+	protected function fetchModelFields($modelId, $modelType, $mappings, $onlyTrashed = false)
+	{
+		if (count($mappings) === 0) {
+			throw new InvalidModelMappingException("No mappings found for " . $tag['model_type']);
+		}
+
+		$fields = $this->DvsModelField->newInstance();
+
+		if ($onlyTrashed)
+		{
+			$fields = $fields->onlyTrashed();
+		}
+
+		$fields = $fields->where('model_id', $modelId)
+			->where('model_type', $modelType)
+			->whereIn('mapping', $mappings)
+			->get();
+
+		return $fields;
+	}
+
+	/**
+	 * Ensures that all model fields are created for a model's
+	 * picks
+	 *
+	 * @param  array $tag
+	 * @return void
+	 */
+	protected function createMissingModelFields($tag, $fields, $mappings)
+	{
+		foreach ($fields as $field)
+		{
+			$mappings = array_diff($mappings, array($field->mapping));
+		}
+
+		// search to see if we need to restore any soft deleted
+		// fields that have already been mapped
+
+		foreach ($mappings as $mapping)
+		{
+			$this->createModelField($tag['key'], $tag['type'], $mapping);
+		}
+	}
+
+	/**
+	 * Creates this model field for us in the database
+	 * this will also restore an existing soft deleted
+	 * model field if it finds one...
+	 *
+	 * @param  integer $modelId
+	 * @param  string  $modelType
+	 * @param  string  $mapping
+	 * @return DvsModelField
+	 */
+	protected function createModelField($modelId, $modelType, $mapping)
+	{
+		$modelField = $this->fetchModelFields($modelId, $modelType, array($mapping), true);
+
+		if (count($modelField) == 1)
+		{
+			$modelField[0]->restore();
+
+			return $modelField[0];
+		}
+
+		$modelField = $this->DvsModelField->newInstance();
+		$modelField->model_id = $modelId;
+		$modelField->model_type = $modelType;
+		$modelField->mapping = $mapping;
+		$modelField->json_value = '{}';
+		$modelField->save();
+
+		return $modelField;
+	}
+
+	/**
+	 * Finds the mappings for this model type
+	 * This allows us to know if we have created enough
+	 * DvsModelField entries in the database
+	 *
+	 * @param  array $tag
+	 * @return array
+	 */
+	protected function fetchMappingsForModelField($tag)
+	{
+		$field = $this->DvsModelField->newInstance();
+
+		$field->model_id = $tag['key'];
+
+		$field->model_type = $tag['type'];
+
+		return array_keys($field->picks);
+	}
+
+	/**
+	 * Filters out the attribute from this model field
+	 *
+	 * @param  Collection 	  $modelField
+	 * @param  string 		  $attribute
+	 * @return DvsModelField
+	 */
+	protected function filterModelFieldByAttribute($modelFields, $attribute)
+	{
+		foreach ($modelFields as $modelField)
+		{
+			if (array_key_exists($attribute, $modelField->picks))
+			{
+				$modelField->syncValuesWithModelValues();
+
+				return $modelField;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Updates an instance with the fields given
 	 * but only if the field values are different
 	 * than what is already in the database
@@ -339,26 +479,6 @@ class TagManager
 		if ($changed) $instance->save();
 
 		return $instance;
-	}
-
-	/**
-	 * Filters out the attribute from this model field
-	 *
-	 * @param  Collection 	  $modelField
-	 * @param  string 		  $attribute
-	 * @return DvsModelField
-	 */
-	protected function filterModelFieldByAttribute($modelFields, $attribute)
-	{
-		foreach ($modelFields as $modelField)
-		{
-			if (array_key_exists($attribute, $modelField->picks))
-			{
-				return $modelField;
-			}
-		}
-
-		return null;
 	}
 
 	/**

@@ -1,4 +1,4 @@
-devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dvsModelView', 'dvsAttributeView', 'dvsGroupView', 'dvsBreadCrumbsView'], function($, View, FieldView, CollectionView, ModelView, AttributeView, GroupView, BreadCrumbsView)
+devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dvsModelView', 'dvsAttributeView', 'dvsCreatorView', 'dvsGroupView', 'dvsBreadCrumbsView'], function($, View, FieldView, CollectionView, ModelView, AttributeView, CreatorView, GroupView, BreadCrumbsView)
 {
 	/**
 	 * List of events for this view
@@ -22,9 +22,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 		this.title = null;
 		this.languageSelector = null;
 		this.versionsSelector = null;
+		this.groupSelector = null;
 		this.datePickers = null;
 		this.breadcrumbs = null;
-		this.grids = null;
+		this.grid = null;
 		this.content = null;
 		this.saveButton = null;
 	}
@@ -41,9 +42,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 		this.title = this.layout.find('[data-view="sidebar-title"]');
 		this.languageSelector = this.layout.find('[data-view="language-selector"]');
 		this.versionsSelector = this.layout.find('[data-view="versions-selector"]');
+		this.groupSelector = this.layout.find('[data-view="group-selector"]');
 		this.datePickers = this.layout.find('[data-view="date-pickers"]');
 		this.breadcrumbs = this.layout.filter('[data-view="breadcrumbs"]');
-		this.grids = this.layout.filter('[data-view="grids"]');
+		this.grid = this.layout.filter('[data-view="grid"]');
 		this.content = this.layout.find('[data-view="content"]');
 		this.saveButton = this.layout.find('[data-view="save-button"]');
 

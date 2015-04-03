@@ -3333,6 +3333,9 @@ button.dvs-no-decoration:hover {
 .dvs-admin-form-horizontal #dvs-fields-list select,
 .dvs-admin-form-horizontal #dvs-fields-list input[type=text] {
   width: 18%; }
+.dvs-admin-form-horizontal #dvs-fields-list .dvs-choices-list select,
+.dvs-admin-form-horizontal #dvs-fields-list .dvs-choices-list input[type=text] {
+  width: 26%; }
 
 .dvs-admin-form-horizontal #dvs-permissions {
   margin: 0 auto;

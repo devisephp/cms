@@ -314,9 +314,17 @@
 			)
 		),
 		'devise::admin.settings.index' => array(
-			'human_name' => 'Devise Settings List',
+            'human_name' => 'Devise Settings List',
+            'extends' => 'devise::admin.layouts.master',
+            'vars' => array(
+            ),
+        ),
+        'devise::admin.models.create' => array(
+			'human_name' => 'Devise Admin Model Creator',
 			'extends' => 'devise::admin.layouts.master',
 			'vars' => array(
+                'fieldTypesList' => 'Devise\Models\Scaffolding\ScaffoldingRepository.getModelFieldTypesList',
+                'formTypesList' => 'Devise\Models\Scaffolding\ScaffoldingRepository.getModelFormTypesList',
 			),
 		),
 	);

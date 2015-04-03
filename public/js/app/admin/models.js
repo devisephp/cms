@@ -32,7 +32,7 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
         });
 
         //
-        // Remove new field item on click of remove button
+        // Remove new field row on click of remove button
         //
         $('#dvs-fields-list').on('click', '.dvs-add-choice', function(event)
         {
@@ -47,36 +47,30 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
         });
 
         //
-        // Toggle visibility of button to add new option
+        // Toggle visibility of "Add Choice" button and
+        // the choices list inside relevant parent div
         //
-        $('.dvs-model-creator-form').on('change', '.dvs-form-type', function() {
+        $('#dvs-fields-list').on('change', '.dvs-form-type', function() {
+            var _opt = $(this).val();
+            var _choicesElements = $('.dvs-add-choice, .dvs-choices-list, .dvs-choices-list li :input', $(this).parent('div'));
 
-            var _addChoiceBtn = $(this).nextAll('.dvs-form-group:first').find('button');
+            if (_opt != 0 && _opt != 'text' && _opt != 'textarea') {
 
-console.log(_addChoiceBtn);
-            if ($(this).val() != 0) {
-                _addChoiceBtn.removeClass('dvs-hidden');
+                _choicesElements.removeClass('dvs-hidden').prop('disabled', false);
             } else {
-                _addChoiceBtn.addClass('dvs-hidden');
+
+                _choicesElements.addClass('dvs-hidden').prop('disabled', true);
             }
         });
 
         //
-        // Menu Accordion
+        // Remove new choice item on click of remove btn
         //
-        $('.menu-accordion').click(function(){
-            var target = $(this).data('target');
-            $(target).toggle();
-            if($(this).html() === '<span class="ion-android-expand"></span>'){
-                $(this).html('<span class="ion-android-contract"></span>');
-                $(this).parent().siblings('ol').addClass('hidden');
-            } else {
-                $(this).html('<span class="ion-android-expand"></span>');
-                $(this).parent().siblings('ol').removeClass('hidden');
-            }
+        $('#dvs-fields-list').on('click', '.dvs-remove-choice', function(event)
+        {
+            $(event.currentTarget).closest('.dvs-choice').remove();
         });
     }
-
 
     initialize();
 

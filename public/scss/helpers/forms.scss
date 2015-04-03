@@ -159,6 +159,13 @@ input[type=text] {
     input[type=text] {
         width:18%;
     }
+
+    .dvs-choices-list {
+        select,
+        input[type=text] {
+            width:26%;
+        }
+    }
 }
 
 

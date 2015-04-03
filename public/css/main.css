@@ -3296,29 +3296,43 @@ button.dvs-no-decoration:hover {
   .dvs-admin-form-horizontal .dvs-form-group textarea:disabled {
     color: #797d85; }
 .dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle,
-.dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle {
+.dvs-admin-form-vertical .dvs-sort-items .ui-sortable-handle,
+.dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle,
+.dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle {
   clear: both; }
   .dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle:after,
-  .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle:after {
+  .dvs-admin-form-vertical .dvs-sort-items .ui-sortable-handle:after,
+  .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle:after,
+  .dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle:after {
     content: "";
     display: table;
     clear: both; }
 .dvs-admin-form-vertical .dvs-menu-items select,
 .dvs-admin-form-vertical .dvs-menu-items input[type=text],
+.dvs-admin-form-vertical .dvs-sort-items select,
+.dvs-admin-form-vertical .dvs-sort-items input[type=text],
 .dvs-admin-form-horizontal .dvs-menu-items select,
-.dvs-admin-form-horizontal .dvs-menu-items input[type=text] {
+.dvs-admin-form-horizontal .dvs-menu-items input[type=text],
+.dvs-admin-form-horizontal .dvs-sort-items select,
+.dvs-admin-form-horizontal .dvs-sort-items input[type=text] {
   width: 23%;
   float: left;
   height: 24px;
   font-size: 11px;
   margin-right: 5px; }
 .dvs-admin-form-vertical .dvs-menu-items select,
-.dvs-admin-form-horizontal .dvs-menu-items select {
+.dvs-admin-form-vertical .dvs-sort-items select,
+.dvs-admin-form-horizontal .dvs-menu-items select,
+.dvs-admin-form-horizontal .dvs-sort-items select {
   height: 31px;
   width: 15%; }
 
 .dvs-admin-form-vertical input[type="submit"] {
   margin-left: 0; }
+
+.dvs-admin-form-horizontal #dvs-fields-list select,
+.dvs-admin-form-horizontal #dvs-fields-list input[type=text] {
+  width: 18%; }
 
 .dvs-admin-form-horizontal #dvs-permissions {
   margin: 0 auto;
@@ -3804,6 +3818,12 @@ td .dvs-select-small {
   background-image: linear-gradient(#2b2e36, #262930);
   border-color: #1d1f25;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); }
+  #dvs-admin .sortable li div.dvs-borderless {
+    border: none; }
+#dvs-admin #dvs-fields-list .dvs-form-group label {
+  font-size: 11px;
+  width: auto;
+  margin-right: 0; }
 
 #dvs-admin #dvs-modal-container h1, #dvs-admin #dvs-modal-container h2, #dvs-admin #dvs-modal-container h3, #dvs-admin #dvs-modal-container h4, #dvs-admin #dvs-modal-container h5, #dvs-admin #dvs-modal-container h6 {
   color: #262626; }

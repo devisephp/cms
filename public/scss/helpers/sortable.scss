@@ -38,5 +38,19 @@
 		border-color: darken($primaryTableBgColor, 4%);
 
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
+
+        &.dvs-borderless {
+            border:none;
+        }
 	}
+
+    #dvs-fields-list {
+        .dvs-form-group {
+            label {
+                font-size:11px;
+                width:auto;
+                margin-right:0;
+            }
+        }
+    }
 }

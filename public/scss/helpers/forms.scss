@@ -120,16 +120,16 @@ input[type=text] {
 
     input[type=text]:disabled,
     textarea:disabled {
-        color:darken($bodyFormTextColor, 25%);
+      color:darken($bodyFormTextColor, 25%);
     }
   }
 
-  .dvs-menu-items {
-
+  .dvs-menu-items,
+  .dvs-sort-items {
   	.ui-sortable-handle {
 	  	clear:both;
 	  	@include clearfix();
-	}
+    }
 
   	select,
   	input[type=text] {
@@ -151,6 +151,14 @@ input[type=text] {
   input[type="submit"] {
     margin-left:0;
   }
+}
+
+
+.dvs-admin-form-horizontal #dvs-fields-list {
+    select,
+    input[type=text] {
+        width:18%;
+    }
 }
 
 

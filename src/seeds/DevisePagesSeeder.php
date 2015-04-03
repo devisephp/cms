@@ -1460,6 +1460,35 @@ class DevisePagesSeeder extends DeviseSeeder
                 'slug'                    => '/',
                 'short_description'       => 'A welcome page and example to see how pages work',
                 'response_type'           => 'View'
+            ),
+            array(
+                'language_id'             => '45',
+                'title'                   => 'Admin Model Creator',
+                'view'                    => 'devise::admin.models.create',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-model-creator',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'ifNotLoggedInGoToLogin|isDeveloper',
+                'after'                   => '',
+                'slug'                    => '/admin/models/create',
+                'short_description'       => 'Create New Model Form',
+                'response_type'           => 'View'
+            ),
+            array(
+                'language_id'             => '45',
+                'title'                   => 'Model Creator Store Request',
+                'http_verb'               => 'post',
+                'route_name'              => 'dvs-model-creator-store',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'isDeveloper',
+                'after'                   => '',
+                'slug'                    => '/admin/models',
+                'short_description'       => 'Admin Model Creator Attempt Store',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Models\Scaffolding\ScaffoldingManager.makeScaffolding',
+                'response_params'         => 'input'
             )
 		);
 

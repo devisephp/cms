@@ -23,6 +23,11 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 	GroupView.prototype.render = function(node)
 	{
 		this.data['node'] = node;
+
+		this.view = $('<div/>');
+
+		// render the grid view
+
 		return this.view;
 	}
 

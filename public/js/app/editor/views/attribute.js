@@ -30,7 +30,9 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 
 		this.fieldView = new FieldView(this.sidebar);
 
-		this.view = this.fieldView.renderField(this.data.field);
+		this.view = $('<div/>');
+
+		this.view.append(this.fieldView.renderField(this.data.field));
 
 		View.registerEvents(this.view, events, this);
 

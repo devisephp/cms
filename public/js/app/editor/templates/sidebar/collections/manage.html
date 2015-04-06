@@ -6,6 +6,11 @@
 
 <ul id="dvs-collection-instances-sortable">
 	{{#each instances}}
-		<li>{{name}}</li>
+		<li id="instance_{{ id }}" data-instance-id="{{ id }}" class="ui-sortable-handle" style="position: relative;">
+
+			<input name="id-{{ id }}" type="text" value="{{ name }}" placeholder="{{ name }}" class="dvs-collection-instance-name">
+
+			<a class="dvs-collection-instance-remove" data-remove-instance-id="{{ id }}">✖</a>
+		</li>
 	{{/each}}
 </ul>

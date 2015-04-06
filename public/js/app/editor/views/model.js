@@ -30,9 +30,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 
 		this.field = $('<div/>');
 		this.grid = View.make('sidebar.models.grid', this.data);
-
-		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showModelView');
 		this.sidebar.grid.append(this.grid);
+		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showModelView');
 
 		View.registerEvents(this.grid, events, this);
 
@@ -54,17 +53,27 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 */
 	ModelView.prototype.showModelFieldView = function(fieldId)
 	{
+		var field = this.renderModelField(fieldId);
+		this.sidebar.breadcrumbsView.add(this.data.field.mapping, this, 'showModelFieldView', [fieldId]);
+		this.field.empty();
+		this.field.append(field);
+		this.field.show();
+		this.grid.hide();
+		this.sidebar.saveButton.show();
+	}
+
+	/**
+	 * Renders a model field
+	 */
+	ModelView.prototype.renderModelField = function(fieldId)
+	{
 		var fieldView = new FieldView(this.sidebar);
 		var field = View.data.find(this.data.fields, fieldId);
 		var html = fieldView.renderField(field);
 
-		this.sidebar.breadcrumbsView.add(field.mapping, this, 'showModelFieldView', [fieldId]);
+		this.data.field = field;
 
-		this.field.empty();
-		this.field.append(html);
-		this.field.show();
-		this.grid.hide();
-		this.sidebar.saveButton.show();
+		return html;
 	}
 
 	/**
@@ -82,15 +91,79 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 */
 	ModelView.prototype.save = function()
 	{
-		console.log('save the model now', this.data);
+		var self = this;
+		var url = this.data.page.url('update_model_fields');
+		var data = {
+			'fields': this.data.fields,
+			'page': this.data.page.info
+		};
+
+		$.ajax(url, {
+			method: 'PUT',
+			data: data,
+			success: function() { onSaveSuccess.apply(self, arguments); },
+			error: function() { onSaveError.apply(self, arguments); }
+		});
 	}
 
 	/**
 	 * called when our form content changes
 	 */
-	ModelView.prototype.changed = function(event)
+	ModelView.prototype.changed = function(key, value, event)
 	{
-		console.log('content changed inside of this model...');
+		var field = this.data.field;
+
+		switch (key)
+		{
+			case 'content_requested':
+				field.content_requested = value;
+			break;
+
+			case '_reset_values':
+				this.resetFieldValues(field, value);
+			break;
+
+			default: field.values[key] = value;
+		}
+	}
+
+	/**
+	 * reset this fields value if it is okay
+	 */
+	ModelView.prototype.resetFieldValues = function(field, shouldReset)
+	{
+		if (!shouldReset) return;
+
+		var self = this;
+
+		setTimeout(function()
+		{
+			field.values = {};
+			self.field.empty();
+			self.field.append(self.renderModelField(field.id));
+		}, 500);
+	}
+
+	/**
+	 * save was successful, update field values
+	 * to reflect what is returned from the server
+	 */
+	function onSaveSuccess(data, response, xhr)
+	{
+		this.field.empty();
+		this.data.field = data;
+		this.field.append(this.renderModelField(data.id));
+	}
+
+	/**
+	 * save failed to update field, probably
+	 * should let the user know or something
+	 * with validation messages
+	 */
+	function onSaveError()
+	{
+		alert('Could not save field! Check console');
+		console.warn('save error', this, arguments);
 	}
 
 	/**

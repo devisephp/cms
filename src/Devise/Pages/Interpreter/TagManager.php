@@ -1,6 +1,5 @@
 <?php namespace Devise\Pages\Interpreter;
 
-use Devise\Pages\Models\ModelMapper;
 use Devise\Pages\Collections\CollectionsRepository;
 use Devise\Pages\Interpreter\Exceptions\PageDataNotInitializedException;
 use Devise\Pages\Interpreter\Exceptions\InvalidModelMappingException;
@@ -44,11 +43,6 @@ class TagManager
 	 */
 	protected $CollectionsRepository;
 
-	/**
-	 * Model mapper handles creating DvsModelField
-	 * @var ModelMapper
-	 */
-	protected $ModelMapper;
 
 	/**
 	 * Page id
@@ -76,16 +70,14 @@ class TagManager
 	 * @param \DvsCollectionSet     $DvsCollectionSet
 	 * @param \DvsModelField        $DvsModelField
 	 * @param CollectionsRepository $CollectionsRepository
-	 * @param ModelMapper           $ModelMapper
 	 */
-	public function __construct(\DvsField $DvsField, \DvsGlobalField $DvsGlobalField, \DvsCollectionSet $DvsCollectionSet, \DvsModelField $DvsModelField, CollectionsRepository $CollectionsRepository, ModelMapper $ModelMapper)
+	public function __construct(\DvsField $DvsField, \DvsGlobalField $DvsGlobalField, \DvsCollectionSet $DvsCollectionSet, \DvsModelField $DvsModelField, CollectionsRepository $CollectionsRepository)
 	{
 		$this->DvsField = $DvsField;
 		$this->DvsGlobalField = $DvsGlobalField;
 		$this->DvsCollectionSet = $DvsCollectionSet;
 		$this->DvsModelField = $DvsModelField;
 		$this->CollectionsRepository = $CollectionsRepository;
-		$this->ModelMapper = $ModelMapper;
 	}
 
 	/**

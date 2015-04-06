@@ -1,9 +1,10 @@
-devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dvsModelView', 'dvsAttributeView', 'dvsCreatorView', 'dvsGroupView', 'dvsBreadCrumbsView'], function($, View, FieldView, CollectionView, ModelView, AttributeView, CreatorView, GroupView, BreadCrumbsView)
+devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dvsModelView', 'dvsAttributeView', 'dvsCreatorView', 'dvsGroupView', 'dvsBreadCrumbsView'], function($, query, View, FieldView, CollectionView, ModelView, AttributeView, CreatorView, GroupView, BreadCrumbsView)
 {
 	/**
 	 * List of events for this view
 	 */
 	var events = {
+		'change #dvs-sidebar-version-selector': onChangePageVersion,
 		'click .dvs-sidebar-save-group': 'save',
 		'input form input': 'changed',
 		'change form input': 'changed',
@@ -51,6 +52,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 		this.content = this.layout.find('[data-view="content"]');
 		this.saveButton = this.layout.find('[data-view="save-button"]');
 
+		this.saveButton.hide();
+
 		this.breadcrumbsView.setContainerElement(this.breadcrumbs);
 		this.content.append(this.contentView.render(node));
 		this.languageSelector.append(View.make('sidebar.partials.language-selector', { page: this.page }));
@@ -58,7 +61,6 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 		this.datePickers.append(View.make('sidebar.partials.date-pickers', { page: this.page }));
 
 		View.registerEvents(this.layout, events, this);
-		this.saveButton.hide();
 
 		return this.layout;
 	}
@@ -84,6 +86,22 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 	}
 
 	/**
+	 * change the page version id url
+	 */
+	Sidebar.prototype.changePageVersion = function(pageVersionId)
+	{
+		if (pageVersionId == this.page.pageVersionId) return;
+
+		var params = query.toJson();
+
+		var pageVersion = View.data.find(this.page.pageVersions, pageVersionId);
+
+		params['page_version'] = pageVersion.name;
+
+		location.href = location.origin + location.pathname + query.toQueryString(params);
+	}
+
+	/**
 	 * Calls save on the underlying content view
 	 */
 	Sidebar.prototype.save = function()
@@ -96,7 +114,17 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 	 */
 	Sidebar.prototype.changed = function(event)
 	{
-		this.contentView.changed(event);
+		var el = $(event.currentTarget)
+		var name = el.attr('name');
+		var value = el.val();
+		var type = el.attr('type');
+
+		if (type === 'checkbox')
+		{
+			value = el.is(':checked') ? value : false;
+		}
+
+		this.contentView.changed(name, value, event);
 	}
 
 	/**
@@ -115,6 +143,16 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dv
 		}
 
 		throw "could not find type of view: " + binding;
+	}
+
+	/**
+	 * called when the page version is changed
+	 */
+	function onChangePageVersion(event)
+	{
+		var pageVersionId = $(event.currentTarget).val();
+
+		this.changePageVersion(pageVersionId);
 	}
 
 	return Sidebar;

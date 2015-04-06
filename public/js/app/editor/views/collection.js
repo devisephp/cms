@@ -1,4 +1,4 @@
-devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, FieldView)
+devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'jquery-ui'], function($, View, FieldView)
 {
 	/**
 	 * List of events for this view
@@ -9,6 +9,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		'click #dvs-new-collection-instance': 	onNewCollectionInstanceBtnClicked,
 		'change #dvs-groups-select': 			onSelectedInstanceChanged,
 		'click [data-show-field]': 				onShowFieldBtnClicked,
+		'click [data-remove-instance-id]': 		onRemoveInstanceClicked,
 	};
 
 	/**
@@ -32,9 +33,9 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		this.data['node'] = node;
 		this.data['instances'] = node.data;
 
-		this.grid = renderGridViews(this.data.instances);
-		this.manage = View.make('sidebar.collections.manage', this.data);
-		this.groupSelector = View.make('sidebar.collections.selector', this.data);
+		this.grid = this.renderGridView();
+		this.manage = this.renderManageView();
+		this.groupSelector = this.renderGroupSelectorView();
 		this.field = $('<div/>');
 
 		this.sidebar.breadcrumbsView.add('All Editors', this, 'showGridView');
@@ -47,8 +48,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		View.registerEvents(this.manage, events, this);
 		View.registerEvents(this.groupSelector, events, this);
 
-		if (this.data.instances.length == 0) this.showManageView();
-		else this.showGridView();
+		if (this.data.instances.length === 0)
+		{
+			this.showManageView();
+		}
 
 		return this.field;
 	};
@@ -70,15 +73,19 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 */
 	CollectionView.prototype.showCollectionField = function(fieldId, instanceId)
 	{
-		// var fieldView = new FieldView(this.data.page);
-		// var field = this.findCollectionField(fieldId, instanceId);
-		// var html = fieldView.renderField(field);
+		var fieldView = new FieldView(this.sidebar);
+		var instance = View.data.find(this.data.instances, instanceId);
+		var field = View.data.find(instance.fields, fieldId);
+		var html = fieldView.renderField(field);
 
-		// this.field.empty();
-		// this.field.append(html);
-		// this.field.show();
-		// this.grid.hide();
-		// this.sidebar.saveButton.show();
+		this.sidebar.breadcrumbsView.add(field.human_name, this, 'showCollectionField', [fieldId, instanceId]);
+
+		this.field.empty();
+		this.field.append(html);
+		this.field.show();
+		this.manage.hide();
+		this.grid.hide();
+		this.sidebar.saveButton.show();
 	}
 
 	/**
@@ -86,8 +93,14 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 */
 	CollectionView.prototype.showGridView = function()
 	{
+		if (!this.selectedInstanceId) return;
+
 		this.manage.hide();
+		this.field.hide();
+		this.sidebar.saveButton.hide();
 		this.grid.show();
+		this.grid.find('li').removeClass('dvs-active');
+		this.grid.find('li#dvs-sidebar-group-' + this.selectedInstanceId).addClass('dvs-active');
 	}
 
 	/**
@@ -101,19 +114,49 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	}
 
 	/**
+	 * Renders the grid view with this data
+	 */
+	CollectionView.prototype.renderGridView = function()
+	{
+		return View.make('sidebar.collections.grid', this.data);
+	}
+
+	/**
+	 * Renders the manage view with this data
+	 */
+	CollectionView.prototype.renderManageView = function()
+	{
+		var view = View.make('sidebar.collections.manage', this.data);
+
+        var sortable = view.filter('#dvs-collection-instances-sortable').sortable({
+            axis: 'y',
+            stop: function() {
+            	console.log('sorting stopped');
+            },
+            placeholder: 'dvs-sort-placeholder'
+        });
+
+        sortable.disableSelection();
+
+		return view;
+	}
+
+	/**
+	 * Renders the group selector view with this data
+	 */
+	CollectionView.prototype.renderGroupSelectorView = function()
+	{
+		return View.make('sidebar.collections.selector', this.data)
+	}
+
+	/**
 	 * the selected instance has been changed, we need to change
 	 * our data nodes and refresh the views
 	 */
 	CollectionView.prototype.updateSelectedInstance = function(instanceId)
 	{
-		console.log('update the selected instance');
-		// this.manageView.hide();
-		// this.breadcrumbsView.hide();
-		// this.fieldView.hide();
-		// this.saveButtonView.hide();
-		// this.gridsView.find('li').removeClass('dvs-active');
-		// this.gridsView.find('#dvs-sidebar-elements-and-groups-' + instanceId + ' > li').addClass('dvs-active');
-		// this.gridsView.show();
+		this.selectedInstanceId = instanceId;
+		this.showGridView();
 	}
 
 	/**
@@ -130,23 +173,6 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	CollectionView.prototype.changed = function(event)
 	{
 		console.log('content changed inside of this collection...');
-	}
-
-	/**
-	 * loops through all the instances of this collection
-	 * view and spits out crap for it. we also render
-	 * an empty view in case no instances are found
-	 */
-	function renderGridViews(instances)
-	{
-		var view = "";
-
-		$.each(instances, function(index, instance)
-		{
-			view += View.render('sidebar.collections.grid', instance);
-		});
-
-		return view;
 	}
 
 	/**
@@ -171,8 +197,15 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		var button = $(event.currentTarget);
 		var fieldId = button.data('showField');
 		var collectionInstanceId = button.data('collectionInstance');
-		// this.showCollectionField(fieldId, collectionInstanceId);
-		console.log('show the field btn', fieldId, collectionInstanceId);
+		this.showCollectionField(fieldId, collectionInstanceId);
+	}
+
+	/**
+	 * remove this instance id from the collection set
+	 */
+	function onRemoveInstanceClicked(event)
+	{
+		console.log('removing this instance id', event);
 	}
 
 	/**

@@ -72,6 +72,30 @@ class FieldValue
 	}
 
 	/**
+	 * Overrides this data with the new
+	 * input array
+	 *
+	 * @param  array $input
+	 * @return void
+	 */
+	public function override($input)
+	{
+		$old = (array) json_decode($this->json);
+
+		foreach ($old as $key => $value)
+		{
+			unset($this->$key);
+		}
+
+		$this->json = json_encode($input);
+
+		foreach ($input as $key => $value)
+		{
+			$this->$key = $value;
+		}
+	}
+
+	/**
 	 * Merges in the array data into the
 	 * field object json
 	 *

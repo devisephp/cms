@@ -38,11 +38,15 @@ devise.define(['jquery', 'dvsTemplates'], function($, Templates)
     {
         var template = Templates.make(template, data);
 
-        var view = $('<div/>').html(template).contents();
+        return View.compile(template);
+    }
 
-        View.injectPartials(view, data);
-
-        return view;
+    /**
+     * Compiles the html into a jquery object
+     */
+    View.compile = function(html)
+    {
+        return $('<div/>').html(html).contents();
     }
 
     /**
@@ -51,23 +55,6 @@ devise.define(['jquery', 'dvsTemplates'], function($, Templates)
     View.render = function(template, data)
     {
         return Templates.make(template, data);
-    }
-
-    /**
-     * Inject in partials into our element
-     */
-    View.injectPartials = function(layout, data)
-    {
-        layout.find('[data-partial]').each(function(index, el)
-        {
-            var element = $(el);
-
-            var partial = element.data('partial');
-
-            var view = Templates.make('sidebar.partials.' + partial, data);
-
-            element.append(view);
-        });
     }
 
     /**

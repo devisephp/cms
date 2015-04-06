@@ -12,6 +12,11 @@ class ResponseHandlerTest extends \DeviseTestCase
 		$this->ResponseHandler = new ResponseHandler($this->CollectionsManager);
 	}
 
+	public function test_it_updates_field()
+	{
+		$this->markTestIncomplete();
+	}
+
 	public function test_it_stores_instance()
 	{
 		$this->CollectionsManager->shouldReceive('createNewInstance')->times(1);

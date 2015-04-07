@@ -77,6 +77,16 @@ class MigrationScaffolding {
 	}
 
 	/**
+	 * @param $targetFile
+	 * @param $template
+	 * @return mixed
+	 */
+	public function saveMigration($targetFile, $template)
+	{
+		return $this->Framework->File->put($targetFile, $template);
+	}
+
+	/**
 	 * @return bool
      */
 	private function tableDoesNotExist()
@@ -100,7 +110,7 @@ class MigrationScaffolding {
 
 		$template = $this->convertFields($template);
 
-		return $this->Framework->File->put($targetFile, $template);		
+		return $this->saveMigration($targetFile, $template);
 	}
 
 	/**
@@ -176,5 +186,4 @@ class MigrationScaffolding {
 
 		return $parameters;
 	}
-
 }

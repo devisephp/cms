@@ -10,7 +10,7 @@ class MigrationScaffoldingTest extends \DeviseTestCase
 
         $Framework = new \Devise\Support\Framework;
         $this->MigrationScaffolding = new MigrationScaffolding($Framework);
-        $this->MockMigrationScaffolding = m::mock('Devise\Models\Scaffolding\MigrationScaffolding[runMigration, getMigrationTemplatePath]', [$Framework]);
+        $this->MockMigrationScaffolding = m::mock('Devise\Models\Scaffolding\MigrationScaffolding[runMigration, getMigrationTemplatePath, saveMigration]', [$Framework]);
 
         $this->constants = [
 			'original'        => "little Widget",
@@ -77,13 +77,16 @@ class MigrationScaffoldingTest extends \DeviseTestCase
     public function test_it_doesnt_create_table_if_it_exists()
     {
     	$this->constants['snakeCasePlural'] = 'users';
-       	$result = $this->MigrationScaffolding->buildAndRun($this->constants, $this->fields);
+
+       	$result = $this->MockMigrationScaffolding->buildAndRun($this->constants, $this->fields);
         assertFalse($result);
     }
 
     public function test_it_creates_table_if_table_doesnt_exist()
     {
     	$this->MockMigrationScaffolding->shouldReceive('runMigration')->times(1)->andReturn(true);
+
+		$this->MockMigrationScaffolding->shouldReceive('saveMigration')->times(1)->andReturn(true);
 
     	$this->MockMigrationScaffolding->shouldReceive('getMigrationTemplatePath')->times(1)->andReturn('src/scaffolding/migrations/create_model.txt');
 

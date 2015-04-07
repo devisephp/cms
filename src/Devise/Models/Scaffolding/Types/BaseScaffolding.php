@@ -6,24 +6,56 @@ use Devise\Models\Scaffolding\TemplateScaffolding;
 use Devise\Models\Scaffolding\SanityChecksHelper;
 use Devise\Models\Scaffolding\MigrationScaffolding;
 
-class BaseScaffolding 
+/**
+ * Class BaseScaffolding
+ * @package Devise\Models\Scaffolding\Types
+ */
+class BaseScaffolding
 {
 	use \Illuminate\Console\AppNamespaceDetectorTrait;
 
+	/**
+	 * @var
+     */
 	public $constants;
 
+	/**
+	 * @var array
+     */
 	public $viewFiles;
 
+	/**
+	 * @var array
+     */
 	public $templates;
 
+	/**
+	 * @var array
+     */
 	public $srcFiles;
 
+	/**
+	 * @var array
+     */
 	public $pages;
 
+	/**
+	 * @var array
+     */
 	public $apis;
 
+	/**
+	 * @var
+     */
 	protected $fields;
 
+	/**
+	 * @param TemplateScaffolding $TemplateScaffolding
+	 * @param DeviseSeeder $Seeder
+	 * @param SanityChecksHelper $SanityChecksHelper
+	 * @param MigrationScaffolding $MigrationScaffolding
+	 * @param Framework $Framework
+     */
 	public function __construct(TemplateScaffolding $TemplateScaffolding, DeviseSeeder $Seeder, SanityChecksHelper $SanityChecksHelper, MigrationScaffolding $MigrationScaffolding, Framework $Framework)
 	{
 		$this->TemplateScaffolding   = $TemplateScaffolding;
@@ -38,6 +70,11 @@ class BaseScaffolding
 		$this->apis                  = [];
 	}
 
+	/**
+	 * @param $modelName
+	 * @param array $fields
+	 * @return bool
+     */
 	public function scaffold($modelName, $fields = [])
 	{
 		$this->fields = $fields;
@@ -79,6 +116,9 @@ class BaseScaffolding
 		}
 	}
 
+	/**
+	 * @param $modelName
+     */
 	protected function hydrateConstants($modelName)
 	{
 		$this->constants = [
@@ -103,16 +143,25 @@ class BaseScaffolding
 		];
 	}
 
-	protected function makeViewFiles() 
+	/**
+	 * @return bool
+     */
+	protected function makeViewFiles()
 	{
 		return $this->TemplateScaffolding->convertTemplatesAndSave($this->viewFiles, $this->constants, $this->fields);
 	}
 
-	protected function makeSrcFiles() 
+	/**
+	 * @return bool
+     */
+	protected function makeSrcFiles()
 	{
 		return $this->TemplateScaffolding->convertTemplatesAndSave($this->srcFiles, $this->constants, $this->fields);
 	}
 
+	/**
+	 * @param $pagesOrApis
+     */
 	protected function createPages($pagesOrApis)
 	{
 		$now = date('Y-m-d H:i:s', strtotime('now'));

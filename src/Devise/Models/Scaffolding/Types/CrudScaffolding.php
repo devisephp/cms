@@ -3,8 +3,17 @@
 use Devise\Support\Framework;
 use Devise\Templates\TemplatesManager;
 
+/**
+ * Class CrudScaffolding
+ * @package Devise\Models\Scaffolding\Types
+ */
 class CrudScaffolding extends BaseScaffolding
 {
+	/**
+	 * Sets the view files for this scaffold type
+	 *
+	 * @return void;
+     */
 	protected function setViewFiles()
 	{
 		$scaffoldSrcBase = base_path() . '/vendor/devisephp/cms/src/scaffolding/crud/views/';
@@ -64,6 +73,11 @@ class CrudScaffolding extends BaseScaffolding
 		];
 	}
 
+	/**
+	 * sets the scaffolding source files and targets for this scaffold type
+	 *
+	 * @return void;
+     */
 	protected function setSrcFiles()
 	{
 		$scaffoldSrcBase = base_path() . '/vendor/devisephp/cms/src/scaffolding/crud/src/';
@@ -82,6 +96,11 @@ class CrudScaffolding extends BaseScaffolding
 		];
 	}
 
+	/**
+	 * Sets the pages that need to be created for this scaffold to work in Devise
+	 *
+	 * @return void;
+     */
 	protected function setPages()
 	{
 		$this->pages = [
@@ -118,6 +137,11 @@ class CrudScaffolding extends BaseScaffolding
 		];
 	}
 
+	/**
+	 * Sets the APIs needed for this scaffold to work in Devise
+	 *
+	 * @return void
+     */
 	protected function setApis()
 	{
 		$this->apis = [

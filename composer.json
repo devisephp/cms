@@ -22,7 +22,7 @@
         "league/commonmark": "0.7.*"
     },
     "require-dev": {
-        "mockery/mockery": "dev-master",
+        "mockery/mockery": "0.9.3",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*"
     },

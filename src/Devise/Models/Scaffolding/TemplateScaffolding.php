@@ -3,15 +3,27 @@
 use Devise\Support\Framework;
 use Devise\Templates\TemplatesManager;
 
+/**
+ * Class TemplateScaffolding
+ * @package Devise\Models\Scaffolding
+ */
 class TemplateScaffolding {
 
+	/**
+	 * @param TemplatesManager $TemplatesManager
+	 * @param Framework $Framework
+     */
 	public function __construct(TemplatesManager $TemplatesManager, Framework $Framework)
 	{
 		$this->TemplatesManager = $TemplatesManager;
 		$this->Framework        = $Framework;
 	}
 
-	public function insertTemplateConfiguration($templates) 
+	/**
+	 * @param $templates
+	 * @return bool
+     */
+	public function insertTemplateConfiguration($templates)
 	{
 		$inputs = [];
 		foreach ($templates as $template => $file) {
@@ -23,6 +35,12 @@ class TemplateScaffolding {
 		return $this->TemplatesManager->storeMultipleTemplates($inputs);
 	}
 
+	/**
+	 * @param $files
+	 * @param $constants
+	 * @param $fields
+	 * @return bool
+     */
 	public function convertTemplatesAndSave($files, $constants, $fields)
 	{
 		$this->constants = $constants;
@@ -51,6 +69,12 @@ class TemplateScaffolding {
 	}
 
 
+	/**
+	 * @param $type
+	 * @param $template
+	 * @param $fields
+	 * @return mixed
+     */
 	protected function convertCreateAndUpdateFields($type, $template, $fields)
 	{
 		if (str_contains($template, '*|'.$type.'Fields|*')) {
@@ -72,6 +96,11 @@ class TemplateScaffolding {
 		return $template;
 	}
 
+	/**
+	 * @param $template
+	 * @param $fields
+	 * @return mixed
+     */
 	protected function convertIndexes($template, $fields)
 	{
 		if (str_contains($template, '*|indexHeaders|*') || str_contains($template, '*|indexFields|*') ) {
@@ -97,7 +126,12 @@ class TemplateScaffolding {
 		return $template;
 	}
 
-	protected function convertFields($template, $fields) 
+	/**
+	 * @param $template
+	 * @param $fields
+	 * @return mixed
+     */
+	protected function convertFields($template, $fields)
 	{
 		if (str_contains($template, '*|fields|*')) {
 
@@ -121,6 +155,10 @@ class TemplateScaffolding {
 		return $template;
 	}
 
+	/**
+	 * @param $field
+	 * @return string
+     */
 	private function getLabelText($field)
 	{
 		return ucwords( str_replace('_', ' ', 
@@ -128,6 +166,10 @@ class TemplateScaffolding {
 		));
 	}
 
+	/**
+	 * @param $field
+	 * @return string
+     */
 	private function getLabel($field)
 	{
 		$labelText = (isset($field['label'])) ? 
@@ -139,6 +181,10 @@ class TemplateScaffolding {
 		return "<?= Form::label('" . $labelText . "') ?>";
 	}
 
+	/**
+	 * @param $field
+	 * @return string
+     */
 	private function getField($field)
 	{
 		$default = isset($field['default']) ? $field['default'] : 'null';
@@ -174,6 +220,10 @@ class TemplateScaffolding {
 		}
 	}
 
+	/**
+	 * @param $datatype
+	 * @return string
+     */
 	private function getFormTypeFromDataType($datatype)
 	{
 		$datatype = is_array($datatype) ? $datatype[0] : $datatype;
@@ -195,6 +245,12 @@ class TemplateScaffolding {
 		}
 	}
 
+	/**
+	 * @param $field
+	 * @param $default
+	 * @param $options
+	 * @return string
+     */
 	private function buildSelectRangeField($field, $default, $options)
 	{
 		$begin = is_array($field['begin']) ? $field['begin'] : 'null';
@@ -203,6 +259,12 @@ class TemplateScaffolding {
 		return "<?= Form::selectRange('" . $field['name'] . "', " . $begin . ", " . $end . ", " . $default . ", ".  var_export($options, true) . ") ?>";
 	}
 
+	/**
+	 * @param $field
+	 * @param $options
+	 * @param $type
+	 * @return string
+     */
 	private function buildRadioField($field, $options, $type)
 	{
 		$value = is_array($field['value']) ? $field['value'] : 'null';
@@ -211,6 +273,12 @@ class TemplateScaffolding {
 		return "<?= Form::radio('" . $field['name'] . "', ". $value . ", ". $checked . ", ".  var_export($options, true) . ") ?>";
 	}
 
+	/**
+	 * @param $field
+	 * @param $options
+	 * @param $type
+	 * @return string
+     */
 	private function buildCheckboxField($field, $options, $type)
 	{
 		$value = is_array($field['value']) ? $field['value'] : 1;
@@ -219,21 +287,45 @@ class TemplateScaffolding {
 		return "<?= Form::checkbox('" . $field['name'] . "', ". $value . ", ". $checked . ", ".  var_export($options, true) . ") ?>";
 	}
 
+	/**
+	 * @param $field
+	 * @param $options
+	 * @return string
+     */
 	private function buildFileField($field, $options)
 	{
 		return "<?= Form::file('" . $field['name'] . "', ".  var_export($options, true) . ") ?>";
 	}
 
+	/**
+	 * @param $field
+	 * @param $options
+	 * @return string
+     */
 	private function buildPasswordField($field, $options)
 	{
 		return "<?= Form::password('" . $field['name'] . "', ".  var_export($options, true) . ") ?>";
 	}
 
+	/**
+	 * @param $field
+	 * @param $default
+	 * @param $options
+	 * @param $choices
+	 * @return string
+     */
 	private function buildSelectField($field, $default, $options, $choices)
 	{
 		return "<?= Form::select('" . $field['name'] . "', " . var_export($choices, true) . ", " . $default . ", ". var_export($options, true) . ") ?>";
 	}
 
+	/**
+	 * @param $field
+	 * @param $default
+	 * @param $options
+	 * @param $type
+	 * @return string
+     */
 	private function buildGenericField($field, $default, $options, $type)
 	{
 		return "<?= Form::" . $type . "('" . $field['name'] . "', " . $default . ", ".  var_export($options, true) . ") ?>";

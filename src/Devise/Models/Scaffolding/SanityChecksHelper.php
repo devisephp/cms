@@ -2,13 +2,26 @@
 
 use Devise\Support\Framework;
 
+/**
+ * Class SanityChecksHelper
+ * @package Devise\Models\Scaffolding
+ */
 class SanityChecksHelper {
 
+	/**
+	 * @param Framework $Framework
+     */
 	public function __construct(Framework $Framework)
 	{
 		$this->Framework = $Framework;
 	}
 
+	/**
+	 * @param $constants
+	 * @param $viewFiles
+	 * @param $srcFiles
+	 * @return bool
+     */
 	public function runSanityCheck($constants, $viewFiles, $srcFiles)
 	{
 		$this->constants = $constants;	
@@ -28,21 +41,32 @@ class SanityChecksHelper {
 	}
 
 
-	protected function checkViewsDirectory()
+	/**
+	 * @return bool
+     */
+	public function checkViewsDirectory()
 	{
 		$path = base_path() . '/resources/views/admin/' . $this->constants['viewsDirectory'];
 
 		return $this->checkDirectoryAndFileStatus($path, $this->viewFiles);
 	}
 
-	protected function checkSrcDirectory() 
+	/**
+	 * @return bool
+     */
+	public function checkSrcDirectory()
 	{
 		$path = app_path() . '/' . $this->constants['srcDirectory'];
 
 		return $this->checkDirectoryAndFileStatus($path, $this->srcFiles);
 	}
 
-	protected function checkDirectoryAndFileStatus($path, $files) 
+	/**
+	 * @param $path
+	 * @param $files
+	 * @return bool
+     */
+	protected function checkDirectoryAndFileStatus($path, $files)
 	{
 		if (!$this->Framework->File->isDirectory($path)) {
 

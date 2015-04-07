@@ -2,6 +2,10 @@
 
 use Devise\Models\Scaffolding\Types\CrudScaffolding;
 
+/**
+ * Class ScaffoldingManager
+ * @package Devise\Models\Scaffolding
+ */
 class ScaffoldingManager
 {
 
@@ -12,15 +16,25 @@ class ScaffoldingManager
 	 */
 	private $scaffoldingType;
 
-	private $scaffolding;
+    /**
+     * @var
+     */
+    private $scaffolding;
 
-	public function __construct(CrudScaffolding $CrudScaffolding)
+    /**
+     * @param CrudScaffolding $CrudScaffolding
+     */
+    public function __construct(CrudScaffolding $CrudScaffolding)
 	{
 		$this->scaffoldingType = 'crud';
 		$this->CrudScaffolding = $CrudScaffolding;
 	}
 
-	public function makeScaffolding($input)
+    /**
+     * @param $input
+     * @return bool
+     */
+    public function makeScaffolding($input)
 	{
 		switch($this->scaffoldingType)
 		{
@@ -31,10 +45,13 @@ class ScaffoldingManager
 
         $this->interpretInputData($input);
 
-		echo $this->scaffolding->scaffold($input['model_name'], $input['fields']);
+		return $this->scaffolding->scaffold($input['model_name'], $input['fields']);
 	}
 
-	public function setScaffoldingType($type)
+    /**
+     * @param $type
+     */
+    public function setScaffoldingType($type)
 	{
 		$this->scaffoldingType = $type;
 	}
@@ -46,7 +63,7 @@ class ScaffoldingManager
      * @param  array $input
      * @return array
      */
-    private function interpretInputData(&$input)
+    public function interpretInputData(&$input)
     {
         $input = array_except($input, ['_token']);
 

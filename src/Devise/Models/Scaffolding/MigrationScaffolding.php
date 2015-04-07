@@ -4,6 +4,10 @@ use Devise\Support\Framework;
 use \Artisan;
 use \Schema;
 
+/**
+ * Class MigrationScaffolding
+ * @package Devise\Models\Scaffolding
+ */
 class MigrationScaffolding {
 
 	/**
@@ -40,29 +44,53 @@ class MigrationScaffolding {
 		$this->fields = $fields;
 
 		if ($this->tableDoesNotExist()) {
-			$this->buildMigration();
-			$this->runMigration();
-
-			return true;
+			if($this->buildMigration()) {
+				return $this->runMigration();
+			}
 		}
 
 		return false;
 	}
 
+	/**
+	 * @return mixed
+     */
+	public function runMigration()
+	{
+		return Artisan::call('migrate');
+	}
+
+	/**
+	 * @return string
+     */
+	public function getMigrationTemplatePath()
+	{
+		return base_path() . '/vendor/devisephp/cms/src/scaffolding/migrations/create_model.txt';
+	}
+
+	/**
+	 * @return string
+     */
+	public function getTargetFilePath()
+	{
+		return base_path() . '/database/migrations/' . date('Y_m_d_His') . '_create_'. $this->constants['snakeCasePlural'] .'.php';
+	}
+
+	/**
+	 * @return bool
+     */
 	private function tableDoesNotExist()
 	{
 		return Schema::hasTable($this->constants['snakeCasePlural']) !== true;
 	}
 
-	private function runMigration()
-	{
-		Artisan::call('migrate');
-	}
-
+	/**
+	 * @return mixed
+     */
 	private function buildMigration()
 	{
-		$migrationTemplate = base_path() . '/vendor/devisephp/cms/src/scaffolding/migrations/create_model.txt';
-		$targetFile = base_path() . '/database/migrations/' . date('Y_m_d_His') . '_create_'. $this->constants['snakeCasePlural'] .'.php';
+		$migrationTemplate = $this->getMigrationTemplatePath();
+		$targetFile = $this->getTargetFilePath();;
 
 		$template = $this->Framework->File->get($migrationTemplate);
 
@@ -72,10 +100,14 @@ class MigrationScaffolding {
 
 		$template = $this->convertFields($template);
 
-		$this->Framework->File->put($targetFile, $template);		
+		return $this->Framework->File->put($targetFile, $template);		
 	}
 
-	private function convertFields($template) 
+	/**
+	 * @param $template
+	 * @return mixed
+     */
+	private function convertFields($template)
 	{
 		// Build Fields
 		$replacement = $this->buildFields();
@@ -89,6 +121,9 @@ class MigrationScaffolding {
 		return $template;
 	}
 
+	/**
+	 * @return string
+     */
 	private function buildFields()
 	{
 		$replacementFields = '';
@@ -108,6 +143,9 @@ class MigrationScaffolding {
 		return $replacementFields;
 	}
 
+	/**
+	 * @return string
+     */
 	private function buildIndexes()
 	{
 		$replacementIndexes = "";
@@ -122,6 +160,10 @@ class MigrationScaffolding {
 		return $replacementIndexes;
 	}
 
+	/**
+	 * @param $field
+	 * @return string
+     */
 	private function buildParameters($field)
 	{
 		$parameters = '';

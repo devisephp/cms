@@ -6,11 +6,34 @@ use \Schema;
 
 class MigrationScaffolding {
 
+	/**
+	 * These are the constants built upon the name of 
+	 * model we are building 
+	 * @var array
+	 */
+	protected $constants;
+
+	/**
+	 * Fields of the model
+	 * @var array
+	 */
+	protected $fields;
+
+	/**
+	 * Constructor - initialize and inject the framework
+	 * @param Framework $Framework 
+	 */
 	public function __construct(Framework $Framework)
 	{
 		$this->Framework = $Framework;
 	}
 
+	/**
+	 * The primary initialization for building migrations
+	 * @param  array $constants 
+	 * @param  array $fields    
+	 * @return bool            Did we make migrations or not?
+	 */
 	public function buildAndRun($constants, $fields)
 	{
 		$this->constants = $constants;
@@ -19,7 +42,11 @@ class MigrationScaffolding {
 		if ($this->tableDoesNotExist()) {
 			$this->buildMigration();
 			$this->runMigration();
+
+			return true;
 		}
+
+		return false;
 	}
 
 	private function tableDoesNotExist()

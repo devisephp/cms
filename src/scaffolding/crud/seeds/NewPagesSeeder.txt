@@ -1,0 +1,24 @@
+<?php
+
+class *|modelName|*NewPagesSeeder extends DeviseSeeder
+{
+    public function run()
+    {
+        $pages = *|seederPages|*
+
+        $now = date('Y-m-d H:i:s', strtotime('now'));
+
+        $dvsPages = $this->findOrCreateRows('dvs_pages', 'route_name', $pages);
+
+        foreach ( $dvsPages as $dvsPage )
+        {
+            $this->findOrCreateRow('dvs_page_versions', 'page_id', [
+                'page_id'            => $dvsPage->id,
+                'created_by_user_id' => 1,
+                'name'               => 'Default',
+                'starts_at'          => $now,
+            ]);
+        }
+    }
+
+}

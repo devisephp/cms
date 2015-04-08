@@ -11,7 +11,7 @@
                 <option value="url">URL</option>
             </select>
 
-            <select name="item[<?=$item->id?>][permission]" class="form-control btn btn-default pull-left">
+            <select name="item[{cid}][permission]" class="form-control btn btn-default pull-left">
                 <option value="">No Restrictions</option>
                 @foreach ($availablePermissions as $availablePermission)
                     <option value="<?= $availablePermission ?>">

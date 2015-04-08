@@ -1487,7 +1487,7 @@ class DevisePagesSeeder extends DeviseSeeder
                 'slug'                    => '/admin/models',
                 'short_description'       => 'Admin Model Creator Attempt Store',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Models\Scaffolding\ScaffoldingManager.makeScaffolding',
+                'response_path'           => 'Devise\Models\Scaffolding\ScaffoldingResponseHandler.requestCreateNewModel',
                 'response_params'         => 'input'
             )
 		);

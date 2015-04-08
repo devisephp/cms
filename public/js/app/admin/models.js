@@ -10,7 +10,7 @@ devise.define(['jquery', 'jquery-ui', 'jqNestedSortable'], function ( $ )
             handle: 'div',
             items: 'li',
             toleranceElement: '> div',
-            maxLevels: 2
+            maxLevels: 1
         });
 
         //

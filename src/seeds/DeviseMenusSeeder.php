@@ -100,9 +100,16 @@ class DeviseMenusSeeder extends DeviseSeeder
 			array(
 				'menu_id' => $menuId,
 				'parent_item_id' => 8,
+				'name' => 'Create Models',
+				'url' => '/admin/models/create',
+				'position' => 13,
+			),
+			array(
+				'menu_id' => $menuId,
+				'parent_item_id' => 8,
 				'name' => 'Settings',
 				'url' => '/admin/settings',
-				'position' => 13,
+				'position' => 14,
 			),
 		);
 

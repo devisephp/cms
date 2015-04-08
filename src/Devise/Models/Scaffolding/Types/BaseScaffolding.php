@@ -106,7 +106,7 @@ class BaseScaffolding
 			// Create Pages in Database
 			$this->createPages($this->pages);
 
-			// Create Pages in Database
+			// Create APIs in Database
 			$this->createPages($this->apis);
 
 			return true;
@@ -121,18 +121,24 @@ class BaseScaffolding
      */
 	protected function hydrateConstants($modelName)
 	{
-		$this->constants = [
+		$englishConstants = [
 			
 			'original'        => $modelName, //little Widget
 			'singular'        => strtolower(str_singular($modelName)), // little widget
 			'singularCase'    => ucwords(str_singular($modelName)), // Little Widget
 			'plural'          => strtolower(str_plural($modelName)), // little widgets
 			'pluralCase'      => ucwords(str_plural($modelName)), // Little Widgets
-			'snakeCase'       => str_replace(' ', '', snake_case(str_singular($modelName))), // little_widget
-			'snakeCasePlural' => str_replace(' ', '', snake_case(str_plural($modelName))), // little_widgets
+		];
+
+		$modelName = htmlspecialchars($modelName);
+		$modelName = str_replace(' ', '_', $modelName);
+
+		$codeConstants = [
+			'snakeCase'       => snake_case(str_singular($modelName)), // little_widget
+			'snakeCasePlural' => snake_case(str_plural($modelName)), // little_widgets
 			'camelCase'       => camel_case(str_singular($modelName)), // littleWidget
 			'camelCasePlural' => camel_case(str_plural($modelName)), // littleWidgets
-			'viewsDirectory'  => str_replace(' ', '', snake_case(str_plural($modelName))), // little_widgets
+			'viewsDirectory'  => snake_case(str_plural($modelName)), // little_widgets
 			'srcDirectory'    => ucfirst(camel_case(str_plural($modelName))), // LittleWidgets
 			'modelName'       => ucfirst(camel_case(str_singular($modelName))), // LittleWidget
 			'className'       => studly_case(str_plural($modelName)), // LittleWidgets
@@ -141,6 +147,8 @@ class BaseScaffolding
 			'pluralVar'       => lcfirst(camel_case(str_plural($modelName))), // littleWidgets
 			'namespace'       => trim($this->getAppNamespace(), '\\')
 		];
+
+		$this->constants = $englishConstants + $codeConstants;
 	}
 
 	/**

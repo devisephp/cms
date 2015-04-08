@@ -1,13 +1,15 @@
 <?php namespace Devise\Models\Scaffolding;
 
-use Devise\Models\Scaffolding\Types\CrudScaffolding;
-
 /**
  * Class ScaffoldingManager
  * @package Devise\Models\Scaffolding
  */
 class ScaffoldingManager
 {
+
+    public $errors;
+
+    public $message;
 
 	/**
 	 * The type of scaffolding we are going to make
@@ -22,38 +24,16 @@ class ScaffoldingManager
     private $scaffolding;
 
     /**
-     * @param CrudScaffolding $CrudScaffolding
-     */
-    public function __construct(CrudScaffolding $CrudScaffolding)
-	{
-		$this->scaffoldingType = 'crud';
-		$this->CrudScaffolding = $CrudScaffolding;
-	}
-
-    /**
      * @param $input
      * @return bool
      */
-    public function makeScaffolding($input)
+    public function makeScaffolding($input, $scaffolding)
 	{
-		switch($this->scaffoldingType)
-		{
-			default:
-				$this->scaffolding = $this->CrudScaffolding;
-			break;
-		}
+        $this->scaffolding = $scaffolding;
 
         $this->interpretInputData($input);
 
 		return $this->scaffolding->scaffold($input['model_name'], $input['fields']);
-	}
-
-    /**
-     * @param $type
-     */
-    public function setScaffoldingType($type)
-	{
-		$this->scaffoldingType = $type;
 	}
 
     /**
@@ -173,9 +153,9 @@ class ScaffoldingManager
      */
     private function castToBoolean(&$value)
     {
-        if($value == 'on') {
+        if ($value == 'on') {
             $value = true;
-        } else if($value == 'off') {
+        } else if ($value == 'off') {
             $value = false;
         }
     }

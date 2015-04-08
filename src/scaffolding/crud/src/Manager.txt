@@ -81,8 +81,7 @@ class *|className|*Manager
 	public function updateRules()
 	{
  		return array(
-        	'category' => 'required',
-        	'title' => 'min:3'
+        	// 'title' => 'min:3'
     	);
 	}
 

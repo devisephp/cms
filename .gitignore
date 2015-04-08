@@ -9,6 +9,6 @@ tests/bootstrap/app/storage
 node_modules
 /.sami
 /.idea
-
+tests/functional/test.png
 
 tests/_output/*

@@ -56,7 +56,7 @@
 
                                 <label>
                                     <?= Form::hidden('fields[0][displayIndex]', 'off') ?>
-                                    <?= Form::checkbox('fields[0][displayIndex]', 'on', true) ?> On Index
+                                    <?= Form::checkbox('fields[0][displayIndex]', 'on', false) ?> On Index
                                 </label>
 
                                 <label><?= Form::checkbox('fields[0][index]', 'index', true) ?> Is Index</label>

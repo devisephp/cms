@@ -22,6 +22,11 @@ class SeederScaffolding {
 	protected $fields;
 
 	/**
+	 * @var
+	 */
+	private $newSeeds;
+
+	/**
 	 * @param Framework $Framework
      */
 	public function __construct(Framework $Framework)
@@ -38,7 +43,6 @@ class SeederScaffolding {
 		$this->constants = $constants;
 
 		if($this->buildAllSeeders()) {
-			$this->injectInDatabaseSeeder();
 			$this->runSeeds();
 		}
 
@@ -50,7 +54,10 @@ class SeederScaffolding {
      */
 	public function runSeeds()
 	{
-		return Artisan::call('db:seed --class="'. $this->constants['snakeCasePlural'] .'Seeder');
+		foreach($this->newSeeds as $seed) {
+			Artisan::call('db:seed', ['--class' => $seed]);
+		}
+		return true;
 	}
 
 	/**
@@ -76,6 +83,8 @@ class SeederScaffolding {
 	public function getTargetFilePath($templateFile)
 	{
 		$nameOfFile = $this->Framework->File->name($templateFile);
+		$this->newSeeds[] = $this->constants['modelName'] . $nameOfFile;
+
 		return base_path() . '/database/seeds/' . $this->constants['modelName'] . $nameOfFile . '.php';
 	}
 
@@ -101,19 +110,9 @@ class SeederScaffolding {
 		foreach($files as $file) {
 			$this->buildSeeder($file);
 		}
+
+		return true;
 	}
-
-	/**
-	 *
-     */
-	private function injectInDatabaseSeeder()
-	{
-		$databaseSeederFilePath = $this->getDatabaseSeederPath();
-		$databaseSeederfile = $this->Framework->File->get($databaseSeederFilePath);
-
-		$start = strpos($databaseSeederfile, "run()");
-	}
-
 
 	/**
 	 * @param $templateFile
@@ -126,7 +125,7 @@ class SeederScaffolding {
 		$template = $this->Framework->File->get($templateFile);
 
 		foreach($this->constants as $key => $value) {
-			$template = str_replace('*|'.$key.'|*', $value, $template);
+			$template = str_replace('*|' . $key . '|*', $value, $template);
 		}
 
 		return $this->saveSeed($targetFile, $template);

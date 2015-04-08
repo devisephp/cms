@@ -20,4 +20,8 @@
   .app-spotlights {
     @include dvs-sections(#29a8df);
   }
+
+  .app-links {
+    @include dvs-sections(#d2de2c);
+  }
 }

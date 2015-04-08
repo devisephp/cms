@@ -29,6 +29,8 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 
 		this.view.append(this.renderField(node.data, true));
 
+		this.sidebar.breadcrumbsView.add(node.human_name, this, 'renderField', [node.data, true]);
+
 		this.sidebar.saveButton.show();
 
 		View.registerEvents(this.view, events, this);

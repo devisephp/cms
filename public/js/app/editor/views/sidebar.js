@@ -38,7 +38,7 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 	 */
 	Sidebar.prototype.render = function(node)
 	{
-		this.contentView = createViewFrom(this, node.binding);
+		this.contentView = this.createViewFromBinding(node.binding);
 		this.breadcrumbsView = new BreadCrumbsView;
 
 		this.layout = View.make('sidebar.layout', { page: this.page, node: node });
@@ -147,16 +147,16 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 	/**
 	 * Creates a view from this node type
 	 */
-	function createViewFrom(sidebar, binding)
+	Sidebar.prototype.createViewFromBinding = function(binding)
 	{
 		switch (binding)
 		{
-			case 'field': 		return new FieldView(sidebar);
-			case 'collection': 	return new CollectionView(sidebar);
-			case 'model': 		return new ModelView(sidebar);
-			case 'attribute': 	return new AttributeView(sidebar);
-			case 'group': 		return new GroupView(sidebar);
-			case 'creator': 	return new CreatorView(sidebar);
+			case 'field': 		return new FieldView(this);
+			case 'collection': 	return new CollectionView(this);
+			case 'model': 		return new ModelView(this);
+			case 'attribute': 	return new AttributeView(this);
+			case 'group': 		return new GroupView(this);
+			case 'creator': 	return new CreatorView(this);
 		}
 
 		throw "could not find type of view: " + binding;

@@ -12,7 +12,7 @@ class CrudScaffolding extends BaseScaffolding
 	protected function extendConstansts() {
 		$pages = array_merge($this->pages, $this->apis);
 
-		$this->constants['seederPages'] = var_export($pages, true);
+		$this->constants['seederPages'] = var_export($pages, true) . ';';
 		$this->constants['scaffoldingType'] = 'crud';
 	}
 

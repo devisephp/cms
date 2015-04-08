@@ -12,6 +12,7 @@ class ScaffoldingManagerTest extends \DeviseTestCase
         $SeederScaffolding = m::mock('Devise\Models\Scaffolding\SeederScaffolding');
         $SanityChecksHelper = m::mock('Devise\Models\Scaffolding\SanityChecksHelper');
         $MigrationScaffolding = m::mock('Devise\Models\Scaffolding\MigrationScaffolding');
+        $DeviseSeeder = m::mock('Devise\Support\DeviseSeeder');
 
         $Framework = new \Devise\Support\Framework;
         $this->CrudScaffolding = new \Devise\Models\Scaffolding\Types\CrudScaffolding(
@@ -19,6 +20,7 @@ class ScaffoldingManagerTest extends \DeviseTestCase
             $SanityChecksHelper,
             $MigrationScaffolding,
             $SeederScaffolding,
+            $DeviseSeeder,
             $Framework
         );
         $this->ScaffoldingManager = new \Devise\Models\Scaffolding\ScaffoldingManager($this->CrudScaffolding);

@@ -38,26 +38,11 @@ class SeederScaffolding {
 	 * @param $constants
 	 * @return bool
      */
-	public function buildAndRun($constants)
+	public function build($constants)
 	{
 		$this->constants = $constants;
 
-		if($this->buildAllSeeders()) {
-			$this->runSeeds();
-		}
-
-		return false;
-	}
-	
-	/**
-	 * @return mixed
-     */
-	public function runSeeds()
-	{
-		foreach($this->newSeeds as $seed) {
-			Artisan::call('db:seed', ['--class' => $seed]);
-		}
-		return true;
+		return $this->buildAllSeeders();
 	}
 
 	/**

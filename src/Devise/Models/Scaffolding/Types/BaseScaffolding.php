@@ -5,6 +5,7 @@ use Devise\Models\Scaffolding\TemplateScaffolding;
 use Devise\Models\Scaffolding\SanityChecksHelper;
 use Devise\Models\Scaffolding\MigrationScaffolding;
 use Devise\Models\Scaffolding\SeederScaffolding;
+use Devise\Support\DeviseSeeder;
 
 /**
  * Class BaseScaffolding
@@ -61,12 +62,14 @@ class BaseScaffolding
 		SanityChecksHelper $SanityChecksHelper,
 		MigrationScaffolding $MigrationScaffolding,
 		SeederScaffolding $SeederScaffolding,
+		DeviseSeeder $DeviseSeeder,
 		Framework $Framework
 	) {
 		$this->TemplateScaffolding   = $TemplateScaffolding;
 		$this->SanityChecksHelper    = $SanityChecksHelper;
 		$this->MigrationScaffolding  = $MigrationScaffolding;
 		$this->SeederScaffolding     = $SeederScaffolding;
+		$this->Seeder                = $DeviseSeeder;
 		$this->Framework             = $Framework;
 		$this->viewFiles             = [];
 		$this->templates             = [];
@@ -111,7 +114,13 @@ class BaseScaffolding
 			$this->TemplateScaffolding->insertTemplateConfiguration($this->viewFiles);
 
 			// Build it and run it
-			$this->SeederScaffolding->buildAndRun($this->constants);
+			$this->SeederScaffolding->build($this->constants);
+
+			// Create Pages in Database
+			$this->createPages($this->pages);
+
+			// Create APIs in Database
+			$this->createPages($this->apis);
 
 			return true;
 
@@ -169,5 +178,25 @@ class BaseScaffolding
 	protected function makeSrcFiles()
 	{
 		return $this->TemplateScaffolding->convertTemplatesAndSave($this->srcFiles, $this->constants, $this->fields);
+	}
+
+	/**
+	 * @param $pagesOrApis
+	 */
+	protected function createPages($pagesOrApis)
+	{
+		$now = date('Y-m-d H:i:s', strtotime('now'));
+
+		foreach($pagesOrApis as $page) {
+
+			$dvsPage = $this->Seeder->findOrCreateRow('dvs_pages', 'route_name', $page);
+
+			$this->Seeder->findOrCreateRow('dvs_page_versions', 'page_id', [
+				'page_id'            => $dvsPage->id,
+				'created_by_user_id' => 1,
+				'name'               => 'Default',
+				'starts_at'          => $now,
+			]);
+		}
 	}
 }

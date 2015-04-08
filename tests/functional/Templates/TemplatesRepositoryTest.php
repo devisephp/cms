@@ -15,7 +15,7 @@ class TemplatesRepositoryTest extends \DeviseTestCase
 
         $this->Filesystem = new Filesystem;
 
-        $this->ConfigFileManager = m::mock(new ConfigFileManager($this->Filesystem));
+        $this->ConfigFileManager = m::mock(new ConfigFileManager($this->Filesystem, $this->Framework));
         $this->ConfigFileManager->shouldReceive('saveToFile')->andReturn(['some' => 'stuff']);
 
         $this->TemplatesManager = new TemplatesManager($this->ConfigFileManager, $this->Framework);

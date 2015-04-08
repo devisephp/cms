@@ -15,7 +15,7 @@ class PermissionsManagerTest extends \DeviseTestCase
 
         $this->Filesystem = new Filesystem;
 
-        $this->ConfigFileManager = m::mock(new ConfigFileManager($this->Filesystem));
+        $this->ConfigFileManager = m::mock(new ConfigFileManager($this->Filesystem, $this->Framework));
         $this->ConfigFileManager->shouldReceive('saveToFile')->andReturn(['some' => 'stuff']);
 
         $this->PermissionsManager = new PermissionsManager($this->ConfigFileManager, $this->Framework);

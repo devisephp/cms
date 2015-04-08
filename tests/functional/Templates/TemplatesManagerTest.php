@@ -15,7 +15,7 @@ class TemplatesManagerTest extends \DeviseTestCase
 
         $this->Filesystem = new Filesystem;
 
-        $this->ConfigFileManager = m::mock(new ConfigFileManager($this->Filesystem));
+        $this->ConfigFileManager = m::mock(new ConfigFileManager($this->Filesystem, $this->Framework));
         $this->TemplatesManager = new TemplatesManager($this->ConfigFileManager, $this->Framework);
     }
     

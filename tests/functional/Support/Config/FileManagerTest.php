@@ -9,9 +9,10 @@ class FileManagerTest extends \DeviseTestCase
     {
         parent::setUp();
 
+        $Framework = new \Devise\Support\Framework;
         $this->Filesystem = m::mock(new Filesystem);
 
-        $this->FileManager = new FileManager($this->Filesystem);
+        $this->FileManager = new FileManager($this->Filesystem, $Framework);
     }
 
     public function test_it_can_save_to_file()

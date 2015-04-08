@@ -32,6 +32,6 @@ class ApiPagesManagerTest extends \DeviseTestCase
         $this->PageVersionManager->shouldReceive('createDefaultPageVersion')->times(0);
         $page = $this->ApiPagesManager->createNewPage(['title' => 'Some page title', 'slug' => '/some-page-title', 'http_verb' => 'get']);
         assertFalse($page);
-        assertEquals(count($this->ApiPagesManager->errors), 2);
+        assertEquals(count($this->ApiPagesManager->errors), 1);
     }
 }

@@ -28,6 +28,7 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 		this.breadcrumbs = null;
 		this.grid = null;
 		this.manageCollection = null;
+		this.validationErrors = null;
 		this.content = null;
 		this.saveButton = null;
 	}
@@ -49,6 +50,7 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 		this.breadcrumbs = this.layout.filter('[data-view="breadcrumbs"]');
 		this.grid = this.layout.filter('[data-view="grid"]');
 		this.manageCollection = this.layout.filter('[data-view="manage-collection"]');
+		this.validationErrors = this.layout.filter('[data-view="validation-errors"]');
 		this.content = this.layout.find('[data-view="content"]');
 		this.saveButton = this.layout.find('[data-view="save-button"]');
 
@@ -124,7 +126,22 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 			value = el.is(':checked') ? value : false;
 		}
 
-		this.contentView.changed(name, value, event);
+		switch (name)
+		{
+			case 'content_requested':
+				typeof this.contentView.contentRequestedChanged === 'function' && this.contentView.contentRequestedChanged(value, event);
+			break;
+
+			case 'field_scope':
+				typeof this.contentView.fieldScopeChanged === 'function' && this.contentView.fieldScopeChanged(value, event);
+			break;
+
+			case '_reset_values':
+				typeof this.contentView.resetValuesChanged === 'function' && this.contentView.resetValuesChanged(value, event);
+			break;
+
+			default: this.contentView.changed(name, value, event);
+		}
 	}
 
 	/**

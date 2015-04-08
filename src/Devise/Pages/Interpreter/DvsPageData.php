@@ -560,6 +560,7 @@ class DvsPageData
 			'human_name' => $collectionName,
 			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
 			'schema' => $collectionFields,
+			'collection' => $node['data'],
 			'data' => $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($node['data']->id, $this->pageVersionId),
 		];
 	}

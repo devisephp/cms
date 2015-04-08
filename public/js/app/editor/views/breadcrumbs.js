@@ -71,9 +71,13 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 	 */
 	BreadCrumbsView.prototype.back = function(origIndex)
 	{
+		if (typeof origIndex === 'undefined') {
+			origIndex = this.breadcrumbs.length - 2;
+		}
+
 		var index = parseInt(origIndex);
 
-		if (isNaN(index) || index > this.breadcrumbs.length - 1) {
+		if (isNaN(index) || index > this.breadcrumbs.length - 1 || index < 0) {
 			throw "cannot go back to " + origIndex;
 		}
 

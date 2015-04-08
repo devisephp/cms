@@ -1,9 +1,11 @@
 <div id="dvs-sidebar-groups">
 
 	<select class="large dvs-select" id="dvs-groups-select" name="groups">
-		{{#each instances}}
-			<option value="{{id}}">{{name}}</option>
-		{{/each}}
+		{{#select selectedInstanceId}}
+			{{#each instances}}
+				<option value="{{id}}">{{name}}</option>
+			{{/each}}
+		{{/select}}
 	</select>
 
 	<button id="dvs-sidebar-manage-groups" class="dvs-button dvs-button-secondary dvs-button-small dvs-button-solid">Collections</button>

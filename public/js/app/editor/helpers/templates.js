@@ -27,7 +27,7 @@ devise.define(['handlebars'], function(handlebars)
 	 * register helper for when
 	 */
 	handlebars.registerHelper('when', function(value, option1, option2) {
-		if (value) return option1;
+		if (value && value != '0' && value != 'false') return option1;
 
 		if (typeof option2 !== 'string') return '';
 
@@ -109,14 +109,14 @@ devise.define(['handlebars'], function(handlebars)
 	 * register helper for checked
 	 */
 	handlebars.registerHelper("checked", function(value, options) {
-		return value ? 'checked' : '';
+		return value && value != '0' && value != 'false' ? 'checked' : '';
 	});
 
 	/**
 	 * register helper for disabled
 	 */
 	handlebars.registerHelper("disabled", function(value, options) {
-		return value ? 'disabled' : '';
+		return value && value != '0' && value != 'false' ? 'disabled' : '';
 	});
 
 	/**

@@ -62,6 +62,22 @@ class DvsModelField extends Eloquent
     }
 
     /**
+     * Get the messages for this field type
+     *
+     * @return []
+     */
+    public function getMessagesAttribute()
+    {
+        $config = config('devise.model-mapping');
+
+        $config = array_get($config, $this->model_type, []);
+
+        $config = array_get($config, 'messages', []);
+
+        return $config;
+    }
+
+    /**
      * Get the picks for this field type
      *
      * @return []

@@ -92,8 +92,29 @@ devise.define(['jquery', 'dvsTemplates'], function($, Templates)
 
         $.each(data, function(index, item)
         {
-            if (item.id == id) {
+            if (item.id == id)
+            {
                 found = item;
+                return false; // break from loop
+            }
+        });
+
+        return found;
+    }
+
+    /**
+     * Finds the index of this item with an id
+     * inside of the data array
+     */
+    View.data.findIndex = function(data, id)
+    {
+        var found = -1;
+
+        $.each(data, function(index, item)
+        {
+            if (item.id == id)
+            {
+                found = index;
                 return false; // break from loop
             }
         });

@@ -32,11 +32,25 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 
 		this.view = $('<div/>');
 
-		this.view.append(this.fieldView.renderField(this.data.field));
+		this.renderField();
+
+		this.sidebar.breadcrumbsView.add(node.human_name, this, 'renderField');
 
 		View.registerEvents(this.view, events, this);
 
 		return this.view;
+	}
+
+	/**
+	 * renders the field view
+	 */
+	AttributeView.prototype.renderField = function()
+	{
+		this.view.empty();
+
+		this.view.append(this.fieldView.renderField(this.data.field));
+
+		this.sidebar.saveButton.show();
 	}
 
 	/**
@@ -55,15 +69,82 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 */
 	AttributeView.prototype.save = function()
 	{
-		console.log('save the attribute now', this.data.field);
+		var self = this;
+		var url = this.data.page.url('update_model_attribute', {id: this.data.field.id});
+		var data = {
+			'field': this.data.field,
+			'page': this.data.page.info
+		};
+
+		this.sidebar.validationErrors.empty();
+
+		$.ajax(url, {
+			method: 'PUT',
+			data: data,
+			success: function() { onSaveSuccess.apply(self, arguments); },
+			error: function() { onSaveError.apply(self, arguments); }
+		});
 	}
 
 	/**
 	 * called when our form content changes
 	 */
-	AttributeView.prototype.changed = function(event)
+	AttributeView.prototype.changed = function(key, value, event)
 	{
-		console.log('content changed inside of this attribute...');
+		this.data.field.values[key] = value;
+	}
+
+	/**
+	 * Changed when the content is requested field is changed
+	 */
+	AttributeView.prototype.contentRequestedChanged = function(shouldRequestContent)
+	{
+		this.data.field.content_requested = shouldRequestContent;
+	}
+
+	/**
+	 * reset this fields value if it is okay
+	 */
+	AttributeView.prototype.resetValuesChanged = function(shouldReset)
+	{
+		if (!shouldReset) return;
+
+		var self = this;
+
+		setTimeout(function()
+		{
+			self.data.field.values = {}
+			self.renderField();
+		}, 500);
+	}
+
+	/**
+	 * save was successful, update field values
+	 * to reflect what is returned from the server
+	 */
+	function onSaveSuccess(data, response, xhr)
+	{
+		this.data.field = data.field;
+		// trigger some sort of live update here?
+	}
+
+	/**
+	 * save failed to update field, probably
+	 * should let the user know or something
+	 * with validation messages
+	 */
+	function onSaveError(xhr, textStatus, errorThrown)
+	{
+		if (xhr.status !== 403)
+		{
+			console.warn('save error', xhr, textStatus, errorThrown);
+			alert('Could not save field due to unknown error.');
+			return;
+		}
+
+		var html = View.make('sidebar.partials.errors', {'errors': xhr.responseJSON.errors});
+		this.sidebar.validationErrors.empty();
+		this.sidebar.validationErrors.append(html);
 	}
 
 	return AttributeView;

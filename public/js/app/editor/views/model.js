@@ -31,7 +31,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		this.field = $('<div/>');
 		this.grid = View.make('sidebar.models.grid', this.data);
 		this.sidebar.grid.append(this.grid);
-		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showModelView');
+		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showGridView');
 
 		View.registerEvents(this.grid, events, this);
 
@@ -63,6 +63,16 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	}
 
 	/**
+	 * Shows the validation errors
+	 */
+	ModelView.prototype.showValidationErrorsView = function(errors)
+	{
+		var html = View.make('sidebar.partials.errors', {'errors': errors});
+		this.sidebar.validationErrors.empty();
+		this.sidebar.validationErrors.append(html);
+	}
+
+	/**
 	 * Renders a model field
 	 */
 	ModelView.prototype.renderModelField = function(fieldId)
@@ -79,7 +89,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	/**
 	 * Shows the model view
 	 */
-	ModelView.prototype.showModelView = function()
+	ModelView.prototype.showGridView = function()
 	{
 		this.field.empty();
 		this.grid.show();
@@ -98,6 +108,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 			'page': this.data.page.info
 		};
 
+		this.sidebar.validationErrors.empty();
+
 		$.ajax(url, {
 			method: 'PUT',
 			data: data,
@@ -111,34 +123,30 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 */
 	ModelView.prototype.changed = function(key, value, event)
 	{
-		var field = this.data.field;
+		this.data.field.values[key] = value;
+	}
 
-		switch (key)
-		{
-			case 'content_requested':
-				field.content_requested = value;
-			break;
-
-			case '_reset_values':
-				this.resetFieldValues(field, value);
-			break;
-
-			default: field.values[key] = value;
-		}
+	/**
+	 * Changed when the content is requested field is changed
+	 */
+	ModelView.prototype.contentRequestedChanged = function(shouldRequestContent)
+	{
+		this.data.field.content_requested = shouldRequestContent;
 	}
 
 	/**
 	 * reset this fields value if it is okay
 	 */
-	ModelView.prototype.resetFieldValues = function(field, shouldReset)
+	ModelView.prototype.resetValuesChanged = function(shouldReset)
 	{
 		if (!shouldReset) return;
 
 		var self = this;
+		var field = this.data.field;
 
 		setTimeout(function()
 		{
-			field.values = {};
+			field.values = {}
 			self.field.empty();
 			self.field.append(self.renderModelField(field.id));
 		}, 500);
@@ -150,9 +158,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 */
 	function onSaveSuccess(data, response, xhr)
 	{
-		this.field.empty();
-		this.data.field = data;
-		this.field.append(this.renderModelField(data.id));
+		this.data.fields = data.fields;
+		this.sidebar.breadcrumbsView.back();
+		this.showGridView();
+		// trigger some sort of live update here?
 	}
 
 	/**
@@ -160,11 +169,22 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 * should let the user know or something
 	 * with validation messages
 	 */
-	function onSaveError()
+	function onSaveError(xhr, textStatus, errorThrown)
 	{
-		alert('Could not save field! Check console');
-		console.warn('save error', this, arguments);
+		if (xhr.status !== 403)
+		{
+			console.warn('save error', xhr, textStatus, errorThrown);
+			alert('Could not save field due to unknown error.');
+			return;
+		}
+
+		var html = View.make('sidebar.partials.errors', {'errors': xhr.responseJSON.errors});
+		this.sidebar.validationErrors.empty();
+		this.sidebar.validationErrors.append(html);
+		this.sidebar.breadcrumbsView.back();
+		this.showGridView();
 	}
+
 
 	/**
 	 * the show model field button has been clicked

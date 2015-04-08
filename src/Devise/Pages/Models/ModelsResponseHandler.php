@@ -1,5 +1,7 @@
 <?php namespace Devise\Pages\Models;
 
+use Devise\Support\Framework;
+
 class ModelsResponseHandler
 {
 	/**
@@ -14,9 +16,10 @@ class ModelsResponseHandler
 	 *
 	 * @param ModelManager $ModelManager
 	 */
-	public function __construct(ModelManager $ModelManager)
+	public function __construct(ModelManager $ModelManager, Framework $Framework)
 	{
 		$this->ModelManager = $ModelManager;
+		$this->Response = $Framework->Response;
 	}
 
 	/**
@@ -28,11 +31,19 @@ class ModelsResponseHandler
 	 */
 	public function executeModelFieldUpdate($modelFieldId, $input)
 	{
-		$field = $this->ModelManager->updateField($input['field'], $input['page']);
+		try
+		{
+			$field = $this->ModelManager->updateField($input['field'], $input['page']);
+		}
 
-		$model = $this->ModelManager->getModelFor($fields);
+		catch (ModelFieldValidationFailedException $e)
+		{
+			return $this->Response->json([
+				'errors' => $e->getErrors()
+			], 403);
+		}
 
-		return array('model' => $model, 'field' => $field);
+		return array('field' => $field);
 	}
 
 	/**
@@ -44,11 +55,13 @@ class ModelsResponseHandler
 	 */
 	public function executeModelFieldsUpdate($input)
 	{
-		$fields = $this->ModelManager->updateFields($input['fields'], $input['page']);
+		try {
+			$fields = $this->ModelManager->updateFields($input['fields'], $input['page']);
+		} catch (ModelFieldValidationFailedException $e) {
+			return $this->Response->json(['errors' => $e->getErrors()], 403);
+		}
 
-		$model = $this->ModelManager->getModelFor($fields);
-
-		return array('model' => $model, 'fields' => $fields);
+		return array('fields' => $fields);
 	}
 
 	/**
@@ -60,9 +73,11 @@ class ModelsResponseHandler
 	 */
 	public function executeModelFieldsCreate($input)
 	{
-		$fields = $this->ModelManager->createFields($input['fields'], $input['page']);
-
-		$model = $this->ModelManager->getModelFor($fields);
+		try {
+			list($fields, $model) = $this->ModelManager->createFieldsAndModel($input['fields'], $input['page']);
+		} catch (ModelFieldValidationFailedException $e) {
+			return $this->Response->json(['errors' => $e->getErrors()], 403);
+		}
 
 		return array('model' => $model, 'fields' => $fields);
 	}

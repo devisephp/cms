@@ -1396,7 +1396,7 @@ class DevisePagesSeeder extends DeviseSeeder
             array(
                 'language_id'             => '45',
                 'title'                   => 'Update a single model field that is managed by a DvsModelField',
-                'http_verb'               => 'post',
+                'http_verb'               => 'put',
                 'route_name'              => 'dvs-model-field-update',
                 'is_admin'                => '1',
                 'dvs_admin'               => '1',

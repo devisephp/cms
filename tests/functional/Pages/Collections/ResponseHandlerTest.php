@@ -9,12 +9,14 @@ class ResponseHandlerTest extends \DeviseTestCase
 		parent::setUp();
 
 		$this->CollectionsManager = m::mock('Devise\Pages\Collections\CollectionsManager');
-		$this->ResponseHandler = new ResponseHandler($this->CollectionsManager);
+		$this->FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+		$this->ResponseHandler = new ResponseHandler($this->CollectionsManager, $this->FieldManager);
 	}
 
 	public function test_it_updates_field()
 	{
-		$this->markTestIncomplete();
+		$this->FieldManager->shouldReceive('updateField')->times(1)->with(42, ['some' => 'input']);
+		$this->ResponseHandler->updateCollectionInstanceField(42, ['some' => 'input']);
 	}
 
 	public function test_it_stores_instance()

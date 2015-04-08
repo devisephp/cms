@@ -100,30 +100,29 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 	 */
 	FieldView.prototype.changed = function(key, value, event)
 	{
-		var field = this.data.field;
+		this.data.field.values[key] = value;
+	}
 
-		switch (key)
-		{
-			case 'content_requested':
-				field.content_requested = value;
-			break;
+	/**
+	 * content requested field was changed
+	 */
+	FieldView.prototype.contentRequestedChanged = function(shouldRequestContent)
+	{
+		this.data.field.content_requested = shouldRequestContent;
+	}
 
-			case 'field_scope':
-				field.new_scope = value ? 'global' : 'page';
-			break;
-
-			case '_reset_values':
-				this.resetFieldValues(field, value);
-			break;
-
-			default: field.values[key] = value;
-		}
+	/**
+	 * field scope was changed
+	 */
+	FieldView.prototype.fieldScopeChanged = function(value)
+	{
+		this.data.field.new_scope = value ? 'global' : 'page';
 	}
 
 	/**
 	 * reset this fields value if it is okay
 	 */
-	FieldView.prototype.resetFieldValues = function(field, shouldReset)
+	FieldView.prototype.resetValuesChanged = function(shouldReset)
 	{
 		if (!shouldReset) return;
 
@@ -131,9 +130,9 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 
 		setTimeout(function()
 		{
-			field.values = {};
+			self.field.values = {};
 			self.view.empty();
-			self.view.append(self.renderField(field, true));
+			self.view.append(self.renderField(self.field, true));
 		}, 500);
 	}
 

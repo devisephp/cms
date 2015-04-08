@@ -27,11 +27,15 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		this.data['node'] = node;
 		this.data['creator'] = node.data;
 
+		this.createDefaultFields(this.data.creator);
+
 		this.field = $('<div/>');
+
 		this.grid = View.make('sidebar.creators.grid', this.data);
 
-		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showGridView');
 		this.sidebar.grid.append(this.grid);
+
+		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showGridView');
 
 		View.registerEvents(this.grid, events, this);
 
@@ -54,10 +58,11 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	CreatorView.prototype.showFieldView = function(name)
 	{
 		var fieldView = new FieldView(this.sidebar);
-		var field = this.createFieldFor(name);
+		var field = View.data.find(this.data.fields, name);
 		var html = fieldView.renderField(field);
 
 		this.sidebar.breadcrumbsView.add(name, this, 'showFieldView', [name]);
+		this.data.field = field;
 
 		this.field.empty();
 		this.field.append(html);
@@ -77,26 +82,24 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	}
 
 	/**
-	 * creates an empty field for this mapping name
+	 * makes default fields for this creator
 	 */
-	CreatorView.prototype.createFieldFor = function(name)
+	CreatorView.prototype.createDefaultFields = function(creator)
 	{
-		var field = {};
+		var fields = [];
 
-		var defaults = {};
+		$.each(creator.types, function(mapping, type)
+		{
+			fields.push({
+				id: mapping,
+				mapping: mapping,
+				model_type: creator.model_type,
+				type: type,
+				values: $.extend({}, creator.defaults)
+			});
+		});
 
-		this.data.attributes[name] = typeof this.data.attributes[name] === 'undefined' ? defaults : this.data.attributes[name];
-
-		field.collection_instance_id = null;
-		field.page_version_id = this.sidebar.page.pageVersionId;
-		field.type = this.data.creator.types[name];
-		field.human_name = name;
-		field.key = this.data.creator.id;
-		field.values = this.data.attributes[name];
-		field.scope = 'model';
-		field.content_requested = false; 
-
-		return field;
+		this.data['fields'] = fields;
 	}
 
 	/**
@@ -104,15 +107,62 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	 */
 	CreatorView.prototype.save = function()
 	{
-		console.log('save the creator now', this.data);
+		var self = this;
+		var url = this.data.page.url('create_model');
+		var data = {
+			'fields': this.data.fields,
+			'page': this.data.page.info
+		};
+
+		this.sidebar.validationErrors.empty();
+
+		$.ajax(url, {
+			method: 'POST',
+			data: data,
+			success: function() { onSaveSuccess.apply(self, arguments); },
+			error: function() { onSaveError.apply(self, arguments); }
+		});
 	}
 
 	/**
 	 * called when our form content changes
 	 */
-	CreatorView.prototype.changed = function(event)
+	CreatorView.prototype.changed = function(key, value, event)
 	{
-		console.log('content changed inside of this creator...');
+		this.data.field.values[key] = value;
+	}
+
+	/**
+	 * save was successful, update field values
+	 * to reflect what is returned from the server
+	 */
+	function onSaveSuccess(data, response, xhr)
+	{
+		this.createDefaultFields(this.data.creator);
+		this.sidebar.breadcrumbsView.back();
+		this.showGridView();
+		// trigger some sort of live update here?
+	}
+
+	/**
+	 * save failed to update field, probably
+	 * should let the user know or something
+	 * with validation messages
+	 */
+	function onSaveError(xhr, textStatus, errorThrown)
+	{
+		if (xhr.status !== 403)
+		{
+			console.warn('save error', xhr, textStatus, errorThrown);
+			alert('Could not save field due to unknown error.');
+			return;
+		}
+
+		var html = View.make('sidebar.partials.errors', {'errors': xhr.responseJSON.errors});
+		this.sidebar.validationErrors.empty();
+		this.sidebar.validationErrors.append(html);
+		this.sidebar.breadcrumbsView.back();
+		this.showGridView();
 	}
 
 	/**

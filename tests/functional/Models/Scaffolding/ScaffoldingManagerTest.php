@@ -9,12 +9,18 @@ class ScaffoldingManagerTest extends \DeviseTestCase
         parent::setUp();
 
         $TemplateScaffolding = m::mock('Devise\Models\Scaffolding\TemplateScaffolding');
-        $DeviseSeeder = m::mock('Devise\Support\DeviseSeeder');
+        $SeederScaffolding = m::mock('Devise\Models\Scaffolding\SeederScaffolding');
         $SanityChecksHelper = m::mock('Devise\Models\Scaffolding\SanityChecksHelper');
         $MigrationScaffolding = m::mock('Devise\Models\Scaffolding\MigrationScaffolding');
 
         $Framework = new \Devise\Support\Framework;
-        $this->CrudScaffolding = new \Devise\Models\Scaffolding\Types\CrudScaffolding($TemplateScaffolding, $DeviseSeeder, $SanityChecksHelper, $MigrationScaffolding, $Framework);
+        $this->CrudScaffolding = new \Devise\Models\Scaffolding\Types\CrudScaffolding(
+            $TemplateScaffolding,
+            $SanityChecksHelper,
+            $MigrationScaffolding,
+            $SeederScaffolding,
+            $Framework
+        );
         $this->ScaffoldingManager = new \Devise\Models\Scaffolding\ScaffoldingManager($this->CrudScaffolding);
 
         $this->input = [

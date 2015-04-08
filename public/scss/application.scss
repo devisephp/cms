@@ -1,0 +1,23 @@
+/**
+ * This sets the color of
+
+#dvs-admin {
+  .app-blogs {
+    @include dvs-sections(#792096);
+  }
+}
+*/
+
+#dvs-admin {
+  .app-blogs {
+    @include dvs-sections(#1ea69c);
+  }
+
+  .app-comments {
+    @include dvs-sections(#045b37);
+  }
+
+  .app-spotlights {
+    @include dvs-sections(#29a8df);
+  }
+}

@@ -1,26 +1,3 @@
-@mixin dvs-sections($color) {
-	.dvs-card-top {
-		background-color:$color;
-	}
-
-	.dvs-card-bottom {
-		.dvs-icon {
-			color: $color;
-		}
-	}
-
-	&.dvs-admin-card {
-		&:hover {
-      		background-color:$color;
-      		border-color:darken($color, 10%);
-
-      		.dvs-card-top{
-      			background-color:darken($color, 10%);
-      		}
-		}
-	}
-}
-
 #dvs-admin {
 
 	.dvs-pages {

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400|Source+Code+Pro:400,600');
 /* Packages, Libs and Other Goodies */
 /*!
   Ionicons, v2.0.0
@@ -11,747 +12,14 @@
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
-@import url("http://fonts.googleapis.com/css?family=Roboto:900,700,100,300,400|Source+Code+Pro:400,600");
 @font-face {
   font-family: "Ionicons";
   src: url("../fonts/ionicons.eot?v=2.0.0");
   src: url("../fonts/ionicons.eot?v=2.0.0#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=2.0.0") format("truetype"), url("../fonts/ionicons.woff?v=2.0.0") format("woff"), url("../fonts/ionicons.svg?v=2.0.0#Ionicons") format("svg");
   font-weight: normal;
   font-style: normal; }
-.ion, .ionicons,
-.ion-alert:before,
-.ion-alert-circled:before,
-.ion-android-add:before,
-.ion-android-add-circle:before,
-.ion-android-alarm-clock:before,
-.ion-android-alert:before,
-.ion-android-apps:before,
-.ion-android-archive:before,
-.ion-android-arrow-back:before,
-.ion-android-arrow-down:before,
-.ion-android-arrow-dropdown:before,
-.ion-android-arrow-dropdown-circle:before,
-.ion-android-arrow-dropleft:before,
-.ion-android-arrow-dropleft-circle:before,
-.ion-android-arrow-dropright:before,
-.ion-android-arrow-dropright-circle:before,
-.ion-android-arrow-dropup:before,
-.ion-android-arrow-dropup-circle:before,
-.ion-android-arrow-forward:before,
-.ion-android-arrow-up:before,
-.ion-android-attach:before,
-.ion-android-bar:before,
-.ion-android-bicycle:before,
-.ion-android-boat:before,
-.ion-android-bookmark:before,
-.ion-android-bulb:before,
-.ion-android-bus:before,
-.ion-android-calendar:before,
-.ion-android-call:before,
-.ion-android-camera:before,
-.ion-android-cancel:before,
-.ion-android-car:before,
-.ion-android-cart:before,
-.ion-android-chat:before,
-.ion-android-checkbox:before,
-.ion-android-checkbox-blank:before,
-.ion-android-checkbox-outline:before,
-.ion-android-checkbox-outline-blank:before,
-.ion-android-checkmark-circle:before,
-.ion-android-clipboard:before,
-.ion-android-close:before,
-.ion-android-cloud:before,
-.ion-android-cloud-circle:before,
-.ion-android-cloud-done:before,
-.ion-android-cloud-outline:before,
-.ion-android-color-palette:before,
-.ion-android-compass:before,
-.ion-android-contact:before,
-.ion-android-contacts:before,
-.ion-android-contract:before,
-.ion-android-create:before,
-.ion-android-delete:before,
-.ion-android-desktop:before,
-.ion-android-document:before,
-.ion-android-done:before,
-.ion-android-done-all:before,
-.ion-android-download:before,
-.ion-android-drafts:before,
-.ion-android-exit:before,
-.ion-android-expand:before,
-.ion-android-favorite:before,
-.ion-android-favorite-outline:before,
-.ion-android-film:before,
-.ion-android-folder:before,
-.ion-android-folder-open:before,
-.ion-android-funnel:before,
-.ion-android-globe:before,
-.ion-android-hand:before,
-.ion-android-hangout:before,
-.ion-android-happy:before,
-.ion-android-home:before,
-.ion-android-image:before,
-.ion-android-laptop:before,
-.ion-android-list:before,
-.ion-android-locate:before,
-.ion-android-lock:before,
-.ion-android-mail:before,
-.ion-android-map:before,
-.ion-android-menu:before,
-.ion-android-microphone:before,
-.ion-android-microphone-off:before,
-.ion-android-more-horizontal:before,
-.ion-android-more-vertical:before,
-.ion-android-navigate:before,
-.ion-android-notifications:before,
-.ion-android-notifications-none:before,
-.ion-android-notifications-off:before,
-.ion-android-open:before,
-.ion-android-options:before,
-.ion-android-people:before,
-.ion-android-person:before,
-.ion-android-person-add:before,
-.ion-android-phone-landscape:before,
-.ion-android-phone-portrait:before,
-.ion-android-pin:before,
-.ion-android-plane:before,
-.ion-android-playstore:before,
-.ion-android-print:before,
-.ion-android-radio-button-off:before,
-.ion-android-radio-button-on:before,
-.ion-android-refresh:before,
-.ion-android-remove:before,
-.ion-android-remove-circle:before,
-.ion-android-restaurant:before,
-.ion-android-sad:before,
-.ion-android-search:before,
-.ion-android-send:before,
-.ion-android-settings:before,
-.ion-android-share:before,
-.ion-android-share-alt:before,
-.ion-android-star:before,
-.ion-android-star-half:before,
-.ion-android-star-outline:before,
-.ion-android-stopwatch:before,
-.ion-android-subway:before,
-.ion-android-sunny:before,
-.ion-android-sync:before,
-.ion-android-textsms:before,
-.ion-android-time:before,
-.ion-android-train:before,
-.ion-android-unlock:before,
-.ion-android-upload:before,
-.ion-android-volume-down:before,
-.ion-android-volume-mute:before,
-.ion-android-volume-off:before,
-.ion-android-volume-up:before,
-.ion-android-walk:before,
-.ion-android-warning:before,
-.ion-android-watch:before,
-.ion-android-wifi:before,
-.ion-aperture:before,
-.ion-archive:before,
-.ion-arrow-down-a:before,
-.ion-arrow-down-b:before,
-.ion-arrow-down-c:before,
-.ion-arrow-expand:before,
-.ion-arrow-graph-down-left:before,
-.ion-arrow-graph-down-right:before,
-.ion-arrow-graph-up-left:before,
-.ion-arrow-graph-up-right:before,
-.ion-arrow-left-a:before,
-.ion-arrow-left-b:before,
-.ion-arrow-left-c:before,
-.ion-arrow-move:before,
-.ion-arrow-resize:before,
-.ion-arrow-return-left:before,
-.ion-arrow-return-right:before,
-.ion-arrow-right-a:before,
-.ion-arrow-right-b:before,
-.ion-arrow-right-c:before,
-.ion-arrow-shrink:before,
-.ion-arrow-swap:before,
-.ion-arrow-up-a:before,
-.ion-arrow-up-b:before,
-.ion-arrow-up-c:before,
-.ion-asterisk:before,
-.ion-at:before,
-.ion-backspace:before,
-.ion-backspace-outline:before,
-.ion-bag:before,
-.ion-battery-charging:before,
-.ion-battery-empty:before,
-.ion-battery-full:before,
-.ion-battery-half:before,
-.ion-battery-low:before,
-.ion-beaker:before,
-.ion-beer:before,
-.ion-bluetooth:before,
-.ion-bonfire:before,
-.ion-bookmark:before,
-.ion-bowtie:before,
-.ion-briefcase:before,
-.ion-bug:before,
-.ion-calculator:before,
-.ion-calendar:before,
-.ion-camera:before,
-.ion-card:before,
-.ion-cash:before,
-.ion-chatbox:before,
-.ion-chatbox-working:before,
-.ion-chatboxes:before,
-.ion-chatbubble:before,
-.ion-chatbubble-working:before,
-.ion-chatbubbles:before,
-.ion-checkmark:before,
-.ion-checkmark-circled:before,
-.ion-checkmark-round:before,
-.ion-chevron-down:before,
-.ion-chevron-left:before,
-.ion-chevron-right:before,
-.ion-chevron-up:before,
-.ion-clipboard:before,
-.ion-clock:before,
-.ion-close:before,
-.ion-close-circled:before,
-.ion-close-round:before,
-.ion-closed-captioning:before,
-.ion-cloud:before,
-.ion-code:before,
-.ion-code-download:before,
-.ion-code-working:before,
-.ion-coffee:before,
-.ion-compass:before,
-.ion-compose:before,
-.ion-connection-bars:before,
-.ion-contrast:before,
-.ion-crop:before,
-.ion-cube:before,
-.ion-disc:before,
-.ion-document:before,
-.ion-document-text:before,
-.ion-drag:before,
-.ion-earth:before,
-.ion-easel:before,
-.ion-edit:before,
-.ion-egg:before,
-.ion-eject:before,
-.ion-email:before,
-.ion-email-unread:before,
-.ion-erlenmeyer-flask:before,
-.ion-erlenmeyer-flask-bubbles:before,
-.ion-eye:before,
-.ion-eye-disabled:before,
-.ion-female:before,
-.ion-filing:before,
-.ion-film-marker:before,
-.ion-fireball:before,
-.ion-flag:before,
-.ion-flame:before,
-.ion-flash:before,
-.ion-flash-off:before,
-.ion-folder:before,
-.ion-fork:before,
-.ion-fork-repo:before,
-.ion-forward:before,
-.ion-funnel:before,
-.ion-gear-a:before,
-.ion-gear-b:before,
-.ion-grid:before,
-.ion-hammer:before,
-.ion-happy:before,
-.ion-happy-outline:before,
-.ion-headphone:before,
-.ion-heart:before,
-.ion-heart-broken:before,
-.ion-help:before,
-.ion-help-buoy:before,
-.ion-help-circled:before,
-.ion-home:before,
-.ion-icecream:before,
-.ion-image:before,
-.ion-images:before,
-.ion-information:before,
-.ion-information-circled:before,
-.ion-ionic:before,
-.ion-ios-alarm:before,
-.ion-ios-alarm-outline:before,
-.ion-ios-albums:before,
-.ion-ios-albums-outline:before,
-.ion-ios-americanfootball:before,
-.ion-ios-americanfootball-outline:before,
-.ion-ios-analytics:before,
-.ion-ios-analytics-outline:before,
-.ion-ios-arrow-back:before,
-.ion-ios-arrow-down:before,
-.ion-ios-arrow-forward:before,
-.ion-ios-arrow-left:before,
-.ion-ios-arrow-right:before,
-.ion-ios-arrow-thin-down:before,
-.ion-ios-arrow-thin-left:before,
-.ion-ios-arrow-thin-right:before,
-.ion-ios-arrow-thin-up:before,
-.ion-ios-arrow-up:before,
-.ion-ios-at:before,
-.ion-ios-at-outline:before,
-.ion-ios-barcode:before,
-.ion-ios-barcode-outline:before,
-.ion-ios-baseball:before,
-.ion-ios-baseball-outline:before,
-.ion-ios-basketball:before,
-.ion-ios-basketball-outline:before,
-.ion-ios-bell:before,
-.ion-ios-bell-outline:before,
-.ion-ios-body:before,
-.ion-ios-body-outline:before,
-.ion-ios-bolt:before,
-.ion-ios-bolt-outline:before,
-.ion-ios-book:before,
-.ion-ios-book-outline:before,
-.ion-ios-bookmarks:before,
-.ion-ios-bookmarks-outline:before,
-.ion-ios-box:before,
-.ion-ios-box-outline:before,
-.ion-ios-briefcase:before,
-.ion-ios-briefcase-outline:before,
-.ion-ios-browsers:before,
-.ion-ios-browsers-outline:before,
-.ion-ios-calculator:before,
-.ion-ios-calculator-outline:before,
-.ion-ios-calendar:before,
-.ion-ios-calendar-outline:before,
-.ion-ios-camera:before,
-.ion-ios-camera-outline:before,
-.ion-ios-cart:before,
-.ion-ios-cart-outline:before,
-.ion-ios-chatboxes:before,
-.ion-ios-chatboxes-outline:before,
-.ion-ios-chatbubble:before,
-.ion-ios-chatbubble-outline:before,
-.ion-ios-checkmark:before,
-.ion-ios-checkmark-empty:before,
-.ion-ios-checkmark-outline:before,
-.ion-ios-circle-filled:before,
-.ion-ios-circle-outline:before,
-.ion-ios-clock:before,
-.ion-ios-clock-outline:before,
-.ion-ios-close:before,
-.ion-ios-close-empty:before,
-.ion-ios-close-outline:before,
-.ion-ios-cloud:before,
-.ion-ios-cloud-download:before,
-.ion-ios-cloud-download-outline:before,
-.ion-ios-cloud-outline:before,
-.ion-ios-cloud-upload:before,
-.ion-ios-cloud-upload-outline:before,
-.ion-ios-cloudy:before,
-.ion-ios-cloudy-night:before,
-.ion-ios-cloudy-night-outline:before,
-.ion-ios-cloudy-outline:before,
-.ion-ios-cog:before,
-.ion-ios-cog-outline:before,
-.ion-ios-color-filter:before,
-.ion-ios-color-filter-outline:before,
-.ion-ios-color-wand:before,
-.ion-ios-color-wand-outline:before,
-.ion-ios-compose:before,
-.ion-ios-compose-outline:before,
-.ion-ios-contact:before,
-.ion-ios-contact-outline:before,
-.ion-ios-copy:before,
-.ion-ios-copy-outline:before,
-.ion-ios-crop:before,
-.ion-ios-crop-strong:before,
-.ion-ios-download:before,
-.ion-ios-download-outline:before,
-.ion-ios-drag:before,
-.ion-ios-email:before,
-.ion-ios-email-outline:before,
-.ion-ios-eye:before,
-.ion-ios-eye-outline:before,
-.ion-ios-fastforward:before,
-.ion-ios-fastforward-outline:before,
-.ion-ios-filing:before,
-.ion-ios-filing-outline:before,
-.ion-ios-film:before,
-.ion-ios-film-outline:before,
-.ion-ios-flag:before,
-.ion-ios-flag-outline:before,
-.ion-ios-flame:before,
-.ion-ios-flame-outline:before,
-.ion-ios-flask:before,
-.ion-ios-flask-outline:before,
-.ion-ios-flower:before,
-.ion-ios-flower-outline:before,
-.ion-ios-folder:before,
-.ion-ios-folder-outline:before,
-.ion-ios-football:before,
-.ion-ios-football-outline:before,
-.ion-ios-game-controller-a:before,
-.ion-ios-game-controller-a-outline:before,
-.ion-ios-game-controller-b:before,
-.ion-ios-game-controller-b-outline:before,
-.ion-ios-gear:before,
-.ion-ios-gear-outline:before,
-.ion-ios-glasses:before,
-.ion-ios-glasses-outline:before,
-.ion-ios-grid-view:before,
-.ion-ios-grid-view-outline:before,
-.ion-ios-heart:before,
-.ion-ios-heart-outline:before,
-.ion-ios-help:before,
-.ion-ios-help-empty:before,
-.ion-ios-help-outline:before,
-.ion-ios-home:before,
-.ion-ios-home-outline:before,
-.ion-ios-infinite:before,
-.ion-ios-infinite-outline:before,
-.ion-ios-information:before,
-.ion-ios-information-empty:before,
-.ion-ios-information-outline:before,
-.ion-ios-ionic-outline:before,
-.ion-ios-keypad:before,
-.ion-ios-keypad-outline:before,
-.ion-ios-lightbulb:before,
-.ion-ios-lightbulb-outline:before,
-.ion-ios-list:before,
-.ion-ios-list-outline:before,
-.ion-ios-location:before,
-.ion-ios-location-outline:before,
-.ion-ios-locked:before,
-.ion-ios-locked-outline:before,
-.ion-ios-loop:before,
-.ion-ios-loop-strong:before,
-.ion-ios-medical:before,
-.ion-ios-medical-outline:before,
-.ion-ios-medkit:before,
-.ion-ios-medkit-outline:before,
-.ion-ios-mic:before,
-.ion-ios-mic-off:before,
-.ion-ios-mic-outline:before,
-.ion-ios-minus:before,
-.ion-ios-minus-empty:before,
-.ion-ios-minus-outline:before,
-.ion-ios-monitor:before,
-.ion-ios-monitor-outline:before,
-.ion-ios-moon:before,
-.ion-ios-moon-outline:before,
-.ion-ios-more:before,
-.ion-ios-more-outline:before,
-.ion-ios-musical-note:before,
-.ion-ios-musical-notes:before,
-.ion-ios-navigate:before,
-.ion-ios-navigate-outline:before,
-.ion-ios-nutrition:before,
-.ion-ios-nutrition-outline:before,
-.ion-ios-paper:before,
-.ion-ios-paper-outline:before,
-.ion-ios-paperplane:before,
-.ion-ios-paperplane-outline:before,
-.ion-ios-partlysunny:before,
-.ion-ios-partlysunny-outline:before,
-.ion-ios-pause:before,
-.ion-ios-pause-outline:before,
-.ion-ios-paw:before,
-.ion-ios-paw-outline:before,
-.ion-ios-people:before,
-.ion-ios-people-outline:before,
-.ion-ios-person:before,
-.ion-ios-person-outline:before,
-.ion-ios-personadd:before,
-.ion-ios-personadd-outline:before,
-.ion-ios-photos:before,
-.ion-ios-photos-outline:before,
-.ion-ios-pie:before,
-.ion-ios-pie-outline:before,
-.ion-ios-pint:before,
-.ion-ios-pint-outline:before,
-.ion-ios-play:before,
-.ion-ios-play-outline:before,
-.ion-ios-plus:before,
-.ion-ios-plus-empty:before,
-.ion-ios-plus-outline:before,
-.ion-ios-pricetag:before,
-.ion-ios-pricetag-outline:before,
-.ion-ios-pricetags:before,
-.ion-ios-pricetags-outline:before,
-.ion-ios-printer:before,
-.ion-ios-printer-outline:before,
-.ion-ios-pulse:before,
-.ion-ios-pulse-strong:before,
-.ion-ios-rainy:before,
-.ion-ios-rainy-outline:before,
-.ion-ios-recording:before,
-.ion-ios-recording-outline:before,
-.ion-ios-redo:before,
-.ion-ios-redo-outline:before,
-.ion-ios-refresh:before,
-.ion-ios-refresh-empty:before,
-.ion-ios-refresh-outline:before,
-.ion-ios-reload:before,
-.ion-ios-reverse-camera:before,
-.ion-ios-reverse-camera-outline:before,
-.ion-ios-rewind:before,
-.ion-ios-rewind-outline:before,
-.ion-ios-rose:before,
-.ion-ios-rose-outline:before,
-.ion-ios-search:before,
-.ion-ios-search-strong:before,
-.ion-ios-settings:before,
-.ion-ios-settings-strong:before,
-.ion-ios-shuffle:before,
-.ion-ios-shuffle-strong:before,
-.ion-ios-skipbackward:before,
-.ion-ios-skipbackward-outline:before,
-.ion-ios-skipforward:before,
-.ion-ios-skipforward-outline:before,
-.ion-ios-snowy:before,
-.ion-ios-speedometer:before,
-.ion-ios-speedometer-outline:before,
-.ion-ios-star:before,
-.ion-ios-star-half:before,
-.ion-ios-star-outline:before,
-.ion-ios-stopwatch:before,
-.ion-ios-stopwatch-outline:before,
-.ion-ios-sunny:before,
-.ion-ios-sunny-outline:before,
-.ion-ios-telephone:before,
-.ion-ios-telephone-outline:before,
-.ion-ios-tennisball:before,
-.ion-ios-tennisball-outline:before,
-.ion-ios-thunderstorm:before,
-.ion-ios-thunderstorm-outline:before,
-.ion-ios-time:before,
-.ion-ios-time-outline:before,
-.ion-ios-timer:before,
-.ion-ios-timer-outline:before,
-.ion-ios-toggle:before,
-.ion-ios-toggle-outline:before,
-.ion-ios-trash:before,
-.ion-ios-trash-outline:before,
-.ion-ios-undo:before,
-.ion-ios-undo-outline:before,
-.ion-ios-unlocked:before,
-.ion-ios-unlocked-outline:before,
-.ion-ios-upload:before,
-.ion-ios-upload-outline:before,
-.ion-ios-videocam:before,
-.ion-ios-videocam-outline:before,
-.ion-ios-volume-high:before,
-.ion-ios-volume-low:before,
-.ion-ios-wineglass:before,
-.ion-ios-wineglass-outline:before,
-.ion-ios-world:before,
-.ion-ios-world-outline:before,
-.ion-ipad:before,
-.ion-iphone:before,
-.ion-ipod:before,
-.ion-jet:before,
-.ion-key:before,
-.ion-knife:before,
-.ion-laptop:before,
-.ion-leaf:before,
-.ion-levels:before,
-.ion-lightbulb:before,
-.ion-link:before,
-.ion-load-a:before,
-.ion-load-b:before,
-.ion-load-c:before,
-.ion-load-d:before,
-.ion-location:before,
-.ion-lock-combination:before,
-.ion-locked:before,
-.ion-log-in:before,
-.ion-log-out:before,
-.ion-loop:before,
-.ion-magnet:before,
-.ion-male:before,
-.ion-man:before,
-.ion-map:before,
-.ion-medkit:before,
-.ion-merge:before,
-.ion-mic-a:before,
-.ion-mic-b:before,
-.ion-mic-c:before,
-.ion-minus:before,
-.ion-minus-circled:before,
-.ion-minus-round:before,
-.ion-model-s:before,
-.ion-monitor:before,
-.ion-more:before,
-.ion-mouse:before,
-.ion-music-note:before,
-.ion-navicon:before,
-.ion-navicon-round:before,
-.ion-navigate:before,
-.ion-network:before,
-.ion-no-smoking:before,
-.ion-nuclear:before,
-.ion-outlet:before,
-.ion-paintbrush:before,
-.ion-paintbucket:before,
-.ion-paper-airplane:before,
-.ion-paperclip:before,
-.ion-pause:before,
-.ion-person:before,
-.ion-person-add:before,
-.ion-person-stalker:before,
-.ion-pie-graph:before,
-.ion-pin:before,
-.ion-pinpoint:before,
-.ion-pizza:before,
-.ion-plane:before,
-.ion-planet:before,
-.ion-play:before,
-.ion-playstation:before,
-.ion-plus:before,
-.ion-plus-circled:before,
-.ion-plus-round:before,
-.ion-podium:before,
-.ion-pound:before,
-.ion-power:before,
-.ion-pricetag:before,
-.ion-pricetags:before,
-.ion-printer:before,
-.ion-pull-request:before,
-.ion-qr-scanner:before,
-.ion-quote:before,
-.ion-radio-waves:before,
-.ion-record:before,
-.ion-refresh:before,
-.ion-reply:before,
-.ion-reply-all:before,
-.ion-ribbon-a:before,
-.ion-ribbon-b:before,
-.ion-sad:before,
-.ion-sad-outline:before,
-.ion-scissors:before,
-.ion-search:before,
-.ion-settings:before,
-.ion-share:before,
-.ion-shuffle:before,
-.ion-skip-backward:before,
-.ion-skip-forward:before,
-.ion-social-android:before,
-.ion-social-android-outline:before,
-.ion-social-angular:before,
-.ion-social-angular-outline:before,
-.ion-social-apple:before,
-.ion-social-apple-outline:before,
-.ion-social-bitcoin:before,
-.ion-social-bitcoin-outline:before,
-.ion-social-buffer:before,
-.ion-social-buffer-outline:before,
-.ion-social-chrome:before,
-.ion-social-chrome-outline:before,
-.ion-social-codepen:before,
-.ion-social-codepen-outline:before,
-.ion-social-css3:before,
-.ion-social-css3-outline:before,
-.ion-social-designernews:before,
-.ion-social-designernews-outline:before,
-.ion-social-dribbble:before,
-.ion-social-dribbble-outline:before,
-.ion-social-dropbox:before,
-.ion-social-dropbox-outline:before,
-.ion-social-euro:before,
-.ion-social-euro-outline:before,
-.ion-social-facebook:before,
-.ion-social-facebook-outline:before,
-.ion-social-foursquare:before,
-.ion-social-foursquare-outline:before,
-.ion-social-freebsd-devil:before,
-.ion-social-github:before,
-.ion-social-github-outline:before,
-.ion-social-google:before,
-.ion-social-google-outline:before,
-.ion-social-googleplus:before,
-.ion-social-googleplus-outline:before,
-.ion-social-hackernews:before,
-.ion-social-hackernews-outline:before,
-.ion-social-html5:before,
-.ion-social-html5-outline:before,
-.ion-social-instagram:before,
-.ion-social-instagram-outline:before,
-.ion-social-javascript:before,
-.ion-social-javascript-outline:before,
-.ion-social-linkedin:before,
-.ion-social-linkedin-outline:before,
-.ion-social-markdown:before,
-.ion-social-nodejs:before,
-.ion-social-octocat:before,
-.ion-social-pinterest:before,
-.ion-social-pinterest-outline:before,
-.ion-social-python:before,
-.ion-social-reddit:before,
-.ion-social-reddit-outline:before,
-.ion-social-rss:before,
-.ion-social-rss-outline:before,
-.ion-social-sass:before,
-.ion-social-skype:before,
-.ion-social-skype-outline:before,
-.ion-social-snapchat:before,
-.ion-social-snapchat-outline:before,
-.ion-social-tumblr:before,
-.ion-social-tumblr-outline:before,
-.ion-social-tux:before,
-.ion-social-twitch:before,
-.ion-social-twitch-outline:before,
-.ion-social-twitter:before,
-.ion-social-twitter-outline:before,
-.ion-social-usd:before,
-.ion-social-usd-outline:before,
-.ion-social-vimeo:before,
-.ion-social-vimeo-outline:before,
-.ion-social-whatsapp:before,
-.ion-social-whatsapp-outline:before,
-.ion-social-windows:before,
-.ion-social-windows-outline:before,
-.ion-social-wordpress:before,
-.ion-social-wordpress-outline:before,
-.ion-social-yahoo:before,
-.ion-social-yahoo-outline:before,
-.ion-social-yen:before,
-.ion-social-yen-outline:before,
-.ion-social-youtube:before,
-.ion-social-youtube-outline:before,
-.ion-soup-can:before,
-.ion-soup-can-outline:before,
-.ion-speakerphone:before,
-.ion-speedometer:before,
-.ion-spoon:before,
-.ion-star:before,
-.ion-stats-bars:before,
-.ion-steam:before,
-.ion-stop:before,
-.ion-thermometer:before,
-.ion-thumbsdown:before,
-.ion-thumbsup:before,
-.ion-toggle:before,
-.ion-toggle-filled:before,
-.ion-transgender:before,
-.ion-trash-a:before,
-.ion-trash-b:before,
-.ion-trophy:before,
-.ion-tshirt:before,
-.ion-tshirt-outline:before,
-.ion-umbrella:before,
-.ion-university:before,
-.ion-unlocked:before,
-.ion-upload:before,
-.ion-usb:before,
-.ion-videocamera:before,
-.ion-volume-high:before,
-.ion-volume-low:before,
-.ion-volume-medium:before,
-.ion-volume-mute:before,
-.ion-wand:before,
-.ion-waterdrop:before,
-.ion-wifi:before,
-.ion-wineglass:before,
-.ion-woman:before,
-.ion-wrench:before,
-.ion-xbox:before {
+
+.ion, .ionicons, .ion-alert:before, .ion-alert-circled:before, .ion-android-add:before, .ion-android-add-circle:before, .ion-android-alarm-clock:before, .ion-android-alert:before, .ion-android-apps:before, .ion-android-archive:before, .ion-android-arrow-back:before, .ion-android-arrow-down:before, .ion-android-arrow-dropdown:before, .ion-android-arrow-dropdown-circle:before, .ion-android-arrow-dropleft:before, .ion-android-arrow-dropleft-circle:before, .ion-android-arrow-dropright:before, .ion-android-arrow-dropright-circle:before, .ion-android-arrow-dropup:before, .ion-android-arrow-dropup-circle:before, .ion-android-arrow-forward:before, .ion-android-arrow-up:before, .ion-android-attach:before, .ion-android-bar:before, .ion-android-bicycle:before, .ion-android-boat:before, .ion-android-bookmark:before, .ion-android-bulb:before, .ion-android-bus:before, .ion-android-calendar:before, .ion-android-call:before, .ion-android-camera:before, .ion-android-cancel:before, .ion-android-car:before, .ion-android-cart:before, .ion-android-chat:before, .ion-android-checkbox:before, .ion-android-checkbox-blank:before, .ion-android-checkbox-outline:before, .ion-android-checkbox-outline-blank:before, .ion-android-checkmark-circle:before, .ion-android-clipboard:before, .ion-android-close:before, .ion-android-cloud:before, .ion-android-cloud-circle:before, .ion-android-cloud-done:before, .ion-android-cloud-outline:before, .ion-android-color-palette:before, .ion-android-compass:before, .ion-android-contact:before, .ion-android-contacts:before, .ion-android-contract:before, .ion-android-create:before, .ion-android-delete:before, .ion-android-desktop:before, .ion-android-document:before, .ion-android-done:before, .ion-android-done-all:before, .ion-android-download:before, .ion-android-drafts:before, .ion-android-exit:before, .ion-android-expand:before, .ion-android-favorite:before, .ion-android-favorite-outline:before, .ion-android-film:before, .ion-android-folder:before, .ion-android-folder-open:before, .ion-android-funnel:before, .ion-android-globe:before, .ion-android-hand:before, .ion-android-hangout:before, .ion-android-happy:before, .ion-android-home:before, .ion-android-image:before, .ion-android-laptop:before, .ion-android-list:before, .ion-android-locate:before, .ion-android-lock:before, .ion-android-mail:before, .ion-android-map:before, .ion-android-menu:before, .ion-android-microphone:before, .ion-android-microphone-off:before, .ion-android-more-horizontal:before, .ion-android-more-vertical:before, .ion-android-navigate:before, .ion-android-notifications:before, .ion-android-notifications-none:before, .ion-android-notifications-off:before, .ion-android-open:before, .ion-android-options:before, .ion-android-people:before, .ion-android-person:before, .ion-android-person-add:before, .ion-android-phone-landscape:before, .ion-android-phone-portrait:before, .ion-android-pin:before, .ion-android-plane:before, .ion-android-playstore:before, .ion-android-print:before, .ion-android-radio-button-off:before, .ion-android-radio-button-on:before, .ion-android-refresh:before, .ion-android-remove:before, .ion-android-remove-circle:before, .ion-android-restaurant:before, .ion-android-sad:before, .ion-android-search:before, .ion-android-send:before, .ion-android-settings:before, .ion-android-share:before, .ion-android-share-alt:before, .ion-android-star:before, .ion-android-star-half:before, .ion-android-star-outline:before, .ion-android-stopwatch:before, .ion-android-subway:before, .ion-android-sunny:before, .ion-android-sync:before, .ion-android-textsms:before, .ion-android-time:before, .ion-android-train:before, .ion-android-unlock:before, .ion-android-upload:before, .ion-android-volume-down:before, .ion-android-volume-mute:before, .ion-android-volume-off:before, .ion-android-volume-up:before, .ion-android-walk:before, .ion-android-warning:before, .ion-android-watch:before, .ion-android-wifi:before, .ion-aperture:before, .ion-archive:before, .ion-arrow-down-a:before, .ion-arrow-down-b:before, .ion-arrow-down-c:before, .ion-arrow-expand:before, .ion-arrow-graph-down-left:before, .ion-arrow-graph-down-right:before, .ion-arrow-graph-up-left:before, .ion-arrow-graph-up-right:before, .ion-arrow-left-a:before, .ion-arrow-left-b:before, .ion-arrow-left-c:before, .ion-arrow-move:before, .ion-arrow-resize:before, .ion-arrow-return-left:before, .ion-arrow-return-right:before, .ion-arrow-right-a:before, .ion-arrow-right-b:before, .ion-arrow-right-c:before, .ion-arrow-shrink:before, .ion-arrow-swap:before, .ion-arrow-up-a:before, .ion-arrow-up-b:before, .ion-arrow-up-c:before, .ion-asterisk:before, .ion-at:before, .ion-backspace:before, .ion-backspace-outline:before, .ion-bag:before, .ion-battery-charging:before, .ion-battery-empty:before, .ion-battery-full:before, .ion-battery-half:before, .ion-battery-low:before, .ion-beaker:before, .ion-beer:before, .ion-bluetooth:before, .ion-bonfire:before, .ion-bookmark:before, .ion-bowtie:before, .ion-briefcase:before, .ion-bug:before, .ion-calculator:before, .ion-calendar:before, .ion-camera:before, .ion-card:before, .ion-cash:before, .ion-chatbox:before, .ion-chatbox-working:before, .ion-chatboxes:before, .ion-chatbubble:before, .ion-chatbubble-working:before, .ion-chatbubbles:before, .ion-checkmark:before, .ion-checkmark-circled:before, .ion-checkmark-round:before, .ion-chevron-down:before, .ion-chevron-left:before, .ion-chevron-right:before, .ion-chevron-up:before, .ion-clipboard:before, .ion-clock:before, .ion-close:before, .ion-close-circled:before, .ion-close-round:before, .ion-closed-captioning:before, .ion-cloud:before, .ion-code:before, .ion-code-download:before, .ion-code-working:before, .ion-coffee:before, .ion-compass:before, .ion-compose:before, .ion-connection-bars:before, .ion-contrast:before, .ion-crop:before, .ion-cube:before, .ion-disc:before, .ion-document:before, .ion-document-text:before, .ion-drag:before, .ion-earth:before, .ion-easel:before, .ion-edit:before, .ion-egg:before, .ion-eject:before, .ion-email:before, .ion-email-unread:before, .ion-erlenmeyer-flask:before, .ion-erlenmeyer-flask-bubbles:before, .ion-eye:before, .ion-eye-disabled:before, .ion-female:before, .ion-filing:before, .ion-film-marker:before, .ion-fireball:before, .ion-flag:before, .ion-flame:before, .ion-flash:before, .ion-flash-off:before, .ion-folder:before, .ion-fork:before, .ion-fork-repo:before, .ion-forward:before, .ion-funnel:before, .ion-gear-a:before, .ion-gear-b:before, .ion-grid:before, .ion-hammer:before, .ion-happy:before, .ion-happy-outline:before, .ion-headphone:before, .ion-heart:before, .ion-heart-broken:before, .ion-help:before, .ion-help-buoy:before, .ion-help-circled:before, .ion-home:before, .ion-icecream:before, .ion-image:before, .ion-images:before, .ion-information:before, .ion-information-circled:before, .ion-ionic:before, .ion-ios-alarm:before, .ion-ios-alarm-outline:before, .ion-ios-albums:before, .ion-ios-albums-outline:before, .ion-ios-americanfootball:before, .ion-ios-americanfootball-outline:before, .ion-ios-analytics:before, .ion-ios-analytics-outline:before, .ion-ios-arrow-back:before, .ion-ios-arrow-down:before, .ion-ios-arrow-forward:before, .ion-ios-arrow-left:before, .ion-ios-arrow-right:before, .ion-ios-arrow-thin-down:before, .ion-ios-arrow-thin-left:before, .ion-ios-arrow-thin-right:before, .ion-ios-arrow-thin-up:before, .ion-ios-arrow-up:before, .ion-ios-at:before, .ion-ios-at-outline:before, .ion-ios-barcode:before, .ion-ios-barcode-outline:before, .ion-ios-baseball:before, .ion-ios-baseball-outline:before, .ion-ios-basketball:before, .ion-ios-basketball-outline:before, .ion-ios-bell:before, .ion-ios-bell-outline:before, .ion-ios-body:before, .ion-ios-body-outline:before, .ion-ios-bolt:before, .ion-ios-bolt-outline:before, .ion-ios-book:before, .ion-ios-book-outline:before, .ion-ios-bookmarks:before, .ion-ios-bookmarks-outline:before, .ion-ios-box:before, .ion-ios-box-outline:before, .ion-ios-briefcase:before, .ion-ios-briefcase-outline:before, .ion-ios-browsers:before, .ion-ios-browsers-outline:before, .ion-ios-calculator:before, .ion-ios-calculator-outline:before, .ion-ios-calendar:before, .ion-ios-calendar-outline:before, .ion-ios-camera:before, .ion-ios-camera-outline:before, .ion-ios-cart:before, .ion-ios-cart-outline:before, .ion-ios-chatboxes:before, .ion-ios-chatboxes-outline:before, .ion-ios-chatbubble:before, .ion-ios-chatbubble-outline:before, .ion-ios-checkmark:before, .ion-ios-checkmark-empty:before, .ion-ios-checkmark-outline:before, .ion-ios-circle-filled:before, .ion-ios-circle-outline:before, .ion-ios-clock:before, .ion-ios-clock-outline:before, .ion-ios-close:before, .ion-ios-close-empty:before, .ion-ios-close-outline:before, .ion-ios-cloud:before, .ion-ios-cloud-download:before, .ion-ios-cloud-download-outline:before, .ion-ios-cloud-outline:before, .ion-ios-cloud-upload:before, .ion-ios-cloud-upload-outline:before, .ion-ios-cloudy:before, .ion-ios-cloudy-night:before, .ion-ios-cloudy-night-outline:before, .ion-ios-cloudy-outline:before, .ion-ios-cog:before, .ion-ios-cog-outline:before, .ion-ios-color-filter:before, .ion-ios-color-filter-outline:before, .ion-ios-color-wand:before, .ion-ios-color-wand-outline:before, .ion-ios-compose:before, .ion-ios-compose-outline:before, .ion-ios-contact:before, .ion-ios-contact-outline:before, .ion-ios-copy:before, .ion-ios-copy-outline:before, .ion-ios-crop:before, .ion-ios-crop-strong:before, .ion-ios-download:before, .ion-ios-download-outline:before, .ion-ios-drag:before, .ion-ios-email:before, .ion-ios-email-outline:before, .ion-ios-eye:before, .ion-ios-eye-outline:before, .ion-ios-fastforward:before, .ion-ios-fastforward-outline:before, .ion-ios-filing:before, .ion-ios-filing-outline:before, .ion-ios-film:before, .ion-ios-film-outline:before, .ion-ios-flag:before, .ion-ios-flag-outline:before, .ion-ios-flame:before, .ion-ios-flame-outline:before, .ion-ios-flask:before, .ion-ios-flask-outline:before, .ion-ios-flower:before, .ion-ios-flower-outline:before, .ion-ios-folder:before, .ion-ios-folder-outline:before, .ion-ios-football:before, .ion-ios-football-outline:before, .ion-ios-game-controller-a:before, .ion-ios-game-controller-a-outline:before, .ion-ios-game-controller-b:before, .ion-ios-game-controller-b-outline:before, .ion-ios-gear:before, .ion-ios-gear-outline:before, .ion-ios-glasses:before, .ion-ios-glasses-outline:before, .ion-ios-grid-view:before, .ion-ios-grid-view-outline:before, .ion-ios-heart:before, .ion-ios-heart-outline:before, .ion-ios-help:before, .ion-ios-help-empty:before, .ion-ios-help-outline:before, .ion-ios-home:before, .ion-ios-home-outline:before, .ion-ios-infinite:before, .ion-ios-infinite-outline:before, .ion-ios-information:before, .ion-ios-information-empty:before, .ion-ios-information-outline:before, .ion-ios-ionic-outline:before, .ion-ios-keypad:before, .ion-ios-keypad-outline:before, .ion-ios-lightbulb:before, .ion-ios-lightbulb-outline:before, .ion-ios-list:before, .ion-ios-list-outline:before, .ion-ios-location:before, .ion-ios-location-outline:before, .ion-ios-locked:before, .ion-ios-locked-outline:before, .ion-ios-loop:before, .ion-ios-loop-strong:before, .ion-ios-medical:before, .ion-ios-medical-outline:before, .ion-ios-medkit:before, .ion-ios-medkit-outline:before, .ion-ios-mic:before, .ion-ios-mic-off:before, .ion-ios-mic-outline:before, .ion-ios-minus:before, .ion-ios-minus-empty:before, .ion-ios-minus-outline:before, .ion-ios-monitor:before, .ion-ios-monitor-outline:before, .ion-ios-moon:before, .ion-ios-moon-outline:before, .ion-ios-more:before, .ion-ios-more-outline:before, .ion-ios-musical-note:before, .ion-ios-musical-notes:before, .ion-ios-navigate:before, .ion-ios-navigate-outline:before, .ion-ios-nutrition:before, .ion-ios-nutrition-outline:before, .ion-ios-paper:before, .ion-ios-paper-outline:before, .ion-ios-paperplane:before, .ion-ios-paperplane-outline:before, .ion-ios-partlysunny:before, .ion-ios-partlysunny-outline:before, .ion-ios-pause:before, .ion-ios-pause-outline:before, .ion-ios-paw:before, .ion-ios-paw-outline:before, .ion-ios-people:before, .ion-ios-people-outline:before, .ion-ios-person:before, .ion-ios-person-outline:before, .ion-ios-personadd:before, .ion-ios-personadd-outline:before, .ion-ios-photos:before, .ion-ios-photos-outline:before, .ion-ios-pie:before, .ion-ios-pie-outline:before, .ion-ios-pint:before, .ion-ios-pint-outline:before, .ion-ios-play:before, .ion-ios-play-outline:before, .ion-ios-plus:before, .ion-ios-plus-empty:before, .ion-ios-plus-outline:before, .ion-ios-pricetag:before, .ion-ios-pricetag-outline:before, .ion-ios-pricetags:before, .ion-ios-pricetags-outline:before, .ion-ios-printer:before, .ion-ios-printer-outline:before, .ion-ios-pulse:before, .ion-ios-pulse-strong:before, .ion-ios-rainy:before, .ion-ios-rainy-outline:before, .ion-ios-recording:before, .ion-ios-recording-outline:before, .ion-ios-redo:before, .ion-ios-redo-outline:before, .ion-ios-refresh:before, .ion-ios-refresh-empty:before, .ion-ios-refresh-outline:before, .ion-ios-reload:before, .ion-ios-reverse-camera:before, .ion-ios-reverse-camera-outline:before, .ion-ios-rewind:before, .ion-ios-rewind-outline:before, .ion-ios-rose:before, .ion-ios-rose-outline:before, .ion-ios-search:before, .ion-ios-search-strong:before, .ion-ios-settings:before, .ion-ios-settings-strong:before, .ion-ios-shuffle:before, .ion-ios-shuffle-strong:before, .ion-ios-skipbackward:before, .ion-ios-skipbackward-outline:before, .ion-ios-skipforward:before, .ion-ios-skipforward-outline:before, .ion-ios-snowy:before, .ion-ios-speedometer:before, .ion-ios-speedometer-outline:before, .ion-ios-star:before, .ion-ios-star-half:before, .ion-ios-star-outline:before, .ion-ios-stopwatch:before, .ion-ios-stopwatch-outline:before, .ion-ios-sunny:before, .ion-ios-sunny-outline:before, .ion-ios-telephone:before, .ion-ios-telephone-outline:before, .ion-ios-tennisball:before, .ion-ios-tennisball-outline:before, .ion-ios-thunderstorm:before, .ion-ios-thunderstorm-outline:before, .ion-ios-time:before, .ion-ios-time-outline:before, .ion-ios-timer:before, .ion-ios-timer-outline:before, .ion-ios-toggle:before, .ion-ios-toggle-outline:before, .ion-ios-trash:before, .ion-ios-trash-outline:before, .ion-ios-undo:before, .ion-ios-undo-outline:before, .ion-ios-unlocked:before, .ion-ios-unlocked-outline:before, .ion-ios-upload:before, .ion-ios-upload-outline:before, .ion-ios-videocam:before, .ion-ios-videocam-outline:before, .ion-ios-volume-high:before, .ion-ios-volume-low:before, .ion-ios-wineglass:before, .ion-ios-wineglass-outline:before, .ion-ios-world:before, .ion-ios-world-outline:before, .ion-ipad:before, .ion-iphone:before, .ion-ipod:before, .ion-jet:before, .ion-key:before, .ion-knife:before, .ion-laptop:before, .ion-leaf:before, .ion-levels:before, .ion-lightbulb:before, .ion-link:before, .ion-load-a:before, .ion-load-b:before, .ion-load-c:before, .ion-load-d:before, .ion-location:before, .ion-lock-combination:before, .ion-locked:before, .ion-log-in:before, .ion-log-out:before, .ion-loop:before, .ion-magnet:before, .ion-male:before, .ion-man:before, .ion-map:before, .ion-medkit:before, .ion-merge:before, .ion-mic-a:before, .ion-mic-b:before, .ion-mic-c:before, .ion-minus:before, .ion-minus-circled:before, .ion-minus-round:before, .ion-model-s:before, .ion-monitor:before, .ion-more:before, .ion-mouse:before, .ion-music-note:before, .ion-navicon:before, .ion-navicon-round:before, .ion-navigate:before, .ion-network:before, .ion-no-smoking:before, .ion-nuclear:before, .ion-outlet:before, .ion-paintbrush:before, .ion-paintbucket:before, .ion-paper-airplane:before, .ion-paperclip:before, .ion-pause:before, .ion-person:before, .ion-person-add:before, .ion-person-stalker:before, .ion-pie-graph:before, .ion-pin:before, .ion-pinpoint:before, .ion-pizza:before, .ion-plane:before, .ion-planet:before, .ion-play:before, .ion-playstation:before, .ion-plus:before, .ion-plus-circled:before, .ion-plus-round:before, .ion-podium:before, .ion-pound:before, .ion-power:before, .ion-pricetag:before, .ion-pricetags:before, .ion-printer:before, .ion-pull-request:before, .ion-qr-scanner:before, .ion-quote:before, .ion-radio-waves:before, .ion-record:before, .ion-refresh:before, .ion-reply:before, .ion-reply-all:before, .ion-ribbon-a:before, .ion-ribbon-b:before, .ion-sad:before, .ion-sad-outline:before, .ion-scissors:before, .ion-search:before, .ion-settings:before, .ion-share:before, .ion-shuffle:before, .ion-skip-backward:before, .ion-skip-forward:before, .ion-social-android:before, .ion-social-android-outline:before, .ion-social-angular:before, .ion-social-angular-outline:before, .ion-social-apple:before, .ion-social-apple-outline:before, .ion-social-bitcoin:before, .ion-social-bitcoin-outline:before, .ion-social-buffer:before, .ion-social-buffer-outline:before, .ion-social-chrome:before, .ion-social-chrome-outline:before, .ion-social-codepen:before, .ion-social-codepen-outline:before, .ion-social-css3:before, .ion-social-css3-outline:before, .ion-social-designernews:before, .ion-social-designernews-outline:before, .ion-social-dribbble:before, .ion-social-dribbble-outline:before, .ion-social-dropbox:before, .ion-social-dropbox-outline:before, .ion-social-euro:before, .ion-social-euro-outline:before, .ion-social-facebook:before, .ion-social-facebook-outline:before, .ion-social-foursquare:before, .ion-social-foursquare-outline:before, .ion-social-freebsd-devil:before, .ion-social-github:before, .ion-social-github-outline:before, .ion-social-google:before, .ion-social-google-outline:before, .ion-social-googleplus:before, .ion-social-googleplus-outline:before, .ion-social-hackernews:before, .ion-social-hackernews-outline:before, .ion-social-html5:before, .ion-social-html5-outline:before, .ion-social-instagram:before, .ion-social-instagram-outline:before, .ion-social-javascript:before, .ion-social-javascript-outline:before, .ion-social-linkedin:before, .ion-social-linkedin-outline:before, .ion-social-markdown:before, .ion-social-nodejs:before, .ion-social-octocat:before, .ion-social-pinterest:before, .ion-social-pinterest-outline:before, .ion-social-python:before, .ion-social-reddit:before, .ion-social-reddit-outline:before, .ion-social-rss:before, .ion-social-rss-outline:before, .ion-social-sass:before, .ion-social-skype:before, .ion-social-skype-outline:before, .ion-social-snapchat:before, .ion-social-snapchat-outline:before, .ion-social-tumblr:before, .ion-social-tumblr-outline:before, .ion-social-tux:before, .ion-social-twitch:before, .ion-social-twitch-outline:before, .ion-social-twitter:before, .ion-social-twitter-outline:before, .ion-social-usd:before, .ion-social-usd-outline:before, .ion-social-vimeo:before, .ion-social-vimeo-outline:before, .ion-social-whatsapp:before, .ion-social-whatsapp-outline:before, .ion-social-windows:before, .ion-social-windows-outline:before, .ion-social-wordpress:before, .ion-social-wordpress-outline:before, .ion-social-yahoo:before, .ion-social-yahoo-outline:before, .ion-social-yen:before, .ion-social-yen-outline:before, .ion-social-youtube:before, .ion-social-youtube-outline:before, .ion-soup-can:before, .ion-soup-can-outline:before, .ion-speakerphone:before, .ion-speedometer:before, .ion-spoon:before, .ion-star:before, .ion-stats-bars:before, .ion-steam:before, .ion-stop:before, .ion-thermometer:before, .ion-thumbsdown:before, .ion-thumbsup:before, .ion-toggle:before, .ion-toggle-filled:before, .ion-transgender:before, .ion-trash-a:before, .ion-trash-b:before, .ion-trophy:before, .ion-tshirt:before, .ion-tshirt-outline:before, .ion-umbrella:before, .ion-university:before, .ion-unlocked:before, .ion-upload:before, .ion-usb:before, .ion-videocamera:before, .ion-volume-high:before, .ion-volume-low:before, .ion-volume-medium:before, .ion-volume-mute:before, .ion-wand:before, .ion-waterdrop:before, .ion-wifi:before, .ion-wineglass:before, .ion-woman:before, .ion-wrench:before, .ion-xbox:before {
   display: inline-block;
   font-family: "Ionicons";
   speak: none;
@@ -3002,7 +2270,7 @@
   margin: 10px; }
 
 .dvs-fg.dvs-white {
-  color: white; }
+  color: #ffffff; }
 .dvs-fg.dvs-black {
   color: #262626; }
 .dvs-fg.dvs-gray {
@@ -3012,7 +2280,7 @@
 .dvs-fg.dvs-mid-gray {
   color: #a0a0a0; }
 .dvs-fg.dvs-red {
-  color: #fd5f46; }
+  color: #FD5F46; }
 .dvs-fg.dvs-purple {
   color: #673f90; }
 .dvs-fg.dvs-green {
@@ -3027,23 +2295,23 @@
   font-size: 10px;
   text-transform: uppercase; }
   .dvs-badge.white {
-    background-color: white;
-    color: #2d3039; }
+    background-color: #ffffff;
+    color: #2D3039; }
   .dvs-badge.black {
     background-color: #262626;
     color: #bcbec2; }
   .dvs-badge.gray {
     background-color: #bcbec2;
-    color: #2d3039; }
+    color: #2D3039; }
   .dvs-badge.red {
-    background-color: #fd5f46;
-    color: white; }
+    background-color: #FD5F46;
+    color: #ffffff; }
   .dvs-badge.purple {
     background-color: #673f90;
-    color: white; }
+    color: #ffffff; }
   .dvs-badge.green {
     background-color: #7dbd5d;
-    color: white; }
+    color: #ffffff; }
   .dvs-badge .dvs-button.dvs-button-small {
     padding: 1px 3px 1px 2px;
     font-weight: bold;
@@ -3056,12 +2324,9 @@
 
 .dvs-small {
   font-size: 0.9em;
-  line-height: 1.0em; }
+  line-height: 1em; }
 
-a.dvs-no-decoration,
-button.dvs-no-decoration,
-a.dvs-no-decoration:hover,
-button.dvs-no-decoration:hover {
+a.dvs-no-decoration, button.dvs-no-decoration, a.dvs-no-decoration:hover, button.dvs-no-decoration:hover {
   text-decoration: none; }
 
 .dvs-advanced {
@@ -3093,56 +2358,54 @@ button.dvs-no-decoration:hover {
   float: left; }
 
 .row {
-  margin-left: -1.33333%; }
+  margin-left: -1.3333333333%; }
 
 .column, .col1, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9, .col10, .col11, .col12 {
-  margin-left: 1.33333%; }
+  margin-left: 1.3333333333%; }
 
 .col1 {
-  width: 7.0%; }
+  width: 7%; }
 
 .col2 {
-  width: 15.33333%; }
+  width: 15.3333333333%; }
 
 .col3 {
-  width: 23.66667%; }
+  width: 23.6666666667%; }
 
 .col4 {
-  width: 32.0%; }
+  width: 32%; }
 
 .col5 {
-  width: 40.33333%; }
+  width: 40.3333333333%; }
 
 .col6 {
-  width: 48.66667%; }
+  width: 48.6666666667%; }
 
 .col7 {
-  width: 57.0%; }
+  width: 57%; }
 
 .col8 {
-  width: 65.33333%; }
+  width: 65.3333333333%; }
 
 .col9 {
-  width: 73.66667%; }
+  width: 73.6666666667%; }
 
 .col10 {
-  width: 82.0%; }
+  width: 82%; }
 
 .col11 {
-  width: 90.33333%; }
+  width: 90.3333333333%; }
 
 .col12 {
-  width: 98.66667%; }
+  width: 98.6666666667%; }
 
-.dvs-admin-form-horizontal,
-.dvs-admin-form-vertical {
+.dvs-admin-form-horizontal, .dvs-admin-form-vertical {
   padding: 50px 30px 50px;
   box-sizing: border-box;
   background-color: #292b33;
   border-radius: 2px;
   box-shadow: inset 0 2px 12px 4px rgba(0, 0, 0, 0.2); }
-  .dvs-admin-form-horizontal .dvs-helptext,
-  .dvs-admin-form-vertical .dvs-helptext {
+  .dvs-admin-form-horizontal .dvs-helptext, .dvs-admin-form-vertical .dvs-helptext {
     clear: both;
     width: 78%;
     margin: 0 0 0 20%;
@@ -3152,8 +2415,7 @@ button.dvs-no-decoration:hover {
     font-weight: 300;
     line-height: 20px; }
 
-#dvs-admin input[type=password].form-control,
-#dvs-admin input[type=text].form-control {
+#dvs-admin input[type=password].form-control, #dvs-admin input[type=text].form-control {
   padding: 14px 14px;
   font-size: 14px;
   color: #bcbec2;
@@ -3164,52 +2426,39 @@ button.dvs-no-decoration:hover {
   background: -webkit-linear-gradient(top, #202228, #24262e);
   background: linear-gradient(to bottom, #202228, #24262e);
   padding: 24px 14px; }
-  #dvs-admin input[type=password].form-control::-webkit-input-placeholder,
-  #dvs-admin input[type=text].form-control::-webkit-input-placeholder {
+  #dvs-admin input[type=password].form-control::-webkit-input-placeholder, #dvs-admin input[type=text].form-control::-webkit-input-placeholder {
     color: #797d85; }
-  #dvs-admin input[type=password].form-control::-moz-placeholder,
-  #dvs-admin input[type=text].form-control::-moz-placeholder {
+  #dvs-admin input[type=password].form-control::-moz-placeholder, #dvs-admin input[type=text].form-control::-moz-placeholder {
     color: #797d85; }
-  #dvs-admin input[type=password].form-control:-moz-placeholder,
-  #dvs-admin input[type=text].form-control:-moz-placeholder {
+  #dvs-admin input[type=password].form-control:-moz-placeholder, #dvs-admin input[type=text].form-control:-moz-placeholder {
     color: #797d85; }
-  #dvs-admin input[type=password].form-control:-ms-input-placeholder,
-  #dvs-admin input[type=text].form-control:-ms-input-placeholder {
+  #dvs-admin input[type=password].form-control:-ms-input-placeholder, #dvs-admin input[type=text].form-control:-ms-input-placeholder {
     color: #797d85; }
 #dvs-admin .form-control:focus {
   border-color: #5a6072;
   box-shadow: 0 0 12px rgba(90, 96, 114, 0.5); }
-#dvs-admin .dvs-admin-form-vertical h3, #dvs-admin .dvs-admin-form-vertical h4, #dvs-admin .dvs-admin-form-vertical h5, #dvs-admin .dvs-admin-form-vertical h6,
-#dvs-admin .dvs-admin-form-horizontal h3,
-#dvs-admin .dvs-admin-form-horizontal h4,
-#dvs-admin .dvs-admin-form-horizontal h5,
-#dvs-admin .dvs-admin-form-horizontal h6 {
+#dvs-admin .dvs-admin-form-vertical h3, #dvs-admin .dvs-admin-form-vertical h4, #dvs-admin .dvs-admin-form-vertical h5, #dvs-admin .dvs-admin-form-vertical h6, #dvs-admin .dvs-admin-form-horizontal h3, #dvs-admin .dvs-admin-form-horizontal h4, #dvs-admin .dvs-admin-form-horizontal h5, #dvs-admin .dvs-admin-form-horizontal h6 {
   padding-bottom: 20px;
   font-weight: 300; }
-#dvs-admin .dvs-admin-form-vertical hr,
-#dvs-admin .dvs-admin-form-horizontal hr {
+#dvs-admin .dvs-admin-form-vertical hr, #dvs-admin .dvs-admin-form-horizontal hr {
   margin-top: -5px;
   margin-bottom: 50px; }
 #dvs-admin .dvs-admin-form-vertical h3, #dvs-admin .dvs-admin-form-vertical h4, #dvs-admin .dvs-admin-form-vertical h5, #dvs-admin .dvs-admin-form-vertical h6 {
   padding-left: 0; }
 
-.dvs-admin-form-vertical input[type="submit"],
-.dvs-admin-form-horizontal input[type="submit"] {
+.dvs-admin-form-vertical input[type="submit"], .dvs-admin-form-horizontal input[type="submit"] {
   margin-left: 22%; }
-.dvs-admin-form-vertical .dvs-form-group,
-.dvs-admin-form-horizontal .dvs-form-group {
+.dvs-admin-form-vertical .dvs-form-group, .dvs-admin-form-horizontal .dvs-form-group {
   clear: both;
   margin-bottom: 35px;
   color: #a1a4aa;
   display: table;
   width: 100%; }
-  .dvs-admin-form-vertical .dvs-form-group:after,
-  .dvs-admin-form-horizontal .dvs-form-group:after {
+  .dvs-admin-form-vertical .dvs-form-group:after, .dvs-admin-form-horizontal .dvs-form-group:after {
     content: "";
     display: table;
     clear: both; }
-  .dvs-admin-form-vertical .dvs-form-group label,
-  .dvs-admin-form-horizontal .dvs-form-group label {
+  .dvs-admin-form-vertical .dvs-form-group label, .dvs-admin-form-horizontal .dvs-form-group label {
     display: table-cell;
     vertical-align: middle;
     width: 20%;
@@ -3217,14 +2466,7 @@ button.dvs-no-decoration:hover {
     margin-right: 2%;
     line-height: 1.5em;
     padding: 5px 35px 5px 0; }
-  .dvs-admin-form-vertical .dvs-form-group input[type="text"],
-  .dvs-admin-form-vertical .dvs-form-group input[type="password"],
-  .dvs-admin-form-vertical .dvs-form-group textarea,
-  .dvs-admin-form-vertical .dvs-form-group select,
-  .dvs-admin-form-horizontal .dvs-form-group input[type="text"],
-  .dvs-admin-form-horizontal .dvs-form-group input[type="password"],
-  .dvs-admin-form-horizontal .dvs-form-group textarea,
-  .dvs-admin-form-horizontal .dvs-form-group select {
+  .dvs-admin-form-vertical .dvs-form-group input[type="text"], .dvs-admin-form-vertical .dvs-form-group input[type="password"], .dvs-admin-form-vertical .dvs-form-group textarea, .dvs-admin-form-vertical .dvs-form-group select, .dvs-admin-form-horizontal .dvs-form-group input[type="text"], .dvs-admin-form-horizontal .dvs-form-group input[type="password"], .dvs-admin-form-horizontal .dvs-form-group textarea, .dvs-admin-form-horizontal .dvs-form-group select {
     display: table-cell;
     width: 78%;
     padding: 14px 14px;
@@ -3236,105 +2478,50 @@ button.dvs-no-decoration:hover {
     overflow: hidden;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e); }
-    .dvs-admin-form-vertical .dvs-form-group input[type="text"]::-webkit-input-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group input[type="password"]::-webkit-input-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group textarea::-webkit-input-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group select::-webkit-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-webkit-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-webkit-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group textarea::-webkit-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select::-webkit-input-placeholder {
+    .dvs-admin-form-vertical .dvs-form-group input[type="text"]::-webkit-input-placeholder, .dvs-admin-form-vertical .dvs-form-group input[type="password"]::-webkit-input-placeholder, .dvs-admin-form-vertical .dvs-form-group textarea::-webkit-input-placeholder, .dvs-admin-form-vertical .dvs-form-group select::-webkit-input-placeholder, .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-webkit-input-placeholder, .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-webkit-input-placeholder, .dvs-admin-form-horizontal .dvs-form-group textarea::-webkit-input-placeholder, .dvs-admin-form-horizontal .dvs-form-group select::-webkit-input-placeholder {
       color: #797d85; }
-    .dvs-admin-form-vertical .dvs-form-group input[type="text"]::-moz-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group input[type="password"]::-moz-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group textarea::-moz-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group select::-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group textarea::-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select::-moz-placeholder {
+    .dvs-admin-form-vertical .dvs-form-group input[type="text"]::-moz-placeholder, .dvs-admin-form-vertical .dvs-form-group input[type="password"]::-moz-placeholder, .dvs-admin-form-vertical .dvs-form-group textarea::-moz-placeholder, .dvs-admin-form-vertical .dvs-form-group select::-moz-placeholder, .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-moz-placeholder, .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-moz-placeholder, .dvs-admin-form-horizontal .dvs-form-group textarea::-moz-placeholder, .dvs-admin-form-horizontal .dvs-form-group select::-moz-placeholder {
       color: #797d85; }
-    .dvs-admin-form-vertical .dvs-form-group input[type="text"]:-moz-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group input[type="password"]:-moz-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group textarea:-moz-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group select:-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group textarea:-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select:-moz-placeholder {
+    .dvs-admin-form-vertical .dvs-form-group input[type="text"]:-moz-placeholder, .dvs-admin-form-vertical .dvs-form-group input[type="password"]:-moz-placeholder, .dvs-admin-form-vertical .dvs-form-group textarea:-moz-placeholder, .dvs-admin-form-vertical .dvs-form-group select:-moz-placeholder, .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-moz-placeholder, .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-moz-placeholder, .dvs-admin-form-horizontal .dvs-form-group textarea:-moz-placeholder, .dvs-admin-form-horizontal .dvs-form-group select:-moz-placeholder {
       color: #797d85; }
-    .dvs-admin-form-vertical .dvs-form-group input[type="text"]:-ms-input-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group input[type="password"]:-ms-input-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group textarea:-ms-input-placeholder,
-    .dvs-admin-form-vertical .dvs-form-group select:-ms-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-ms-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-ms-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group textarea:-ms-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select:-ms-input-placeholder {
+    .dvs-admin-form-vertical .dvs-form-group input[type="text"]:-ms-input-placeholder, .dvs-admin-form-vertical .dvs-form-group input[type="password"]:-ms-input-placeholder, .dvs-admin-form-vertical .dvs-form-group textarea:-ms-input-placeholder, .dvs-admin-form-vertical .dvs-form-group select:-ms-input-placeholder, .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-ms-input-placeholder, .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-ms-input-placeholder, .dvs-admin-form-horizontal .dvs-form-group textarea:-ms-input-placeholder, .dvs-admin-form-horizontal .dvs-form-group select:-ms-input-placeholder {
       color: #797d85; }
-  .dvs-admin-form-vertical .dvs-form-group select,
-  .dvs-admin-form-horizontal .dvs-form-group select {
+  .dvs-admin-form-vertical .dvs-form-group select, .dvs-admin-form-horizontal .dvs-form-group select {
     height: 50px;
     width: 78%;
     border-radius: 0; }
-  .dvs-admin-form-vertical .dvs-form-group input[type=checkbox],
-  .dvs-admin-form-vertical .dvs-form-group input[type=radio],
-  .dvs-admin-form-horizontal .dvs-form-group input[type=checkbox],
-  .dvs-admin-form-horizontal .dvs-form-group input[type=radio] {
+  .dvs-admin-form-vertical .dvs-form-group input[type=checkbox], .dvs-admin-form-vertical .dvs-form-group input[type=radio], .dvs-admin-form-horizontal .dvs-form-group input[type=checkbox], .dvs-admin-form-horizontal .dvs-form-group input[type=radio] {
     margin-left: 2%; }
-  .dvs-admin-form-vertical .dvs-form-group .fancyCheckbox label,
-  .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label {
+  .dvs-admin-form-vertical .dvs-form-group .fancyCheckbox label, .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label {
     border-radius: 50px;
     width: 34px;
     height: 24px; }
-  .dvs-admin-form-vertical .dvs-form-group textarea.short,
-  .dvs-admin-form-horizontal .dvs-form-group textarea.short {
+  .dvs-admin-form-vertical .dvs-form-group textarea.short, .dvs-admin-form-horizontal .dvs-form-group textarea.short {
     height: 100px; }
-  .dvs-admin-form-vertical .dvs-form-group input[type=text]:disabled,
-  .dvs-admin-form-vertical .dvs-form-group textarea:disabled,
-  .dvs-admin-form-horizontal .dvs-form-group input[type=text]:disabled,
-  .dvs-admin-form-horizontal .dvs-form-group textarea:disabled {
+  .dvs-admin-form-vertical .dvs-form-group input[type=text]:disabled, .dvs-admin-form-vertical .dvs-form-group textarea:disabled, .dvs-admin-form-horizontal .dvs-form-group input[type=text]:disabled, .dvs-admin-form-horizontal .dvs-form-group textarea:disabled {
     color: #797d85; }
-.dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle,
-.dvs-admin-form-vertical .dvs-sort-items .ui-sortable-handle,
-.dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle,
-.dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle {
+.dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle, .dvs-admin-form-vertical .dvs-sort-items .ui-sortable-handle, .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle, .dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle {
   clear: both; }
-  .dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle:after,
-  .dvs-admin-form-vertical .dvs-sort-items .ui-sortable-handle:after,
-  .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle:after,
-  .dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle:after {
+  .dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle:after, .dvs-admin-form-vertical .dvs-sort-items .ui-sortable-handle:after, .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle:after, .dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle:after {
     content: "";
     display: table;
     clear: both; }
-.dvs-admin-form-vertical .dvs-menu-items select,
-.dvs-admin-form-vertical .dvs-menu-items input[type=text],
-.dvs-admin-form-vertical .dvs-sort-items select,
-.dvs-admin-form-vertical .dvs-sort-items input[type=text],
-.dvs-admin-form-horizontal .dvs-menu-items select,
-.dvs-admin-form-horizontal .dvs-menu-items input[type=text],
-.dvs-admin-form-horizontal .dvs-sort-items select,
-.dvs-admin-form-horizontal .dvs-sort-items input[type=text] {
+.dvs-admin-form-vertical .dvs-menu-items select, .dvs-admin-form-vertical .dvs-menu-items input[type=text], .dvs-admin-form-vertical .dvs-sort-items select, .dvs-admin-form-vertical .dvs-sort-items input[type=text], .dvs-admin-form-horizontal .dvs-menu-items select, .dvs-admin-form-horizontal .dvs-menu-items input[type=text], .dvs-admin-form-horizontal .dvs-sort-items select, .dvs-admin-form-horizontal .dvs-sort-items input[type=text] {
   width: 23%;
   float: left;
   height: 24px;
   font-size: 11px;
   margin-right: 5px; }
-.dvs-admin-form-vertical .dvs-menu-items select,
-.dvs-admin-form-vertical .dvs-sort-items select,
-.dvs-admin-form-horizontal .dvs-menu-items select,
-.dvs-admin-form-horizontal .dvs-sort-items select {
+.dvs-admin-form-vertical .dvs-menu-items select, .dvs-admin-form-vertical .dvs-sort-items select, .dvs-admin-form-horizontal .dvs-menu-items select, .dvs-admin-form-horizontal .dvs-sort-items select {
   height: 31px;
   width: 15%; }
 
 .dvs-admin-form-vertical input[type="submit"] {
   margin-left: 0; }
 
-.dvs-admin-form-horizontal #dvs-fields-list select,
-.dvs-admin-form-horizontal #dvs-fields-list input[type=text] {
+.dvs-admin-form-horizontal #dvs-fields-list select, .dvs-admin-form-horizontal #dvs-fields-list input[type=text] {
   width: 18%; }
-.dvs-admin-form-horizontal #dvs-fields-list .dvs-choices-list select,
-.dvs-admin-form-horizontal #dvs-fields-list .dvs-choices-list input[type=text] {
+.dvs-admin-form-horizontal #dvs-fields-list .dvs-choices-list select, .dvs-admin-form-horizontal #dvs-fields-list .dvs-choices-list input[type=text] {
   width: 26%; }
 
 .dvs-admin-form-horizontal #dvs-permissions {
@@ -3346,16 +2533,10 @@ button.dvs-no-decoration:hover {
   .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group {
     float: left;
     width: 100%; }
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="text"],
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="password"],
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group textarea,
-    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group select {
+    .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="text"], .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="password"], .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group textarea, .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group select {
       width: 150px;
       display: inline-block; }
-      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="text"].operator-types,
-      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="password"].operator-types,
-      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group textarea.operator-types,
-      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group select.operator-types {
+      .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="text"].operator-types, .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group input[type="password"].operator-types, .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group textarea.operator-types, .dvs-admin-form-horizontal #dvs-permissions .dvs-form-group select.operator-types {
         display: block;
         float: none; }
   .dvs-admin-form-horizontal #dvs-permissions input.rule-param {
@@ -3369,7 +2550,7 @@ button.dvs-no-decoration:hover {
   .dvs-admin-form-horizontal #dvs-permissions .dvs-permission-group {
     background: -webkit-linear-gradient(#61646b, #55585d);
     background: linear-gradient(#61646b, #55585d);
-    color: #2d3039;
+    color: #2D3039;
     border-radius: 3px;
     margin-top: 15px;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
@@ -3426,9 +2607,9 @@ button.dvs-no-decoration:hover {
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
     background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
     background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-    -webkit-transition: all 0.4s ease;
-    -moz-transition: all 0.4s ease;
-    transition: all 0.4s ease; }
+    -webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    transition: all .4s ease; }
   .fancyCheckbox input[type=checkbox] {
     visibility: hidden; }
     .fancyCheckbox input[type=checkbox]:checked + label {
@@ -3454,14 +2635,14 @@ button.dvs-no-decoration:hover {
       display: block;
       width: 50%; }
   .dvs-admin-mode #dvs-content {
-    opacity: 0.6; }
+    opacity: .6; }
 
 .dvs-button {
   display: inline-block;
   padding: 12px 20px;
-  color: #bcbec2;
+  color: #BCBEC2;
   background-color: transparent;
-  border: 1px solid #bcbec2;
+  border: 1px solid #BCBEC2;
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 2px;
@@ -3472,8 +2653,8 @@ button.dvs-no-decoration:hover {
   .dvs-button:hover {
     color: #d7d8da; }
   .dvs-button.dvs-button-solid {
-    background-color: #bcbec2;
-    color: #2d3039; }
+    background-color: #BCBEC2;
+    color: #2D3039; }
   .dvs-button.dvs-button-tiny {
     padding: 6px;
     font-size: 10px; }
@@ -3493,16 +2674,16 @@ button.dvs-no-decoration:hover {
     color: #5dbabd; }
     .dvs-button.dvs-button-secondary.dvs-button-solid {
       background-color: #5dbabd;
-      color: white; }
+      color: #ffffff; }
   .dvs-button.dvs-button-inactive {
-    border: 1px solid #fd5f46;
-    color: #fd5f46; }
+    border: 1px solid #FD5F46;
+    color: #FD5F46; }
     .dvs-button.dvs-button-inactive.dvs-button-solid {
-      background-color: #fd5f46;
+      background-color: #FD5F46;
       color: #bcbec2; }
   .dvs-button.dvs-button-dark {
     background-color: #333333;
-    color: white; }
+    color: #ffffff; }
   .dvs-button.dvs-button-gray {
     border: 1px solid #bcbec2;
     color: #bcbec2; }
@@ -3510,17 +2691,17 @@ button.dvs-no-decoration:hover {
       background-color: #bcbec2;
       color: #262626; }
   .dvs-button.dvs-button-danger {
-    border: 1px solid #fd5f46;
-    color: #fd5f46; }
+    border: 1px solid #FD5F46;
+    color: #FD5F46; }
     .dvs-button.dvs-button-danger.dvs-button-solid {
-      background-color: #fd5f46;
-      color: white; }
+      background-color: #FD5F46;
+      color: #ffffff; }
   .dvs-button.dvs-button-success {
     border: 1px solid #7dbd5d;
     color: #7dbd5d; }
     .dvs-button.dvs-button-success.dvs-button-solid {
       background-color: #7dbd5d;
-      color: white; }
+      color: #ffffff; }
   .dvs-button.dvs-button-outset {
     color: #bcbec2;
     background-color: #262930;
@@ -3586,7 +2767,7 @@ button.dvs-no-decoration:hover {
   cursor: pointer;
   background-color: transparent;
   border-radius: 2px;
-  border: 1px solid #bcbec2;
+  border: 1px solid #BCBEC2;
   color: #bcbec2;
   padding: 12px 6px;
   font-size: 12px;
@@ -3629,8 +2810,8 @@ button.dvs-no-decoration:hover {
     border-right: 5px solid transparent;
     border-top: 5px solid #bcbec2; }
   .dvs-select-wrapper.dvs-button-solid {
-    background-color: #bcbec2;
-    color: #2d3039; }
+    background-color: #BCBEC2;
+    color: #2D3039; }
     .dvs-select-wrapper.dvs-button-solid:after {
       border-top-color: #262626; }
   .dvs-select-wrapper.dvs-select-small {
@@ -3645,12 +2826,12 @@ button.dvs-no-decoration:hover {
     color: #5dbabd; }
     .dvs-select-wrapper.dvs-select-secondary.dvs-select-solid {
       background-color: #5dbabd;
-      color: white; }
+      color: #ffffff; }
   .dvs-select-wrapper.dvs-select-inactive {
-    border: 1px solid #fd5f46;
-    color: #fd5f46; }
+    border: 1px solid #FD5F46;
+    color: #FD5F46; }
     .dvs-select-wrapper.dvs-select-inactive.dvs-select-solid {
-      background-color: #fd5f46;
+      background-color: #FD5F46;
       color: #bcbec2; }
   .dvs-select-wrapper.dvs-select-gray {
     border: 1px solid #bcbec2;
@@ -3659,46 +2840,37 @@ button.dvs-no-decoration:hover {
       background-color: #bcbec2;
       color: #262626; }
   .dvs-select-wrapper.dvs-select-danger {
-    border: 1px solid #fd5f46;
-    color: #fd5f46; }
+    border: 1px solid #FD5F46;
+    color: #FD5F46; }
     .dvs-select-wrapper.dvs-select-danger.dvs-select-solid {
-      background-color: #fd5f46;
-      color: white; }
+      background-color: #FD5F46;
+      color: #ffffff; }
   .dvs-select-wrapper.dvs-select-success {
     border: 1px solid #7dbd5d;
     color: #7dbd5d; }
     .dvs-select-wrapper.dvs-select-success.dvs-select-solid {
       background-color: #7dbd5d;
-      color: white; }
+      color: #ffffff; }
       .dvs-select-wrapper.dvs-select-success.dvs-select-solid:after {
-        border-top-color: white; }
+        border-top-color: #ffffff; }
 
 td .dvs-select-small {
   margin-top: 5px; }
 
-#dvs-admin .alert,
-#dvs-admin .dvs-messages {
+#dvs-admin .alert, #dvs-admin .dvs-messages {
   background-color: #17181d;
   border: 1px solid #383c47;
   padding: 30px;
-  color: white;
+  color: #ffffff;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
-  #dvs-admin .alert h1, #dvs-admin .alert h2, #dvs-admin .alert h3, #dvs-admin .alert h4, #dvs-admin .alert h5, #dvs-admin .alert h6,
-  #dvs-admin .dvs-messages h1,
-  #dvs-admin .dvs-messages h2,
-  #dvs-admin .dvs-messages h3,
-  #dvs-admin .dvs-messages h4,
-  #dvs-admin .dvs-messages h5,
-  #dvs-admin .dvs-messages h6 {
-    color: white;
+  #dvs-admin .alert h1, #dvs-admin .alert h2, #dvs-admin .alert h3, #dvs-admin .alert h4, #dvs-admin .alert h5, #dvs-admin .alert h6, #dvs-admin .dvs-messages h1, #dvs-admin .dvs-messages h2, #dvs-admin .dvs-messages h3, #dvs-admin .dvs-messages h4, #dvs-admin .dvs-messages h5, #dvs-admin .dvs-messages h6 {
+    color: #ffffff;
     font-size: 18px;
     font-weight: 600; }
-  #dvs-admin .alert.alert-danger,
-  #dvs-admin .dvs-messages.alert-danger {
-    background-color: #fd5f46;
+  #dvs-admin .alert.alert-danger, #dvs-admin .dvs-messages.alert-danger {
+    background-color: #FD5F46;
     border: 1px solid #fd755f; }
-  #dvs-admin .alert.alert-success,
-  #dvs-admin .dvs-messages.alert-success {
+  #dvs-admin .alert.alert-success, #dvs-admin .dvs-messages.alert-success {
     background-color: #7dbd5d;
     border: 1px solid #8cc46f; }
 
@@ -3707,14 +2879,17 @@ td .dvs-select-small {
 @media (max-width: 767px) {
   .dvs-hide-mobile {
     display: none; } }
+
 /* Tablets */
 @media (min-width: 768px) and (max-width: 979px) {
   .dvs-hide-tablet {
     display: none; } }
+
 /* Large Devices */
 @media (min-width: 1200px) {
   .dvs-hide-large {
     display: none; } }
+
 #dvs-admin .dvs-calendar-container h2 {
   font-size: 28px;
   font-weight: 300;
@@ -3736,7 +2911,7 @@ td .dvs-select-small {
 #dvs-admin .dvs-calendar-container .fc-month-view thead th {
   padding: 15px 20px; }
 #dvs-admin .dvs-calendar-container .fc-month-view tbody tr {
-  color: white; }
+  color: #ffffff; }
 #dvs-admin #page-version-events {
   float: left;
   width: 100%;
@@ -3778,7 +2953,7 @@ td .dvs-select-small {
   border-radius: 2px;
   background-color: #5dbabd;
   border-width: 0;
-  color: white; }
+  color: #ffffff; }
 #dvs-admin .fc-event-container {
   padding: 5px; }
   #dvs-admin .fc-event-container .fc-event {
@@ -3820,7 +2995,7 @@ td .dvs-select-small {
   background-image: -webkit-linear-gradient(#2b2e36, #262930);
   background-image: linear-gradient(#2b2e36, #262930);
   border-color: #1d1f25;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); }
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); }
   #dvs-admin .sortable li div.dvs-borderless {
     border: none; }
 #dvs-admin #dvs-fields-list .dvs-form-group label {
@@ -3857,8 +3032,8 @@ td .dvs-select-small {
   margin-top: -200px;
   z-index: 20000; }
   #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
-    background-image: -webkit-linear-gradient(#2d3039, #22242b);
-    background-image: linear-gradient(#2d3039, #22242b);
+    background-image: -webkit-linear-gradient(#2D3039, #22242b);
+    background-image: linear-gradient(#2D3039, #22242b);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
     padding-top: 30px; }
     #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal h4 {
@@ -3910,8 +3085,7 @@ td .dvs-select-small {
       list-style-type: disc; }
   #dvs-sidebar-container :focus {
     outline: none; }
-  #dvs-sidebar-container table th a,
-  #dvs-sidebar-container table td a {
+  #dvs-sidebar-container table th a, #dvs-sidebar-container table td a {
     text-decoration: none; }
 
 /* Common */
@@ -3924,8 +3098,7 @@ td .dvs-select-small {
 .dvs-fixed {
   position: fixed; }
 
-.dvs-collapsed,
-.dvs-hidden {
+.dvs-collapsed, .dvs-hidden {
   display: none; }
 
 /* Application-Specific */
@@ -3934,10 +3107,7 @@ td .dvs-select-small {
   -moz-transition: none !important;
   transition: none !important; }
 
-#dvs-mode,
-#dvs-container,
-#dvs-pusher,
-#dvs-content {
+#dvs-mode, #dvs-container, #dvs-pusher, #dvs-content {
   height: 100%; }
 
 #dvs-container {
@@ -3949,8 +3119,8 @@ td .dvs-select-small {
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   transition: all 0.5s;
-  background-image: -webkit-linear-gradient(top, #e9e9e9 0%, #fefefe 50%, #e7e7e7 51%, white 100%);
-  background-image: linear-gradient(to bottom, #e9e9e9 0%, #fefefe 50%, #e7e7e7 51%, white 100%); }
+  background-image: -webkit-linear-gradient(top, #e9e9e9 0%, #fefefe 50%, #e7e7e7 51%, #ffffff 100%);
+  background-image: linear-gradient(to bottom, #e9e9e9 0%, #fefefe 50%, #e7e7e7 51%, #ffffff 100%); }
 
 #dvs-content {
   position: relative;
@@ -3964,7 +3134,7 @@ td .dvs-select-small {
   width: 80%;
   height: 100px;
   background: rgba(0, 0, 0, 0.08);
-  border-radius: 25% / 50px;
+  border-radius: 25%/50px;
   box-shadow: 0 0 80px 25px rgba(0, 0, 0, 0.1); }
 
 #dvs-pusher {
@@ -3988,8 +3158,7 @@ td .dvs-select-small {
   -moz-transition: opacity 0.5s;
   transition: opacity 0.5s; }
 
-#dvs-admin-mode-button,
-#dvs-node-mode-button {
+#dvs-admin-mode-button, #dvs-node-mode-button {
   position: fixed;
   display: block;
   bottom: 0px;
@@ -4008,12 +3177,11 @@ td .dvs-select-small {
   font-weight: bold;
   font-size: 12px;
   text-transform: uppercase;
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   transition: all 0.5s; }
-  #dvs-admin-mode-button:hover,
-  #dvs-node-mode-button:hover {
+  #dvs-admin-mode-button:hover, #dvs-node-mode-button:hover {
     background-color: rgba(0, 0, 0, 0.9); }
 
 #dvs-admin-mode-button {
@@ -4033,7 +3201,7 @@ td .dvs-select-small {
   padding: 25px;
   overflow: hidden;
   background-color: #bcbec2;
-  color: #2d3039;
+  color: #2D3039;
   -webkit-transition: width 0.1s;
   -moz-transition: width 0.1s;
   transition: width 0.1s;
@@ -4067,8 +3235,7 @@ td .dvs-select-small {
     margin-top: 10px;
     margin-bottom: 30px; }
 
-#dvs-docs-close,
-#dvs-docs-expand {
+#dvs-docs-close, #dvs-docs-expand {
   position: absolute;
   top: 20px;
   right: 20px; }
@@ -4138,9 +3305,9 @@ td .dvs-select-small {
     font-size: 14px;
     vertical-align: middle;
     background-color: #673f90;
-    color: white;
+    color: #ffffff;
     border-radius: 3px;
-    font-family: "Roboto", Tahoma, Arial, sans-serif;
+    font-family: 'Roboto', Tahoma, Arial, sans-serif;
     font-weight: 400;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
@@ -4207,7 +3374,7 @@ td .dvs-select-small {
       z-index: 1;
       width: 470px; }
     .dvs-node-mode #dvs-nodes .dvs-node > span {
-      font-family: "Roboto", Tahoma, Arial, sans-serif;
+      font-family: 'Roboto', Tahoma, Arial, sans-serif;
       font-weight: 400;
       font-size: 13px;
       text-transform: uppercase;
@@ -4236,7 +3403,7 @@ td .dvs-select-small {
       .dvs-node-mode #dvs-nodes .dvs-node.left:hover, .dvs-node-mode #dvs-nodes .dvs-node.column:hover, .dvs-node-mode #dvs-nodes .dvs-node.col1:hover, .dvs-node-mode #dvs-nodes .dvs-node.col2:hover, .dvs-node-mode #dvs-nodes .dvs-node.col3:hover, .dvs-node-mode #dvs-nodes .dvs-node.col4:hover, .dvs-node-mode #dvs-nodes .dvs-node.col5:hover, .dvs-node-mode #dvs-nodes .dvs-node.col6:hover, .dvs-node-mode #dvs-nodes .dvs-node.col7:hover, .dvs-node-mode #dvs-nodes .dvs-node.col8:hover, .dvs-node-mode #dvs-nodes .dvs-node.col9:hover, .dvs-node-mode #dvs-nodes .dvs-node.col10:hover, .dvs-node-mode #dvs-nodes .dvs-node.col11:hover, .dvs-node-mode #dvs-nodes .dvs-node.col12:hover {
         left: -5px; }
       .dvs-node-mode #dvs-nodes .dvs-node.left.dvs-content-requested .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.column .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col1 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col2 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col3 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col4 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col5 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col6 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col7 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col8 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col9 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col10 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col11 .svg-node-arrow, .dvs-node-mode #dvs-nodes .dvs-node.dvs-content-requested.col12 .svg-node-arrow {
-        fill: lightyellow; }
+        fill: #ffffe0; }
     .dvs-node-mode #dvs-nodes .dvs-node.right {
       right: 1px; }
       .dvs-node-mode #dvs-nodes .dvs-node.right .dvs-node-inner-wrapper {
@@ -4256,7 +3423,7 @@ td .dvs-select-small {
       .dvs-node-mode #dvs-nodes .dvs-node.right:hover {
         right: -4px; }
       .dvs-node-mode #dvs-nodes .dvs-node.right.dvs-content-requested .svg-node-arrow {
-        fill: lightyellow; }
+        fill: #ffffe0; }
 
 #dvs-admin-sidenav {
   float: left;
@@ -4265,7 +3432,7 @@ td .dvs-select-small {
   padding: 0 5%;
   box-sizing: border-box; }
   #dvs-admin-sidenav h5 {
-    color: white;
+    color: #ffffff;
     font-weight: bold; }
   #dvs-admin-sidenav .dvs-admin-links {
     margin: 12px 0 40px 0; }
@@ -4273,7 +3440,7 @@ td .dvs-select-small {
       line-height: 40px; }
       #dvs-admin-sidenav .dvs-admin-links li a {
         display: block;
-        color: #bcbec2;
+        color: #BCBEC2;
         text-decoration: none; }
         #dvs-admin-sidenav .dvs-admin-links li a.dvs-active, #dvs-admin-sidenav .dvs-admin-links li a:active, #dvs-admin-sidenav .dvs-admin-links li a:hover {
           color: #7dbd5d; }
@@ -4285,10 +3452,10 @@ td .dvs-select-small {
   margin: 0 5% 100px 0; }
 
 #dvs-admin {
-  background-color: #2d3039;
-  color: white;
+  background-color: #2D3039;
+  color: #ffffff;
   font-size: 16px;
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   font-weight: 300;
   line-height: 1; }
   #dvs-admin h1, #dvs-admin h2, #dvs-admin h3, #dvs-admin h4, #dvs-admin h5, #dvs-admin h6 {
@@ -4376,7 +3543,7 @@ td .dvs-select-small {
       width: 100%;
       height: 100%;
       text-align: center;
-      color: white;
+      color: #ffffff;
       font-size: 90px;
       line-height: 300px; }
   #dvs-admin .dvs-admin-card .dvs-card-bottom {
@@ -4389,7 +3556,7 @@ td .dvs-select-small {
       top: -23px;
       left: 50%;
       margin-left: -23px;
-      background-color: white;
+      background-color: #ffffff;
       color: #7dbd5d;
       width: 46px;
       height: 46px;
@@ -4419,15 +3586,15 @@ td .dvs-select-small {
   #dvs-admin .dvs-admin-card.dvs-page-versions-card.live-card:hover {
     background-color: #7dbd5d; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-badge {
-    color: white; }
+    color: #ffffff; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-select-wrapper {
     margin-top: 10px;
     font-size: 9px; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card:hover {
     background-color: #5dbabd; }
     #dvs-admin .dvs-admin-card.dvs-page-versions-card:hover .dvs-select-wrapper {
-      border-color: white;
-      color: white; }
+      border-color: #ffffff;
+      color: #ffffff; }
 
 #dvs-admin-subnavigation {
   position: absolute;
@@ -4508,7 +3675,7 @@ td .dvs-select-small {
   .dvs-inset-text:-ms-input-placeholder {
     color: #797d85; }
   .dvs-inset-text a {
-    color: #fd5f46; }
+    color: #FD5F46; }
 
 .dvs-opaque-text {
   opacity: 0.5; }
@@ -4516,7 +3683,7 @@ td .dvs-select-small {
 .dvs-admin-container {
   position: relative;
   margin: 0 auto;
-  background-image: linear-gradient(#383c47, #2d3039); }
+  background-image: linear-gradient(#383c47, #2D3039); }
   .dvs-admin-container:after {
     content: "";
     display: table;
@@ -4543,7 +3710,7 @@ table.dvs-admin-table {
       vertical-align: middle; }
   table.dvs-admin-table tbody tr {
     min-height: 60px;
-    color: white;
+    color: #ffffff;
     background-color: #262930; }
     table.dvs-admin-table tbody tr.dvs-table-row-even td {
       border-bottom: 1px solid #2f323c; }
@@ -4565,8 +3732,7 @@ table.dvs-admin-table {
         margin-bottom: 8px; }
   table.dvs-admin-table tfoot td {
     padding: 5px; }
-  table.dvs-admin-table td:last-child,
-  table.dvs-admin-table th:last-child {
+  table.dvs-admin-table td:last-child, table.dvs-admin-table th:last-child {
     border-right: 0px; }
   table.dvs-admin-table .dvs-lang-flag {
     margin: 0 2.5px; }
@@ -4608,9 +3774,8 @@ table.dvs-admin-table {
       display: table;
       clear: both; }
 
-.dvs-loading,
-#dvs-sidebar-loading {
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+.dvs-loading, #dvs-sidebar-loading {
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   line-height: 1.4em;
   padding: 12px 20px;
   color: white;
@@ -4626,8 +3791,7 @@ table.dvs-admin-table {
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   transition: all 1s ease; }
-  .dvs-loading.onload,
-  #dvs-sidebar-loading.onload {
+  .dvs-loading.onload, #dvs-sidebar-loading.onload {
     opacity: 0; }
 
 #dvs-sidebar-loading {
@@ -4672,11 +3836,11 @@ table.dvs-admin-table {
   #dvs-admin .dvs-menus.dvs-admin-card:hover .dvs-card-top {
     background-color: #aa691d; }
 #dvs-admin .dvs-permissions .dvs-card-top {
-  background-color: #fd5f46; }
+  background-color: #FD5F46; }
 #dvs-admin .dvs-permissions .dvs-card-bottom .dvs-icon {
-  color: #fd5f46; }
+  color: #FD5F46; }
 #dvs-admin .dvs-permissions.dvs-admin-card:hover {
-  background-color: #fd5f46;
+  background-color: #FD5F46;
   border-color: #fc3314; }
   #dvs-admin .dvs-permissions.dvs-admin-card:hover .dvs-card-top {
     background-color: #fc3314; }
@@ -4743,9 +3907,9 @@ table.dvs-admin-table {
 #dvs-mode.dvs-sidebar-mode #dvs-node-mode-button {
   bottom: -50px;
   opacity: 0;
-  font-family: "Roboto", Tahoma, Arial, sans-serif; }
+  font-family: 'Roboto', Tahoma, Arial, sans-serif; }
 #dvs-mode.dvs-sidebar-mode #dvs-admin-mode-button {
-  font-family: "Roboto", Tahoma, Arial, sans-serif; }
+  font-family: 'Roboto', Tahoma, Arial, sans-serif; }
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h1, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h2, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h3, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h4, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h5, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container h6 {
   font-size: 14px;
   margin-bottom: 10px; }
@@ -4756,12 +3920,10 @@ table.dvs-admin-table {
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-contents-container {
   margin: 20px;
   margin-top: 0; }
-#dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements-and-groups,
-#dvs-mode.dvs-sidebar-mode #dvs-sidebar-elements-and-groups {
+#dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements-and-groups, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-elements-and-groups {
   clear: both;
   margin: 20px; }
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements-and-groups .dvs-sidebar-elements-and-groups,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-elements-and-groups .dvs-sidebar-elements-and-groups {
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements-and-groups .dvs-sidebar-elements-and-groups, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-elements-and-groups .dvs-sidebar-elements-and-groups {
     margin: 0; }
 #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container {
   overflow: hidden;
@@ -4780,11 +3942,11 @@ table.dvs-admin-table {
   z-index: 10010;
   opacity: 0;
   width: 328px;
-  color: whitesmoke;
+  color: #f5f5f5;
   background: -webkit-linear-gradient(#2e2e2e, #1e1e1e);
   background: linear-gradient(#2e2e2e, #1e1e1e);
   font-size: 12px;
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   font-weight: 400;
   box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
@@ -4814,10 +3976,8 @@ table.dvs-admin-table {
       clear: both; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar .dvs-sidebar-group {
     display: none; }
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar textarea,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar select,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar input[type=text] {
-    color: whitesmoke; }
+  #dvs-mode.dvs-sidebar-mode #dvs-sidebar textarea, #dvs-mode.dvs-sidebar-mode #dvs-sidebar select, #dvs-mode.dvs-sidebar-mode #dvs-sidebar input[type=text] {
+    color: #f5f5f5; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar select {
     background-color: #262626;
     padding: 20px; }
@@ -4836,8 +3996,8 @@ table.dvs-admin-table {
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-title h1 {
     margin: 0;
     float: left;
-    color: whitesmoke;
-    font-family: "Roboto", Tahoma, Arial, sans-serif;
+    color: #f5f5f5;
+    font-family: 'Roboto', Tahoma, Arial, sans-serif;
     font-size: 14px;
     font-weight: 600; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-title a {
@@ -4867,7 +4027,7 @@ table.dvs-admin-table {
   clear: both;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   padding: 0 20px 20px;
   color: #6b6b6b; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-breadcrumbs a {
@@ -4904,9 +4064,9 @@ table.dvs-admin-table {
     font-size: 10px;
     border: 1px solid #bcbec2;
     border-radius: 2px;
-    -webkit-transition: all 0.4s ease;
-    -moz-transition: all 0.4s ease;
-    transition: all 0.4s ease; }
+    -webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    transition: all .4s ease; }
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button:nth-child(odd), #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button:nth-child(odd) {
       margin-left: 0; }
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button:nth-child(even), #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button:nth-child(even) {
@@ -4914,13 +4074,13 @@ table.dvs-admin-table {
       margin-right: 0; }
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button:hover, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button:hover {
       background-color: #5dbabd;
-      color: white; }
+      color: #ffffff; }
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button.dvs-content-requested, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button.dvs-content-requested {
       background-color: rgba(253, 95, 70, 0.6);
       border: 1px solid rgba(253, 95, 70, 0.8);
-      color: white; }
+      color: #ffffff; }
       #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements button.dvs-content-requested:hover, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group button.dvs-content-requested:hover {
-        background-color: #fd5f46; }
+        background-color: #FD5F46; }
   #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements > div > div, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group > div > div {
     padding: 0 15px 18px 12px;
     box-sizing: content-box;
@@ -4937,145 +4097,99 @@ table.dvs-admin-table {
         display: table;
         clear: both; }
   #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements h4, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements label, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group h4, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group label {
-    color: whitesmoke;
+    color: #f5f5f5;
     font-size: 12px;
-    font-family: "Roboto", Tahoma, Arial, sans-serif;
+    font-family: 'Roboto', Tahoma, Arial, sans-serif;
     text-transform: uppercase; }
   #dvs-mode.dvs-sidebar-mode .dvs-sidebar-elements h4, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-group h4 {
     width: 100%;
     margin: 18px 0 0 0;
     color: #76cbff;
     font-size: 18px;
-    font-family: "Roboto", Tahoma, Arial, sans-serif;
+    font-family: 'Roboto', Tahoma, Arial, sans-serif;
     font-weight: 600;
     text-transform: none;
     border-bottom: 1px solid #10a5ff; }
-#dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group,
-#dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element {
+#dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element {
   clear: both;
   padding: 0 20px 20px;
   font-size: 13px;
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   display: none; }
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group label,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element label {
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group label, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element label {
     display: block;
     color: #cfcfcf;
-    font-family: "Roboto", Tahoma, Arial, sans-serif;
+    font-family: 'Roboto', Tahoma, Arial, sans-serif;
     font-weight: 700;
     margin-bottom: 8px; }
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property {
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property {
     clear: both;
     margin-top: 20px; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property:after,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property:after {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property:after, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property:after {
       content: "";
       display: table;
       clear: both; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property:first-child,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property:first-child {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property:first-child, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property:first-child {
       margin-top: 0; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property .dvs-select-wrapper,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property .dvs-select-wrapper {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property .dvs-select-wrapper, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property .dvs-select-wrapper {
       width: auto;
       margin-left: 15px;
       padding-top: 2px;
       padding-right: 30px;
       height: 30px;
       font-size: 10px; }
-      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property .dvs-select-wrapper .dvs-holder,
-      #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property .dvs-select-wrapper .dvs-holder {
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property .dvs-select-wrapper .dvs-holder, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property .dvs-select-wrapper .dvs-holder {
         margin: 8px 5px 0 0; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property span,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property span {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-property span, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-property span {
       width: auto; }
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group input[type="text"],
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group textarea,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element input[type="text"],
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element textarea {
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group input[type="text"], #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group textarea, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element input[type="text"], #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element textarea {
     width: 100%;
     padding: 10px;
-    font-family: "Roboto", Tahoma, Arial, sans-serif;
+    font-family: 'Roboto', Tahoma, Arial, sans-serif;
     background-color: black;
     border-width: 0; }
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid {
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid {
     margin: 20px 0; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid:after,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid:after {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid:after, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid:after {
       content: "";
       display: table;
       clear: both; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label,
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid button,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid button {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid button, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid button {
       float: left;
       margin: 2px 2px 0 0;
       padding: 15px 3px;
       text-align: center;
       cursor: pointer;
       width: 185px; }
-      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label.dvs-button-secondary,
-      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid button.dvs-button-secondary,
-      #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label.dvs-button-secondary,
-      #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid button.dvs-button-secondary {
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label.dvs-button-secondary, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid button.dvs-button-secondary, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label.dvs-button-secondary, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid button.dvs-button-secondary {
         width: 99px; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label {
-      font-family: "Roboto", Tahoma, Arial, sans-serif;
-      background-color: #bfbfbf;
-      -webkit-transition: all 0.4s ease;
-      -moz-transition: all 0.4s ease;
-      transition: all 0.4s ease; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox],
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox] {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid label, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid label {
+      font-family: 'Roboto', Tahoma, Arial, sans-serif;
+      background-color: #fcd382;
+      -webkit-transition: all .4s ease;
+      -moz-transition: all .4s ease;
+      transition: all .4s ease; }
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox], #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox] {
       position: absolute;
       visibility: hidden;
-      font-family: "Roboto", Tahoma, Arial, sans-serif;
+      font-family: 'Roboto', Tahoma, Arial, sans-serif;
       background-color: transparent;
       color: #5dbabd; }
-      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox] + label.dvs-button-secondary,
-      #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox] + label.dvs-button-secondary {
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox] + label.dvs-button-secondary, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox] + label.dvs-button-secondary {
         width: 185px; }
-      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox]:checked + label,
-      #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox]:checked + label {
-        font-family: "Roboto", Tahoma, Arial, sans-serif;
+      #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-sidebar-button-grid input[type=checkbox]:checked + label, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-sidebar-button-grid input[type=checkbox]:checked + label {
+        font-family: 'Roboto', Tahoma, Arial, sans-serif;
         background-color: #5dbabd;
-        color: white; }
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager,
-  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager,
-  #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager {
+        color: #ffffff; }
+  #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager {
     width: 100%; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager td,
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager td,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager td,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager td {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager td, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager td, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager td, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager td {
       vertical-align: middle; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-checkbox-fields td,
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-option-fields td,
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-checkbox-fields td,
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-option-fields td,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-checkbox-fields td,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-option-fields td,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-checkbox-fields td,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-option-fields td {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-checkbox-fields td, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-option-fields td, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-checkbox-fields td, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-option-fields td, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-checkbox-fields td, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-option-fields td, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-checkbox-fields td, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-option-fields td {
       padding: 1px 1px 0 0; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-checkbox-fields input[type=text],
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-option-fields input[type=text],
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-checkbox-fields input[type=text],
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-option-fields input[type=text],
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-checkbox-fields input[type=text],
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-option-fields input[type=text],
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-checkbox-fields input[type=text],
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-option-fields input[type=text] {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-checkbox-fields input[type=text], #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-option-fields input[type=text], #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-checkbox-fields input[type=text], #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-option-fields input[type=text], #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-checkbox-fields input[type=text], #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-option-fields input[type=text], #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-checkbox-fields input[type=text], #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-option-fields input[type=text] {
       background-color: #333333; }
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-select-wrapper,
-    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-select-wrapper,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-select-wrapper,
-    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-select-wrapper {
+    #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-options-manager .dvs-select-wrapper, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group .dvs-checkboxes-manager .dvs-select-wrapper, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-options-manager .dvs-select-wrapper, #dvs-mode.dvs-sidebar-mode #dvs-sidebar-current-element .dvs-checkboxes-manager .dvs-select-wrapper {
       margin: -2px 3px 0;
       width: 60px; }
 #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group {
@@ -5087,8 +4201,8 @@ table.dvs-admin-table {
   display: block;
   width: 100%;
   padding: 27px 15px;
-  color: white;
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  color: #ffffff;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   font-size: 22px;
   font-weight: 600;
   text-transform: uppercase;
@@ -5096,8 +4210,8 @@ table.dvs-admin-table {
   border-width: 0; }
 #dvs-mode.dvs-sidebar-mode .dvs-sidebar-discard {
   padding: 10px;
-  color: white;
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  color: #ffffff;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   font-size: 16px;
   background-color: #333333; }
 #dvs-mode.dvs-sidebar-mode .dvs-sidebar-datetime-element .xdsoft_datetimepicker .xdsoft_datepicker {
@@ -5199,7 +4313,7 @@ table.dvs-admin-table {
   border-top: 1px solid #a6a6a6;
   border-bottom: 1px solid #191919;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  background-image: -webkit-linear-gradient(-360deg, rgba(244, 244, 244, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%);
+  background-image: -webkit-linear-gradient(90deg, rgba(244, 244, 244, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%);
   background-image: linear-gradient(90deg, rgba(244, 244, 244, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%); }
   #dvs-mode.dvs-sidebar-mode .dvs-group-edit h3 span {
     display: none; }
@@ -5220,9 +4334,9 @@ table.dvs-admin-table {
 #dvs-mode.dvs-sidebar-mode .dvs-button {
   display: inline-block;
   padding: 12px 20px;
-  color: #bcbec2;
+  color: #BCBEC2;
   background-color: transparent;
-  border: 1px solid #bcbec2;
+  border: 1px solid #BCBEC2;
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 2px;
@@ -5233,8 +4347,8 @@ table.dvs-admin-table {
   #dvs-mode.dvs-sidebar-mode .dvs-button:hover {
     color: #d7d8da; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-solid {
-    background-color: #bcbec2;
-    color: #2d3039; }
+    background-color: #BCBEC2;
+    color: #2D3039; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-tiny {
     padding: 6px;
     font-size: 10px; }
@@ -5254,16 +4368,16 @@ table.dvs-admin-table {
     color: #5dbabd; }
     #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-secondary.dvs-button-solid {
       background-color: #5dbabd;
-      color: white; }
+      color: #ffffff; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-inactive {
-    border: 1px solid #fd5f46;
-    color: #fd5f46; }
+    border: 1px solid #FD5F46;
+    color: #FD5F46; }
     #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-inactive.dvs-button-solid {
-      background-color: #fd5f46;
+      background-color: #FD5F46;
       color: #bcbec2; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-dark {
     background-color: #333333;
-    color: white; }
+    color: #ffffff; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-gray {
     border: 1px solid #bcbec2;
     color: #bcbec2; }
@@ -5271,17 +4385,17 @@ table.dvs-admin-table {
       background-color: #bcbec2;
       color: #262626; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-danger {
-    border: 1px solid #fd5f46;
-    color: #fd5f46; }
+    border: 1px solid #FD5F46;
+    color: #FD5F46; }
     #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-danger.dvs-button-solid {
-      background-color: #fd5f46;
-      color: white; }
+      background-color: #FD5F46;
+      color: #ffffff; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-success {
     border: 1px solid #7dbd5d;
     color: #7dbd5d; }
     #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-success.dvs-button-solid {
       background-color: #7dbd5d;
-      color: white; }
+      color: #ffffff; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-outset {
     color: #bcbec2;
     background-color: #262930;
@@ -5344,7 +4458,7 @@ table.dvs-admin-table {
   cursor: pointer;
   background-color: transparent;
   border-radius: 2px;
-  border: 1px solid #bcbec2;
+  border: 1px solid #BCBEC2;
   color: #bcbec2;
   padding: 12px 6px;
   font-size: 12px;
@@ -5387,8 +4501,8 @@ table.dvs-admin-table {
     border-right: 5px solid transparent;
     border-top: 5px solid #bcbec2; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-button-solid {
-    background-color: #bcbec2;
-    color: #2d3039; }
+    background-color: #BCBEC2;
+    color: #2D3039; }
     #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-button-solid:after {
       border-top-color: #262626; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-small {
@@ -5403,12 +4517,12 @@ table.dvs-admin-table {
     color: #5dbabd; }
     #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-secondary.dvs-select-solid {
       background-color: #5dbabd;
-      color: white; }
+      color: #ffffff; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-inactive {
-    border: 1px solid #fd5f46;
-    color: #fd5f46; }
+    border: 1px solid #FD5F46;
+    color: #FD5F46; }
     #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-inactive.dvs-select-solid {
-      background-color: #fd5f46;
+      background-color: #FD5F46;
       color: #bcbec2; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-gray {
     border: 1px solid #bcbec2;
@@ -5417,19 +4531,19 @@ table.dvs-admin-table {
       background-color: #bcbec2;
       color: #262626; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-danger {
-    border: 1px solid #fd5f46;
-    color: #fd5f46; }
+    border: 1px solid #FD5F46;
+    color: #FD5F46; }
     #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-danger.dvs-select-solid {
-      background-color: #fd5f46;
-      color: white; }
+      background-color: #FD5F46;
+      color: #ffffff; }
   #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-success {
     border: 1px solid #7dbd5d;
     color: #7dbd5d; }
     #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-success.dvs-select-solid {
       background-color: #7dbd5d;
-      color: white; }
+      color: #ffffff; }
       #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper.dvs-select-success.dvs-select-solid:after {
-        border-top-color: white; }
+        border-top-color: #ffffff; }
 #dvs-mode.dvs-sidebar-mode td .dvs-select-small {
   margin-top: 5px; }
 #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper {
@@ -5602,8 +4716,8 @@ table.dvs-admin-table {
       position: relative;
       margin: 0 12px 12px 0;
       overflow: hidden;
-      background: -webkit-linear-gradient(white, #f7f7f7);
-      background: linear-gradient(white, #f7f7f7); }
+      background: -webkit-linear-gradient(#ffffff, #f7f7f7);
+      background: linear-gradient(#ffffff, #f7f7f7); }
       #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-item-wrapper button {
         cursor: pointer; }
       #dvs-media-manager #dvs-media-mngr-gallery .dvs-media-item-wrapper .dvs-media-item-actions {
@@ -5622,7 +4736,7 @@ table.dvs-admin-table {
       width: 150px;
       vertical-align: top;
       text-decoration: none;
-      color: #2d3039;
+      color: #2D3039;
       font-size: 12px;
       font-weight: 300; }
       #dvs-media-manager #dvs-media-mngr-gallery a.dvs-media-item .dvs-media-thumb-cont {
@@ -5638,8 +4752,7 @@ table.dvs-admin-table {
         line-height: 18px;
         word-break: break-all;
         text-align: center; }
-  #dvs-media-manager input[type="text"],
-  #dvs-media-manager input[type="number"] {
+  #dvs-media-manager input[type="text"], #dvs-media-manager input[type="number"] {
     border-radius: 2px;
     border-width: 0;
     padding: 5px 15px;
@@ -5675,16 +4788,14 @@ html.dz-drag-hover body {
 .dropzone-previews .empty:only-child {
   display: inherit; }
 
-.ghost-dot,
-.cq-dot {
+.ghost-dot, .cq-dot {
   width: 10px;
   height: 10px;
   border-radius: 5px;
   background-color: white;
   margin: 0 auto;
   cursor: pointer; }
-  .ghost-dot.page-dot,
-  .cq-dot.page-dot {
+  .ghost-dot.page-dot, .cq-dot.page-dot {
     background-color: #182e5a; }
 
 .ghost-dot {
@@ -5710,22 +4821,16 @@ html.dz-drag-hover body {
 @media (max-width: 767px) {
   #dvs-admin {
     padding: 25px 0; }
-
   #dvs-admin-body {
     width: 100%; }
-
-  #dvs-admin-sidenav,
-  .dvs-admin-card {
+  #dvs-admin-sidenav, .dvs-admin-card {
     float: none;
     width: 85%; }
-
   #dvs-admin-sidenav {
     height: auto;
     margin: 0 auto 35px; }
-    #dvs-admin-sidenav h5,
-    #dvs-admin-sidenav .dvs-admin-links li a {
+    #dvs-admin-sidenav h5, #dvs-admin-sidenav .dvs-admin-links li a {
       text-align: center; }
-
   .dvs-admin-card {
     margin: 25px auto;
     /* Force one (1) card per row */ }
@@ -5733,7 +4838,6 @@ html.dz-drag-hover body {
       clear: left; }
     .dvs-admin-card .dvs-card-bottom .dvs-metrics-wpr {
       display: block !important; }
-
   #dvs-admin-title {
     float: none;
     width: 100%;
@@ -5741,20 +4845,17 @@ html.dz-drag-hover body {
     #dvs-admin-title h1 {
       font-size: 48px;
       padding-bottom: 5px; }
-
   #dvs-admin-actions {
     float: none;
     width: auto; }
-
-  .dvs-admin-form-horizontal,
-  .dvs-admin-form-vertical {
+  .dvs-admin-form-horizontal, .dvs-admin-form-vertical {
     padding-left: 15px;
     padding-right: 15px; } }
+
 /* Tablets */
 @media (min-width: 768px) and (max-width: 979px) {
   #dvs-admin-sidenav h5 {
     font-size: 105%; }
-
   .dvs-admin-card {
     width: 46.4%;
     margin: 20px 1.8%;
@@ -5763,6 +4864,7 @@ html.dz-drag-hover body {
       clear: left; }
     .dvs-admin-card .dvs-card-bottom .dvs-metrics-wpr {
       display: block; } }
+
 /* Large Devices */
 @media (min-width: 1200px) {
   .dvs-admin-card .dvs-hex-wpr {
@@ -5778,6 +4880,7 @@ html.dz-drag-hover body {
       .dvs-admin-card .dvs-card-bottom .dvs-metrics-wpr .dvs-metric span {
         border-radius: 11px;
         padding: 4px 10px; } }
+
 /* Editors */
 .dvs-datepicker-skin {
   width: 280px; }
@@ -5795,10 +4898,7 @@ html.dz-drag-hover body {
       margin-bottom: .3em;
       color: #e9f0f4;
       text-align: center; }
-    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-prev-hover,
-    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next-hover,
-    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next,
-    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-prev {
+    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-prev-hover, .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next-hover, .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next, .dvs-datepicker-skin.ui-datepicker .ui-datepicker-prev {
       position: absolute;
       top: .9em;
       border: none;
@@ -5806,11 +4906,9 @@ html.dz-drag-hover body {
       height: 20px; }
     .dvs-datepicker-skin.ui-datepicker .ui-datepicker-prev-hover {
       left: 2px; }
-    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next,
-    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next-hover {
+    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next, .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next-hover {
       right: 2px; }
-    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next span,
-    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-prev span {
+    .dvs-datepicker-skin.ui-datepicker .ui-datepicker-next span, .dvs-datepicker-skin.ui-datepicker .ui-datepicker-prev span {
       background-image: url(../../img/ui-icons_ffffff_256x240.png);
       background-position: -32px 0;
       margin-top: 0;
@@ -5852,8 +4950,7 @@ html.dz-drag-hover body {
     font-weight: normal;
     color: #efefef;
     font-size: 12px; }
-  .dvs-datepicker-skin td .ui-state-active,
-  .dvs-datepicker-skin td .ui-state-hover {
+  .dvs-datepicker-skin td .ui-state-active, .dvs-datepicker-skin td .ui-state-hover {
     background: #2e3641; }
   .dvs-datepicker-skin .ui-state-disabled {
     opacity: 1; }
@@ -5961,3 +5058,41 @@ html.dz-drag-hover body {
   border-radius: 3px; }
 #dvs-admin .dvs-test-blocks p {
   margin: 8px 0 15px 0; }
+
+/* Application Specific Styles */
+/**
+ * This sets the color of
+
+#dvs-admin {
+  .app-blogs {
+    @include dvs-sections(#792096);
+  }
+}
+*/
+#dvs-admin .app-blogs .dvs-card-top {
+  background-color: #1ea69c; }
+#dvs-admin .app-blogs .dvs-card-bottom .dvs-icon {
+  color: #1ea69c; }
+#dvs-admin .app-blogs.dvs-admin-card:hover {
+  background-color: #1ea69c;
+  border-color: #167b73; }
+  #dvs-admin .app-blogs.dvs-admin-card:hover .dvs-card-top {
+    background-color: #167b73; }
+#dvs-admin .app-comments .dvs-card-top {
+  background-color: #045b37; }
+#dvs-admin .app-comments .dvs-card-bottom .dvs-icon {
+  color: #045b37; }
+#dvs-admin .app-comments.dvs-admin-card:hover {
+  background-color: #045b37;
+  border-color: #022a19; }
+  #dvs-admin .app-comments.dvs-admin-card:hover .dvs-card-top {
+    background-color: #022a19; }
+#dvs-admin .app-spotlights .dvs-card-top {
+  background-color: #29a8df; }
+#dvs-admin .app-spotlights .dvs-card-bottom .dvs-icon {
+  color: #29a8df; }
+#dvs-admin .app-spotlights.dvs-admin-card:hover {
+  background-color: #29a8df;
+  border-color: #1c8ab9; }
+  #dvs-admin .app-spotlights.dvs-admin-card:hover .dvs-card-top {
+    background-color: #1c8ab9; }

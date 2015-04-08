@@ -29,6 +29,8 @@ class ScaffoldingManager
      */
     public function makeScaffolding($input, $scaffolding)
 	{
+
+
         $this->scaffolding = $scaffolding;
 
         $this->interpretInputData($input);

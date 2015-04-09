@@ -112,7 +112,7 @@ class TemplateScaffolding {
 			foreach($fields as $field) {
 				if (isset($field['displayIndex']) && $field['displayIndex'] === true) {
 
-					$replacementHeaders .= $tab . '<th>' . $this->getLabelText($field) . '</th>' . PHP_EOL;
+					$replacementHeaders .= $tab . '<th>Sort::link(' . $field . ')</th>' . PHP_EOL;
 
 					$replacementFields  .= $tab . $tab . "<td><?= $" . $this->constants['singularVar'] . "['". $field['name'] ."'] ?></td>" . PHP_EOL;
 				}
@@ -211,6 +211,9 @@ class TemplateScaffolding {
 			case 'password' :
 				return $this->buildPasswordField($field, $options);
 			break;
+			case 'image' :
+				return $this->buildImageField($field, $options);
+				break;
 			case 'select' :
 				return $this->buildSelectField($field, $default, $options, $choices);
 			break;
@@ -327,6 +330,11 @@ class TemplateScaffolding {
 	 * @return string
      */
 	private function buildGenericField($field, $default, $options, $type)
+	{
+		return "<?= Form::" . $type . "('" . $field['name'] . "', " . $default . ", ".  var_export($options, true) . ") ?>";
+	}
+
+	private function buildImageField($field, $default, $options, $type)
 	{
 		return "<?= Form::" . $type . "('" . $field['name'] . "', " . $default . ", ".  var_export($options, true) . ") ?>";
 	}

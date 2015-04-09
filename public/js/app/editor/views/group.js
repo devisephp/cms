@@ -1,10 +1,11 @@
-devise.define(['jquery', 'dvsBaseView'], function($, View)
+devise.define(['jquery', 'dvsBaseView', 'dvsSelectSurrogate'], function($, View, dvsSelectSurrogate)
 {
 	/**
 	 * list of events for this view
 	 */
 	var events = {
-		'click [data-show-node]': onShowNodeBtnClicked
+		'click [data-show-node]': onShowNodeBtnClicked,
+		'change [data-category-selector]': onCategoryChanged,
 	};
 
 	/**
@@ -29,7 +30,7 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 		this.data['categories'] = node.data.categories;
 		this.content = $('<div/>');
 
-		this.sidebar.breadcrumbsView.add(node.human_name, this, 'renderGridView');
+		this.sidebar.breadcrumbsView.add(node.human_name, this, 'renderGridAndSelectorViews');
 		this.showingCategoryIndex = 0;
 		this.showingNodeIndex = false;
 
@@ -40,16 +41,31 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 	}
 
 	/**
+	 * render grid and selector views both
+	 */
+	GroupView.prototype.renderGridAndSelectorViews = function()
+	{
+		this.renderGridView();
+		this.renderCategorySelectorView();
+	}
+
+	/**
 	 * renders the grid view for this grouping
 	 */
 	GroupView.prototype.renderGridView = function()
 	{
-		if (this.contentView) this.contentView.close();
 		for (var i = 0; i < this.data.categories.length; i++) this.data.categories[i].active = false;
+
+		this.contentView && this.contentView.close();
+		this.contentView = null;
 		this.content.empty();
 		this.data.categories[this.showingCategoryIndex].active = 'dvs-active';
 		this.grid = View.make('sidebar.groups.grid', this.data);
+		this.sidebar.grid.empty();
 		this.sidebar.grid.append(this.grid);
+		this.sidebar.saveButton.hide();
+		this.sidebar.manageCollection.empty();
+		this.sidebar.validationErrors.empty();
 		View.registerEvents(this.grid, events, this);
 	}
 
@@ -58,8 +74,15 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 	 */
 	GroupView.prototype.renderCategorySelectorView = function()
 	{
+		this.sidebar.groupSelector.empty();
+
 		// if there is only 1 category, we don't show selector
 		if (this.data.categories.length < 2) return;
+
+		this.categorySelector = View.make('sidebar.groups.selector', {showingCategoryIndex: this.showingCategoryIndex, categories: this.data.categories});
+		this.sidebar.groupSelector.append(this.categorySelector);
+		dvsSelectSurrogate();
+		View.registerEvents(this.categorySelector, events, this);
 	}
 
 	/**
@@ -67,7 +90,7 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 	 */
 	GroupView.prototype.renderContentView = function(node)
 	{
-		if (this.contentView) this.contentView.close();
+		this.contentView && this.contentView.close();
 		this.sidebar.grid.empty();
 		this.contentView = this.sidebar.createViewFromBinding(node.binding);
 		this.content.empty();
@@ -79,7 +102,7 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 	 */
 	GroupView.prototype.close = function()
 	{
-		if (this.contentView) this.contentView.close();
+		this.contentView && this.contentView.close();
 		this.contentView = null;
 		this.data = null;
 		this.content = null;
@@ -127,14 +150,32 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 		typeof this.contentView.resetValuesChanged === 'function' && this.contentView.resetValuesChanged(shouldReset);
 	}
 
+	/**
+	 * the node button has been clicked, we should show
+	 * this node now
+	 */
 	function onShowNodeBtnClicked(event)
 	{
-		var categoryIndex = event.currentTarget.dataset.categoryId;
 		var nodeIndex = event.currentTarget.dataset.showNode;
-		var node = this.data.categories[categoryIndex].nodes[nodeIndex];
+		var node = this.data.categories[this.showingCategoryIndex].nodes[nodeIndex];
 
 		this.showingNodeIndex = nodeIndex;
 		this.renderContentView(node);
+	}
+
+	/**
+	 * change the category index
+	 */
+	function onCategoryChanged(event)
+	{
+		var newCategoryIndex = parseInt(event.currentTarget.value);
+
+		// when index hasn't changed, no soup for you...
+		if (this.showingCategoryIndex == newCategoryIndex) return;
+
+		this.showingCategoryIndex = newCategoryIndex;
+		this.sidebar.breadcrumbsView.back(0);
+		this.renderCategorySelectorView();
 	}
 
 	return GroupView;

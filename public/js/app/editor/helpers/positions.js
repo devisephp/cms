@@ -82,15 +82,15 @@ devise.define(['jquery'], function($) {
      */
     function getCoordinatesForGroupNode(groupNode, view)
     {
-        var position = {};
+        var position = false;
 
-        $.each(groupNode.data, function(index, category)
+        $.each(groupNode.data.categories, function(index, category)
         {
-            for (var i = 0; i < category.length; i++)
+            for (var i = 0; i < category.nodes.length; i++)
             {
-                var node = category[i];
-                position = getCoordinatesForNode(node.key, node.cid, view);
-                return false;
+                var node = category.nodes[i];
+                var nodePosition = getCoordinatesForNode(node.key, node.cid, view);
+                if (!position) position = nodePosition;
             }
         });
 

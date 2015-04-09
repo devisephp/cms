@@ -4,8 +4,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	 * List of events for this view
 	 */
 	var events = {
-		'click #dvs-sidebar-manage-groups': 	'showManageView',
-		'click .js-show-grids-view': 			'showGridView',
+		'click #dvs-sidebar-manage-groups': 	onManageInstancesBtnClicked,
 		'click #dvs-new-collection-instance': 	onNewCollectionInstanceBtnClicked,
 		'change #dvs-groups-select': 			onSelectedInstanceChanged,
 		'click [data-show-field]': 				onShowFieldBtnClicked,
@@ -22,7 +21,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 		this.data = { page: sidebar.page };
 		this.grid = null;
 		this.manage = null;
-		this.groupSelector = null;
+		this.instanceSelector = null;
 		this.field = null;
 	};
 
@@ -35,108 +34,25 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 		this.data['instances'] = node.data;
 		this.data['collection'] = node.collection;
 
-		this.sidebar.breadcrumbsView.add('All Editors', this, 'showGridView');
-		this.sidebar.manageCollection.hide();
+		this.sidebar.breadcrumbsView.add('All Editors', this, 'renderGridAndSelectorViews');
 
-		this.renderGridView();
-		this.renderManageView();
-		this.renderGroupSelectorView();
 		this.field = $('<div/>');
-
-		if (this.data.instances.length === 0)
-		{
-			this.showManageView();
-		}
+		this.manage = $('<div/>');
+		this.renderGridAndSelectorViews();
+		this.data.instances.length === 0 && this.renderManageView();
 
 		return this.field;
 	};
 
 	/**
-	 * handles the closing of this view to
-	 * prevent memeory leaks
+	 * renders the grid and instance selector view
 	 */
-	CollectionView.prototype.close = function()
+	CollectionView.prototype.renderGridAndSelectorViews = function()
 	{
-		this.grid = null;
-		this.manage = null;
-		this.groupSelector = null;
-		this.field = null;
-	}
-
-	/**
-	 * shows the collection field in our sidebar view
-	 */
-	CollectionView.prototype.showCollectionField = function(fieldId, instanceId)
-	{
-		var instance = View.data.find(this.data.instances, instanceId);
-		var field = View.data.find(instance.fields, fieldId);
-
-		this.data.instance = instance;
-		this.data.field = field;
-
-		if (!this.showingGridView) this.showGridView();
-		this.showingGridView = false;
-		this.sidebar.breadcrumbsView.add(field.human_name, this, 'showCollectionField', [fieldId, instanceId]);
-
-		this.renderCollectionField();
-	}
-
-	/**
-	 * Shows the grid view for a given instance
-	 */
-	CollectionView.prototype.showGridView = function()
-	{
-		if (this.data.instances.length === 0) return;
-
-		if (!this.selectedInstanceId) {
-			this.selectedInstanceId = this.groupSelector.find('#dvs-groups-select').val();
-		}
-
-		// go back if we are not showing the grid view any longer...
-		if (!this.showingGridView && this.hasShownGridBefore)
-		{
-			this.showingGridView = true;
-			this.sidebar.breadcrumbsView.back();
-		}
-
-		this.showingGridView = true;
-		this.hasShownGridBefore = true;
-		this.sidebar.manageCollection.hide();
-		this.field.hide();
-		this.sidebar.saveButton.hide();
-		this.grid.show();
-		this.grid.find('li').removeClass('dvs-active');
-		this.grid.find('li#dvs-sidebar-group-' + this.selectedInstanceId).addClass('dvs-active');
-	}
-
-	/**
-	 * Shows the create instance view
-	 */
-	CollectionView.prototype.showManageView = function()
-	{
-		if (!this.showingGridView) this.showGridView();
-		this.showingGridView = false;
-		this.sidebar.breadcrumbsView.add('Collections', this, 'showManageView');
-
-		this.field.hide();
-		this.grid.hide();
-		this.sidebar.manageCollection.show();
-	}
-
-	/**
-	 * Renders the collection field view
-	 */
-	CollectionView.prototype.renderCollectionField = function()
-	{
-		var fieldView = new FieldView(this.sidebar);
-		var html = fieldView.renderField(this.data.field);
-
-		this.field.empty();
-		this.field.append(html);
-		this.field.show();
-		this.sidebar.manageCollection.hide();
-		this.grid.hide();
-		this.sidebar.saveButton.show();
+		this.showingManageView = false;
+		this.showingFieldView = false;
+		this.renderInstanceSelectorView();
+		this.renderGridView();
 	}
 
 	/**
@@ -144,8 +60,19 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	 */
 	CollectionView.prototype.renderGridView = function()
 	{
+		if (this.data.instances.length === 0) return;
+
+		!this.selectedInstanceId && this.setSelectedInstanceId(this.instanceSelector.find('#dvs-groups-select').val());
+
 		this.grid = View.make('sidebar.collections.grid', this.data);
+		this.grid.show();
+		this.sidebar.grid.empty();
 		this.sidebar.grid.append(this.grid);
+
+		this.manage.hide();
+		this.field.hide();
+		this.sidebar.saveButton.hide();
+
 		View.registerEvents(this.grid, events, this);
 	}
 
@@ -166,6 +93,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 
         sortable.disableSelection();
 
+		this.manage.show();
+		this.grid.hide();
+		this.field.hide();
+		this.sidebar.manageCollection.show();
         this.sidebar.manageCollection.empty();
 		this.sidebar.manageCollection.append(this.manage);
 		View.registerEvents(this.manage, events, this);
@@ -174,27 +105,59 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	/**
 	 * Renders the group selector view with this data
 	 */
-	CollectionView.prototype.renderGroupSelectorView = function()
+	CollectionView.prototype.renderInstanceSelectorView = function()
 	{
-		this.groupSelector = View.make('sidebar.collections.selector', {instances: this.data.instances, selectedInstanceId: this.selectedInstanceId});
+		this.instanceSelector = View.make('sidebar.collections.selector', {instances: this.data.instances, selectedInstanceId: this.selectedInstanceId});
 		this.sidebar.groupSelector.empty();
-		this.sidebar.groupSelector.append(this.groupSelector);
+		this.sidebar.groupSelector.append(this.instanceSelector);
 		this.selectedInstanceId = false;
 		dvsSelectSurrogate();	// the dropdown needs to have surrogate select on it
-		View.registerEvents(this.groupSelector, events, this);
+		View.registerEvents(this.instanceSelector, events, this);
 	}
 
 	/**
-	 * the selected instance has been changed, we need to change
-	 * our data nodes and refresh the views
+	 * Renders the collection field view
 	 */
-	CollectionView.prototype.updateSelectedInstance = function(instanceId)
+	CollectionView.prototype.renderCollectionField = function()
 	{
-		// nothing changed... so don't do anything...
-		if (this.selectedInstanceId == instanceId) return;
+		var fieldView = new FieldView(this.sidebar);
+		var html = fieldView.renderField(this.selectedField);
 
+		this.field.empty();
+		this.field.append(html);
+		this.field.show();
+		this.manage.hide();
+		this.grid.hide();
+		this.sidebar.saveButton.show();
+		dvsSelectSurrogate();
+
+	}
+
+	/**
+	 * handles the closing of this view to
+	 * prevent memeory leaks
+	 */
+	CollectionView.prototype.close = function()
+	{
+		this.grid = null;
+		this.manage = null;
+		this.instanceSelector = null;
+		this.field = null;
+	}
+
+	/**
+	 * Sets the selected instance id on this collection
+	 */
+	CollectionView.prototype.setSelectedInstanceId = function(instanceId)
+	{
 		this.selectedInstanceId = instanceId;
-		this.showGridView();
+		this.selectedInstance = View.data.find(this.data.instances, instanceId);
+
+		$.each(this.data.instances, function(index, instance)
+		{
+			if (instance.id == instanceId) instance.active = 'dvs-active';
+			else instance.active = false;
+		});
 	}
 
 	/**
@@ -203,17 +166,25 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	CollectionView.prototype.save = function()
 	{
 		var self = this;
-		var url = this.data.page.url('update_collection_field', {id: this.data.field.id});
+		var url = this.data.page.url('update_collection_field', {id: this.selectedField.id});
 		var data = {
-			'field': this.data.field,
+			'field': this.selectedField,
 			'page': this.data.page.info
 		};
 
 		$.ajax(url, {
 			method: 'PUT',
 			data: data,
-			success: function() { onSaveSuccess.apply(self, arguments); },
-			error: function() { onSaveError.apply(self, arguments); }
+			success: function(data, response, xhr)
+			{
+				self.data.field = data;
+				self.renderCollectionField();
+			},
+			error: function(xhr, textStatus, error)
+			{
+				alert('Could not save field! Check console');
+				console.warn('save error', arguments);
+			}
 		});
 	}
 
@@ -222,7 +193,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	 */
 	CollectionView.prototype.changed = function(key, value, event)
 	{
-		this.data.field.values[key] = value;
+		this.selectedField.values[key] = value;
 	}
 
 	/**
@@ -246,8 +217,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	 */
 	CollectionView.prototype.contentRequestedChanged = function(shouldRequestContent)
 	{
-		this.data.field.content_requested = shouldRequestContent;
-		this.renderGridView();
+		this.selectedField.content_requested = shouldRequestContent;
 	}
 
 	/**
@@ -302,25 +272,13 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	}
 
 	/**
-	 * save was successful, update field values
-	 * to reflect what is returned from the server
+	 * the manage instances button has been clicked
 	 */
-	function onSaveSuccess(data, response, xhr)
+	function onManageInstancesBtnClicked(event)
 	{
-		this.data.field = data;
-		this.renderCollectionField();
-		this.sidebar.breadcrumbsView.back();
-	}
-
-	/**
-	 * save failed to update field, probably
-	 * should let the user know or something
-	 * with validation messages
-	 */
-	function onSaveError(xhr, textStatus, error)
-	{
-		alert('Could not save field! Check console');
-		console.warn('save error', this, arguments);
+		!this.showingManageView && this.sidebar.breadcrumbsView.add('Collections', this, 'renderManageView');
+		this.showingManageView = true;
+		this.renderManageView();
 	}
 
 	/**
@@ -332,9 +290,15 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	{
 		var selected = $(event.currentTarget);
 
-		if (selected.val()) {
-			this.updateSelectedInstance(selected.val());
-		}
+		var instanceId = selected.val();
+
+		// nothing changed... so don't do anything...
+		if (!instanceId || this.selectedInstanceId == instanceId) return;
+
+		this.setSelectedInstanceId(instanceId);
+
+		if (this.showingManageView || this.showingFieldView) this.sidebar.breadcrumbsView.back();
+		else this.renderGridView();
 	}
 
 	/**
@@ -344,8 +308,11 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	{
 		var button = $(event.currentTarget);
 		var fieldId = button.data('showField');
-		var collectionInstanceId = button.data('collectionInstance');
-		this.showCollectionField(fieldId, collectionInstanceId);
+
+		this.showingFieldView = true;
+		this.selectedField = View.data.find(this.selectedInstance.fields, fieldId);
+		this.sidebar.breadcrumbsView.add(this.selectedField.human_name, this, 'renderCollectionField');
+		this.renderCollectionField();
 	}
 
 	/**
@@ -366,8 +333,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 			success: function()
 			{
 				self.data.instances.splice(instanceIndex, 1);	// remove from instances array
-				self.renderGridView();
-				self.renderGroupSelectorView();
+				self.renderInstanceSelectorView();
 				self.renderManageView();
 			},
 			error: function()
@@ -405,8 +371,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 			success: function(data)
 			{
 				self.data.instances[instanceIndex] = data;
-				self.renderGridView();
-				self.renderGroupSelectorView();
+				self.renderInstanceSelectorView();
 				self.renderManageView();
 			},
 			error: function()
@@ -441,7 +406,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 			success: function()
 			{
 				self.resortInstances(instanceIds);
-				self.renderGroupSelectorView();
+				self.renderInstanceSelectorView();
 			},
 			error: function()
 			{
@@ -471,7 +436,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 			data: instance,
 			success: function()
 			{
-				self.renderGroupSelectorView();
+				self.renderInstanceSelectorView();
 			},
 			error: function()
 			{

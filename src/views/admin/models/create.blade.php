@@ -62,8 +62,7 @@
                                 <label><?= Form::checkbox('fields[0][index]', 'index', true) ?> Is Index</label>
                             </div>
 
-                            <ol class="dvs-choices-list">
-                            </ol>
+                            <ol class="dvs-choices-list"></ol>
                         </div>
                     </li>
                 </ol>
@@ -76,8 +75,22 @@
 
 @section('js')
     <script>
-        var newFieldHtml = '@include("devise::admin.models._single-field-html")';
-        var newChoiceHtml = '@include("devise::admin.models._single-choice-html")';
+        <?php ob_start() ?>
+        @include("devise::admin.models._single-field-html")
+        <?php
+            $newFieldHtml = ob_get_contents();
+            ob_end_clean();
+        ?>
+
+        <?php ob_start() ?>
+        @include("devise::admin.models._single-choice-html")
+        <?php
+            $newChoiceHtml = ob_get_contents();
+            ob_end_clean();
+        ?>
+
+        var newFieldHtml= '<?= str_replace(array(PHP_EOL, '\t', '\r','\n'), '', $newFieldHtml) ?>';
+        var newChoiceHtml = '<?= str_replace(array(PHP_EOL, '\t', '\r','\n'), '', $newChoiceHtml) ?>';
 
         devise.require(['app/admin/models']);
     </script>

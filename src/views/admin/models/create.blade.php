@@ -9,7 +9,7 @@
 @section('main')
 
     <div class="dvs-admin-form-horizontal">
-        <?= Form::open(array('method' => 'POST', 'route' => array('dvs-model-creator-store'), 'id' => 'dvs-model-creator-form')) ?>
+        <?= Form::open(array('method' => 'POST', 'route' => array('dvs-model-creator-store'), 'id' => 'dvs-model-creator-form', 'onsubmit' => "return confirm('Are you really ready to submit? Double check your fields have all the correct settings.');")) ?>
 
             <div class="dvs-form-group">
                 <?= Form::label('Model Name') ?>

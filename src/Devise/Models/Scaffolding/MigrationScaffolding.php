@@ -142,6 +142,8 @@ class MigrationScaffolding {
 		foreach($this->fields as $field) {
 
 			$type = is_array($field['type']) ? $field['type'][0] : $field['type'];
+			$type = ($type !== "") ?: $type = "string";
+
 			$default = isset($field['default']) ? "->default('".$field['default']."')" : '';
 			$nullable = (isset($field['nullable']) && $field['nullable'] === true) ? "->nullable()" : "";
 

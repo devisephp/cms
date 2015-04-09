@@ -24,4 +24,8 @@
   .app-links {
     @include dvs-sections(#d2de2c);
   }
+
+  .app-locations {
+    @include dvs-sections(#44A94D);
+  }
 }

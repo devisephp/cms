@@ -5105,3 +5105,12 @@ html.dz-drag-hover body {
   border-color: #afba1d; }
   #dvs-admin .app-links.dvs-admin-card:hover .dvs-card-top {
     background-color: #afba1d; }
+#dvs-admin .app-locations .dvs-card-top {
+  background-color: #44A94D; }
+#dvs-admin .app-locations .dvs-card-bottom .dvs-icon {
+  color: #44A94D; }
+#dvs-admin .app-locations.dvs-admin-card:hover {
+  background-color: #44A94D;
+  border-color: #35853c; }
+  #dvs-admin .app-locations.dvs-admin-card:hover .dvs-card-top {
+    background-color: #35853c; }

@@ -2411,9 +2411,9 @@ a.dvs-no-decoration, button.dvs-no-decoration, a.dvs-no-decoration:hover, button
     margin: 0 0 0 20%;
     padding: 12px 10px 12px 15px;
     color: #b7b9bd;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 300;
-    line-height: 20px; }
+    line-height: 17px; }
 
 #dvs-admin input[type=password].form-control, #dvs-admin input[type=text].form-control {
   padding: 14px 14px;
@@ -2649,7 +2649,11 @@ a.dvs-no-decoration, button.dvs-no-decoration, a.dvs-no-decoration:hover, button
   box-sizing: border-box;
   font-size: 12px;
   font-weight: 400;
-  line-height: 1em; }
+  line-height: 1em;
+  cursor: pointer;
+  -webkit-transition: all, 0.5s;
+  -moz-transition: all, 0.5s;
+  transition: all, 0.5s; }
   .dvs-button:hover {
     color: #d7d8da; }
   .dvs-button.dvs-button-solid {
@@ -2675,6 +2679,9 @@ a.dvs-no-decoration, button.dvs-no-decoration, a.dvs-no-decoration:hover, button
     .dvs-button.dvs-button-secondary.dvs-button-solid {
       background-color: #5dbabd;
       color: #ffffff; }
+    .dvs-button.dvs-button-secondary:hover {
+      color: black;
+      background-color: #6fc2c4; }
   .dvs-button.dvs-button-inactive {
     border: 1px solid #FD5F46;
     color: #FD5F46; }
@@ -2696,6 +2703,9 @@ a.dvs-no-decoration, button.dvs-no-decoration, a.dvs-no-decoration:hover, button
     .dvs-button.dvs-button-danger.dvs-button-solid {
       background-color: #FD5F46;
       color: #ffffff; }
+    .dvs-button.dvs-button-danger:hover {
+      color: black;
+      background-color: #fd755f; }
   .dvs-button.dvs-button-success {
     border: 1px solid #7dbd5d;
     color: #7dbd5d; }
@@ -2707,22 +2717,19 @@ a.dvs-no-decoration, button.dvs-no-decoration, a.dvs-no-decoration:hover, button
     background-color: #262930;
     border: 1px solid #202228;
     border-radius: 4px; }
+    .dvs-button.dvs-button-outset:hover {
+      color: #d7d8da;
+      background-color: #32353f; }
 
 .dvs-button-group {
   white-space: nowrap; }
   .dvs-button-group .dvs-button {
     float: left;
     display: inline-block !important;
-    border-radius: 0;
-    border-right-width: 1px;
-    border-left-width: 0; }
-    .dvs-button-group .dvs-button:first-child {
-      border-radius: 3px 0 0 3px;
-      border-left-width: 1px;
-      margin-left: 0; }
+    margin-top: 3px;
+    margin-right: 3px; }
     .dvs-button-group .dvs-button:last-child {
-      border-radius: 0 3px 3px 0;
-      border-right-width: 1px; }
+      margin-right: 0; }
   .dvs-button-group form {
     display: inline; }
 
@@ -3454,7 +3461,7 @@ td .dvs-select-small {
 #dvs-admin {
   background-color: #2D3039;
   color: #ffffff;
-  font-size: 16px;
+  font-size: 13px;
   font-family: 'Roboto', Tahoma, Arial, sans-serif;
   font-weight: 300;
   line-height: 1; }
@@ -3496,7 +3503,7 @@ td .dvs-select-small {
     #dvs-admin .dvs-admin-items-wpr > h4 {
       margin-bottom: 12px;
       color: #919191;
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 600;
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
     #dvs-admin .dvs-admin-items-wpr table.dvs-admin-items {
@@ -3512,9 +3519,16 @@ td .dvs-select-small {
             width: 42%; }
   #dvs-admin .dvs-secondary-text {
     padding-top: 10px;
-    font-size: 14px; }
+    font-size: 11px; }
   #dvs-admin a:not(.dvs-button) {
     color: #5dbabd; }
+  #dvs-admin #dvs-admin-body h3 {
+    margin-top: 150px;
+    color: #4f5464;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.3) -1px -1px 0px;
+    font-size: 22px; }
 
 /* Dashboard */
 #dvs-admin .dvs-flexbox {
@@ -3596,64 +3610,60 @@ td .dvs-select-small {
       border-color: #ffffff;
       color: #ffffff; }
 
+#dvs-admin-title {
+  clear: both;
+  padding: 15px 5%;
+  text-align: left;
+  background-color: #444856; }
+  #dvs-admin-title h1 {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    color: #c6c9d2;
+    font-size: 16px;
+    font-weight: 300;
+    text-transform: uppercase; }
+    #dvs-admin-title h1 span {
+      margin-right: 8px;
+      font-size: 18px;
+      color: #71788f; }
+
 #dvs-admin-subnavigation {
-  position: absolute;
-  top: 50px;
-  right: 5%;
-  text-align: right; }
+  margin-bottom: 75px;
+  text-align: right;
+  background-color: #5a6072;
+  padding: 8px 5%; }
+  #dvs-admin-subnavigation:after {
+    content: "";
+    display: table;
+    clear: both; }
 
 #dvs-admin-actions {
-  text-align: center; }
+  text-align: right; }
   #dvs-admin-actions .dvs-button {
-    clear: both;
+    clear: none;
     float: right;
-    width: 150px;
-    margin-bottom: 8px; }
+    width: auto;
+    border-color: #8d93a5;
+    background-color: #383c47;
+    color: #c6c9d2;
+    font-size: 9px;
+    padding: 8px 12px 7px; }
+    #dvs-admin-actions .dvs-button:hover {
+      background-color: #4f5464;
+      color: #e3e4e9; }
   #dvs-admin-actions a {
     clear: both;
     margin-left: 8px; }
   #dvs-admin-actions select {
     clear: both; }
   #dvs-admin-actions .dvs-select-wrapper {
-    clear: both;
     float: right;
     width: 150px;
     font-size: 11px;
-    margin-bottom: 8px; }
-
-#dvs-admin-title {
-  clear: both;
-  margin-bottom: 15px;
-  padding: 50px 0 100px;
-  text-align: center; }
-  #dvs-admin-title h1 {
-    display: inline-block;
-    padding: 15px 20px;
-    margin-top: 30px;
-    color: #5dbabd;
-    font-size: 50px;
-    font-weight: 400;
-    text-transform: uppercase;
-    border: 3px solid #5dbabd;
-    border-radius: 3px;
-    background: -webkit-linear-gradient(#b7f0f2, #5dbabd);
-    background: linear-gradient(#b7f0f2, #5dbabd);
-    background-clip: text;
-    -moz-background-clip: text;
-    -webkit-background-clip: text;
-    text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
-    -webkit-text-fill-color: transparent;
-    border-color: #b7f0f2;
-    -webkit-border-image: -webkit-linear-gradient(#b7f0f2, #5dbabd) 2 1%;
-    border-image: linear-gradient(#b7f0f2, #5dbabd) 2 1%;
-    border-style: solid;
-    border-top-color: #b7f0f2;
-    border-bottom-color: #5dbabd; }
-    #dvs-admin-title h1 span {
-      text-fill-color: #5dbabd;
-      -moz-text-fill-color: #5dbabd;
-      -webkit-text-fill-color: #5dbabd; }
+    padding: 8px 12px; }
+    #dvs-admin-actions .dvs-select-wrapper .dvs-holder {
+      background-color: transparent; }
 
 .dvs-inset-text {
   padding: 14px 14px;
@@ -3707,7 +3717,8 @@ table.dvs-admin-table {
     table.dvs-admin-table thead th {
       padding: 15px 20px;
       border-bottom: 1px solid #383c47;
-      vertical-align: middle; }
+      vertical-align: middle;
+      font-size: 12px; }
   table.dvs-admin-table tbody tr {
     min-height: 60px;
     color: #ffffff;
@@ -3720,13 +3731,14 @@ table.dvs-admin-table {
     table.dvs-admin-table tbody tr td {
       padding: 20px 30px;
       border-right: 1px solid #2f323c;
-      vertical-align: middle; }
+      vertical-align: middle;
+      white-space: nowrap; }
       table.dvs-admin-table tbody tr td a:not(.dvs-button) {
         color: #5dbabd; }
         table.dvs-admin-table tbody tr td a:not(.dvs-button).dvs-expand-details {
           display: inline-block;
           color: #347e80;
-          font-size: 13px;
+          font-size: 10px;
           font-weight: 300; }
       table.dvs-admin-table tbody tr td.dvs-stacked-col div {
         margin-bottom: 8px; }
@@ -4343,7 +4355,11 @@ table.dvs-admin-table {
   box-sizing: border-box;
   font-size: 12px;
   font-weight: 400;
-  line-height: 1em; }
+  line-height: 1em;
+  cursor: pointer;
+  -webkit-transition: all, 0.5s;
+  -moz-transition: all, 0.5s;
+  transition: all, 0.5s; }
   #dvs-mode.dvs-sidebar-mode .dvs-button:hover {
     color: #d7d8da; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-solid {
@@ -4369,6 +4385,9 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-secondary.dvs-button-solid {
       background-color: #5dbabd;
       color: #ffffff; }
+    #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-secondary:hover {
+      color: black;
+      background-color: #6fc2c4; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-inactive {
     border: 1px solid #FD5F46;
     color: #FD5F46; }
@@ -4390,6 +4409,9 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-danger.dvs-button-solid {
       background-color: #FD5F46;
       color: #ffffff; }
+    #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-danger:hover {
+      color: black;
+      background-color: #fd755f; }
   #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-success {
     border: 1px solid #7dbd5d;
     color: #7dbd5d; }
@@ -4401,21 +4423,18 @@ table.dvs-admin-table {
     background-color: #262930;
     border: 1px solid #202228;
     border-radius: 4px; }
+    #dvs-mode.dvs-sidebar-mode .dvs-button.dvs-button-outset:hover {
+      color: #d7d8da;
+      background-color: #32353f; }
 #dvs-mode.dvs-sidebar-mode .dvs-button-group {
   white-space: nowrap; }
   #dvs-mode.dvs-sidebar-mode .dvs-button-group .dvs-button {
     float: left;
     display: inline-block !important;
-    border-radius: 0;
-    border-right-width: 1px;
-    border-left-width: 0; }
-    #dvs-mode.dvs-sidebar-mode .dvs-button-group .dvs-button:first-child {
-      border-radius: 3px 0 0 3px;
-      border-left-width: 1px;
-      margin-left: 0; }
+    margin-top: 3px;
+    margin-right: 3px; }
     #dvs-mode.dvs-sidebar-mode .dvs-button-group .dvs-button:last-child {
-      border-radius: 0 3px 3px 0;
-      border-right-width: 1px; }
+      margin-right: 0; }
   #dvs-mode.dvs-sidebar-mode .dvs-button-group form {
     display: inline; }
 #dvs-mode.dvs-sidebar-mode .pagination {
@@ -4838,13 +4857,6 @@ html.dz-drag-hover body {
       clear: left; }
     .dvs-admin-card .dvs-card-bottom .dvs-metrics-wpr {
       display: block !important; }
-  #dvs-admin-title {
-    float: none;
-    width: 100%;
-    text-align: center; }
-    #dvs-admin-title h1 {
-      font-size: 48px;
-      padding-bottom: 5px; }
   #dvs-admin-actions {
     float: none;
     width: auto; }
@@ -5114,3 +5126,5 @@ html.dz-drag-hover body {
   border-color: #35853c; }
   #dvs-admin .app-locations.dvs-admin-card:hover .dvs-card-top {
     background-color: #35853c; }
+
+/*# sourceMappingURL=main.css.map */

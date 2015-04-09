@@ -13,6 +13,9 @@
   font-size: 12px;
   font-weight:400;
   line-height:1em;
+  cursor:pointer;
+
+  @include transition(all, 0.5s);
 
   &:hover {
     color:lighten($primaryButtonBgColor, 10%);
@@ -54,6 +57,11 @@
       background-color:$secondaryButtonBgColor;
       color:$secondaryButtonTextColor;
     }
+
+    &:hover {
+      color: invert($secondaryButtonTextColor);
+      background-color:lighten($secondaryButtonBgColor, 5%);
+    }
   }
 
   &.dvs-button-inactive {
@@ -90,6 +98,11 @@
       background-color:$dangerButtonBgColor;
       color:$dangerButtonTextColor;
     }
+
+    &:hover {
+      color: invert($dangerButtonTextColor);
+      background-color:lighten($dangerButtonBgColor, 5%);
+    }
   }
 
   &.dvs-button-success {
@@ -107,28 +120,30 @@
     background-color:$primaryTableBgColor;
     border:1px solid darken($primaryTableBgColor, 3%);
     border-radius:4px;
+
+    &:hover {
+      color: lighten($french-gray, 10%);
+      background-color:lighten($primaryTableBgColor, 5%);
+    }
   }
 }
 
 .dvs-button-group {
   white-space:nowrap;
+  //display: flex;
 
   .dvs-button {
     float:left;
     display:inline-block !important;
-    border-radius:0;
-    border-right-width:1px;
-    border-left-width:0;
+    margin-top:3px;
+    margin-right:3px;
 
     &:first-child {
-      border-radius:3px 0 0 3px;
-      border-left-width:1px;
-      margin-left:0;
+
     }
 
     &:last-child {
-      border-radius:0 3px 3px 0;
-      border-right-width:1px;
+      margin-right:0;
     }
   }
 

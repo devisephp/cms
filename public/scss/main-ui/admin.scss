@@ -113,6 +113,18 @@
   a:not(.dvs-button) {
     color:$blue;
   }
+
+  #dvs-admin-body {
+    h3 {
+      margin-top:150px;
+      color: lighten($bodyBgColor, 15%);
+      text-transform: uppercase;
+      text-align:center;
+      text-shadow: rgba(0, 0, 0, 0.3) -1px -1px 0px;
+      font-size:22px;
+    }
+
+  }
 }
 
 /* Dashboard */
@@ -244,21 +256,56 @@
   }
 }
 
+
+#dvs-admin-title {
+  clear:both;
+  padding:15px 5%;
+  text-align:left;
+  background-color:lighten($bodyBgColor, 10%);
+
+  h1 {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    color: lighten($bodyBgColor, 60%);
+    font-size:16px;
+    font-weight:300;
+    text-transform: uppercase;
+
+    span {
+      margin-right:8px;
+      font-size:18px;
+      color: lighten($bodyBgColor, 30%);
+    }
+  }
+}
+
+
 #dvs-admin-subnavigation {
-  position:absolute;
-  top:50px;
-  right:5%;
+  @include clearfix;
+  margin-bottom:75px;
   text-align:right;
+  background-color:lighten($bodyBgColor, 20%);
+  padding:8px 5%;
 }
 
 #dvs-admin-actions {
-  text-align:center;
+  text-align:right;
 
   .dvs-button {
-    clear:both;
+    clear:none;
     float:right;
-    width:150px;
-    margin-bottom:8px;
+    width:auto;
+    border-color:lighten($bodyBgColor,40%);
+    background-color:lighten($bodyBgColor, 5%);
+    color: lighten($bodyBgColor, 60%);
+    font-size:9px;
+    padding:8px 12px 7px;
+
+    &:hover {
+      background-color:lighten($bodyBgColor, 15%);
+      color: lighten($bodyBgColor, 70%);
+    }
   }
 
   a {
@@ -271,38 +318,13 @@
   }
 
   .dvs-select-wrapper {
-    clear:both;
     float:right;
     width:150px;
     font-size:11px;
-    margin-bottom:8px;
-  }
-}
+    padding:8px 12px;
 
-#dvs-admin-title {
-  clear:both;
-  margin-bottom:15px;
-  padding:50px 0 100px;
-  text-align:     center;
-
-  h1 {
-    display: inline-block;
-    padding: 15px 20px;
-    margin-top:     30px;
-    color: $blue;
-    font-size:50px;
-    font-weight:400;
-    text-transform: uppercase;
-    border: 3px solid $blue;
-    border-radius:3px;
-
-    @include text-gradient($light-blue, $blue);
-    @include gradient-border($light-blue, $blue);
-
-    span {
-      text-fill-color:  $blue;
-      -moz-text-fill-color:  $blue;
-      -webkit-text-fill-color:  $blue;
+    .dvs-holder {
+      background-color:transparent;
     }
   }
 }
@@ -352,6 +374,7 @@ table.dvs-admin-table {
       padding:15px 20px;
       border-bottom:1px solid lighten($primaryTableBgColor, 8%);
       vertical-align: middle;
+      font-size:12px;
     }
   }
 
@@ -373,6 +396,7 @@ table.dvs-admin-table {
       padding:20px 30px;
       border-right:1px solid lighten($primaryTableBgColor, 4%);
       vertical-align: middle;
+      white-space:nowrap;
 
       a:not(.dvs-button) {
         color:$blue;

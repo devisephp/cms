@@ -32,7 +32,7 @@
                         <?= Sort::filter('slug', "#pages, #pagination-links", ['placeholder' => 'Filter by Slug', 'class' => 'filter-by-slug'])  ?>
                     </div>
                 </th>
-				<th>Languages</th>
+                @if(count($languages) > 1) <th>Languages</th> @endif
 				<th>
                     <?= Sort::link('is_admin','Admin')  ?>
                     <input type="checkbox" name="show_admin" value="true" <?= Input::get('show_admin') === 'true' ? 'checked' : ''  ?>>
@@ -55,7 +55,9 @@
                         <div class="dvs-inset-text"><?= HTML::filterLinkParts($page->slug)  ?></div>
                         <a class="dvs-expand-details" href="javascript:void(0)">+ Expand Page Versions</a>
                     </td>
-                    <td class="dvs-tac"><?= HTML::showLanguagesForPages($page->availableLanguages, true)  ?></td>
+                    @if(count($languages) > 1)
+                        <td class="dvs-tac"><?= HTML::showLanguagesForPages($page->availableLanguages, true)  ?></td>
+                    @endif
 					<td class="dvs-tac"><?= ($page->is_admin) ? 'Yes' : 'No'  ?></td>
 					<td class="dvs-tac dvs-button-group">
                         @if($page->status == 'live' && $page->http_verb == 'get')

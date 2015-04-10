@@ -28,4 +28,8 @@
   .app-locations {
     @include dvs-sections(#44A94D);
   }
+
+  .app-employees {
+    @include dvs-sections(#4B79BA);
+  }
 }

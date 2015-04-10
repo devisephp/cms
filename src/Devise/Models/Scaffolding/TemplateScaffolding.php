@@ -112,7 +112,7 @@ class TemplateScaffolding {
 			foreach($fields as $field) {
 				if (isset($field['displayIndex']) && $field['displayIndex'] === true) {
 
-					$replacementHeaders .= $tab . '<th>Sort::link(' . $field . ')</th>' . PHP_EOL;
+					$replacementHeaders .= $tab . '<th><?= Sort::link(\'' . $field['name'] . '\') ?></th>' . PHP_EOL;
 
 					$replacementFields  .= $tab . $tab . "<td><?= $" . $this->constants['singularVar'] . "['". $field['name'] ."'] ?></td>" . PHP_EOL;
 				}

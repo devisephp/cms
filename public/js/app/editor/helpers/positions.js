@@ -2,14 +2,15 @@ devise.define(['jquery'], function($) {
 
     /**
      * This calculates the node positions for all
-     * the nodes inside of the editor
+     * the nodes inside of the nodesData
      */
-    function calculateNodePositions(editor)
+    function calculateNodePositions(nodesView, nodesData)
     {
-        editor.nodesView.children().each(function(index, child)
+        nodesView.children().each(function(index, child)
         {
             var cid = $(child).data('node-cid');
-            var node = editor.data.nodes[cid];
+            var node = nodesData[cid];
+            var body = nodesView.closest('body');
 
             // groups have nested nodes inside of them
             if (node.binding === 'group')
@@ -17,13 +18,13 @@ devise.define(['jquery'], function($) {
                 for (var i = 0; i < node.data.length; i++)
                 {
                     var current = node.data[i];
-                    current.position = getCoordinatesForNode(current.key, current.cid, editor.view);
+                    current.position = getCoordinatesForNode(current.key, current.cid, body);
                 }
             }
 
             node.position = (node.binding === 'group')
-                ? getCoordinatesForGroupNode(node, editor.view)
-                : getCoordinatesForNode(node.key, node.cid, editor.view);
+                ? getCoordinatesForGroupNode(node, body)
+                : getCoordinatesForNode(node.key, node.cid, body);
 
             node.position.side = getSideForNode(node.position);
         });
@@ -33,13 +34,13 @@ devise.define(['jquery'], function($) {
      * This adjusts the nodes in the DOM
      * to their new positions
      */
-    function adjustNodeDOMPositions(editor)
+    function adjustNodeDOMPositions(nodesView, nodesData)
     {
-        editor.nodesView.children().each(function(index, child)
+        nodesView.children().each(function(index, child)
         {
             var el = $(child);
             var cid = el.data('node-cid');
-            var node = editor.data.nodes[cid];
+            var node = nodesData[cid];
 
             el.css('top', node.position.top);
             el.removeClass('left right');
@@ -114,11 +115,11 @@ devise.define(['jquery'], function($) {
     /**
      * This makes sure that no two nodes touch each other
      */
-    function solveNodeCollisions(editor)
+    function solveNodeCollisions(nodesView, nodesData)
     {
-        var nodes = editor.data.nodes;
+        var nodes = nodesData;
 
-        var view = editor.view;
+        var view = nodesView.closest('body');
 
         for (var i = 0; i < nodes.length; i++)
         {
@@ -182,11 +183,11 @@ devise.define(['jquery'], function($) {
      * recalculates node positions
      */
     return {
-    	recalculateNodePositions: function(editor)
+    	recalculateNodePositions: function(nodesView, nodesData)
     	{
-        	calculateNodePositions(editor);
-	        solveNodeCollisions(editor);
-    	    adjustNodeDOMPositions(editor);
+            calculateNodePositions(nodesView, nodesData);
+            solveNodeCollisions(nodesView, nodesData);
+            adjustNodeDOMPositions(nodesView, nodesData);
     	}
 	};
 

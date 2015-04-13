@@ -40,5 +40,4 @@
 
     @include('devise::scripts')
     <script>hljs.initHighlightingOnLoad();</script>
-
 @stop

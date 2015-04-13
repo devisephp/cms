@@ -1,10 +1,8 @@
-devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionHelper', 'dvsSelectSurrogate'], function($, query, Sidebar, View, dvsPosition, dvsSelectSurrogate)
+devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionHelper', 'dvsSelectSurrogate', 'dvsLiveUpdater'], function($, query, Sidebar, View, dvsPosition, dvsSelectSurrogate, LiveUpdater)
 {
     var events = {
         'click #dvs-node-mode-button': onClickNodeModeButton,
-        'click [data-node-cid]': onNodeButtonClicked,
-        'click .dvs-sidebar-close': onCloseSidebarButtonClicked,
-        'click #dvs-sidebar-add-version': onAddPageVersionBtnClicked,
+        'click .dvs-sidebar-close': onCloseSidebarButtonClicked
     };
 
     /**
@@ -26,17 +24,57 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
     {
         if (! this.shouldStart()) return false;
 
-        var wrapper = createDeviseWrapper();
+        this.render();
 
-        var page = wrapPageInsideDeviseWrapper(wrapper);
+        View.registerEvents(this.layoutView, this.events, this);
 
-        registerViews(this, page);
-
-        registerEvents(this, page);
-
-        initializeNodesView(this.data.nodes, this.nodesView, this);
+        $('body').show();
 
         return true;
+    }
+
+    /**
+     * render the editor layout
+     */
+    Editor.prototype.render = function()
+    {
+        this.layoutView             = View.make('editor.layout');
+        this.iframeView             = this.layoutView.find('#dvs-iframe');
+        this.nodesView              = $('<div/>');
+        this.iframeBodyView         = $('<div/>');
+        this.editButtonView         = this.layoutView.find('#dvs-node-mode-button');
+        this.sidebarContainerView   = this.layoutView.find('#dvs-sidebar-container');
+        this.sidebarView            = this.layoutView.find('#dvs-sidebar');
+
+        loadEditorIframe(this);
+
+        $('body').empty();
+        $('body').append(this.layoutView);
+    }
+
+    /**
+     * Creates all the nodes in the nodes view
+     */
+    Editor.prototype.createNodesView = function()
+    {
+        var nodesView = $('<div id="dvs-nodes" style="width: 100%; position: absolute; top: 0px; left: 0px;"; class="dvs-faded"></div>');
+        var editor = this;
+
+        $.each(this.data.nodes, function(index, node)
+        {
+            var nodeView = View.make('editor.node', {cid: index, node: node});
+            nodesView.append(nodeView);
+        });
+
+        // register handler for clicking on a node
+        // this should show the sidebar for that node
+        nodesView.on('click', '[data-node-cid]', function(event)
+        {
+            var cid = $(event.currentTarget).data('node-cid');
+            editor.showSidebar(cid);
+        });
+
+        return nodesView;
     }
 
     /**
@@ -55,7 +93,9 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      */
     Editor.prototype.showEditor = function()
     {
-        this.view.addClass('dvs-node-mode');
+        this.layoutView.addClass('dvs-node-mode');
+        this.iframeBodyView.addClass('dvs-node-mode');
+        this.showingEditor = true;
         this.nodesView.show();
     }
 
@@ -65,7 +105,9 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
     Editor.prototype.hideEditor = function()
     {
         this.nodesView.hide();
-        this.view.removeClass('dvs-node-mode');
+        this.showingEditor = false;
+        this.layoutView.removeClass('dvs-node-mode');
+        this.iframeBodyView.removeClass('dvs-node-mode');
     }
 
     /**
@@ -77,10 +119,12 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
 
         this.hideEditor();
 
+        this.showingSidebar = true;
         this.sidebarView.empty();
         this.sidebarView.append(this.sidebar.render(node));
         this.sidebarView.addClass('loaded');
-        this.view.addClass('dvs-sidebar-mode');
+        this.layoutView.addClass('dvs-sidebar-mode');
+        this.iframeBodyView.addClass('dvs-sidebar-mode');
         this.sidebarContainerView.show();
         this.sidebarRendered(node);
     }
@@ -98,10 +142,12 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      */
     Editor.prototype.hideSidebar = function()
     {
+        this.showingSidebar = false;
         this.sidebar.close();
         this.sidebarContainerView.hide();
         this.sidebarView.removeClass('loaded');
-        this.view.removeClass('dvs-sidebar-mode');
+        this.layoutView.removeClass('dvs-sidebar-mode');
+        this.iframeBodyView.removeClass('dvs-sidebar-mode');
         this.sidebarView.empty();
         this.showEditor();
     }
@@ -112,146 +158,71 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      */
     Editor.prototype.recalculateNodePositions = function()
     {
-        dvsPosition.recalculateNodePositions(this);
-    }
-
-    /**
-     * Adds page version to this page
-     */
-    Editor.prototype.addPageVersion = function(name)
-    {
-       var data = { page_version_id: this.pageVersionId, name: name };
-
-        $.post('/admin/page-versions', data).then(function(results, status, xhr)
-        {
-            var href = window.location.origin; // base url of current page
-            href += window.location.pathname; // add on current subpage(s)
-            href += '?page_version=' + results.name; // add on new page version params
-            window.location.href = href;
-        });
-    }
-
-    /**
-     * Saves a node to database and updates our local cache when
-     * things return
-     */
-     Editor.prototype.persist = function(node)
-     {
-        var defer = new $.Deferred;
-
-        console.log('persisting node', node);
-
-        defer.promise;
-     }
-
-    /**
-     * create the devise wrapper that wraps the current page
-     */
-    function createDeviseWrapper()
-    {
-        var theme = $('<div class="dvs-default" id="dvs-mode">');
-        var container = $('<div id="dvs-container">');
-        var pusher = $('<div id="dvs-pusher">');
-        var content = $('<div id="dvs-content">');
-        var iframe      = $('<iframe id="dvs-iframe" scrolling="no" style="width: 100%; pointer-events: none; opacity: 0.8;">');
-
-        var editButton  = $('<button id="dvs-node-mode-button">').html('Edit Page');
-        var adminButton = $('<button id="dvs-admin-mode-button" onclick="location.href = \'/admin/pages\'">').html('Admin');
-
-        var nodes       = $('<div id="dvs-nodes" class="dvs-faded">');
-        var sidebarContainer = $('<div id="dvs-sidebar-container" style="display: none;">');
-        var sidebarScroll = $('<div id="dvs-sidebar-scroller">');
-        var sidebar     = $('<div id="dvs-sidebar">');
-
-        resetDvsIframeHeight(iframe);
-        iframe.attr('src', query.append('start-editor', 'false', location.href));
-
-        container.append(pusher);
-
-        pusher.append(content);
-        pusher.append(iframe);
-
-        sidebarContainer.append(sidebarScroll);
-        sidebarScroll.append(sidebar);
-
-        theme.append(container);
-        theme.append(editButton);
-        theme.append(adminButton);
-        theme.append(nodes);
-        theme.append(sidebarContainer);
-
-        return theme;
-    }
-
-    /**
-     * Gets all the views setup correctly, now that our
-     * page is wrapped and bootstraped
-     */
-    function registerViews(editor, page)
-    {
-        editor.view                   = page.find('#dvs-mode');
-        editor.containerView          = page.find('#dvs-container');
-        editor.pusherView             = page.find('#dvs-pusher');
-        editor.contentView            = page.find('#dvs-content');
-        editor.iframeView             = page.find('#dvs-iframe');
-        editor.editButtonView         = page.find('#dvs-node-mode-button');
-        editor.adminButtonView        = page.find('#dvs-admin-mode-button');
-        editor.nodesView              = page.find('#dvs-nodes');
-        editor.sidebarContainerView   = page.find('#dvs-sidebar-container');
-        editor.sidebarScrollView      = page.find('#dvs-sidebar-scroller');
-        editor.sidebarView            = page.find('#dvs-sidebar');
-    }
-
-    /**
-     * Registers all the events on this page
-     */
-    function registerEvents(editor, page)
-    {
-        View.registerEvents(page, editor.events, editor);
-    }
-
-    /**
-     * Creates the nodes inside this nodes element
-     */
-    function initializeNodesView(nodes, nodesView, editor)
-    {
-        $.each(nodes, function(index, node)
-        {
-            var nodeView = View.make('editor.node', {cid: index, node: node});
-            nodesView.append(nodeView);
-        });
-
-        editor.recalculateNodePositions();
-    }
-
-    /**
-     * wraps the body inside of this devise wrapper
-     */
-    function wrapPageInsideDeviseWrapper(wrapper)
-    {
-        var body = $('body');
-        var paddingTop = parseInt(body.css('padding-top'));
-        var paddingBot = parseInt(body.css('padding-bottom'));
-        var documentHeight = $(document).height() + paddingTop + paddingBot;
-
-        body.attr('style', ' height:' + documentHeight + 'px!important;');
-        body.wrapInner(wrapper);
-
-        return body;
+        dvsPosition.recalculateNodePositions(this.nodesView, this.data.nodes);
     }
 
     /**
      * Resets the iframe height once it is loaded...
      */
-    function resetDvsIframeHeight(iframe)
+    function loadEditorIframe(editor)
     {
-        iframe.load(function() {
-            var self = this;
-            setTimeout(function() {
-                self.style.height = self.contentWindow.document.body.offsetHeight + 'px';
-                self.style.display = 'none';
-            }, 50);
+        var iframe = editor.iframeView;
+
+        iframe.load(function()
+        {
+            var url = this.contentWindow.location.href;
+
+            // if you find the url has been reloaded to
+            // something that doesn't have start-editor in it, then
+            // reload this page's url to iframe's url
+            if (url.indexOf('start-editor=false') === -1)
+            {
+                window.location.href = url;
+                return;
+            }
+
+            // since this url is part of the editor
+            // we need to show our iframe. this is here
+            // so we don't get any "flashing" on invalid
+            // editor links
+            iframe.show();
+
+            // give all <a> tags a target to the top parent frame
+            // if new <a> links are added later via javascript
+            // the start-editor=false redirect (see above) will
+            // catch it
+            iframe.contents().find('a').each(function(index, el){
+                $(el).attr('target', '_top');
+            });
+
+            // check for form submissions, and when we find one
+            // we actually take the form out of the iframe, and submit
+            // it via the parent frame, so that it won't be submitted
+            // inside of the iframe...
+            var body = iframe.contents().find('body');
+
+            body.on('submit', 'form', function(e)
+            {
+                console.log('submitting form', e);
+                e.preventDefault();
+            });
+
+            // put the nodes inside of the iframe body
+            body.append(editor.createNodesView());
+            editor.iframeBodyView = body;
+            editor.nodesView = body.find('#dvs-nodes');
+            editor.recalculateNodePositions();
+
+            // in case the iframe is reloaded, we need to check for these
+            // classes for the nodes to show up properly
+            if (editor.showingSidebar) body.addClass('dvs-sidebar-mode');
+            if (editor.showingEditor) body.addClass('dvs-node-mode');
+
+            // sets the iframe up so we can control it's content
+            LiveUpdater.setIframe(iframe);
         });
+
+        iframe.attr('src', query.append('start-editor', 'false', location.href));
     }
 
     /**
@@ -260,20 +231,9 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      */
     function onClickNodeModeButton(event)
     {
-        var shown = (this.view.hasClass('dvs-node-mode'))
+        var shown = (this.layoutView.hasClass('dvs-node-mode'))
             ? this.hideEditor()
             :this.showEditor();
-    }
-
-    /**
-     * handle when the node button is clicked
-     * we need to show the sidebar for this
-     * node
-     */
-    function onNodeButtonClicked(event)
-    {
-        var cid = $(event.currentTarget).data('node-cid');
-        this.showSidebar(cid);
     }
 
     /**
@@ -283,24 +243,6 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
     {
         this.hideSidebar();
         this.showEditor();
-    }
-
-    /**
-     * handle when the add page version button is clicked
-     */
-    function onAddPageVersionBtnClicked(event)
-    {
-        var pageName = prompt('What would you like to name this new page version?');
-
-        if (pageName) this.addPageVersion(pageName);
-    }
-
-    /**
-     * handle when the save button is clicked in the sidebar
-     */
-    function onSidebarSaveButtonClicked(event)
-    {
-        this.sidebar.persist(this.editingNode);
     }
 
     /**

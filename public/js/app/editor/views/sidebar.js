@@ -5,6 +5,7 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 	 */
 	var events = {
 		'change #dvs-sidebar-version-selector': onChangePageVersion,
+        'click #dvs-sidebar-add-version': onAddPageVersionBtnClicked,
 		'click .dvs-sidebar-save-group': 'save',
 		'input form input': 'changed',
 		'change form input': 'changed',
@@ -103,6 +104,22 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 		location.href = location.origin + location.pathname + query.toQueryString(params);
 	}
 
+    /**
+     * Adds page version to this page
+     */
+    Sidebar.prototype.addPageVersion = function(name)
+    {
+       var data = { page_version_id: this.page.pageVersionId, name: name };
+
+        $.post('/admin/page-versions', data).then(function(results, status, xhr)
+        {
+            var href = window.location.origin; // base url of current page
+            href += window.location.pathname; // add on current subpage(s)
+            href += '?page_version=' + results.name; // add on new page version params
+            window.location.href = href;
+        });
+    }
+
 	/**
 	 * Calls save on the underlying content view
 	 */
@@ -171,6 +188,16 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 
 		this.changePageVersion(pageVersionId);
 	}
+
+    /**
+     * handle when the add page version button is clicked
+     */
+    function onAddPageVersionBtnClicked(event)
+    {
+        var pageName = prompt('What would you like to name this new page version?');
+
+        if (pageName) this.addPageVersion(pageName);
+    }
 
 	return Sidebar;
 });

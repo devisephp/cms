@@ -134,6 +134,20 @@ class TagManager
 	}
 
 	/**
+	 * Get the instance for a variable type. We cannot
+	 * do much with this since we haven't identified
+	 * what type of variable this is, e.g. model or
+	 * attribute.
+	 *
+	 * @param  array $tag
+	 * @return array
+	 */
+	protected function getInstanceForVariable($tag)
+	{
+		return [];
+	}
+
+	/**
 	 * Get the instance of a collection. This is
 	 * the CollectionSet with  all instances attached
 	 *

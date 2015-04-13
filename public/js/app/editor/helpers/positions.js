@@ -22,7 +22,7 @@ devise.define(['jquery'], function($) {
             }
 
             node.position = (node.binding === 'group')
-                ? node.data[0].position
+                ? getCoordinatesForGroupNode(node, editor.view)
                 : getCoordinatesForNode(node.key, node.cid, editor.view);
 
             node.position.side = getSideForNode(node.position);
@@ -75,6 +75,26 @@ devise.define(['jquery'], function($) {
         if (typeof coordinates === 'object' && coordinates.top) return coordinates;
 
         return getCoordinatesFromParent(placeholder);
+    }
+
+    /**
+     * finds the first node in the group with a position
+     */
+    function getCoordinatesForGroupNode(groupNode, view)
+    {
+        var position = false;
+
+        $.each(groupNode.data.categories, function(index, category)
+        {
+            for (var i = 0; i < category.nodes.length; i++)
+            {
+                var node = category.nodes[i];
+                var nodePosition = getCoordinatesForNode(node.key, node.cid, view);
+                if (!position) position = nodePosition;
+            }
+        });
+
+        return position;
     }
 
     /**

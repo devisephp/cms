@@ -168,8 +168,9 @@ class DvsPageData
 			'category' => $category,
 			'alternateTarget' => $alternateTarget,
 			'defaults' => null,
-			'data' => [],
 		];
+
+		$this->tags[$id]['data'] = $this->TagManager->getInstanceForTag($this->tags[$id]);
 	}
 
 	/**
@@ -440,47 +441,56 @@ class DvsPageData
 	protected function addCollectionNodesIntoGroupsOrNodes($collections, $groups, $nodes)
 	{
 		$normalCollections = [];
-
 		$groupCollections = [];
 
+		// some collections may belong to a group...
 		foreach ($collections as $collection)
 		{
 			$group = $collection['group'];
+			$category = $collection['category'] ?: 'Uncategorized';
 			$name = $collection['collectionName'];
 
-			if ($group) $groupCollections = $this->appendToArray($groupCollections, $group, $collection);
-			else $normalCollections = $this->appendToArray($normalCollections, $name, $collection);
+			if ($group)
+			{
+				if (!isset($groupCollections[$group])) $groupCollections[$group] = [];
+				if (!isset($groupCollections[$group][$category])) $groupCollections[$group][$category] = [];
+				if (!isset($groupCollections[$group][$category][$name])) $groupCollections[$group][$category][$name] = [];
+				$groupCollections[$group][$category][$name][] = $collection;
+			}
+			else
+			{
+				$normalCollections = $this->appendToArray($normalCollections, $name, $collection);
+			}
 		}
 
+		// handle collections as normal
 		foreach ($normalCollections as $collectionName => $collectionFields)
 		{
 			$nodes[] = $this->buildCollectionNode($collectionName, $collectionFields);
 		}
 
-		foreach ($groupCollections as $groupName => $collectionFields)
+		// put the collection node inside of the group/category pair...
+		foreach ($groupCollections as $groupName => $categories)
 		{
-			$builtCollections = [];
-			$insideCollectionFields = [];
-
-			foreach ($collectionFields as $collectionField)
+			foreach ($categories as $categoryName => $collection)
 			{
-				$name = $collectionField['collectionName'];
-				$insideCollectionFields = $this->appendToArray($insideCollectionFields, $name, $collection);
+				foreach ($collection as $collectionName => $collectionFields)
+				{
+					if (!isset($groups[$groupName])) $groups[$groupName] = [];
+					if (!isset($groups[$groupName][$categoryName])) $groups[$groupName][$categoryName] = [];
+					$groups[$groupName][$categoryName][] = $this->buildCollectionNode($collectionName, $collectionFields);
+				}
 			}
-
-			foreach ($insideCollectionFields as $collectionName => $insideFields)
-			{
-				$builtCollections = $this->buildCollectionNode($collectionName, $insideFields);
-			}
-
-			$groups = $this->appendToArray($builtCollections, $groupName, $groups);
 		}
 
 		return array($groups, $nodes);
 	}
 
 	/**
-	 * Adds the groups into the nodes
+	 * Adds the groups into the nodes. Groups are organized
+	 * into categories. Some groups only have 1 category but
+	 * it is possible to have many categories inside of a
+	 * single group
 	 *
 	 * @param array $groups
 	 * @param array $nodes
@@ -489,9 +499,9 @@ class DvsPageData
 	{
 		$index = 0;
 
-		foreach ($groups as $name => $items)
+		foreach ($groups as $name => $categories)
 		{
-			$nodes[] = $this->buildGroupNode('group' . $index++, $name, $items);
+			$nodes[] = $this->buildGroupNode('group' . $index++, $name, $categories);
 		}
 
 		return array($groups, $nodes);
@@ -509,13 +519,22 @@ class DvsPageData
 	{
 		foreach ($nodes as $node)
 		{
-			$key = $node['group'];
+			$group = $node['group'];
+
+			$category = $node['category'] ?: 'Uncategorized';
 
 			$built = $this->buildNode($node);
 
-			if ($key) $groups = $this->appendToArray($groups, $key, $built);
-
-			else $allNodes = $this->appendToArray($allNodes, false, $built);
+			if ($group)
+			{
+				if (!isset($groups[$group])) $groups[$group] = [];
+				if (!isset($groups[$group][$category])) $groups[$group][$category] = [];
+				$groups[$group][$category][] = $built;
+			}
+			else
+			{
+				$allNodes = $this->appendToArray($allNodes, false, $built);
+			}
 		}
 
 		return array($groups, $allNodes);
@@ -528,17 +547,26 @@ class DvsPageData
 	 * @param  array $items
 	 * @return array
 	 */
-	protected function buildGroupNode($cid, $name, $items)
+	protected function buildGroupNode($cid, $name, $categories)
 	{
-		$node = $items[0];
+		$data = [];
+
+		foreach ($categories as $categoryName => $nodes)
+		{
+			$data[] = [
+				'id' => count($data),
+				'name' => $categoryName,
+				'nodes' => $nodes
+			];
+		}
 
 		return [
 			'cid' => $cid,
-			'key' => $node['key'],
+			'key' => $cid,
 			'binding' => 'group',
 			'human_name' => $name,
 			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
-			'data' => $items,
+			'data' => ['categories' => $data],
 		];
 	}
 

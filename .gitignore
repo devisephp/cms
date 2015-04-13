@@ -12,3 +12,4 @@ node_modules
 tests/functional/test.png
 
 tests/_output/*
+tests/bootstrap/codeception/_output/*

@@ -25,8 +25,7 @@
         "mockery/mockery": "dev-master",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*",
-        "codeception/codeception": "*",
-        "site5/phantoman": "~1.0"
+        "codeception/codeception": "*"
     },
     "autoload": {
         "classmap": [

@@ -6,9 +6,19 @@
 
 class_name: AcceptanceTester
 modules:
-    enabled:
-        - PhpBrowser
-        - AcceptanceHelper
+    enabled: [WebDriver,Db]
     config:
-        PhpBrowser:
-            url: 'http://localhost:8000/'
+        WebDriver:
+            url: 'http://devsietest.app'
+            browser: firefox
+            window_size: 1024x768
+            restart: true
+            clear_cookies: true
+            wait: 5
+        Db:
+         dsn: 'mysql:host=localhost;dbname=devsietest'
+         user: 'root'
+         password: 'secret'
+         dump: 'tests/_data/devsietest.sql'
+         populate: true
+         cleanup: true

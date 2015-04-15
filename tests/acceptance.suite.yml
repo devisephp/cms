@@ -10,15 +10,18 @@ modules:
     config:
         WebDriver:
             url: 'http://devsietest.app'
-            browser: firefox
+            port: 4444
+            browser: 'firefox'
             window_size: 1024x768
             restart: true
             clear_cookies: true
             wait: 5
+            capabilities:
+                unexpectedAlertBehaviour: 'accept'
         Db:
-         dsn: 'mysql:host=localhost;dbname=devsietest'
-         user: 'root'
-         password: 'secret'
-         dump: 'tests/_data/devsietest.sql'
-         populate: true
-         cleanup: true
+            dsn: 'mysql:host=localhost;dbname=devsietest'
+            user: 'root'
+            password: 'secret'
+            dump: 'tests/_data/devsietest.sql'
+            populate: true
+            cleanup: true

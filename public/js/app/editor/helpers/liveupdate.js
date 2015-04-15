@@ -12,6 +12,10 @@ devise.define(['jquery', 'query'], function($, query)
 
 	LiveUpdate.prototype.refresh = function()
 	{
+		typeof this.iframe[0] !== 'undefined' &&
+		typeof this.iframe[0].contentWindow !== 'undefined' &&
+		typeof this.iframe[0].contentWindow.location !== 'undefined' &&
+		typeof this.iframe[0].contentWindow.location.reload !== 'undefined' &&
 		this.iframe[0].contentWindow.location.reload(true);
 	}
 

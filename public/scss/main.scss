@@ -38,6 +38,9 @@
 @import "editors/datepicker";
 @import "editors/images";
 
+/* Vendor Overrides / Styles */
+@import "vendors/_dropzone";
+
 /* Testing */
 @import "testing/tests";
 

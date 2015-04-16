@@ -32,4 +32,8 @@
   .app-employees {
     @include dvs-sections(#4B79BA);
   }
+
+  .app-events {
+    @include dvs-sections(#0D6C7F);
+  }
 }

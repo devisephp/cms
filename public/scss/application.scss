@@ -9,31 +9,10 @@
 */
 
 #dvs-admin {
+  /* Just an example of what you might call one of your
+  /* dashboard cards */
   .app-blogs {
     @include dvs-sections(#1ea69c);
-  }
-
-  .app-comments {
-    @include dvs-sections(#045b37);
-  }
-
-  .app-spotlights {
-    @include dvs-sections(#29a8df);
-  }
-
-  .app-links {
-    @include dvs-sections(#d2de2c);
-  }
-
-  .app-locations {
-    @include dvs-sections(#44A94D);
-  }
-
-  .app-employees {
-    @include dvs-sections(#4B79BA);
-  }
-
-  .app-events {
-    @include dvs-sections(#0D6C7F);
+  
   }
 }

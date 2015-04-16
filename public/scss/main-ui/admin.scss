@@ -63,7 +63,7 @@
 
   hr {
     margin:20px auto;
-    border-color:darken($blue, 20%);
+    border-color:lighten($bodyBgColor, 8%);
     border-style:solid;
     border-width:0;
     border-bottom-width:1px;

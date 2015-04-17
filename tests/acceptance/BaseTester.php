@@ -33,9 +33,12 @@ class BaseTester {
         // go to fields page
         $I->amOnPage('/admin/fields');
 
+
         // wait for the edit page button
         $I->waitForElement('#dvs-node-mode-button', self::WAIT_TIME);
         $I->click('Edit Page');
+
+        $I->switchToIFrame('dvsiframe');
 
         // wait for nodes
         $I->waitForElement('.dvs-node', self::WAIT_TIME);
@@ -49,6 +52,8 @@ class BaseTester {
     {
         $I->waitForElement("//span[.='" . $name . "']", self::WAIT_TIME);
         $I->click("//span[.='" . $name . "']");
+
+        $I->switchToIFrame();
 
         // wait for <div id="dvs-sidebar" class="loaded">
         $I->waitForElement("//div[@id='dvs-sidebar'][@class='loaded']", self::WAIT_TIME);

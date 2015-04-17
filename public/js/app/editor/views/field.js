@@ -1,4 +1,4 @@
-devise.define(['jquery', 'dvsBaseView'], function($, View)
+devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, LiveUpdater)
 {
 	/**
 	 * list of events for this view
@@ -100,9 +100,11 @@ devise.define(['jquery', 'dvsBaseView'], function($, View)
 	/**
 	 * called when our form content changes
 	 */
-	FieldView.prototype.changed = function(key, value, event)
+	FieldView.prototype.changed = function(attribute, value, event)
 	{
-		this.data.field.values[key] = value;
+		this.data.field.values[attribute] = value;
+
+		LiveUpdater.change(this.data.node, this.data.node.data, event.currentTarget, attribute, value);
 	}
 
 	/**

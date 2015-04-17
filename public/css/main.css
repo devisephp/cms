@@ -3154,16 +3154,18 @@ button.dvs-no-decoration:hover {
 
 #dvs-admin input[type=password].form-control,
 #dvs-admin input[type=text].form-control {
+  height: auto;
+  box-sizing: border-box;
   padding: 14px 14px;
   font-size: 14px;
   color: #bcbec2;
   border: 1px solid #32353f;
   border-bottom: 2px solid #444856;
   border-radius: 4px;
-  overflow: hidden;
+  background-color: #202228;
   background: -webkit-linear-gradient(top, #202228, #24262e);
   background: linear-gradient(to bottom, #202228, #24262e);
-  padding: 24px 14px; }
+  padding: 18px 14px; }
   #dvs-admin input[type=password].form-control::-webkit-input-placeholder,
   #dvs-admin input[type=text].form-control::-webkit-input-placeholder {
     color: #797d85; }
@@ -3227,13 +3229,14 @@ button.dvs-no-decoration:hover {
   .dvs-admin-form-horizontal .dvs-form-group select {
     display: table-cell;
     width: 78%;
+    box-sizing: border-box;
     padding: 14px 14px;
     font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
     border-radius: 4px;
-    overflow: hidden;
+    background-color: #202228;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e); }
     .dvs-admin-form-vertical .dvs-form-group input[type="text"]::-webkit-input-placeholder,
@@ -4503,13 +4506,14 @@ td .dvs-select-small {
       background-color: transparent; }
 
 .dvs-inset-text {
+  box-sizing: border-box;
   padding: 14px 14px;
   font-size: 14px;
   color: #bcbec2;
   border: 1px solid #32353f;
   border-bottom: 2px solid #444856;
   border-radius: 4px;
-  overflow: hidden;
+  background-color: #202228;
   background: -webkit-linear-gradient(top, #202228, #24262e);
   background: linear-gradient(to bottom, #202228, #24262e);
   max-width: 300px; }
@@ -4590,13 +4594,14 @@ table.dvs-admin-table {
     min-width: 200px;
     max-width: 300px;
     margin-left: 10px;
+    box-sizing: border-box;
     padding: 14px 14px;
     font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
     border-radius: 4px;
-    overflow: hidden;
+    background-color: #202228;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e); }
     table.dvs-admin-table input[type=text]::-webkit-input-placeholder {
@@ -5547,13 +5552,14 @@ table.dvs-admin-table {
     margin: 0 auto; }
   #dvs-media-manager #dvs-media-cropper-settings {
     margin-top: 20px;
+    box-sizing: border-box;
     padding: 14px 14px;
     font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
     border-radius: 4px;
-    overflow: hidden;
+    background-color: #202228;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e); }
     #dvs-media-manager #dvs-media-cropper-settings::-webkit-input-placeholder {
@@ -5565,13 +5571,14 @@ table.dvs-admin-table {
     #dvs-media-manager #dvs-media-cropper-settings:-ms-input-placeholder {
       color: #797d85; }
   #dvs-media-manager #dvs-media-upload {
+    box-sizing: border-box;
     padding: 14px 14px;
     font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
     border-radius: 4px;
-    overflow: hidden;
+    background-color: #202228;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e);
     margin-bottom: 20px; }
@@ -5592,13 +5599,14 @@ table.dvs-admin-table {
     clear: both;
     margin: 0 0 20px; }
     #dvs-media-manager #dvs-new-category input[type=text] {
+      box-sizing: border-box;
       padding: 14px 14px;
       font-size: 14px;
       color: #bcbec2;
       border: 1px solid #32353f;
       border-bottom: 2px solid #444856;
       border-radius: 4px;
-      overflow: hidden;
+      background-color: #202228;
       background: -webkit-linear-gradient(top, #202228, #24262e);
       background: linear-gradient(to bottom, #202228, #24262e);
       margin-bottom: 8px; }

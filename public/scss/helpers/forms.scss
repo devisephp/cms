@@ -25,9 +25,10 @@ input[type=password],
 input[type=text] {
 
   &.form-control {
+    height:auto;
     @include insetFormDude();
 
-    padding:24px 14px;
+    padding:18px 14px;
   }
 }
 

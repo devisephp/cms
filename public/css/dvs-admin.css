@@ -50,7 +50,8 @@ html, body {
 :focus {
   outline: none; }
 
-table th a, table td a {
+table th a,
+table td a {
   text-decoration: none; }
 
 /* Helper Styles */
@@ -681,10 +682,12 @@ table th a, table td a {
 .fr {
   float: right; }
 
-.hide, .cantsee, .hidden {
+.hide,
+.cantsee,
+.hidden {
   display: none !important; }
 
-.show, .cansee, .nothidden {
+.show,
+.cansee,
+.nothidden {
   display: inherit !important; }
-
-/*# sourceMappingURL=dvs-admin.css.map */

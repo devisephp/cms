@@ -118,17 +118,21 @@ class InstallWizard
 	 */
 	public function createAdminUser($email, $username, $password)
 	{
-		// create the user
-		$user = $this->DvsUser->newInstance();
+        // create the user
+        $user = $this->DvsUser->newInstance();
         $user->email = $email;
-		$user->username = $username;
+        $user->username = $username;
         $user->password = $this->Hash->make($password);
         $user->activated = true;
-		$user->save();
+        $user->save();
 
-		// add the user to the admin group
-		$adminGroup = $this->DvsGroup->whereName('Developer')->firstOrFail();
-		$user->groups()->sync([$adminGroup->id]);
+        // add the user to the admin group
+        $adminGroup = $this->DvsGroup->whereName('Developer')->firstOrFail();
+        $user->groups()->sync([$adminGroup->id]);
+
+        // write "email" and "username" input values to env
+        $this->EnvironmentFileManager->merge(['ADMIN_EMAIL' => $email]);
+        $this->EnvironmentFileManager->merge(['ADMIN_USERNAME' => $email]);
 
 		return $user;
 	}

@@ -170,8 +170,8 @@ class InstallerController extends Controller
 	 */
 	public function getCreateUser()
 	{
-		$email = $this->Input->old('email');
-        $username = $this->Input->old('username');
+		$email = $this->Input->old('email', env('ADMIN_EMAIL'));
+        $username = $this->Input->old('username', env('ADMIN_USERNAME'));
 
 		return $this->View->make('devise::installer.create-user', compact('email', 'username', 'password'));
 	}
@@ -185,9 +185,7 @@ class InstallerController extends Controller
 	public function postCreateUser()
 	{
 		$email = $this->Input->get('email');
-
         $username = $this->Input->get('username');
-
 		$password = $this->Input->get('password');
 
 		$this->InstallWizard->validateAdminUser($email, $username, $password);

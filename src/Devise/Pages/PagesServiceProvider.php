@@ -6,6 +6,7 @@ use Devise\Pages\Interpreter\ViewOpener;
 use Devise\Pages\Interpreter\DeviseCompiler;
 use Devise\Pages\Interpreter\DeviseParser;
 use Devise\Pages\Interpreter\BladeEngineCompiler;
+use Devise\Pages\Fields\DvsMagicMode;
 
 /**
  * Registers the Pages service provider. This allows us to manage our pages
@@ -46,12 +47,22 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
+        $this->registerDvsMagicMode();
         $this->registerInterpreter();
         $this->registerPhpBladeExtensions();
         $this->registerDeviseDataContainer();
         $this->registerTemplateComposer();
         $this->registerViewName();
 
+    }
+
+    /**
+     * [registerDvsMagicMode description]
+     * @return [type]
+     */
+    private function registerDvsMagicMode()
+    {
+        $this->app->instance('dvsMagicMode', new DvsMagicMode);
     }
 
     /**

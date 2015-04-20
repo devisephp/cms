@@ -1,14 +1,36 @@
 devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'], function(AttributeBinding, ClassBinding, StyleBinding, TextBinding)
 {
 	/**
+	 * default lookup
+	 */
+	var defaultLookup = function(key, database)
+	{
+		if (typeof database[key] === 'undefined') return '';
+
+		return database[key];
+	}
+
+	/**
+	 * default database setter
+	 */
+	var defaultSetter = function(key, value, database)
+	{
+		database[key] = value;
+	}
+
+	/**
 	 * Bindings finder finds one way bindings
 	 * inside of the DOM
 	 */
-	var BindingsFinder = function(models, lookup)
+	var BindingsFinder = function(models, lookup, setter)
 	{
+		lookup = typeof lookup !== 'function' ? defaultLookup : lookup;
+		setter = typeof setter !== 'function' ? defaultSetter : setter;
+
 		this.pattern = new RegExp('###dvsmagic-[^###]+###', 'g');
 		this.models = models;
-		this.lookup = lookup;
+		this.lookup = function(key) { return lookup(key, models); }
+		this.setter = function(key, value) { if (key) return setter(key, value, models); }
 	}
 
 	/**
@@ -23,6 +45,8 @@ devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'
 		{
 			bindings = [];
 			bindings = wrapApplyOnBindings(bindings);
+			bindings.get = this.lookup;
+			bindings.set = this.setter;
 		}
 
 		bindings = findElementBindings(node, bindings, this);
@@ -43,13 +67,14 @@ devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'
 	 */
 	function wrapApplyOnBindings(bindings)
 	{
-		bindings.apply = function()
+		bindings.apply = function(key)
 		{
 			for (var index in bindings)
 			{
 				if (index !== 'apply' && typeof bindings[index].apply === 'function')
 				{
-					bindings[index].apply();
+					if (key) bindings[index].key === key && bindings[index].apply();
+					else bindings[index].apply();
 				}
 			}
 		}
@@ -66,11 +91,13 @@ devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'
 	}
 
 	/**
-	 * method to find a model from a matched tring
+	 * finds the key from this match
 	 */
-	function findModelFromMatch(match, database, finder)
+	function findKeyFromMatch(match)
 	{
-		return finder.lookup(match, database);
+		var split = match.substring(3, match.length-3).split('-');
+		var dvsmagic = split.shift();
+		return split.join('-');
 	}
 
 	/**
@@ -88,25 +115,19 @@ devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'
 
 			for (var j = 0; j < numberOfMatches; j++)
 			{
-				var binding;
-				var property = findPropertyFromMatch(matches[j]);
-				var values = findModelFromMatch(matches[j], finder.models, finder);
+				var key = findKeyFromMatch(matches[j]);
 
-				// treat style and class as special attributes
 				if (attribute.name === 'style')
 				{
-					bindings = findStyleBindings(node, bindings, matches[j], values, property);
-					continue;
+					bindings = findStyleBindings(node, bindings, matches[j], finder.lookup);
 				}
 				else if (attribute.name === 'class')
 				{
-					binding = new ClassBinding(node, matches[j], values, property);
-					bindings.push(binding);
+					bindings.push(new ClassBinding(node, key, finder.lookup, matches[j]));
 				}
 				else
 				{
-					binding = new AttributeBinding(attribute, matches[j], values, property)
-					bindings.push(binding);
+					bindings.push(new AttributeBinding(attribute, key, finder.lookup));
 				}
 			}
 		}
@@ -136,9 +157,8 @@ devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'
 
 			if (index > -1)
 			{
-				var property = findPropertyFromMatch(matches[index]);
-				var model = findModelFromMatch(matches[index], finder.models, finder);
-				bindings.push(new TextBinding(newNode, matches[index], model, property));
+				var key = findKeyFromMatch(matches[index]);
+				bindings.push(new TextBinding(newNode, key, finder.lookup, matches[index]));
 			}
 
 			newNode.__magicAlreadyDone = true;
@@ -205,14 +225,15 @@ devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'
 	/**
 	 * finds all the style bings for all the matches
 	 */
-	function findStyleBindings(node, bindings, match, values, property)
+	function findStyleBindings(node, bindings, match, lookup)
 	{
 		var styles = node.attributes.item('style').nodeValue.split(';');
 		var affected = findAffectedStyles(styles, match);
+		var key = findKeyFromMatch(match);
 
 		for (var i = 0; i < affected.length; i++)
 		{
-			bindings.push(new StyleBinding(node, match, values, property, affected[i].style, affected[i].value));
+			bindings.push(new StyleBinding(node, key, lookup, match, affected[i].style, affected[i].value));
 		}
 
 		return bindings;

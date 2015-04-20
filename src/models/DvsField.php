@@ -1,6 +1,8 @@
 <?php
 
 use Devise\Pages\Fields\FieldValue;
+use Devise\Pages\Fields\LiveFieldValue;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DvsField extends Eloquent
@@ -40,7 +42,9 @@ class DvsField extends Eloquent
     public function getValueAttribute()
     {
         $json = $this->json_value ?: '{}';
-        $this->_value = $this->_value ?: new FieldValue($json);
+
+        $this->_value = $this->_value ?: new LiveFieldValue($json, $this->id, 'field');
+
         return $this->_value;
     }
 
@@ -62,6 +66,6 @@ class DvsField extends Eloquent
      */
     public function getScopeAttribute()
     {
-        return 'page';
+        return 'field';
     }
 }

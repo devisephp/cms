@@ -250,3 +250,35 @@ if (!function_exists('deviseDocsLink'))
 		echo '<button class="dvs-document"'.$section.'>'.$helptext.'</button>';
 	}
 }
+
+
+if (!function_exists('startdvsmagic'))
+{
+	function startdvsmagic()
+	{
+		Request::query('start-editor') === 'false' && App::make('dvsMagicMode')->enable();
+		return null;
+	}
+}
+
+if (!function_exists('dvsmagic'))
+{
+	function dvsmagic($object)
+	{
+		if ($object instanceof Devise\Pages\Fields\LiveFieldValue)
+		{
+			return $object->render();
+		}
+
+		return $object;
+	}
+}
+
+if (!function_exists('enddvsmagic'))
+{
+	function enddvsmagic()
+	{
+		App::make('dvsMagicMode')->disable();
+		return null;
+	}
+}

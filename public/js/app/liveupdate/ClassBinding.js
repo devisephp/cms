@@ -3,14 +3,13 @@ devise.define([], function()
 	/**
 	 * one-way bindings for class attribute
 	 */
-	var ClassBinding = function(node, match, values, name)
+	var ClassBinding = function(node, key, lookup, match)
 	{
 		this.node = node;
-		this.match = match;
+		this.key = key;
+		this.lookup = lookup;
 		this.old = this.match;
 		this.oldValues = [this.match];
-		this.values = values;
-		this.name = name;
 	}
 
 	/**
@@ -18,7 +17,7 @@ devise.define([], function()
 	 */
 	ClassBinding.prototype.apply = function()
 	{
-		var value = typeof this.values[this.name] === 'undefined' ? '' : this.values[this.name];
+		var value = this.lookup(this.key);
 
 		value = value.replace(new RegExp(',', 'g'), '');
 

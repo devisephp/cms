@@ -3,12 +3,12 @@ devise.define([], function()
 	/**
 	 * one-way bindings for style attribute
 	 */
-	var StyleBinding = function(node, match, values, name, style, value)
+	var StyleBinding = function(node, key, lookup, match, style, value)
 	{
 		this.node = node;
+		this.key = key;
 		this.match = match;
-		this.values = values;
-		this.name = name;
+		this.lookup = lookup;
 		this.style = style;
 		this.value = value;
 	}
@@ -18,7 +18,7 @@ devise.define([], function()
 	 */
 	StyleBinding.prototype.apply = function()
 	{
-		var value = typeof this.values[this.name] === 'undefined' ? '' : this.values[this.name];
+		var value = this.lookup(this.key);
 
 		var newValue = strReplace(this.match, value.toString(), this.value);
 

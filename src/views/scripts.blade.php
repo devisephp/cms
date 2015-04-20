@@ -39,7 +39,9 @@
    		});
 
 		// bootstrap the dvsEditor
-		devise.require(['dvsTemplates', 'dvsEditor', 'dvsPageData', 'query'], function(Templates, Editor, PageData, query) {
+		devise.require(['dvsTemplates', 'dvsEditor', 'dvsPageData', 'query', 'dvsCsrf'], function(Templates, Editor, PageData, query, csrf) {
+
+			csrf(PageData.csrfToken);
 
 			<?php foreach ($templates as $template): ?>
 				<?php

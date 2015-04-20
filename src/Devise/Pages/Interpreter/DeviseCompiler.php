@@ -69,6 +69,8 @@ class DeviseCompiler
 
 		$traverser->addVisitor(new Modifiers\AddPlaceHolderTags($this->parser));
 
+		$traverser->addVisitor(new Modifiers\EchoDeviseMagic($this->parser));
+
 		return $traverser->traverse($ast);
 	}
 }

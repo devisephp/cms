@@ -3,11 +3,11 @@ devise.define(['jquery'], function($)
 	/**
 	 * one-way bindings for text nodes
 	 */
-	var TextBinding = function(node, match, values, name)
+	var TextBinding = function(node, key, lookup, match)
 	{
 		this.match = match;
-		this.values = values;
-		this.name = name;
+		this.key = key;
+		this.lookup = lookup;
 		this.old = match;
 		this.nodes = [node];
 	}
@@ -17,7 +17,7 @@ devise.define(['jquery'], function($)
 	 */
 	TextBinding.prototype.apply = function()
 	{
-		var value = typeof this.values[this.name] === 'undefined' ? '' : this.values[this.name];
+		var value = this.lookup(this.key);
 
 		if (this.old === value) return;
 		if (!this.parentNode) this.parentNode = this.nodes[0].parentNode;

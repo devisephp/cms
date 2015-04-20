@@ -178,6 +178,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 			success: function(data, response, xhr)
 			{
 				self.data.field = data;
+				console.log(data);
+				// LiveUpdater.changedFieldAttribute(this.data.field, key);
 				self.renderCollectionField();
 			},
 			error: function(xhr, textStatus, error)
@@ -194,6 +196,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	CollectionView.prototype.changed = function(key, value, event)
 	{
 		this.selectedField.values[key] = value;
+		LiveUpdater.changedFieldAttribute(this.data.field, key);
 	}
 
 	/**

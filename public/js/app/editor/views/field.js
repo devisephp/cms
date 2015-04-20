@@ -104,7 +104,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 	{
 		this.data.field.values[attribute] = value;
 
-		LiveUpdater.change(this.data.node, this.data.node.data, event.currentTarget, attribute, value);
+		LiveUpdater.changedFieldAttribute(this.data.field, attribute);
 	}
 
 	/**
@@ -148,6 +148,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 	{
 		this.view.empty();
 		this.view.append(this.renderField(data, true));
+		LiveUpdater.changedField(this.data.field);
 	}
 
 	/**

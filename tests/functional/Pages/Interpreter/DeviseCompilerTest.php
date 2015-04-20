@@ -91,6 +91,18 @@ class DeviseCompilerTest extends \DeviseTestCase
 		assertContains('<div data-devise-<?php echo devise_tag_cid(\'creator-07bc2f9dadb7314768a55b1f9cd404dc\', "creator", null, "DvsPage", "creator", "The Page Creator", null, null, null, null, null) ?>="creator-07bc2f9dadb7314768a55b1f9cd404dc"></div>', $outcome);
 	}
 
+	public function test_it_can_echo_dvsmagic()
+	{
+		$compiler = new DeviseCompiler;
+		$outcome = $compiler->compile($this->fixture('devise-views.interpret7'));
+		assertContains('echo startdvsmagic() . dvsmagic($value) . enddvsmagic();', $outcome);
+		assertContains('echo startdvsmagic() . dvsmagic($page->test->value) . enddvsmagic();', $outcome);
+		assertContains('echo startdvsmagic() . dvsmagic($page->test->value(\'hmm\')) . enddvsmagic();', $outcome);
+		assertContains('echo $page->test->value ? startdvsmagic() . dvsmagic($page->test->value) . enddvsmagic() : \'durka\';', $outcome);
+		assertContains('startdvsmagic() . dvsmagic($page->test->value) . enddvsmagic() . \'durka\' . (startdvsmagic() . dvsmagic($page->test->another_value) . enddvsmagic());', $outcome);
+		assertContains('echo e(startdvsmagic() . dvsmagic($page->test->value) . enddvsmagic());', $outcome);
+	}
+
 	public function test_it_handles_random1_view()
 	{
 		$compiler = new DeviseCompiler;

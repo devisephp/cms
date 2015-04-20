@@ -84,6 +84,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 			success: function() { onSaveSuccess.apply(self, arguments); },
 			error: function() { onSaveError.apply(self, arguments); }
 		});
+
+
 	}
 
 	/**
@@ -92,6 +94,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	AttributeView.prototype.changed = function(key, value, event)
 	{
 		this.data.field.values[key] = value;
+		LiveUpdater.changedFieldAttribute(this.data.field, key);
 	}
 
 	/**
@@ -125,7 +128,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	function onSaveSuccess(data, response, xhr)
 	{
 		this.data.field = data.field;
-		// trigger some sort of live update here?
+		LiveUpdater.changedField(this.data.field);
 	}
 
 	/**

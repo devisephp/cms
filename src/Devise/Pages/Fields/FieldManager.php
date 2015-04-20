@@ -76,6 +76,8 @@ class FieldManager
 
 		$this->Event->fire("devise.{$field->type}.field.updated", [$field, $newValues, $oldValues]);
 
+		$field->values->extract();
+
 		return $field;
 	}
 

@@ -53,6 +53,14 @@ class DvsPageData
 	protected $cids = [];
 
 	/**
+	 * Keeps track of a database that we can build
+	 * in javascript where all the cool data is stored
+	 *
+	 * @var array
+	 */
+	protected $database = [];
+
+	/**
 	 * Tag manager that creates and finds
 	 * fields for our tags
 	 *
@@ -85,8 +93,9 @@ class DvsPageData
 	{
 		$this->TagManager = $TagManager;
 		$this->CollectionsRepository = $CollectionsRepository;
-		$this->cids = ['hidden' => 0, 'model' => 0, 'attribute' => 0, 'creator' => 0, 'field' => 0, 'variable' => 0, 'collection' => 0];
 		$this->PagesRepository = $PagesRepository;
+		$this->Crypt = \Crypt::getFacadeRoot();
+		$this->cids = ['hidden' => 0, 'model' => 0, 'attribute' => 0, 'creator' => 0, 'field' => 0, 'variable' => 0, 'collection' => 0];
 	}
 
 	/**
@@ -110,8 +119,9 @@ class DvsPageData
 		$attributes = $this->filterTags('attribute');
 		$creators = $this->filterTags('creator');
 		$nodes = $this->buildNodes($collections, $fields, $models, $attributes, $creators);
+		$database = $this->database;
 
-		return $this->jsonEncode(compact('nodes', 'pageId', 'pageVersionId', 'languageId', 'csrfToken', 'availableLanguages', 'pageRoutes', 'pageVersions'));
+		return $this->jsonEncode(compact('nodes', 'pageId', 'pageVersionId', 'languageId', 'csrfToken', 'availableLanguages', 'pageRoutes', 'pageVersions', 'database'));
 	}
 
 	/**
@@ -129,7 +139,7 @@ class DvsPageData
 		$this->pageId = $pageId;
 		$this->pageVersionId = $pageVersionId;
 		$this->languageId = $languageId;
-		$this->csrfToken = $csrfToken;
+		$this->csrfToken = $this->Crypt->encrypt($csrfToken);
 		$this->TagManager->initialize($pageId, $pageVersionId, $languageId);
 	}
 
@@ -226,6 +236,18 @@ class DvsPageData
 		$tag = $this->resolveTag($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults);
 
 		return $tag['cid'];
+	}
+
+	/**
+	 * Set the values up in the database
+	 *
+	 * @param  [type] $key
+	 * @param  [type] $value
+	 * @return [type]
+	 */
+	public function database($key, $value)
+	{
+		$this->database[$key] = $value;
 	}
 
 	/**

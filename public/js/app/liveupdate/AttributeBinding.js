@@ -3,12 +3,11 @@ devise.define([], function()
 	/**
 	 * one way bindings for attributes
 	 */
-	var AttributeBinding = function(attribute, match, values, name)
+	var AttributeBinding = function(node, key, lookup)
 	{
-		this.node = attribute;
-		this.match = match;
-		this.values = values;
-		this.name = name;
+		this.node = node;
+		this.key = key;
+		this.lookup = lookup;
 	}
 
 	/**
@@ -16,7 +15,7 @@ devise.define([], function()
 	 */
 	AttributeBinding.prototype.apply = function()
 	{
-		var value = typeof this.values[this.name] === 'undefined' ? '' : this.values[this.name];
+		var value = this.lookup(this.key);
 		this.old = this.node.nodeValue;
 		this.node.nodeValue = value;
 	}

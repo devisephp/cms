@@ -1,4 +1,4 @@
-devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionHelper', 'dvsSelectSurrogate', 'dvsLiveUpdater'], function($, query, Sidebar, View, dvsPosition, dvsSelectSurrogate, LiveUpdater)
+devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionHelper', 'dvsSelectSurrogate', 'dvsLiveUpdater', 'BindingsFinder'], function($, query, Sidebar, View, dvsPosition, dvsSelectSurrogate, LiveUpdater, BindingsFinder)
 {
     var events = {
         'click #dvs-node-mode-button': onClickNodeModeButton,
@@ -218,8 +218,20 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
             if (editor.showingSidebar) body.addClass('dvs-sidebar-mode');
             if (editor.showingEditor) body.addClass('dvs-node-mode');
 
+            // copy over the database fields for live updates
+            editor.data.database = this.contentWindow.devise.dvsPageData.database;
+
+            // create a finder on this editor
+            editor.finder = new BindingsFinder(editor.data.database)
+
+            // find all the bindings
+            editor.bindings = editor.finder.find(this.contentWindow.document.children[0]);
+
+            // apply the bindings now
+            editor.bindings.apply();
+
             // sets the iframe up so we can control it's content
-            LiveUpdater.setIframe(iframe);
+            LiveUpdater.setup(iframe, editor.bindings);
         });
 
         iframe.attr('src', query.append('start-editor', 'false', location.href));

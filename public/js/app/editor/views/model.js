@@ -124,6 +124,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 	ModelView.prototype.changed = function(key, value, event)
 	{
 		this.data.field.values[key] = value;
+		LiveUpdater.changedFieldAttribute(this.data.field, key);
 	}
 
 	/**
@@ -161,7 +162,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		this.data.fields = data.fields;
 		this.sidebar.breadcrumbsView.back();
 		this.showGridView();
-		// trigger some sort of live update here?
+		LiveUpdater.changedField(this.data.field);
 	}
 
 	/**

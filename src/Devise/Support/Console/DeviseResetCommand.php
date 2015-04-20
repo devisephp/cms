@@ -19,6 +19,8 @@ class DeviseResetCommand extends Command
      */
     protected $description = 'Resets a project by dropping db tables and running migrations and seeds for Devise and then the application. All configs and files are left untouched';
 
+    protected $excludeTables = array();
+
     /**
      * Setup the application container as we'll need this for running migrations.
      */
@@ -38,19 +40,51 @@ class DeviseResetCommand extends Command
 
         if (! $migrations->repositoryExists()) $migrations->createRepository();
 
-        // remove all existing tables from DB
-        $this->dropDatabaseTables();
+        $refreshDB = $this->askAboutRefreshingDatabase();
 
-        \Artisan::call('devise:migrate');
-        \Artisan::call('migrate');
+        if($refreshDB == 'yes') {
+            if ($this->askAboutExcludingUsersTable() == 'yes') {
+                $this->excludeTables[] = 'users';
+                $this->excludeTables[] = 'group_user';
+            }
 
-        \Artisan::call('devise:seed');
-        \Artisan::call('db:seed');
+            $this->dropDatabaseTables();
+
+            \Artisan::call('devise:migrate');
+            \Artisan::call('migrate');
+
+            \Artisan::call('devise:seed');
+            \Artisan::call('db:seed');
+        }
+    }
+
+    /**
+     * Prompt for wiping and re-populating the current database
+     *
+     * @param  boolean $default
+     * @return boolean
+     */
+    private function askAboutRefreshingDatabase($default = 'yes')
+    {
+        $answer = $this->ask("This is going to refresh the entire database. Are you sure? [{$default}]");
+        return $answer ?: $default;
+    }
+
+    /**
+     * Prompt for asking which tables to include in excludeTables array
+     *
+     * @param  boolean $default
+     * @return boolean
+     */
+    private function askAboutExcludingUsersTable($default = 'yes')
+    {
+        $answer = $this->ask("Would you like to exclude clearing the users table? [{$default}]");
+        return $answer ?: $default;
     }
 
     /**
      * Truncates all tables in current database except
-     * for any listed in the $excludeArr.
+     * for any listed in the class property excludeTables.
      *
      * @return Void
      */
@@ -63,12 +97,9 @@ class DeviseResetCommand extends Command
             ->getDoctrineSchemaManager()
             ->listTableNames();
 
-        // any tables to exclude from dropping
-        $excludeArr = ['group_user', 'users'];
-
-        // loop thru tables and drop any not in excludeArr
+        // loop thru tables and drop any not in excludeTables
         foreach($tables as $table) {
-            if (in_array($table, $excludeArr)) { continue; }
+            if (in_array($table, $this->excludeTables)) { continue; }
 
             \Schema::drop($table);
         }

@@ -72,7 +72,7 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_posts_database()
     {
-    	$this->Framework->Input->shouldReceive('get')->times(7)->andReturn('production');
+    	$this->Framework->Input->shouldReceive('get')->times(8)->andReturn('production');
         $this->InstallWizard->shouldReceive('saveDatabase')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('to')->once()->andReturnSelf();
 

@@ -21,7 +21,8 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
     	$this->Framework = new \Devise\Support\Framework;
 
-    	$this->DeviseInstallCommand = new DeviseInstallCommand($this->Framework->Container);
+        $this->DeviseInstallCommand = new DeviseInstallCommand($this->Framework->Container);
+        $this->DeviseInstallCommand->Cache = m::mock('CacheObj');
 
 		$this->DeviseInstallCommand->DeviseMigrateCommand = m::mock('Devise\Support\Console\DeviseMigrateCommand');
 		$this->DeviseInstallCommand->DeviseSeedCommand = m::mock('Devise\Support\Console\DeviseSeedCommand');
@@ -54,6 +55,7 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
 	public function test_it_runs_install_commands()
 	{
+        $this->DeviseInstallCommand->Cache->shouldReceive('get')->times(3)->andReturn('yes');
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();
@@ -63,8 +65,8 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
 	public function test_it_changes_database_config_file()
 	{
-		$this->DeviseInstallCommand->Config = m::mock('ConfigObj');
-		$this->DeviseInstallCommand->Config->shouldReceive('get')->once()->andReturn('mysql');
+        $this->DeviseInstallCommand->Config = m::mock('ConfigObj');
+        $this->DeviseInstallCommand->Config->shouldReceive('get')->once()->andReturn('mysql');
 		$this->DeviseInstallCommand->changeDatabaseConfigFile();
 		$contents = file_get_contents('vfs://basedir/config/database.php');
 		assertContains("'default' => env('DB_DEFAULT', 'mysql'),", $contents);

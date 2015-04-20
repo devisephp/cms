@@ -11,12 +11,32 @@ class CreateGroupUser extends Migration {
      */
     public function up()
     {
-        Schema::create('group_user', function($table) {
-            $table->integer('group_id');
-            $table->integer('user_id');
+        if (!Schema::hasTable('group_user'))
+        {
 
-            $table->primary(array('group_id', 'user_id'));
-        });
+            Schema::create('group_user', function($table) {
+                $table->integer('group_id');
+                $table->integer('user_id');
+
+                $table->primary(array('group_id', 'user_id'));
+            });
+
+        } else {
+
+             Schema::table('group_user', function($table) {
+                if(!Schema::hasColumn('group_user', 'group_id')) {
+                    $table->integer('group_id');
+                }
+
+                if(!Schema::hasColumn('group_user', 'user_id')) {
+                    $table->integer('user_id')->after('group_id');
+                }
+
+                $table->dropPrimary('group_id', 'user_id');
+                $table->primary(array('group_id', 'user_id'));
+            });
+
+        }
     }
 
     /**

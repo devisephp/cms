@@ -45,7 +45,6 @@ class DeviseInstallCommand extends Command
         parent::__construct();
         $this->app = $app;
         $this->basePath = $this->app->basePath();
-        $this->Cache = $this->app->make('cache');
         $this->Config = $this->app->make('config');
         $this->DeviseMigrateCommand = new DeviseMigrateCommand($this->app);
         $this->DeviseSeedCommand = new DeviseSeedCommand($this->app);
@@ -79,19 +78,17 @@ class DeviseInstallCommand extends Command
         $this->changeDatabaseConfigFile();
         $this->changeEmailConfigFile();
 
-        // execute migrations if DB_MIGRATIONS cache value is not 'no'
-        if ($this->Cache->get('DB_MIGRATIONS') !== 'no') {
+        if (env('DB_MIGRATIONS') != 'no') {
             $this->DeviseMigrateCommand->handle();
         }
 
-        // execute seeds if DB_SEEDS cache value is not 'no'
-        if ($this->Cache->get('DB_SEEDS') !== 'no') {
+        if (env('DB_SEEDS') != 'no') {
             $this->DeviseSeedCommand->handle();
         }
 
         $this->DevisePublishAssetsCommand->handle();
 
-        if ($this->Cache->get('CONFIGS_PUBLISH') !== 'no') {
+        if (env('CONFIGS_OVERRIDE') == 'yes') {
             $this->DevisePublishConfigsCommand->handle();
         }
     }
@@ -155,6 +152,9 @@ class DeviseInstallCommand extends Command
         $name = $this->env('DB_DATABASE', 'devisephp');
         $user = $this->env('DB_USERNAME', 'root');
         $pass = $this->env('DB_PASSWORD', '');
+        $migrations = $this->env('DB_MIGRATIONS', 'yes');
+        $seeds = $this->env('DB_SEEDS', 'yes');
+        $configsOverride = $this->env('CONFIGS_OVERRIDE', 'yes');
 
         while ($databaseNotInstalled)
         {
@@ -163,12 +163,11 @@ class DeviseInstallCommand extends Command
             $name = $this->io()->askAboutDatabaseName($name);
             $user = $this->io()->askAboutDatabaseUser($user);
             $pass = $this->io()->askAboutDatabasePass($pass);
-            $this->wizard()->saveDatabase($type, $host, $name, $user, $pass);
-
-            // Cache migrations & seeds values
-            $this->io()->askAboutConfigsPublish("yes");
-            $this->io()->askAboutDatabaseMigrations("yes");
-            $this->io()->askAboutDatabaseSeeds("yes");
+            $migrations = $this->io()->askAboutDatabaseMigrations($migrations);
+            $seeds = $this->io()->askAboutDatabaseSeeds($seeds);
+            $configsOverride = $this->io()->askAboutConfigsOverride($configsOverride);
+            $this->wizard()->saveConfigsOverride($configsOverride);
+            $this->wizard()->saveDatabase($type, $host, $name, $user, $pass, $migrations, $seeds);
 
             if ($this->wizard()->errors)
             {
@@ -272,7 +271,7 @@ class DeviseInstallCommand extends Command
     protected function askAboutDatabaseMigrations($default)
     {
         $answer = $this->io()->ask("Do you want to run database migrations? [{$default}]");
-        return $this->Cache->put('DB_MIGRATIONS', $answer ?: $default, 10);
+        return $answer ?: $default;
     }
 
     /**
@@ -284,19 +283,19 @@ class DeviseInstallCommand extends Command
     protected function askAboutDatabaseSeeds($default)
     {
         $answer = $this->io()->ask("Do you want to run database seeds? [{$default}]");
-        return $this->Cache->put('DB_SEEDS', $answer ?: $default, 10);
+        return $answer ?: $default;
     }
 
     /**
-     * Prompt for publish/replace all Devise configs
+     * Prompt for publish/override all Devise configs
      *
      * @param  boolean $default
      * @return boolean
      */
-    protected function askAboutConfigsPublish($default)
+    protected function askAboutConfigsOverride($default)
     {
-        $answer = $this->io()->ask("Do you want publish/replace all Devise configs? [{$default}]");
-        return $this->Cache->put('CONFIGS_PUBLISH', $answer ?: $default, 10);
+        $answer = $this->io()->ask("Do you want override all Devise configs? [{$default}]");
+        return $answer ?: $default;
     }
 
     /**

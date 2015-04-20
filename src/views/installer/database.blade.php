@@ -36,24 +36,19 @@
             <input tabindex="5" type="text" class="form-control" name="database_password" placeholder="Database Password" value="<?= $database->password ?>">
         </div>
 
-         <div class="form-group tal">
-            <label>Override All Devise Configs?</label><br>
-            <input tabindex="6" type="checkbox" name="configs_publish" value="yes" <?= $checked('CONFIGS_PUBLISH') ?> />
-        </div>
-
         <div class="form-group tal">
             <label>Run Seeds/Migrations?</label><br>
             <div class="checkbox">
-                <label><input tabindex="7" type="checkbox" name="database_migrations" value="yes" <?= $checked('DB_MIGRATIONS') ?> /> Migrations</label>
+                <label><input tabindex="6" type="checkbox" name="database_migrations" value="yes" <?= $checked('migrations') ?> /> Migrations</label>
             </div>
             <div class="checkbox">
-                <label><input tabindex="8" type="checkbox" name="database_seeds" value="yes" <?= $checked('DB_SEEDS') ?> />Seeds</label>
+                <label><input tabindex="7" type="checkbox" name="database_seeds" value="yes" <?= $checked('seeds') ?> />Seeds</label>
             </div>
         </div>
 
         <div class="form-group dvs-form-actions mt sp30">
-            <button tabindex="9" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
-            <button tabindex="10" class="next dvs-button-success dvs-button">Next</button>
+            <button tabindex="8" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
+            <button tabindex="9" class="next dvs-button-success dvs-button">Next</button>
         </div>
 
     </form>

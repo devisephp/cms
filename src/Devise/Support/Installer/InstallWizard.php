@@ -137,6 +137,19 @@ class InstallWizard
 		return $user;
 	}
 
+    /**
+     * Save input value submitted for "configs_override" to the
+     * key "CONFIGS_OVERRIDE" in .env file
+     *
+     *
+     * @return void
+     */
+    public function saveConfigsOverride($value)
+    {
+        $env = $this->EnvironmentFileManager->get();
+        $this->EnvironmentFileManager->merge(['CONFIGS_OVERRIDE' => $value]);
+    }
+
 	/**
 	 * Saves the new application key if there isn't already one set
 	 * We need this set early on so it doesn't screw up our tokens
@@ -181,9 +194,11 @@ class InstallWizard
 	 * @param  string $name
 	 * @param  string $username
      * @param  string $password
+     * @param  string $migrations
+     * @param  string $seeds
 	 * @return
 	 */
-	public function saveDatabase($default, $host, $name, $username, $password)
+	public function saveDatabase($default, $host, $name, $username, $password, $migrations, $seeds)
 	{
 		$settings = [
 			'DB_DEFAULT' => $default,
@@ -191,6 +206,8 @@ class InstallWizard
 			'DB_DATABASE' => $name,
 			'DB_USERNAME' => $username,
             'DB_PASSWORD' => $password,
+            'DB_MIGRATIONS' => $migrations,
+            'DB_SEEDS' => $seeds
 		];
 
 		// no errors at the moment

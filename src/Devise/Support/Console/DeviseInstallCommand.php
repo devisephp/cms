@@ -90,7 +90,10 @@ class DeviseInstallCommand extends Command
         }
 
         $this->DevisePublishAssetsCommand->handle();
-        $this->DevisePublishConfigsCommand->handle();
+
+        if ($this->Cache->get('CONFIGS_PUBLISH') !== 'no') {
+            $this->DevisePublishConfigsCommand->handle();
+        }
     }
 
     /**
@@ -162,7 +165,8 @@ class DeviseInstallCommand extends Command
             $pass = $this->io()->askAboutDatabasePass($pass);
             $this->wizard()->saveDatabase($type, $host, $name, $user, $pass);
 
-            // write migrations & seeds values to Cache
+            // Cache migrations & seeds values
+            $this->io()->askAboutConfigsPublish("yes");
             $this->io()->askAboutDatabaseMigrations("yes");
             $this->io()->askAboutDatabaseSeeds("yes");
 
@@ -267,8 +271,8 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseMigrations($default)
     {
-        $answer = $this->io()->ask("Run database migrations? [{$default}]");
-        return $this->Cache->put('DB_MIGRATIONS', $answer ?: $default, 20);
+        $answer = $this->io()->ask("Do you want to run database migrations? [{$default}]");
+        return $this->Cache->put('DB_MIGRATIONS', $answer ?: $default, 10);
     }
 
     /**
@@ -279,8 +283,20 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseSeeds($default)
     {
-        $answer = $this->io()->ask("Run database seeds? [{$default}]");
-        return $this->Cache->put('DB_SEEDS', $answer ?: $default, 20);
+        $answer = $this->io()->ask("Do you want to run database seeds? [{$default}]");
+        return $this->Cache->put('DB_SEEDS', $answer ?: $default, 10);
+    }
+
+    /**
+     * Prompt for publish/replace all Devise configs
+     *
+     * @param  boolean $default
+     * @return boolean
+     */
+    protected function askAboutConfigsPublish($default)
+    {
+        $answer = $this->io()->ask("Do you want publish/replace all Devise configs? [{$default}]");
+        return $this->Cache->put('CONFIGS_PUBLISH', $answer ?: $default, 10);
     }
 
     /**

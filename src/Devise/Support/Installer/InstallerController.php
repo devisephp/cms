@@ -130,11 +130,17 @@ class InstallerController extends Controller
         $database->password = $this->Input->old('database_password', env('DB_PASSWORD'));
 
 		$selected = function($type, $yes = 'selected', $no = '') use ($database)
+        {
+            return $type == $database->type ? $yes : $no;
+        };
+
+        $checked = function($field, $yes = 'checked', $no = '')
 		{
-			return $type == $database->type ? $yes : $no;
+            $value = $this->Cache->get($field); // check cache for old value
+			return $value == 'no' ? $no : $yes;
 		};
 
-		return $this->View->make('devise::installer.database', compact('database', 'selected'));
+		return $this->View->make('devise::installer.database', compact('database', 'selected', 'checked'));
 	}
 
 	/**
@@ -149,10 +155,12 @@ class InstallerController extends Controller
 		$name = $this->Input->get('database_name');
 		$username = $this->Input->get('database_username');
 		$password = $this->Input->get('database_password');
+        $configsPublish = $this->Input->get('configs_publish', 'no');
         $migrations = $this->Input->get('database_migrations', 'no');
         $seeds = $this->Input->get('database_seeds', 'no');
 
-        // save migrations & seeds input values to cache
+        // store configs_publish, migrations & seeds input values in cache
+        $this->Cache->put('CONFIGS_PUBLISH', $configsPublish, 10);
         $this->Cache->put('DB_MIGRATIONS', $migrations, 10);
         $this->Cache->put('DB_SEEDS', $seeds, 10);
 

@@ -45,6 +45,7 @@ class DeviseInstallCommand extends Command
         parent::__construct();
         $this->app = $app;
         $this->basePath = $this->app->basePath();
+        $this->Cache = $this->app->make('cache');
         $this->Config = $this->app->make('config');
         $this->DeviseMigrateCommand = new DeviseMigrateCommand($this->app);
         $this->DeviseSeedCommand = new DeviseSeedCommand($this->app);
@@ -77,8 +78,17 @@ class DeviseInstallCommand extends Command
     {
         $this->changeDatabaseConfigFile();
         $this->changeEmailConfigFile();
-        $this->DeviseMigrateCommand->handle();
-        $this->DeviseSeedCommand->handle();
+
+        // execute migrations if DB_MIGRATIONS cache value is not 'no'
+        if ($this->Cache->get('DB_MIGRATIONS') !== 'no') {
+            $this->DeviseMigrateCommand->handle();
+        }
+
+        // execute seeds if DB_SEEDS cache value is not 'no'
+        if ($this->Cache->get('DB_SEEDS') !== 'no') {
+            $this->DeviseSeedCommand->handle();
+        }
+
         $this->DevisePublishAssetsCommand->handle();
         $this->DevisePublishConfigsCommand->handle();
     }
@@ -142,6 +152,7 @@ class DeviseInstallCommand extends Command
         $name = $this->env('DB_DATABASE', 'devisephp');
         $user = $this->env('DB_USERNAME', 'root');
         $pass = $this->env('DB_PASSWORD', '');
+
         while ($databaseNotInstalled)
         {
             $type = $this->io()->askAboutDatabaseType($type);
@@ -150,6 +161,11 @@ class DeviseInstallCommand extends Command
             $user = $this->io()->askAboutDatabaseUser($user);
             $pass = $this->io()->askAboutDatabasePass($pass);
             $this->wizard()->saveDatabase($type, $host, $name, $user, $pass);
+
+            // write migrations & seeds values to Cache
+            $this->io()->askAboutDatabaseMigrations("yes");
+            $this->io()->askAboutDatabaseSeeds("yes");
+
             if ($this->wizard()->errors)
             {
                 $this->io()->comment('');
@@ -241,6 +257,30 @@ class DeviseInstallCommand extends Command
     {
         $answer = $this->io()->ask("What is your database password? [{$default}]");
         return $answer ?: $default;
+    }
+
+    /**
+     * Prompt for executing database migrations
+     *
+     * @param  boolean $default
+     * @return boolean
+     */
+    protected function askAboutDatabaseMigrations($default)
+    {
+        $answer = $this->io()->ask("Run database migrations? [{$default}]");
+        return $this->Cache->put('DB_MIGRATIONS', $answer ?: $default, 20);
+    }
+
+    /**
+     * Prompt for executing database seeds
+     *
+     * @param  boolean $default
+     * @return boolean
+     */
+    protected function askAboutDatabaseSeeds($default)
+    {
+        $answer = $this->io()->ask("Run database seeds? [{$default}]");
+        return $this->Cache->put('DB_SEEDS', $answer ?: $default, 20);
     }
 
     /**

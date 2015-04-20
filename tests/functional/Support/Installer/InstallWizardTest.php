@@ -60,6 +60,8 @@ class InstallWizardTest extends \DeviseTestCase
             ->once()
             ->andReturn('&5y$21%lIpwAOghJs2pjLGIoCfsGwiWryIlNQcBejtRrv0/RRjLiyEnVO\9P');
 
+        $this->EnvironmentFileManager->shouldReceive('merge')->twice()->andReturnSelf();
+
         $output = $this->InstallWizard->createAdminUser('admin@email.com', 'adminuser', 'fooAdminPass');
 
         $this->assertEquals('admin@email.com', $output->email);

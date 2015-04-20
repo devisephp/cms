@@ -180,7 +180,7 @@ class InstallWizard
 	 * @param  string $host
 	 * @param  string $name
 	 * @param  string $username
-	 * @param  string $password
+     * @param  string $password
 	 * @return
 	 */
 	public function saveDatabase($default, $host, $name, $username, $password)
@@ -190,7 +190,7 @@ class InstallWizard
 			'DB_HOST' => $host,
 			'DB_DATABASE' => $name,
 			'DB_USERNAME' => $username,
-			'DB_PASSWORD' => $password,
+            'DB_PASSWORD' => $password,
 		];
 
 		// no errors at the moment

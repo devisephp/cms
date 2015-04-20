@@ -15,6 +15,7 @@ class InstallerController extends Controller
 	{
 		$this->InstallWizard = $InstallWizard;
         $this->Auth = $Framework->Auth;
+        $this->Cache = $Framework->Cache;
 		$this->Input = $Framework->Input;
         $this->Redirect = $Framework->Redirect;
         $this->View = $Framework->View;
@@ -126,7 +127,7 @@ class InstallerController extends Controller
 		$database->host = $this->Input->old('database_host', env('DB_HOST'));
 		$database->name = $this->Input->old('database_name', env('DB_DATABASE'));
 		$database->username = $this->Input->old('database_username', env('DB_USERNAME'));
-		$database->password = $this->Input->old('database_password', env('DB_PASSWORD'));
+        $database->password = $this->Input->old('database_password', env('DB_PASSWORD'));
 
 		$selected = function($type, $yes = 'selected', $no = '') use ($database)
 		{
@@ -148,6 +149,12 @@ class InstallerController extends Controller
 		$name = $this->Input->get('database_name');
 		$username = $this->Input->get('database_username');
 		$password = $this->Input->get('database_password');
+        $migrations = $this->Input->get('database_migrations', 'no');
+        $seeds = $this->Input->get('database_seeds', 'no');
+
+        // save migrations & seeds input values to cache
+        $this->Cache->put('DB_MIGRATIONS', $migrations, 10);
+        $this->Cache->put('DB_SEEDS', $seeds, 10);
 
 		$this->InstallWizard->saveDatabase($type, $host, $name, $username, $password);
 

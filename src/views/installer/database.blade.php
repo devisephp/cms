@@ -36,6 +36,16 @@
             <input tabindex="5" type="text" class="form-control" name="database_password" placeholder="Database Password" value="<?= $database->password ?>">
         </div>
 
+        <div class="form-group tal">
+            <label>Run Seeds/Migrations</label><br>
+            <div class="checkbox">
+                <label><input tabindex="6" type="checkbox" name="database_migrations" value="yes" checked /> Migrations</label>
+            </div>
+            <div class="checkbox">
+                <label><input tabindex="7" type="checkbox" name="database_seeds" value="yes" checked />Seeds</label>
+            </div>
+        </div>
+
         <div class="form-group dvs-form-actions mt sp30">
             <button tabindex="7" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
             <button tabindex="6" class="next dvs-button-success dvs-button">Next</button>

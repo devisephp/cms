@@ -206,18 +206,18 @@ class InstallerController extends Controller
 
 		$this->InstallWizard->validateAdminUser($email, $username, $password);
 
-		if ($this->InstallWizard->errors)
-		{
-            return $this->Redirect
-				->to('install/create-user')
-				->withErrors($this->InstallWizard->errors)
-    			->with('message-errors', 'Error')
-				->withInput();
-		}
-
         $this->InstallWizard->saveConfigsOverride($configsOverride);
 
-        $this->InstallWizard->installDevise($configsOverride);
+        if ($this->InstallWizard->errors)
+        {
+            return $this->Redirect
+                ->to('install/create-user')
+                ->withErrors($this->InstallWizard->errors)
+                ->with('message-errors', 'Error')
+                ->withInput();
+        }
+
+        $this->InstallWizard->installDevise();
 
         $newUser = $this->InstallWizard->createAdminUser($email, $username, $password);
 

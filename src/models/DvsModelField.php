@@ -30,7 +30,7 @@ class DvsModelField extends Eloquent
     public function getValueAttribute()
     {
         $json = $this->json_value ?: '{}';
-        $this->_value = $this->_value ?: new FieldValue($json);
+        $this->_value = $this->_value ?: new LiveFieldValue($json, $this->id, 'model');
         return $this->_value;
     }
 

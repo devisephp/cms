@@ -22,10 +22,10 @@ class LiveFieldValue
 	 *
 	 * @param string $json
 	 */
-	public function __construct($json, $fieldId, $type)
+	public function __construct($json, $fieldId, $type, Framework $Framework = null)
 	{
 		$this->__ = new \StdClass;
-		$this->__->Container = (new Framework)->Container;
+		$this->__->Framework = $Framework ?: new Framework;
 		$this->__->json = $json;
 		$this->__->id = $fieldId;
 		$this->__->type = $type;
@@ -106,7 +106,7 @@ class LiveFieldValue
 
 		$key = $this->__->type . '-' . $this->__->id . '-' . $this->__->chain;
 
-		$this->__->Container->make('dvsPageData')->database($key, $value);
+		$this->__->Framework->Container->make('dvsPageData')->database($key, $value);
 
 		$this->__->values = (array) json_decode($this->__->json);
 
@@ -123,7 +123,7 @@ class LiveFieldValue
 	 */
 	public function isMagical()
 	{
-		return $this->__->Container->make('dvsMagicMode')->enabled();
+		return $this->__->Framework->Container->make('dvsMagicMode')->enabled();
 	}
 
 	/**

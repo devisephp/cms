@@ -7,9 +7,8 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 		'change #dvs-sidebar-version-selector': onChangePageVersion,
         'click #dvs-sidebar-add-version': onAddPageVersionBtnClicked,
 		'click .dvs-sidebar-save-group': 'save',
-		'input form input': 'changed',
-		'change form input': 'changed',
-		'change form select': 'changed'
+		'input form [name]': 'changed',
+		'change form [name]': 'changed'
 	};
 
 	/**

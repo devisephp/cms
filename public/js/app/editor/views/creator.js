@@ -1,4 +1,4 @@
-devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, FieldView)
+devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], function($, View, FieldView, LiveUpdater)
 {
 	/**
 	 * List of events for this view
@@ -141,7 +141,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, Field
 		this.createDefaultFields(this.data.creator);
 		this.sidebar.breadcrumbsView.back();
 		this.showGridView();
-		// trigger some sort of live update here?
+		LiveUpdater.refresh();
 	}
 
 	/**

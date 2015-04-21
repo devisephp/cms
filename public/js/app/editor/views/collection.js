@@ -1,4 +1,4 @@
-devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'jquery-ui'], function($, View, FieldView, dvsSelectSurrogate)
+devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'dvsLiveUpdater', 'jquery-ui'], function($, View, FieldView, dvsSelectSurrogate, LiveUpdater)
 {
 	/**
 	 * List of events for this view
@@ -177,10 +177,9 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 			data: data,
 			success: function(data, response, xhr)
 			{
-				self.data.field = data;
-				console.log(data);
-				// LiveUpdater.changedFieldAttribute(this.data.field, key);
+				self.selectedField = data;
 				self.renderCollectionField();
+				LiveUpdater.changedField(this.selectedField);
 			},
 			error: function(xhr, textStatus, error)
 			{
@@ -196,7 +195,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 	CollectionView.prototype.changed = function(key, value, event)
 	{
 		this.selectedField.values[key] = value;
-		LiveUpdater.changedFieldAttribute(this.data.field, key);
+		LiveUpdater.changedFieldAttribute(this.selectedField, key);
 	}
 
 	/**
@@ -376,6 +375,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'j
 				self.data.instances[instanceIndex] = data;
 				self.renderInstanceSelectorView();
 				self.renderManageView();
+				LiveUpdater.refresh();
 			},
 			error: function()
 			{

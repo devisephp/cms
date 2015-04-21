@@ -29,7 +29,6 @@ devise.define(['jquery', 'query'], function($, query)
 		var key = _key(field, attribute);
 		var value = _value(field, attribute);
 
-		console.log(key, value);
 		this.bindings.set(key, value);
 		this.bindings.apply(key);
 	}

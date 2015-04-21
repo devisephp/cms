@@ -1,4 +1,4 @@
-devise.define(['jquery', 'dvsBaseView', 'dvsFieldView'], function($, View, FieldView)
+devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], function($, View, FieldView, LiveUpdater)
 {
 	/**
 	 * list of events for this view

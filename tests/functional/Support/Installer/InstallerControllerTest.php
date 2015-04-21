@@ -64,7 +64,7 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_gets_database()
     {
-        $this->Framework->Input->shouldReceive('old')->times(5)->andReturn('production');
+        $this->Framework->Input->shouldReceive('old')->times(8)->andReturn('production');
         $this->Framework->View->shouldReceive('make')->once()->andReturnSelf();
 
         $this->InstallerController->getDatabase();
@@ -73,6 +73,7 @@ class InstallerControllerTest extends \DeviseTestCase
     public function test_it_posts_database()
     {
     	$this->Framework->Input->shouldReceive('get')->times(8)->andReturn('production');
+        $this->InstallWizard->shouldReceive('saveConfigsOverride')->once()->andReturnSelf();
         $this->InstallWizard->shouldReceive('saveDatabase')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('to')->once()->andReturnSelf();
 

@@ -55,7 +55,6 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
 	public function test_it_runs_install_commands()
 	{
-        $this->DeviseInstallCommand->Cache->shouldReceive('get')->times(3)->andReturn('yes');
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();

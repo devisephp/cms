@@ -129,15 +129,19 @@ class InstallerController extends Controller
         $database->password = $this->Input->old('database_password', env('DB_PASSWORD'));
         $database->migrations = $this->Input->old('database_migrations', env('DB_MIGRATIONS'));
         $database->seeds = $this->Input->old('database_seeds', env('DB_SEEDS'));
+        $configsOverride = $this->Input->old('configs_override', env('CONFIGS_OVERRIDE'));
 
-		$selected = function($type, $yes = 'selected', $no = '') use ($database)
+        $selected = function($type, $yes = 'selected', $no = '') use ($database)
         {
             return $type == $database->type ? $yes : $no;
         };
 
-        $checked = function($name, $yes = 'checked', $no = '') use ($database)
-		{
-			return $database->$name == 'no' ? $no : $yes;
+        $checked = function($fieldname, $yes = 'checked', $no = '') use ($database, $configsOverride)
+        {
+            if (isset($database->$fieldname)) {
+                return $database->$fieldname == 'no' ? $no : $yes;
+            }
+            return $configsOverride == 'no' ? $no : $yes;
 		};
 
 		return $this->View->make('devise::installer.database', compact('database', 'selected', 'checked'));
@@ -157,6 +161,9 @@ class InstallerController extends Controller
 		$password = $this->Input->get('database_password');
         $migrations = $this->Input->get('database_migrations', 'no');
         $seeds = $this->Input->get('database_seeds', 'no');
+        $configsOverride = $this->Input->get('configs_override', 'no');
+
+        $this->InstallWizard->saveConfigsOverride($configsOverride);
 
 		$this->InstallWizard->saveDatabase($type, $host, $name, $username, $password, $migrations, $seeds);
 
@@ -181,14 +188,8 @@ class InstallerController extends Controller
 	{
 		$email = $this->Input->old('email', env('ADMIN_EMAIL'));
         $username = $this->Input->old('username', env('ADMIN_USERNAME'));
-        $username = $this->Input->old('username', env('ADMIN_USERNAME'));
-        $configsOverride = $this->Input->old('configs_override', env('CONFIGS_OVERRIDE'));
 
-        $checked = function($inputName, $yes = 'checked', $no = '') use ($configsOverride) {
-            return $configsOverride == 'no' ? $no : $yes;
-        };
-
-		return $this->View->make('devise::installer.create-user', compact('email', 'username', 'password', 'checked'));
+		return $this->View->make('devise::installer.create-user', compact('email', 'username'));
 	}
 
 	/**
@@ -202,11 +203,8 @@ class InstallerController extends Controller
 		$email = $this->Input->get('email');
         $username = $this->Input->get('username');
         $password = $this->Input->get('password');
-		$configsOverride = $this->Input->get('configs_override');
 
 		$this->InstallWizard->validateAdminUser($email, $username, $password);
-
-        $this->InstallWizard->saveConfigsOverride($configsOverride);
 
         if ($this->InstallWizard->errors)
         {

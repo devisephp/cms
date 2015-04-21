@@ -46,6 +46,14 @@
             </div>
         </div>
 
+         <div class="dvs-form-group tal">
+            <label>Override All Devise Configs? (If you're unsure leave "on")</label><br>
+            <div class="fancyCheckbox">
+                <input tabindex="4" type="checkbox" name="configs_override" value="yes" id="configs-override" <?= $checked('configs_override') ?> />
+                <label for="configs-override">&nbsp;</label>
+            </div><br><br>
+        </div>
+
         <div class="form-group dvs-form-actions mt sp30">
             <button tabindex="8" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
             <button tabindex="9" class="next dvs-button-success dvs-button">Next</button>

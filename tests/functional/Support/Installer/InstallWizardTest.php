@@ -97,7 +97,7 @@ class InstallWizardTest extends \DeviseTestCase
             ->once()
             ->andReturnNull();
 
-		$output = $this->InstallWizard->saveDatabase('sqlite', ':memory:', 'testDB', 'root', '');
+		$output = $this->InstallWizard->saveDatabase('sqlite', ':memory:', 'testDB', 'root', '', 'yes', 'yes');
 
         $this->assertNull($output);
 	}

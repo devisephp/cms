@@ -21,6 +21,16 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], functio
             parentForm.find('input[name="' + target + '_crop_y2"]').val(settings.crop.y2);
             parentForm.find('input[name="' + target + '_crop_w"]').val(settings.crop.w);
             parentForm.find('input[name="' + target + '_crop_h"]').val(settings.crop.h);
+
+            parentForm.find('input[name="_crop_' + target + '"]').trigger('change');
+            parentForm.find('input[name="' + target + '_width"]').trigger('change');
+            parentForm.find('input[name="' + target + '_height"]').trigger('change');
+            parentForm.find('input[name="' + target + '_crop_x"]').trigger('change');
+            parentForm.find('input[name="' + target + '_crop_y"]').trigger('change');
+            parentForm.find('input[name="' + target + '_crop_x2"]').trigger('change');
+            parentForm.find('input[name="' + target + '_crop_y2"]').trigger('change');
+            parentForm.find('input[name="' + target + '_crop_w"]').trigger('change');
+            parentForm.find('input[name="' + target + '_crop_h"]').trigger('change');
         }
 
         // make sure to trigger the change on this input

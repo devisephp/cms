@@ -99,8 +99,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 	/**
 	 * save the field...
 	 */
-	ModelView.prototype.save = function()
+	ModelView.prototype.save = function(values)
 	{
+		this.data.field.values = values;
+
 		var self = this;
 		var url = this.data.page.url('update_model_fields');
 		var data = {

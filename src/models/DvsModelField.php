@@ -1,6 +1,6 @@
 <?php
 
-use Devise\Pages\Fields\FieldValue;
+use Devise\Pages\Fields\LiveFieldValue;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DvsModelField extends Eloquent

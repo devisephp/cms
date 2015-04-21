@@ -227,7 +227,7 @@ devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'
 	 */
 	function findStyleBindings(node, bindings, match, lookup)
 	{
-		var styles = node.attributes.item('style').nodeValue.split(';');
+		var styles = node.attributes.getNamedItem('style').nodeValue.split(';');
 		var affected = findAffectedStyles(styles, match);
 		var key = findKeyFromMatch(match);
 

@@ -38,6 +38,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 
 		this.field = $('<div/>');
 		this.manage = $('<div/>');
+		this.grid = $('<div/>');
 		this.renderGridAndSelectorViews();
 		this.data.instances.length === 0 && this.renderManageView();
 
@@ -163,8 +164,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 	/**
 	 * save the collection field...
 	 */
-	CollectionView.prototype.save = function()
+	CollectionView.prototype.save = function(values)
 	{
+		this.selectedField.values = values;
+
 		var self = this;
 		var url = this.data.page.url('update_collection_field', {id: this.selectedField.id});
 		var data = {
@@ -179,7 +182,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 			{
 				self.selectedField = data;
 				self.renderCollectionField();
-				LiveUpdater.changedField(this.selectedField);
+				LiveUpdater.changedField(self.selectedField);
 			},
 			error: function(xhr, textStatus, error)
 			{

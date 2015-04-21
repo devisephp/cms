@@ -122,9 +122,17 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 	/**
 	 * Calls save on the underlying content view
 	 */
-	Sidebar.prototype.save = function()
+	Sidebar.prototype.save = function(event)
 	{
-		this.contentView.save();
+		var form = this.layout.find('form');
+		var formData = {};
+
+		$.each(form.serializeArray(), function(index, nameValuePair)
+		{
+			formData[nameValuePair.name] = nameValuePair.value;
+		});
+
+		this.contentView.save(formData, event);
 	}
 
 	/**

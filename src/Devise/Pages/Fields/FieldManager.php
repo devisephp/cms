@@ -66,7 +66,9 @@ class FieldManager
 
 		$field->values->override($newValues);
 
-        $field->content_requested = array_get($fieldInput, 'content_requested', false);
+\Clockwork::info($newValues);
+
+        $field->content_requested = array_get($fieldInput, 'content_requested', false) == 1;
 
         $field->json_value = $field->values->toJSON();
 

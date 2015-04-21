@@ -113,9 +113,9 @@ devise.define(['jquery', 'dvsBaseView', 'dvsSelectSurrogate'], function($, View,
 	/**
 	 * save the field...
 	 */
-	GroupView.prototype.save = function(event)
+	GroupView.prototype.save = function(values, event)
 	{
-		this.contentView.save(event);
+		this.contentView.save(values, event);
 	}
 
 	/**

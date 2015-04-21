@@ -50,7 +50,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 
 		var resetValues = View.make('sidebar.partials.reset-values');
 
-		var sitewide = View.make('sidebar.partials.site-wide-field', { 'site_wide': field.scope !== 'page' });
+		var sitewide = View.make('sidebar.partials.site-wide-field', { 'site_wide': field.scope === '  ' });
 
 		this.data['field'] = field;
 
@@ -80,8 +80,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 	/**
 	 * save the field...
 	 */
-	FieldView.prototype.save = function()
+	FieldView.prototype.save = function(values)
 	{
+		this.data.field.values = values;
+
 		var self = this;
 		var url = this.data.page.url('update_field', {id: this.data.field.id});
 		var data = {

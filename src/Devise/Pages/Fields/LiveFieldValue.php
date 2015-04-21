@@ -29,7 +29,8 @@ class LiveFieldValue
 		$this->__->json = $json;
 		$this->__->id = $fieldId;
 		$this->__->type = $type;
-		$this->__->chain = '';
+		$this->__->name = '';
+		$this->__->value = '';
 		$this->__->values = (array) json_decode($this->__->json);
 	}
 
@@ -84,12 +85,12 @@ class LiveFieldValue
 	 */
 	public function get($name, $default = null)
 	{
-		$values = isset($this->__->values[$name]) ? $this->__->values[$name] : [];
+		$value = isset($this->__->values[$name]) ? $this->__->values[$name] : $default;
 
-		if (!$this->isMagical()) return $values ?: $default;
+		if (!$this->isMagical()) return $value ?: $default;
 
-		$this->__->values = $values;
-		$this->__->chain .= $this->__->chain ? '.' . $name : $name;
+		$this->__->value = is_a($value, 'Devise\Pages\Fields\LiveFieldValue') ? '' : $value;
+		$this->__->name = $name;
 
 		return $this;
 	}
@@ -102,15 +103,15 @@ class LiveFieldValue
 	 */
 	public function render()
 	{
-		$value = $this->__->values ?: '';
+		$value = $this->__->value ?: '';
 
-		$key = $this->__->type . '-' . $this->__->id . '-' . $this->__->chain;
+		$key = $this->__->type . '-' . $this->__->id . '-' . $this->__->name;
 
 		$this->__->Framework->Container->make('dvsPageData')->database($key, $value);
 
-		$this->__->values = (array) json_decode($this->__->json);
+		$this->__->value = '';
 
-		$this->__->chain = '';
+		$this->__->name = '';
 
 		return $this->isMagical() ? "###dvsmagic-{$key}###" : $value;
 	}
@@ -148,13 +149,9 @@ class LiveFieldValue
 	 */
 	public function merge($input)
 	{
-		$values = (array) json_decode($this->__->json);
+		$this->__->values = array_merge($this->__->values, $input);
 
-		$values = array_merge($values, $input);
-
-		$this->__->json = json_encode($values);
-
-		$this->__->values = $values;
+		$this->__->json = json_encode($this->__->values);
 	}
 
 	/**

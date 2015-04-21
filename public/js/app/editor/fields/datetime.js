@@ -26,6 +26,7 @@ devise.define(['require', 'jquery', 'datetimepicker', 'moment'], function (requi
                     var format = formatInput.val();
                     var m = moment(input.val()).format(formatMap[format]);
                     sample.val(m);
+                    sample.trigger('change');
                 });
 
                 formatInput.on('change', function()
@@ -36,6 +37,7 @@ devise.define(['require', 'jquery', 'datetimepicker', 'moment'], function (requi
                     if (m != 'Invalid date')
                     {
                         sample.val(m);
+                        sample.trigger('change');
                     }
                 });
             });

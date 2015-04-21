@@ -37,19 +37,20 @@ class DeviseInstallCommandTest extends \DeviseTestCase
     	$this->DeviseInstallCommand->wizard = m::mock('Devise\Support\Installer\InstallWizard');
 
     	$this->DeviseInstallCommand->basePath = 'vfs://basedir';
-    	$this->DeviseInstallCommand->envMock = true;
+        $this->DeviseInstallCommand->envMock = true;
     }
 
     public function test_it_handles_install_command()
     {
     	$this->DeviseInstallCommand->wizard->shouldReceive('refreshEnvironment')->once();
     	$this->DeviseInstallCommand->wizard->shouldReceive('saveEnvironment')->with('local')->once();
-    	$this->DeviseInstallCommand->wizard->shouldReceive('saveDatabase')->with('mysql', 'localhost', 'devisephp', 'root', '')->once();
+        $this->DeviseInstallCommand->wizard->shouldReceive('saveConfigsOverride')->once()->andReturn();
+    	$this->DeviseInstallCommand->wizard->shouldReceive('saveDatabase')->with('mysql', 'localhost', 'devisephp', 'root', '', 'yes', 'yes')->once()->andReturn();
 		$this->DeviseInstallCommand->wizard->shouldReceive('createAdminUser')->once();
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();
-		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle')->once();
+		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle');
     	$this->DeviseInstallCommand->handle();
     }
 
@@ -58,7 +59,7 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();
-		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle')->once();
+		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle');
 		$this->DeviseInstallCommand->runInstallCommands();
 	}
 

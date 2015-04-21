@@ -66,8 +66,6 @@ class FieldManager
 
 		$field->values->override($newValues);
 
-\Clockwork::info($newValues);
-
         $field->content_requested = array_get($fieldInput, 'content_requested', false) == 1;
 
         $field->json_value = $field->values->toJSON();
@@ -77,8 +75,6 @@ class FieldManager
 		$this->Event->fire('devise.field.updated', [$field, $newValues, $oldValues]);
 
 		$this->Event->fire("devise.{$field->type}.field.updated", [$field, $newValues, $oldValues]);
-
-		$field->values->extract();
 
 		return $field;
 	}

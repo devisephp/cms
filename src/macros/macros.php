@@ -263,14 +263,16 @@ if (!function_exists('startdvsmagic'))
 
 if (!function_exists('dvsmagic'))
 {
-	function dvsmagic($object)
+	function dvsmagic($value, $name, $parent)
 	{
-		if ($object instanceof Devise\Pages\Fields\LiveFieldValue)
+		if (!$parent) return $value;
+
+		if ($parent instanceof Devise\Pages\Fields\LiveFieldValue)
 		{
-			return $object->render();
+			return $parent->live($name, $value);
 		}
 
-		return $object;
+		return $value;
 	}
 }
 

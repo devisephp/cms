@@ -95,12 +95,12 @@ class DeviseCompilerTest extends \DeviseTestCase
 	{
 		$compiler = new DeviseCompiler;
 		$outcome = $compiler->compile($this->fixture('devise-views.interpret7'));
-		assertContains('echo startdvsmagic() . dvsmagic($value) . enddvsmagic();', $outcome);
-		assertContains('echo startdvsmagic() . dvsmagic($page->test->value) . enddvsmagic();', $outcome);
-		assertContains('echo startdvsmagic() . dvsmagic($page->test->value(\'hmm\')) . enddvsmagic();', $outcome);
-		assertContains('echo $page->test->value ? startdvsmagic() . dvsmagic($page->test->value) . enddvsmagic() : \'durka\';', $outcome);
-		assertContains('startdvsmagic() . dvsmagic($page->test->value) . enddvsmagic() . \'durka\' . (startdvsmagic() . dvsmagic($page->test->another_value) . enddvsmagic());', $outcome);
-		assertContains('echo e(startdvsmagic() . dvsmagic($page->test->value) . enddvsmagic());', $outcome);
+		assertContains('echo startdvsmagic() . dvsmagic($value, \'value\', false) . enddvsmagic();', $outcome);
+		assertContains('echo startdvsmagic() . dvsmagic($page->test->value, \'value\', $page->test) . enddvsmagic();', $outcome);
+		assertContains('echo startdvsmagic() . dvsmagic($page->test->value(\'hmm\'), \'value\', $page->test) . enddvsmagic();', $outcome);
+		assertContains('echo $page->test->value ? startdvsmagic() . dvsmagic($page->test->value, \'value\', $page->test) . enddvsmagic() : \'durka\';', $outcome);
+		assertContains('startdvsmagic() . dvsmagic($page->test->value, \'value\', $page->test) . enddvsmagic() . \'durka\' . (startdvsmagic() . dvsmagic($page->test->another_value, \'another_value\', $page->test) . enddvsmagic());', $outcome);
+		assertContains('echo e(startdvsmagic() . dvsmagic($page->test->value, \'value\', $page->test) . enddvsmagic());', $outcome);
 	}
 
 	public function test_it_handles_random1_view()

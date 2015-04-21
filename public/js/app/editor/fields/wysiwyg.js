@@ -1,4 +1,5 @@
 devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
+
     return {
         init: function()
         {
@@ -18,7 +19,7 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
 
             _config.extraPlugins = 'iframe,iframedialog,justify';
 
-            var cke = $('textarea.dvs-wysiwyg').ckeditor(_config).editor;
+            cke = $('textarea.dvs-wysiwyg').ckeditor(_config).editor;
 
             document.onMediaManagerSelect = function(url, target, input){
                 CKEDITOR.tools.callFunction(input.CKEditorFuncNum, url);
@@ -34,6 +35,20 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
                 // sidebar.skinnyMe();
             });
 
+            // updates the textarea input for us
+            function updateInput(event)
+            {
+                cke.element.$.value = cke.getData();
+                $(cke.element.$).trigger('input');
+            }
+
+            cke.on("instanceReady", function() {
+                this.document.on("keyup", updateInput);
+                this.document.on("paste", updateInput);
+                this.document.on("keypress", updateInput);
+                this.document.on("blur", updateInput);
+                this.document.on("change", updateInput);
+            });
         }
     };
 });

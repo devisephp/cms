@@ -66,7 +66,7 @@ devise.define(['jquery'], function($) {
             if (hidden) element.hide();
 
             if (typeof coordinates === 'object' && coordinates.top) return coordinates;
-            return getCoordinatesFromParent(element, tid, cid);
+            return getCoordinatesFromParent(element);
         }
 
         placeholder.show();

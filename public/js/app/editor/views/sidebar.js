@@ -125,14 +125,14 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 	Sidebar.prototype.save = function(event)
 	{
 		var form = this.layout.find('form');
-		var formData = {};
+		var values = {};
 
 		$.each(form.serializeArray(), function(index, nameValuePair)
 		{
-			formData[nameValuePair.name] = nameValuePair.value;
+			values[nameValuePair.name] = nameValuePair.value;
 		});
 
-		this.contentView.save(formData, event);
+		this.contentView.save(values, event);
 	}
 
 	/**

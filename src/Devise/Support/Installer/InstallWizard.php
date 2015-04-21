@@ -144,7 +144,7 @@ class InstallWizard
      *
      * @return void
      */
-    public function saveConfigsOverride($value)
+    public function saveConfigsOverride($value = 'no')
     {
         $env = $this->EnvironmentFileManager->get();
         $this->EnvironmentFileManager->merge(['CONFIGS_OVERRIDE' => $value]);

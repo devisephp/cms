@@ -29,6 +29,7 @@ class DeviseResetCommand extends Command
         parent::__construct();
 
         $this->app = $app;
+        $this->Schema = \Schema::getFacadeRoot();
     }
 
     /**
@@ -50,11 +51,11 @@ class DeviseResetCommand extends Command
 
             $this->dropDatabaseTables();
 
-            \Artisan::call('devise:migrate');
-            \Artisan::call('migrate');
+            $this->call('devise:migrate');
+            $this->call('migrate');
 
-            \Artisan::call('devise:seed');
-            \Artisan::call('db:seed');
+            $this->call('devise:seed');
+            $this->call('db:seed');
         }
     }
 
@@ -66,19 +67,20 @@ class DeviseResetCommand extends Command
      */
     private function askAboutRefreshingDatabase($default = 'yes')
     {
-        $answer = $this->ask("This is going to refresh the entire database. Are you sure? [{$default}]");
+        $answer = $this->ask('This will refresh the entire database. Are you sure? ['.$default.']');
         return $answer ?: $default;
     }
 
     /**
      * Prompt for asking which tables to include in excludeTables array
      *
+     * @todo   add abilty to add "--table" option to accept comma seperated list of tablenames
      * @param  boolean $default
      * @return boolean
      */
     private function askAboutExcludingUsersTable($default = 'yes')
     {
-        $answer = $this->ask("Would you like to exclude clearing the users table? [{$default}]");
+        $answer = $this->ask('Would you like to keep the "users" table? ['.$default.']');
         return $answer ?: $default;
     }
 
@@ -93,15 +95,17 @@ class DeviseResetCommand extends Command
         \DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
         // gets all tables names in current database
-        $tables = \Schema::getConnection()
+        $tables = $this->Schema->getConnection()
             ->getDoctrineSchemaManager()
             ->listTableNames();
 
-        // loop thru tables and drop any not in excludeTables
+        // loop tables and drop any not in $excludeTables array
         foreach($tables as $table) {
-            if (in_array($table, $this->excludeTables)) { continue; }
+            if (in_array($table, $this->excludeTables)) {
+                continue;
+            }
 
-            \Schema::drop($table);
+            $this->Schema->drop($table);
         }
     }
 }

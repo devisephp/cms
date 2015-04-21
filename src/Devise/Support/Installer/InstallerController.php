@@ -202,7 +202,7 @@ class InstallerController extends Controller
 		$email = $this->Input->get('email');
         $username = $this->Input->get('username');
         $password = $this->Input->get('password');
-		$configsOverride = $this->Input->get('configs_override', 'no');
+		$configsOverride = $this->Input->get('configs_override');
 
 		$this->InstallWizard->validateAdminUser($email, $username, $password);
 

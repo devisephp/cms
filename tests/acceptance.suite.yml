@@ -6,18 +6,14 @@
 
 class_name: AcceptanceTester
 modules:
-    enabled: [WebDriver,Db]
+    enabled: [WebDriver,Db,LBM\PhantomjsBoot]
     config:
         WebDriver:
-            url: 'http://devsietest.app'
+            url: 'http://devisetest.app'
             port: 4444
             browser: 'firefox'
             window_size: 1024x768
-            restart: true
-            clear_cookies: true
             wait: 5
-            capabilities:
-                unexpectedAlertBehaviour: 'accept'
         Db:
             dsn: 'mysql:host=localhost;dbname=devsietest'
             user: 'root'
@@ -25,3 +21,6 @@ modules:
             dump: 'tests/_data/devsietest.sql'
             populate: true
             cleanup: true
+        LBM\PhantomjsBoot:
+            path: '/home/vagrant/pjs/bin/phantomjs'
+            port: 4444

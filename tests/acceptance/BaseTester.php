@@ -53,7 +53,8 @@ class BaseTester {
         $I->waitForElement("//span[.='" . $name . "']", self::WAIT_TIME);
         $I->click("//span[.='" . $name . "']");
 
-        $I->switchToIFrame();
+        // switching back to the main window
+        $I->switchToWindow();
 
         // wait for <div id="dvs-sidebar" class="loaded">
         $I->waitForElement("//div[@id='dvs-sidebar'][@class='loaded']", self::WAIT_TIME);

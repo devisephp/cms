@@ -10,11 +10,6 @@ class CreateNewUserCest extends BaseTester {
         $this->clickNode($I, 'Create New User');
     }
 
-    public function _after(AcceptanceTester $I)
-    {
-        $this->logout($I);
-    }
-
     /**
      * clicking on the node and open sidebar
      */

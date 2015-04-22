@@ -28,7 +28,7 @@ class ResponseHandlerTest extends \DeviseTestCase
 	public function test_it_updates_sort_order()
 	{
 		$this->CollectionsManager->shouldReceive('updateInstanceSort')->times(3);
-		$this->ResponseHandler->updateSortOrder(1, 1, ['instance' => [['id' => 1], ['id' => 2], ['id' => 3]]]);
+		$this->ResponseHandler->updateSortOrder(1, 1, ['instances' => [['id' => 1], ['id' => 2], ['id' => 3]]]);
 	}
 
 	public function test_it_renames_instance()

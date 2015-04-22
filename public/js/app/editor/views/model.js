@@ -126,7 +126,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 	ModelView.prototype.changed = function(key, value, event)
 	{
 		this.data.field.values[key] = value;
-		LiveUpdater.changedFieldAttribute(this.data.field, key);
+		LiveUpdater.changedModelAttribute(this.data.field, key);
 	}
 
 	/**
@@ -164,7 +164,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 		this.data.fields = data.fields;
 		this.sidebar.breadcrumbsView.back();
 		this.showGridView();
-		LiveUpdater.changedField(this.data.field);
+		LiveUpdater.changedModel(this.data.field);
 	}
 
 	/**

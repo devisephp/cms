@@ -22,15 +22,33 @@ class LiveFieldValue
 	 *
 	 * @param string $json
 	 */
-	public function __construct($json, $fieldId, $type, Framework $Framework = null)
+	public function __construct($json, $fieldId, $type)
 	{
 		$this->__ = new \StdClass;
-		$this->__->Framework = $Framework ?: new Framework;
 		$this->__->json = $json;
 		$this->__->id = $fieldId;
 		$this->__->type = $type;
 		$this->__->value = '';
 		$this->__->values = (array) json_decode($this->__->json);
+		$this->extract();
+	}
+
+	/**
+	 * [__id description]
+	 * @return [type]
+	 */
+	public function __id()
+	{
+		return $this->__->id;
+	}
+
+	/**
+	 * [__type description]
+	 * @return [type]
+	 */
+	public function __type()
+	{
+		return $this->__->type;
 	}
 
 	/**
@@ -90,32 +108,6 @@ class LiveFieldValue
 	}
 
 	/**
-	 * Convert to a empty string to avoid
-	 * null pointer exceptions
-	 *
-	 * @return string
-	 */
-	public function live($name, $value)
-	{
-		$key = $this->__->type . '-' . $this->__->id . '-' . $name;
-
-		$this->__->Framework->Container->make('dvsPageData')->database($key, $value);
-
-		return $this->isMagical() ? "###dvsmagic-{$key}###" : $value;
-	}
-
-	/**
-	 * Let's us know if this dang thing is in
-	 * magic mode or not
-	 *
-	 * @return boolean
-	 */
-	public function isMagical()
-	{
-		return $this->__->Framework->Container->make('dvsMagicMode')->enabled();
-	}
-
-	/**
 	 * Overrides this data with the new
 	 * input array
 	 *
@@ -124,8 +116,10 @@ class LiveFieldValue
 	 */
 	public function override(array $input)
 	{
+		$this->unextract();
 		$this->__->values = $input;
 		$this->__->json = json_encode($this->__->values);
+		$this->extract();
 	}
 
 	/**
@@ -139,6 +133,7 @@ class LiveFieldValue
 	{
 		$this->__->values = array_merge($this->__->values, $input);
 		$this->__->json = json_encode($this->__->values);
+		$this->extract();
 	}
 
 	/**

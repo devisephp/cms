@@ -52,30 +52,4 @@ class DvsGlobalField extends Eloquent
     {
         return 'global';
     }
-
-    /**
-     * Overrides the toJson to handle
-     * extracting values
-     *
-     * @return json
-     */
-    public function toJson($options = 0)
-    {
-        $this->getValueAttribute()->extract();
-
-        return parent::toJson($options);
-    }
-
-    /**
-     * Override the toArray to handle
-     * extracting values
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        $this->getValueAttribute()->extract();
-
-        return parent::toArray();
-    }
 }

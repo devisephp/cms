@@ -265,14 +265,7 @@ if (!function_exists('dvsmagic'))
 {
 	function dvsmagic($value, $name, $parent)
 	{
-		if (!$parent) return $value;
-
-		if ($parent instanceof Devise\Pages\Fields\LiveFieldValue)
-		{
-			return $parent->live($name, $value);
-		}
-
-		return $value;
+		return App::make('dvsMagicMode')->live($value, $name, $parent);
 	}
 }
 

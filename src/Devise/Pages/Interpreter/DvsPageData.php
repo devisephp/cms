@@ -632,7 +632,6 @@ class DvsPageData
 			'human_name' => $node['humanName'],
 			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
 			'data' => $node['data'],
-			'handler' => $node['alternateTarget']
 		];
 
 		if ($binding === 'model' || $binding === 'attribute')

@@ -13,7 +13,16 @@ class ImagesTest extends \DeviseTestCase
             'test.png' => file_get_contents($this->fixture('images.awesome')),
         ]);
 
+        $this->testImageFile =  __DIR__ . '/../../test.png';
+        if (file_exists($this->testImageFile)) unlink($this->testImageFile);
+
         $this->Images = new Images;
+    }
+
+    public function tearDown()
+    {
+        if (file_exists($this->testImageFile)) unlink($this->testImageFile);
+        parent::tearDown();
     }
 
     public function test_it_copies_image()
@@ -45,24 +54,16 @@ class ImagesTest extends \DeviseTestCase
 
     public function test_it_saves_image()
     {
-        $testImageFile =  __DIR__ . '/../../test.png';
-        if (file_exists($testImageFile)) unlink($testImageFile);
         $image = new \Imagick( vfsStream::url('baseImagePath/test.png') );
-        $this->Images->saveImage($image, $testImageFile);
-        // assertFileExists($testImageFile);
-        $this->markTestIncomplete();
-        unlink($testImageFile);
+        $this->Images->saveImage($image, $this->testImageFile);
+        assertFileExists($this->testImageFile);
     }
 
     public function test_it_makes_thumbnail_images()
     {
-        $testImageFile =  __DIR__ . '/../../test.png';
-        if (file_exists($testImageFile)) unlink($testImageFile);
-        $image = $this->Images->makeThumbnailImage('vfs://baseImagePath/test.png', $testImageFile);
+        $image = $this->Images->makeThumbnailImage('vfs://baseImagePath/test.png', $this->testImageFile);
         assertEquals(200, $image->getImageWidth());
-        // assertFileExists($testImageFile);
-        $this->markTestIncomplete();
-        unlink($testImageFile);
+        assertFileExists($this->testImageFile);
     }
 
     public function test_it_can_tell_me_if_this_file_can_have_thumbnails()

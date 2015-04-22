@@ -43,7 +43,6 @@ class TagManager
 	 */
 	protected $CollectionsRepository;
 
-
 	/**
 	 * Page id
 	 * @var integer
@@ -159,8 +158,6 @@ class TagManager
 		$collectionSet = $this->DvsCollectionSet->newInstance()->where('name', $tag['collection'])->first();
 
 		$collectionSet = $collectionSet ?: $this->createCollectionSet($tag);
-
-		//$colelctionSet->collectionInstances = $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($collectionSet->id, $this->pageVersionId);
 
 		return $collectionSet;
 	}
@@ -347,7 +344,7 @@ class TagManager
 	protected function fetchModelFields($modelId, $modelType, $mappings, $onlyTrashed = false)
 	{
 		if (count($mappings) === 0) {
-			throw new InvalidModelMappingException("No mappings found for " . $tag['model_type']);
+			throw new InvalidModelMappingException("No mappings found for " . $modelType);
 		}
 
 		$fields = $this->DvsModelField->newInstance();

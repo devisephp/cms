@@ -43,11 +43,20 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
             }
 
             cke.on("instanceReady", function() {
+                this.document.on('afterCommandExec', updateInput);
+                this.document.on('afterRedo', updateInput);
+                this.document.on('afterSetData', updateInput);
+                this.document.on('afterUndo', updateInput);
+                this.document.on('blur', updateInput);
+                this.document.on('change', updateInput);
+                this.document.on('click', updateInput);
+                this.document.on('focus', updateInput);
+                this.document.on('mouseover', updateInput);
+                this.document.on('paste', updateInput);
+                this.document.on('pasteDialog', updateInput);
                 this.document.on("keyup", updateInput);
                 this.document.on("paste", updateInput);
                 this.document.on("keypress", updateInput);
-                this.document.on("blur", updateInput);
-                this.document.on("change", updateInput);
             });
         }
     };

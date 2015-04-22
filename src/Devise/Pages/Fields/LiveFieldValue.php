@@ -137,6 +137,26 @@ class LiveFieldValue
 	}
 
 	/**
+	 * Returns this object as json string
+	 *
+	 * @return string
+	 */
+	public function toJSON()
+	{
+		return $this->__->json;
+	}
+
+	/**
+	 * Returns this object as array
+	 *
+	 * @return array
+	 */
+	public function toArray()
+	{
+		return $this->__->values;
+	}
+
+	/**
 	 * This extracts the variables so they may be used.
 	 * This is not recommended to do as it will
 	 * mess up LiveUpdate, but it is needed in certain
@@ -164,25 +184,5 @@ class LiveFieldValue
 		{
 			unset($this->{$key});
 		}
-	}
-
-	/**
-	 * Returns this object as json string
-	 *
-	 * @return string
-	 */
-	public function toJSON()
-	{
-		return $this->__->json;
-	}
-
-	/**
-	 * Returns this object as array
-	 *
-	 * @return array
-	 */
-	public function toArray()
-	{
-		return $this->__->values;
 	}
 }

@@ -11,29 +11,26 @@
 
 namespace LBM;
 
+use Codeception\Configuration as Config;
 use Codeception\Exception\Extension as ExtensionException;
+use Codeception\Lib\Console\Output;
 
-class PhantomjsBoot extends \Codeception\Platform\Extension
+class PhantomjsBoot extends \Codeception\Module
 {
-
-    // list events to listen to
-    static $events = array(
-        'suite.before' => 'beforeSuite',
-    );
-
     private $resource;
 
     private $pipes;
 
-    public static $includeInheritedActions = false;
+    private $output;
 
-    public static $onlyActions = array();
-    public static $excludeActions = array();
+    private $logDir;
 
-    public function __construct($config, $options = array())
+    public function __construct($config)
     {
-        $options['silent'] = false;
-        parent::__construct($config, $options);
+        parent::__construct($config);
+
+        $this->output = new Output([]);
+        $this->logDir = Config::outputDir();
 
         // Set default path for PhantomJS to "vendor/bin/phantomjs" for if it was installed via composer
         if (!isset($this->config['path'])) {
@@ -43,21 +40,30 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
         // If a directory was provided for the path, use old method of appending PhantomJS
         if (is_dir(realpath($this->config['path']))) {
             // Show warning that this is being deprecated
-            $this->writeln("\r\n");
-            $this->writeln("WARNING: The PhantomJS path for Phantoman is set to a directory, this is being deprecated in the future. Please update your Phantoman configuration to be the full path to PhantomJS.");
+            $this->output->writeln("\r\n");
+            $this->output->writeln("WARNING: The PhantomJS path for Phantoman is set to a directory, this is being deprecated in the future. Please update your Phantoman configuration to be the full path to PhantomJS.");
 
             $this->config['path'] .= '/phantomjs';
-        }
-
-        // Add .exe extension if running on the windows
-        if ($this->isWindows() && file_exists(realpath($this->config['path'] . '.exe'))) {
-            $this->config['path'] .= '.exe';
         }
 
         // Set default WebDriver port
         if (!isset($this->config['port'])) {
             $this->config['port'] = 4444;
         }
+
+        $this->startServer();
+        $resource = $this->resource;
+        register_shutdown_function(
+            function () use ($resource) {
+                if (is_resource($resource)) {
+                    proc_terminate($resource);
+                }
+            }
+        );
+    }
+    public function __destruct()
+    {
+        $this->stopServer();
     }
 
     /**
@@ -65,15 +71,15 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
      */
     private function startServer()
     {
-        $this->writeln("\r\n");
-        $this->writeln("Starting PhantomJS Server");
+        $this->output->writeln("\r\n");
+        $this->output->writeln("Starting PhantomJS Server");
 
         $command = $this->getCommand();
 
         $descriptorSpec = array(
             array('pipe', 'r'),
-            array('file', $this->getLogDir() . 'phantomjs.output.txt', 'w'),
-            array('file', $this->getLogDir() . 'phantomjs.errors.txt', 'a')
+            array('file', $this->logDir . 'phantomjs.output.txt', 'w'),
+            array('file', $this->logDir . 'phantomjs.errors.txt', 'a')
         );
 
         $this->resource = proc_open($command, $descriptorSpec, $this->pipes, null, null, array('bypass_shell' => true));
@@ -87,7 +93,7 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
         $max_checks = 10;
         $checks = 0;
 
-        $this->write("Waiting for the PhantomJS server to be reachable");
+        $this->output->writeln("Waiting for the PhantomJS server to be reachable");
         while (true) {
             if ($checks >= $max_checks) {
                 throw new ExtensionException($this, 'PhantomJS server never became reachable');
@@ -95,13 +101,13 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
             }
 
             if ($fp = @fsockopen('127.0.0.1', $this->config['port'], $errCode, $errStr, 10)) {
-                $this->writeln('');
-                $this->writeln("PhantomJS server now accessible");
+                $this->output->writeln('');
+                $this->output->writeln("PhantomJS server now accessible");
                 fclose($fp);
                 break;
             }
 
-            $this->write('.');
+            $this->output->writeln('.');
             $checks++;
 
             // Wait before checking again
@@ -109,7 +115,7 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
         }
 
         // Clear progress line writing
-        $this->writeln('');
+        $this->output->writeln('');
     }
 
     /**
@@ -118,7 +124,7 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
     private function stopServer()
     {
         if ($this->resource !== null) {
-            $this->write("Stopping PhantomJS Server");
+            $this->output->writeln("Stopping PhantomJS Server");
 
             // Wait till the server has been stopped
             $max_checks = 10;
@@ -126,16 +132,16 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
                 // If we're on the last loop, and it's still not shut down, just
                 // unset resource to allow the tests to finish
                 if ($i == $max_checks - 1 && proc_get_status($this->resource)['running'] == true) {
-                    $this->writeln('');
-                    $this->writeln("Unable to properly shutdown PhantomJS server");
+                    $this->output->writeln('');
+                    $this->output->writeln("Unable to properly shutdown PhantomJS server");
                     unset($this->resource);
                     break;
                 }
 
                 // Check if the process has stopped yet
                 if (proc_get_status($this->resource)['running'] == false) {
-                    $this->writeln('');
-                    $this->writeln("PhantomJS server stopped");
+                    $this->output->writeln('');
+                    $this->output->writeln("PhantomJS server stopped");
                     unset($this->resource);
                     break;
                 }
@@ -145,7 +151,7 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
                 }
                 proc_terminate($this->resource, 2);
 
-                $this->write('.');
+                $this->output->writeln('.');
 
                 // Wait before checking again
                 sleep(1);
@@ -183,55 +189,4 @@ class PhantomjsBoot extends \Codeception\Platform\Extension
     {
         return escapeshellarg(realpath($this->config['path'])) . ' ' . $this->getCommandParameters();
     }
-
-    /**
-     * Checks if the current machine is Windows.
-     *
-     * @return bool True if the machine is windows.
-     * @see http://stackoverflow.com/questions/5879043/php-script-detect-whether-running-under-linux-or-windows
-     */
-    private function isWindows()
-    {
-        return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
-    }
-
-    ///////
-    // required methods
-    ///////
-
-    public function _resetConfig() {}
-
-    public function _getName() {}
-
-    ///////
-    // required methods that handle events
-    ///////
-
-    // // HOOK: on every Actor class initialization
-    public function _cleanup() {}
-
-    // HOOK: before each suite
-    public function _beforeSuite($settings = array()) {}
-
-    // // HOOK: after suite
-    public function _afterSuite() {}
-
-    // // HOOK: before each step
-    public function _beforeStep(\Codeception\Step $step) {}
-
-    // // HOOK: after each step
-    public function _afterStep(\Codeception\Step $step) {}
-
-    // // HOOK: before test
-    public function _before(\Codeception\TestCase $test) {
-        $this->startServer();
-    }
-
-    // // HOOK: after test
-    public function _after(\Codeception\TestCase $test) {
-        $this->stopServer();
-    }
-
-    // // HOOK: on fail
-    public function _failed(\Codeception\TestCase $test, $fail) {}
 }

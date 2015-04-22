@@ -15,12 +15,9 @@ modules:
             window_size: 1024x768
             wait: 5
         Db:
-            dsn: 'mysql:host=localhost;dbname=devsietest'
+            dsn: 'mysql:host=localhost;dbname=devisetest'
             user: 'root'
             password: 'secret'
-            dump: 'tests/_data/devsietest.sql'
+            dump: 'tests/_data/devisetest.sql'
             populate: true
             cleanup: true
-        LBM\PhantomjsBoot:
-            path: '/home/vagrant/pjs/bin/phantomjs'
-            port: 4444

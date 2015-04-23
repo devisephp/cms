@@ -62,6 +62,28 @@ class DvsModelField extends Eloquent
     }
 
     /**
+     * Gets only the rules that are picked
+     * instead of all the rules
+     *
+     * @return []
+     */
+    public function getPickedRulesAttribute()
+    {
+        $rules = [];
+
+        $allRules = $this->rules;
+
+        $picks = $this->picks;
+
+        foreach ($picks as $modelAttr => $fieldAttr)
+        {
+            if (isset($allRules[$modelAttr])) $rules[$modelAttr] = $allRules[$modelAttr];
+        }
+
+        return $rules;
+    }
+
+    /**
      * Get the messages for this field type
      *
      * @return []

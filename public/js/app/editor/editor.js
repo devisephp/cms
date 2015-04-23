@@ -62,7 +62,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
 
         $.each(this.data.nodes, function(index, node)
         {
-            var nodeView = View.make('editor.node', {cid: index, node: node});
+            var nodeView = View.make('editor.node', {id: node.cid + '-node', cid: index, node: node});
             nodesView.append(nodeView);
         });
 

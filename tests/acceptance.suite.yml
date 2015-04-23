@@ -17,7 +17,7 @@ modules:
         Db:
             dsn: 'mysql:host=localhost;dbname=devisetest'
             user: 'root'
-            password: 'secret'
+            password: ''
             dump: 'tests/_data/devisetest.sql'
             populate: true
             cleanup: true

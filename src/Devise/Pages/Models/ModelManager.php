@@ -42,7 +42,7 @@ class ModelManager
 	 */
 	public function createFieldsAndModel($fields, $page)
 	{
-		$this->removeAnyNegativeIdFields($fields);
+		$this->removeAnyBadModelFields($fields);
 
 		$fields = $this->getCreatedFields($fields, $page);
 
@@ -150,6 +150,10 @@ class ModelManager
 
 			$this->Event->fire("devise.{$modelField->type}.field.updated", [$modelField, $newValues, $oldValues]);
 
+			$this->Event->fire("devise.{$modelField->model_type}.field.updated", [$modelField, $newValues, $oldValues]);
+
+			$this->Event->fire("devise.{$modelField->model_type}.{$modelField->mapping}.field.updated", [$modelField, $newValues, $oldValues]);
+
 			$ids[] = $modelField->id;
 		}
 
@@ -249,7 +253,12 @@ class ModelManager
 	 */
 	protected function getRules($fields)
 	{
-		$rules = count($fields) > 0 ? $fields[0]->rules : [];
+		$rules = [];
+
+		foreach ($fields as $field)
+		{
+			$rules = array_merge($rules, $field->picked_rules);
+		}
 
 		return $rules;
 	}
@@ -355,7 +364,7 @@ class ModelManager
 	protected function getCreatedField($field)
 	{
 		$modelField = $this->DvsModelField->newInstance();
-		$modelField->model_id = -1 * $this->DvsModelField->newInstance()->count();
+		$modelField->model_id = 0;
 		$modelField->model_type = $field['model_type'];
 		$modelField->mapping = $field['mapping'];
 		return $modelField;
@@ -369,7 +378,7 @@ class ModelManager
 	 * @param  [type] $fields [description]
 	 * @return [type]         [description]
 	 */
-	protected function removeAnyNegativeIdFields($fields)
+	protected function removeAnyBadModelFields($fields)
 	{
 		$mappings = [];
 		$modelType = '';

@@ -1,6 +1,5 @@
 <h3>Checkbox Group</h3>
 
-@snippet
 <div data-devise="checkboxGroup1, checkbox-group, Checkbox Group">
    @foreach ($page->checkboxGroup1->checkboxes as $checkbox)
       <label>
@@ -9,7 +8,19 @@
       </label>
     @endforeach
 </div>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<div data-devise="checkboxGroup1, checkbox-group, Checkbox Group">
+   @foreach ($page->checkboxGroup1->checkboxes as $checkbox)
+      <label>
+         <input type="checkbox" value="{{ $checkbox->key }}" {{ $checkbox->default ? \'checked\' : \'\' }}>
+         {{ $checkbox->label }}
+      </label>
+    @endforeach
+</div>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

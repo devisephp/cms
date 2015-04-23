@@ -1,0 +1,11 @@
+<ul id="dvs-sidebar-elements-and-groups">
+	{{#each instances}}
+	    <li id="dvs-sidebar-group-{{id}}" class="dvs-sidebar-group dvs-sidebar-elements {{ active }}">
+		    {{#each fields}}
+	            <button class="{{when content_requested 'dvs-content-requested' }}" data-show-field="{{ id }}" data-collection-instance="{{ collection_instance_id }}">
+	            	{{ human_name }}
+	            </button>
+	        {{/each}}
+	    </li>
+	{{/each}}
+</ul>

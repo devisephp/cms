@@ -6,6 +6,7 @@ use Devise\Pages\Interpreter\ViewOpener;
 use Devise\Pages\Interpreter\DeviseCompiler;
 use Devise\Pages\Interpreter\DeviseParser;
 use Devise\Pages\Interpreter\BladeEngineCompiler;
+use Devise\Pages\Fields\DvsMagicMode;
 
 /**
  * Registers the Pages service provider. This allows us to manage our pages
@@ -46,8 +47,8 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
+        $this->registerDvsMagicMode();
         $this->registerInterpreter();
-        // $this->registerSnippetBladeExtensions();
         $this->registerPhpBladeExtensions();
         $this->registerDeviseDataContainer();
         $this->registerTemplateComposer();
@@ -56,7 +57,17 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
+     * [registerDvsMagicMode description]
+     * @return [type]
+     */
+    private function registerDvsMagicMode()
+    {
+        $this->app->instance('dvsMagicMode', new DvsMagicMode);
+    }
 
+    /**
+     * [registerViewName description]
+     * @return [type]
      */
     private function registerViewName()
     {
@@ -92,19 +103,6 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
             $extended = new BladeEngineCompiler($compiler, $deviseCompiler, $deviseParser);
 
             return new CompilerEngine($extended, $app['files']);
-        });
-    }
-
-    /**
-     * Registers @php and @endphp recognition to blade
-     *
-     * @return void
-     */
-    private function registerSnippetBladeExtensions()
-    {
-        \Blade::extend(function($view, $compiler)
-        {
-            return \App::make('Devise\Sidebar\SnippetBladeCompiler')->compile($view);
         });
     }
 
@@ -149,7 +147,8 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     private function registerDeviseDataContainer()
     {
-        $this->app->instance("dvsPageData", new \Devise\Pages\Interpreter\DvsPageData);
+        $dvsPageData = $this->app->make('Devise\Pages\Interpreter\DvsPageData');
+        $this->app->instance("dvsPageData", $dvsPageData);
     }
 
     /**

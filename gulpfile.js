@@ -59,10 +59,10 @@ gulp.task('build:js', function()
         'jquery-ui',
         'jqNestedSortable',
         'datetimepicker',
-        'dvsPublic',
         'fullCalendar',
         'scrollTo',
-        'localScroll'
+        'localScroll',
+        'handlebars'
     ]
   })
   .pipe(concat.header(fs.readFileSync('public/js/devise.require.js', 'utf8') + '\n'))

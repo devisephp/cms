@@ -9,6 +9,6 @@ class InvalidDeviseTagExceptionTest extends \DeviseTestCase
 
     public function test_it_constructs()
     {
-        new InvalidDeviseKeyException();
+        new InvalidDeviseTagException();
     }
 }

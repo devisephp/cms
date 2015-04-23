@@ -2,11 +2,17 @@
 
 <p style="font-style: italic;">Adding images insdie of wysiwyg not currently working</p>
 
-@snippet
-<div data-devise="wysiwyg1, wysiwyg, Wysiwyg" style="width: 200px; height: 200px; overflow: scroll; background-color: #eee; padding: 5px;" >
+<div data-devise="wysiwyg1, wysiwyg, Wysiwyg">
 	<?= $page->wysiwyg1->text ?>
 </div>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<div data-devise="wysiwyg1, wysiwyg, Wysiwyg">
+	{{ $page->wysiwyg1->text }}
+</div>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

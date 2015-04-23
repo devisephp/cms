@@ -190,9 +190,9 @@ if (!function_exists('isActiveLink'))
 */
 if (!function_exists('devise_tag_cid'))
 {
-    function devise_tag_cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults)
+    function devise_tag_cid($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults)
     {
-    	return App::make('dvsPageData')->cid($id, $bindingType, $collection, $key, $type, $humanName, $group, $category, $alternateTarget, $defaults);
+    	return App::make('dvsPageData')->cid($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults);
     }
 }
 
@@ -248,5 +248,32 @@ if (!function_exists('deviseDocsLink'))
 		$helptext = ($helptext !== null) ? '<span>'. $helptext . '</span>' : null;
 
 		echo '<button class="dvs-document"'.$section.'>'.$helptext.'</button>';
+	}
+}
+
+
+if (!function_exists('startdvsmagic'))
+{
+	function startdvsmagic()
+	{
+		Request::query('start-editor') === 'false' && App::make('dvsMagicMode')->enable();
+		return null;
+	}
+}
+
+if (!function_exists('dvsmagic'))
+{
+	function dvsmagic($value, $name, $parent)
+	{
+		return App::make('dvsMagicMode')->live($value, $name, $parent);
+	}
+}
+
+if (!function_exists('enddvsmagic'))
+{
+	function enddvsmagic()
+	{
+		App::make('dvsMagicMode')->disable();
+		return null;
 	}
 }

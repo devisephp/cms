@@ -1,0 +1,14 @@
+#! /usr/bin/env php
+
+<?php
+
+use Symfony\Component\Console\Application;
+use Devise\Cli\InstallerCommand;
+
+require 'vendor/autoload.php';
+
+$app = new Application('Devise Installer', '1.0');
+
+$app->add(new InstallerCommand);
+
+$app->run();

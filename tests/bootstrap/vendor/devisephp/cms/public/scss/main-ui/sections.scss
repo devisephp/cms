@@ -1,0 +1,58 @@
+@mixin dvs-sections($color) {
+	.dvs-card-top {
+		background-color:$color;
+	}
+
+	.dvs-card-bottom {
+		.dvs-icon {
+			color: $color;
+		}
+	}
+
+	&.dvs-admin-card {
+		&:hover {
+      		background-color:$color;
+      		border-color:darken($color, 10%);
+
+      		.dvs-card-top{
+      			background-color:darken($color, 10%);
+      		}
+		}
+	}
+}
+
+#dvs-admin {
+
+	.dvs-pages {
+		@include dvs-sections($pages);
+	}
+
+	.dvs-menus {
+		@include dvs-sections($menus);
+	}
+
+	.dvs-permissions {
+		@include dvs-sections($permissions);
+	}
+
+	.dvs-templates {
+		@include dvs-sections($templates);
+	}
+
+	.dvs-users {
+		@include dvs-sections($users);
+	}
+
+	.dvs-groups {
+		@include dvs-sections($groups);
+	}
+
+	.dvs-languages {
+		@include dvs-sections($languages);
+	}
+
+	.dvs-api {
+		@include dvs-sections($api);
+	}
+
+}

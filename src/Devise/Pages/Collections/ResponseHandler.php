@@ -1,5 +1,7 @@
 <?php namespace Devise\Pages\Collections;
 
+use Devise\Pages\Fields\FieldManager;
+
 /**
  * Handle responses for collection instances
  */
@@ -13,13 +15,21 @@ class ResponseHandler
     private $CollectionsManager;
 
     /**
+     * Fields manager lets us update fields
+     *
+     * @var FieldManager
+     */
+    private $FieldManager;
+
+    /**
      * Construct a new Response Handler used by dvs_pages
      *
      * @param CollectionsManager $CollectionsManager
      */
-    public function __construct(CollectionsManager $CollectionsManager)
+    public function __construct(CollectionsManager $CollectionsManager, FieldManager $FieldManager)
     {
         $this->CollectionsManager = $CollectionsManager;
+        $this->FieldManager = $FieldManager;
     }
 
     /**
@@ -30,23 +40,9 @@ class ResponseHandler
      * @param  array $input
      * @return instance
      */
-    public function requestStoreInstance($pageVersionId, $collectionSetId, $input) {
-
-	    $data = array(
-            'collection_set_id' => $collectionSetId,
-		    'page_version_id' => $pageVersionId,
-            'sort' => $input['sort'],
-		    'name' => $input['name']
-	    );
-
-	    $instance = $this->CollectionsManager->createNewInstance($data);
-
-        if ($instance)
-        {
-            return $instance;
-        }
-
-		return false;
+    public function requestStoreInstance($pageVersionId, $collectionSetId, $input)
+    {
+		return $this->CollectionsManager->createNewInstance($input);
     }
 
     /**
@@ -59,7 +55,7 @@ class ResponseHandler
      */
 	public function updateSortOrder($pageVersionId, $collectionSetId, $input)
 	{
-		foreach ($input['instance'] as $i => $id)
+		foreach ($input['instances'] as $i => $id)
 		{
 			$this->CollectionsManager->updateInstanceSort($id, $i + 1);
 		}
@@ -89,5 +85,17 @@ class ResponseHandler
 	public function requestDeleteInstance($collectionInstanceId)
 	{
 		$this->CollectionsManager->removeInstance($collectionInstanceId);
+	}
+
+	/**
+	 * Update the collection instance field
+	 *
+	 * @param  [type] $fieldId [description]
+	 * @param  [type] $input   [description]
+	 * @return [type]          [description]
+	 */
+	public function updateCollectionInstanceField($fieldId, $input)
+	{
+		return $this->FieldManager->updateField($fieldId, $input);
 	}
 }

@@ -46,6 +46,28 @@ After clicking next Devise installs it's migrations and seeds into your database
 
 From the root of your project: ```php artisan devise:install``` and follow the prompts which are very similar to the steps above.
 
+### Testing
+
+Devise has functional and acceptance tests. We have over 500 functional tests.
+
+To run unit tests
+
+```
+phpunit
+```
+
+To run acceptance tests you will have to bring up a basic devise Laravel application configured to resolve at `http://devisetest.app`. We recommend using https://github.com/devisephp/example but you are welcome to install Devise on any base Laravel 5. In addition to your webserver you will also need to configure a mysql database `devisetest` with user `root` and password `secret`. You can change all of these Codeception settings locally in the [tests/acceptance.suite.yml](https://github.com/devisephp/cms/blob/master/tests/acceptance.suite.yml) config file. Once you have a test server up and running, you may now run codeception acceptance tests with the following command:
+
+```
+codecept run acceptance
+```
+
+If you would like to run tests inside of firefox instead of phantomjs you will need to first fire up selenium on your local machine with a GUI. To do that, just run this following command...
+
+```
+java -jar tests/bootstrap/selenium-server-standalone-2.45.0.jar
+```
+
 ###License
 
 Devise is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

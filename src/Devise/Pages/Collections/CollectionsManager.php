@@ -14,13 +14,20 @@ class CollectionsManager
     protected $CollectionInstance;
 
     /**
+     * DvsField model
+     *
+     * @var DvsField
+     */
+    protected $Field;
+    /**
      * Create a new collections manager object
      *
      * @param DvsCollectionInstance $CollectionInstance
      */
-	public function __construct(\DvsCollectionInstance $CollectionInstance)
+	public function __construct(\DvsCollectionInstance $CollectionInstance, \DvsField $Field)
 	{
 		$this->CollectionInstance = $CollectionInstance;
+        $this->Field = $Field;
 	}
 
     /**
@@ -30,19 +37,46 @@ class CollectionsManager
      * @param  array $inputData
      * @return CollectionInstance
      */
-	public function createNewInstance(array $inputData)
+	public function createNewInstance(array $input)
 	{
 		$instance = $this->CollectionInstance->newInstance();
-
-        $instance->page_version_id = $inputData['page_version_id'];
-        $instance->collection_set_id = array_get($inputData, 'collection_set_id', null);
-        $instance->name = $inputData['name'];
-        $instance->sort = $inputData['sort'];
-
+        $instance->page_version_id = $input['page_version_id'];
+        $instance->collection_set_id = array_get($input, 'collection_set_id', null);
+        $instance->name = $input['name'];
+        $instance->sort = $input['sort'];
         $instance->save();
 
-        return $instance;
+        $fields = array_get($input, 'fields', []);
+
+        foreach ($fields as $field)
+        {
+            $this->createNewInstanceField($instance, $field);
+        }
+
+        return $this->CollectionInstance->newInstance()->with('fields')->findOrFail($instance->id);
 	}
+
+    /**
+     * [createNewInstanceField description]
+     * @param  [type] $instance [description]
+     * @param  [type] $field    [description]
+     * @return [type]           [description]
+     */
+    public function createNewInstanceField($instance, $fieldInput)
+    {
+        $field = $this->Field->newInstance();
+
+        $field->collection_instance_id = $instance->id;
+        $field->page_version_id = $instance->page_version_id;
+        $field->type = $fieldInput['type'];
+        $field->key = $fieldInput['key'];
+        $field->human_name = $fieldInput['human_name'];
+        $field->json_value = array_get($fieldInput, 'json_value', '{}');
+        $field->content_requested = array_get($fieldInput, 'content_requested', 1);
+        $field->save();
+
+        return $field;
+    }
 
     /**
      * Updates the instance with input data
@@ -83,6 +117,8 @@ class CollectionsManager
 	public function removeInstance($id)
     {
 		$instance = $this->CollectionInstance->find($id);
+
+        // should we remove all the fields of this instance here?
 
 		return ($instance) ? $instance->delete() : false;
 	}

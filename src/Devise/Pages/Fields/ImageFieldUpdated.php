@@ -37,13 +37,15 @@ class ImageFieldUpdated
 	public function handle($field, $input, $beforeChanges)
 	{
 		$imageVersion = $this->createVersionOfImage($field, $input);
+		$thumbnailVersion = $this->createThumbnailOfImage($field, $input);
 
 		$field->values->merge([
 			'has_thumbnail' => array_get($input, 'has_thumbnail', false),
 			'original' => array_get($input, 'image', ''),
 			'image' => $imageVersion,
 			'image_url' => $imageVersion,
-			'thumbnail_url' => $this->createThumbnailOfImage($field, $input),
+			'thumbnail' => $thumbnailVersion,
+			'thumbnail_url' => $thumbnailVersion,
 		]);
 
 		$field->json_value = $field->values->toJSON();

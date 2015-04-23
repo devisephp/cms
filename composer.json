@@ -24,7 +24,9 @@
     "require-dev": {
         "mockery/mockery": "0.9.3",
         "phpunit/phpunit": "*",
-        "mikey179/vfsStream": "*"
+        "mikey179/vfsStream": "*",
+        "codeception/codeception": "*",
+        "jakoch/phantomjs-installer": "1.9.8"
     },
     "autoload": {
         "classmap": [
@@ -38,7 +40,14 @@
         }
     },
     "scripts": {
-        "docs" : "vendor/bin/sami.php update sami.php"
+        "docs" : "vendor/bin/sami.php update sami.php",
+        "acceptance": "tests/bootstrap/acceptance.sh",
+        "post-install-cmd": [
+            "PhantomInstaller\\Installer::installPhantomJS"
+        ],
+        "post-update-cmd": [
+            "PhantomInstaller\\Installer::installPhantomJS"
+        ]
     },
     "minimum-stability": "stable"
 }

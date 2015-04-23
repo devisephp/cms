@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery', 'dvsQueryHelper'], function (require, $, query)
+devise.define(['require', 'jquery', 'query'], function (require, $, query)
 {
     var obj = {};
 

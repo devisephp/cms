@@ -1,10 +1,16 @@
 <h3>Datetime</h3>
 
-@snippet
 <p data-devise="datetime1, datetime, Datetime">
 	Concert starts at <?= $page->datetime1->datetime ?>
 </p>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<p data-devise="datetime1, datetime, Datetime">
+	Concert starts at {{ $page->datetime1->datetime }}
+</p>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

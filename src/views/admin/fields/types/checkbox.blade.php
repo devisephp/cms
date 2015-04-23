@@ -1,10 +1,16 @@
 <h3>Checkbox</h3>
 
-@snippet
 <p data-devise="checkbox1, checkbox, Checkbox">
     <?= $page->checkbox1->value ? 'Do something with check' : 'Do something else' ?>
 </p>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<p data-devise="checkbox1, checkbox, Checkbox">
+    {{ $page->checkbox1->value ? \'Do something with check\' : \'Do something else\' }}
+</p>
+') ?>
+</code></pre>
 
 
 @include('devise::admin.fields.show',

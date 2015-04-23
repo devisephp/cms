@@ -1,0 +1,55 @@
+<form id="dvs-sidebar-field-form">
+    <div class="dvs-editor-values">
+
+        <div class="dvs-property">
+            <label>Text</label>
+            <input type="text" name="text" value="{{ values.text }}">
+        </div>
+
+        <div class="dvs-property">
+            <label>Page</label>
+            <select name="route" class="dvs-select">
+                {{#select values.route}}
+
+                    {{#each page.pageRoutes}}
+
+                        {{#ifType this "string" }}
+                            <option value="{{@key}}">{{this}}</option>
+                        {{else}}
+                            <optgroup label="{{@key}}">
+                                {{#each this}}<option value="{{@key}}">{{this}}</option>{{/each}}
+                            </optgroup>
+                        {{/ifType}}
+
+                    {{/each}}
+
+                {{/select}}
+            </select>
+        </div>
+
+        <div class="dvs-property">
+            <label>(or) URL</label>
+            <input type="text" name="url" value="{{ values.url }}">
+        </div>
+
+        <div class="dvs-property">
+            <label>Target</label>
+            <select name="target" class="dvs-select dvs-button-solid dvs-select-full">
+                {{#select values.target}}
+                    <option name="_self">Same Window (_self)</option>
+                    <option name="_blank">New Window (_blank)</option>
+                {{/select}}
+            </select>
+        </div>
+
+        <div data-view="site-wide-field"></div>
+
+        <div data-view="content-requested"></div>
+
+        <div data-view="reset-values"></div>
+    </div>
+</form>
+
+{{#script}}
+    devise.require(['app/editor/fields/link'], function(obj) { obj.init(); });
+{{/script}}

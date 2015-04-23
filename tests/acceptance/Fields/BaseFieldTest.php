@@ -1,6 +1,6 @@
-<?php
+<?php namespace Fields;
 
-class BaseAcceptanceTest
+class BaseFieldTest
 {
     /**
      * Wait time for stuff
@@ -13,9 +13,9 @@ class BaseAcceptanceTest
      * @param  AcceptanceTester $I
      * @return [type]
      */
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
-        $I->gotToFieldsAndShowNodes();
+        $I->gotoFieldsAndShowNodes();
     }
 
     /**
@@ -24,7 +24,7 @@ class BaseAcceptanceTest
      * @param  AcceptanceTester $I
      * @return [type]
      */
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
         $I->logout();
     }

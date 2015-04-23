@@ -1,8 +1,8 @@
-<?php
+<?php namespace Fields;
 
-class EditPageVersionModelCest extends BaseAcceptanceTest
+class EditPageVersionModelCest extends BaseFieldTest
 {
-    public function i_can_click_name_grid_item(AcceptanceTester $I)
+    public function i_can_click_name_grid_item(\AcceptanceTester $I)
     {
         $I->clickNode('#model0-node');
         $I->click('.dvs-sidebar-elements button');
@@ -13,7 +13,7 @@ class EditPageVersionModelCest extends BaseAcceptanceTest
         $I->dontSee('Max Length');
     }
 
-    public function i_can_save_this_model(AcceptanceTester $I)
+    public function i_can_save_this_model(\AcceptanceTester $I)
     {
         $value = $I->generateRandomString();
         $I->clickNode('#model0-node');

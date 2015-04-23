@@ -1,8 +1,8 @@
-<?php
+<?php namespace Fields;
 
-class CreateNewUserCest extends BaseAcceptanceTest
+class CreateNewUserCest extends BaseFieldTest
 {
-    public function i_see_the_grid_buttons(AcceptanceTester $I)
+    public function i_see_the_grid_buttons(\AcceptanceTester $I)
     {
         $I->clickNode('#creatorcreator-933e76acb06dec2ba6c31ba9c058a4e9-node');
         $I->seeElement('button[data-creator-attribute-name="Name"]');
@@ -10,7 +10,7 @@ class CreateNewUserCest extends BaseAcceptanceTest
         $I->seeElement('button[data-creator-attribute-name="Password"]');
     }
 
-    public function i_can_click_each_grid_item(AcceptanceTester $I)
+    public function i_can_click_each_grid_item(\AcceptanceTester $I)
     {
         $I->clickNode('#creatorcreator-933e76acb06dec2ba6c31ba9c058a4e9-node');
         $I->click('button[data-creator-attribute-name="Name"]');
@@ -33,7 +33,7 @@ class CreateNewUserCest extends BaseAcceptanceTest
         $I->dontSee('Max Length');
     }
 
-    public function i_cannot_create_invalid_user(AcceptanceTester $I)
+    public function i_cannot_create_invalid_user(\AcceptanceTester $I)
     {
         $I->clickNode('#creatorcreator-933e76acb06dec2ba6c31ba9c058a4e9-node');
         $I->click('button[data-creator-attribute-name="Name"]');
@@ -44,7 +44,7 @@ class CreateNewUserCest extends BaseAcceptanceTest
         $I->see('The name field is required.', '#dvs-sidebar-validation-errors');
     }
 
-    public function i_can_create_a_new_user(AcceptanceTester $I)
+    public function i_can_create_a_new_user(\AcceptanceTester $I)
     {
         $I->clickNode('#creatorcreator-933e76acb06dec2ba6c31ba9c058a4e9-node');
         $I->click('button[data-creator-attribute-name="Name"]');

@@ -144,12 +144,12 @@ class EchoDeviseMagic extends NodeVisitorAbstract
 
 		$dvsmagic->left->right->args[0]->value = $node;
 
-		if ($node->name)
+		if (isset($node->name))
 		{
 			$dvsmagic->left->right->args[1]->value->value = $node->name;
 		}
 
-		if ($node->var)
+		if (isset($node->var))
 		{
 			$dvsmagic->left->right->args[2]->value = $node->var;
 		}

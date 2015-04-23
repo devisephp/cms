@@ -25,7 +25,7 @@ class BaseAcceptanceTester extends \Codeception\Actor
     /**
      * loads logout page
      */
-    public function gotToFieldsAndShowNodes($waitTime = 5)
+    public function gotoFieldsAndShowNodes($waitTime = 5)
     {
         $this->login('/admin/fields');
         $this->waitForElement('#dvs-node-mode-button', $waitTime);

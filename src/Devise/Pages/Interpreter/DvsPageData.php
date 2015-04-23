@@ -178,9 +178,15 @@ class DvsPageData
 			'category' => $category,
 			'alternateTarget' => $alternateTarget,
 			'defaults' => null,
+			'hidden' => true,
 		];
 
 		$this->tags[$id]['data'] = $this->TagManager->getInstanceForTag($this->tags[$id]);
+
+		if ($this->tags[$id]['data'])
+		{
+			$this->tags[$id]['cid'] = $this->tags[$id]['bindingType'] . $this->tags[$id]['data']->id;
+		}
 	}
 
 	/**
@@ -234,6 +240,8 @@ class DvsPageData
 		$this->assertTagExists($id);
 
 		$tag = $this->resolveTag($id, $bindingType, $collection, $key, $type, $humanName, $collectionName, $group, $category, $alternateTarget, $defaults);
+
+		$tag['hidden'] = false;
 
 		return $tag['cid'];
 	}

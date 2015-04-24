@@ -39,23 +39,33 @@ devise.define(['AttributeBinding', 'ClassBinding', 'StyleBinding', 'TextBinding'
 	 * pass this the html node (document.childNodes[0])
 	 * and it will get all the one-way bindings for us
 	 */
-	BindingsFinder.prototype.find = function(node, bindings)
+	BindingsFinder.prototype.find = function(node)
 	{
-		if (typeof bindings === 'undefined')
-		{
-			bindings = [];
-			bindings = wrapApplyOnBindings(bindings);
-			bindings.get = this.lookup;
-			bindings.set = this.setter;
-		}
+		var bindings = [];
 
-		bindings = findElementBindings(node, bindings, this);
+		bindings = wrapApplyOnBindings(bindings);
 
-		bindings = findTextBindings(node, bindings, this);
+		bindings.get = this.lookup;
+
+		bindings.set = this.setter;
+
+		bindings = recursivelyFindAllBindingsInsideOfNode(node, bindings, this);
+
+		return bindings;
+	}
+
+	/**
+	 * Finds all the bindings from this node and child nodes
+	 */
+	function recursivelyFindAllBindingsInsideOfNode(node, bindings, finder)
+	{
+		bindings = findElementBindings(node, bindings, finder);
+
+		bindings = findTextBindings(node, bindings, finder);
 
 		for (var i = 0; i < node.childNodes.length; i++)
 		{
-		   bindings = this.find(node.childNodes[i], bindings);
+		   bindings = recursivelyFindAllBindingsInsideOfNode(node.childNodes[i], bindings, finder);
 		}
 
 		return bindings;

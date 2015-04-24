@@ -45,4 +45,17 @@ class FieldsResponseHandler
 
         return Response::json($response, $code);
     }
+
+    /**
+     * Resets a fields values
+     *
+     * @param  integer $fieldId
+     * @return json
+     */
+    public function requestReset($fieldId, $scope)
+    {
+        $field = $this->Manager->resetField($fieldId, $scope);
+
+        return $field;
+    }
 }

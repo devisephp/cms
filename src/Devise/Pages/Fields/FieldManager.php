@@ -80,6 +80,25 @@ class FieldManager
 	}
 
 	/**
+	 * Reset field values
+	 *
+	 * @param  integer $fieldId
+	 * @return \DvsField | \DvsGlobalField
+	 */
+	public function resetField($fieldId, $scope)
+	{
+		$field = $scope === 'global' ? $this->GlobalField->findOrFail($fieldId) : $this->Field->findOrFail($fieldId);
+
+		$field->json_value = '{}';
+
+		$field->values->override([]);
+
+		$field->save();
+
+		return $field;
+	}
+
+	/**
 	 * Sets a series of fields content requested to false
 	 * @param  array $fieldIds Array of field ids
 	 * @return bool

@@ -15,10 +15,11 @@ devise.define(['jquery', 'query'], function($, query)
 	/**
 	 * Set the iframe for this live updater
 	 */
-	LiveUpdate.prototype.setup = function(iframe, bindings)
+	LiveUpdate.prototype.setup = function(iframe, bindings, database)
 	{
 		this.iframe = iframe;
 		this.bindings = bindings;
+		this.database = database;
 	}
 
 	/**
@@ -70,6 +71,45 @@ devise.define(['jquery', 'query'], function($, query)
 			this.bindings.apply(key);
 		}
 	}
+
+	/**
+	 * sets the default values set for this field
+	 * this only works for values not set inside of this
+	 * field
+	 */
+	LiveUpdate.prototype.setDefaultsForField = function(field)
+	{
+		var defaults = this.getDefaultsForField(field);
+
+		for (var attribute in defaults)
+		{
+			if (typeof field.values[attribute] === 'undefined' || !field.values[attribute])
+			{
+				field.values[attribute] = defaults[attribute];
+			}
+		}
+	}
+
+	/**
+	 * finds all the defaults that are in the system for this
+	 */
+	LiveUpdate.prototype.getDefaultsForField = function(field)
+	{
+		var defaults = {};
+		var fieldKey = _key(field, '');
+
+		for (var key in this.database)
+		{
+			if (key.match(fieldKey))
+			{
+				var attribute = key.replace(fieldKey, '');
+				defaults[attribute] = this.database[key];
+			}
+		}
+
+		return defaults;
+	}
+
 
 	/**
 	 * Occasionally it makes sense to refresh the entire

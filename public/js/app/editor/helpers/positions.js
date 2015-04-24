@@ -6,9 +6,8 @@ devise.define(['jquery'], function($) {
      * We need to set the nodeHeight to calculate
      * offsets.
      */
-    function setNodeHeight(nodesView) 
+    function setNodeHeight(nodesView)
     {
-
         nodeHeight = nodesView.children().first().children('.dvs-node-inner-wrapper').height();
     }
 

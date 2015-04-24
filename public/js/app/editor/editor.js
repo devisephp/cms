@@ -231,7 +231,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
             editor.recalculateNodePositions();
 
             // sets the iframe up so we can control it's content
-            LiveUpdater.setup(iframe, editor.bindings);
+            LiveUpdater.setup(iframe, editor.bindings, editor.data.database);
         });
 
         iframe.attr('src', query.append('start-editor', 'false', location.href));

@@ -2,7 +2,7 @@
     <div class="dvs-editor-values">
         <label>Image Path</label>
 
-        <input type="text" name="image" value="{{ values.original }}">
+        <input type="text" name="image" value="{{when values.original values.original values.image }}">
 
         <div class="dvs-sidebar-button-grid dvs-property">
             <button type="button" data-target="image" class="browse dvs-button">Select or Upload Image</button>

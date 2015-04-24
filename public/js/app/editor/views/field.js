@@ -15,6 +15,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 		this.sidebar = sidebar;
 		this.data = { page: sidebar.page };
 		this.view = null;
+		this.loadDefaults = true;
 	};
 
 	/**
@@ -54,17 +55,19 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 
 		this.data['field'] = field;
 
-		this.view = View.make('sidebar.fields.' + field.type, { 'page': this.data.page, 'field': field, 'values': field.values });
+		this.loadDefaults === true && LiveUpdater.setDefaultsForField(this.data.field);
 
-		this.view.find('[data-view="content-requested"]').replaceWith(requestContent);
+		var view = View.make('sidebar.fields.' + field.type, { 'page': this.data.page, 'field': field, 'values': field.values });
 
-		this.view.find('[data-view="reset-values"]').replaceWith(resetValues);
+		view.find('[data-view="content-requested"]').replaceWith(requestContent);
+
+		view.find('[data-view="reset-values"]').replaceWith(resetValues);
 
 		if (showSitewide) {
-			this.view.find('[data-view="site-wide-field"]').replaceWith(sitewide);
+			view.find('[data-view="site-wide-field"]').replaceWith(sitewide);
 		}
 
-		return this.view;
+		return view;
 	}
 
 	/**
@@ -133,12 +136,18 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 		if (!shouldReset) return;
 
 		var self = this;
+		var field = self.data.field;
+		var url = self.data.page.url('reset_field', {id: field.id, scope: field.scope});
+
+		$.post(url);	// reset field on server
 
 		setTimeout(function()
 		{
-			self.field.values = {};
+			field.values = {};
 			self.view.empty();
-			self.view.append(self.renderField(self.field, true));
+			self.loadDefaults = false;
+			self.view.append(self.renderField(field, true));
+			self.loadDefaults = true;
 		}, 500);
 	}
 

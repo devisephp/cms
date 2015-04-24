@@ -183,7 +183,7 @@ class DvsPageData
 
 		$this->tags[$id]['data'] = $this->TagManager->getInstanceForTag($this->tags[$id]);
 
-		if ($this->tags[$id]['data'])
+		if ($this->tags[$id]['data'] && isset($this->tags[$id]['data']->id))
 		{
 			$this->tags[$id]['cid'] = $this->tags[$id]['bindingType'] . $this->tags[$id]['data']->id;
 		}

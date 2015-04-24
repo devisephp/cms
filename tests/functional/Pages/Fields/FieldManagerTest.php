@@ -19,6 +19,11 @@ class FieldManagerTest extends \DeviseTestCase
 		assertEquals(0, $field->content_requested);
 	}
 
+	public function test_it_resets_field()
+	{
+		$this->FieldManager->resetField(1, 'field');
+	}
+
 	public function test_it_updates_field()
 	{
 		$field = $this->FieldManager->updateField(1, ['field' => ['content_requested' => 1, 'values' => ['key1' => 'value']], 'page' => ['page_version_id' => 42]]);

@@ -527,6 +527,21 @@ class DevisePagesSeeder extends DeviseSeeder
             ),
             array(
                 'language_id'             => '45',
+                'title'                   => 'Reset field values',
+                'http_verb'               => 'post',
+                'route_name'              => 'dvs-fields-reset',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'canUseDeviseEditor',
+                'after'                   => '',
+                'slug'                    => '/admin/fields/{fieldId}/{fieldScope}/reset',
+                'short_description'       => 'Reset a field via ajax call',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Pages\Fields\FieldsResponseHandler.requestReset',
+                'response_params'         => 'params.fieldId,params.fieldScope'
+            ),
+            array(
+                'language_id'             => '45',
                 'view'                    => 'devise::admin.fields.index',
                 'title'                   => 'All the Devise fields you could be using',
                 'http_verb'               => 'get',

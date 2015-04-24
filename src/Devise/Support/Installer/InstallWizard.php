@@ -132,7 +132,7 @@ class InstallWizard
 
         // write "email" and "username" input values to env
         $this->EnvironmentFileManager->merge(['ADMIN_EMAIL' => $email]);
-        $this->EnvironmentFileManager->merge(['ADMIN_USERNAME' => $email]);
+        $this->EnvironmentFileManager->merge(['ADMIN_USERNAME' => $username]);
 
 		return $user;
 	}
@@ -206,8 +206,8 @@ class InstallWizard
 			'DB_DATABASE' => $name,
 			'DB_USERNAME' => $username,
             'DB_PASSWORD' => $password,
-            'DB_MIGRATIONS' => $migrations,
-            'DB_SEEDS' => $seeds
+            'APP_MIGRATIONS' => $migrations,
+            'APP_SEEDS' => $seeds
 		];
 
 		// no errors at the moment
@@ -314,7 +314,10 @@ class InstallWizard
 			'DB_HOST' => env('DB_HOST', 'localhost'),
 			'DB_DATABASE' => env('DB_DATABASE', 'forge'),
 			'DB_USERNAME' => env('DB_USERNAME', 'forge'),
-			'DB_PASSWORD' => env('DB_PASSWORD', ''),
+            'DB_PASSWORD' => env('DB_PASSWORD', ''),
+            'CONFIGS_OVERRIDE' => env('CONFIGS_OVERRIDE', ''),
+            'APP_MIGRATIONS' => env('APP_MIGRATIONS', ''),
+			'APP_SEEDS' => env('APP_SEEDS', ''),
 			'SESSION_DRIVER' => env('SESSION_DRIVER', 'file'),
 		], $settings);
 

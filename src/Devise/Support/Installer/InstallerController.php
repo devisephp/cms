@@ -127,8 +127,8 @@ class InstallerController extends Controller
 		$database->name = $this->Input->old('database_name', env('DB_DATABASE'));
 		$database->username = $this->Input->old('database_username', env('DB_USERNAME'));
         $database->password = $this->Input->old('database_password', env('DB_PASSWORD'));
-        $database->migrations = $this->Input->old('database_migrations', env('DB_MIGRATIONS'));
-        $database->seeds = $this->Input->old('database_seeds', env('DB_SEEDS'));
+        $database->migrations = $this->Input->old('app_migrations', env('APP_MIGRATIONS'));
+        $database->seeds = $this->Input->old('app_seeds', env('APP_SEEDS'));
         $configsOverride = $this->Input->old('configs_override', env('CONFIGS_OVERRIDE'));
 
         $selected = function($type, $yes = 'selected', $no = '') use ($database)
@@ -159,8 +159,8 @@ class InstallerController extends Controller
 		$name = $this->Input->get('database_name');
 		$username = $this->Input->get('database_username');
 		$password = $this->Input->get('database_password');
-        $migrations = $this->Input->get('database_migrations', 'no');
-        $seeds = $this->Input->get('database_seeds', 'no');
+        $migrations = $this->Input->get('app_migrations', 'no');
+        $seeds = $this->Input->get('app_seeds', 'no');
         $configsOverride = $this->Input->get('configs_override', 'no');
 
         $this->InstallWizard->saveConfigsOverride($configsOverride);

@@ -13,6 +13,12 @@ class DeviseResetCommand extends Command
     protected $name = 'devise:reset';
 
     /**
+     * [$Schema description]
+     * @var null
+     */
+    public $Schema = null;
+
+    /**
      * Description of reset-project command
      *
      * @param string
@@ -29,9 +35,20 @@ class DeviseResetCommand extends Command
         parent::__construct();
 
         $this->app = $app;
-        $this->Schema = \Schema::getFacadeRoot();
+        $this->Schema = null;
     }
 
+    /**
+     * Schema
+     */
+    protected function Schema()
+    {
+        if (! $this->Schema) {
+            $this->Schema = \Schema::getFacadeRoot();
+        }
+
+        return $this->Schema;
+    }
     /**
      * Run the package migrations.
      */
@@ -95,7 +112,7 @@ class DeviseResetCommand extends Command
         \DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
         // gets all tables names in current database
-        $tables = $this->Schema->getConnection()
+        $tables = $this->Schema()->getConnection()
             ->getDoctrineSchemaManager()
             ->listTableNames();
 
@@ -105,7 +122,7 @@ class DeviseResetCommand extends Command
                 continue;
             }
 
-            $this->Schema->drop($table);
+            $this->Schema()->drop($table);
         }
     }
 }

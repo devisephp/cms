@@ -206,8 +206,8 @@ class InstallWizard
 			'DB_DATABASE' => $name,
 			'DB_USERNAME' => $username,
             'DB_PASSWORD' => $password,
-            'DB_MIGRATIONS' => $migrations,
-            'DB_SEEDS' => $seeds
+            'APP_MIGRATIONS' => $migrations,
+            'APP_SEEDS' => $seeds
 		];
 
 		// no errors at the moment

@@ -83,11 +83,11 @@ class DeviseInstallCommand extends Command
         $this->DeviseSeedCommand->handle();
         $this->DevisePublishAssetsCommand->handle();
 
-        if (env('DB_MIGRATIONS') != 'no') {
+        if (env('APP_MIGRATIONS') != 'no') {
             $this->Artisan->call('migrate');
         }
 
-        if (env('DB_SEEDS') != 'no') {
+        if (env('APP_SEEDS') != 'no') {
             $this->Artisan->call('db:seed');
         }
 
@@ -155,8 +155,8 @@ class DeviseInstallCommand extends Command
         $name = $this->env('DB_DATABASE', 'devisephp');
         $user = $this->env('DB_USERNAME', 'root');
         $pass = $this->env('DB_PASSWORD', '');
-        $migrations = $this->env('DB_MIGRATIONS', 'yes');
-        $seeds = $this->env('DB_SEEDS', 'yes');
+        $migrations = $this->env('APP_MIGRATIONS', 'yes');
+        $seeds = $this->env('APP_SEEDS', 'yes');
         $configsOverride = $this->env('CONFIGS_OVERRIDE', 'yes');
 
         while ($databaseNotInstalled)

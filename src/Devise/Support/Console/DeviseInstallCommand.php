@@ -61,6 +61,7 @@ class DeviseInstallCommand extends Command
         $this->setupEnvironment();
         $this->setupDatabase();
         list($email, $user, $pass) = $this->setupAdminUser();
+        $this->wizard()->refreshEnvironment();
         $this->io()->comment('');
         $this->io()->comment("Please wait while devise is installing...");
         $this->io()->comment('');
@@ -272,7 +273,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseMigrations($default)
     {
-        $answer = $this->io()->ask("Do you want to run database migrations? [{$default}]");
+        $answer = $this->io()->ask("Do you want to run the application's db migrations? [{$default}]");
         return $answer ?: $default;
     }
 
@@ -284,7 +285,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseSeeds($default)
     {
-        $answer = $this->io()->ask("Do you want to run database seeds? [{$default}]");
+        $answer = $this->io()->ask("Do you want to run the application's db seeds? [{$default}]");
         return $answer ?: $default;
     }
 

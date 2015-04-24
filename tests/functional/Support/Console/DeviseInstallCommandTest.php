@@ -23,7 +23,7 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
         $this->DeviseInstallCommand = new DeviseInstallCommand($this->Framework->Container);
         $this->DeviseInstallCommand->Cache = m::mock('CacheObj');
-
+        $this->DeviseInstallCommand->Artisan = m::mocK('ArtisanObj');
 		$this->DeviseInstallCommand->DeviseMigrateCommand = m::mock('Devise\Support\Console\DeviseMigrateCommand');
 		$this->DeviseInstallCommand->DeviseSeedCommand = m::mock('Devise\Support\Console\DeviseSeedCommand');
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand = m::mock('Devise\Support\Console\DevisePublishAssetsCommand');
@@ -42,10 +42,11 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
     public function test_it_handles_install_command()
     {
-    	$this->DeviseInstallCommand->wizard->shouldReceive('refreshEnvironment')->once();
+    	$this->DeviseInstallCommand->wizard->shouldReceive('refreshEnvironment')->twice();
     	$this->DeviseInstallCommand->wizard->shouldReceive('saveEnvironment')->with('local')->once();
         $this->DeviseInstallCommand->wizard->shouldReceive('saveConfigsOverride')->once()->andReturn();
     	$this->DeviseInstallCommand->wizard->shouldReceive('saveDatabase')->with('mysql', 'localhost', 'devisephp', 'root', '', 'yes', 'yes')->once()->andReturn();
+        $this->DeviseInstallCommand->Artisan->shouldReceive('call')->twice();
 		$this->DeviseInstallCommand->wizard->shouldReceive('createAdminUser')->once();
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
@@ -59,6 +60,7 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();
+        $this->DeviseInstallCommand->Artisan->shouldReceive('call')->twice();
 		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle');
 		$this->DeviseInstallCommand->runInstallCommands();
 	}

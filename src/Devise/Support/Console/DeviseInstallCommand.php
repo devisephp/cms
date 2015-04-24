@@ -50,6 +50,7 @@ class DeviseInstallCommand extends Command
         $this->DeviseSeedCommand = new DeviseSeedCommand($this->app);
         $this->DevisePublishAssetsCommand = new DevisePublishAssetsCommand($this->app);
         $this->DevisePublishConfigsCommand = new DevisePublishConfigsCommand($this->app);
+        $this->Artisan = \Artisan::getFacadeRoot();
     }
 
     /**
@@ -57,8 +58,10 @@ class DeviseInstallCommand extends Command
      */
     public function handle()
     {
+        $this->wizard()->refreshEnvironment();
         $this->setupEnvironment();
         $this->setupDatabase();
+        $this->wizard()->refreshEnvironment();
         list($email, $user, $pass) = $this->setupAdminUser();
         $this->io()->comment('');
         $this->io()->comment("Please wait while devise is installing...");
@@ -77,18 +80,19 @@ class DeviseInstallCommand extends Command
     {
         $this->changeDatabaseConfigFile();
         $this->changeEmailConfigFile();
-
-        if (env('DB_MIGRATIONS') != 'no') {
-            $this->DeviseMigrateCommand->handle();
-        }
-
-        if (env('DB_SEEDS') != 'no') {
-            $this->DeviseSeedCommand->handle();
-        }
-
+        $this->DeviseMigrateCommand->handle();
+        $this->DeviseSeedCommand->handle();
         $this->DevisePublishAssetsCommand->handle();
 
-        if (env('CONFIGS_OVERRIDE') == 'yes') {
+        if ($this->env('APP_MIGRATIONS') != 'no') {
+            $this->Artisan->call('migrate');
+        }
+
+        if ($this->env('APP_SEEDS') != 'no') {
+            $this->Artisan->call('db:seed');
+        }
+
+        if ($this->env('CONFIGS_OVERRIDE') == 'yes') {
             $this->DevisePublishConfigsCommand->handle();
         }
     }
@@ -131,7 +135,6 @@ class DeviseInstallCommand extends Command
      */
     protected function setupEnvironment()
     {
-        $this->wizard()->refreshEnvironment();
         $default = $this->env('APP_ENV', 'local');
         $answer = $this->io()->ask("What environment is this? [{$default}]");
         $answer = $answer ?: $default;
@@ -152,8 +155,8 @@ class DeviseInstallCommand extends Command
         $name = $this->env('DB_DATABASE', 'devisephp');
         $user = $this->env('DB_USERNAME', 'root');
         $pass = $this->env('DB_PASSWORD', '');
-        $migrations = $this->env('DB_MIGRATIONS', 'yes');
-        $seeds = $this->env('DB_SEEDS', 'yes');
+        $migrations = $this->env('APP_MIGRATIONS', 'yes');
+        $seeds = $this->env('APP_SEEDS', 'yes');
         $configsOverride = $this->env('CONFIGS_OVERRIDE', 'yes');
 
         while ($databaseNotInstalled)
@@ -270,7 +273,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseMigrations($default)
     {
-        $answer = $this->io()->ask("Do you want to run database migrations? [{$default}]");
+        $answer = $this->io()->ask("Do you want to run the application's db migrations? [{$default}]");
         return $answer ?: $default;
     }
 
@@ -282,7 +285,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseSeeds($default)
     {
-        $answer = $this->io()->ask("Do you want to run database seeds? [{$default}]");
+        $answer = $this->io()->ask("Do you want to run the application's db seeds? [{$default}]");
         return $answer ?: $default;
     }
 

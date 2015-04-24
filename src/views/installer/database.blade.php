@@ -37,12 +37,12 @@
         </div>
 
         <div class="form-group tal">
-            <label>Run Seeds/Migrations?</label><br>
+            <label>Run Application Seeds/Migrations?</label><br>
             <div class="checkbox">
-                <label><input tabindex="6" type="checkbox" name="database_migrations" value="yes" <?= $checked('migrations') ?> /> Migrations</label>
+                <label><input tabindex="6" type="checkbox" name="app_migrations" value="yes" <?= $checked('migrations') ?> /> Migrations</label>
             </div>
             <div class="checkbox">
-                <label><input tabindex="7" type="checkbox" name="database_seeds" value="yes" <?= $checked('seeds') ?> />Seeds</label>
+                <label><input tabindex="7" type="checkbox" name="app_seeds" value="yes" <?= $checked('seeds') ?> />Seeds</label>
             </div>
         </div>
 

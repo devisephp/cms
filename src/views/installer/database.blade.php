@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group tal">
-            <label>Run Seeds/Migrations?</label><br>
+            <label>Run Application Seeds/Migrations?</label><br>
             <div class="checkbox">
                 <label><input tabindex="6" type="checkbox" name="database_migrations" value="yes" <?= $checked('migrations') ?> /> Migrations</label>
             </div>

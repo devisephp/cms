@@ -132,7 +132,7 @@ class InstallWizard
 
         // write "email" and "username" input values to env
         $this->EnvironmentFileManager->merge(['ADMIN_EMAIL' => $email]);
-        $this->EnvironmentFileManager->merge(['ADMIN_USERNAME' => $email]);
+        $this->EnvironmentFileManager->merge(['ADMIN_USERNAME' => $username]);
 
 		return $user;
 	}

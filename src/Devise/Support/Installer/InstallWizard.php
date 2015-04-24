@@ -314,7 +314,10 @@ class InstallWizard
 			'DB_HOST' => env('DB_HOST', 'localhost'),
 			'DB_DATABASE' => env('DB_DATABASE', 'forge'),
 			'DB_USERNAME' => env('DB_USERNAME', 'forge'),
-			'DB_PASSWORD' => env('DB_PASSWORD', ''),
+            'DB_PASSWORD' => env('DB_PASSWORD', ''),
+            'CONFIGS_OVERRIDE' => env('CONFIGS_OVERRIDE', ''),
+            'APP_MIGRATIONS' => env('APP_MIGRATIONS', ''),
+			'APP_SEEDS' => env('APP_SEEDS', ''),
 			'SESSION_DRIVER' => env('SESSION_DRIVER', 'file'),
 		], $settings);
 

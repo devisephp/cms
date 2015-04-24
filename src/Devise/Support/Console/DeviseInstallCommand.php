@@ -50,6 +50,7 @@ class DeviseInstallCommand extends Command
         $this->DeviseSeedCommand = new DeviseSeedCommand($this->app);
         $this->DevisePublishAssetsCommand = new DevisePublishAssetsCommand($this->app);
         $this->DevisePublishConfigsCommand = new DevisePublishConfigsCommand($this->app);
+        $this->Artisan = \Artisan::getFacadeRoot();
     }
 
     /**
@@ -57,10 +58,11 @@ class DeviseInstallCommand extends Command
      */
     public function handle()
     {
+        $this->wizard()->refreshEnvironment();
         $this->setupEnvironment();
         $this->setupDatabase();
-        list($email, $user, $pass) = $this->setupAdminUser();
         $this->wizard()->refreshEnvironment();
+        list($email, $user, $pass) = $this->setupAdminUser();
         $this->io()->comment('');
         $this->io()->comment("Please wait while devise is installing...");
         $this->io()->comment('');
@@ -82,15 +84,15 @@ class DeviseInstallCommand extends Command
         $this->DeviseSeedCommand->handle();
         $this->DevisePublishAssetsCommand->handle();
 
-        if (env('APP_MIGRATIONS') != 'no') {
-            \Artisan::call('migrate');
+        if ($this->env('APP_MIGRATIONS') != 'no') {
+            $this->Artisan->call('migrate');
         }
 
-        if (env('APP_SEEDS') != 'no') {
-            \Artisan::call('db:seed');
+        if ($this->env('APP_SEEDS') != 'no') {
+            $this->Artisan->call('db:seed');
         }
 
-        if (env('CONFIGS_OVERRIDE') == 'yes') {
+        if ($this->env('CONFIGS_OVERRIDE') == 'yes') {
             $this->DevisePublishConfigsCommand->handle();
         }
     }
@@ -133,7 +135,6 @@ class DeviseInstallCommand extends Command
      */
     protected function setupEnvironment()
     {
-        $this->wizard()->refreshEnvironment();
         $default = $this->env('APP_ENV', 'local');
         $answer = $this->io()->ask("What environment is this? [{$default}]");
         $answer = $answer ?: $default;

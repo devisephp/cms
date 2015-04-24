@@ -46,7 +46,6 @@ class DeviseInstallCommand extends Command
         $this->app = $app;
         $this->basePath = $this->app->basePath();
         $this->Config = $this->app->make('config');
-        $this->Artisan = \Artisan::getFacadeRoot();
         $this->DeviseMigrateCommand = new DeviseMigrateCommand($this->app);
         $this->DeviseSeedCommand = new DeviseSeedCommand($this->app);
         $this->DevisePublishAssetsCommand = new DevisePublishAssetsCommand($this->app);
@@ -84,11 +83,11 @@ class DeviseInstallCommand extends Command
         $this->DevisePublishAssetsCommand->handle();
 
         if (env('APP_MIGRATIONS') != 'no') {
-            $this->Artisan->call('migrate');
+            \Artisan::call('migrate');
         }
 
         if (env('APP_SEEDS') != 'no') {
-            $this->Artisan->call('db:seed');
+            \Artisan::call('db:seed');
         }
 
         if (env('CONFIGS_OVERRIDE') == 'yes') {

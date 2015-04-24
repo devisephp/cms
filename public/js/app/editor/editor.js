@@ -207,12 +207,6 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
                 e.preventDefault();
             });
 
-            // put the nodes inside of the iframe body
-            body.append(editor.createNodesView());
-            editor.iframeBodyView = body;
-            editor.nodesView = body.find('#dvs-nodes');
-            editor.recalculateNodePositions();
-
             // in case the iframe is reloaded, we need to check for these
             // classes for the nodes to show up properly
             if (editor.showingSidebar) body.addClass('dvs-sidebar-mode');
@@ -229,6 +223,12 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
 
             // apply the bindings now
             editor.bindings.apply();
+
+            // put the nodes inside of the iframe body
+            body.append(editor.createNodesView());
+            editor.iframeBodyView = body;
+            editor.nodesView = body.find('#dvs-nodes');
+            editor.recalculateNodePositions();
 
             // sets the iframe up so we can control it's content
             LiveUpdater.setup(iframe, editor.bindings);

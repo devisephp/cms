@@ -1,5 +1,17 @@
 devise.define(['jquery'], function($) {
 
+    var nodeHeight = 82;
+
+    /**
+     * We need to set the nodeHeight to calculate
+     * offsets.
+     */
+    function setNodeHeight(nodesView) 
+    {
+
+        nodeHeight = nodesView.children().first().children('.dvs-node-inner-wrapper').height();
+    }
+
     /**
      * This calculates the node positions for all
      * the nodes inside of the nodesData
@@ -73,7 +85,7 @@ devise.define(['jquery'], function($) {
         coordinates = placeholder.offset();
         placeholder.hide();
 
-        if (typeof coordinates === 'object' && coordinates.top) return coordinates;
+        // if (typeof coordinates === 'object' && coordinates.top) return coordinates;
 
         return getCoordinatesFromParent(placeholder);
     }
@@ -138,8 +150,6 @@ devise.define(['jquery'], function($) {
      */
     function hasNodeCollision(node1, node2)
     {
-        var nodeHeight = 82;
-
         if (node1.position.side != node2.position.side) return false;
 
         return Math.abs(node1.position.top - node2.position.top) < nodeHeight;
@@ -150,7 +160,7 @@ devise.define(['jquery'], function($) {
      */
     function solveNodeCollision(node1, node2)
     {
-        return Math.abs(node1.position.top - node2.position.top);
+        return nodeHeight;
     }
 
     /**
@@ -185,9 +195,11 @@ devise.define(['jquery'], function($) {
     return {
     	recalculateNodePositions: function(nodesView, nodesData)
     	{
+            setNodeHeight(nodesView);
             calculateNodePositions(nodesView, nodesData);
             solveNodeCollisions(nodesView, nodesData);
             adjustNodeDOMPositions(nodesView, nodesData);
+
     	}
 	};
 

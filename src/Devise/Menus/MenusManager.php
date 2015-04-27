@@ -112,21 +112,21 @@ class MenusManager
 	{
         $validator = $this->Validator->make($input, $this->updateRules($id));
 
-        if ($validator->fails()){
+        if ($validator->fails())
+        {
             $this->message = 'Validation failure.';
             $this->errors = $validator->errors()->all();
 
             return false;
-        } else {
-
-    		$menu = $this->Menu->findOrFail($id);
-    		$menu->name = $input['name'];
-    		$menu->save();
-
-    		$this->syncMenuItems($menu, $input);
-
-    		return $menu;
         }
+
+		$menu = $this->Menu->findOrFail($id);
+		$menu->name = $input['name'];
+		$menu->save();
+
+		$this->syncMenuItems($menu, $input);
+
+		return $menu;
 	}
 
     /**
@@ -142,36 +142,44 @@ class MenusManager
 	{
 		$position = 0;
 
-		if (isset($input['item'])) {
-			list($items, $order) = $this->createNewMenuItems($menu, $input['item'], $input['item_order']);
+		if (!isset($input['item']) )
+		{
+			$input['item'] = array();
+		}
 
-			// sync up all the menu item data
-			foreach ($items as $id => $item) {
-				$menuItem = $this->MenuItem->findOrFail($id);
+		if (!isset($input['item_order']))
+		{
+			$input['item_order'] = array();
+		}
 
-				if (isset($item['image'])) {
-					$menuItem->image = $item['image'];
-				}
-				if (isset($item['url_or_page']) && $item['url_or_page'] !== 'page') {
-					$item['page_id'] = NULL;
-				}
+		list($items, $order) = $this->createNewMenuItems($menu, $input['item'], $input['item_order']);
 
-				$menuItem->parent_item_id = $order[$id] ?: null;
-				$menuItem->url = $item['url'];
-				$menuItem->page_id = $item['page_id'];
-				$menuItem->name = $item['name'];
-				$menuItem->position = $position++;
-				$menuItem->permission = array_get($item, 'permission', null);
-				$menuItem->save();
+		// sync up all the menu item data
+		foreach ($items as $id => $item) {
+			$menuItem = $this->MenuItem->findOrFail($id);
+
+			if (isset($item['image'])) {
+				$menuItem->image = $item['image'];
+			}
+			if (isset($item['url_or_page']) && $item['url_or_page'] !== 'page') {
+				$item['page_id'] = NULL;
 			}
 
-			// user removed these menu items so let's remove in database
-			$removeItems = array_diff($menu->allItems()->lists('id'), array_keys($items));
+			$menuItem->parent_item_id = $order[$id] ?: null;
+			$menuItem->url = $item['url'];
+			$menuItem->page_id = $item['page_id'];
+			$menuItem->name = $item['name'];
+			$menuItem->position = $position++;
+			$menuItem->permission = array_get($item, 'permission', null);
+			$menuItem->save();
+		}
 
-			foreach ($removeItems as $removeItem) {
-				$item = $this->MenuItem->find($removeItem);
-				if ($item) $item->delete();
-			}
+		// user removed these menu items so let's remove in database
+		$removeItems = array_diff($menu->allItems()->lists('id'), array_keys($items));
+
+		foreach ($removeItems as $removeItem) {
+			$item = $this->MenuItem->find($removeItem);
+			if ($item) $item->delete();
 		}
 	}
 

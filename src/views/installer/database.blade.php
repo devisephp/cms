@@ -36,24 +36,6 @@
             <input tabindex="5" type="text" class="form-control" name="database_password" placeholder="Database Password" value="<?= $database->password ?>">
         </div>
 
-        <div class="form-group tal">
-            <label>Run Application Seeds/Migrations?</label><br>
-            <div class="checkbox">
-                <label><input tabindex="6" type="checkbox" name="app_migrations" value="yes" <?= $checked('migrations') ?> /> Migrations</label>
-            </div>
-            <div class="checkbox">
-                <label><input tabindex="7" type="checkbox" name="app_seeds" value="yes" <?= $checked('seeds') ?> />Seeds</label>
-            </div>
-        </div>
-
-         <div class="dvs-form-group tal">
-            <label>Override All Devise Configs? (If you're unsure leave "on")</label><br>
-            <div class="fancyCheckbox">
-                <input tabindex="4" type="checkbox" name="configs_override" value="yes" id="configs-override" <?= $checked('configs_override') ?> />
-                <label for="configs-override">&nbsp;</label>
-            </div><br><br>
-        </div>
-
         <div class="form-group dvs-form-actions mt sp30">
             <button tabindex="8" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
             <button tabindex="9" class="next dvs-button-success dvs-button">Next</button>

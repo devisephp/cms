@@ -83,6 +83,18 @@ class InstallWizardTest extends \DeviseTestCase
         $this->assertNull( $this->InstallWizard->saveEnvironment('production') );
 	}
 
+    public function test_it_saves_migrations_and_seeds()
+    {
+        $this->markTestIncomplete();
+        //saveApplicationMigrationAndSeedSettings
+    }
+
+    public function test_it_saves_application_namespace()
+    {
+        $this->markTestIncomplete();
+        //saveApplicationNamespace
+    }
+
 	public function test_it_saves_database()
 	{
         $this->Framework->Config->shouldReceive('set');
@@ -97,7 +109,7 @@ class InstallWizardTest extends \DeviseTestCase
             ->once()
             ->andReturnNull();
 
-		$output = $this->InstallWizard->saveDatabase('sqlite', ':memory:', 'testDB', 'root', '', 'yes', 'yes');
+		$output = $this->InstallWizard->saveDatabase('sqlite', ':memory:', 'testDB', 'root', '');
 
         $this->assertNull($output);
 	}

@@ -61,11 +61,15 @@ class DeviseInstallCommand extends Command
         $this->wizard()->refreshEnvironment();
         $this->setupEnvironment();
         $this->setupDatabase();
+        $this->setupConfigOverrides();
+        $this->setupAppName();
         $this->wizard()->refreshEnvironment();
+
         list($email, $user, $pass) = $this->setupAdminUser();
         $this->io()->comment('');
         $this->io()->comment("Please wait while devise is installing...");
         $this->io()->comment('');
+
         $this->runInstallCommands();
         $this->wizard()->createAdminUser($email, $user, $pass);
     }
@@ -94,6 +98,10 @@ class DeviseInstallCommand extends Command
 
         if ($this->env('CONFIGS_OVERRIDE') == 'yes') {
             $this->DevisePublishConfigsCommand->handle();
+        }
+
+        if ($this->env('APP_NAME')) {
+            $this->Artisan->call('app:name', [ 'name' => $this->env('APP_NAME') ]);
         }
     }
 
@@ -140,7 +148,21 @@ class DeviseInstallCommand extends Command
         $answer = $answer ?: $default;
         $this->wizard()->saveEnvironment($answer);
         $this->io()->comment('');
-        return $answer ?: $default;
+        return $answer;
+    }
+
+    /**
+     * [setupAppName description]
+     * @return [type]
+     */
+    protected function setupAppName()
+    {
+        $default = $this->env('APP_NAME', 'App');
+        $answer = $this->io()->ask("What is your Application name? [{$default}]");
+        $answer = $answer ?: $default;
+        $this->wizard->saveApplicationNamespace($default);
+        $this->io()->comment('');
+        return $answer;
     }
 
     /**
@@ -157,7 +179,6 @@ class DeviseInstallCommand extends Command
         $pass = $this->env('DB_PASSWORD', '');
         $migrations = $this->env('APP_MIGRATIONS', 'yes');
         $seeds = $this->env('APP_SEEDS', 'yes');
-        $configsOverride = $this->env('CONFIGS_OVERRIDE', 'yes');
 
         while ($databaseNotInstalled)
         {
@@ -168,9 +189,9 @@ class DeviseInstallCommand extends Command
             $pass = $this->io()->askAboutDatabasePass($pass);
             $migrations = $this->io()->askAboutDatabaseMigrations($migrations);
             $seeds = $this->io()->askAboutDatabaseSeeds($seeds);
-            $configsOverride = $this->io()->askAboutConfigsOverride($configsOverride);
-            $this->wizard()->saveConfigsOverride($configsOverride);
-            $this->wizard()->saveDatabase($type, $host, $name, $user, $pass, $migrations, $seeds);
+
+            $this->wizard()->saveDatabase($type, $host, $name, $user, $pass);
+            $this->wizard()->saveApplicationMigrationAndSeedSettings($migrations, $seeds);
 
             if ($this->wizard()->errors)
             {
@@ -183,6 +204,20 @@ class DeviseInstallCommand extends Command
                 $databaseNotInstalled = false;
             }
         }
+
+        $this->io()->comment('');
+    }
+
+    /**
+     * [setupConfigOverrides description]
+     * @return [type]
+     */
+    protected function setupConfigOverrides()
+    {
+        $default = $this->env('CONFIGS_OVERRIDE', 'yes');
+        $answer = $this->io()->ask("Do you want override all Devise configs? [{$default}]");
+        $answer = $answer ?: $default;
+        $this->wizard()->saveConfigsOverride($answer);
         $this->io()->comment('');
     }
 
@@ -194,7 +229,7 @@ class DeviseInstallCommand extends Command
     {
         $email = "no-reply@devisephp.com";
         $user = "devise";
-        $pass = "secret";
+        $pass = "password";
         $email = $this->io()->ask("Admin email [{$email}]") ?: $email;
         $user = $this->io()->ask("Admin username [{$user}]") ?: $user;
         $pass = $this->io()->ask("Admin password [{$pass}]") ?: $pass;
@@ -286,18 +321,6 @@ class DeviseInstallCommand extends Command
     protected function askAboutDatabaseSeeds($default)
     {
         $answer = $this->io()->ask("Do you want to run the application's db seeds? [{$default}]");
-        return $answer ?: $default;
-    }
-
-    /**
-     * Prompt for publish/override all Devise configs
-     *
-     * @param  boolean $default
-     * @return boolean
-     */
-    protected function askAboutConfigsOverride($default)
-    {
-        $answer = $this->io()->ask("Do you want override all Devise configs? [{$default}]");
         return $answer ?: $default;
     }
 

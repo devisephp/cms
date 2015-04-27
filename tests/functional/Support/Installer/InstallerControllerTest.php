@@ -80,6 +80,16 @@ class InstallerControllerTest extends \DeviseTestCase
         $this->InstallerController->postDatabase();
     }
 
+    public function test_it_gets_application()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_it_posts_application()
+    {
+        $this->markTestIncomplete();
+    }
+
     public function test_it_gets_create_user()
     {
         $this->Framework->Input->shouldReceive('old')->andReturn('foo@email.com');

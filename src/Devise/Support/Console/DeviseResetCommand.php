@@ -23,8 +23,12 @@ class DeviseResetCommand extends Command
      *
      * @param string
      */
-    protected $description = 'Resets a project by dropping db tables and running migrations and seeds for Devise and then the application. All configs and files are left untouched';
+    protected $description = 'Remove database and re-run all migrations and seeds. Configs are untouched';
 
+    /**
+     * [$excludeTables description]
+     * @var array
+     */
     protected $excludeTables = array();
 
     /**

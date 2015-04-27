@@ -13,6 +13,9 @@ class InstallerController extends Controller
 	 */
 	public function __construct(Framework $Framework, InstallWizard $InstallWizard)
 	{
+        // needed because namespace *could* change sometimes
+		$Framework->Config->set('auth.model', 'DvsUser');
+
 		$this->InstallWizard = $InstallWizard;
         $this->Auth = $Framework->Auth;
 		$this->Input = $Framework->Input;
@@ -127,24 +130,13 @@ class InstallerController extends Controller
 		$database->name = $this->Input->old('database_name', env('DB_DATABASE'));
 		$database->username = $this->Input->old('database_username', env('DB_USERNAME'));
         $database->password = $this->Input->old('database_password', env('DB_PASSWORD'));
-        $database->migrations = $this->Input->old('app_migrations', env('APP_MIGRATIONS'));
-        $database->seeds = $this->Input->old('app_seeds', env('APP_SEEDS'));
-        $configsOverride = $this->Input->old('configs_override', env('CONFIGS_OVERRIDE'));
 
         $selected = function($type, $yes = 'selected', $no = '') use ($database)
         {
             return $type == $database->type ? $yes : $no;
         };
 
-        $checked = function($fieldname, $yes = 'checked', $no = '') use ($database, $configsOverride)
-        {
-            if (isset($database->$fieldname)) {
-                return $database->$fieldname == 'no' ? $no : $yes;
-            }
-            return $configsOverride == 'no' ? $no : $yes;
-		};
-
-		return $this->View->make('devise::installer.database', compact('database', 'selected', 'checked'));
+		return $this->View->make('devise::installer.database', compact('database', 'selected'));
 	}
 
 	/**
@@ -159,13 +151,8 @@ class InstallerController extends Controller
 		$name = $this->Input->get('database_name');
 		$username = $this->Input->get('database_username');
 		$password = $this->Input->get('database_password');
-        $migrations = $this->Input->get('app_migrations', 'no');
-        $seeds = $this->Input->get('app_seeds', 'no');
-        $configsOverride = $this->Input->get('configs_override', 'no');
 
-        $this->InstallWizard->saveConfigsOverride($configsOverride);
-
-		$this->InstallWizard->saveDatabase($type, $host, $name, $username, $password, $migrations, $seeds);
+		$this->InstallWizard->saveDatabase($type, $host, $name, $username, $password);
 
 		if ($this->InstallWizard->errors)
 		{
@@ -175,6 +162,56 @@ class InstallerController extends Controller
             			->with('message-errors', 'Error')
             			->withInput();
 		}
+
+		return $this->Redirect->to('install/application');
+	}
+
+	/**
+	 * Sets up the application
+	 *
+	 * @return Response
+	 */
+	public function getApplication()
+	{
+		$appName = $this->Input->old('app_name', env('APP_NAME', 'App'));
+        $migrations = $this->Input->old('app_migrations', env('APP_MIGRATIONS'));
+        $seeds = $this->Input->old('app_seeds', env('APP_SEEDS'));
+        $configsOverride = $this->Input->old('configs_override', env('CONFIGS_OVERRIDE'));
+        $checked = function($fieldname, $yes = 'checked', $no = '') use ($migrations, $seeds, $configsOverride)
+        {
+        	switch ($fieldname)
+        	{
+        		case 'migrations': return $migrations === 'yes' ? $yes : $no;
+        		case 'seeds': return $seeds === 'yes' ? $yes : $no;
+        		case 'configs_override': return $configsOverride === 'yes' ? $yes : $no;
+        	}
+
+            return $no;
+		};
+
+		return $this->View->make('devise::installer.application', compact('appName', 'migrations', 'seeds', 'configsOverride', 'checked'));
+	}
+
+	/**
+	 * Save the application setup
+	 *
+	 * @return Redirect
+	 */
+	public function postApplication()
+	{
+		$appName = $this->Input->get('app_name', 'App');
+
+        $migrations = $this->Input->get('app_migrations', 'no');
+
+        $seeds = $this->Input->get('app_seeds', 'no');
+
+        $configsOverride = $this->Input->get('configs_override', 'no');
+
+        $this->InstallWizard->saveConfigsOverride($configsOverride);
+
+		$this->InstallWizard->saveApplicationMigrationAndSeedSettings($migrations, $seeds);
+
+		$this->InstallWizard->saveApplicationNamespace($appName);
 
 		return $this->Redirect->to('install/create-user');
 	}

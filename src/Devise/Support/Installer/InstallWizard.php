@@ -168,6 +168,18 @@ class InstallWizard
 	}
 
 	/**
+	 * Saves this app name
+	 *
+	 * @param  string $appName
+	 * @return void
+	 */
+	public function saveApplicationNamespace($appName)
+	{
+		$appName = $appName ?: 'App';
+		$this->EnvironmentFileManager->merge(['APP_NAME' => $appName]);
+	}
+
+	/**
 	 * Saves the environment for us
 	 *
 	 * @param  string $env
@@ -187,6 +199,21 @@ class InstallWizard
 	}
 
 	/**
+	 * Save the migration and seed settings
+	 *
+	 * @param  [type] $migrations
+	 * @param  [type] $seeds
+	 * @return [type]
+	 */
+	public function saveApplicationMigrationAndSeedSettings($migrations, $seeds)
+	{
+		$this->EnvironmentFileManager->merge([
+            'APP_MIGRATIONS' => $migrations,
+            'APP_SEEDS' => $seeds
+		]);
+	}
+
+	/**
 	 * Saves the database settings for us
 	 *
 	 * @param  string $default
@@ -194,11 +221,9 @@ class InstallWizard
 	 * @param  string $name
 	 * @param  string $username
      * @param  string $password
-     * @param  string $migrations
-     * @param  string $seeds
 	 * @return
 	 */
-	public function saveDatabase($default, $host, $name, $username, $password, $migrations, $seeds)
+	public function saveDatabase($default, $host, $name, $username, $password)
 	{
 		$settings = [
 			'DB_DEFAULT' => $default,
@@ -206,8 +231,6 @@ class InstallWizard
 			'DB_DATABASE' => $name,
 			'DB_USERNAME' => $username,
             'DB_PASSWORD' => $password,
-            'APP_MIGRATIONS' => $migrations,
-            'APP_SEEDS' => $seeds
 		];
 
 		// no errors at the moment
@@ -306,6 +329,7 @@ class InstallWizard
 		];
 
 		$merged = array_merge([
+			'APP_NAME' => env('APP_NAME', 'App'),
 			'APP_ENV' => env('APP_ENV', 'local'),
 			'APP_DEBUG' => env('APP_DEBUG'),
 			'APP_KEY' => env('APP_KEY', 'SomeRandomString'),

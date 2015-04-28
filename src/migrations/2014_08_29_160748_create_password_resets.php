@@ -11,11 +11,31 @@ class CreatePasswordResets extends Migration {
      */
     public function up()
     {
-        Schema::create('password_resets', function($table) {
-            $table->string('email', 255);
-            $table->string('token', 255);
-            $table->timestamp('created_at')->default('0000-00-00 00:00:00');
-        });
+        if (!Schema::hasTable('password_resets'))
+        {
+            Schema::create('password_resets', function($table) {
+                $table->string('email', 255);
+                $table->string('token', 255);
+                $table->timestamp('created_at')->default('0000-00-00 00:00:00');
+            });
+        }
+        else
+        {
+            Schema::table('password_resets', function($table)
+            {
+                if (!Schema::hasColumn('password_resets', 'email')) {
+                    $table->string('email', 255);
+                }
+
+                if (!Schema::hasColumn('password_resets', 'token')) {
+                    $table->string('token', 255);
+                }
+
+                if (!Schema::hasColumn('password_resets', 'created_at')) {
+                    $table->timestamp('created_at')->default('0000-00-00 00:00:00');
+                }
+            });
+        }
     }
 
     /**

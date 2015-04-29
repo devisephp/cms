@@ -571,21 +571,6 @@ class DevisePagesSeeder extends DeviseSeeder
             ),
             array(
                 'language_id'             => '45',
-                'title'                   => 'Finds all content requested fields',
-                'http_verb'               => 'get',
-                'route_name'              => 'dvs-fields-content-requested',
-                'is_admin'                => '1',
-                'dvs_admin'               => '1',
-                'before'                  => 'canUseDeviseEditor',
-                'after'                   => '',
-                'slug'                    => '/admin/fields/content-requested/{pageVersionId}',
-                'short_description'       => 'Finds all fields which are flagged as \"content requested\" for a given page version id',
-                'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Fields\FieldsRepository.findContentRequestedFieldsList',
-                'response_params'         => 'params.pageVersionId'
-            ),
-            array(
-                'language_id'             => '45',
                 'view'                    => 'devise::admin.media.manager',
                 'title'                   => 'Media Manager',
                 'http_verb'               => 'get',

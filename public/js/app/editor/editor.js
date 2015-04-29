@@ -170,9 +170,11 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
 
         iframe.load(function()
         {
+            var contentWindow = this.contentWindow;
+
             setTimeout(function()
             {
-                var url = this.contentWindow.location.href;
+                var url = contentWindow.location.href;
 
                 // if you find the url has been reloaded to
                 // something that doesn't have start-editor in it, then
@@ -215,13 +217,13 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
                 if (editor.showingEditor) body.addClass('dvs-node-mode');
 
                 // copy over the database fields for live updates
-                editor.data.database = this.contentWindow.devise.dvsPageData.database;
+                editor.data.database = contentWindow.devise.dvsPageData.database;
 
                 // create a finder on this editor
                 editor.finder = new BindingsFinder(editor.data.database)
 
                 // find all the bindings
-                editor.bindings = editor.finder.find(this.contentWindow.document.children[0]);
+                editor.bindings = editor.finder.find(contentWindow.document.children[0]);
 
                 // apply the bindings now
                 editor.bindings.apply();

@@ -98,9 +98,9 @@ devise.define(['jquery', 'scrollTo', 'localScroll'], function($) {
             addTocListener();
             addTocScrollTos();
 
-            //if (show === 'true') {
+            if (show === 'true') {
                 openDocs();
-            //}
+            }
         }
     };
 

@@ -52,6 +52,7 @@ devise.define(['jquery', 'scrollTo', 'localScroll'], function($) {
     var addOpenListener = function()
     {
         $('.dvs-document').click(openDocs);
+        $('[data-dvs-document]').click(openDocs);
     };
 
     var addTocListener = function()
@@ -97,9 +98,9 @@ devise.define(['jquery', 'scrollTo', 'localScroll'], function($) {
             addTocListener();
             addTocScrollTos();
 
-            if (show === 'true') {
+            //if (show === 'true') {
                 openDocs();
-            }
+            //}
         }
     };
 

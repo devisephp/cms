@@ -6019,3 +6019,27 @@ html.dz-drag-hover body {
     border-color: #167b73; }
     #dvs-admin .app-blogs.dvs-admin-card:hover .dvs-card-top {
       background-color: #167b73; }
+
+/* Documentation Specific Styles */
+#devise-documentation-container h1 {
+  padding: 0;
+  font-size: 16px; }
+#devise-documentation-container h2 {
+  padding: 0;
+  font-size: 15px; }
+#devise-documentation-container h3 {
+  padding: 0;
+  font-size: 14px; }
+#devise-documentation-container h4 {
+  padding: 0;
+  font-size: 13px; }
+#devise-documentation-container p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 12px; }
+
+.dvs-document-button:before {
+  content: '?';
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer; }

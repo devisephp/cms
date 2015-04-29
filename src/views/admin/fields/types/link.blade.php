@@ -1,13 +1,13 @@
 <h3>Link</h3>
 
-<a data-devise="link1, link, Link" href="<?= $page->link1->url ?>" target="<?= $page->link1->target ?>">
-    <?= $page->link1->text ?>
+<a data-devise="link1, link, Link" href="<?= $page->link1->url('http://google.com') ?>" target="<?= $page->link1->target('_self') ?>">
+    <?= $page->link1->text('Edit me cause I just go to google') ?>
 </a>
 
 <pre class="devise-code-snippet"><code class="html">
 <?= htmlentities('
-<a data-devise="link1, link, Link" href="{{ $page->link1->url }}" target="{{ $page->link1->target }}">
-    {{ $page->link1->text }}
+<a data-devise="link1, link, Link" href="{{ $page->link1->url() }}" target="{{ $page->link1->target() }}">
+    {{ $page->link1->text() }}
 </a>
 ') ?>
 </code></pre>

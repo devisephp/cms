@@ -18,7 +18,7 @@
 		@endforeach
 
         @foreach ($values as $key => $value)
-            @if (!isset($descriptions[$key]))
+            @if (!isset($descriptions[$key]) && !is_object($value))
                 <tr>
                     <td><?= $key ?></td>
                     <td>No description found for this attribute</td>

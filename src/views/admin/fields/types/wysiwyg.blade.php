@@ -1,7 +1,5 @@
 <h3>Wysiwyg</h3>
 
-<p style="font-style: italic;">Adding images insdie of wysiwyg not currently working</p>
-
 <div data-devise="wysiwyg1, wysiwyg, Wysiwyg">
 	<?= $page->wysiwyg1->text ?>
 </div>

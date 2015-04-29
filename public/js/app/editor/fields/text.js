@@ -1,30 +1,34 @@
 devise.define(['require', 'jquery'], function (require, $) {
 
-    function addMaxLengthInputBinding(maxlengthInput, textInput) {
-        maxlengthInput.bind('input', function () {
-            var val = $(this).val();
-            if (val !== '') {
-                if (!isNaN(val)) {
-                    $(this).val(parseInt(val));
-                    textInput.attr('maxlength', parseInt(val));
-                    if (textInput.val().length > val) {
-                        // maxlength is shorter than current value cut off the extra characters
-                        textInput.val(textInput.val().substring(0, val));
-                    }
-                } else {
-                    var previousValue = val.substring(0, val.length - 1);
-                    if (!isNaN(previousValue)) {
-                        $(this).val(previousValue);
-                    } else {
-                        //something went wrong current maxlength
-                        $(this).val(textInput.attr('maxlength'));
-                    }
-                }
-            } else {
-                //user trying to clear field current maxlength
-                $(this).val(textInput.attr('maxlength'));
-            }
+
+    var timeoutId = null;
+    var maxLengthValue = null;
+    var maxlengthInput = null;
+    var textInput = null;
+
+    function addMaxLengthInputBinding() {
+        maxlengthInput.bind('keyup', function () {
+            
+            clearUpdateTimeout();
+            
+            maxLengthValue = $(this).val();
+                        
+            if (maxLengthValue !== '' && !isNaN(maxLengthValue)) {
+                timeoutId = window.setTimeout(updateTextInput, 1000);
+            } 
         });
+    }
+
+    function updateTextInput() {
+        textInput.attr('maxlength', parseInt(maxLengthValue));
+        if (textInput.val().length > maxLengthValue) {
+            // maxlength is shorter than current maxLengthValue cut off the extra characters
+            textInput.val(textInput.val().substring(0, maxLengthValue));
+        }
+    }
+
+    function clearUpdateTimeout() {
+        window.clearTimeout(timeoutId);
     }
 
     return {
@@ -33,10 +37,10 @@ devise.define(['require', 'jquery'], function (require, $) {
             $('form.dvs-element-text').each(function () {
 
                 var parentForm = $(this);
-                var textInput = parentForm.find('input[name="text"]');
-                var maxlengthInput = parentForm.find('input[name="maxlength"]');
+                textInput = parentForm.find('input[name="text"]');
+                maxlengthInput = parentForm.find('input[name="maxlength"]');
 
-                addMaxLengthInputBinding(maxlengthInput, textInput);
+                addMaxLengthInputBinding();
             });
         }
     };

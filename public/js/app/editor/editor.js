@@ -63,6 +63,11 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
         $.each(this.data.nodes, function(index, node)
         {
             var nodeView = View.make('editor.node', {id: node.cid + '-node', cid: index, node: node});
+            
+            if (node.data.content_requested == 1) {
+                nodeView.addClass('dvs-content-requested');
+            }   
+            
             nodesView.append(nodeView);
         });
 

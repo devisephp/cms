@@ -14,7 +14,6 @@
 			var dvsPageData = <?= App::make('dvsPageData')->toJSON() ?>;
 
 			dvsPageData.urls = {};
-			dvsPageData.urls.content_requested = "<?= route('dvs-fields-content-requested', $page->version->id) ?>";
 			dvsPageData.urls.add_collection_instance = "<?= route('dvs-collection-instance-add', [':pageVersionId', ':collectionId']) ?>";
             dvsPageData.urls.remove_collection_instance = "<?= route('dvs-collection-instance-delete', [':collectionId', ':id']) ?>";
 			dvsPageData.urls.update_collection_instance = "<?= route('dvs-collection-instance-update-name', [':pageVersionId', ':collectionId', ':id']) ?>";

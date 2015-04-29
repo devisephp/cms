@@ -1,4 +1,4 @@
-<form id="dvs-sidebar-field-form">
+<form id="dvs-sidebar-field-form" class="dvs-element-text">
 	<div class="dvs-editor-values">
 
         <div class="dvs-property">
@@ -18,3 +18,8 @@
 		<div data-view="reset-values"></div>
     </div>
 </form>
+
+
+{{#script}}
+    devise.require(['app/editor/fields/text'], function(obj) { obj.init(); });
+{{/script}}

@@ -63,6 +63,11 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
         $.each(this.data.nodes, function(index, node)
         {
             var nodeView = View.make('editor.node', {id: node.cid + '-node', cid: index, node: node});
+            
+            if (node.data.content_requested == 1) {
+                nodeView.addClass('dvs-content-requested');
+            }   
+            
             nodesView.append(nodeView);
         });
 
@@ -170,68 +175,73 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
 
         iframe.load(function()
         {
-            var url = this.contentWindow.location.href;
+            var contentWindow = this.contentWindow;
 
-            // if you find the url has been reloaded to
-            // something that doesn't have start-editor in it, then
-            // reload this page's url to iframe's url
-            if (url.indexOf('start-editor=false') === -1)
+            setTimeout(function()
             {
-                window.location.href = url;
-                return;
-            }
+                var url = contentWindow.location.href;
 
-            // since this url is part of the editor
-            // we need to show our iframe. this is here
-            // so we don't get any "flashing" on invalid
-            // editor links
-            iframe.show();
+                // if you find the url has been reloaded to
+                // something that doesn't have start-editor in it, then
+                // reload this page's url to iframe's url
+                if (url.indexOf('start-editor=false') === -1)
+                {
+                    window.location.href = url;
+                    return;
+                }
 
-            // give all <a> tags a target to the top parent frame
-            // if new <a> links are added later via javascript
-            // the start-editor=false redirect (see above) will
-            // catch it
-            iframe.contents().find('a').each(function(index, el){
-                $(el).attr('target', '_top');
+                // since this url is part of the editor
+                // we need to show our iframe. this is here
+                // so we don't get any "flashing" on invalid
+                // editor links
+                iframe.show();
+
+                // give all <a> tags a target to the top parent frame
+                // if new <a> links are added later via javascript
+                // the start-editor=false redirect (see above) will
+                // catch it
+                iframe.contents().find('a').each(function(index, el){
+                    $(el).attr('target', '_top');
+                });
+
+                // check for form submissions, and when we find one
+                // we actually take the form out of the iframe, and submit
+                // it via the parent frame, so that it won't be submitted
+                // inside of the iframe...
+                var body = iframe.contents().find('body');
+
+                body.on('submit', 'form', function(e)
+                {
+                    console.log('submitting form', e);
+                    e.preventDefault();
+                });
+
+                // in case the iframe is reloaded, we need to check for these
+                // classes for the nodes to show up properly
+                if (editor.showingSidebar) body.addClass('dvs-sidebar-mode');
+                if (editor.showingEditor) body.addClass('dvs-node-mode');
+
+                // copy over the database fields for live updates
+                editor.data.database = contentWindow.devise.dvsPageData.database;
+
+                // create a finder on this editor
+                editor.finder = new BindingsFinder(editor.data.database)
+
+                // find all the bindings
+                editor.bindings = editor.finder.find(contentWindow.document.children[0]);
+
+                // apply the bindings now
+                editor.bindings.apply();
+
+                // put the nodes inside of the iframe body
+                body.append(editor.createNodesView());
+                editor.iframeBodyView = body;
+                editor.nodesView = body.find('#dvs-nodes');
+                editor.recalculateNodePositions();
+
+                // sets the iframe up so we can control it's content
+                LiveUpdater.setup(iframe, editor.bindings, editor.data.database);
             });
-
-            // check for form submissions, and when we find one
-            // we actually take the form out of the iframe, and submit
-            // it via the parent frame, so that it won't be submitted
-            // inside of the iframe...
-            var body = iframe.contents().find('body');
-
-            body.on('submit', 'form', function(e)
-            {
-                console.log('submitting form', e);
-                e.preventDefault();
-            });
-
-            // in case the iframe is reloaded, we need to check for these
-            // classes for the nodes to show up properly
-            if (editor.showingSidebar) body.addClass('dvs-sidebar-mode');
-            if (editor.showingEditor) body.addClass('dvs-node-mode');
-
-            // copy over the database fields for live updates
-            editor.data.database = this.contentWindow.devise.dvsPageData.database;
-
-            // create a finder on this editor
-            editor.finder = new BindingsFinder(editor.data.database)
-
-            // find all the bindings
-            editor.bindings = editor.finder.find(this.contentWindow.document.children[0]);
-
-            // apply the bindings now
-            editor.bindings.apply();
-
-            // put the nodes inside of the iframe body
-            body.append(editor.createNodesView());
-            editor.iframeBodyView = body;
-            editor.nodesView = body.find('#dvs-nodes');
-            editor.recalculateNodePositions();
-
-            // sets the iframe up so we can control it's content
-            LiveUpdater.setup(iframe, editor.bindings, editor.data.database);
         });
 
         iframe.attr('src', query.append('start-editor', 'false', location.href));

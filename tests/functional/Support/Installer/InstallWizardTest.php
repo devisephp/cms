@@ -85,14 +85,15 @@ class InstallWizardTest extends \DeviseTestCase
 
     public function test_it_saves_migrations_and_seeds()
     {
-        $this->markTestIncomplete();
-        //saveApplicationMigrationAndSeedSettings
+        $this->EnvironmentFileManager->shouldReceive('merge')->once()->andReturnSelf();
+        $this->InstallWizard->saveApplicationMigrationAndSeedSettings('yes','yes');
     }
 
     public function test_it_saves_application_namespace()
     {
-        $this->markTestIncomplete();
-        //saveApplicationNamespace
+        $appName = 'Test';
+        $this->EnvironmentFileManager->shouldReceive('merge')->with(['APP_NAME' => $appName])->once()->andReturnSelf();
+        $this->InstallWizard->saveApplicationNamespace($appName);
     }
 
 	public function test_it_saves_database()

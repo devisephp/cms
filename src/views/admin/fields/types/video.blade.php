@@ -1,7 +1,5 @@
 <h3>Video</h3>
 
-<p style="font-style: italic;">This field is still under development so it does not currently work as expected</p>
-
 <video data-devise="video1, video, Video" id="example_video_1" style="clear:both" class="video-js vjs-default-skin"
     controls preload="auto"
     poster="<?= $page->video1->poster_image ?>"

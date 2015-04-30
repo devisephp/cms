@@ -1,4 +1,4 @@
-<?php namespace Devise\Pages\Fields;
+<?php namespace Devise\Pages\Fields\Handlers;
 
 use Devise\Media\Images\Images;
 use Devise\Media\Images\InvalidImageException;

@@ -23,6 +23,7 @@ require.config({
         jquery:             'lib/jquery',
         'jquery-ui':        'lib/jquery-ui',
         jqNestedSortable:   'lib/jquery.nestedSortable',
+        jqSerializeObject:  'lib/jquery-serialize-object',
         jqueryEasing:       'lib/jquery.easing.1.3',
         jcrop :             'lib/jquery.Jcrop.min',
         crossroads:         'lib/crossroads',

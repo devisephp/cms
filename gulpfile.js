@@ -57,6 +57,7 @@ gulp.task('build:js', function()
         'config',
         'jquery',
         'jquery-ui',
+        'jqSerializeObject',
         'jqNestedSortable',
         'datetimepicker',
         'fullCalendar',

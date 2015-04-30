@@ -8,10 +8,10 @@ devise.define(['jquery'], (function($)
     query.toJson = function(string)
     {
         if (typeof string === 'undefined') {
-            string = window.location.search.substr(1).split('&');
+            string = window.location.search.substr(1);
         }
 
-        var a = string;
+        var a = string.split('&');
         var b = {};
 
         if (a == "") return {};

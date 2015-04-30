@@ -81,12 +81,24 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_gets_application()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Input->shouldReceive('old')->times(4)->andReturn('test');
+        $this->Framework->View->shouldReceive('make')->once()->andReturn('returned val');
+        $result = $this->InstallerController->getApplication();
+        $this->assertEquals('returned val',$result);
     }
 
     public function test_it_posts_application()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Input->shouldReceive('get')->times(4)->andReturn('test');
+
+        $this->InstallWizard->shouldReceive('saveConfigsOverride')->once()->with('test');
+        $this->InstallWizard->shouldReceive('saveApplicationMigrationAndSeedSettings')->once()->with('test','test');
+        $this->InstallWizard->shouldReceive('saveApplicationNamespace')->once()->with('test');
+
+        $this->Framework->Redirect->shouldReceive('to')->once()->andReturn('returned val');
+        
+        $result = $this->InstallerController->postApplication();
+        $this->assertEquals('returned val',$result);
     }
 
     public function test_it_gets_create_user()

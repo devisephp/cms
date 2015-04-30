@@ -23,8 +23,8 @@
             <tbody>
 	            {{#each values.options}}
 	                <tr class="dvs-option-fields">
-	                    <td><input type="text" name="options[{{@index}}][name]" value="{{ name }}"></td>
-	                    <td><input type="text" name="options[{{@index}}][value]" value="{{ value }}"></td>
+	                    <td><input type="text" name="options[][name]" value="{{ name }}"></td>
+	                    <td><input type="text" name="options[][value]" value="{{ value }}"></td>
 	                    <td><button type="button" class="dvs-button dvs-button-small dvs-table-row-delete">Delete</button></td>
 	                </tr>
                 {{/each}}
@@ -43,8 +43,8 @@
     <!--templates will be used by js to create new table rows and options-->
     <table><tbody class="dvs-row-template">
         <tr class="dvs-option-fields">
-            <td><input type="text" name="options[0][name]" value=""></td>
-            <td><input type="text" name="options[0][value]" value=""></td>
+            <td><input type="text" name="options[][name]" value=""></td>
+            <td><input type="text" name="options[][value]" value=""></td>
             <td><button type="button" class="dvs-button dvs-button-small dvs-table-row-delete">Delete</button></td>
         </tr>
     </tbody></table>

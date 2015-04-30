@@ -1,8 +1,9 @@
-<?php namespace Devise\Pages\Fields;
+<?php namespace Devise\Pages\Fields\Handlers;
 
 use Mockery as m;
+use Devise\Pages\Fields\FieldValue;
 
-class VideoFieldUpdatedTest extends \DeviseTestCase
+class AudioFieldUpdatedTest extends \DeviseTestCase
 {
 	public function test_it_handles_updates()
 	{
@@ -14,8 +15,8 @@ class VideoFieldUpdatedTest extends \DeviseTestCase
 		$DvsField->shouldReceive('save')->times(1);
         $Encoder = m::mock('Devise\Media\Encoding\ZencoderJob');
         $Framework = new \Devise\Support\Framework;
-        $VideoFieldUpdated = new VideoFieldUpdated($MediaPathHelper, $Encoder, $Framework);
+        $AudioFieldUpdated = new AudioFieldUpdated($MediaPathHelper, $Encoder, $Framework);
 
-		$VideoFieldUpdated->handle($DvsField, []);
+		$AudioFieldUpdated->handle($DvsField, []);
 	}
 }

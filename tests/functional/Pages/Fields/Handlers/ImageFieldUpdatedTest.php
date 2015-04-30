@@ -1,6 +1,7 @@
-<?php namespace Devise\Pages\Fields;
+<?php namespace Devise\Pages\Fields\Handlers;
 
 use Mockery as m;
+use Devise\Pages\Fields\FieldValue;
 
 class ImageFieldUpdatedTest extends \DeviseTestCase
 {

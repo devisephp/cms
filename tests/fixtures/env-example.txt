@@ -7,7 +7,11 @@ DB_DATABASE=homestead
 DB_USERNAME=homestead
 DB_PASSWORD=secret
 
-### Here is a comment that should be ignored maybe?
-
 CACHE_DRIVER=file
 SESSION_DRIVER=file
+
+ADMIN_EMAIL=no-reply@devisephp.com
+ADMIN_USERNAME=deviseadmin
+APP_MIGRATIONS=no
+APP_SEEDS=no
+CONFIGS_OVERRIDE=yes

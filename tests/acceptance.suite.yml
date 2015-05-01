@@ -1,0 +1,23 @@
+# Codeception Test Suite Configuration
+
+# suite for acceptance tests.
+# perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+class_name: AcceptanceTester
+modules:
+    enabled: [WebDriver,Db,LBM\PhantomjsBoot]
+    config:
+        WebDriver:
+            url: 'http://devisetest.app'
+            port: 4444
+            browser: 'firefox'
+            window_size: 1024x768
+            wait: 5
+        Db:
+            dsn: 'mysql:host=localhost;dbname=devisetest'
+            user: 'root'
+            password: 'secret'
+            dump: 'tests/_data/devisetest.sql'
+            populate: true
+            cleanup: true

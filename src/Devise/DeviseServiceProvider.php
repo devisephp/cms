@@ -50,7 +50,6 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->registerDeviseUniversalSearch();
         $this->registerPages();
         $this->registerEncoding();
-        $this->registerSidebar();
         $this->registerUsers();
 
         require __DIR__ . '/../macros/macros.php';
@@ -164,15 +163,6 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->register($EncodingProvider);
     }
 
-    /**
-     * Register the sidebar provider
-     * @return void
-     */
-    public function registerSidebar()
-    {
-        $SidebarProvider = new Sidebar\SidebarServiceProvider($this->app);
-        $this->app->register($SidebarProvider);
-    }
     /**
      * Register universal search service provider
      *

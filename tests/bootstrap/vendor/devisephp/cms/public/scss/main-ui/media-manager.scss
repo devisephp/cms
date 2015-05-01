@@ -1,0 +1,260 @@
+
+.dvs-media-manager-container {
+    padding:10px;
+}
+
+#dvs-media-manager {
+
+    @include clearfix;
+    position:relative;
+    padding:40px;
+
+    #dvs-media-mngr-categories {
+        float:left;
+        width:25%;
+
+        ul {
+            padding-left:0;
+        }
+
+        li {
+            @include clearfix;
+
+            min-height:30px;
+            list-style-type:none;
+            margin: 5px 0 5px 0;
+
+            .dvs-category-actions {
+                float:right;
+                display:none;
+
+                a {
+                    margin-left:5px;
+                }
+            }
+
+            a {
+                float:left;
+                color:$french-gray;
+                text-decoration:none;
+
+                &:hover {
+                    color:$green;
+                }
+            }
+
+            &:hover {
+                .dvs-category-actions {
+                    display:block;
+                }
+            }
+        }
+    }
+
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .dvs-cat-btn {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        padding: 8px 15px;
+        margin-right:-3px;
+    }
+    .dvs-cat-rename-btn {
+        margin-right:-2px;
+    }
+
+    .dvs-cat-delete-btn {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    #dvs-media-top-action-bar {
+        @include clearfix;
+        margin: -45px -45px 40px;
+    }
+
+    #dvs-media-crumbs {
+        @include clearfix;
+        background-color:darken($bodyBgColor, 10%);
+        padding: 5px 40px;
+
+        a {
+            text-decoration: none;
+            color: $blue;
+
+            &:hover {
+                text-decoration:underline;
+            }
+        }
+    }
+
+    #dvs-media-manager-search {
+        @include clearfix;
+        clear:both;
+        text-align:right;
+        background-color:darken($bodyBgColor, 7%);
+        padding: 5px 40px;
+    }
+
+    .crop-container {
+        width: 500px;;
+        margin: 0 auto;
+    }
+
+    #dvs-media-cropper-settings {
+        margin-top:20px;
+
+        @include insetFormDude;
+    }
+
+    #dvs-media-upload {
+
+        @include insetFormDude;
+        margin-bottom:20px;
+
+        form {
+            margin: 20px 10px;
+
+            input[name="file"] {
+                margin-left: 20px;
+            }
+        }
+    }
+    #dvs-new-category {
+        position:relative;
+        clear:both;
+        margin: 0 0 20px;
+
+        input[type=text] {
+            @include insetFormDude;
+            margin-bottom:8px;
+        }
+    }
+
+    #dvs-error-message {
+        background-color: $formErrorColor;
+        text-align: center;
+        padding: 30px;
+    }
+    #dvs-media-mngr-gallery {
+
+        width:70%;
+        margin-left:5%;
+        float:right;
+
+        .dvs-media-item-wrapper {
+            height:210px;
+            width:150px;
+            display: inline-block;
+            position: relative;
+            margin: 0 12px 12px 0;
+            overflow:hidden;
+
+            @include background(linear-gradient($white, darken($white, 3%)));
+
+            button {
+                cursor: pointer;
+            }
+
+            .dvs-media-item-actions {
+                position:absolute;
+                bottom:8px;
+                left:50%;
+                margin-left:-30px;
+                display:none;
+                text-align:center;
+            }
+
+            &:hover {
+                .dvs-media-item-actions {
+                    display:block;
+                }
+            }
+
+            &:nth-child(4n+1) {
+                margin-right:0;
+            }
+        }
+
+        a.dvs-media-item {
+            display:inline-block;
+            width: 150px;
+            vertical-align: top;
+            text-decoration:none;
+            color: $bodyBgColor;
+            font-size: 12px;
+            font-weight:300;
+
+            .dvs-media-thumb-cont {
+
+                width: 150px;
+
+                img {
+                    width: 130px;
+                    height: 130px;
+                    margin: 10px 10px;
+                }
+            }
+
+            p {
+                margin-top:0;
+                padding: 5px;
+                text-align:center;
+                line-height: 18px;
+                word-break: break-all;
+                text-align:center;
+            }
+        }
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        border-radius: 2px;
+        border-width:0;
+        padding: 5px 15px;
+        font-size: 12px;
+        background-color:lighten($black, 13%);
+        color: darken($white, 10%);
+    }
+}
+
+html.dz-drag-hover div#dvs-admin {
+    opacity: 0;
+}
+
+html.dz-drag-hover body {
+    background-color: $light-blue !important;
+}
+
+.dropzone-previews .dz-processing {
+    opacity: 0.5;
+}
+
+.dropzone-previews .dz-processing.dz-complete {
+    opacity: 1;
+}
+
+// Error when uploading
+.dropzone-previews .dz-processing.dz-error {
+    background: hotpink !important;
+    opacity: 0.25;
+}
+
+.dropzone-previews .dz-processing .dvs-media-item-actions {
+    display: none;
+}
+
+.dropzone-previews .dz-processing.dz-success .dvs-media-item-actions {
+    display: inherit;
+}
+
+.dropzone-previews .empty {
+    display: none;
+}
+
+.dropzone-previews .empty:only-child {
+    display: inherit;
+}

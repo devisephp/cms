@@ -21,8 +21,9 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
     	$this->Framework = new \Devise\Support\Framework;
 
-    	$this->DeviseInstallCommand = new DeviseInstallCommand($this->Framework->Container);
-
+        $this->DeviseInstallCommand = new DeviseInstallCommand($this->Framework->Container);
+        $this->DeviseInstallCommand->Cache = m::mock('CacheObj');
+        $this->DeviseInstallCommand->Artisan = m::mocK('ArtisanObj');
 		$this->DeviseInstallCommand->DeviseMigrateCommand = m::mock('Devise\Support\Console\DeviseMigrateCommand');
 		$this->DeviseInstallCommand->DeviseSeedCommand = m::mock('Devise\Support\Console\DeviseSeedCommand');
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand = m::mock('Devise\Support\Console\DevisePublishAssetsCommand');
@@ -36,19 +37,23 @@ class DeviseInstallCommandTest extends \DeviseTestCase
     	$this->DeviseInstallCommand->wizard = m::mock('Devise\Support\Installer\InstallWizard');
 
     	$this->DeviseInstallCommand->basePath = 'vfs://basedir';
-    	$this->DeviseInstallCommand->envMock = true;
+        $this->DeviseInstallCommand->envMock = true;
     }
 
     public function test_it_handles_install_command()
     {
-    	$this->DeviseInstallCommand->wizard->shouldReceive('refreshEnvironment')->once();
+    	$this->DeviseInstallCommand->wizard->shouldReceive('refreshEnvironment')->twice();
     	$this->DeviseInstallCommand->wizard->shouldReceive('saveEnvironment')->with('local')->once();
-    	$this->DeviseInstallCommand->wizard->shouldReceive('saveDatabase')->with('mysql', 'localhost', 'devisephp', 'root', '')->once();
-		$this->DeviseInstallCommand->wizard->shouldReceive('createAdminUser')->once();
+        $this->DeviseInstallCommand->wizard->shouldReceive('saveConfigsOverride')->once()->andReturn();
+        $this->DeviseInstallCommand->wizard->shouldReceive('saveDatabase')->with('mysql', 'localhost', 'devisephp', 'root', '')->once()->andReturn();
+    	$this->DeviseInstallCommand->wizard->shouldReceive('saveApplicationMigrationAndSeedSettings')->with('yes','yes')->once()->andReturn();
+        $this->DeviseInstallCommand->Artisan->shouldReceive('call')->twice();
+        $this->DeviseInstallCommand->wizard->shouldReceive('createAdminUser')->once();
+		$this->DeviseInstallCommand->wizard->shouldReceive('saveApplicationNamespace')->once();
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();
-		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle')->once();
+		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle');
     	$this->DeviseInstallCommand->handle();
     }
 
@@ -57,14 +62,15 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();
-		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle')->once();
+        $this->DeviseInstallCommand->Artisan->shouldReceive('call')->twice();
+		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle');
 		$this->DeviseInstallCommand->runInstallCommands();
 	}
 
 	public function test_it_changes_database_config_file()
 	{
-		$this->DeviseInstallCommand->Config = m::mock('ConfigObj');
-		$this->DeviseInstallCommand->Config->shouldReceive('get')->once()->andReturn('mysql');
+        $this->DeviseInstallCommand->Config = m::mock('ConfigObj');
+        $this->DeviseInstallCommand->Config->shouldReceive('get')->once()->andReturn('mysql');
 		$this->DeviseInstallCommand->changeDatabaseConfigFile();
 		$contents = file_get_contents('vfs://basedir/config/database.php');
 		assertContains("'default' => env('DB_DEFAULT', 'mysql'),", $contents);

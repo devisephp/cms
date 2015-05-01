@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery', 'app/helpers/query-params', 'jcrop'], function (require, $, queryParams)
+devise.define(['require', 'jquery', 'query', 'jcrop'], function (require, $, query)
 {
     var width = $('input[name="cropper[width]"]').val();
     var height = $('input[name="cropper[height]"]').val();
@@ -22,8 +22,8 @@ devise.define(['require', 'jquery', 'app/helpers/query-params', 'jcrop'], functi
 
     function onSubmit(e)
     {
-        var target = queryParams('target');
-        var url = queryParams('image');
+        var target = query.get('target');
+        var url = query.get('image');
         var crop = {
             width: $('input[name="cropper[width]"]').val(),
             height: $('input[name="cropper[height]"]').val(),

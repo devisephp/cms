@@ -60,6 +60,8 @@ class InstallWizardTest extends \DeviseTestCase
             ->once()
             ->andReturn('&5y$21%lIpwAOghJs2pjLGIoCfsGwiWryIlNQcBejtRrv0/RRjLiyEnVO\9P');
 
+        $this->EnvironmentFileManager->shouldReceive('merge')->twice()->andReturnSelf();
+
         $output = $this->InstallWizard->createAdminUser('admin@email.com', 'adminuser', 'fooAdminPass');
 
         $this->assertEquals('admin@email.com', $output->email);
@@ -80,6 +82,19 @@ class InstallWizardTest extends \DeviseTestCase
 
         $this->assertNull( $this->InstallWizard->saveEnvironment('production') );
 	}
+
+    public function test_it_saves_migrations_and_seeds()
+    {
+        $this->EnvironmentFileManager->shouldReceive('merge')->once()->andReturnSelf();
+        $this->InstallWizard->saveApplicationMigrationAndSeedSettings('yes','yes');
+    }
+
+    public function test_it_saves_application_namespace()
+    {
+        $appName = 'Test';
+        $this->EnvironmentFileManager->shouldReceive('merge')->with(['APP_NAME' => $appName])->once()->andReturnSelf();
+        $this->InstallWizard->saveApplicationNamespace($appName);
+    }
 
 	public function test_it_saves_database()
 	{

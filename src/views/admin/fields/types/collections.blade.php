@@ -1,13 +1,22 @@
 <h3>Collections</h3>
 
-@snippet
-<div data-devise="myCollection[imageName], image, Image For Collection, groupName1, catName1"></div>
-<div data-devise="myCollection[textName], text, Text For Collection, groupName1, catName1"></div>
+@foreach ($page->myCollection as $collection)
+	<div data-devise="myCollection[imageName], image, Image For Collection, Collection Name"
+		 data-devise="myCollection[textName], text, Text For Collection, Collection Name">
+		<p>{{ $collection->textName->text('default value') }}</p>
+		<img style="width: 100px;" src="{{ $collection->imageName->image('/packages/devisephp/cms/img/devise-installer-logo.gif') }}" alt="{{ $collection->imageName->caption('default caption') }}">
+	</div>
+@endforeach
 
-@if (isset($myCollection))
-    @foreach ($myCollection as $collection)
-        <?= $collection->textName->text('default value') ?>
-    @endforeach
-@endif
-@endsnippet
 
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+@foreach ($page->myCollection as $collection)
+	<div data-devise="myCollection[imageName], image, Image For Collection, Collection Name"
+		 data-devise="myCollection[textName], text, Text For Collection, Collection Name">
+		<p>{{ $collection->textName->text(\'default value\') }}</p>
+		<img style="width: 100px;" src="{{ $collection->imageName->image(\'/packages/devisephp/cms/img/devise-installer-logo.gif\') }}" alt="{{ $collection->imageName->caption(\'default caption\') }}">
+	</div>
+@endforeach
+') ?>
+</code></pre>

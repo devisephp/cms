@@ -22,7 +22,7 @@ class DvsUser extends Model implements AuthenticatableContract, CanResetPassword
      *
      * @var array
      */
-    protected $hidden = array('password');
+    protected $hidden = array('');
 
     /**
      * Set the soft delete to true

@@ -9,7 +9,14 @@ class ResponseHandlerTest extends \DeviseTestCase
 		parent::setUp();
 
 		$this->CollectionsManager = m::mock('Devise\Pages\Collections\CollectionsManager');
-		$this->ResponseHandler = new ResponseHandler($this->CollectionsManager);
+		$this->FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+		$this->ResponseHandler = new ResponseHandler($this->CollectionsManager, $this->FieldManager);
+	}
+
+	public function test_it_updates_field()
+	{
+		$this->FieldManager->shouldReceive('updateField')->times(1)->with(42, ['some' => 'input']);
+		$this->ResponseHandler->updateCollectionInstanceField(42, ['some' => 'input']);
 	}
 
 	public function test_it_stores_instance()
@@ -21,7 +28,7 @@ class ResponseHandlerTest extends \DeviseTestCase
 	public function test_it_updates_sort_order()
 	{
 		$this->CollectionsManager->shouldReceive('updateInstanceSort')->times(3);
-		$this->ResponseHandler->updateSortOrder(1, 1, ['instance' => [['id' => 1], ['id' => 2], ['id' => 3]]]);
+		$this->ResponseHandler->updateSortOrder(1, 1, ['instances' => [['id' => 1], ['id' => 2], ['id' => 3]]]);
 	}
 
 	public function test_it_renames_instance()

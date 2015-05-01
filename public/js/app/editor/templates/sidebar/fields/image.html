@@ -1,0 +1,56 @@
+<form id="dvs-sidebar-field-form" class="dvs-element-image">
+    <div class="dvs-editor-values">
+        <label>Image Path</label>
+
+        <input type="text" name="image" value="{{when values.original values.original values.image }}">
+
+        <div class="dvs-sidebar-button-grid dvs-property">
+            <button type="button" data-target="image" class="browse dvs-button">Select or Upload Image</button>
+            <button type="button" class="js-when-has-image js-crop dvs-button dvs-button-secondary" data-target="image">Crop Image</button>
+            <input type="checkbox" name="has_thumbnail" value="1" {{checked values.has_thumbnail}} id="has_thumbnail">
+            <label class="dvs-button dvs-button-secondary" for="has_thumbnail" style="display: inline;">Create Thumbnail?</label>
+            <button type="button" class="js-when-has-thumbnail js-crop dvs-button dvs-button-secondary" data-target="thumbnail" data-image-width="100" data-image-height="100" {{disabled values.has_thumbnail }}>Crop Thumb</button>
+        </div>
+
+        <div class="dvs-property">
+            <label for="caption">Caption</label>
+            <input type="text" name="caption" value="{{ values.caption }}">
+        </div>
+
+        <!-- these fields are used for cropping and resizing image -->
+        <input type="hidden" name="_crop_image" value="0">
+        <input type="hidden" name="image_width" value="">
+        <input type="hidden" name="image_height" value="">
+        <input type="hidden" name="image_crop_x" value="">
+        <input type="hidden" name="image_crop_y" value="">
+        <input type="hidden" name="image_crop_x2" value="">
+        <input type="hidden" name="image_crop_y2" value="">
+        <input type="hidden" name="image_crop_w" value="">
+        <input type="hidden" name="image_crop_h" value="">
+
+        <!-- these fields are used for cropping and resizing thumbnail -->
+        <input type="hidden" name="thumbnail" value="{{ values.thumbnail }}">
+        <input type="hidden" name="_crop_thumbnail" value="0">
+        <input type="hidden" name="thumbnail_width" value="">
+        <input type="hidden" name="thumbnail_height" value="">
+        <input type="hidden" name="thumbnail_crop_x" value="">
+        <input type="hidden" name="thumbnail_crop_y" value="">
+        <input type="hidden" name="thumbnail_crop_x2" value="">
+        <input type="hidden" name="thumbnail_crop_y2" value="">
+        <input type="hidden" name="thumbnail_crop_w" value="">
+        <input type="hidden" name="thumbnail_crop_h" value="">
+
+        <div data-view="site-wide-field"></div>
+
+        <div data-view="content-requested"></div>
+
+        <div data-view="reset-values"></div>
+    </div>
+</form>
+
+{{#script}}
+    devise.require(['app/editor/fields/image'], function(obj){
+        var mediaManagerUlr = '{{ page.urls.media_manager }}';
+        obj.init(mediaManagerUlr);
+    });
+{{/script}}

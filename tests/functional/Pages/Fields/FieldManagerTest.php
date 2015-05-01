@@ -7,65 +7,33 @@ class FieldManagerTest extends \DeviseTestCase
 	public function setUp()
 	{
 		$this->FieldsRepository = new FieldsRepository(new \DvsField, new \DvsGlobalField);
-		$this->LanguagesRepository = m::mock('Devise\Languages\LanguagesRepository');
         $this->Framework = new \Devise\Support\Framework;
-		$this->FieldManager = new FieldManager(new \DvsField, new \DvsGlobalField, $this->FieldsRepository, $this->LanguagesRepository, $this->Framework);
+		$this->FieldManager = new FieldManager(new \DvsField, new \DvsGlobalField, $this->FieldsRepository, $this->Framework);
 	}
 
-	/**
-	 * @expectedException Devise\Support\DeviseValidationException
-	 */
-	public function test_it_handles_validation_when_creating_new_field()
+	public function test_it_marks_content_requested()
 	{
-		$this->FieldManager->findOrCreateField([]);
+		$fieldIds = [1];
+		$this->FieldManager->markNoContentRequested($fieldIds);
+		$field = (new \DvsField)->find(1);
+		assertEquals(0, $field->content_requested);
 	}
 
-	public function test_it_creates_new_field_from_input_data()
+	public function test_it_resets_field()
 	{
-		// given no field exists for this input data
-		$previous = \DvsField::count();
-
-		$this->LanguagesRepository->shouldReceive('findLanguageForPageVersion')
-			->times(1)
-			->andReturn(\DvsLanguage::find(45));
-
-
-		// when we call this method with input data
-		$output = $this->FieldManager->findOrCreateField([
-			'human_name' => 'Human Name',
-			'key' => 'key42',
-			'type' => 'text',
-			'settings' => '{}',
-			'page_version_id' => '1',
-			'value' => '{}',
-		]);
-
-		// then it should create a new field from input data
-		assertEquals('key42', $output->key);
-		assertEquals($previous + 1, \DvsField::count());
-	}
-
-	public function test_it_finds_existing_field_from_input_data()
-	{
-		$previous = \DvsField::count();
-
-		$output = $this->FieldManager->findOrCreateField([
-			'human_name' => 'Good-Bye',
-			'key' => 'goodbye',
-			'type' => 'text',
-			'settings' => '{}',
-			'page_version_id' => '1',
-			'value' => '{}',
-		]);
-
-		assertEquals('goodbye', $output->key);
-		assertEquals($previous, \DvsField::count());
+		$this->FieldManager->resetField(1, 'field');
 	}
 
 	public function test_it_updates_field()
 	{
-		$field = $this->FieldManager->updateField(1, ['key1' => 'value']);
-
+		$field = $this->FieldManager->updateField(1, ['field' => ['content_requested' => 1, 'values' => ['key1' => 'value']], 'page' => ['page_version_id' => 42]]);
 		assertEquals('value', $field->values->key1);
+	}
+
+	public function test_it_calls_events_on_update()
+	{
+		$this->FieldManager->Event = m::mock('EventManagerThing');
+		$this->FieldManager->Event->shouldReceive('fire')->twice();
+		$field = $this->FieldManager->updateField(1, ['field' => ['content_requested' => 1, 'values' => ['key1' => 'value']], 'page' => ['page_version_id' => 42]]);
 	}
 }

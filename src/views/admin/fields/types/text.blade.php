@@ -1,10 +1,16 @@
 <h3>Text</h3>
 
-@snippet
 <p data-devise="text1, text, Text">
     <?= $page->text1->text('This is some default text') ?>
 <p>
-@endsnippet
+
+<pre class="devise-code-snippet"><code class="html">
+<?= htmlentities('
+<p data-devise="text1, text, Text">
+    {{ $page->text1->text(\'This is some default text\') }}
+<p>
+') ?>
+</code></pre>
 
 @include('devise::admin.fields.show',
 [

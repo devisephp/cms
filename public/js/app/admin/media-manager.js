@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery', 'app/helpers/query-params'], function (require, $, queryParams)
+devise.define(['require', 'jquery', 'query'], function (require, $, query)
 {
     var _input = {};
     return {
@@ -64,7 +64,7 @@ devise.define(['require', 'jquery', 'app/helpers/query-params'], function (requi
     {
         e.preventDefault();
 
-        var target = queryParams('target');
+        var target = query.get('target');
         var url = $(this).attr('href');
 
         opener.document.onMediaManagerSelect(url, target, _input);

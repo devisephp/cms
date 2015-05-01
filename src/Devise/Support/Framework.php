@@ -37,6 +37,10 @@ class Framework
                 return \Auth::getFacadeRoot();
             break;
 
+            case 'cache':                  // Illuminate\Cache\CacheManager
+                return \Cache::getFacadeRoot();
+            break;
+
             case 'config':                  // Illuminate\Config\Repository
                 return \Config::getFacadeRoot();
             break;

@@ -118,20 +118,37 @@ class InstallWizard
 	 */
 	public function createAdminUser($email, $username, $password)
 	{
-		// create the user
-		$user = $this->DvsUser->newInstance();
+        // create the user
+        $user = $this->DvsUser->newInstance();
         $user->email = $email;
-		$user->username = $username;
+        $user->username = $username;
         $user->password = $this->Hash->make($password);
         $user->activated = true;
-		$user->save();
+        $user->save();
 
-		// add the user to the admin group
-		$adminGroup = $this->DvsGroup->whereName('Developer')->firstOrFail();
-		$user->groups()->sync([$adminGroup->id]);
+        // add the user to the admin group
+        $adminGroup = $this->DvsGroup->whereName('Developer')->firstOrFail();
+        $user->groups()->sync([$adminGroup->id]);
+
+        // write "email" and "username" input values to env
+        $this->EnvironmentFileManager->merge(['ADMIN_EMAIL' => $email]);
+        $this->EnvironmentFileManager->merge(['ADMIN_USERNAME' => $username]);
 
 		return $user;
 	}
+
+    /**
+     * Save input value submitted for "configs_override" to the
+     * key "CONFIGS_OVERRIDE" in .env file
+     *
+     *
+     * @return void
+     */
+    public function saveConfigsOverride($value = 'no')
+    {
+        $env = $this->EnvironmentFileManager->get();
+        $this->EnvironmentFileManager->merge(['CONFIGS_OVERRIDE' => $value]);
+    }
 
 	/**
 	 * Saves the new application key if there isn't already one set
@@ -148,6 +165,18 @@ class InstallWizard
 		{
 			$this->EnvironmentFileManager->merge(['APP_KEY' => str_random(32)]);
 		}
+	}
+
+	/**
+	 * Saves this app name
+	 *
+	 * @param  string $appName
+	 * @return void
+	 */
+	public function saveApplicationNamespace($appName)
+	{
+		$appName = $appName ?: 'App';
+		$this->EnvironmentFileManager->merge(['APP_NAME' => $appName]);
 	}
 
 	/**
@@ -170,13 +199,28 @@ class InstallWizard
 	}
 
 	/**
+	 * Save the migration and seed settings
+	 *
+	 * @param  [type] $migrations
+	 * @param  [type] $seeds
+	 * @return [type]
+	 */
+	public function saveApplicationMigrationAndSeedSettings($migrations, $seeds)
+	{
+		$this->EnvironmentFileManager->merge([
+            'APP_MIGRATIONS' => $migrations,
+            'APP_SEEDS' => $seeds
+		]);
+	}
+
+	/**
 	 * Saves the database settings for us
 	 *
 	 * @param  string $default
 	 * @param  string $host
 	 * @param  string $name
 	 * @param  string $username
-	 * @param  string $password
+     * @param  string $password
 	 * @return
 	 */
 	public function saveDatabase($default, $host, $name, $username, $password)
@@ -186,7 +230,7 @@ class InstallWizard
 			'DB_HOST' => $host,
 			'DB_DATABASE' => $name,
 			'DB_USERNAME' => $username,
-			'DB_PASSWORD' => $password,
+            'DB_PASSWORD' => $password,
 		];
 
 		// no errors at the moment
@@ -285,6 +329,7 @@ class InstallWizard
 		];
 
 		$merged = array_merge([
+			'APP_NAME' => env('APP_NAME', 'App'),
 			'APP_ENV' => env('APP_ENV', 'local'),
 			'APP_DEBUG' => env('APP_DEBUG'),
 			'APP_KEY' => env('APP_KEY', 'SomeRandomString'),
@@ -293,7 +338,10 @@ class InstallWizard
 			'DB_HOST' => env('DB_HOST', 'localhost'),
 			'DB_DATABASE' => env('DB_DATABASE', 'forge'),
 			'DB_USERNAME' => env('DB_USERNAME', 'forge'),
-			'DB_PASSWORD' => env('DB_PASSWORD', ''),
+            'DB_PASSWORD' => env('DB_PASSWORD', ''),
+            'CONFIGS_OVERRIDE' => env('CONFIGS_OVERRIDE', ''),
+            'APP_MIGRATIONS' => env('APP_MIGRATIONS', ''),
+			'APP_SEEDS' => env('APP_SEEDS', ''),
 			'SESSION_DRIVER' => env('SESSION_DRIVER', 'file'),
 		], $settings);
 

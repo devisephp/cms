@@ -1,0 +1,11 @@
+<ul id="dvs-sidebar-elements-and-groups">
+	{{#each categories}}
+	    <li id="dvs-sidebar-group-{{id}}" class="dvs-sidebar-group dvs-sidebar-elements {{ active }}">
+		    {{#each nodes}}
+	            <button class="" data-show-node="{{ @key }}">
+	            	{{ human_name }}
+	            </button>
+	        {{/each}}
+	    </li>
+	{{/each}}
+</ul>

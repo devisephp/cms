@@ -1,0 +1,69 @@
+<form id="dvs-sidebar-field-form">
+
+    <div class="dvs-property">
+        <label>Audio Path</label>
+        <input type="text" name="original" value="{{ values.original }}">
+    </div>
+
+    <div class="dvs-property">
+        <button type="button" data-target="original" class="browse dvs-button dvs-button-success dvs-button-solid">Browse</button>
+    </div>
+
+	<div class="dvs-property fancy-sidebar-checkbox">
+	    <label for="ogg">Vorbis</label>
+	    <div class="fancyCheckbox">
+		    <input id="ogg" type="checkbox" name="ogg" value="1" {{checked values.ogg }}>
+		    <label for="ogg">&nbsp;</label>
+	    </div>
+	</div>
+
+	<div class="dvs-property fancy-sidebar-checkbox">
+	    <label for="mp3">MP3</label>
+	    <div class="fancyCheckbox">
+		    <input id="mp3" type="checkbox" name="mp3" value="1" {{checked values.mp3 }}>
+		    <label for="mp3">&nbsp;</label>
+	    </div>
+	</div>
+
+	<div class="dvs-property fancy-sidebar-checkbox">
+	    <label for="acc">ACC</label>
+	    <div class="fancyCheckbox">
+		    <input id="acc" type="checkbox" name="acc" value="1" {{checked values.acc }}>
+		    <label for="acc">&nbsp;</label>
+	    </div>
+	</div>
+
+	<div class="dvs-property">
+	    <label>Audio Channels</label>
+	    <select name="audio_channels" class="dvs-select-dvs-button-solid">
+	    	{{#select values.audio_channels 2}}
+			    <option value="1">1</option>
+			    <option value="2">2</option>
+			{{/select}}
+	    </select>
+	</div>
+
+	<div class="dvs-property">
+	    <label>Audio Bit Depth</label>
+	    <select name="audio_bit_depth" class="dvs-select-dvs-button-solid">
+	    	{{#select values.audio_bit_depth}}
+			    <option value="16">16</option>
+			    <option value="24">24</option>
+			    <option value="32">32</option>
+			{{/select}}
+	    </select>
+	</div>
+
+	<div data-view="site-wide-field"></div>
+
+	<div data-view="content-requested"></div>
+
+	<div data-view="reset-values"></div>
+</form>
+
+{{#script}}
+    devise.require(['app/editor/fields/audio'], function(obj) {
+        var mediaManagerUrl = '{{ page.urls.media_manager }}';
+        obj.init(mediaManagerUrl);
+	});
+{{/script}}

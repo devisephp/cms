@@ -8,14 +8,6 @@
     <link href="{{ URL::asset('/packages/devisephp/cms/css/highlightjs/tomorrow.min.css') }}" type="text/css" rel="stylesheet" >
     <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/lib/highlight.pack.js') ?>"></script>
 
-    <!-- some weird style that I'm just overriding so I can see the listed attributes -->
-    <style>
-        /*.dvs-test-block table tr:nth-child(odd) td {
-            background-color: transparent;
-        }*/
-    </style>
-
-
 @stop
 
 @section('title')
@@ -35,7 +27,7 @@
             'audio', 'checkbox-group', 'checkbox', 'color',
             'datetime', 'file', 'html', 'image',
             'link', 'map', 'select', 'text', 'textarea',
-            'video', 'wysiwyg', 'groups', 'collections', 'hidden-fields'] as $type)
+            'video', 'wysiwyg', 'groups', 'groups-with-categories', 'groups-mixed', 'collections', 'hidden-fields'] as $type)
             <tr>
                 <td>
                     @include("devise::admin.fields.types.{$type}")
@@ -48,5 +40,4 @@
 
     @include('devise::scripts')
     <script>hljs.initHighlightingOnLoad();</script>
-
 @stop

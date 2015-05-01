@@ -23,14 +23,14 @@ class EnvironmentFileManagerTest extends \DeviseTestCase
     public function test_it_can_get()
     {
         $settings = $this->EnvironmentFileManager->get();
-        assertCount(9, $settings);
+        assertCount(14, $settings);
         assertEquals('local', $settings['APP_ENV']);
     }
 
     public function test_it_can_get_with_comments_and_empty_lines()
     {
         $settings = $this->EnvironmentFileManager->get($file = null, $settingsOnly = false);
-        assertCount(14, $settings);
+        assertCount(17, $settings);
         assertEquals('local', $settings['APP_ENV']);
     }
 

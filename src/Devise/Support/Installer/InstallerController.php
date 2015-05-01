@@ -13,6 +13,9 @@ class InstallerController extends Controller
 	 */
 	public function __construct(Framework $Framework, InstallWizard $InstallWizard)
 	{
+        // needed because namespace *could* change sometimes
+		$Framework->Config->set('auth.model', 'DvsUser');
+
 		$this->InstallWizard = $InstallWizard;
         $this->Auth = $Framework->Auth;
 		$this->Input = $Framework->Input;
@@ -126,12 +129,12 @@ class InstallerController extends Controller
 		$database->host = $this->Input->old('database_host', env('DB_HOST'));
 		$database->name = $this->Input->old('database_name', env('DB_DATABASE'));
 		$database->username = $this->Input->old('database_username', env('DB_USERNAME'));
-		$database->password = $this->Input->old('database_password', env('DB_PASSWORD'));
+        $database->password = $this->Input->old('database_password', env('DB_PASSWORD'));
 
-		$selected = function($type, $yes = 'selected', $no = '') use ($database)
-		{
-			return $type == $database->type ? $yes : $no;
-		};
+        $selected = function($type, $yes = 'selected', $no = '') use ($database)
+        {
+            return $type == $database->type ? $yes : $no;
+        };
 
 		return $this->View->make('devise::installer.database', compact('database', 'selected'));
 	}
@@ -160,6 +163,56 @@ class InstallerController extends Controller
             			->withInput();
 		}
 
+		return $this->Redirect->to('install/application');
+	}
+
+	/**
+	 * Sets up the application
+	 *
+	 * @return Response
+	 */
+	public function getApplication()
+	{
+		$appName = $this->Input->old('app_name', env('APP_NAME', 'App'));
+        $migrations = $this->Input->old('app_migrations', env('APP_MIGRATIONS'));
+        $seeds = $this->Input->old('app_seeds', env('APP_SEEDS'));
+        $configsOverride = $this->Input->old('configs_override', env('CONFIGS_OVERRIDE'));
+        $checked = function($fieldname, $yes = 'checked', $no = '') use ($migrations, $seeds, $configsOverride)
+        {
+        	switch ($fieldname)
+        	{
+        		case 'migrations': return $migrations === 'yes' ? $yes : $no;
+        		case 'seeds': return $seeds === 'yes' ? $yes : $no;
+        		case 'configs_override': return $configsOverride === 'yes' ? $yes : $no;
+        	}
+
+            return $no;
+		};
+
+		return $this->View->make('devise::installer.application', compact('appName', 'migrations', 'seeds', 'configsOverride', 'checked'));
+	}
+
+	/**
+	 * Save the application setup
+	 *
+	 * @return Redirect
+	 */
+	public function postApplication()
+	{
+		$appName = $this->Input->get('app_name', 'App');
+
+        $migrations = $this->Input->get('app_migrations', 'no');
+
+        $seeds = $this->Input->get('app_seeds', 'no');
+
+        $configsOverride = $this->Input->get('configs_override', 'no');
+
+        $this->InstallWizard->saveConfigsOverride($configsOverride);
+
+		$this->InstallWizard->saveApplicationMigrationAndSeedSettings($migrations, $seeds);
+
+		$this->InstallWizard->saveApplicationNamespace($appName);
+
 		return $this->Redirect->to('install/create-user');
 	}
 
@@ -170,10 +223,10 @@ class InstallerController extends Controller
 	 */
 	public function getCreateUser()
 	{
-		$email = $this->Input->old('email');
-        $username = $this->Input->old('username');
+		$email = $this->Input->old('email', env('ADMIN_EMAIL'));
+        $username = $this->Input->old('username', env('ADMIN_USERNAME'));
 
-		return $this->View->make('devise::installer.create-user', compact('email', 'username', 'password'));
+		return $this->View->make('devise::installer.create-user', compact('email', 'username'));
 	}
 
 	/**
@@ -185,25 +238,23 @@ class InstallerController extends Controller
 	public function postCreateUser()
 	{
 		$email = $this->Input->get('email');
-
         $username = $this->Input->get('username');
-
-		$password = $this->Input->get('password');
+        $password = $this->Input->get('password');
 
 		$this->InstallWizard->validateAdminUser($email, $username, $password);
 
-		if ($this->InstallWizard->errors)
-		{
-			return $this->Redirect
-						->to('install/create-user')
-						->withErrors($this->InstallWizard->errors)
-            			->with('message-errors', 'Error')
-						->withInput();
-		}
+        if ($this->InstallWizard->errors)
+        {
+            return $this->Redirect
+                ->to('install/create-user')
+                ->withErrors($this->InstallWizard->errors)
+                ->with('message-errors', 'Error')
+                ->withInput();
+        }
 
-		$this->InstallWizard->installDevise();
+        $this->InstallWizard->installDevise();
 
-		$newUser = $this->InstallWizard->createAdminUser($email, $username, $password);
+        $newUser = $this->InstallWizard->createAdminUser($email, $username, $password);
 
 		$this->Auth->loginUsingId($newUser->id, true);
 

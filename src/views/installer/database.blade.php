@@ -37,8 +37,8 @@
         </div>
 
         <div class="form-group dvs-form-actions mt sp30">
-            <button tabindex="7" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
-            <button tabindex="6" class="next dvs-button-success dvs-button">Next</button>
+            <button tabindex="8" class="back dvs-button dvs-button-secondary" type="button" onclick="location.href='environment'">Back</button>
+            <button tabindex="9" class="next dvs-button-success dvs-button">Next</button>
         </div>
 
     </form>

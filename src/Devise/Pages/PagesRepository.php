@@ -2,6 +2,7 @@
 
 use Devise\Languages\LanguageDetector;
 use Devise\Pages\Collections\CollectionsRepository;
+use Devise\Pages\Interpreter\ViewOpener;
 
 /**
  * Class PagesRepository is used to search and retrieve DvsPage models
@@ -40,7 +41,7 @@ class PagesRepository
      * @param null $Config
      * @param null $URL
      */
-	public function __construct(\DvsPage $Page, \DvsField $Field, \DvsGlobalField $GlobalField, LanguageDetector $LanguageDetector, CollectionsRepository $CollectionsRepository, $Input = null, $Config = null, $URL = null, $File = null)
+	public function __construct(\DvsPage $Page, \DvsField $Field, \DvsGlobalField $GlobalField, LanguageDetector $LanguageDetector, CollectionsRepository $CollectionsRepository, $Input = null, $Config = null, $URL = null, $File = null, $ViewOpener = null)
 	{
 		$this->Page = $Page;
         $this->Field = $Field;
@@ -53,6 +54,7 @@ class PagesRepository
         $this->URL = $URL ?: \URL::getFacadeRoot();
         $this->File = $File ?: \File::getFacadeRoot();
 
+        $this->ViewOpener = $ViewOpener ?: new ViewOpener;
         $this->now = new \DateTime;
 	}
 
@@ -175,6 +177,51 @@ class PagesRepository
         if ($language->id == $page->language_id) return null;
 
         return $this->Page->whereTranslatedFromPageId($page->id)->whereLanguageId($language->id)->first();
+    }
+
+    /**
+     * Find the page variables for this given page
+     *
+     * @param  [type] $page
+     * @return [type]
+     */
+    public function findTemplateVariables($templates)
+    {
+        $variables = [];
+        $templates = is_array($templates) ? $templates : array($templates);
+        $config = $this->Config->get('devise.templates');
+
+        foreach ($templates as $template)
+        {
+            $templateConfig = isset($config[$template]) ? $config[$template] : [];
+            $templateVars = isset($templateConfig['vars']) ? array_keys($templateConfig['vars']) : [];
+            $variables = array_merge($variables, $templateVars);
+        }
+
+        return $variables;
+    }
+
+    /**
+     * Find the page templates for this given page
+     *
+     * @param  [type] $page
+     * @return [type]
+     */
+    public function findPageTemplates($page)
+    {
+        $templates = [];
+
+        $view = $page->view;
+        $config = $this->Config->get('devise.templates');
+        $config = isset($config[$view]) ? $config[$view] : [];
+        $extends = isset($config['extends']) ? $config['extends'] : null;
+
+        if ($view) $templates[] = $view;
+        if ($extends) $templates[] = $extends;
+
+        $templates = array_merge($templates, $this->ViewOpener->findAllIncludedViews($view));
+
+        return $templates;
     }
 
     /**

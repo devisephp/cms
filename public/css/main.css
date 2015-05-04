@@ -3999,7 +3999,9 @@ td .dvs-select-small {
   transition: opacity 0.5s; }
 
 #dvs-admin-mode-button,
-#dvs-node-mode-button {
+#dvs-node-mode-button,
+#dvs-about-page-button,
+#dvs-edit-settings-button {
   position: fixed;
   display: block;
   bottom: 0px;
@@ -4023,15 +4025,44 @@ td .dvs-select-small {
   -moz-transition: all 0.5s;
   transition: all 0.5s; }
   #dvs-admin-mode-button:hover,
-  #dvs-node-mode-button:hover {
+  #dvs-node-mode-button:hover,
+  #dvs-about-page-button:hover,
+  #dvs-edit-settings-button:hover {
     background-color: rgba(0, 0, 0, 0.9); }
 
 #dvs-admin-mode-button {
   right: 20px;
   border-radius: 0 3px 0 0; }
 
+#dvs-about-page-button {
+  left: 10px; }
+  #dvs-about-page-button.open {
+    bottom: 50%; }
+
+#dvs-edit-settings-button {
+  right: 224px; }
+
+#dvs-about-page-container {
+  display: none;
+  height: 50%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.9);
+  bottom: 0;
+  left: 10px;
+  width: 80%;
+  overflow-y: scroll; }
+  #dvs-about-page-container.open {
+    display: inherit; }
+  #dvs-about-page-container .about-var-dump {
+    width: 60%; }
+
 #dvs-iframe {
   border-width: 0; }
+
+#about-page-iframe {
+  width: 100%;
+  height: 100%;
+  border: none; }
 
 #dvs-admin #devise-documentation-container a {
   color: #673f90; }

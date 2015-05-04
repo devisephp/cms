@@ -1,7 +1,8 @@
 devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionHelper', 'dvsSelectSurrogate', 'dvsLiveUpdater', 'BindingsFinder'], function($, query, Sidebar, View, dvsPosition, dvsSelectSurrogate, LiveUpdater, BindingsFinder)
 {
     var events = {
-        'click #dvs-node-mode-button': onClickNodeModeButton,
+        'click #dvs-node-mode-button': onNodeModeButtonClicked,
+        'click #dvs-about-page-button': onAboutPageButtonClicked,
         'click .dvs-sidebar-close': onCloseSidebarButtonClicked
     };
 
@@ -15,6 +16,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
         this.events = events;
         this.data = data;
         this.sidebar = new Sidebar(data);
+        this.aboutPageTemplate = $('[data-template-name="about-page"]');
     }
 
     /**
@@ -38,15 +40,20 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      */
     Editor.prototype.render = function()
     {
-        this.layoutView             = View.make('editor.layout');
+        this.layoutView             = View.make('editor.layout', this.data);
         this.iframeView             = this.layoutView.find('#dvs-iframe');
         this.nodesView              = $('<div/>');
         this.iframeBodyView         = $('<div/>');
         this.editButtonView         = this.layoutView.find('#dvs-node-mode-button');
+        this.aboutPageButtonView    = this.layoutView.find('#dvs-about-page-button');
+        this.aboutPageContainerView = this.layoutView.find('#dvs-about-page-container');
         this.sidebarContainerView   = this.layoutView.find('#dvs-sidebar-container');
         this.sidebarView            = this.layoutView.find('#dvs-sidebar');
 
         loadEditorIframe(this);
+
+        this.aboutPageContainerView.empty();
+        this.aboutPageContainerView.append(View.make('about-page'));
 
         $('body').empty();
         $('body').append(this.layoutView);
@@ -63,11 +70,11 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
         $.each(this.data.nodes, function(index, node)
         {
             var nodeView = View.make('editor.node', {id: node.cid + '-node', cid: index, node: node});
-            
+
             if (node.data.content_requested == 1) {
                 nodeView.addClass('dvs-content-requested');
-            }   
-            
+            }
+
             nodesView.append(nodeView);
         });
 
@@ -90,7 +97,8 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      */
     Editor.prototype.shouldStart = function()
     {
-        return location.href.indexOf('start-editor=false') === -1;
+        return location.href.indexOf('start-editor=false') === -1
+        && location.href.indexOf('disable-editor') === -1;
     }
 
     /**
@@ -190,12 +198,6 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
                     return;
                 }
 
-                // since this url is part of the editor
-                // we need to show our iframe. this is here
-                // so we don't get any "flashing" on invalid
-                // editor links
-                iframe.show();
-
                 // give all <a> tags a target to the top parent frame
                 // if new <a> links are added later via javascript
                 // the start-editor=false redirect (see above) will
@@ -251,7 +253,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      *  handle the edit button being clicked
      *  we basically just show the node view
      */
-    function onClickNodeModeButton(event)
+    function onNodeModeButtonClicked(event)
     {
         var shown = (this.layoutView.hasClass('dvs-node-mode'))
             ? this.hideEditor()
@@ -265,6 +267,15 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
     {
         this.hideSidebar();
         this.showEditor();
+    }
+
+    /**
+     * handle when the about page button is clicked
+     */
+    function onAboutPageButtonClicked(event)
+    {
+        this.aboutPageButtonView.toggleClass('open');
+        this.aboutPageContainerView.toggleClass('open');
     }
 
     /**

@@ -54,10 +54,53 @@ class ViewOpener
 
 		$includedViews[] = $path;
 
+		return $this->openViewPath($path);
+	}
+
+	/**
+	 * Recursively finds every view that is included inside this view
+	 *
+	 * @param  [type] $view
+	 * @return [type]
+	 */
+	public function findAllIncludedViews($viewPath, $ignore = [])
+	{
+		$content = $this->openViewPath($viewPath, true);
+
+		$includes = $this->includeStatements($content);
+
+		$ignore[] = $viewPath;
+
+		foreach ($includes as $include)
+		{
+			if (!in_array($include, $ignore))
+			{
+				$ignore[] = $include;
+				$includes = array_merge($includes, $this->findAllIncludedViews($include, $ignore));
+			}
+		}
+
+		return array_unique($includes);
+	}
+
+	/**
+	 * Find the real path
+	 *
+	 * @param  [type] $path
+	 * @param  [type] &$includedViews
+	 * @return [type]
+	 */
+	public function openViewPath($path, $throwsException = false)
+	{
+		if ($throwsException)
+		{
+			$realpath = $this->finder->find($path);
+			return $this->file->get($realpath);
+		}
+
 		try
 		{
 			$realpath = $this->finder->find($path);
-
 			return $this->file->get($realpath);
 		}
 
@@ -73,6 +116,28 @@ class ViewOpener
 		return '';
 	}
 
+	/**
+	 * Gets the included views from all these matches
+	 *
+	 * @param  string $content
+	 * @return array
+	 */
+	protected function includeStatements($content)
+	{
+		$includes = [];
+
+		$pattern = "/@include\s*\(\s*\'([^']+)\'|" . '@include\s*\(\s*\"([^"]+)\"/';
+
+		preg_match_all($pattern, $content, $matches);
+
+		for ($i = 0; $i < count($matches[1]); $i++)
+		{
+			$includes[] = $matches[1][$i] ? $matches[1][$i] : $matches[2][$i];
+		}
+
+        return array_unique($includes);
+	}
+
     /**
      * Finds the path from a $statement string. The pattern below
      * searches for "@include('this.is.what.we.want', ...)"
@@ -82,16 +147,10 @@ class ViewOpener
      */
 	protected function pathFromIncludeStatement($statement)
 	{
-		$pattern = "/@include\s*\(\s*\'([^']+)\'|" . '@include\s*\(\s*\"([^"]+)\"/';
+		$matches = $this->includeStatements($statement);
 
-		preg_match($pattern, $statement, $matches);
-
-		// we can't figure out how to open this path so bail
-		if (count($matches) == 0)
-		{
-			return null;
-		}
-
-        return array_pop($matches);
+        return count($matches) > 0 ? array_pop($matches) : null;
 	}
+
+
 }

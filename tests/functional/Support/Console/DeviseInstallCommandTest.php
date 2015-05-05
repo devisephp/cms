@@ -45,9 +45,11 @@ class DeviseInstallCommandTest extends \DeviseTestCase
     	$this->DeviseInstallCommand->wizard->shouldReceive('refreshEnvironment')->twice();
     	$this->DeviseInstallCommand->wizard->shouldReceive('saveEnvironment')->with('local')->once();
         $this->DeviseInstallCommand->wizard->shouldReceive('saveConfigsOverride')->once()->andReturn();
-    	$this->DeviseInstallCommand->wizard->shouldReceive('saveDatabase')->with('mysql', 'localhost', 'devisephp', 'root', '', 'yes', 'yes')->once()->andReturn();
+        $this->DeviseInstallCommand->wizard->shouldReceive('saveDatabase')->with('mysql', 'localhost', 'devisephp', 'root', '')->once()->andReturn();
+    	$this->DeviseInstallCommand->wizard->shouldReceive('saveApplicationMigrationAndSeedSettings')->with('yes','yes')->once()->andReturn();
         $this->DeviseInstallCommand->Artisan->shouldReceive('call')->twice();
-		$this->DeviseInstallCommand->wizard->shouldReceive('createAdminUser')->once();
+        $this->DeviseInstallCommand->wizard->shouldReceive('createAdminUser')->once();
+		$this->DeviseInstallCommand->wizard->shouldReceive('saveApplicationNamespace')->once();
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();

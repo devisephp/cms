@@ -36,8 +36,9 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
         require __DIR__. '/routes.php';
 
         // register these field update bindings
-        \Event::listen('devise.video.field.updated', 'Devise\Pages\Fields\VideoFieldUpdated');
-        \Event::listen('devise.image.field.updated', 'Devise\Pages\Fields\ImageFieldUpdated');
+        \Event::listen('devise.audio.field.updated', 'Devise\Pages\Fields\Handlers\AudioFieldUpdated');
+        \Event::listen('devise.video.field.updated', 'Devise\Pages\Fields\Handlers\VideoFieldUpdated');
+        \Event::listen('devise.image.field.updated', 'Devise\Pages\Fields\Handlers\ImageFieldUpdated');
     }
 
     /**

@@ -1,4 +1,4 @@
-<?php namespace Devise\Pages\Fields;
+<?php namespace Devise\Pages\Fields\Handlers;
 
 use Devise\Media\MediaPaths;
 use Devise\Support\Framework;
@@ -163,14 +163,29 @@ class VideoFieldUpdated
 
 		foreach ($this->formats as $format)
 		{
-			$url = isset($field->values->$format) && $field->values->$format ? $this->filename($field->values->video, $format) : '';
+			$url = isset($field->values->$format) && $field->values->$format ? $this->filename($field->values, $format) : '';
+
+			$audioEncoding = $field->values->audioEncoding('acc');
+			$width = $field->values->width(false);
+			$height = $field->values->height(false);
+			$upscale = $field->values->upscale(false);
+			$aspectMode = $field->values->aspectMode('preserve');
+			$size = "{$width}x{$height}";
 
 			if ($url)
 			{
-				$settings[] = array(
+				$newSetting = array(
 					'format' => $format,
 					'label' => $url,
+					'audio_codec' => $audioEncoding,
 				);
+
+				if ($width || $height) $newSetting['aspect_mode'] = $aspectMode;
+				if ($width) $newSetting['width'] = $width;
+				if ($height) $newSetting['height'] = $height;
+				if ($upscale) $newSetting['upscale'] = true;
+
+				$settings[] = $newSetting;
 			}
 		}
 
@@ -184,11 +199,22 @@ class VideoFieldUpdated
 	 * @param  string $format
 	 * @return string
 	 */
-	protected function filename($filepath, $format)
+	protected function filename($values, $format)
 	{
-		$info = $this->MediaPaths->isUrlPath($filepath) ? $this->MediaPaths->fileVersionInfoFromUrl($filepath) : $this->MediaPaths->fileVersionInfo($filepath);
+		$filepath = $values->video;
+		$audioEncoding = $values->audioEncoding('acc');
+		$width = $values->width(false);
+		$height = $values->height(false);
+		$upscale = $values->upscale(false) ? 'upscale' : false;
+		$aspectMode = $values->aspectMode('preserve');
+		$size = "{$width}x{$height}";
 
-		return $this->MediaPaths->makeRelativePath("{$info->versiondir}/{$info->filename}.{$format}");
+		$additionalUrl = $audioEncoding;
+		$additionalUrl .= $width && $height ? "_{$size}" : '';
+		$additionalUrl .= $upscale ? "_{$upscale}" : '';
+		$additionalUrl .= $aspectMode ? "_{$aspectMode}" : '';
+		$info = $this->MediaPaths->isUrlPath($filepath) ? $this->MediaPaths->fileVersionInfoFromUrl($filepath) : $this->MediaPaths->fileVersionInfo($filepath);
+		return $this->MediaPaths->makeRelativePath("{$info->versiondir}/{$info->filename}_{$additionalUrl}.{$format}");
 	}
 
     /**

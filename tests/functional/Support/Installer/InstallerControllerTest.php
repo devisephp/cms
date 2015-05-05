@@ -64,7 +64,7 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_gets_database()
     {
-        $this->Framework->Input->shouldReceive('old')->times(8)->andReturn('production');
+        $this->Framework->Input->shouldReceive('old')->times(5)->andReturn('production');
         $this->Framework->View->shouldReceive('make')->once()->andReturnSelf();
 
         $this->InstallerController->getDatabase();
@@ -72,8 +72,7 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_posts_database()
     {
-    	$this->Framework->Input->shouldReceive('get')->times(8)->andReturn('production');
-        $this->InstallWizard->shouldReceive('saveConfigsOverride')->once()->andReturnSelf();
+    	$this->Framework->Input->shouldReceive('get')->times(5)->andReturn('production');
         $this->InstallWizard->shouldReceive('saveDatabase')->once()->andReturnSelf();
         $this->Framework->Redirect->shouldReceive('to')->once()->andReturnSelf();
 
@@ -82,12 +81,24 @@ class InstallerControllerTest extends \DeviseTestCase
 
     public function test_it_gets_application()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Input->shouldReceive('old')->times(4)->andReturn('test');
+        $this->Framework->View->shouldReceive('make')->once()->andReturn('returned val');
+        $result = $this->InstallerController->getApplication();
+        $this->assertEquals('returned val',$result);
     }
 
     public function test_it_posts_application()
     {
-        $this->markTestIncomplete();
+        $this->Framework->Input->shouldReceive('get')->times(4)->andReturn('test');
+
+        $this->InstallWizard->shouldReceive('saveConfigsOverride')->once()->with('test');
+        $this->InstallWizard->shouldReceive('saveApplicationMigrationAndSeedSettings')->once()->with('test','test');
+        $this->InstallWizard->shouldReceive('saveApplicationNamespace')->once()->with('test');
+
+        $this->Framework->Redirect->shouldReceive('to')->once()->andReturn('returned val');
+        
+        $result = $this->InstallerController->postApplication();
+        $this->assertEquals('returned val',$result);
     }
 
     public function test_it_gets_create_user()

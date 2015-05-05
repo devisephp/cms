@@ -5,11 +5,10 @@
     <div class="dvs-editor-values">
         <div class="dvs-checkboxes" id="dvs-sample-checkbox-group">
 
-            {{#each field.checkboxes}}
+            {{#each values.checkboxes}}
                 <div class="dvs-checkbox">
-                    <input type="hidden" name="{{ key }}" value="0">
                     <label>
-                        <input type="checkbox" value="{{ default }}">
+                        <input type="checkbox" value="1" {{checked default}}>
                         <span>{{ label }}</span>
                     </label>
                 </div>
@@ -31,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each field.checkboxes }}
+                {{#each values.checkboxes }}
                     <tr class="dvs-checkbox-fields">
                         <td>
                             <input type="text" name="checkboxes[][key]" value="{{ key }}">

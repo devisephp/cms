@@ -1450,12 +1450,12 @@ class DevisePagesSeeder extends DeviseSeeder
                 'response_type'           => 'Function',
                 'response_path'           => 'Devise\Models\Scaffolding\ScaffoldingResponseHandler.requestCreateNewModel',
                 'response_params'         => 'input'
-            )
+            ),
 		);
 
         $now = date('Y-m-d H:i:s', strtotime('now'));
 
-        $dvsPages = $this->findOrCreateRows('dvs_pages', 'route_name', $pages);
+        $dvsPages = $this->findOrCreateRows('dvs_pages', ['http_verb', 'slug'], $pages);
 
 		foreach ( $dvsPages as $dvsPage )
         {

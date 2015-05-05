@@ -1,4 +1,4 @@
-devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dvsModelView', 'dvsAttributeView', 'dvsCreatorView', 'dvsGroupView', 'dvsBreadCrumbsView'], function($, query, View, FieldView, CollectionView, ModelView, AttributeView, CreatorView, GroupView, BreadCrumbsView)
+devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionView', 'dvsModelView', 'dvsAttributeView', 'dvsCreatorView', 'dvsGroupView', 'dvsBreadCrumbsView', 'jqSerializeObject'], function($, query, View, FieldView, CollectionView, ModelView, AttributeView, CreatorView, GroupView, BreadCrumbsView)
 {
 	/**
 	 * List of events for this view
@@ -125,12 +125,7 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 	Sidebar.prototype.save = function(event)
 	{
 		var form = this.layout.find('form');
-		var values = {};
-
-		$.each(form.serializeArray(), function(index, nameValuePair)
-		{
-			values[nameValuePair.name] = nameValuePair.value;
-		});
+		var values = form.serializeObject();
 
 		this.contentView.save(values, event);
 	}

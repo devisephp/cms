@@ -19,8 +19,8 @@ class CreateDvsPages extends Migration {
             $table->string('title', 255);
             $table->string('http_verb', 255)->default('get');
             $table->string('route_name', 255);
-            $table->boolean('is_admin');
-            $table->boolean('dvs_admin');
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('dvs_admin')->default(false);
             $table->string('slug', 255);
             $table->text('short_description')->nullable();
             $table->string('meta_title', 255)->nullable();

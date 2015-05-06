@@ -41,8 +41,8 @@ class EncodingServiceProvider extends ServiceProvider
         $apiKey = $this->app['config']->get('devise.zencoder.api-key');
         $notifications = $this->app['config']->get('devise.zencoder.notifications');
         $encoder = new ZencoderJob($apiKey, $notifications, new FileDownloader, new Framework);
-
         $this->app->instance("devise.video.encoder", $encoder);
+        $this->app->instance("devise.audio.encoder", $encoder);
     }
 
     /**

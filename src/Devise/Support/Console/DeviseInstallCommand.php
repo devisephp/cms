@@ -86,17 +86,21 @@ class DeviseInstallCommand extends Command
         $this->changeEmailConfigFile();
         $this->DevisePublishAssetsCommand->handle();
 
+        // 1. Application Migrations
         if ($this->env('APP_MIGRATIONS') != 'no') {
             $this->Artisan->call('migrate');
         }
 
+        // 2. Devise Migrations
+        $this->DeviseMigrateCommand->handle();
+
+        // 3. Devise Seeds
+        $this->DeviseSeedCommand->handle();
+
+        // 4. App Seeds
         if ($this->env('APP_SEEDS') != 'no') {
             $this->Artisan->call('db:seed');
         }
-
-        // run devise mgirations/seeds after application migrations/seeds
-        $this->DeviseMigrateCommand->handle();
-        $this->DeviseSeedCommand->handle();
 
         if ($this->env('CONFIGS_OVERRIDE') == 'yes') {
             $this->DevisePublishConfigsCommand->handle();

@@ -1,6 +1,19 @@
 <script data-template-name="about-page" type="text/x-handlebars-template">
+	<h4>Useful Links</h4>
+	<ul>
+		<li>
+			<a href="{{ URL::route('dvs-pages-edit', $page->id) }}">
+				Page Settings
+			</a>
+		</li>
+		<li>
+			<a href="{{Request::url()}}?disable-editor">
+				Disable Editor
+			</a>
+		</li>
+	</ul>
 	<h4>Current Route</h4>
-	<p><?= $page->route_name ?></p>
+	<ul><li><?= $page->route_name ?></li></ul>
 
 	<h4>Templates Loaded</h4>
 	<ul>

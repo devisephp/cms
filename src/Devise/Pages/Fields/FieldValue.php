@@ -13,6 +13,13 @@ class FieldValue
 	 * @var string
 	 */
 	protected $json;
+	
+	/**
+	 * Number of values on this field value
+	 *
+	 * @var integer
+	 */
+	protected $count;
 
 	/**
 	 * Create a new FieldValue object from json string
@@ -22,7 +29,9 @@ class FieldValue
 	public function __construct($json)
 	{
 		$this->json = $json;
-		$values = json_decode($json);
+		$values = json_decode($json, true);
+
+		$this->count = count($values);
 
 		foreach ($values as $key => $value)
 		{

@@ -66,7 +66,9 @@
 }
 
 #dvs-admin-mode-button,
-#dvs-node-mode-button {
+#dvs-node-mode-button,
+#dvs-about-page-button,
+#dvs-edit-settings-button {
   position: fixed;
   display:block;
   bottom: 0px;
@@ -99,8 +101,93 @@
   border-radius: 0 3px 0 0;
 }
 
-#dvs-iframe {
-  border-width:0;
-  
+#dvs-about-page-button {
+  left: 10px;
+  &.open { bottom: 80%; }
 }
 
+#dvs-edit-settings-button {
+  right: 224px;
+}
+
+#dvs-about-page-container {
+  display: none;
+  height: 80%;
+  position: fixed;
+  padding: 3%;
+  background-color: rgba(0, 0, 0, 0.9);
+  bottom: 0;
+  left: 10px;
+  width: 80%;
+  overflow-y: scroll;
+  color: $white;
+  font-weight:100;
+
+  &.open { display: inherit; }
+  .about-var-dump {
+    width: 60%;
+  }
+
+  > ul {
+    padding-left:20px;
+
+    > li {
+      list-style-type: disc;
+    }
+  }
+
+  a {
+    color:$blue-green;
+  }
+
+  h4 {
+    @include clearfix();
+    font-size:1.2em;
+    font-weight:400;
+    margin-top:30px;
+
+    &:first-child {
+      margin-top:0;
+    }
+  }
+
+  h5 {
+    font-size:1em;
+    font-weight:400;
+    color:$blue;
+    cursor:pointer;
+  }
+
+  .about-var-dump {
+    height:0;
+    overflow:hidden;
+    width:100%;
+
+    &.open {
+      height:auto;
+      overflow:auto;
+    }
+
+    pre {
+      padding:20px;
+      background-color:$white;
+      color:$black;
+      font-weight:300;
+      font-family: 'Source Code Pro', 'Courier New', Courier, serif;
+      font-size:11px;
+      line-height: 1.3em;
+      border-radius:3px;
+      width:100%;
+    }
+  }
+}
+
+#dvs-iframe {
+  border-width:0;
+}
+
+#about-page-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}

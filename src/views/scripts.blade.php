@@ -1,8 +1,33 @@
 @if (DeviseUser::checkConditions('canUseDeviseEditor'))
 
 	<?php
+		// handlebar templates are injected into our javascript
+		// via the following code
 		$templateDir = public_path() . '/packages/devisephp/cms/js/app/editor/templates';
 		$templates = $files = File::allFiles($templateDir);
+
+		// print out the html for this about page in a template
+		// and we will inject this into the page at a later time
+		$pagesRepository = App::make('Devise\Pages\PagesRepository');
+		$pageTemplates = $pagesRepository->findPageTemplates($page);
+		$pageVariables = $pagesRepository->findTemplateVariables($pageTemplates);
+
+		$aboutPageData = [
+			'variables' => $pageVariables,
+			'templates' => $pageTemplates,
+			'page' => $page,
+			'data' => [],
+		];
+
+		foreach ($pageVariables as $variable)
+		{
+			$aboutPageData['data'][$variable] = isset($$variable) ? $$variable : 'undefined';
+		}
+
+		// print out the pages.about template... it will be a <script> tag
+		// we will include it into the Templates JST below, it is treated
+		// differently because of the php dynamic content it provides
+		print view('devise::admin.pages.about', $aboutPageData)->render();
 	?>
 
 	<script src="/packages/devisephp/cms/js/devise.js"></script>
@@ -39,7 +64,7 @@
    		});
 
 		// bootstrap the dvsEditor
-		devise.require(['dvsTemplates', 'dvsEditor', 'dvsPageData', 'query', 'dvsCsrf'], function(Templates, Editor, PageData, query, csrf) {
+		devise.define('devise.editor', ['dvsTemplates', 'dvsEditor', 'dvsPageData', 'query', 'dvsCsrf'], function(Templates, Editor, PageData, query, csrf) {
 
 			csrf(PageData.csrfToken);
 
@@ -52,6 +77,8 @@
 				Templates.JST['<?php echo $templateName ?>'] = "<?php echo str_replace("\n", "", str_replace('"', '\"', file_get_contents($template))); ?>";
 			<?php endforeach ?>
 
+			Templates.JST['about-page'] = $('[data-template-name="about-page"]').html();
+
 			devise.editor = new Editor(Templates, PageData);
 
 			devise.editor.start();
@@ -62,6 +89,11 @@
 
 				if (showNode !== false) devise.editor.showSidebar(showNode);
 			}
+		});
+
+		devise.require(['devise.editor'], function(editor)
+		{
+			// this bootstraps the devise.editor for the first time
 		});
 	</script>
 

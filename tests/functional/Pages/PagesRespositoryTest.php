@@ -17,7 +17,8 @@ class PagesRepositoryTest extends \DeviseTestCase
         $this->Config = m::mock('Illuminate\Config\Repository');
         $this->URL = m::mock('Illuminate\Routing\UrlGenerator');
         $this->File = m::mock('Illuminate\Filesystem\Filesystem');
-        $this->PagesRepository = new PagesRepository($this->DvsPage, $this->DvsField, $this->DvsGlobalField, $this->LanguageDetector, $this->CollectionsRepository, $this->Input, $this->Config, $this->URL, $this->File);
+        $this->ViewOpener = m::mock('Devise\Pages\Interpreter\ViewOpener');
+        $this->PagesRepository = new PagesRepository($this->DvsPage, $this->DvsField, $this->DvsGlobalField, $this->LanguageDetector, $this->CollectionsRepository, $this->Input, $this->Config, $this->URL, $this->File, $this->ViewOpener);
     }
 
     public function test_it_finds_page()
@@ -108,6 +109,26 @@ class PagesRepositoryTest extends \DeviseTestCase
         $expectedSize = \DB::table('dvs_pages')->count();
         $list = $this->PagesRepository->getPagesList($includeAdmin = true);
         assertCount($expectedSize, $list);
+    }
+
+    public function test_it_finds_page_templates()
+    {
+        $realConfig = \Config::get('devise.templates');
+        $page = \DvsPage::find(1);
+        $this->Config->shouldReceive('get')->once()->andReturn($realConfig);
+        $this->ViewOpener->shouldReceive('findAllIncludedViews')->once()->with('devise::admin.pages.index')->andReturn(['awesome.view']);
+        $templates = $this->PagesRepository->findPageTemplates($page);
+        assertEquals(['devise::admin.pages.index', 'devise::admin.layouts.master', 'awesome.view'], $templates);
+    }
+
+    public function test_it_finds_template_variables()
+    {
+        $templates = ['devise::admin.pages.index'];
+        $realConfig = \Config::get('devise.templates');
+        $page = \DvsPage::find(1);
+        $this->Config->shouldReceive('get')->once()->andReturn($realConfig);
+        $vars = $this->PagesRepository->findTemplateVariables($templates);
+        assertEquals(['languages', 'pages'], $vars);
     }
 
     /**

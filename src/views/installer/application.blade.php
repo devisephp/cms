@@ -23,7 +23,7 @@
         </div>
 
          <div class="dvs-form-group tal">
-            <label>Override All Devise Configs? (If you're unsure leave "on")</label><br>
+            <label>Override All Devise Configs? (If you're unsure leave "off")</label><br><br>
             <div class="fancyCheckbox">
                 <input tabindex="4" type="checkbox" name="configs_override" value="yes" id="configs-override" <?= $checked('configs_override') ?> />
                 <label for="configs-override">&nbsp;</label>

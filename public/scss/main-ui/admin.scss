@@ -339,8 +339,8 @@
 
 .dvs-inset-text {
   @include insetFormDude();
-
   max-width:300px;
+  overflow:hidden;
 
   a {
     color:$red;

@@ -1,6 +1,6 @@
 devise.define(['jquery'], function($) {
 
-    var nodeHeight = 82;
+    var nodeHeight = 40;
 
     /**
      * We need to set the nodeHeight to calculate
@@ -138,7 +138,7 @@ devise.define(['jquery'], function($) {
             {
                 if (i != j && hasNodeCollision(nodes[i], nodes[j]))
                 {
-                    nodes[j].position.top += nodeHeight;
+                    nodes[i].position.top += nodeHeight;
                 }
             }
         }
@@ -151,7 +151,7 @@ devise.define(['jquery'], function($) {
     {
         if (node1.position.side != node2.position.side) return false;
 
-        return Math.abs(node1.position.top - node2.position.top) < nodeHeight;
+        return Math.abs(node1.position.top - node2.position.top) < (nodeHeight);
     }
 
     /**

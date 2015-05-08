@@ -3156,7 +3156,7 @@ button.dvs-no-decoration:hover {
 #dvs-admin input[type=text].form-control {
   height: auto;
   box-sizing: border-box;
-  padding: 14px 14px;
+  padding: 6px 14px;
   font-size: 14px;
   color: #bcbec2;
   border: 1px solid #32353f;
@@ -3230,7 +3230,7 @@ button.dvs-no-decoration:hover {
     display: table-cell;
     width: 78%;
     box-sizing: border-box;
-    padding: 14px 14px;
+    padding: 6px 14px;
     font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
@@ -3320,7 +3320,7 @@ button.dvs-no-decoration:hover {
 .dvs-admin-form-horizontal .dvs-sort-items input[type=text] {
   width: 23%;
   float: left;
-  height: 24px;
+  height: 31px;
   font-size: 11px;
   margin-right: 5px; }
 .dvs-admin-form-vertical .dvs-menu-items select,
@@ -4582,7 +4582,7 @@ td .dvs-select-small {
 
 .dvs-inset-text {
   box-sizing: border-box;
-  padding: 14px 14px;
+  padding: 6px 14px;
   font-size: 14px;
   color: #bcbec2;
   border: 1px solid #32353f;
@@ -4670,7 +4670,7 @@ table.dvs-admin-table {
     max-width: 300px;
     margin-left: 10px;
     box-sizing: border-box;
-    padding: 14px 14px;
+    padding: 6px 14px;
     font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
@@ -5638,7 +5638,7 @@ table.dvs-admin-table {
   #dvs-media-manager #dvs-media-cropper-settings {
     margin-top: 20px;
     box-sizing: border-box;
-    padding: 14px 14px;
+    padding: 6px 14px;
     font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
@@ -5657,7 +5657,7 @@ table.dvs-admin-table {
       color: #797d85; }
   #dvs-media-manager #dvs-media-upload {
     box-sizing: border-box;
-    padding: 14px 14px;
+    padding: 6px 14px;
     font-size: 14px;
     color: #bcbec2;
     border: 1px solid #32353f;
@@ -5685,7 +5685,7 @@ table.dvs-admin-table {
     margin: 0 0 20px; }
     #dvs-media-manager #dvs-new-category input[type=text] {
       box-sizing: border-box;
-      padding: 14px 14px;
+      padding: 6px 14px;
       font-size: 14px;
       color: #bcbec2;
       border: 1px solid #32353f;

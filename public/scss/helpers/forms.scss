@@ -67,8 +67,9 @@ input[type=text] {
 .dvs-admin-form-vertical,
 .dvs-admin-form-horizontal {
 
-  input[type="submit"] {
-    margin-left:$formLabelColumnWidth + $formGutterWidth;
+  .dvs-submit-margin {
+    display:inline-block;
+    width:$formLabelColumnWidth + $formGutterWidth;
   }
 
   .dvs-form-group {

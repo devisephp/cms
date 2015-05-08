@@ -3195,9 +3195,10 @@ button.dvs-no-decoration:hover {
 #dvs-admin .dvs-admin-form-vertical h3, #dvs-admin .dvs-admin-form-vertical h4, #dvs-admin .dvs-admin-form-vertical h5, #dvs-admin .dvs-admin-form-vertical h6 {
   padding-left: 0; }
 
-.dvs-admin-form-vertical input[type="submit"],
-.dvs-admin-form-horizontal input[type="submit"] {
-  margin-left: 22%; }
+.dvs-admin-form-vertical .dvs-submit-margin,
+.dvs-admin-form-horizontal .dvs-submit-margin {
+  display: inline-block;
+  width: 22%; }
 .dvs-admin-form-vertical .dvs-form-group,
 .dvs-admin-form-horizontal .dvs-form-group {
   clear: both;

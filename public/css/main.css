@@ -3196,9 +3196,10 @@ button.dvs-no-decoration:hover {
 #dvs-admin .dvs-admin-form-vertical h3, #dvs-admin .dvs-admin-form-vertical h4, #dvs-admin .dvs-admin-form-vertical h5, #dvs-admin .dvs-admin-form-vertical h6 {
   padding-left: 0; }
 
-.dvs-admin-form-vertical input[type="submit"],
-.dvs-admin-form-horizontal input[type="submit"] {
-  margin-left: 22%; }
+.dvs-admin-form-vertical .dvs-submit-margin,
+.dvs-admin-form-horizontal .dvs-submit-margin {
+  display: inline-block;
+  width: 22%; }
 .dvs-admin-form-vertical .dvs-form-group,
 .dvs-admin-form-horizontal .dvs-form-group {
   clear: both;
@@ -3279,7 +3280,7 @@ button.dvs-no-decoration:hover {
       color: #797d85; }
   .dvs-admin-form-vertical .dvs-form-group select,
   .dvs-admin-form-horizontal .dvs-form-group select {
-    height: 50px;
+    height: 31px;
     width: 78%;
     border-radius: 0; }
   .dvs-admin-form-vertical .dvs-form-group input[type=checkbox],
@@ -3828,6 +3829,7 @@ td .dvs-select-small {
   padding: 6px;
   margin: 0;
   cursor: move;
+  background-color: #262930;
   background: #262930;
   background-image: -webkit-linear-gradient(#2b2e36, #262930);
   background-image: linear-gradient(#2b2e36, #262930);
@@ -4594,7 +4596,8 @@ td .dvs-select-small {
   background-color: #202228;
   background: -webkit-linear-gradient(top, #202228, #24262e);
   background: linear-gradient(to bottom, #202228, #24262e);
-  max-width: 300px; }
+  max-width: 300px;
+  overflow: hidden; }
   .dvs-inset-text::-webkit-input-placeholder {
     color: #797d85; }
   .dvs-inset-text::-moz-placeholder {

@@ -33,6 +33,7 @@
 		padding: 6px;
 		margin: 0;
 		cursor: move;
+    background-color: $primaryTableBgColor;
 		background: $primaryTableBgColor;
 		@include background-image(linear-gradient($secondaryTableBgColor, $primaryTableBgColor));
 		border-color: darken($primaryTableBgColor, 4%);

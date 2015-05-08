@@ -36,7 +36,11 @@
 
             @include('devise::admin.templates.variables._variables-table')
 
-            <?= Form::submit('Update Template', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
+            <div class="dvs-form-group">
+                <div class="dvs-submit-margin">&nbsp;</div>
+                    <?= Form::submit('Update Template', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
+                </div>
+            </div>
         <?= Form::close() ?>
     </div>
 

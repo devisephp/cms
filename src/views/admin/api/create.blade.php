@@ -18,7 +18,10 @@
 
             @include('devise::admin.api._form', ['method' => 'store'])
 
-			<?= Form::submit('Create Request', array('class' => 'dvs-button dvs-button-large')) ?>
+            <div class="dvs-form-group">
+                <div class="dvs-submit-margin">&nbsp;</div>
+                <?= Form::submit('Create Request', array('class' => 'dvs-button dvs-button-solid dvs-button-success ')) ?>
+            </div>
 		<?= Form::close() ?>
 	</div>
 

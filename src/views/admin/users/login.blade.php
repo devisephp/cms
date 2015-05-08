@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="form-group mt sp30">
-                        <input type="submit" class="dvs-button dvs-button-primary" value="Log In to AdministrationB">
+                        <input type="submit" class="dvs-button dvs-button-primary" value="Log In to Administration">
                     </div>
 
                     <div class="form-group">

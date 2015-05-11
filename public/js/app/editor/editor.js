@@ -3,6 +3,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
     var events = {
         'click #dvs-node-mode-button': onNodeModeButtonClicked,
         'click #dvs-about-page-button': onAboutPageButtonClicked,
+        'click #dvs-about-page-container h5': onAboutPageVariableClicked,
         'click .dvs-sidebar-close': onCloseSidebarButtonClicked
     };
 
@@ -246,7 +247,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
             });
         });
 
-        iframe.attr('src', query.append('start-editor', 'false', location.href));
+        iframe.attr('src', query.append('start-editor', 'false', location.origin + location.pathname + location.search)  + location.hash);
     }
 
     /**
@@ -276,6 +277,14 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
     {
         this.aboutPageButtonView.toggleClass('open');
         this.aboutPageContainerView.toggleClass('open');
+    }
+
+    /**
+     * handle when variables clicked
+     */
+    function onAboutPageVariableClicked(event)
+    {
+        $(event.currentTarget).siblings('.about-var-dump').toggleClass('open');
     }
 
     /**

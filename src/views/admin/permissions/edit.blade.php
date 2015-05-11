@@ -49,9 +49,13 @@
                 </div>
             </div>
 
-            <?= Form::submit('Update Permission', array('class' => 'dvs-button')) ?>
+        <div class="dvs-form-group">
+            <div class="dvs-submit-margin">&nbsp;</div>
+                <?= Form::submit('Update Permission', array('class' => 'dvs-button')) ?>
+                <?= Form::button('Reset Form', array('class' => 'dvs-button', 'id' => 'dvs-reset-form')) ?>
+            </div>
+        </div>
 
-            <?= Form::button('Reset Form', array('class' => 'dvs-button', 'id' => 'dvs-reset-form')) ?>
 
         <?= Form::close() ?>
     </div>

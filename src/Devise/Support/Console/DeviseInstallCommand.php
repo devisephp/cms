@@ -91,12 +91,12 @@ class DeviseInstallCommand extends Command
         }
 
         $this->DeviseMigrateCommand->handle();
+        
+        $this->DeviseSeedCommand->handle();
 
         if ($this->env('APP_SEEDS') != 'no') {
             $this->Artisan->call('db:seed');
         }
-
-        $this->DeviseSeedCommand->handle();
 
         if ($this->env('CONFIGS_OVERRIDE') == 'yes') {
             $this->DevisePublishConfigsCommand->handle();

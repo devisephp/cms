@@ -28,7 +28,6 @@
     		</div>
 
     		<div class="dvs-form-group">
-
     			<ol class="sortable dvs-menu-items">
     				@foreach ($menu->items as $item)
     					@include('devise::admin.menus._items', ['item' => $item])
@@ -36,7 +35,11 @@
     			</ol>
     		</div>
 
-    		<?= Form::submit('Update Menu', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
+            <div class="dvs-form-group">
+                <div class="dvs-submit-margin">&nbsp;</div>
+                    <?= Form::submit('Update Menu', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
+                </div>
+            </div>
         <?= Form::close() ?>
     </div>
 

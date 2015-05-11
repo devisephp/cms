@@ -51,7 +51,6 @@
 			dvsPageData.urls.update_model_attribute = "<?= route('dvs-model-field-update', [':id']) ?>";
 			dvsPageData.urls.create_model = "<?= route('dvs-model-fields-create') ?>";
 			dvsPageData.urls.reset_field = "<?= route('dvs-fields-reset', [':id', ':scope']) ?>";
-			dvsPageData.urls.about_page = "<?= route('dvs-pages-about', [':id']) ?>";
 
 			dvsPageData.url = function(name, params) { var url = dvsPageData.urls[name]; params = params || []; for (var index in params) {	var match = new RegExp(':' + index, 'g'); url = url.replace(match, params[index]); } return url; };
 

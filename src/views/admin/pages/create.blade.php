@@ -18,7 +18,11 @@
 
             @include('devise::admin.pages._page-form', ['method' => 'store'])
 
-			<?= Form::submit('Create Page', array('class' => 'dvs-button dvs-button-large')) ?>
+            <div class="dvs-form-group">
+                <div class="dvs-submit-margin">&nbsp;</div>
+                    <?= Form::submit('Create Page', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
+                </div>
+            </div>
 		<?= Form::close() ?>
 	</div>
 

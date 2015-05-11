@@ -1410,7 +1410,7 @@ class DevisePagesSeeder extends DeviseSeeder
             ),
             array(
                 'language_id'             => '45',
-                'title'                   => 'You Have Arrived',
+                'title'                   => 'You Have Arrived (Delete)',
                 'view'                    => 'devise::installer.index-post-install',
                 'http_verb'               => 'get',
                 'route_name'              => 'you-have-arrived',

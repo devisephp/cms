@@ -18,7 +18,11 @@
 
             @include('devise::admin.pages._page-form', ['method' => 'update'])
 
-            <?= Form::submit('Edit Page', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
+            <div class="dvs-form-group">
+                <div class="dvs-submit-margin">&nbsp;</div>
+                    <?= Form::submit('Edit Page', array('class' => 'dvs-button dvs-button-solid dvs-button-success')) ?>
+                </div>
+            </div>
         <?= Form::close() ?>
     </div>
 

@@ -79,7 +79,11 @@
 
 			</div>
 
-			<input type="submit" class="dvs-button dvs-button-success dvs-button-solid" value="Update Settings">
+            <div class="dvs-form-group">
+                <div class="dvs-submit-margin">&nbsp;</div>
+			        <input type="submit" class="dvs-button dvs-button-success dvs-button-solid" value="Update Settings">
+                </div>
+            </div>
 		</form>
 
     </div>

@@ -65,7 +65,7 @@ class ViewOpener
 	 */
 	public function findAllIncludedViews($viewPath, $ignore = [])
 	{
-		$content = $this->openViewPath($viewPath, true);
+		$content = $this->openViewPath($viewPath);
 
 		$includes = $this->includeStatements($content);
 
@@ -90,14 +90,8 @@ class ViewOpener
 	 * @param  [type] &$includedViews
 	 * @return [type]
 	 */
-	public function openViewPath($path, $throwsException = false)
+	public function openViewPath($path)
 	{
-		if ($throwsException)
-		{
-			$realpath = $this->finder->find($path);
-			return $this->file->get($realpath);
-		}
-
 		try
 		{
 			$realpath = $this->finder->find($path);

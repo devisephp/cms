@@ -251,29 +251,13 @@ if (!function_exists('deviseDocsLink'))
 	}
 }
 
-
-if (!function_exists('startdvsmagic'))
-{
-	function startdvsmagic()
-	{
-		Request::query('start-editor') === 'false' && App::make('dvsMagicMode')->enable();
-		return null;
-	}
-}
-
 if (!function_exists('dvsmagic'))
 {
 	function dvsmagic($value, $name, $parent)
 	{
-		return App::make('dvsMagicMode')->live($value, $name, $parent);
-	}
-}
-
-if (!function_exists('enddvsmagic'))
-{
-	function enddvsmagic()
-	{
+		Request::query('start-editor') === 'false' && App::make('dvsMagicMode')->enable();
+		$liveValue = App::make('dvsMagicMode')->live($value, $name, $parent);
 		App::make('dvsMagicMode')->disable();
-		return null;
+		return $liveValue;
 	}
 }

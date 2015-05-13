@@ -140,21 +140,19 @@ class EchoDeviseMagic extends NodeVisitorAbstract
 	 */
 	protected function wrapNodeWithMagicMethods($node)
 	{
-		$dvsmagic = $this->DeviseParser->parse('<?php startdvsmagic() . dvsmagic(false, "", false) . enddvsmagic() ?>')[0];
+		$dvsmagic = $this->DeviseParser->parse('<?php dvsmagic(false, "", false) ?>')[0];
 
-		$dvsmagic->left->right->args[0]->value = $node;
+		$dvsmagic->args[0]->value = $node;
 
 		if (isset($node->name))
 		{
-			$dvsmagic->left->right->args[1]->value->value = $node->name;
+			$dvsmagic->args[1]->value->value = $node->name;
 		}
 
 		if (isset($node->var))
 		{
-			$dvsmagic->left->right->args[2]->value = $node->var;
+			$dvsmagic->args[2]->value = $node->var;
 		}
-
-		$dvsmagic->args = array($node);
 
 		return $dvsmagic;
 	}

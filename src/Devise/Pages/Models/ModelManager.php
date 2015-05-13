@@ -139,8 +139,7 @@ class ModelManager
 
 			$modelField->values->override($newValues);
 
-			// probably want to add content_requested to model fields later?
-        	// $modelField->content_requested = array_get($field, 'content_requested', false);
+        	$modelField->content_requested = array_get($field, 'content_requested', 0) == 1;
 
 	        $modelField->json_value = $modelField->values->toJSON();
 
@@ -336,8 +335,7 @@ class ModelManager
 
 			$modelField->values->override($newValues);
 
-			// probably want to add content_requested to model fields later?
-        	// $modelField->content_requested = array_get($field, 'content_requested', false);
+        	$modelField->content_requested = array_get($field, 'content_requested', 0) == 1;
 
 	        $modelField->json_value = $modelField->values->toJSON();
 

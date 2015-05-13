@@ -77,7 +77,7 @@
 				Templates.JST['<?php echo $templateName ?>'] = "<?php echo str_replace("\n", "", str_replace('"', '\"', file_get_contents($template))); ?>";
 			<?php endforeach ?>
 
-			Templates.JST['about-page'] = $('[data-template-name="about-page"]').html();
+			Templates.JST['about-page'] = document.querySelector('[data-template-name="about-page"]').innerHTML;
 
 			devise.editor = new Editor(Templates, PageData);
 

@@ -29,11 +29,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 		this.data['model'] = node.model;
 
 		this.field = $('<div/>');
-		this.grid = View.make('sidebar.models.grid', this.data);
-		this.sidebar.grid.append(this.grid);
+		this.renderGridView();
 		this.sidebar.breadcrumbsView.add(node.human_name, this, 'showGridView');
-
-		View.registerEvents(this.grid, events, this);
 
 		return this.field;
 	}
@@ -156,6 +153,18 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 	}
 
 	/**
+	 * Re-renders the grid view (useful when content
+	 * requested changes)
+	 */
+	ModelView.prototype.renderGridView = function()
+	{
+		this.grid = View.make('sidebar.models.grid', this.data);
+		this.sidebar.grid.empty();
+		this.sidebar.grid.append(this.grid);
+		View.registerEvents(this.grid, events, this);
+	}
+
+	/**
 	 * save was successful, update field values
 	 * to reflect what is returned from the server
 	 */
@@ -163,6 +172,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 	{
 		this.data.fields = data.fields;
 		this.sidebar.breadcrumbsView.back();
+		this.renderGridView();
 		this.showGridView();
 		LiveUpdater.changedModel(this.data.field);
 	}

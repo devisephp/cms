@@ -24,6 +24,10 @@
                     </div>
 
                     <div class="form-group">
+                        <input name="username" type="text" class="form-control" placeholder="Username" value="<?= old('username') ?>">
+                    </div>
+
+                    <div class="form-group">
                         <input name="email" type="text" class="form-control" placeholder="Email" value="<?= old('email') ?>" />
                     </div>
 

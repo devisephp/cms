@@ -217,21 +217,6 @@ class DevisePagesSeeder extends DeviseSeeder
                 'response_path'           => 'Devise\Pages\ApiPagesResponseHandler.requestDestroyPage',
                 'response_params'         => 'params.pageId'
             ),
-			array(
-				'language_id'             => '45',
-				'title'                   => 'Partial Loader',
-				'http_verb'               => 'post',
-				'route_name'              => 'dvs-partials',
-				'is_admin'                => '1',
-				'dvs_admin'               => '1',
-                'before'                  => 'ifNotLoggedInGoToLogin',
-                'after'                   => '',
-				'slug'                    => '/admin/media-manager/upload',
-				'short_description'       => 'Update a field via ajax call',
-				'response_type'           => 'Function',
-				'response_path'           => 'Devise\Media\Files\ResponseHandler.requestUpload',
-				'response_params'         => 'input'
-			),
             array(
                 'language_id'             => '45',
                 'view'                    => 'devise::admin.content.queue',

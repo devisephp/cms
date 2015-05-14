@@ -108,18 +108,33 @@ class RuleList
     /**
      * Checks if user is in a group
      *
+     *  you can pass multiple groups in here
+     *
+     * isInGroup('group1', 'group2')
+     * means the user is in either 'group1' or 'group2'
+     *
      * @param  string  $groupname
      * @return boolean
      */
     protected function isInGroup($groupname)
     {
-        if($this->isLoggedIn()) {
-            $user = $this->User->find($this->Auth->user()->id);
-            foreach($user->groups as $group) {
-                if(strtolower($group->name) === strtolower($groupname)) {
-                    return true;
-                }
-            }
+        if (!$this->isLoggedIn()) return false;
+
+        $groups = [];
+
+        $userGroups = [];
+
+        $groupnames = func_get_args();
+
+        $user = $this->User->find($this->Auth->user()->id);
+
+        foreach ($groupnames as $groupname) $groups[] = strtolower($groupname);
+
+        foreach($user->groups as $group) $userGroups[] = strtolower($group->name);
+
+        foreach($groups as $group)
+        {
+            if (in_array($group, $userGroups)) return true;
         }
 
         return false;
@@ -133,16 +148,51 @@ class RuleList
      */
     protected function isNotInGroup($groupname)
     {
-        if($this->isLoggedIn()) {
-            $user = $this->User->find($this->Auth->user()->id);
-            foreach($user->groups as $group) {
-                if(strtolower($group->name) == strtolower($groupname)) {
-                    return false;
-                }
-            }
-            return true;
+        return ! call_user_func_array([$this, 'isInGroup'], func_get_args());
+    }
+
+    /**
+     * Check to see if user is in all groups
+     *
+     * isInGroup('group1', 'group2')
+     * means user is in both 'group1' AND 'group1'
+     *
+     * @param  [type]  $groupname
+     * @return boolean
+     */
+    protected function isInGroups($groupname)
+    {
+        if (!$this->isLoggedIn()) return false;
+
+        $groups = [];
+
+        $userGroups = [];
+
+        $groupnames = func_get_args();
+
+        $user = $this->User->find($this->Auth->user()->id);
+
+        foreach ($groupnames as $groupname) $groups[] = strtolower($groupname);
+
+        foreach($user->groups as $group) $userGroups[] = strtolower($group->name);
+
+        foreach($groups as $group)
+        {
+            if (!in_array($group, $userGroups)) return false;
         }
-        return false;
+
+        return true;
+    }
+
+    /**
+     * Check to see if user is not in all the groups
+     *
+     * @param  [type]  $groupname
+     * @return boolean
+     */
+    protected function isNotInGroups($groupname)
+    {
+        return ! call_user_func_array([$this, 'isInGroups'], func_get_args());
     }
 
     /**

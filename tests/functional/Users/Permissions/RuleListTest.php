@@ -64,7 +64,7 @@ class RuleListTest extends \DeviseTestCase
         $currentUser = $this->DvsUser->find(1);
         $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
 
-        assertTrue( $this->RuleList->isInGroup('Developer') );
+        assertTrue( $this->RuleList->isInGroup('Developer', 'Group1') );
     }
 
     public function test_it_tells_us_if_we_are_not_in_a_group()
@@ -74,7 +74,30 @@ class RuleListTest extends \DeviseTestCase
         $currentUser = $this->DvsUser->find(1);
         $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
 
-        assertFalse( $this->RuleList->isNotInGroup('Developer') );
+        assertFalse( $this->RuleList->isNotInGroup('Developer', 'Group1') );
+    }
+
+    public function test_it_tells_us_if_we_are_in_groups()
+    {
+        $this->Framework->Auth->shouldReceive('check')->times(2)->andReturn(true);
+
+        $currentUser = $this->DvsUser->find(1);
+        $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
+
+        assertTrue( $this->RuleList->isInGroups('Developer', 'Developer') );
+        assertFalse( $this->RuleList->isInGroups('Developer', 'Group1') );
+    }
+
+    public function test_it_tells_us_if_we_are_not_in_groups()
+    {
+        $this->Framework->Auth->shouldReceive('check')->times(3)->andReturn(true);
+
+        $currentUser = $this->DvsUser->find(1);
+        $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);
+
+        assertTrue( $this->RuleList->isNotInGroups('Group1', 'Group2') );
+        assertTrue( $this->RuleList->isNotInGroups('Developer', 'Group1') );
+        assertFalse( $this->RuleList->isNotInGroups('Developer', 'Developer') );
     }
 
     public function test_it_tells_us_if_we_have_a_name()
@@ -122,5 +145,4 @@ class RuleListTest extends \DeviseTestCase
         $this->Framework->Auth->shouldReceive('check')->once()->andReturn(true);
         assertTrue( $this->RuleList->showDeviseSpan('someKey', new \Illuminate\Support\Collection) );
     }
-
 }

@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 
-class DvsPageVersion extends Eloquent
+class DvsPageVersion extends Model
 {
     use SoftDeletes;
 

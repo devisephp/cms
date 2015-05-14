@@ -2,8 +2,9 @@
 
 use Devise\Pages\Fields\FieldValue;
 use Devise\Support\Sortable\Sortable;
+use Illuminate\Database\Eloquent\Model;
 
-class DvsPage extends Eloquent
+class DvsPage extends Model
 {
     use Sortable;
 

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Pages\Fields\FieldsRepository | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Pages_Fields_FieldsRepository" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Devise.html">Devise</a></li>
+                                        <li><a href="../../../Devise/Pages.html">Pages</a></li>
+                                        <li><a href="../../../Devise/Pages/Fields.html">Fields</a></li>
+    
+                <li>FieldsRepository</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>FieldsRepository</h1>
+    </div>
+
+    <p>    class
+    <strong>FieldsRepository</strong></p>
+
+            <div class="description">
+            <p>Fields repository allows us to retrieve fields
+that belong to page versions and keys and have been
+deleted. We also can find global fields with this
+repository.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr> $Field, <abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr> $GlobalField)
+                                            <p>Construct a new FieldsRepository</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Fields\Field">Field</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_findFieldByKeyAndPageVersion">findFieldByKeyAndPageVersion</a>($key, $pageVersionId, $collectionInstanceId)
+                                            <p>Find existing page field given key and pageId</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Fields\Field">Field</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_findTrashedFieldByKeyAndPageVersion">findTrashedFieldByKeyAndPageVersion</a>($key, $pageVersionId)
+                                            <p>Find existing page field (only if it has been trashed)</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_findTrashedGlobalFieldByKeyAndLanguage">findTrashedGlobalFieldByKeyAndLanguage</a>(string $key, integer $languageId)
+                                            <p>Find existing global field (only if it has been trashed)</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_findFieldById">findFieldById</a>(integer $id)
+                                            <p>Find the field by id</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_findFieldByIdAndScope">findFieldByIdAndScope</a>(integer $fieldId, string $fieldScope)
+                                            <p>Find a field by it's id and scope (page or global)</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_findTrashedFieldByIdAndScope">findTrashedFieldByIdAndScope</a>(integer $fieldId, string $fieldScope)
+                                            <p>Find a field by it's scope and included fields that have been deleted</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_findFieldByGlobalKeyAndLanguage">findFieldByGlobalKeyAndLanguage</a>(string $key, integer $languageId)
+                                            <p>Find a field by it's global key and language id</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Fields\Field">Field</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_findContentRequestedFieldsList">findContentRequestedFieldsList</a>(integer $pageVersionId)
+                                            <p>Find all fields where content requested is true for given
+page version id and builds a list of field keys</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 32</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr> $Field, <abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr> $GlobalField)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Construct a new FieldsRepository</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr></td>
+                <td>$Field</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr></td>
+                <td>$GlobalField</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_findFieldByKeyAndPageVersion">
+        <div class="location">at line 45</div>
+        <code>                    <abbr title="Devise\Pages\Fields\Field">Field</abbr>
+    <strong>findFieldByKeyAndPageVersion</strong>($key, $pageVersionId, $collectionInstanceId)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find existing page field given key and pageId</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$key</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$pageVersionId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$collectionInstanceId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Fields\Field">Field</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_findTrashedFieldByKeyAndPageVersion">
+        <div class="location">at line 61</div>
+        <code>                    <abbr title="Devise\Pages\Fields\Field">Field</abbr>
+    <strong>findTrashedFieldByKeyAndPageVersion</strong>($key, $pageVersionId)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find existing page field (only if it has been trashed)</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$key</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$pageVersionId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Fields\Field">Field</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_findTrashedGlobalFieldByKeyAndLanguage">
+        <div class="location">at line 78</div>
+        <code>                    <abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr>
+    <strong>findTrashedGlobalFieldByKeyAndLanguage</strong>(string $key, integer $languageId)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find existing global field (only if it has been trashed)</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$key</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>integer</td>
+                <td>$languageId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_findFieldById">
+        <div class="location">at line 93</div>
+        <code>                    <abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr>
+    <strong>findFieldById</strong>(integer $id)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find the field by id</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$id</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_findFieldByIdAndScope">
+        <div class="location">at line 105</div>
+        <code>                    <abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr>
+    <strong>findFieldByIdAndScope</strong>(integer $fieldId, string $fieldScope)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find a field by it's id and scope (page or global)</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$fieldId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$fieldScope</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr></td>
+            <td>|| DvsGlobalField</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_findTrashedFieldByIdAndScope">
+        <div class="location">at line 117</div>
+        <code>                    <abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr>
+    <strong>findTrashedFieldByIdAndScope</strong>(integer $fieldId, string $fieldScope)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find a field by it's scope and included fields that have been deleted</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$fieldId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$fieldScope</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Fields\DvsField">DvsField</abbr></td>
+            <td>|| DvsGlobalField</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_findFieldByGlobalKeyAndLanguage">
+        <div class="location">at line 129</div>
+        <code>                    <abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr>
+    <strong>findFieldByGlobalKeyAndLanguage</strong>(string $key, integer $languageId)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find a field by it's global key and language id</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$key</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>integer</td>
+                <td>$languageId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Fields\DvsGlobalField">DvsGlobalField</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_findContentRequestedFieldsList">
+        <div class="location">at line 141</div>
+        <code>                    <abbr title="Devise\Pages\Fields\Field">Field</abbr>
+    <strong>findContentRequestedFieldsList</strong>(integer $pageVersionId)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find all fields where content requested is true for given
+page version id and builds a list of field keys</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$pageVersionId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Fields\Field">Field</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

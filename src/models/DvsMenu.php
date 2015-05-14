@@ -1,6 +1,8 @@
 <?php
 
-class DvsMenu extends Eloquent
+use Illuminate\Database\Eloquent\Model;
+
+class DvsMenu extends Model
 {
 	protected $table = "dvs_menus";
 	protected $guarded = array();

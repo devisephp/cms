@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Support\Installer\InstallerController | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Support_Installer_InstallerController" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Devise.html">Devise</a></li>
+                                        <li><a href="../../../Devise/Support.html">Support</a></li>
+                                        <li><a href="../../../Devise/Support/Installer.html">Installer</a></li>
+    
+                <li>InstallerController</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>InstallerController</h1>
+    </div>
+
+    <p>    class
+    <strong>InstallerController</strong>        extends <abbr title="Illuminate\Routing\Controller">Controller</abbr></p>
+
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Support\Installer\Devise\Support\Framework">Framework</abbr> $Framework, <abbr title="Devise\Support\Installer\Devise\Support\Installer\InstallWizard">InstallWizard</abbr> $InstallWizard)
+                                            <p>[__construct description]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIndex">getIndex</a>()
+                                            <p>Welcome the installer/admin</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\View">View</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getWelcome">getWelcome</a>()
+                                            <p>Welcome the installer/admin</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getInformInstallAssets">getInformInstallAssets</a>()
+                                            <p>[getInformInstallAssets description]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAssets">getAssets</a>()
+                                            <p>[getAssets description]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\View">View</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnvironment">getEnvironment</a>()
+                                            <p>Show environment page</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_postEnvironment">postEnvironment</a>()
+                                            <p>Save the environment</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\View">View</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDatabase">getDatabase</a>()
+                                            <p>Show the database page</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_postDatabase">postDatabase</a>()
+                                            <p>Save the database</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\Response">Response</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getApplication">getApplication</a>()
+                                            <p>Sets up the application</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_postApplication">postApplication</a>()
+                                            <p>Save the application setup</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\View">View</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCreateUser">getCreateUser</a>()
+                                            <p>Show the create user page</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_postCreateUser">postCreateUser</a>()
+                                            <p>Save the new user and redirect them to the
+settings wizard</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 14</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Support\Installer\Devise\Support\Framework">Framework</abbr> $Framework, <abbr title="Devise\Support\Installer\Devise\Support\Installer\InstallWizard">InstallWizard</abbr> $InstallWizard)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>[__construct description]</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\Devise\Support\Framework">Framework</abbr></td>
+                <td>$Framework</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\Devise\Support\Installer\InstallWizard">InstallWizard</abbr></td>
+                <td>$InstallWizard</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIndex">
+        <div class="location">at line 31</div>
+        <code>                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+    <strong>getIndex</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Welcome the installer/admin</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\Redirect">Redirect</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getWelcome">
+        <div class="location">at line 41</div>
+        <code>                    <abbr title="Devise\Support\Installer\View">View</abbr>
+    <strong>getWelcome</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Welcome the installer/admin</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\View">View</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getInformInstallAssets">
+        <div class="location">at line 54</div>
+        <code>                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+    <strong>getInformInstallAssets</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>[getInformInstallAssets description]</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\[type]">[type]</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAssets">
+        <div class="location">at line 63</div>
+        <code>                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+    <strong>getAssets</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>[getAssets description]</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\[type]">[type]</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnvironment">
+        <div class="location">at line 76</div>
+        <code>                    <abbr title="Devise\Support\Installer\View">View</abbr>
+    <strong>getEnvironment</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Show environment page</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\View">View</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_postEnvironment">
+        <div class="location">at line 100</div>
+        <code>                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+    <strong>postEnvironment</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Save the environment</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\Redirect">Redirect</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDatabase">
+        <div class="location">at line 125</div>
+        <code>                    <abbr title="Devise\Support\Installer\View">View</abbr>
+    <strong>getDatabase</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Show the database page</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\View">View</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_postDatabase">
+        <div class="location">at line 147</div>
+        <code>                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+    <strong>postDatabase</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Save the database</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\Redirect">Redirect</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getApplication">
+        <div class="location">at line 174</div>
+        <code>                    <abbr title="Devise\Support\Installer\Response">Response</abbr>
+    <strong>getApplication</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Sets up the application</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_postApplication">
+        <div class="location">at line 200</div>
+        <code>                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+    <strong>postApplication</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Save the application setup</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\Redirect">Redirect</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCreateUser">
+        <div class="location">at line 224</div>
+        <code>                    <abbr title="Devise\Support\Installer\View">View</abbr>
+    <strong>getCreateUser</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Show the create user page</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\View">View</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_postCreateUser">
+        <div class="location">at line 238</div>
+        <code>                    <abbr title="Devise\Support\Installer\Redirect">Redirect</abbr>
+    <strong>postCreateUser</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Save the new user and redirect them to the
+settings wizard</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\Redirect">Redirect</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

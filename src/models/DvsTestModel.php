@@ -1,6 +1,8 @@
 <?php
 
-class DvsTestModel extends Eloquent
+use Illuminate\Database\Eloquent\Model;
+
+class DvsTestModel extends Model
 {
 	protected $table = 'dvs_test_models';
 

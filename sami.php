@@ -6,7 +6,10 @@ use Symfony\Component\Finder\Finder;
 // apparently we need to load Laravel in order for Sami.php
 // to find classes like "Eloquent" ... which makes sense I guess
 // since those don't really exist (they are aliases in Laravel)
-$app = require __DIR__.'/tests/bootstrap/bootstrap/start.php';
+require __DIR__.'/tests/bootstrap/bootstrap/autoload.php';
+$app = require __DIR__.'/tests/bootstrap/bootstrap/app.php';
+
+class Eloquent {}
 
 $iterator = Finder::create()
 	->files()

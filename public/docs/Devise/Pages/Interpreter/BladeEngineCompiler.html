@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Pages\Interpreter\BladeEngineCompiler | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Pages_Interpreter_BladeEngineCompiler" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Devise.html">Devise</a></li>
+                                        <li><a href="../../../Devise/Pages.html">Pages</a></li>
+                                        <li><a href="../../../Devise/Pages/Interpreter.html">Interpreter</a></li>
+    
+                <li>BladeEngineCompiler</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>BladeEngineCompiler</h1>
+    </div>
+
+    <p>    class
+    <strong>BladeEngineCompiler</strong>        implements
+        <abbr title="Illuminate\View\Compilers\CompilerInterface">CompilerInterface</abbr></p>
+
+            <div class="description">
+            <p>This class merely decorates the another compiler
+and thus giving us the extra functionality we need
+to work properly.</p>            <p>..</p>        </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Pages\Interpreter\Illuminate\View\Compilers\CompilerInterface">CompilerInterface</abbr> $compiler, <abbr title="Devise\Pages\Interpreter\Devise\Pages\Interpreter\DeviseCompiler">DeviseCompiler</abbr> $DeviseCompiler, <abbr title="Devise\Pages\Interpreter\Devise\Pages\Interpreter\DeviseParser">DeviseParser</abbr> $DeviseParser)
+                                            <p>Construct a new blade compiler</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCompiledPath">getCompiledPath</a>(string $path)
+                                            <p>Get the path to the compiled version of a view.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_isExpired">isExpired</a>(string $path)
+                                            <p>Determine if the given view is expired.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compile">compile</a>(string $path = null)
+                                            <p>Compile the view at the given path.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_extend">extend</a>(<abbr title="Devise\Pages\Interpreter\Closure">Closure</abbr> $closure)
+                                            <p>[extend description]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___call">__call</a>(<abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr> $method, <abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr> $arguments)
+                                            <p>Any calls made we proxy to the underlying compiler</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 20</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Pages\Interpreter\Illuminate\View\Compilers\CompilerInterface">CompilerInterface</abbr> $compiler, <abbr title="Devise\Pages\Interpreter\Devise\Pages\Interpreter\DeviseCompiler">DeviseCompiler</abbr> $DeviseCompiler, <abbr title="Devise\Pages\Interpreter\Devise\Pages\Interpreter\DeviseParser">DeviseParser</abbr> $DeviseParser)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Construct a new blade compiler</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\Illuminate\View\Compilers\CompilerInterface">CompilerInterface</abbr></td>
+                <td>$compiler</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\Devise\Pages\Interpreter\DeviseCompiler">DeviseCompiler</abbr></td>
+                <td>$DeviseCompiler</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\Devise\Pages\Interpreter\DeviseParser">DeviseParser</abbr></td>
+                <td>$DeviseParser</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCompiledPath">
+        <div class="location">at line 33</div>
+        <code>                    string
+    <strong>getCompiledPath</strong>(string $path)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get the path to the compiled version of a view.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_isExpired">
+        <div class="location">at line 44</div>
+        <code>                    bool
+    <strong>isExpired</strong>(string $path)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Determine if the given view is expired.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compile">
+        <div class="location">at line 55</div>
+        <code>                    void
+    <strong>compile</strong>(string $path = null)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Compile the view at the given path.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_extend">
+        <div class="location">at line 77</div>
+        <code>                    <abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr>
+    <strong>extend</strong>(<abbr title="Devise\Pages\Interpreter\Closure">Closure</abbr> $closure)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>[extend description]</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\Closure">Closure</abbr></td>
+                <td>$closure</td>
+                <td>[description]</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr></td>
+            <td>[description]</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___call">
+        <div class="location">at line 89</div>
+        <code>                    <abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr>
+    <strong>__call</strong>(<abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr> $method, <abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr> $arguments)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Any calls made we proxy to the underlying compiler</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr></td>
+                <td>$method</td>
+                <td>[description]`</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr></td>
+                <td>$arguments</td>
+                <td>[description]</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Interpreter\[type]">[type]</abbr></td>
+            <td>[description]</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

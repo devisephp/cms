@@ -1,6 +1,8 @@
 <?php
 
-class DvsCollectionInstance extends Eloquent
+use Illuminate\Database\Eloquent\Model;
+
+class DvsCollectionInstance extends Model
 {
 	protected $table = 'dvs_collection_instances';
 

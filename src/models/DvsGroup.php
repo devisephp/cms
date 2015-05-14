@@ -1,7 +1,8 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
 
-class DvsGroup extends Eloquent
+class DvsGroup extends Model
 {
     protected $table = 'groups';
 

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Languages\LanguageDetector | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Languages_LanguageDetector" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../Devise.html">Devise</a></li>
+                                        <li><a href="../../Devise/Languages.html">Languages</a></li>
+    
+                <li>LanguageDetector</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>LanguageDetector</h1>
+    </div>
+
+    <p>    class
+    <strong>LanguageDetector</strong></p>
+
+            <div class="description">
+            <p>Language detector is used to determine the current and
+universal languages for this system. It uses LocaleDetector
+to get the universal code, i.e 'en', 'es', and then fetches
+the DvsLanguage from the database</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Languages\Devise\Languages\LocaleDetector">LocaleDetector</abbr> $LocaleDetector, <abbr title="Devise\Languages\DvsLanguage">DvsLanguage</abbr> $Language, $Config = null)
+                                            <p>Create a new Language Detector</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Languages\Language">Language</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_current">current</a>()
+                                            <p>Get the current language for the locale
+this will probably use the cookie as default</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Languages\Language">Language</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_universal">universal</a>()
+                                            <p>Get the universal language that we fallback
+to.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_update">update</a>(<abbr title="Devise\Languages\Language">Language</abbr> $language)
+                                            <p>Update the current language for this
+browser</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    integer
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_primaryLanguageId">primaryLanguageId</a>()
+                                            <p>Returns the primary language id for this system</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 25</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Languages\Devise\Languages\LocaleDetector">LocaleDetector</abbr> $LocaleDetector, <abbr title="Devise\Languages\DvsLanguage">DvsLanguage</abbr> $Language, $Config = null)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Create a new Language Detector</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Languages\Devise\Languages\LocaleDetector">LocaleDetector</abbr></td>
+                <td>$LocaleDetector</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Languages\DvsLanguage">DvsLanguage</abbr></td>
+                <td>$Language</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$Config</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_current">
+        <div class="location">at line 38</div>
+        <code>                    <abbr title="Devise\Languages\Language">Language</abbr>
+    <strong>current</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get the current language for the locale
+this will probably use the cookie as default</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Languages\Language">Language</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_universal">
+        <div class="location">at line 63</div>
+        <code>                    <abbr title="Devise\Languages\Language">Language</abbr>
+    <strong>universal</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get the universal language that we fallback
+to.</p>                    <p>.. which is likely english because that
+is the default in laravel's Config::get(app.locale)</p>            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Languages\Language">Language</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_update">
+        <div class="location">at line 77</div>
+        <code>                    void
+    <strong>update</strong>(<abbr title="Devise\Languages\Language">Language</abbr> $language)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Update the current language for this
+browser</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Languages\Language">Language</abbr></td>
+                <td>$language</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_primaryLanguageId">
+        <div class="location">at line 87</div>
+        <code>                    integer
+    <strong>primaryLanguageId</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Returns the primary language id for this system</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>integer</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

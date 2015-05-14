@@ -2,8 +2,9 @@
 
 use Devise\Pages\Fields\LiveFieldValue;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 
-class DvsModelField extends Eloquent
+class DvsModelField extends Model
 {
     use SoftDeletes;
 

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Pages\PageController | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Pages_PageController" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../Devise.html">Devise</a></li>
+                                        <li><a href="../../Devise/Pages.html">Pages</a></li>
+    
+                <li>PageController</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>PageController</h1>
+    </div>
+
+    <p>    class
+    <strong>PageController</strong>        extends <abbr title="Illuminate\Routing\Controller">Controller</abbr></p>
+
+            <div class="description">
+            <p>All pages registered in dvs_pages database table
+come through this controller show method. The reason
+for this is so that the database can be in charge of
+the routes and a non developer can construct new
+pages with predefined templates in a dropdown selectbox.</p>            <p>The templates have already been designed by the developer
+but new pages can be added easily by the cms administrator.</p>        </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Pages\Devise\Pages\PagesRepository">PagesRepository</abbr> $PagesRepository, <abbr title="Devise\Pages\Devise\Pages\Viewvars\DataBuilder">DataBuilder</abbr> $DataBuilder, null $Input = null, null $View = null, null $Route = null, null $Redirect = null)
+                                            <p>Creates a new DvsPagesController instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Response">Response</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_show">show</a>()
+                                            <p>Displays details of a page</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_retrieveResponse">retrieveResponse</a>(<abbr title="DvsPage">DvsPage</abbr> $page)
+                                            <p>This retrieves a page with all the
+view's vars set on the response</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 41</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Pages\Devise\Pages\PagesRepository">PagesRepository</abbr> $PagesRepository, <abbr title="Devise\Pages\Devise\Pages\Viewvars\DataBuilder">DataBuilder</abbr> $DataBuilder, null $Input = null, null $View = null, null $Route = null, null $Redirect = null)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Creates a new DvsPagesController instance.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Pages\Devise\Pages\PagesRepository">PagesRepository</abbr></td>
+                <td>$PagesRepository</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Devise\Pages\Viewvars\DataBuilder">DataBuilder</abbr></td>
+                <td>$DataBuilder</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>null</td>
+                <td>$Input</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>null</td>
+                <td>$View</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>null</td>
+                <td>$Route</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>null</td>
+                <td>$Redirect</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_show">
+        <div class="location">at line 56</div>
+        <code>                    <abbr title="Devise\Pages\Response">Response</abbr>
+    <strong>show</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Displays details of a page</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Response">Response</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_retrieveResponse">
+        <div class="location">at line 80</div>
+        <code>                    
+    <strong>retrieveResponse</strong>(<abbr title="DvsPage">DvsPage</abbr> $page)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>This retrieves a page with all the
+view's vars set on the response</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="DvsPage">DvsPage</abbr></td>
+                <td>$page</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Devise/Pages/PagesException.html"><abbr title="Devise\Pages\PagesException">PagesException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

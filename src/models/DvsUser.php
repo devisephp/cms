@@ -1,14 +1,16 @@
 <?php
 
+use Devise\Support\Sortable\Sortable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class DvsUser extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword;
+    use Authenticatable, CanResetPassword, Sortable, SoftDeletes;
 
     /**
      * Users table
@@ -25,11 +27,11 @@ class DvsUser extends Model implements AuthenticatableContract, CanResetPassword
     protected $hidden = array('');
 
     /**
-     * Set the soft delete to true
+     * Deleted at is a date too...
      *
-     * @var boolean
+     * @var array
      */
-    protected $softDelete = true;
+    protected $dates = ['deleted_at'];
 
     /**
      * Defines belongs to many DvsGroup

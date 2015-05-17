@@ -1,5 +1,7 @@
 <?php namespace Devise\Pages\Collections;
 
+use Illuminate\Support\Collection;
+
 /**
  * Retreives collection instances and sets and fields for us.
  * This class is used in many places to retreieve collection
@@ -112,12 +114,19 @@ class CollectionsRepository
             // not being used in this context as far as I know of... but I'm
             // leaving this here just in case we need to bring it back at some point
             // $keyName = ($index + 1) . ') ' .$collectionInstance->name;
+            $keyName = $collectionInstance->collectionSet->name;
 
             // make this an array if it is not already set
-            $collections[$collectionInstance->collectionSet->name] = isset($collections[$collectionInstance->collectionSet->name]) ? $collections[$collectionInstance->collectionSet->name] : [];
+            $collections[] = isset($collections[$keyName]) ? $collections[$keyName] : [];
 
             // add these collection fields to this array
-            $collections[$collectionInstance->collectionSet->name][] = $this->CollectionFieldsFactory->createFromCollectionInstance($collectionInstance);
+            $collections[$keyName][] = $this->CollectionFieldsFactory->createFromCollectionInstance($collectionInstance);
+        }
+
+        // put these instances into a Laravel collection
+        foreach ($collections as $keyName => $collectionInstances)
+        {
+            $collections[$keyName] = new Collection($collectionInstances);
         }
 
         return $collections;

@@ -108,9 +108,9 @@ class DvsPageData
 	{
 		// Occurs when there are no data-devise tags on the page
 		if(!$this->pageVersionId) {
-			return $this->jsonEncode(new \StdClass); 
+			return $this->jsonEncode(new \StdClass);
 		}
-		
+
 		$pageVersionId = $this->pageVersionId;
 		$pageId = $this->pageId;
 		$languageId = $this->languageId;
@@ -616,6 +616,10 @@ class DvsPageData
 	{
 		$node = $collectionFields[0];
 
+		$instances = $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($node['data']->id, $this->pageVersionId);
+
+		$instances = $this->CollectionsRepository->syncFieldsForInstances($instances, $collectionFields, $this->pageVersionId);
+
 		return [
 			'cid' => $node['cid'],
 			'key' => $node['collection'],
@@ -624,7 +628,7 @@ class DvsPageData
 			'position' => [ 'top' => 0, 'left' => 0, 'side' => 'left' ],
 			'schema' => $collectionFields,
 			'collection' => $node['data'],
-			'data' => $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId($node['data']->id, $this->pageVersionId),
+			'data' => $instances,
 		];
 	}
 

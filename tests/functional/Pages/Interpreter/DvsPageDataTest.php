@@ -105,6 +105,7 @@ class DvsPageDataTest extends \DeviseTestCase
 		$this->PagesRepository->shouldReceive('getRouteList')->once()->andReturn(['route1', 'route2']);
 		$this->PagesRepository->shouldReceive('getPageVersions')->once()->andReturn(['version1', 'version2']);
 		$this->CollectionsRepository->shouldReceive('findCollectionInstancesForCollectionSetIdAndPageVersionId')->once()->andReturn([]);
+		$this->CollectionsRepository->shouldReceive('syncFieldsForInstances')->once()->andReturn([]);
 		$this->TagManager->shouldReceive('getInstanceForTag')->andReturn($dvsField);
 		$this->populateDvsPageData();
 		$json = $this->dvsPageData->toJSON();

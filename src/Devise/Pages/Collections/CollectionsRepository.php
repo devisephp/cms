@@ -148,4 +148,113 @@ class CollectionsRepository
             ->orderBy('sort', 'ASC')
             ->get();
     }
+
+    /**
+     * Sync fields for instances
+     *
+     * @param  Eloquent\Collection $instances
+     * @param  array $collectionFields
+     * @return Eloquent\Collection
+     */
+    public function syncFieldsForInstances($instances, $collectionFields, $pageVersionId)
+    {
+        $this->createMissingFieldsForInstances($instances, $collectionFields, $pageVersionId);
+
+        $fields = [];
+
+        foreach ($collectionFields as $collectionField)
+        {
+            $fields[$collectionField['key']] = $collectionField;
+        }
+
+        foreach ($instances as $instance)
+        {
+            foreach ($instance->fields as $field)
+            {
+                $schema = $fields[$field->key];
+                $field->type = $schema['type'];
+                $field->human_name = $schema['humanName'];
+                $field->save();
+            }
+        }
+
+        return $instances;
+    }
+
+    /**
+     * Creates any missing fields that may have been added later...
+     *
+     * @param  Eloquent\Collection $instances
+     * @param  array $collectionFields
+     * @return Eloquent\Collection
+     */
+    protected function createMissingFieldsForInstances($instances, $collectionFields, $pageVersionId)
+    {
+        foreach ($instances as $instance)
+        {
+            $missing = $this->findMissingFieldsForInstance($instance, $collectionFields);
+
+            $this->createFieldsForInstance($instance, $missing, $pageVersionId);
+        }
+
+        return $instances;
+    }
+
+    /**
+     * Finds missing fields for an instance
+     *
+     * @param  DvsCollectionInstance $instance
+     * @param  array $collectionFields
+     * @return array
+     */
+    protected function findMissingFieldsForInstance($instance, $collectionFields)
+    {
+        $missingFields = [];
+
+        foreach ($collectionFields as $collectionField)
+        {
+            $missing = true;
+            $key = $collectionField['key'];
+
+            foreach ($instance->fields as $field)
+            {
+                if ($field->key === $key) $missing = false;
+            }
+
+            if ($missing) $missingFields[$key] = $collectionField;
+        }
+
+        return $missingFields;
+    }
+
+    /**
+     * Creates a field for this instance
+     *
+     * @param  [type] $instance
+     * @param  [type] $collectionField
+     * @param  [type] $pageVersionId
+     * @return [type]
+     */
+    protected function createFieldsForInstance($instance, $collectionFields, $pageVersionId)
+    {
+        $fields = [];
+
+        foreach ($collectionFields as $collectionField)
+        {
+            $field = $this->Field->newInstance();
+            $field->collection_instance_id = $instance->id;
+            $field->page_version_id = $pageVersionId;
+            $field->type = $collectionField['type'];
+            $field->human_name = $collectionField['humanName'];
+            $field->key = $collectionField['key'];
+            $field->json_value = '{}';
+            $field->content_requested = 0;
+            $field->save();
+
+            $fields[] = $field;
+            $instance->fields->add($field);
+        }
+
+        return $fields;
+    }
 }

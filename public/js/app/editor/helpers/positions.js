@@ -29,14 +29,11 @@ devise.define(['jquery'], function($) {
                 for (var i = 0; i < node.data.length; i++)
                 {
                     var current = node.data[i];
-                    current.position = getCoordinatesForNode(current.key, current.cid, body);
+                    current.position = getCoordinatesForNode(current, body);
                 }
             }
 
-            node.position = (node.binding === 'group')
-                ? getCoordinatesForGroupNode(node, body)
-                : getCoordinatesForNode(node.key, node.cid, body);
-
+            node.position = getCoordinatesForNode(node, body);
             node.position.side = getSideForNode(node.position);
         });
     }
@@ -60,9 +57,56 @@ devise.define(['jquery'], function($) {
     }
 
     /**
+     * Get the coordinates for this node
+     */
+    function getCoordinatesForNode(node, view)
+    {
+        if (node.binding === 'group')
+        {
+            return getCoordinatesForGroupNode(node, view);
+        }
+
+        if (node.binding === 'collection')
+        {
+            return getCoordinatesForCollectionNode(node, view);
+        }
+
+        return getCoordinatesForFieldNode(node.key, node.cid, view);
+    }
+
+    /**
+     * Finds the position for a collection node
+     */
+    function getCoordinatesForCollectionNode(node, view)
+    {
+        var hidden, coordinates;
+        var placeholder = view.find('[data-dvs-placeholder^="' + node.key + '["]').last();
+        var element = view.find('[data-devise-' + node.cid + ']').first();
+
+        if (element.length)
+        {
+            hidden = !element.is(':visible');
+
+            if (hidden) element.show();
+            coordinates = element.offset();
+            if (hidden) element.hide();
+
+            if (typeof coordinates === 'object' && coordinates.top) return coordinates;
+            return getCoordinatesFromParent(element);
+        }
+
+        placeholder.show();
+        coordinates = placeholder.offset();
+        placeholder.hide();
+
+        if (typeof coordinates === 'object' && coordinates.top) return coordinates;
+        return getCoordinatesFromParent(placeholder);
+    }
+
+    /**
      * Get the coordinates for a cid or key inside this view
      */
-    function getCoordinatesForNode(key, cid, view)
+    function getCoordinatesForFieldNode(key, cid, view)
     {
         var hidden, coordinates;
         var placeholder = view.find('[data-dvs-placeholder="' + key + '"]').last();
@@ -84,8 +128,7 @@ devise.define(['jquery'], function($) {
         coordinates = placeholder.offset();
         placeholder.hide();
 
-        // if (typeof coordinates === 'object' && coordinates.top) return coordinates;
-
+        if (typeof coordinates === 'object' && coordinates.top) return coordinates;
         return getCoordinatesFromParent(placeholder);
     }
 
@@ -101,7 +144,7 @@ devise.define(['jquery'], function($) {
             for (var i = 0; i < category.nodes.length; i++)
             {
                 var node = category.nodes[i];
-                var nodePosition = getCoordinatesForNode(node.key, node.cid, view);
+                var nodePosition = getCoordinatesForNode(node, view);
                 if (!position) position = nodePosition;
             }
         });

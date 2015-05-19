@@ -13,3 +13,7 @@ This sets the layout used by the template blade. This field's value is inserted 
 ``` php
 @extends('devise::admin.layouts.master')
 ```
+
+### Using a Template After Registering
+
+After successfully registering a new template, its as simple as navigating to Pages admin and selecting your newly registered template from the dropdown on either, the Page Create or Page Edit forms.

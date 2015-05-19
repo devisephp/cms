@@ -39,6 +39,15 @@ $languagesListForPage = Devise\Languages\LanguagesRepository.languageSelectorOpt
 $pageVersionLanguage = Devise\Languages\LanguagesRepository.findLanguageForPageVersion($pageVersionId);
 ```
 
+### Examples of Usage
+
+*Building Dropdown of Active Languages For a Page*
+``` php
+// get all active languages
+$activeLanguages = Devise\Languages\LanguagesRepository.languageSelectorOptions($page);
+
+Form::select('language_id', $activeLanguages, (!Input::has('language_id')) ? Config::get('devise.languages.primary_language_id') : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select dvs-button-solid'))
+```
 
 ### Notes About Languages
 

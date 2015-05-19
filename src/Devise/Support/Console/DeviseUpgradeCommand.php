@@ -2,21 +2,21 @@
 
 use Illuminate\Container\Container;
 
-class DeviseMigrateCommand extends Command
+class DeviseUpgradeCommand extends Command
 {
     /**
      * Name of the command.
      *
      * @param string
      */
-    protected $name = 'devise:migrate';
+    protected $name = 'devise:upgrade';
 
     /**
      * Necessary to let people know, in case the name wasn't clear enough.
      *
      * @param string
      */
-    protected $description = 'Handles installing devise migrations';
+    protected $description = 'Handles upgrading devise applications';
 
     /**
      * Setup the application container as we'll need this for running migrations.
@@ -24,8 +24,10 @@ class DeviseMigrateCommand extends Command
     public function __construct(Container $app)
     {
         parent::__construct();
-
         $this->app = $app;
+        $this->DevisePublishAssetsCommand = new DevisePublishAssetsCommand($this->app);
+        $this->DeviseMigrateCommand = new DeviseMigrateCommand($this->app);
+        $this->DeviseSeedCommand = new DeviseSeedCommand($this->app);
     }
 
     /**
@@ -33,12 +35,8 @@ class DeviseMigrateCommand extends Command
      */
     public function handle()
     {
-        $migrations = $this->app->make('migration.repository');
-
-        if (! $migrations->repositoryExists()) $migrations->createRepository();
-
-        $migrator = $this->app->make('migrator');
-
-        $migrator->run(__DIR__.'/../../../migrations');
+        $this->DevisePublishAssetsCommand->handle();
+        $this->DeviseMigrateCommand->handle();
+        $this->DeviseSeedCommand->handle();
     }
 }

@@ -9,4 +9,9 @@ class DevisePublishAssetsCommandTest extends \DeviseTestCase
     	$Framework = new \Devise\Support\Framework;
     	new DevisePublishAssetsCommand($Framework->Container);
     }
+
+    public function test_it_can_handle_command()
+    {
+    	$this->markTestIncomplete();
+    }
 }

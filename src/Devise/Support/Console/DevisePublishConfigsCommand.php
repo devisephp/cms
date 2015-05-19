@@ -1,6 +1,5 @@
 <?php namespace Devise\Support\Console;
 
-use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 
 class DevisePublishConfigsCommand extends Command

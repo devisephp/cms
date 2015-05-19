@@ -101,7 +101,12 @@ class SupportServiceProvider extends ServiceProvider
             return new Console\DeviseResetCommand($this->app);
         });
 
-        $this->commands(['command.devise.install', 'command.devise.assets', 'command.devise.configs', 'command.devise.migrate', 'command.devise.seed', 'command.devise.reset']);
+        $this->app->singleton('command.devise.upgrade', function($app)
+        {
+            return new Console\DeviseUpgradeCommand($this->app);
+        });
+
+        $this->commands(['command.devise.install', 'command.devise.assets', 'command.devise.configs', 'command.devise.migrate', 'command.devise.seed', 'command.devise.reset', 'command.devise.upgrade']);
     }
 
 }

@@ -37,6 +37,9 @@ class DevisePublishAssetsCommand extends Command
         $this->app = $app;
         $this->FileDiff = new FileDiff;
         $this->File = File::getFacadeRoot();
+        $this->__DIR__ = __DIR__;
+        $this->public_path = public_path();
+        $this->base_path = base_path();
     }
 
     /**
@@ -54,8 +57,8 @@ class DevisePublishAssetsCommand extends Command
      */
     protected function copyPublicAssets()
     {
-        $target = __DIR__ . '/../../../../public';
-        $source = public_path() . '/packages/devisephp/cms';
+        $target = $this->__DIR__ . '/../../../../public';
+        $source = $this->public_path . '/packages/devisephp/cms';
         $difference = $this->FileDiff->different($target, $source);
         $difference = $this->askAboutDifferences($difference);
         $unmodified = $this->FileDiff->unmodified($target, $source);
@@ -70,8 +73,8 @@ class DevisePublishAssetsCommand extends Command
      */
     protected function copyErrorViewsToApplication()
     {
-        $target = __DIR__ . '/../../../views/errors';
-        $source = base_path() . '/resources/views/errors/';
+        $target = $this->__DIR__ . '/../../../views/errors';
+        $source = $this->base_path . '/resources/views/errors/';
         $difference = $this->FileDiff->different($target, $source);
         $difference = $this->askAboutDifferences($difference);
         $unmodified = $this->FileDiff->unmodified($target, $source);

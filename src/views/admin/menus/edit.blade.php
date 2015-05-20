@@ -20,11 +20,13 @@
     		<div class="dvs-form-group">
     		    <?= Form::label('Menu Name') ?>
     		    <?= Form::text('name', $menu->name, array('placeholder' => 'Menu')) ?>
+                <span data-dvs-document="menu-name" class="dvs-document-button"></span>
     		</div>
 
     		<div class="dvs-form-group">
     		    <?= Form::label('Menu Items') ?>
     		    <button type="button" class="dvs-button dvs-button-secondary js-add-menu-item">Add Item</button>
+                <span data-dvs-document="menu-items" class="dvs-document-button"></span>
     		</div>
 
     		<div class="dvs-form-group">

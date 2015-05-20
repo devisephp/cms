@@ -105,7 +105,7 @@ class FieldManager
 	 */
 	public function markNoContentRequested($fieldIds)
 	{
-		return $this->Field->whereIn('id', $fieldIds)->update(['content_requested' => 0]);
+		return $this->Field->whereIn('id', $fieldIds)->update(['content_requested' => false]);
 	}
 
 	/**

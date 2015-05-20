@@ -282,6 +282,13 @@ class PageManager
         return $this->PageVersionManager->updatePageVersionDates($pageVersionId, $input);
     }
 
+    /**
+     * Marks all page's fields with a "true" content_requested value as complete
+     *
+     * @param  int   $pageVersionId
+     * @param  array $input
+     * @return string
+     */
     public function markContentRequestedFieldsComplete($pageId)
     {
         $page = $this->Page->findOrFail($pageId);
@@ -289,15 +296,9 @@ class PageManager
         $pageVersions = $this->PageVersionsRepository->getVersionsListForPage($page);
 
         foreach($pageVersions as $pageVersion => $name) {
+            $requestedFieldIds = $this->FieldsRepository->findContentRequestedFieldsList($pageVersion);
 
-            $contentRequestedFieldList = $this->FieldsRepository->findContentRequestedFieldsList($pageVersion);
-
-            $contentRequestedFields = [];
-            foreach($contentRequestedFieldList as $id => $field) {
-                $contentRequestedFields[] = $id;
-            }
-
-            if(!$this->FieldManager->markNoContentRequested($contentRequestedFields)) {
+            if(!$this->FieldManager->markNoContentRequested($requestedFieldIds)) {
                 return json_encode(false);
             }
         }

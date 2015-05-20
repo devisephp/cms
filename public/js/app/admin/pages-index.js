@@ -17,20 +17,23 @@ devise.define(['require', 'jquery', 'query'], function (require, $, query)
 
             var action = $(this).data('url');
             var _this = this;
+            var confirmed = confirm('This resets all content requested fields on this page. Are you sure?');
 
-            $.ajax(
-            {
-                url: action,
-                type: 'GET',
-                success: function(data, textStatus, jqXHR)
+            if(confirmed == true) {
+                $.ajax(
                 {
-                    $(_this).parent().fadeOut();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    alert('There was a problem with your request');
-                }
-            });
+                    url: action,
+                    type: 'GET',
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        $(_this).parent().fadeOut();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert('There was a problem with your request');
+                    }
+                });
+            }
         });
     }
 

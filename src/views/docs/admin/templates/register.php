@@ -1,17 +1,17 @@
 # Registering a Template
 
-### Important Notes
+### File Name
 You will notice the file name dropdown has been populated by Devise, but you might be wondering where and why? Devise checks inside the ```/resources/views/``` directory (and any sub-directories) for any non-registered blade files which *do not begin with an underscore (_)*. These are excluded becuase in Devise partials start with an underscore and can be included inside multiple templates.
 
-### Human Name Field
+### Human Name
 
 The human name field is primarily used on the admin templates index, so it can be quickly found by us humans.
 
-### Extends Field
+### Extends
 
 This sets the layout used by the template blade. This field's value is inserted into:
-``` php
-@extends('devise::admin.layouts.master')
+```php
+@extends(@livespan([name="template[extends]"]))
 ```
 
 ### Using a Template After Registering

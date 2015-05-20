@@ -14,29 +14,34 @@ return array(
 
 ### Common Language Repository Methods:
 
+For our examples, we will need an instance of LanguagesRepository"
+``` php
+$LanguagesRepository = new Devise\Languages\LanguagesRepository;
+```
+
 *Get Paginated List of All Languages*
 ``` php
-$allLanguages = Devise\Languages\LanguagesRepository.languages();
+$allLanguages = $LanguagesRepository->languages();
 ```
 
 *Get Active Languages List*
 ``` php
-$activeLanguages = Devise\Languages\LanguagesRepository.activeLanguageList();
+$activeLanguages = $LanguagesRepository->activeLanguageList();
 ```
 
 *Get Language for Current Request & User*
 ``` php
-$currentLanguage = Devise\Languages\LanguagesRepository.currentLanguage();
+$currentLanguage = $LanguagesRepository->currentLanguage();
 ```
 
 *Get List of Available Languages for a Page*
 ``` php
-$languagesListForPage = Devise\Languages\LanguagesRepository.languageSelectorOptions($page);
+$languagesListForPage = $LanguagesRepository->languageSelectorOptions($page);
 ```
 
 *Find Language for by Page Version Id*
 ``` php
-$pageVersionLanguage = Devise\Languages\LanguagesRepository.findLanguageForPageVersion($pageVersionId);
+$pageVersionLanguage = $LanguagesRepository->findLanguageForPageVersion($pageVersionId);
 ```
 
 ### Examples of Usage
@@ -44,7 +49,7 @@ $pageVersionLanguage = Devise\Languages\LanguagesRepository.findLanguageForPageV
 *Building Dropdown of Active Languages For a Page*
 ``` php
 // get all active languages
-$activeLanguages = Devise\Languages\LanguagesRepository.languageSelectorOptions($page);
+$activeLanguages = $LanguagesRepository->languageSelectorOptions($page);
 
 Form::select('language_id', $activeLanguages, (!Input::has('language_id')) ? Config::get('devise.languages.primary_language_id') : Input::get('language_id'), array('id' => 'lang-select', 'class' => 'dvs-select dvs-button-solid'))
 ```

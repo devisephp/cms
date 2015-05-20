@@ -1,7 +1,9 @@
 devise.define(['jquery'], function($) {
 
-    function updateElementText(element, listenTo)
+    function updateElementText(selector, listenTo)
     {
+        var element = $(selector);
+
         var text = listenTo.val();
 
         if (text === '') text = element.data('livespanDefault');
@@ -17,7 +19,11 @@ devise.define(['jquery'], function($) {
             {
                 var element = $(el);
 
-                var listenTo = $(element.data('livespan'));
+                var listenToSelector = element.data('livespan');
+
+                var listenTo = $(listenToSelector);
+
+                var selector = '[data-livespan="'+ listenToSelector.replace(/"/g, '') +'"]';
 
                 element.data('livespanDefault', element.text());
 
@@ -25,7 +31,7 @@ devise.define(['jquery'], function($) {
 
                 listenTo.on('keyup', function()
                 {
-                    updateElementText(element, listenTo);
+                    updateElementText(selector, listenTo);
                 });
             });
         }

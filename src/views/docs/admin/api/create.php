@@ -43,7 +43,7 @@ Here are a few example parameters. Assume that we are calling __<?= url('@livesp
 __input__ - passes the entire query input to the method.
 
 ```
-public function @livespan([name="response_method"])($input)
+public function @livespan([name=response_method])($input)
 {
 	var_dump($input); // array('foo' => 'baz')
 }
@@ -52,7 +52,7 @@ public function @livespan([name="response_method"])($input)
 __input.foo__ - passes foo from the input query array
 
 ```
-public function @livespan([name="response_method"])($foo)
+public function @livespan([name=response_method])($foo)
 {
 	print $foo; // 'baz'
 }
@@ -62,7 +62,7 @@ Or if we had a url __<?= url("/some/:id") ?>__ then we can get the id this way
 
 __params.id, input__ - passes the id
 ```
-public function @livespan([name="response_method"])($id, $input)
+public function @livespan([name=response_method])($id, $input)
 {
 	print $id; 			// 1
 	var_dump($input); 	// array('foo' => 'baz')

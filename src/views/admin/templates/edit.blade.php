@@ -27,11 +27,13 @@
             <div class="dvs-form-group">
                 <?= Form::label('Human Name') ?>
                 <?= Form::text('template[human_name]', array_get($template, 'human_name', '')) ?>
+                <span data-dvs-document="human-name" class="dvs-document-button"></span>
             </div>
 
             <div class="dvs-form-group">
                 <?= Form::label('Extends') ?>
                 <?= Form::text('template[extends]', array_get($template, 'newExtends', $template['extends'])) ?>
+                <span data-dvs-document="extends" class="dvs-document-button"></span>
             </div>
 
             @include('devise::admin.templates.variables._variables-table')

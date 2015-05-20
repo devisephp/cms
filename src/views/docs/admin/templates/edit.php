@@ -9,11 +9,11 @@ The file name dropdown is auto-populated by Devise, but you might be wondering w
 /resources/views/@livespan([name="template_path"]).blade.php
 ```
 
-### Human Name Field
+### Human Name
 
 Primarily used as meta data on the admin templates index.
 
-### Extends Field
+### Extends
 
 Defines layout used by the template and the value is inserted into the extends tag within the blade file:
 

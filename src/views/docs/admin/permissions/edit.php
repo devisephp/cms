@@ -1,7 +1,6 @@
 # Permissions
 
-On this page you can create a new permission. Permissions are used to restrict access to certain areas of your application. There are several parts of a permission all discussed in detail below.
-
+On this page you can edit an existing permission. Permissions are used to restrict access to certain areas of your application. There are several parts of a permission all discussed in detail below.
 
 ### Condition
 

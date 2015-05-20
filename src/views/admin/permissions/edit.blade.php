@@ -20,21 +20,25 @@
             <div class="dvs-form-group">
                 <?= Form::label('Condition') ?>
                 <?= Form::text('permission_name_edit', $input['condition'], array('id'=>'permission-name')) ?>
+                <span data-dvs-document="condition" class="dvs-document-button"></span>
             </div>
 
             <div class="dvs-form-group">
                 <?= Form::label('Redirect Route or Action') ?>
                 <?= Form::text('redirect', isset($permission['redirect']) ? $permission['redirect'] : null, array('class' => 'short')) ?>
+                <span data-dvs-document="redirect-route-or-action" class="dvs-document-button"></span>
             </div>
 
             <div class="dvs-form-group">
                 <?= Form::label('Redirect Type') ?>
                 <?= Form::select('redirect_type', ['route'=>'Route','action'=>'Action'], isset($permission['redirect_type']) ? $permission['redirect_type'] : null, array('class' => 'short')) ?>
+                <span data-dvs-document="redirect-type" class="dvs-document-button"></span>
             </div>
 
             <div class="dvs-form-group">
                 <?= Form::label('Redirect Message') ?>
                 <?= Form::text('redirect_message', isset($permission['redirect_message']) ? $permission['redirect_message'] : null, array('class' => 'short')) ?>
+                <span data-dvs-document="redirect-message" class="dvs-document-button"></span>
             </div>
 
             <div id="dvs-permissions">

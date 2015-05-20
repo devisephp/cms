@@ -5559,6 +5559,14 @@ table.dvs-admin-table {
       #dvs-mode.dvs-sidebar-mode #dvs-sidebar-language-selector .dvs-select-wrapper .dvs-holder {
         margin-top: 0; }
 
+.dvs-sidebar-save-group {
+  -webkit-transition: all 2s;
+  transition: all 2s;
+  pointer: cursor; }
+
+.saving .dvs-sidebar-save-group {
+  opacity: 0.3; }
+
 .dvs-media-manager-container {
   padding: 10px; }
 

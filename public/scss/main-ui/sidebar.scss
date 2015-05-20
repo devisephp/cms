@@ -46,7 +46,6 @@
         margin:5px 0 0 90px ;
       }
     }
-
   }
 
   #dvs-sidebar-contents-container {
@@ -681,4 +680,17 @@
     }
   }
 
+}
+
+.dvs-sidebar-save-group {
+  -webkit-transition: all 2s;
+  transition: all 2s;
+  pointer: cursor;
+}
+
+.saving {
+  .dvs-sidebar-save-group
+  {
+    opacity: 0.3;
+  }
 }

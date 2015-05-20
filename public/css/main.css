@@ -3868,7 +3868,16 @@ td .dvs-select-small {
   margin-left: -250px;
   margin-top: -200px;
   z-index: 20000; }
+  #dvs-admin #dvs-admin-modal .js-tab-links {
+    display: block;
+    float: left; }
+    #dvs-admin #dvs-admin-modal .js-tab-links li {
+      display: inherit;
+      float: inherit; }
+      #dvs-admin #dvs-admin-modal .js-tab-links li a {
+        padding: 12px 2% 12px 0; }
   #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
+    float: left;
     background-image: -webkit-linear-gradient(#2d3039, #22242b);
     background-image: linear-gradient(#2d3039, #22242b);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);

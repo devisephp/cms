@@ -171,6 +171,7 @@ class CollectionsRepository
         {
             foreach ($instance->fields as $field)
             {
+                if (!isset($fields[$field->key])) continue;
                 $schema = $fields[$field->key];
                 $field->type = $schema['type'];
                 $field->human_name = $schema['humanName'];

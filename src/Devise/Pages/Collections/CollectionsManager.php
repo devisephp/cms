@@ -72,7 +72,7 @@ class CollectionsManager
         $field->key = $fieldInput['key'];
         $field->human_name = $fieldInput['human_name'];
         $field->json_value = array_get($fieldInput, 'json_value', '{}');
-        $field->content_requested = array_get($fieldInput, 'content_requested', 1);
+        $field->content_requested = array_get($fieldInput, 'content_requested', false) == 1;
         $field->save();
 
         return $field;

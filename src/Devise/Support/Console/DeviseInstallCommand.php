@@ -86,7 +86,7 @@ class DeviseInstallCommand extends Command
         $this->DevisePublishAssetsCommand->handle();
 
         if ($this->env('APP_MIGRATIONS') != 'no') {
-            $this->Artisan->call('migrate');
+            $this->runApplicationMigrations();
         }
 
         $this->DeviseMigrateCommand->handle();
@@ -94,7 +94,7 @@ class DeviseInstallCommand extends Command
         $this->DeviseSeedCommand->handle();
 
         if ($this->env('APP_SEEDS') != 'no') {
-            $this->Artisan->call('db:seed');
+            $this->runApplicationSeeds();
         }
 
         if ($this->env('CONFIGS_OVERRIDE') == 'yes') {
@@ -136,6 +136,32 @@ class DeviseInstallCommand extends Command
         $contents = file_get_contents($authConfigFile);
         $modified = str_replace("'email' => 'emails.password',", "'email' => 'devise::emails.recover-password',", $contents);
         if ($contents !== $modified) file_put_contents($authConfigFile, $modified);
+    }
+
+    /**
+     * Runs the application seeds
+     *
+     * @return void
+     */
+    protected function runApplicationSeeds()
+    {
+        $seeder = $this->app->make('seeder');
+        $seeder->call('DatabaseSeeder');
+    }
+
+    /**
+     * Runs the application migrations
+     * @return void
+     */
+    protected function runApplicationMigrations()
+    {
+        $migrations = $this->app->make('migration.repository');
+
+        if (! $migrations->repositoryExists()) $migrations->createRepository();
+
+        $migrator = $this->app->make('migrator');
+
+        $migrator->run(base_path() . '/database/migrations');
     }
 
     /**

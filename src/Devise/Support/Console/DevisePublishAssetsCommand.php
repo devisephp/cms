@@ -31,7 +31,7 @@ class DevisePublishAssetsCommand extends Command
      * [__construct description]
      * @param [type] $app
      */
-    public function __construct($app)
+    public function __construct(Container $app)
     {
         parent::__construct();
         $this->app = $app;

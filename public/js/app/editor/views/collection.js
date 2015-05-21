@@ -175,11 +175,14 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 			'page': this.data.page.info
 		};
 
+		this.sidebar.layout.removeClass('saving');
+
 		$.ajax(url, {
 			method: 'PUT',
 			data: data,
 			success: function(data, response, xhr)
 			{
+				self.sidebar.layout.removeClass('saving');
 				self.selectedField = data;
 				self.renderCollectionField();
 				LiveUpdater.changedField(self.selectedField);
@@ -188,6 +191,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 			{
 				alert('Could not save field! Check console');
 				console.warn('save error', arguments);
+				self.sidebar.layout.removeClass('saving');
 			}
 		});
 	}

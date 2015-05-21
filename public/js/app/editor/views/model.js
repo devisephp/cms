@@ -107,6 +107,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 			'page': this.data.page.info
 		};
 
+		this.sidebar.layout.addClass('saving');
 		this.sidebar.validationErrors.empty();
 
 		$.ajax(url, {
@@ -170,6 +171,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 	 */
 	function onSaveSuccess(data, response, xhr)
 	{
+		this.sidebar.layout.removeClass('saving');
 		this.data.fields = data.fields;
 		this.sidebar.breadcrumbsView.back();
 		this.renderGridView();
@@ -192,6 +194,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 		}
 
 		var html = View.make('sidebar.partials.errors', {'errors': xhr.responseJSON.errors});
+		this.sidebar.layout.removeClass('saving');
 		this.sidebar.validationErrors.empty();
 		this.sidebar.validationErrors.append(html);
 		this.sidebar.breadcrumbsView.back();

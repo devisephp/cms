@@ -18,6 +18,7 @@
             <div class="dvs-form-group">
     	        <?= Form::label('Name') ?>
     	        <?= Form::text('name', $group->name) ?>
+                <span data-dvs-document="name" class="dvs-document-button"></span>
             </div>
 
             <div class="dvs-form-group">

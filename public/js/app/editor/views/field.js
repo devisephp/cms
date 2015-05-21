@@ -94,6 +94,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 			'page': this.data.page.info
 		};
 
+		this.sidebar.layout.addClass('saving');
+
 		$.ajax(url, {
 			method: 'PUT',
 			data: data,
@@ -159,6 +161,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 	{
 		this.view.empty();
 		this.view.append(this.renderField(data, true));
+		this.sidebar.layout.removeClass('saving');
 		LiveUpdater.changedField(this.data.field);
 	}
 
@@ -171,6 +174,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 	{
 		alert('Could not save field! Check console');
 		console.warn('save error', this, arguments);
+		this.sidebar.layout.removeClass('saving');
 	}
 
 	return FieldView;

@@ -222,6 +222,9 @@
     }
 
     &.dvs-page-versions-card {
+      p {
+        font-size:12px;
+      }
 
       .dvs-card-top {
         height:10px;
@@ -229,7 +232,6 @@
       }
 
       &.live-card {
-
         .dvs-card-top {
           background-color:$green;
         }
@@ -237,11 +239,14 @@
         &:hover {
           background-color:$green;
         }
-
       }
 
-
       .dvs-card-bottom {
+        h4 {
+          font-size:18px;
+          @include wrapTextInParent();
+        }
+
         .dvs-badge {
           color:$white;
         }
@@ -442,6 +447,7 @@ table.dvs-admin-table {
   .dvs-publish-dates {
     p {
       margin: 10px 0;
+      @include wrapTextInParent();
     }
 
     input[type=text] {

@@ -15,8 +15,6 @@
             </p>
 
             <div data-dvs-page-id="<?= $page->id ?>" data-dvs-version-id="<?= $version->id ?>">
-
-
                 <select class="dvs-page-version-actions dvs-select">
                     <option value="">Select an action</option>
                     <option value="publish">Publish</option>

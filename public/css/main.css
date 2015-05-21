@@ -4519,6 +4519,8 @@ td .dvs-select-small {
     width: 63%; }
   #dvs-admin .dvs-admin-card.tall .dvs-card-top {
     height: 470px; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card p {
+    font-size: 12px; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-top {
     height: 10px;
     background-color: #5dbabd; }
@@ -4526,6 +4528,13 @@ td .dvs-select-small {
     background-color: #7dbd5d; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card.live-card:hover {
     background-color: #7dbd5d; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom h4 {
+    font-size: 18px;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-badge {
     color: white; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-select-wrapper {
@@ -4701,7 +4710,12 @@ table.dvs-admin-table {
     table.dvs-admin-table input[type=text]:-ms-input-placeholder {
       color: #797d85; }
   table.dvs-admin-table .dvs-publish-dates p {
-    margin: 10px 0; }
+    margin: 10px 0;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word; }
   table.dvs-admin-table .dvs-publish-dates input[type=text] {
     width: 100%;
     float: left;

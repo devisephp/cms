@@ -54,9 +54,6 @@
             <div class="dvs-form-group">
                 <?= Form::label('Version To Copy') ?>
                 <?= Form::select('page_version_id', $versionsList, ($liveVersion) ? $liveVersion->id : null, array('id' => 'http-verb')) ?>
-                <div class="dvs-helptext">
-                    <p>Which page version would you like to use when this copy is created. The currently live version (if one exists) is selected by default.</p>
-                </div>
             </div>
 
             @include('devise::admin.pages._page-form', ['method' => $input['reason']])

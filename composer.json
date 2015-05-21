@@ -26,14 +26,16 @@
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*",
         "codeception/codeception": "*",
-        "jakoch/phantomjs-installer": "1.9.8"
+        "jakoch/phantomjs-installer": "1.9.8",
+        "laracasts/integrated": "0.15.*"
     },
     "autoload": {
         "classmap": [
             "src/models",
             "src/seeds",
             "src/migrations",
-            "tests/DeviseTestCase.php"
+            "tests/DeviseTestCase.php",
+            "tests/Integrated.php"
         ],
         "psr-0": {
             "Devise\\": "src/"

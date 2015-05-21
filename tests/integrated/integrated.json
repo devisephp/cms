@@ -1,0 +1,13 @@
+{
+    "baseUrl": "http://localhost:8888",
+
+    "pdo": {
+        "connection": "mysql:host=localhost;dbname=devisetest",
+        "username": "root",
+        "password": ""
+    },
+
+    "selenium": {
+        "browser": "firefox"
+    }
+}

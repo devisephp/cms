@@ -54,6 +54,7 @@ return array(
     'CreateDvsTestModels' => $vendorDir . '/devisephp/cms/src/migrations/2015_03_09_134915_create_dvs_test_models.php',
     'CreateGroupUser' => $vendorDir . '/devisephp/cms/src/migrations/2014_08_29_160748_create_group_user.php',
     'CreateGroups' => $vendorDir . '/devisephp/cms/src/migrations/2014_08_29_160748_create_groups.php',
+    'CreateLittleWidgets' => $baseDir . '/database/migrations/2015_04_07_181027_create_little_widgets.php',
     'CreatePasswordResets' => $vendorDir . '/devisephp/cms/src/migrations/2014_08_29_160748_create_password_resets.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsers' => $vendorDir . '/devisephp/cms/src/migrations/2014_08_29_160748_create_users.php',

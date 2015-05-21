@@ -6,7 +6,8 @@ class LocaleDetectorTest extends \DeviseTestCase
 	{
 		parent::setUp();
 
-		$this->LocaleDetector = new LocaleDetector;
+		$this->Framework = new \Devise\Support\Framework;
+		$this->LocaleDetector = new LocaleDetector($this->Framework);
 	}
 
 	public function test_it_finds_current_locale()

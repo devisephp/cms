@@ -19,16 +19,19 @@
             <div class="dvs-form-group">
                 <?= Form::label('File Name') ?>
                 <?= Form::select('file_name', [0 => 'Choose an option'] + $unregisteredTemplatesList) ?>
+                <span data-dvs-document="file-name" class="dvs-document-button"></span>
             </div>
 
             <div class="dvs-form-group">
                 <?= Form::label('Human Name') ?>
                 <?= Form::text('human_name') ?>
+                <span data-dvs-document="human-name" class="dvs-document-button"></span>
             </div>
 
             <div class="dvs-form-group">
                 <?= Form::label('Extends') ?>
                 <?= Form::text('extends') ?>
+                <span data-dvs-document="extends" class="dvs-document-button"></span>
             </div>
 
             <div class="dvs-form-group">

@@ -57,7 +57,4 @@
 
         @endif
     </table>
-
-
-    @include('devise::admin.templates.variables._new-variables-table')
 </div>

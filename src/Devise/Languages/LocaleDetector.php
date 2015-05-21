@@ -1,6 +1,6 @@
 <?php namespace Devise\Languages;
 
-use Request, Cookie, Config;
+use Devise\Support\Framework, \Cookie;
 
 /**
  * Locales are shorthand 2 letter strings
@@ -14,6 +14,16 @@ class LocaleDetector
 	 * @var string
 	 */
 	protected $cookieKey = 'devise.my.locale';
+
+	/**
+	 * Construct a new LocaleDetector
+	 *
+	 * @param Framework         $Framework
+	 */
+	public function __construct(Framework $Framework)
+	{
+		$this->Framework = $Framework;
+	}
 
 	/**
 	 * Get the current locale. At first we try
@@ -57,7 +67,7 @@ class LocaleDetector
 	 */
 	public function universal()
 	{
-		return Config::get('app.locale');
+		return $this->Framework->Config->get('app.locale');
 	}
 
 	/**
@@ -67,7 +77,7 @@ class LocaleDetector
 	 */
 	public function header()
 	{
-		return substr(Request::server('HTTP_ACCEPT_LANGUAGE', null), 0, 2);
+		return substr($this->Framework->Request->server('HTTP_ACCEPT_LANGUAGE', null), 0, 2);
 	}
 
 	/**
@@ -81,7 +91,7 @@ class LocaleDetector
 	 */
    	public function segment()
     {
-        return Request::segment(1, null);
+        return $this->Framework->Request->segment(1, null);
     }
 
 	/**
@@ -92,6 +102,7 @@ class LocaleDetector
 	 */
 	public function update($locale)
 	{
+		$this->Framework->Container->setLocale($locale);
 		Cookie::forever($this->cookieKey, $locale);
 	}
 }

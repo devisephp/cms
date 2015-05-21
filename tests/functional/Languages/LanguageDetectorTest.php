@@ -7,7 +7,8 @@ class LanguageDetectorTest extends \DeviseTestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->LanguageDetector = new LanguageDetector(new LocaleDetector, new \DvsLanguage);
+		$this->Framework = new \Devise\Support\Framework;
+		$this->LanguageDetector = new LanguageDetector(new LocaleDetector($this->Framework), new \DvsLanguage);
 	}
 
 	public function test_it_can_detect_current_language()
@@ -35,7 +36,7 @@ class LanguageDetectorTest extends \DeviseTestCase
     {
         $Config = m::mock('Illuminate\Config\Repository');
         $Config->shouldReceive('get')->times(1)->andReturn(45);
-        $LanguageDetector = new LanguageDetector(new LocaleDetector(), new \DvsLanguage, $Config);
+        $LanguageDetector = new LanguageDetector(new LocaleDetector($this->Framework), new \DvsLanguage, $Config);
         assertEquals(45, $LanguageDetector->primaryLanguageId());
     }
 }

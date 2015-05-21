@@ -18,10 +18,14 @@ trait Sortable
 		// builder can easily access any information it may need from the model
 		// while it is constructing and executing various queries against it.
 		$builder->setModel($this)->with($this->with);
-		if ($excludeDeleted and $this->softDelete)
+
+		$traits = class_uses($this);
+
+		if ($excludeDeleted && in_array('Illuminate\Database\Eloquent\SoftDeletes', $traits) && method_exists($this, 'getQualifiedDeletedAtColumn'))
 		{
 			$builder->whereNull($this->getQualifiedDeletedAtColumn());
 		}
+
 		return $builder;
 	}
 }

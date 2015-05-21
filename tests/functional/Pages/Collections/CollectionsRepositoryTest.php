@@ -42,4 +42,13 @@ class CollectionsRepositoryTest extends \DeviseTestCase
 		$output = $this->CollectionsRepository->findCollectionInstancesForCollectionSetIdAndPageVersionId(1, 1);
 		assertNotCount(0, $output);
 	}
+
+	public function test_it_syncs_fields_for_instances()
+	{
+		$instances = [];
+		$collectionFields = [];
+		$pageVersionId = 1;
+		$output = $this->CollectionsRepository->syncFieldsForInstances($instances, $collectionFields, $pageVersionId);
+		assertCount(0, $output);
+	}
 }

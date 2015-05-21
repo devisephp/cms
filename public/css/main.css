@@ -3871,6 +3871,7 @@ td .dvs-select-small {
   margin-top: -200px;
   z-index: 20000; }
   #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
+    float: left;
     background-image: -webkit-linear-gradient(#2d3039, #22242b);
     background-image: linear-gradient(#2d3039, #22242b);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
@@ -3885,6 +3886,15 @@ td .dvs-select-small {
   right: 0;
   background-color: rgba(38, 38, 38, 0.55);
   z-index: 12000; }
+
+.js-tab-links {
+  display: block;
+  float: left; }
+  .js-tab-links li {
+    display: inherit;
+    float: inherit; }
+    .js-tab-links li a {
+      padding: 12px 2% 12px 0; }
 
 /* Main UI */
 /* http://meyerweb.com/eric/tools/css/reset/

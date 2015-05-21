@@ -169,6 +169,8 @@ class DeviseTag
 	 */
 	protected function extractParametersFromParsedStr($params)
 	{
+		$params = ltrim($params);
+
 		$params = str_replace('data-devise-<?php echo devise_tag_cid(', '', $params);
 
 		$params = substr($params, 1);
@@ -210,7 +212,9 @@ class DeviseTag
 	 */
 	protected function extractParametersFromUnparsedCreatorStr($params)
 	{
-		$params = str_replace(' data-devise-create-model=', '', $params);
+		$params = ltrim($params);
+
+		$params = str_replace('data-devise-create-model=', '', $params);
 
 		$params = substr($params, 1);
 
@@ -251,7 +255,9 @@ class DeviseTag
 	 */
 	protected function extractParametersFromUnparsedStr($params)
 	{
-		$params = str_replace(' data-devise=', '', $params);
+		$params = ltrim($params);
+
+		$params = str_replace('data-devise=', '', $params);
 
 		$params = substr($params, 1);
 

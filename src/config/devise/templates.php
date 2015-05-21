@@ -270,6 +270,11 @@
 			'extends' => 'devise::admin.layouts.master',
 			'vars' => array(
 				'usedVariables' => 'Devise\Templates\TemplatesRepository.compileAllUsedVars',
+                'template' => array(
+                    'Devise\Templates\TemplatesRepository.getTemplateByPath' => array(
+                        '{params.templatePath}',
+                    ),
+                ),
 			),
 		),
         'devise::admin.permissions.index' => array(

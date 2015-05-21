@@ -72,6 +72,16 @@ class UsersRepository
     }
 
     /**
+     * Paginated list of users
+     *
+     * @return Eloquent\Collection
+     */
+    public function users()
+    {
+        return $this->DvsUser->paginate();
+    }
+
+    /**
      * Find user by id
      *
      * @param  int  $id
@@ -80,16 +90,6 @@ class UsersRepository
     public function findById($id)
     {
         return $this->DvsUser->with('groups')->findOrFail($id);
-    }
-
-    /**
-     * Paginated list of users
-     *
-     * @return Eloquent\Collection
-     */
-    public function users()
-    {
-        return $this->DvsUser->paginate();
     }
 
     /**

@@ -191,12 +191,12 @@ class UserManager
      * Register new user
      *
      * @param  array  $input
-     * @param  integer  $groupId
      * @return Boolean
     */
-    public function registerUser($input, $groupId = 3)
+    public function registerUser($input)
     {
-        $input['group_id'] = $groupId;
+        // if no group_id in input, default to "Adminstrator"
+        $input['group_id'] = array_get($input, 'group_id', 2);
 
         if($user = $this->createUser($input))
         {

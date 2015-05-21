@@ -1,6 +1,8 @@
 <?php
 
-class DvsLanguage extends Eloquent
+use Illuminate\Database\Eloquent\Model;
+
+class DvsLanguage extends Model
 {
     protected $table = 'dvs_languages';
 

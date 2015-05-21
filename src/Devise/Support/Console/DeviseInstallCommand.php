@@ -1,6 +1,5 @@
 <?php namespace Devise\Support\Console;
 
-use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 
 class DeviseInstallCommand extends Command
@@ -91,7 +90,7 @@ class DeviseInstallCommand extends Command
         }
 
         $this->DeviseMigrateCommand->handle();
-        
+
         $this->DeviseSeedCommand->handle();
 
         if ($this->env('APP_SEEDS') != 'no') {

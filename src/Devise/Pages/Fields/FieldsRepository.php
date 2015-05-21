@@ -143,8 +143,8 @@ class FieldsRepository
         return $this->Field
             ->where('page_version_id', '=', $pageVersionId)
             ->where('content_requested','=',true)
-            ->select('key')
-            ->lists('key');
+            ->select('id')
+            ->lists('id');
     }
 
 }

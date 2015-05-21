@@ -1,5 +1,7 @@
 <?php namespace Devise\Pages\Collections;
 
+use Illuminate\Support\Collection;
+
 /**
  * Retreives collection instances and sets and fields for us.
  * This class is used in many places to retreieve collection
@@ -112,12 +114,19 @@ class CollectionsRepository
             // not being used in this context as far as I know of... but I'm
             // leaving this here just in case we need to bring it back at some point
             // $keyName = ($index + 1) . ') ' .$collectionInstance->name;
+            $keyName = $collectionInstance->collectionSet->name;
 
             // make this an array if it is not already set
-            $collections[$collectionInstance->collectionSet->name] = isset($collections[$collectionInstance->collectionSet->name]) ? $collections[$collectionInstance->collectionSet->name] : [];
+            $collections[] = isset($collections[$keyName]) ? $collections[$keyName] : [];
 
             // add these collection fields to this array
-            $collections[$collectionInstance->collectionSet->name][] = $this->CollectionFieldsFactory->createFromCollectionInstance($collectionInstance);
+            $collections[$keyName][] = $this->CollectionFieldsFactory->createFromCollectionInstance($collectionInstance);
+        }
+
+        // put these instances into a Laravel collection
+        foreach ($collections as $keyName => $collectionInstances)
+        {
+            $collections[$keyName] = new Collection($collectionInstances);
         }
 
         return $collections;
@@ -138,5 +147,114 @@ class CollectionsRepository
             ->where('page_version_id', $pageVersionId)
             ->orderBy('sort', 'ASC')
             ->get();
+    }
+
+    /**
+     * Sync fields for instances
+     *
+     * @param  Eloquent\Collection $instances
+     * @param  array $collectionFields
+     * @return Eloquent\Collection
+     */
+    public function syncFieldsForInstances($instances, $collectionFields, $pageVersionId)
+    {
+        $this->createMissingFieldsForInstances($instances, $collectionFields, $pageVersionId);
+
+        $fields = [];
+
+        foreach ($collectionFields as $collectionField)
+        {
+            $fields[$collectionField['key']] = $collectionField;
+        }
+
+        foreach ($instances as $instance)
+        {
+            foreach ($instance->fields as $field)
+            {
+                $schema = $fields[$field->key];
+                $field->type = $schema['type'];
+                $field->human_name = $schema['humanName'];
+                $field->save();
+            }
+        }
+
+        return $instances;
+    }
+
+    /**
+     * Creates any missing fields that may have been added later...
+     *
+     * @param  Eloquent\Collection $instances
+     * @param  array $collectionFields
+     * @return Eloquent\Collection
+     */
+    protected function createMissingFieldsForInstances($instances, $collectionFields, $pageVersionId)
+    {
+        foreach ($instances as $instance)
+        {
+            $missing = $this->findMissingFieldsForInstance($instance, $collectionFields);
+
+            $this->createFieldsForInstance($instance, $missing, $pageVersionId);
+        }
+
+        return $instances;
+    }
+
+    /**
+     * Finds missing fields for an instance
+     *
+     * @param  DvsCollectionInstance $instance
+     * @param  array $collectionFields
+     * @return array
+     */
+    protected function findMissingFieldsForInstance($instance, $collectionFields)
+    {
+        $missingFields = [];
+
+        foreach ($collectionFields as $collectionField)
+        {
+            $missing = true;
+            $key = $collectionField['key'];
+
+            foreach ($instance->fields as $field)
+            {
+                if ($field->key === $key) $missing = false;
+            }
+
+            if ($missing) $missingFields[$key] = $collectionField;
+        }
+
+        return $missingFields;
+    }
+
+    /**
+     * Creates a field for this instance
+     *
+     * @param  [type] $instance
+     * @param  [type] $collectionField
+     * @param  [type] $pageVersionId
+     * @return [type]
+     */
+    protected function createFieldsForInstance($instance, $collectionFields, $pageVersionId)
+    {
+        $fields = [];
+
+        foreach ($collectionFields as $collectionField)
+        {
+            $field = $this->Field->newInstance();
+            $field->collection_instance_id = $instance->id;
+            $field->page_version_id = $pageVersionId;
+            $field->type = $collectionField['type'];
+            $field->human_name = $collectionField['humanName'];
+            $field->key = $collectionField['key'];
+            $field->json_value = '{}';
+            $field->content_requested = 0;
+            $field->save();
+
+            $fields[] = $field;
+            $instance->fields->add($field);
+        }
+
+        return $fields;
     }
 }

@@ -13,7 +13,7 @@ class FieldValue
 	 * @var string
 	 */
 	protected $json;
-	
+
 	/**
 	 * Number of values on this field value
 	 *
@@ -98,6 +98,8 @@ class FieldValue
 
 		$this->json = json_encode($input);
 
+		$this->count = count($values);
+
 		foreach ($input as $key => $value)
 		{
 			$this->$key = $value;
@@ -118,6 +120,8 @@ class FieldValue
 		$values = array_merge($values, $input);
 
 		$this->json = json_encode($values);
+
+		$this->count = count($values);
 
 		// add the new inputs to our existing object
 		// or else our json representation will be
@@ -146,6 +150,16 @@ class FieldValue
 	public function toArray()
 	{
 		return (array) json_decode($this->json);
+	}
+
+	/**
+	 * Is this object empty or not?
+	 *
+	 * @return boolean
+	 */
+	public function isEmpty()
+	{
+		return $this->count === 0;
 	}
 
 	/**

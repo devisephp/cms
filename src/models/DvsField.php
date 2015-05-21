@@ -1,10 +1,10 @@
 <?php
 
 use Devise\Pages\Fields\LiveFieldValue;
-
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 
-class DvsField extends Eloquent
+class DvsField extends Model
 {
     use SoftDeletes;
 

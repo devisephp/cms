@@ -108,4 +108,14 @@ class DeviseCompilerTest extends \DeviseTestCase
 		$compiler = new DeviseCompiler;
 		$outcome = $compiler->compile($this->fixture('devise-views.random1'));
 	}
+
+	public function test_it_can_handle_new_lines_in_data_devise_tags()
+	{
+		$compiler = new DeviseCompiler;
+		$outcome = $compiler->compile($this->fixture('devise-views.newlines'));
+		assertContains('App::make(\'dvsPageData\')->register(\'imageName\', \'field\', null, \'imageName\', \'image\', \'humanName\', null, null, null, null)', $outcome);
+		assertContains('App::make(\'dvsPageData\')->register(\'textName\', \'field\', null, \'textName\', \'text\', \'TextName\', null, null, null, null)', $outcome);
+		assertContains('data-devise-<?php echo devise_tag_cid(\'textName\', "field", null, "textName", "text", "TextName", null, null, null, null, null) ?>="textName"', $outcome);
+		assertContains('data-devise-<?php echo devise_tag_cid(\'imageName\', "field", null, "imageName", "image", "humanName", null, null, null, null, null) ?>="imageName"', $outcome);
+	}
 }

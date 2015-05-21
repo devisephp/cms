@@ -36,19 +36,19 @@ class DeviseParser
 	{
 		$tags = [];
 
-		$matches = $this->matches($html, "/ data-devise=[\"]([^\"]*)[\"]/");
+		$matches = $this->matches($html, "/\s?data-devise=[\"]([^\"]*)[\"]/");
 
 		foreach ($matches as $match) $tags[] = new DeviseTag($match[0]);
 
-		$matches = $this->matches($html, "/ data-devise=[']([^']*)[']/");
+		$matches = $this->matches($html, "/\s?data-devise=[']([^']*)[']/");
 
 		foreach ($matches as $match) $tags[] = new DeviseTag($match[0]);
 
-		$matches = $this->matches($html, "/ data-devise-<\?php echo devise_tag_cid\(((?!\?>).)*\) \?>/");
+		$matches = $this->matches($html, "/\s?data-devise-<\?php echo devise_tag_cid\(((?!\?>).)*\) \?>/");
 
 		foreach ($matches as $match) $tags[] = new DeviseTag($match[0], 'parsed');
 
-		$matches = $this->matches($html, "/ data-devise-create-model=[\"'] *([^\"'])*[\"']/");
+		$matches = $this->matches($html, "/\s?data-devise-create-model=[\"'] *([^\"'])*[\"']/");
 
 		foreach ($matches as $match) $tags[] = new DeviseTag($match[0], 'creator');
 

@@ -8,7 +8,7 @@
 
 @section('subnavigation')
     <div id="dvs-admin-actions">
-        <?= link_to(URL::route('dvs-templates-register'), 'New Template', array('class'=>'dvs-button dvs-button-secondary')) ?>
+        <?= link_to(URL::route('dvs-templates-register'), 'Register New Template', array('class'=>'dvs-button dvs-button-secondary')) ?>
     </div>
 @stop
 

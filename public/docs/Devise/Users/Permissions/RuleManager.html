@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Users\Permissions\RuleManager | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Users_Permissions_RuleManager" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Devise.html">Devise</a></li>
+                                        <li><a href="../../../Devise/Users.html">Users</a></li>
+                                        <li><a href="../../../Devise/Users/Permissions.html">Permissions</a></li>
+    
+                <li>RuleManager</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>RuleManager</h1>
+    </div>
+
+    <p>    class
+    <strong>RuleManager</strong></p>
+
+            <div class="description">
+            <p>Class RuleManager manages retrieval, creation/addition, execution
+and evaluation of native and user-defined rules.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Users\Permissions\Devise\Users\Permissions\RedirectHandler">RedirectHandler</abbr> $RedirectHandler, <abbr title="Devise\Users\Permissions\Devise\Support\Framework">Framework</abbr> $Framework)
+                                            <p>Construct a new rule manager</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRules">getRules</a>()
+                                            <p>Get all rules</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Integer
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNumberOfRequiredParametersForRule">getNumberOfRequiredParametersForRule</a>($ruleName)
+                                            <p>Get all rules</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getClosure">getClosure</a>(string $method)
+                                            <p>Get all closures</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_addRule">addRule</a>(string $rule, <abbr title="Devise\Users\Permissions\callback">callback</abbr> $closure = null)
+                                            <p>Add new element to rules array</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_overwriteRule">overwriteRule</a>(string $rule, <abbr title="Devise\Users\Permissions\callback">callback</abbr> $closure = null)
+                                            <p>Add replaces element in rules array</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCondition">getCondition</a>(string $conditionName)
+                                            <p>Retrieve conditions JSON from permission conditions config</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_runCondition">runCondition</a>(string $conditionName, boolean $redirectOnFail, boolean $evaluateResults = true)
+                                            <p>Begins condition checking process by retrieving condition
+by name/key and then executing its contents.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_executeCondition">executeCondition</a>(object $conditionObject)
+                                            <p>Executes conditions one at a time and returns result</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_evaluateResults">evaluateResults</a>($results, $redirectOnFail, $conditionObject)
+                                            <p>Determines if access allowed/denied by checking
+results array for any occurences of a "false" value</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 38</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Users\Permissions\Devise\Users\Permissions\RedirectHandler">RedirectHandler</abbr> $RedirectHandler, <abbr title="Devise\Users\Permissions\Devise\Support\Framework">Framework</abbr> $Framework)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Construct a new rule manager</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Users\Permissions\Devise\Users\Permissions\RedirectHandler">RedirectHandler</abbr></td>
+                <td>$RedirectHandler</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Users\Permissions\Devise\Support\Framework">Framework</abbr></td>
+                <td>$Framework</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRules">
+        <div class="location">at line 51</div>
+        <code>                    Array
+    <strong>getRules</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get all rules</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNumberOfRequiredParametersForRule">
+        <div class="location">at line 61</div>
+        <code>                    Integer
+    <strong>getNumberOfRequiredParametersForRule</strong>($ruleName)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get all rules</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$ruleName</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Integer</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getClosure">
+        <div class="location">at line 83</div>
+        <code>                    Array
+    <strong>getClosure</strong>(string $method)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get all closures</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Devise/Support/DeviseException.html"><abbr title="Devise\Support\DeviseException">DeviseException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_addRule">
+        <div class="location">at line 100</div>
+        <code>                    Void
+    <strong>addRule</strong>(string $rule, <abbr title="Devise\Users\Permissions\callback">callback</abbr> $closure = null)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Add new element to rules array</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$rule</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Users\Permissions\callback">callback</abbr></td>
+                <td>$closure</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Devise/Support/DeviseException.html"><abbr title="Devise\Support\DeviseException">DeviseException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_overwriteRule">
+        <div class="location">at line 118</div>
+        <code>                    Void
+    <strong>overwriteRule</strong>(string $rule, <abbr title="Devise\Users\Permissions\callback">callback</abbr> $closure = null)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Add replaces element in rules array</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$rule</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Users\Permissions\callback">callback</abbr></td>
+                <td>$closure</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Devise/Support/DeviseException.html"><abbr title="Devise\Support\DeviseException">DeviseException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCondition">
+        <div class="location">at line 135</div>
+        <code>                    Void
+    <strong>getCondition</strong>(string $conditionName)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Retrieve conditions JSON from permission conditions config</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$conditionName</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Devise/Support/DeviseException.html"><abbr title="Devise\Support\DeviseException">DeviseException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_runCondition">
+        <div class="location">at line 154</div>
+        <code>                    Void
+    <strong>runCondition</strong>(string $conditionName, boolean $redirectOnFail, boolean $evaluateResults = true)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Begins condition checking process by retrieving condition
+by name/key and then executing its contents.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$conditionName</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$redirectOnFail</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$evaluateResults</td>
+                <td>If false, evaluateResults() omitted</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_executeCondition">
+        <div class="location">at line 169</div>
+        <code>                    array
+    <strong>executeCondition</strong>(object $conditionObject)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Executes conditions one at a time and returns result</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>object</td>
+                <td>$conditionObject</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_evaluateResults">
+        <div class="location">at line 183</div>
+        <code>                    boolean
+    <strong>evaluateResults</strong>($results, $redirectOnFail, $conditionObject)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Determines if access allowed/denied by checking
+results array for any occurences of a "false" value</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$results</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$redirectOnFail</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$conditionObject</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

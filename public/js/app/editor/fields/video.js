@@ -18,7 +18,7 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'dvsPageData', 'ckeditorJq
             {
                 var parentForm = $(this).parents('form');
                 var target = $(e.currentTarget).data('target');
-                var mediaUrl = url + '?type=video&target=' + target;
+                var mediaUrl = url + '?type=video&target=' + target + '&open-last-category';
 
                 document.onMediaManagerSelect = function(video, target, settings) { onMediaManagerSelect(parentForm, video, target, settings); }
                 window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");

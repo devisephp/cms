@@ -1,4 +1,4 @@
-<div id="devise-documentation-container" >
+<div id="devise-documentation-container" class="dvs-closed">
 
 	<button id="dvs-docs-expand">&#10095;</button>
 	<button id="dvs-docs-close"><span class="dvs-icon ion-android-close"></span></button>

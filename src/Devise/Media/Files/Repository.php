@@ -61,7 +61,11 @@ class Repository
         $data = [];
         $this->input = $input;
 
+        $openLastCategory = isset($input['open-last-category']);
+        unset($input['open-last-category']);
+
         $this->ensureRootDirectoryAvailable();
+        $this->setCurrentDirectory($input, $openLastCategory);
 
         $currentDirectory = $this->getCurrentDirectory($input);
         $data['crumbs'] = $this->buildCrumbs( $input );
@@ -88,18 +92,47 @@ class Repository
     }
 
     /**
+     * [setCurrentDirectory description]
+     * @param [type] $input
+     */
+    private function setCurrentDirectory($input, $openLastCategory)
+    {
+        $category = isset($input['category']) ? $input['category'] : '';
+
+        if (!$openLastCategory)
+        {
+            \Session::put('dvs-media-manager-category', $category);
+        }
+    }
+
+    /**
      * The current directory of the
      * @param $input
      * @return string
      */
     private function getCurrentDirectory($input)
     {
-        if(!isset($input['category'])){
-            return public_path().'/'.$this->config['root-dir'];
-        } else {
-            $dirPath = implode('/', explode('.', $input['category']));
-            return public_path().'/'.$this->config['root-dir'] . '/' . $dirPath;
+        $category = $this->getCurrentCategory();
+
+        $root = public_path().'/'.$this->config['root-dir'];
+
+        if ($category)
+        {
+            $dirPath = implode('/', explode('.', $category));
+            return $root . '/' . $dirPath;
         }
+
+        return $root;
+    }
+
+    /**
+     * Gets the current category
+     *
+     * @return [type]
+     */
+    private function getCurrentCategory()
+    {
+        return \Session::get('dvs-media-manager-category');
     }
 
     /**
@@ -117,8 +150,11 @@ class Repository
             )
         );
 
-        if(isset($input['category'])){
-            $parts = explode('.', $input['category']);
+        $category = $this->getCurrentCategory();
+
+        if ($category)
+        {
+            $parts = explode('.', $category);
             $crumbDotPath = '';
             foreach ($parts as $part) {
                 $crumbDotPath .= ($crumbDotPath != '') ? '.' . $part : $part;

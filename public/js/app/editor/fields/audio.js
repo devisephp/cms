@@ -18,7 +18,7 @@ devise.define(['jquery'], function ($) {
             {
                 var parentForm = $(this).parents('form');
                 var target = $(e.currentTarget).data('target');
-                var mediaUrl = url + '?type=audio&target=' + target;
+                var mediaUrl = url + '?type=audio&target=' + target + '&open-last-category';
 
                 document.onMediaManagerSelect = function(file, target, settings) { onMediaManagerSelect(parentForm, file, target, settings); }
                 window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");

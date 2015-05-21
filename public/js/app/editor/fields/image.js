@@ -50,7 +50,7 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], functio
             {
                 var parentForm = $(this).parents('form');
                 var target = $(e.currentTarget).data('target');
-                var mediaUrl = url + '?type=image&cropMode=Preserve&target=' + target;
+                var mediaUrl = url + '?type=image&cropMode=Preserve&target=' + target + '&open-last-category';
 
                 document.onMediaManagerSelect = function(image, target, settings) { onMediaManagerSelect(parentForm, image, target, settings); }
                 window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");

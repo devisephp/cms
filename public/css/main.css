@@ -5924,7 +5924,9 @@ html.dz-drag-hover body {
         padding: 4px 10px; }
 
   table.dvs-admin-table .dvs-publish-dates input[type=text] {
-    width: 50%; } }
+    width: 50%; }
+  table.dvs-admin-table .dvs-publish-dates label {
+    float: right; } }
 /* Editors */
 .dvs-datepicker-skin {
   width: 280px; }

@@ -19,9 +19,13 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
         vfsStream::setup('basedir', null, $structure);
 
-    	$this->Framework = new \Devise\Support\Framework;
+        $Framework = new \Devise\Support\Framework;
 
-        $this->DeviseInstallCommand = new DeviseInstallCommand($this->Framework->Container);
+        $app = m::mock('Illuminate\Container\Container');
+        $app->shouldReceive('basePath')->andReturn(base_path());
+        $app->shouldReceive('make')->with('config')->andReturn($Framework->Container->make('config'));
+
+        $this->DeviseInstallCommand = new DeviseInstallCommand($app);
         $this->DeviseInstallCommand->Cache = m::mock('CacheObj');
         $this->DeviseInstallCommand->Artisan = m::mocK('ArtisanObj');
 		$this->DeviseInstallCommand->DeviseMigrateCommand = m::mock('Devise\Support\Console\DeviseMigrateCommand');
@@ -42,12 +46,20 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
     public function test_it_handles_install_command()
     {
+        $migrator = m::mock('Migrator');
+        $migrator->shouldReceive('run');
+        $migrationRepository = m::mock('MigrationRepository');
+        $migrationRepository->shouldReceive('repositoryExists')->andReturn(true);
+        $seeder = m::mock('Seeder');
+        $seeder->shouldReceive('call');
+        $this->DeviseInstallCommand->app->shouldReceive('make')->with('migration.repository')->andReturn($migrationRepository);
+        $this->DeviseInstallCommand->app->shouldReceive('make')->with('migrator')->andReturn($migrator);
+        $this->DeviseInstallCommand->app->shouldReceive('make')->with('seeder')->andReturn($seeder);
     	$this->DeviseInstallCommand->wizard->shouldReceive('refreshEnvironment')->twice();
     	$this->DeviseInstallCommand->wizard->shouldReceive('saveEnvironment')->with('local')->once();
         $this->DeviseInstallCommand->wizard->shouldReceive('saveConfigsOverride')->once()->andReturn();
         $this->DeviseInstallCommand->wizard->shouldReceive('saveDatabase')->with('mysql', 'localhost', 'devisephp', 'root', '')->once()->andReturn();
     	$this->DeviseInstallCommand->wizard->shouldReceive('saveApplicationMigrationAndSeedSettings')->with('yes','yes')->once()->andReturn();
-        $this->DeviseInstallCommand->Artisan->shouldReceive('call')->twice();
         $this->DeviseInstallCommand->wizard->shouldReceive('createAdminUser')->once();
 		$this->DeviseInstallCommand->wizard->shouldReceive('saveApplicationNamespace')->once();
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
@@ -59,10 +71,18 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
 	public function test_it_runs_install_commands()
 	{
+        $migrator = m::mock('Migrator');
+        $migrator->shouldReceive('run');
+        $migrationRepository = m::mock('MigrationRepository');
+        $migrationRepository->shouldReceive('repositoryExists')->andReturn(true);
+        $seeder = m::mock('Seeder');
+        $seeder->shouldReceive('call');
+        $this->DeviseInstallCommand->app->shouldReceive('make')->with('migration.repository')->andReturn($migrationRepository);
+        $this->DeviseInstallCommand->app->shouldReceive('make')->with('migrator')->andReturn($migrator);
+        $this->DeviseInstallCommand->app->shouldReceive('make')->with('seeder')->andReturn($seeder);
 		$this->DeviseInstallCommand->DeviseMigrateCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DeviseSeedCommand->shouldReceive('handle')->once();
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand->shouldReceive('handle')->once();
-        $this->DeviseInstallCommand->Artisan->shouldReceive('call')->twice();
 		$this->DeviseInstallCommand->DevisePublishConfigsCommand->shouldReceive('handle');
 		$this->DeviseInstallCommand->runInstallCommands();
 	}

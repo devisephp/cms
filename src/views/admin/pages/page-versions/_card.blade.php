@@ -54,7 +54,7 @@
                         <?= Form::checkbox('never') ?> Never Ends
                     </label>
 
-                    <?= Form::submit('Submit', array('class' => 'dvs-button dvs-button-small')) ?>
+                    <?= Form::submit('Submit', array('class' => 'dvs-button dvs-button-small dvs-button-solid')) ?>
 
                 <?= Form::close() ?>
             </div>

@@ -80,4 +80,16 @@
       }
     }
   }
+
+  table.dvs-admin-table {
+    .dvs-publish-dates {
+      input[type=text] {
+        width: 50%;
+      }
+
+      label {
+        float:right;
+      }
+    }
+  }
 }

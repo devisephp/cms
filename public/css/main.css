@@ -4513,7 +4513,7 @@ td .dvs-select-small {
   #dvs-admin .dvs-admin-card:hover {
     background-color: #7dbd5d;
     border-color: #63a443; }
-    #dvs-admin .dvs-admin-card:hover h3, #dvs-admin .dvs-admin-card:hover p {
+    #dvs-admin .dvs-admin-card:hover h3, #dvs-admin .dvs-admin-card:hover p, #dvs-admin .dvs-admin-card:hover label {
       color: #fff; }
   #dvs-admin .dvs-admin-card.wide {
     width: 63%; }
@@ -4703,8 +4703,23 @@ table.dvs-admin-table {
   table.dvs-admin-table .dvs-publish-dates p {
     margin: 10px 0; }
   table.dvs-admin-table .dvs-publish-dates input[type=text] {
-    min-width: 45%;
-    max-width: 100px; }
+    width: 100%;
+    float: left;
+    min-width: inherit;
+    max-width: inherit;
+    margin-left: 0;
+    font-size: 12px;
+    color: #797d85; }
+  table.dvs-admin-table .dvs-publish-dates label {
+    float: left;
+    margin-top: 4px;
+    color: #909090;
+    font-size: 11px; }
+  table.dvs-admin-table .dvs-publish-dates input[type=submit] {
+    margin: 8px auto 12px;
+    float: left;
+    clear: both;
+    display: block; }
   table.dvs-admin-table .dvs-badge.dvs-content-requested {
     margin: 0 auto;
     margin-bottom: 20px;
@@ -5906,7 +5921,10 @@ html.dz-drag-hover body {
       height: auto; }
       .dvs-admin-card .dvs-card-bottom .dvs-metrics-wpr .dvs-metric span {
         border-radius: 11px;
-        padding: 4px 10px; } }
+        padding: 4px 10px; }
+
+  table.dvs-admin-table .dvs-publish-dates input[type=text] {
+    width: 50%; } }
 /* Editors */
 .dvs-datepicker-skin {
   width: 280px; }

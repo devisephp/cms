@@ -42,22 +42,6 @@
       margin-top:-200px;
       z-index:20000;
 
-      .js-tab-links {
-        display:block;
-        float:left;
-
-        li {
-          display:inherit;
-          float:inherit;
-
-          a { padding:12px 2% 12px 0 }
-        }
-      }
-
-      .dvs-modal-tab {
-
-      }
-
       .dvs-admin-form-horizontal {
         float:left;
          @include background-image(linear-gradient($bodyBgColor, darken($bodyBgColor, 5%)));

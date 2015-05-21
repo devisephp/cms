@@ -3868,14 +3868,6 @@ td .dvs-select-small {
   margin-left: -250px;
   margin-top: -200px;
   z-index: 20000; }
-  #dvs-admin #dvs-admin-modal .js-tab-links {
-    display: block;
-    float: left; }
-    #dvs-admin #dvs-admin-modal .js-tab-links li {
-      display: inherit;
-      float: inherit; }
-      #dvs-admin #dvs-admin-modal .js-tab-links li a {
-        padding: 12px 2% 12px 0; }
   #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
     float: left;
     background-image: -webkit-linear-gradient(#2d3039, #22242b);
@@ -3892,6 +3884,15 @@ td .dvs-select-small {
   right: 0;
   background-color: rgba(38, 38, 38, 0.55);
   z-index: 12000; }
+
+.dvs-tab-links {
+  display: block;
+  float: left; }
+  .dvs-tab-links li {
+    display: inherit;
+    float: inherit; }
+    .dvs-tab-links li a {
+      padding: 12px 2% 12px 0; }
 
 /* Main UI */
 /* http://meyerweb.com/eric/tools/css/reset/

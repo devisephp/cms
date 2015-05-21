@@ -1,4 +1,4 @@
-devise.define(['require', 'jquery'], function (require, $) {
+devise.define(['jquery'], function ($) {
     var tabLinksTarget = this.tabLinksTarget || '.js-tab-links li a';
     var tabsContentTarget = this.tabsContentTarget || '.js-tab-content';
 
@@ -22,5 +22,5 @@ devise.define(['require', 'jquery'], function (require, $) {
         $(_this).addClass('dvs-active'); // make clicked link active
     }
 
-    return initialize(tabLinksTarget);
+    return initialize(tabLinksTarget, tabsContentTarget);
 });

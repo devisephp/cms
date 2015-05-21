@@ -67,6 +67,8 @@ class FileDiff
 	{
 		$sums = [];
 
+		if (!$this->File->isDirectory($dir)) return [];
+
 		$allFiles = $this->File->allFiles($dir);
 
 		foreach ($allFiles as $file)

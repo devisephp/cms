@@ -5,7 +5,7 @@ The file name dropdown is auto-populated by Devise, but you might be wondering w
 
 *The current template's path is:*
 
-``` php
+```php
 /resources/views/@livespan([name="template_path"]).blade.php
 ```
 
@@ -17,7 +17,7 @@ Primarily used as meta data on the admin templates index.
 
 Defines layout used by the template and the value is inserted into the extends tag within the blade file:
 
-``` php
+```php
 @extends(@livespan([name="template[extends]"]))
 ```
 
@@ -29,7 +29,7 @@ Template variables offer a simple and quick way to set data available inside a t
 
 After clicking on the "Add New Variable" button, a variable can be created in two ways:
 1. Select an existing variable from the list.
-1. Add a new variable. This requires three fields:
+2. Add a new variable. This requires three fields:
 
 #### Variable Name
 Any unique variable name which will become available in the current template.
@@ -55,7 +55,7 @@ Assume our url looks like, __<?= url() ?>?fooId=10&isLoggedIn=1__, which calls t
 
 __input__ - passes the entire query input to the method.
 
-```
+```php
 public function fooIsUserLoggedIn($input)
 {
     var_dump($input); // array('fooId' => 10, isLoggedIn' => 1)
@@ -64,7 +64,7 @@ public function fooIsUserLoggedIn($input)
 
 __input.fooId__ - only passes "fooId" from the query input array
 
-```
+```php
 public function fooIsUserLoggedIn($fooId)
 {
     echo $fooId; // 10
@@ -76,7 +76,7 @@ public function fooIsUserLoggedIn($fooId)
 Now, our url has a param for "id" __<?= url("/some/:id") ?>__ and for our example let's say the id is "10". Now, we can get the id like:
 
 __params.id__ - passes the id
-```
+```php
 public function fooFindUserById($id)
 {
     echo $id;   // 10

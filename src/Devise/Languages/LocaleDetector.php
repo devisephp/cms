@@ -41,9 +41,8 @@ class LocaleDetector
 
 		if (!$locale)
 		{
-			$locale = $locale ?: $this->segment();
-			$locale = $locale ?: $this->header();
-			$locale = $locale ?: $this->universal();
+            $locale = $locale ?: $this->header();
+            $locale = $locale ?: $this->universal();
 			$this->update($locale);
 		}
 

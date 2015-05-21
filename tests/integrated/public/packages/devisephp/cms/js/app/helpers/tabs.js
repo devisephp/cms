@@ -1,5 +1,5 @@
 devise.define(['jquery'], function ($) {
-    var tabLinksTarget = this.tabLinksTarget || '.js-tab-links li a';
+    var tabLinksTarget = this.tabLinksTarget || '.js-tab-links li';
     var tabsContentTarget = this.tabsContentTarget || '.js-tab-content';
 
     var initialize = function () {

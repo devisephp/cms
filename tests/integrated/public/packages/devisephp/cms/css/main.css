@@ -3861,7 +3861,7 @@ td .dvs-select-small {
 #dvs-admin #dvs-modal-container .js-save-btn {
   margin-top: 5px; }
 #dvs-admin #dvs-admin-modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   width: 500px;
@@ -3869,11 +3869,10 @@ td .dvs-select-small {
   margin-top: -200px;
   z-index: 20000; }
   #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal {
-    float: left;
-    background-image: -webkit-linear-gradient(#2d3039, #22242b);
-    background-image: linear-gradient(#2d3039, #22242b);
+    padding-top: 30px;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
-    padding-top: 30px; }
+    background-image: -webkit-linear-gradient(#2d3039, #22242b);
+    background-image: linear-gradient(#2d3039, #22242b); }
     #dvs-admin #dvs-admin-modal .dvs-admin-form-horizontal h4 {
       color: #bcbec2; }
 #dvs-admin #dvs-admin-blocker {
@@ -3885,14 +3884,26 @@ td .dvs-select-small {
   background-color: rgba(38, 38, 38, 0.55);
   z-index: 12000; }
 
-.js-tab-links {
-  display: block;
-  float: left; }
-  .js-tab-links li {
-    display: inherit;
-    float: inherit; }
-    .js-tab-links li a {
-      padding: 12px 2% 12px 0; }
+ul.js-tab-links {
+  display: block; }
+  ul.js-tab-links:after {
+    content: "";
+    display: table;
+    clear: both; }
+  ul.js-tab-links li {
+    display: block;
+    float: left;
+    padding: 12px 4% 12px 4%;
+    font-weight: 500;
+    color: rgba(144, 144, 144, 0.8);
+    border-right: 1px solid #1d1f25;
+    background-color: rgba(41, 43, 51, 0.7);
+    cursor: pointer; }
+    ul.js-tab-links li.dvs-active {
+      color: #e0e0e0;
+      background-color: #2d3039; }
+    ul.js-tab-links li:last-of-type {
+      border-right: none; }
 
 /* Main UI */
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -4513,12 +4524,14 @@ td .dvs-select-small {
   #dvs-admin .dvs-admin-card:hover {
     background-color: #7dbd5d;
     border-color: #63a443; }
-    #dvs-admin .dvs-admin-card:hover h3, #dvs-admin .dvs-admin-card:hover p {
+    #dvs-admin .dvs-admin-card:hover h3, #dvs-admin .dvs-admin-card:hover p, #dvs-admin .dvs-admin-card:hover label {
       color: #fff; }
   #dvs-admin .dvs-admin-card.wide {
     width: 63%; }
   #dvs-admin .dvs-admin-card.tall .dvs-card-top {
     height: 470px; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card p {
+    font-size: 12px; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-top {
     height: 10px;
     background-color: #5dbabd; }
@@ -4526,6 +4539,13 @@ td .dvs-select-small {
     background-color: #7dbd5d; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card.live-card:hover {
     background-color: #7dbd5d; }
+  #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom h4 {
+    font-size: 18px;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-badge {
     color: white; }
   #dvs-admin .dvs-admin-card.dvs-page-versions-card .dvs-card-bottom .dvs-select-wrapper {
@@ -4701,10 +4721,30 @@ table.dvs-admin-table {
     table.dvs-admin-table input[type=text]:-ms-input-placeholder {
       color: #797d85; }
   table.dvs-admin-table .dvs-publish-dates p {
-    margin: 10px 0; }
+    margin: 10px 0;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word; }
   table.dvs-admin-table .dvs-publish-dates input[type=text] {
-    min-width: 45%;
-    max-width: 100px; }
+    width: 100%;
+    float: left;
+    min-width: inherit;
+    max-width: inherit;
+    margin-left: 0;
+    font-size: 12px;
+    color: #797d85; }
+  table.dvs-admin-table .dvs-publish-dates label {
+    float: left;
+    margin-top: 4px;
+    color: #909090;
+    font-size: 11px; }
+  table.dvs-admin-table .dvs-publish-dates input[type=submit] {
+    margin: 8px auto 12px;
+    float: left;
+    clear: both;
+    display: block; }
   table.dvs-admin-table .dvs-badge.dvs-content-requested {
     margin: 0 auto;
     margin-bottom: 20px;
@@ -4932,7 +4972,11 @@ table.dvs-admin-table {
       color: whitesmoke; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar select {
       background-color: #262626;
-      padding: 20px; }
+      padding: 20px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar #dvs-sidebar-loading {
       height: 40px;
       line-height: 40px; }
@@ -5906,7 +5950,12 @@ html.dz-drag-hover body {
       height: auto; }
       .dvs-admin-card .dvs-card-bottom .dvs-metrics-wpr .dvs-metric span {
         border-radius: 11px;
-        padding: 4px 10px; } }
+        padding: 4px 10px; }
+
+  table.dvs-admin-table .dvs-publish-dates input[type=text] {
+    width: 50%; }
+  table.dvs-admin-table .dvs-publish-dates label {
+    float: right; } }
 /* Editors */
 .dvs-datepicker-skin {
   width: 280px; }

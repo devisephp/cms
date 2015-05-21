@@ -215,7 +215,6 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
 
                 body.on('submit', 'form', function(e)
                 {
-                    console.log('submitting form', e);
                     e.preventDefault();
                 });
 

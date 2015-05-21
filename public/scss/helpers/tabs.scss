@@ -1,11 +1,24 @@
-.js-tab-links {
+ul.js-tab-links {
   display:block;
-  float:left;
+  @include clearfix;
 
   li {
-    display:inherit;
-    float:inherit;
+    display:block;
+    float:left;
+    padding:12px 4% 12px 4%;
+    font-weight:500;
+    color:transparentize($dashboardCardTextColor, 0.2);
+    border-right:1px solid darken($bodyFormBgColor, 5%);
+    background-color:transparentize($bodyFormBgColor, 0.3);
+    cursor:pointer;
 
-    a { padding:12px 2% 12px 0 }
+    &.dvs-active {
+      color:darken($white, 12%);
+      background-color:lighten($bodyFormBgColor, 2%);
+    }
+
+    &:last-of-type {
+      border-right:none;
+    }
   }
 }

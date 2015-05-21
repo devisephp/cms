@@ -1,0 +1,23 @@
+<form id="dvs-sidebar-field-form">
+
+    <div class="dvs-clearfix">
+        <button type="button" class="dvs-fat-sidebar dvs-button dvs-button-small dvs-button-secondary">Full Mode</button>
+        <button type="button" class="dvs-skinny-sidebar dvs-button dvs-button-small dvs-button-secondary">Skinny Mode</button>
+    </div>
+
+    <div class="dvs-clearfix">&nbsp;</div>
+
+    <div class="dvs-editor-values">
+        <textarea name="text" class="dvs-wysiwyg">{{ values.text }}</textarea>
+
+        <div data-view="site-wide-field"></div>
+
+        <div data-view="content-requested"></div>
+
+        <div data-view="reset-values"></div>
+    </div>
+</form>
+
+{{#script}}
+    devise.require(['app/editor/fields/wysiwyg'], function(obj) { obj.init(); });
+{{/script}}

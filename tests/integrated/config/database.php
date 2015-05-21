@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'default' => 'sqlite',
+	'default' => env('DB_DEFAULT', 'mysql'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -49,6 +49,12 @@ return [
 		'sqlite' => array(
 			'driver'   => 'sqlite',
 			'database' => ':memory:',
+			'prefix'   => '',
+		),
+
+		'sqliteFile' => array(
+			'driver'   => 'sqlite',
+			'database' => __DIR__.'/../database/integrated.sqlite',
 			'prefix'   => '',
 		),
 

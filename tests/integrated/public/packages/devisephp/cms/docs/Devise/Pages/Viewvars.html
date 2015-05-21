@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Pages\Viewvars | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="namespace" data-name="namespace:Devise_Pages_Viewvars" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                <div class="namespace-breadcrumbs">
+        <ol class="breadcrumb">
+            <li><span class="label label-default">Namespace</span></li>
+                                                        <li><a href="../../Devise.html">Devise</a></li>
+                                        <li><a href="../../Devise/Pages.html">Pages</a></li>
+                                        <li><a href="../../Devise/Pages/Viewvars.html">Viewvars</a></li>
+    
+        </ol>
+    </div>
+            <div id="page-content">
+                
+    <div class="page-header">
+        <h1>Devise\Pages\Viewvars</h1>
+    </div>
+
+    
+            <h2>Classes</h2>
+        <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Devise/Pages/Viewvars/DataBuilder.html"><abbr title="Devise\Pages\Viewvars\DataBuilder">Devise\Pages\Viewvars\DataBuilder</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This builds the variables that are found in views.php config
+ for a devise page. It uses a ViewComposer (found in this directory)
+ to inject in the data that is built using this class.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Devise/Pages/Viewvars/DataCrawler.html"><abbr title="Devise\Pages\Viewvars\DataCrawler">Devise\Pages\Viewvars\DataCrawler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Purpose of this class is to turn something like this
+in the view vars into a parameter value we can use.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Devise/Pages/Viewvars/ViewvarComposer.html"><abbr title="Devise\Pages\Viewvars\ViewvarComposer">Devise\Pages\Viewvars\ViewvarComposer</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    View composer here is registered in the
+Devise\Pages\PagesServiceProvider.php for all
+views that are contained within the views config
+file. That is how those views have their data injected
+into them properly - by running through this view composer.
+                </div>
+            </div>
+            </div>
+    
+    
+            <h2>Exceptions</h2>
+        <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Devise/Pages/Viewvars/DeviseRouteConfigurationException.html"><abbr title="Devise\Pages\Viewvars\DeviseRouteConfigurationException">Devise\Pages\Viewvars\DeviseRouteConfigurationException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class DeviseRouteConfigurationException is thrown in the case where
+devise views.php config has been improperly configured.
+                </div>
+            </div>
+            </div>
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -59,7 +59,7 @@ return [
 	*/
 
 	'password' => [
-		'email' => 'emails.password',
+		'email' => 'devise::emails.recover-password',
 		'table' => 'password_resets',
 		'expire' => 60,
 	],

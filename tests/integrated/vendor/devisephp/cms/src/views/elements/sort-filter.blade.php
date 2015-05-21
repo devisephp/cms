@@ -1,1 +1,0 @@
-<input type="text" name="dvs-filters[<?= $filterName ?>]" data-dvs-replacement="<?= $replacementSelector ?>" value="<?= Input::query('dvs-filters[' . $filterName . ']') ?>" <?= $attributes ?>>

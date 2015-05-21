@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Support\Installer\InstallWizard | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Support_Installer_InstallWizard" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Devise.html">Devise</a></li>
+                                        <li><a href="../../../Devise/Support.html">Support</a></li>
+                                        <li><a href="../../../Devise/Support/Installer.html">Installer</a></li>
+    
+                <li>InstallWizard</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>InstallWizard</h1>
+    </div>
+
+    <p>    class
+    <strong>InstallWizard</strong></p>
+
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_errors">
+                                                                                <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+                </td>
+                <td>$errors</td>
+                <td class="last">[$errors description]</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Support\Installer\Devise\Support\Config\SettingsManager">SettingsManager</abbr> $SettingsManager, <abbr title="Devise\Support\Installer\Devise\Support\Config\EnvironmentFileManager">EnvironmentFileManager</abbr> $EnvironmentFileManager, <abbr title="Devise\Support\Installer\Devise\Support\Framework">Framework</abbr> $Framework, <abbr title="Devise\Support\Installer\Devise\Support\Installer\DatabaseCreator">DatabaseCreator</abbr> $DatabaseCreator, <abbr title="Devise\Support\Installer\Devise\Support\Console\DeviseInstallCommand">DeviseInstallCommand</abbr> $DeviseInstallCommand, <abbr title="Devise\Support\Installer\Devise\Support\Console\DevisePublishAssetsCommand">DevisePublishAssetsCommand</abbr> $DevisePublishAssetsCommand, <abbr title="DvsUser">DvsUser</abbr> $DvsUser, <abbr title="DvsGroup">DvsGroup</abbr> $DvsGroup)
+                                            <p>Creats a new Install Wizard.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validateAdminUser">validateAdminUser</a>($email, $username, $password)
+                                            <p>Validates the admin user data for us</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="DvsUser">DvsUser</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createAdminUser">createAdminUser</a>($email, $username, $password)
+                                            <p>Create the admin user for the installer. This will
+create the user with the email and password given
+and then it will also put that user into the admin
+group</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_saveConfigsOverride">saveConfigsOverride</a>($value = &#039;no&#039;)
+                                            <p>Save input value submitted for "configs<em>override" to the
+key "CONFIGS</em>OVERRIDE" in .env file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_saveNewApplicationKey">saveNewApplicationKey</a>()
+                                            <p>Saves the new application key if there isn't already one set
+We need this set early on so it doesn't screw up our tokens
+and password hashes.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_saveApplicationNamespace">saveApplicationNamespace</a>(string $appName)
+                                            <p>Saves this app name</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_saveEnvironment">saveEnvironment</a>(string $env)
+                                            <p>Saves the environment for us</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_saveApplicationMigrationAndSeedSettings">saveApplicationMigrationAndSeedSettings</a>(<abbr title="Devise\Support\Installer\[type]">[type]</abbr> $migrations, <abbr title="Devise\Support\Installer\[type]">[type]</abbr> $seeds)
+                                            <p>Save the migration and seed settings</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_saveDatabase">saveDatabase</a>(string $default, string $host, string $name, string $username, string $password)
+                                            <p>Saves the database settings for us</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_installDevise">installDevise</a>()
+                                            <p>[installDevise description]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkAssets">checkAssets</a>()
+                                            <p>[checkAssets description]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_installAssets">installAssets</a>()
+                                            <p>[installAssets description]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_refreshEnvironment">refreshEnvironment</a>(array $settings = array())
+                                            <p>Reloads env settings and also updates the configurations
+in Laravel for anything that might change during the install
+process. Things like app.key, app.debug, database stuff, mail
+stuff, cache and session settings.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 62</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Support\Installer\Devise\Support\Config\SettingsManager">SettingsManager</abbr> $SettingsManager, <abbr title="Devise\Support\Installer\Devise\Support\Config\EnvironmentFileManager">EnvironmentFileManager</abbr> $EnvironmentFileManager, <abbr title="Devise\Support\Installer\Devise\Support\Framework">Framework</abbr> $Framework, <abbr title="Devise\Support\Installer\Devise\Support\Installer\DatabaseCreator">DatabaseCreator</abbr> $DatabaseCreator, <abbr title="Devise\Support\Installer\Devise\Support\Console\DeviseInstallCommand">DeviseInstallCommand</abbr> $DeviseInstallCommand, <abbr title="Devise\Support\Installer\Devise\Support\Console\DevisePublishAssetsCommand">DevisePublishAssetsCommand</abbr> $DevisePublishAssetsCommand, <abbr title="DvsUser">DvsUser</abbr> $DvsUser, <abbr title="DvsGroup">DvsGroup</abbr> $DvsGroup)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Creats a new Install Wizard.</p>                    <p>..</p>            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\Devise\Support\Config\SettingsManager">SettingsManager</abbr></td>
+                <td>$SettingsManager</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\Devise\Support\Config\EnvironmentFileManager">EnvironmentFileManager</abbr></td>
+                <td>$EnvironmentFileManager</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\Devise\Support\Framework">Framework</abbr></td>
+                <td>$Framework</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\Devise\Support\Installer\DatabaseCreator">DatabaseCreator</abbr></td>
+                <td>$DatabaseCreator</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\Devise\Support\Console\DeviseInstallCommand">DeviseInstallCommand</abbr></td>
+                <td>$DeviseInstallCommand</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\Devise\Support\Console\DevisePublishAssetsCommand">DevisePublishAssetsCommand</abbr></td>
+                <td>$DevisePublishAssetsCommand</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="DvsUser">DvsUser</abbr></td>
+                <td>$DvsUser</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="DvsGroup">DvsGroup</abbr></td>
+                <td>$DvsGroup</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validateAdminUser">
+        <div class="location">at line 93</div>
+        <code>                    void
+    <strong>validateAdminUser</strong>($email, $username, $password)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Validates the admin user data for us</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$email</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$username</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$password</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createAdminUser">
+        <div class="location">at line 119</div>
+        <code>                    <abbr title="DvsUser">DvsUser</abbr>
+    <strong>createAdminUser</strong>($email, $username, $password)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Create the admin user for the installer. This will
+create the user with the email and password given
+and then it will also put that user into the admin
+group</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$email</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$username</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$password</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="DvsUser">DvsUser</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_saveConfigsOverride">
+        <div class="location">at line 147</div>
+        <code>                    void
+    <strong>saveConfigsOverride</strong>($value = &#039;no&#039;)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Save input value submitted for "configs<em>override" to the
+key "CONFIGS</em>OVERRIDE" in .env file</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$value</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_saveNewApplicationKey">
+        <div class="location">at line 160</div>
+        <code>                    void
+    <strong>saveNewApplicationKey</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Saves the new application key if there isn't already one set
+We need this set early on so it doesn't screw up our tokens
+and password hashes.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_saveApplicationNamespace">
+        <div class="location">at line 176</div>
+        <code>                    void
+    <strong>saveApplicationNamespace</strong>(string $appName)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Saves this app name</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$appName</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_saveEnvironment">
+        <div class="location">at line 188</div>
+        <code>                    void
+    <strong>saveEnvironment</strong>(string $env)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Saves the environment for us</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$env</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_saveApplicationMigrationAndSeedSettings">
+        <div class="location">at line 208</div>
+        <code>                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+    <strong>saveApplicationMigrationAndSeedSettings</strong>(<abbr title="Devise\Support\Installer\[type]">[type]</abbr> $migrations, <abbr title="Devise\Support\Installer\[type]">[type]</abbr> $seeds)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Save the migration and seed settings</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\[type]">[type]</abbr></td>
+                <td>$migrations</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Support\Installer\[type]">[type]</abbr></td>
+                <td>$seeds</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\[type]">[type]</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_saveDatabase">
+        <div class="location">at line 226</div>
+        <code>                    
+    <strong>saveDatabase</strong>(string $default, string $host, string $name, string $username, string $password)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Saves the database settings for us</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$default</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$host</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$username</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$password</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_installDevise">
+        <div class="location">at line 262</div>
+        <code>                    void
+    <strong>installDevise</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>[installDevise description]</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkAssets">
+        <div class="location">at line 273</div>
+        <code>                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+    <strong>checkAssets</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>[checkAssets description]</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\[type]">[type]</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_installAssets">
+        <div class="location">at line 288</div>
+        <code>                    <abbr title="Devise\Support\Installer\[type]">[type]</abbr>
+    <strong>installAssets</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>[installAssets description]</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Support\Installer\[type]">[type]</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_refreshEnvironment">
+        <div class="location">at line 303</div>
+        <code>                    void
+    <strong>refreshEnvironment</strong>(array $settings = array())</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Reloads env settings and also updates the configurations
+in Laravel for anything that might change during the install
+process. Things like app.key, app.debug, database stuff, mail
+stuff, cache and session settings.</p>                    <p>.. this is a hack for people
+who use php artisan serve ... no one else really needs this
+hackery...</p>            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$settings</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,7 +1,7 @@
 <?php
 
 use Laracasts\Integrated\Extensions\Selenium;
-use Devise\Support\Laravel\Application as Laravel;
+use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 class Integrated extends Selenium
 {

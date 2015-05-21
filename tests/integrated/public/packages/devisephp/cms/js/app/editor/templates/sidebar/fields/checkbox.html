@@ -1,0 +1,22 @@
+<form id="dvs-sidebar-field-form">
+    <div class="dvs-editor-values">
+
+        <div class="dvs-property fancy-sidebar-checkbox">
+            <label for="mp3">{{ field.human_name }}</label>
+            <div class="fancyCheckbox">
+                <input id="value" type="checkbox" name="value" value="1" {{checked values.value}}>
+                <label for="value">&nbsp;</label>
+            </div>
+        </div>
+
+        <div data-view="site-wide-field"></div>
+
+        <div data-view="content-requested"></div>
+
+        <div data-view="reset-values"></div>
+    </div>
+</form>
+
+{{#script}}
+    devise.require(['app/editor/fields/checkbox'], function(obj) { obj.init(); });
+{{/script}}

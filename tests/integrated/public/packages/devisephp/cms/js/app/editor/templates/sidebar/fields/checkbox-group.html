@@ -1,0 +1,99 @@
+<form id="dvs-sidebar-field-form">
+
+    <h3>Available Values</h3>
+
+    <div class="dvs-editor-values">
+        <div class="dvs-checkboxes" id="dvs-sample-checkbox-group">
+
+            {{#each values.checkboxes}}
+                <div class="dvs-checkbox">
+                    <label>
+                        <input type="checkbox" value="1" {{checked default}}>
+                        <span>{{ label }}</span>
+                    </label>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="dvs-editor-settings">
+
+        <table class="dvs-checkboxes-manager">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Label</th>
+                    <th>Default</th>
+                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-checkbox dvs-button-secondary">New</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each values.checkboxes }}
+                    <tr class="dvs-checkbox-fields">
+                        <td>
+                            <input type="text" name="checkboxes[][key]" value="{{ key }}">
+                        </td>
+                        <td>
+                            <input type="text" name="checkboxes[][label]" value="{{ label }}">
+                        </td>
+                        <td>
+                            <select name="checkboxes[][default]" class="dvs-select dvs-select-small">
+                                {{#select default}}
+                                    <option value="0">Off</option>
+                                    <option value="1">On</option>
+                                {{/select}}
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" class="dvs-button dvs-button-small dvs-table-row-delete">Delete</button>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <div data-view="site-wide-field"></div>
+
+        <div data-view="content-requested"></div>
+
+        <div data-view="reset-values"></div>
+
+    </div>
+</form>
+
+<!-- templates for adding new checkbox groups -->
+<div style="display:none">
+    <table>
+        <tbody class="dvs-row-template">
+            <tr class="dvs-checkbox-fields">
+                <td><input type="text" name="checkboxes[][key]"></td>
+                <td><input type="text" name="checkboxes[][label]"></td>
+                <td>
+                    <select name="checkboxes[][default]" class="dvs-select dvs-select-small">
+                        <option value="0">Off</option>
+                        <option value="1">On</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" class="dvs-button dvs-button-small dvs-table-row-delete">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="dvs-checkbox-template">
+        <div class="dvs-checkbox">
+            <input type="hidden">
+            <label>
+                <input type="checkbox">
+                <span></span>
+            </label>
+        </div>
+    </div>
+</div>
+
+{{#script}}
+    devise.require(['app/editor/fields/checkbox-group'], function(obj){ obj.init(); });
+{{/script}}

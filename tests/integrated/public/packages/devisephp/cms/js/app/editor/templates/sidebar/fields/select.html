@@ -1,0 +1,55 @@
+<form id="dvs-sidebar-field-form">
+
+    <div class="dvs-editor-values">
+
+        <label>{{ field.human_name }}</label>
+
+        <select name="value" class="dvs-select">
+	        {{#each values.options }}
+	        	<option value="{{name}}">{{value}}</option>
+	        {{/each}}
+        </select>
+
+        <hr>
+
+        <table class="dvs-options-manager">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th><button type="button" class="dvs-button dvs-button-small dvs-new-option dvs-button-secondary">New</button></th>
+                </tr>
+            </thead>
+            <tbody>
+	            {{#each values.options}}
+	                <tr class="dvs-option-fields">
+	                    <td><input type="text" name="options[][name]" value="{{ name }}"></td>
+	                    <td><input type="text" name="options[][value]" value="{{ value }}"></td>
+	                    <td><button type="button" class="dvs-button dvs-button-small dvs-table-row-delete">Delete</button></td>
+	                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <div data-view="site-wide-field"></div>
+
+        <div data-view="content-requested"></div>
+
+        <div data-view="reset-values"></div>
+    </div>
+</form>
+
+<div style="display:none">
+    <!--templates will be used by js to create new table rows and options-->
+    <table><tbody class="dvs-row-template">
+        <tr class="dvs-option-fields">
+            <td><input type="text" name="options[][name]" value=""></td>
+            <td><input type="text" name="options[][value]" value=""></td>
+            <td><button type="button" class="dvs-button dvs-button-small dvs-table-row-delete">Delete</button></td>
+        </tr>
+    </tbody></table>
+</div>
+
+{{#script}}
+    devise.require(['app/editor/fields/select'], function(obj) { obj.init(); });
+{{/script}}

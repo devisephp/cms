@@ -1,0 +1,25 @@
+<form id="dvs-sidebar-field-form" class="dvs-element-text">
+	<div class="dvs-editor-values">
+
+        <div class="dvs-property">
+            <label for="Text">Text</label>
+			<input maxlength="255" name="text" type="text" value="{{ values.text }}">
+		</div>
+
+        <div class="dvs-property">
+            <label for="Max Length">Max Length</label>
+			<input name="maxlength" type="text" value="{{ values.maxlength }}">
+		</div>
+
+		<div data-view="site-wide-field"></div>
+
+		<div data-view="content-requested"></div>
+
+		<div data-view="reset-values"></div>
+    </div>
+</form>
+
+
+{{#script}}
+    devise.require(['app/editor/fields/text'], function(obj) { obj.init(); });
+{{/script}}

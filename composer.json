@@ -25,17 +25,14 @@
         "mockery/mockery": "0.9.3",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*",
-        "codeception/codeception": "*",
-        "jakoch/phantomjs-installer": "1.9.8",
-        "laracasts/integrated": "0.15.*"
+        "codeception/codeception": "*"
     },
     "autoload": {
         "classmap": [
             "src/models",
             "src/seeds",
             "src/migrations",
-            "tests/DeviseTestCase.php",
-            "tests/Integrated.php"
+            "tests/DeviseTestCase.php"
         ],
         "psr-0": {
             "Devise\\": "src/"

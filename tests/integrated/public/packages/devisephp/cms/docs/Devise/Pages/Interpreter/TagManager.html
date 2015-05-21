@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Pages\Interpreter\TagManager | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Pages_Interpreter_TagManager" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Devise.html">Devise</a></li>
+                                        <li><a href="../../../Devise/Pages.html">Pages</a></li>
+                                        <li><a href="../../../Devise/Pages/Interpreter.html">Interpreter</a></li>
+    
+                <li>TagManager</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>TagManager</h1>
+    </div>
+
+    <p>    class
+    <strong>TagManager</strong></p>
+
+            <div class="description">
+            <p>Create and find tags in the database. A tag could be a model, field,
+attribute, model creator or collection</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Pages\Interpreter\DvsField">DvsField</abbr> $DvsField, <abbr title="Devise\Pages\Interpreter\DvsGlobalField">DvsGlobalField</abbr> $DvsGlobalField, <abbr title="Devise\Pages\Interpreter\DvsCollectionSet">DvsCollectionSet</abbr> $DvsCollectionSet, <abbr title="Devise\Pages\Interpreter\DvsModelField">DvsModelField</abbr> $DvsModelField, <abbr title="Devise\Pages\Interpreter\Devise\Pages\Collections\CollectionsRepository">CollectionsRepository</abbr> $CollectionsRepository)
+                                            <p>Create a new tag manager</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_initialize">initialize</a>(integer $pageId, integer $pageVersionId, integer $languageId)
+                                            <p>Initializes values for our tag manager</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Pages\Interpreter\DvsField">DvsField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getInstanceForTag">getInstanceForTag</a>(array $tag)
+                                            <p>Find this tag in the database</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 73</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Pages\Interpreter\DvsField">DvsField</abbr> $DvsField, <abbr title="Devise\Pages\Interpreter\DvsGlobalField">DvsGlobalField</abbr> $DvsGlobalField, <abbr title="Devise\Pages\Interpreter\DvsCollectionSet">DvsCollectionSet</abbr> $DvsCollectionSet, <abbr title="Devise\Pages\Interpreter\DvsModelField">DvsModelField</abbr> $DvsModelField, <abbr title="Devise\Pages\Interpreter\Devise\Pages\Collections\CollectionsRepository">CollectionsRepository</abbr> $CollectionsRepository)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Create a new tag manager</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\DvsField">DvsField</abbr></td>
+                <td>$DvsField</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\DvsGlobalField">DvsGlobalField</abbr></td>
+                <td>$DvsGlobalField</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\DvsCollectionSet">DvsCollectionSet</abbr></td>
+                <td>$DvsCollectionSet</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\DvsModelField">DvsModelField</abbr></td>
+                <td>$DvsModelField</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Pages\Interpreter\Devise\Pages\Collections\CollectionsRepository">CollectionsRepository</abbr></td>
+                <td>$CollectionsRepository</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_initialize">
+        <div class="location">at line 90</div>
+        <code>                    void
+    <strong>initialize</strong>(integer $pageId, integer $pageVersionId, integer $languageId)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Initializes values for our tag manager</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$pageId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>integer</td>
+                <td>$pageVersionId</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>integer</td>
+                <td>$languageId</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getInstanceForTag">
+        <div class="location">at line 103</div>
+        <code>                    <abbr title="Devise\Pages\Interpreter\DvsField">DvsField</abbr>
+    <strong>getInstanceForTag</strong>(array $tag)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Find this tag in the database</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$tag</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Pages\Interpreter\DvsField">DvsField</abbr></td>
+            <td>| DvsCollection | DvsModelField | DvsGlobalField</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

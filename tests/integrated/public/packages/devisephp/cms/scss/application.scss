@@ -1,0 +1,18 @@
+/**
+ * This sets the color of
+
+#dvs-admin {
+  .app-blogs {
+    @include dvs-sections(#792096);
+  }
+}
+*/
+
+#dvs-admin {
+  /* Just an example of what you might call one of your
+  /* dashboard cards */
+  .app-blogs {
+    @include dvs-sections(#1ea69c);
+  
+  }
+}

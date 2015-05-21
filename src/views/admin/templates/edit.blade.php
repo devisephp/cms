@@ -48,6 +48,6 @@
 
     <script>
         var target = '.dvs-add-button';
-        devise.require(['app/admin/templates', 'dvsModal']);
+        devise.require(['app/admin/templates', 'dvsModal', 'dvsTabs']);
     </script>
 @stop

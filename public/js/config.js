@@ -69,6 +69,7 @@ require.config({
         dvsAdminMenus:      'app/admin/menus',
         dvsReplacement:     'app/helpers/replacement',
         dvsModal:           'app/helpers/modal',
+        dvsTabs:            'app/helpers/tabs',
         dvsPageData:        'app/helpers/page-data',
         dvsDatePicker:      'app/helpers/date-picker',
         dvsSelectSurrogate: 'app/helpers/forms-select-surrogate',

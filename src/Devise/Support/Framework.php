@@ -45,6 +45,10 @@ class Framework
                 return \Config::getFacadeRoot();
             break;
 
+            case 'cookie':                  // Illuminate\Cookie\CookieJar
+                return \Cookie::getFacadeRoot();
+            break;
+
             case 'container':               // Illuminate\Container\Container
                 return \App::getFacadeRoot();
             break;
@@ -59,8 +63,8 @@ class Framework
 
             case 'exception':               // DeviseException
                 return DeviseException::getFacadeRoot();
-                break;
-
+            break;
+            
             case 'hash':                    // Illuminate\Hashing\BcryptHasher
                 return \Hash::getFacadeRoot();
             break;

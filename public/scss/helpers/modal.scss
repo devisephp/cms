@@ -44,12 +44,12 @@
 
       .dvs-admin-form-horizontal {
         float:left;
-         @include background-image(linear-gradient($bodyBgColor, darken($bodyBgColor, 5%)));
-         box-shadow: 0 0 12px rgba(0,0,0,0.4);
-         padding-top:30px;
+        @include background-image(linear-gradient($bodyBgColor, darken($bodyBgColor, 5%)));
+        box-shadow: 0 0 12px rgba(0,0,0,0.4);
+        padding-top:30px;
 
          h4 {
-           color:$french-gray;
+          color:$french-gray;
          }
       }
    }

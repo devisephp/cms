@@ -24,7 +24,7 @@ class DeviseUpgradeCommandTest extends \DeviseTestCase
     {
         $this->DeviseUpgradeCommand->io->shouldReceive('ask')->andReturn('Y');
         $this->DeviseUpgradeCommand->FileDiff->shouldReceive('different')->andReturn(['a_different_file.txt', 'bar.txt']);
-        $this->DeviseUpgradeCommand->FileDiff->shouldReceive('unmodified')->andReturn(['durka.txt']);
+        $this->DeviseUpgradeCommand->FileDiff->shouldReceive('missing')->andReturn(['durka.txt']);
         $this->DeviseUpgradeCommand->File->shouldReceive('isDirectory')->andReturn(true);
         $this->DeviseUpgradeCommand->File->shouldReceive('copy')->andReturn(true);
 		$this->DeviseUpgradeCommand->DeviseMigrateCommand->shouldReceive('handle')->once();

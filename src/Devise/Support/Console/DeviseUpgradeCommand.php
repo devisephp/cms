@@ -64,8 +64,8 @@ class DeviseUpgradeCommand extends Command
         $source = $this->public_path . '/packages/devisephp/cms';
         $difference = $this->FileDiff->different($target, $source);
         $difference = $this->askAboutDifferences($difference);
-        $unmodified = $this->FileDiff->unmodified($target, $source);
-        $files = array_merge($unmodified, $difference);
+        $missing = $this->FileDiff->missing($target, $source);
+        $files = array_merge($missing, $difference);
         $this->copyFiles($files, $target, $source);
     }
 
@@ -80,8 +80,8 @@ class DeviseUpgradeCommand extends Command
         $source = $this->base_path . '/resources/views/errors/';
         $difference = $this->FileDiff->different($target, $source);
         $difference = $this->askAboutDifferences($difference);
-        $unmodified = $this->FileDiff->unmodified($target, $source);
-        $files = array_merge($unmodified, $difference);
+        $missing = $this->FileDiff->missing($target, $source);
+        $files = array_merge($missing, $difference);
         $this->copyFiles($files, $target, $source);
     }
 

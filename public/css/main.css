@@ -4972,7 +4972,11 @@ table.dvs-admin-table {
       color: whitesmoke; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar select {
       background-color: #262626;
-      padding: 20px; }
+      padding: 20px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar #dvs-sidebar-loading {
       height: 40px;
       line-height: 40px; }

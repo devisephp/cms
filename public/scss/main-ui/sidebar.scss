@@ -99,7 +99,6 @@
       clear:both;
       float:left;
       width:100%;
-
       margin:20px auto;
       border-color:darken($blue, 20%);
       border-style:solid;
@@ -123,6 +122,10 @@
     select {
       background-color: $black;
       padding:$sidebarGeneralPadding;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
     }
 
     #dvs-sidebar-loading {

@@ -15,8 +15,6 @@
             </p>
 
             <div data-dvs-page-id="<?= $page->id ?>" data-dvs-version-id="<?= $version->id ?>">
-
-
                 <select class="dvs-page-version-actions dvs-select">
                     <option value="">Select an action</option>
                     <option value="publish">Publish</option>
@@ -54,7 +52,7 @@
                         <?= Form::checkbox('never') ?> Never Ends
                     </label>
 
-                    <?= Form::submit('Submit', array('class' => 'dvs-button dvs-button-small')) ?>
+                    <?= Form::submit('Submit', array('class' => 'dvs-button dvs-button-small dvs-button-solid')) ?>
 
                 <?= Form::close() ?>
             </div>

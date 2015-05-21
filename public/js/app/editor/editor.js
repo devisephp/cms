@@ -230,8 +230,9 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
                 // create a finder on this editor
                 editor.finder = new BindingsFinder(editor.data.database)
 
+
                 // find all the bindings
-                editor.bindings = editor.finder.find(contentWindow.document.children[0]);
+                editor.bindings = editor.finder.find(contentWindow.document.childNodes[1]);
 
                 // apply the bindings now
                 editor.bindings.apply();

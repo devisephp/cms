@@ -3885,13 +3885,13 @@ td .dvs-select-small {
   background-color: rgba(38, 38, 38, 0.55);
   z-index: 12000; }
 
-.dvs-tab-links {
+.js-tab-links {
   display: block;
   float: left; }
-  .dvs-tab-links li {
+  .js-tab-links li {
     display: inherit;
     float: inherit; }
-    .dvs-tab-links li a {
+    .js-tab-links li a {
       padding: 12px 2% 12px 0; }
 
 /* Main UI */

@@ -31,9 +31,6 @@ class CreateGroupUser extends Migration {
                 if(!Schema::hasColumn('group_user', 'user_id')) {
                     $table->integer('user_id')->after('group_id');
                 }
-
-                $table->dropPrimary('group_id', 'user_id');
-                $table->primary(array('group_id', 'user_id'));
             });
 
         }

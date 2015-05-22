@@ -41,11 +41,13 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 		{
 			$loader = require __DIR__ . '/../vendor/autoload.php';
 
-			$loader->setPsr4("App\\", __DIR__ . "/bootstrap/app/");
+			$loader->setPsr4("App\\", __DIR__ . "/integrated/app/");
 
-			static::$application = require __DIR__.'/bootstrap/bootstrap/app.php';
+			static::$application = require __DIR__.'/integrated/bootstrap/app.php';
 
 			static::$application->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
+
+			Config::set('database.default', 'sqlite');
 
 			static::setUpFixtures();
 

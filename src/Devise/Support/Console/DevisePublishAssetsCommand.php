@@ -1,8 +1,7 @@
 <?php namespace Devise\Support\Console;
 
-use Devise\Support\IO\FileDiff;
-use Illuminate\Container\Container;
 use File;
+use Illuminate\Container\Container;
 
 class DevisePublishAssetsCommand extends Command
 {
@@ -21,13 +20,6 @@ class DevisePublishAssetsCommand extends Command
     protected $description = 'Handles installing devise assets';
 
     /**
-     * Input/output for this command
-     *
-     * @var Command
-     */
-    public $io;
-
-    /**
      * [__construct description]
      * @param [type] $app
      */
@@ -35,7 +27,6 @@ class DevisePublishAssetsCommand extends Command
     {
         parent::__construct();
         $this->app = $app;
-        $this->FileDiff = new FileDiff;
         $this->File = File::getFacadeRoot();
         $this->__DIR__ = __DIR__;
         $this->public_path = public_path();
@@ -59,11 +50,7 @@ class DevisePublishAssetsCommand extends Command
     {
         $target = $this->__DIR__ . '/../../../../public';
         $source = $this->public_path . '/packages/devisephp/cms';
-        $difference = $this->FileDiff->different($target, $source);
-        $difference = $this->askAboutDifferences($difference);
-        $unmodified = $this->FileDiff->unmodified($target, $source);
-        $files = array_merge($unmodified, $difference);
-        $this->copyFiles($files, $target, $source);
+        $this->File->copyDirectory($target, $source);
     }
 
     /**
@@ -75,60 +62,6 @@ class DevisePublishAssetsCommand extends Command
     {
         $target = $this->__DIR__ . '/../../../views/errors';
         $source = $this->base_path . '/resources/views/errors/';
-        $difference = $this->FileDiff->different($target, $source);
-        $difference = $this->askAboutDifferences($difference);
-        $unmodified = $this->FileDiff->unmodified($target, $source);
-        $files = array_merge($unmodified, $difference);
-        $this->copyFiles($files, $target, $source);
-    }
-
-    /**
-     * Get list of differences
-     *
-     * @param  [type] $difference
-     * @return [type]
-     */
-    protected function askAboutDifferences($difference)
-    {
-        $overrides = [];
-
-        foreach ($difference as $file)
-        {
-            $override = $this->io()->ask("Do you want to override $file [y/N]");
-            if (strtoupper($override) === 'Y') $overrides[] = $file;
-        }
-
-        return $overrides;
-    }
-
-    /**
-     * Copies all these files from target to source
-     *
-     * @param  [type] $files
-     * @param  [type] $target
-     * @param  [type] $source
-     * @return [type]
-     */
-    protected function copyFiles($files, $target, $source)
-    {
-        foreach ($files as $file)
-        {
-            $targetFile = $target . '/' . $file;
-            $sourceFile = $source . '/' . $file;
-            $sourceDir = dirname($sourceFile);
-
-            if (! $this->File->isDirectory($sourceDir)) $this->File->makeDirectory($sourceDir, 511, true);
-            $this->File->copy($targetFile, $sourceFile, true);
-        }
-    }
-
-    /**
-     * Makes an io connection
-     *
-     * @return [type]
-     */
-    protected function io()
-    {
-        return $this->io ?: $this->io = $this;
+        $this->File->copyDirectory($target, $source);
     }
 }

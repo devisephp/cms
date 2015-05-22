@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Users\UserHelper | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Users_UserHelper" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../Devise.html">Devise</a></li>
+                                        <li><a href="../../Devise/Users.html">Users</a></li>
+    
+                <li>UserHelper</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>UserHelper</h1>
+    </div>
+
+    <p>    class
+    <strong>UserHelper</strong></p>
+
+            <div class="description">
+            <p>Helper allows specific methods to be easily accessible through
+the DeviseUser facade.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Users\Devise\Users\Permissions\RuleManager">RuleManager</abbr> $RuleManager, <abbr title="Devise\Users\Devise\Users\UsersRepository">UsersRepository</abbr> $UsersRepository, <abbr title="Devise\Users\Devise\Support\Framework">Framework</abbr> $Framework)
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___call">__call</a>(string $method, array $arguments)
+                                            <p>Magic method to used to catch function(s) not found in RuleManager</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Users\DvsUser">DvsUser</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_currentUser">currentUser</a>()
+                                            <p>Convenience function to get current user object</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    integer
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_currentUserId">currentUserId</a>()
+                                            <p>Convenience function to get current user's id</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkConditions">checkConditions</a>(string $conditionNames, boolean $redirectOnFail = false)
+                                            <p>Convenience function for handing a single condition name or an
+array of multiple condition names.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkRule">checkRule</a>(string $method, array $arguments = array())
+                                            <p>Checks for any user-defined rules/closures</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 42</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Users\Devise\Users\Permissions\RuleManager">RuleManager</abbr> $RuleManager, <abbr title="Devise\Users\Devise\Users\UsersRepository">UsersRepository</abbr> $UsersRepository, <abbr title="Devise\Users\Devise\Support\Framework">Framework</abbr> $Framework)</code>
+    </h3>
+    <div class="details">
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Users\Devise\Users\Permissions\RuleManager">RuleManager</abbr></td>
+                <td>$RuleManager</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Users\Devise\Users\UsersRepository">UsersRepository</abbr></td>
+                <td>$UsersRepository</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Users\Devise\Support\Framework">Framework</abbr></td>
+                <td>$Framework</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___call">
+        <div class="location">at line 57</div>
+        <code>                    boolean
+    <strong>__call</strong>(string $method, array $arguments)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Magic method to used to catch function(s) not found in RuleManager</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$arguments</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_currentUser">
+        <div class="location">at line 67</div>
+        <code>                    <abbr title="Devise\Users\DvsUser">DvsUser</abbr>
+    <strong>currentUser</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Convenience function to get current user object</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Users\DvsUser">DvsUser</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_currentUserId">
+        <div class="location">at line 77</div>
+        <code>                    integer
+    <strong>currentUserId</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Convenience function to get current user's id</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>integer</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkConditions">
+        <div class="location">at line 90</div>
+        <code>                    void
+    <strong>checkConditions</strong>(string $conditionNames, boolean $redirectOnFail = false)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Convenience function for handing a single condition name or an
+array of multiple condition names.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$conditionNames</td>
+                <td>| array  $conditionNames</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$redirectOnFail</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkRule">
+        <div class="location">at line 106</div>
+        <code>                    void
+    <strong>checkRule</strong>(string $method, array $arguments = array())</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Checks for any user-defined rules/closures</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$arguments</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

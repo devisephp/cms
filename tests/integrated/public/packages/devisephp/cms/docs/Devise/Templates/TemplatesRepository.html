@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Templates\TemplatesRepository | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Templates_TemplatesRepository" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../Devise.html">Devise</a></li>
+                                        <li><a href="../../Devise/Templates.html">Templates</a></li>
+    
+                <li>TemplatesRepository</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>TemplatesRepository</h1>
+    </div>
+
+    <p>    class
+    <strong>TemplatesRepository</strong></p>
+
+            <div class="description">
+            <p>Class TemplatesRepository is used to retrieve template data</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Templates\Devise\Templates\TemplatesManager">TemplatesManager</abbr> $TemplatesManager, <abbr title="Devise\Templates\Devise\Support\Framework">Framework</abbr> $Framework, $File = null)
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTemplateByPath">getTemplateByPath</a>(string $templatePath)
+                                            <p>Get template and any related data by using its template path
+to retrieve its related data from the templates config</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_allTemplatesPaginated">allTemplatesPaginated</a>(integer $perPage = 25)
+                                            <p>Get an array of all template paths and human names</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_registeredTemplatesList">registeredTemplatesList</a>(boolean $showHumanName = true)
+                                            <p>Get an array of all registered templates as an array of paths
+and human names; registered means already in templates config</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_unregisteredTemplatesList">unregisteredTemplatesList</a>()
+                                            <p>Get list of unregistered templates by finding all app template files
+which are not stored (do not have path key) in the templates config</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compileAllUsedVars">compileAllUsedVars</a>()
+                                            <p>compiles an array of all of the variables used in the application</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 13</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Templates\Devise\Templates\TemplatesManager">TemplatesManager</abbr> $TemplatesManager, <abbr title="Devise\Templates\Devise\Support\Framework">Framework</abbr> $Framework, $File = null)</code>
+    </h3>
+    <div class="details">
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Templates\Devise\Templates\TemplatesManager">TemplatesManager</abbr></td>
+                <td>$TemplatesManager</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Templates\Devise\Support\Framework">Framework</abbr></td>
+                <td>$Framework</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$File</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTemplateByPath">
+        <div class="location">at line 31</div>
+        <code>                    array
+    <strong>getTemplateByPath</strong>(string $templatePath)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get template and any related data by using its template path
+to retrieve its related data from the templates config</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$templatePath</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_allTemplatesPaginated">
+        <div class="location">at line 62</div>
+        <code>                    array
+    <strong>allTemplatesPaginated</strong>(integer $perPage = 25)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get an array of all template paths and human names</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$perPage</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_registeredTemplatesList">
+        <div class="location">at line 85</div>
+        <code>                    array
+    <strong>registeredTemplatesList</strong>(boolean $showHumanName = true)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get an array of all registered templates as an array of paths
+and human names; registered means already in templates config</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>boolean</td>
+                <td>$showHumanName</td>
+                <td>False returns just paths array</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_unregisteredTemplatesList">
+        <div class="location">at line 119</div>
+        <code>                    array
+    <strong>unregisteredTemplatesList</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Get list of unregistered templates by finding all app template files
+which are not stored (do not have path key) in the templates config</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compileAllUsedVars">
+        <div class="location">at line 158</div>
+        <code>                    array
+    <strong>compileAllUsedVars</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>compiles an array of all of the variables used in the application</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

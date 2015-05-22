@@ -116,6 +116,13 @@
   @include placeholder { color:darken($french-gray, 25%) }
 }
 
+@mixin wrapTextInParent() {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
 
 @mixin dvs-sections($color) {
   .dvs-card-top {

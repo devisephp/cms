@@ -25,8 +25,7 @@
         "mockery/mockery": "0.9.3",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*",
-        "codeception/codeception": "*",
-        "jakoch/phantomjs-installer": "1.9.8"
+        "codeception/codeception": "*"
     },
     "autoload": {
         "classmap": [

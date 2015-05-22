@@ -48,7 +48,16 @@ class FileDiffTest extends \DeviseTestCase
         $FileDiff = new FileDiff;
         $difference = $FileDiff->different(vfsStream::url('basedir/config1'), vfsStream::url('basedir/config3'));
         $unmodified = $FileDiff->unmodified(vfsStream::url('basedir/config1'), vfsStream::url('basedir/config3'));
+        $missing = $FileDiff->missing(vfsStream::url('basedir/config1'), vfsStream::url('basedir/config3'));
         assertEquals([], $difference);
         assertEquals(['auth.php', 'database.php', 'subdir/auth.php'], $unmodified);
+        assertEquals(['auth.php', 'database.php', 'subdir/auth.php'], $missing);
+    }
+
+    public function test_it_finds_missing_files()
+    {
+        $FileDiff = new FileDiff;
+        $missing = $FileDiff->missing(vfsStream::url('basedir/config1'), vfsStream::url('basedir/config2'));
+        assertEquals(['database.php'], $missing);
     }
 }

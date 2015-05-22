@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Users\Groups\GroupManager | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Users_Groups_GroupManager" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Devise.html">Devise</a></li>
+                                        <li><a href="../../../Devise/Users.html">Users</a></li>
+                                        <li><a href="../../../Devise/Users/Groups.html">Groups</a></li>
+    
+                <li>GroupManager</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>GroupManager</h1>
+    </div>
+
+    <p>    class
+    <strong>GroupManager</strong></p>
+
+            <div class="description">
+            <p>Class GroupManager manages the creating,
+updating, and removing of groups.</p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_errors">
+                                                                                array
+                </td>
+                <td>$errors</td>
+                <td class="last">Errors are kept in an array and can be
+used later if validation fails and we want to
+know why</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_messages">
+                                                                                
+                </td>
+                <td>$messages</td>
+                <td class="last">Validation messages</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr> $Group, <abbr title="Devise\Users\Groups\Devise\Support\Framework">Framework</abbr> $Framework)
+                                            <p>Construct a new Group manager</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createRules">createRules</a>()
+                                            <p>Create validation rules</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createGroup">createGroup</a>(array $input)
+                                            <p>Create a new Group</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_updateRules">updateRules</a>(integer $id, array $input)
+                                            <p>Update validation rules</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_updateGroup">updateGroup</a>(integer $id, array $input)
+                                            <p>Update a new Group</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_destroyGroup">destroyGroup</a>(integer $id)
+                                            <p>Delete a Group</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 45</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr> $Group, <abbr title="Devise\Users\Groups\Devise\Support\Framework">Framework</abbr> $Framework)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Construct a new Group manager</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr></td>
+                <td>$Group</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Users\Groups\Devise\Support\Framework">Framework</abbr></td>
+                <td>$Framework</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createRules">
+        <div class="location">at line 56</div>
+        <code>                    array
+    <strong>createRules</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Create validation rules</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createGroup">
+        <div class="location">at line 69</div>
+        <code>                    <abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr>
+    <strong>createGroup</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Create a new Group</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr></td>
+            <td>$Group</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_updateRules">
+        <div class="location">at line 94</div>
+        <code>                    array
+    <strong>updateRules</strong>(integer $id, array $input)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Update validation rules</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$id</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_updateGroup">
+        <div class="location">at line 108</div>
+        <code>                    <abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr>
+    <strong>updateGroup</strong>(integer $id, array $input)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Update a new Group</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$id</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr></td>
+            <td>$Group</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_destroyGroup">
+        <div class="location">at line 132</div>
+        <code>                    <abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr>
+    <strong>destroyGroup</strong>(integer $id)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Delete a Group</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>integer</td>
+                <td>$id</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Devise\Users\Groups\DvsGroup">DvsGroup</abbr></td>
+            <td>$Group</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

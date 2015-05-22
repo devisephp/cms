@@ -1,0 +1,13 @@
+{
+    "baseUrl": "http://devisetest.app:8000",
+
+    "pdo": {
+        "connection": "sqlite:database/integrated.sqlite",
+        "username": "root",
+        "password": ""
+    },
+
+    "selenium": {
+        "browser": "firefox"
+    }
+}

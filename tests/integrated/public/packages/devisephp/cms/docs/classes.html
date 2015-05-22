@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>All Classes | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/sami.css">
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/typeahead.min.js"></script>
+        <script src="sami.js"></script>
+    
+    
+    </head>
+
+    <body id="classes" data-name="" data-root-path="">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="classes.html">Classes</a></li>
+                                            <li><a href="namespaces.html">Namespaces</a></li>
+                                        <li><a href="interfaces.html">Interfaces</a></li>
+                    <li><a href="traits.html">Traits</a></li>
+                    <li><a href="doc-index.html">Index</a></li>
+                    <li><a href="search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div id="page-content">
+                    <div class="page-header">
+        <h1>Classes</h1>
+    </div>
+
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Calendar/CalendarResponseHandler.html"><abbr title="Devise\Calendar\CalendarResponseHandler">Devise\Calendar\CalendarResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Handles the ajax calls made to backend from the Full Calendar
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Calendar/PageVersionSource.html"><abbr title="Devise\Calendar\PageVersionSource">Devise\Calendar\PageVersionSource</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Purpose of this class is to source out events
+that are page versions in disguise. It also handles
+updating a page version event if the user has changed
+it on the front end calendar .
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="Devise/Calendar/Source.html"><abbr title="Devise\Calendar\Source">Devise\Calendar\Source</abbr></a></em>
+                                    </div>
+                <div class="col-md-6">
+                    A source is a plage to fetch events given a start and
+end time. Our CalendarResponseHandler will use the
+PageVersionSource (and others possibly later) so I
+made an interface we can all abide by if we need to
+create more event sources for the full calendar
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/DeviseServiceProvider.html"><abbr title="Devise\DeviseServiceProvider">Devise\DeviseServiceProvider</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This class loads all the providers in other folders for
+all of devise. We don't want the developer to have to load
+10 different service providers to work with devise, so
+this class is just a wrapper to load all of the service
+providers instead of having to load 10 individual ones in
+the app/config/app.php file
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Languages/LanguageDetector.html"><abbr title="Devise\Languages\LanguageDetector">Devise\Languages\LanguageDetector</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Language detector is used to determine the current and
+universal languages for this system. It uses LocaleDetector
+to get the universal code, i.e 'en', 'es', and then fetches
+the DvsLanguage from the database
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Languages/LanguagesManager.html"><abbr title="Devise\Languages\LanguagesManager">Devise\Languages\LanguagesManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    The languages manager allows us to manage
+the all things related to DvsLanguage model
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Languages/LanguagesRepository.html"><abbr title="Devise\Languages\LanguagesRepository">Devise\Languages\LanguagesRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    The langauges repository provides methods to
+fetch rows in the context of DvsLanguage model
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Languages/LanguagesResponseHandler.html"><abbr title="Devise\Languages\LanguagesResponseHandler">Devise\Languages\LanguagesResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Handles responses for language routes. This class
+is likely used as a response<em>path to a dvs</em>page
+field.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Languages/LocaleDetector.html"><abbr title="Devise\Languages\LocaleDetector">Devise\Languages\LocaleDetector</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Locales are shorthand 2 letter strings
+for a language/region.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Categories/CategoryAlreadyExistsException.html"><abbr title="Devise\Media\Categories\CategoryAlreadyExistsException">Devise\Media\Categories\CategoryAlreadyExistsException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class CategoryAlreadyExistsException is thrown
+whenever the Categories/Manager finds a duplicate
+category. (If you try to create the same directory)
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Categories/CategoryPaths.html"><abbr title="Devise\Media\Categories\CategoryPaths">Devise\Media\Categories\CategoryPaths</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class CategoryPaths converts dot paths to real paths
+and also finds server paths and browser urls to the configured
+root media directory where all our media files are stored at.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Categories/Manager.html"><abbr title="Devise\Media\Categories\Manager">Devise\Media\Categories\Manager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Manager manages categories. A category is basically
+a directory inside of the /media folder.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Categories/ResponseHandler.html"><abbr title="Devise\Media\Categories\ResponseHandler">Devise\Media\Categories\ResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ResponseHandler handles the controller side
+of managing categories. These methods are likely
+referenced in dvs_pages table
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Encoding/EncodingServiceProvider.html"><abbr title="Devise\Media\Encoding\EncodingServiceProvider">Devise\Media\Encoding\EncodingServiceProvider</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Registers a new devise.video.encoder we can use
+globally throughout Laravel
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Encoding/InvalidEncodingSettingsException.html"><abbr title="Devise\Media\Encoding\InvalidEncodingSettingsException">Devise\Media\Encoding\InvalidEncodingSettingsException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class InvalidEncodingSettingsException is thrown in ZencoderJob
+anytime invalid settings are passed in when trying to create a
+new Zencoder api call to start encoding videos
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Encoding/ZencoderJob.html"><abbr title="Devise\Media\Encoding\ZencoderJob">Devise\Media\Encoding\ZencoderJob</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ZencoderJob handles incoming requests that have been
+completed by Zencoder. Also pushes requests to Zencoder api.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Encoding/ZencoderNotificationsController.html"><abbr title="Devise\Media\Encoding\ZencoderNotificationsController">Devise\Media\Encoding\ZencoderNotificationsController</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ZencoderNotificationsController handles incoming requests
+from the zencoder server when it is finished encoding our videos
+in order to let us know it is time to download the encoded video
+back to our own servers
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Files/FileDownloader.html"><abbr title="Devise\Media\Files\FileDownloader">Devise\Media\Files\FileDownloader</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class FileDownloader downloads a file from
+the internet and saves it into a specified directory
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Files/Filesystem.html"><abbr title="Devise\Media\Files\Filesystem">Devise\Media\Files\Filesystem</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Filesystem inherits from Illuminate\Filesystem\Filesystem
+but adds some additional functionality such as file searching.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Files/InvalidFileException.html"><abbr title="Devise\Media\Files\InvalidFileException">Devise\Media\Files\InvalidFileException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class InvalidFileException is thrown in MediaPaths
+whenever the file path given is not valid (it doesn't exist)
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Files/Manager.html"><abbr title="Devise\Media\Files\Manager">Devise\Media\Files\Manager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Manager
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Files/Repository.html"><abbr title="Devise\Media\Files\Repository">Devise\Media\Files\Repository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Repository builds a complex array of data around the file structure
+of the media manager. This let's us fetch a lot of things regarding the
+file system around the media manager
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Files/ResponseHandler.html"><abbr title="Devise\Media\Files\ResponseHandler">Devise\Media\Files\ResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ResponseHandler handles controller part of media manager
+as far as uploading, renaming and removing media files goes
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Images/Images.html"><abbr title="Devise\Media\Images\Images">Devise\Media\Images\Images</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Images/Manager.html"><abbr title="Devise\Media\Images\Manager">Devise\Media\Images\Manager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Manager takes care of image management. This lets us
+get a list of images and also crop and resize images
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/Images/ResponseHandler.html"><abbr title="Devise\Media\Images\ResponseHandler">Devise\Media\Images\ResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ResponseHandler handles requests (controller/route)
+made to crop images
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Media/MediaPaths.html"><abbr title="Devise\Media\MediaPaths">Devise\Media\MediaPaths</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class MediaPaths abstracts away paths that we can use
+and also has a few helper methods for other classes to use
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Menus/MenuCache.html"><abbr title="Devise\Menus\MenuCache">Devise\Menus\MenuCache</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Menus/MenusManager.html"><abbr title="Devise\Menus\MenusManager">Devise\Menus\MenusManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Menus/MenusRepository.html"><abbr title="Devise\Menus\MenusRepository">Devise\Menus\MenusRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class MenusRepository retrieves things related to
+DvsMenu and DvsMenuItems database table
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Menus/MenusResponseHandler.html"><abbr title="Devise\Menus\MenusResponseHandler">Devise\Menus\MenusResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class MenusResponseHandler is used to store and update menus
+and menu items in the database. There is likely a dvs_pages
+database row pointing to these two methods.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/MigrationScaffolding.html"><abbr title="Devise\Models\Scaffolding\MigrationScaffolding">Devise\Models\Scaffolding\MigrationScaffolding</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class MigrationScaffolding
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/SanityChecksHelper.html"><abbr title="Devise\Models\Scaffolding\SanityChecksHelper">Devise\Models\Scaffolding\SanityChecksHelper</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class SanityChecksHelper
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/ScaffoldingManager.html"><abbr title="Devise\Models\Scaffolding\ScaffoldingManager">Devise\Models\Scaffolding\ScaffoldingManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ScaffoldingManager
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/ScaffoldingRepository.html"><abbr title="Devise\Models\Scaffolding\ScaffoldingRepository">Devise\Models\Scaffolding\ScaffoldingRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/ScaffoldingResponseHandler.html"><abbr title="Devise\Models\Scaffolding\ScaffoldingResponseHandler">Devise\Models\Scaffolding\ScaffoldingResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ScaffoldingResponseHandler
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/SeederScaffolding.html"><abbr title="Devise\Models\Scaffolding\SeederScaffolding">Devise\Models\Scaffolding\SeederScaffolding</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class SeederScaffolding
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/TemplateScaffolding.html"><abbr title="Devise\Models\Scaffolding\TemplateScaffolding">Devise\Models\Scaffolding\TemplateScaffolding</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class TemplateScaffolding
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/Types/BaseScaffolding.html"><abbr title="Devise\Models\Scaffolding\Types\BaseScaffolding">Devise\Models\Scaffolding\Types\BaseScaffolding</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class BaseScaffolding
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Models/Scaffolding/Types/CrudScaffolding.html"><abbr title="Devise\Models\Scaffolding\Types\CrudScaffolding">Devise\Models\Scaffolding\Types\CrudScaffolding</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class CrudScaffolding
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/ApiPagesManager.html"><abbr title="Devise\Pages\ApiPagesManager">Devise\Pages\ApiPagesManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ApiPagesManager manages the creating of new pages,
+updating pages
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/ApiPagesRepository.html"><abbr title="Devise\Pages\ApiPagesRepository">Devise\Pages\ApiPagesRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ApiPagesRepository is used to retrieve DvsPage models of Function type
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/ApiPagesResponseHandler.html"><abbr title="Devise\Pages\ApiPagesResponseHandler">Devise\Pages\ApiPagesResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Response handler takes care of creating,updating, destroying
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Collections/CollectionFields.html"><abbr title="Devise\Pages\Collections\CollectionFields">Devise\Pages\Collections\CollectionFields</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This classes purpose is to act as a container
+for fields on the collection level. A collection
+can have multiple fields, e.g.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Collections/CollectionFieldsFactory.html"><abbr title="Devise\Pages\Collections\CollectionFieldsFactory">Devise\Pages\Collections\CollectionFieldsFactory</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Collection fields are objects that allow
+us to traverse the keys in that collection.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Collections/CollectionsManager.html"><abbr title="Devise\Pages\Collections\CollectionsManager">Devise\Pages\Collections\CollectionsManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Manage collections in the database by creating, updating
+and removing them.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Collections/CollectionsRepository.html"><abbr title="Devise\Pages\Collections\CollectionsRepository">Devise\Pages\Collections\CollectionsRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Retreives collection instances and sets and fields for us.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Collections/ResponseHandler.html"><abbr title="Devise\Pages\Collections\ResponseHandler">Devise\Pages\Collections\ResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Handle responses for collection instances
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Docs/Creator.html"><abbr title="Devise\Pages\Docs\Creator">Devise\Pages\Docs\Creator</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Docs/LiveSpan.html"><abbr title="Devise\Pages\Docs\LiveSpan">Devise\Pages\Docs\LiveSpan</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/DuplicateFieldKeyException.html"><abbr title="Devise\Pages\Fields\DuplicateFieldKeyException">Devise\Pages\Fields\DuplicateFieldKeyException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Whenever we see a duplicate field key on a page
+throw an exception for the developer so they can fix it.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/DvsMagicMode.html"><abbr title="Devise\Pages\Fields\DvsMagicMode">Devise\Pages\Fields\DvsMagicMode</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/FieldManager.html"><abbr title="Devise\Pages\Fields\FieldManager">Devise\Pages\Fields\FieldManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    A field manager has the responsibilty of managing fields in
+the database.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/FieldValue.html"><abbr title="Devise\Pages\Fields\FieldValue">Devise\Pages\Fields\FieldValue</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Field value is an object that holds json
+values for a DvsField model
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/FieldsRepository.html"><abbr title="Devise\Pages\Fields\FieldsRepository">Devise\Pages\Fields\FieldsRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Fields repository allows us to retrieve fields
+that belong to page versions and keys and have been
+deleted. We also can find global fields with this
+repository.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/FieldsResponseHandler.html"><abbr title="Devise\Pages\Fields\FieldsResponseHandler">Devise\Pages\Fields\FieldsResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/Handlers/AudioFieldUpdated.html"><abbr title="Devise\Pages\Fields\Handlers\AudioFieldUpdated">Devise\Pages\Fields\Handlers\AudioFieldUpdated</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    When the video field is updated we will
+call this class to handle the encoding part
+This should be registered in the Events of
+laravel whenever the PagesServiceProvider starts
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/Handlers/ImageFieldUpdated.html"><abbr title="Devise\Pages\Fields\Handlers\ImageFieldUpdated">Devise\Pages\Fields\Handlers\ImageFieldUpdated</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This class should be registered in a service provider
+for PagesServiceProvider. It is called anytime a
+field with type "image" is updated. We do this so we
+can hook into the updated event and then create media
+versions and thumbnails for this image field
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/Handlers/VideoFieldUpdated.html"><abbr title="Devise\Pages\Fields\Handlers\VideoFieldUpdated">Devise\Pages\Fields\Handlers\VideoFieldUpdated</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    When the video field is updated we will
+call this class to handle the encoding part
+This should be registered in the Events of
+laravel whenever the PagesServiceProvider starts
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Fields/LiveFieldValue.html"><abbr title="Devise\Pages\Fields\LiveFieldValue">Devise\Pages\Fields\LiveFieldValue</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Field value is an object that holds json
+values for a DvsField model
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/BladeEngineCompiler.html"><abbr title="Devise\Pages\Interpreter\BladeEngineCompiler">Devise\Pages\Interpreter\BladeEngineCompiler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This class merely decorates the another compiler
+and thus giving us the extra functionality we need
+to work properly.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/DeviseCompiler.html"><abbr title="Devise\Pages\Interpreter\DeviseCompiler">Devise\Pages\Interpreter\DeviseCompiler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    purpose of this class is to add placeholder tags
+and also rename devise tags and lastly append on
+App::make('dvsPageData')->bindings for devise tags,
+collections, models and model creators
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/DeviseParser.html"><abbr title="Devise\Pages\Interpreter\DeviseParser">Devise\Pages\Interpreter\DeviseParser</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/DeviseTag.html"><abbr title="Devise\Pages\Interpreter\DeviseTag">Devise\Pages\Interpreter\DeviseTag</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/DvsPageData.html"><abbr title="Devise\Pages\Interpreter\DvsPageData">Devise\Pages\Interpreter\DvsPageData</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    A storage container class that stores collections and fields
+for a given page. These fields and collections are addeded
+to a singleton registered in Devise\Pages\PagesServiceProvider.php
+called 'dvsPageData'. ALl blade views that contain fields and/or
+collections will use methods like addCollection and addField respectively
+to add in the data. Eventually all this data is spit out as JSON
+for the javascript library in devise to take over from there.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Exceptions/DuplicateDeviseKeyException.html"><abbr title="Devise\Pages\Interpreter\Exceptions\DuplicateDeviseKeyException">Devise\Pages\Interpreter\Exceptions\DuplicateDeviseKeyException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This exception is thrown anytime there are multiple devise
+fields on a page that share the same key. Keys are unique to
+the page.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Exceptions/InvalidDeviseKeyException.html"><abbr title="Devise\Pages\Interpreter\Exceptions\InvalidDeviseKeyException">Devise\Pages\Interpreter\Exceptions\InvalidDeviseKeyException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This exception is thrown anytime the devise key is
+invalid. A invalid variable name in php is considered
+an invalid key name. We have to use key name in
+php to referrence the devise key, i.e. $keyName->text
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Exceptions/InvalidDeviseTagException.html"><abbr title="Devise\Pages\Interpreter\Exceptions\InvalidDeviseTagException">Devise\Pages\Interpreter\Exceptions\InvalidDeviseTagException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Thrown whenever the devise tag is malformed.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Exceptions/InvalidModelMappingException.html"><abbr title="Devise\Pages\Interpreter\Exceptions\InvalidModelMappingException">Devise\Pages\Interpreter\Exceptions\InvalidModelMappingException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Thrown whenever the model tag has no picks, resulting
+in a zero count mapping inside the TagManager
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Exceptions/PageDataNotInitializedException.html"><abbr title="Devise\Pages\Interpreter\Exceptions\PageDataNotInitializedException">Devise\Pages\Interpreter\Exceptions\PageDataNotInitializedException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Thrown whenever the page is not initialized with
+correct data. This should never happen unless
+we have bugs in our code.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Modifiers/AddPlaceHolderTags.html"><abbr title="Devise\Pages\Interpreter\Modifiers\AddPlaceHolderTags">Devise\Pages\Interpreter\Modifiers\AddPlaceHolderTags</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This visitor class handles putting
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Modifiers/CreatePristineSection.html"><abbr title="Devise\Pages\Interpreter\Modifiers\CreatePristineSection">Devise\Pages\Interpreter\Modifiers\CreatePristineSection</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    this creates two sections, one for devise editors
+and the other a pristine section which removes
+all the data-devise stuff.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Modifiers/EchoDeviseMagic.html"><abbr title="Devise\Pages\Interpreter\Modifiers\EchoDeviseMagic">Devise\Pages\Interpreter\Modifiers\EchoDeviseMagic</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/Modifiers/RegisterDeviseTags.html"><abbr title="Devise\Pages\Interpreter\Modifiers\RegisterDeviseTags">Devise\Pages\Interpreter\Modifiers\RegisterDeviseTags</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/TagManager.html"><abbr title="Devise\Pages\Interpreter\TagManager">Devise\Pages\Interpreter\TagManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Create and find tags in the database. A tag could be a model, field,
+attribute, model creator or collection
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Interpreter/ViewOpener.html"><abbr title="Devise\Pages\Interpreter\ViewOpener">Devise\Pages\Interpreter\ViewOpener</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class ViewOpener opens a view for an include statement in this format:
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Models/ModelFieldValidationFailedException.html"><abbr title="Devise\Pages\Models\ModelFieldValidationFailedException">Devise\Pages\Models\ModelFieldValidationFailedException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Models/ModelManager.html"><abbr title="Devise\Pages\Models\ModelManager">Devise\Pages\Models\ModelManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Models/ModelsResponseHandler.html"><abbr title="Devise\Pages\Models\ModelsResponseHandler">Devise\Pages\Models\ModelsResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PageController.html"><abbr title="Devise\Pages\PageController">Devise\Pages\PageController</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    All pages registered in dvs_pages database table
+come through this controller show method. The reason
+for this is so that the database can be in charge of
+the routes and a non developer can construct new
+pages with predefined templates in a dropdown selectbox.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PageManager.html"><abbr title="Devise\Pages\PageManager">Devise\Pages\PageManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class PageManager manages the creating of new pages,
+updating pages and removing and copying pages.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PageNotFoundException.html"><abbr title="Devise\Pages\PageNotFoundException">Devise\Pages\PageNotFoundException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This exception is thrown whenever the page is not found
+in the database (likely because the page is not published)
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PageResponseHandler.html"><abbr title="Devise\Pages\PageResponseHandler">Devise\Pages\PageResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Response handler takes care of creating,updating, destroying
+and copying pages within the /admin/pages routes
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PageVersionManager.html"><abbr title="Devise\Pages\PageVersionManager">Devise\Pages\PageVersionManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class PageVersionManager manages all things page versions related.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PageVersionsRepository.html"><abbr title="Devise\Pages\PageVersionsRepository">Devise\Pages\PageVersionsRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class PageVersionsRepository is used to search and retrieve
+DvsPageVersion models and things in context of a Devise Page Versions.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PagesException.html"><abbr title="Devise\Pages\PagesException">Devise\Pages\PagesException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This exception is thrown whenever there are problems with pages
+inside of PagesControllerResponse
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PagesRepository.html"><abbr title="Devise\Pages\PagesRepository">Devise\Pages\PagesRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class PagesRepository is used to search and retrieve DvsPage models
+and things in context of a Devise Page.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/PagesServiceProvider.html"><abbr title="Devise\Pages\PagesServiceProvider">Devise\Pages\PagesServiceProvider</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Registers the Pages service provider. This allows us to manage our pages
+within the Devise cms. It also provides the ability to scan blade views
+and extract out fields and collections which can be loaded in the Devise
+Sidebar and maintained by the admin.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Viewvars/DataBuilder.html"><abbr title="Devise\Pages\Viewvars\DataBuilder">Devise\Pages\Viewvars\DataBuilder</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This builds the variables that are found in views.php config
+ for a devise page. It uses a ViewComposer (found in this directory)
+ to inject in the data that is built using this class.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Viewvars/DataCrawler.html"><abbr title="Devise\Pages\Viewvars\DataCrawler">Devise\Pages\Viewvars\DataCrawler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Purpose of this class is to turn something like this
+in the view vars into a parameter value we can use.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Viewvars/DeviseRouteConfigurationException.html"><abbr title="Devise\Pages\Viewvars\DeviseRouteConfigurationException">Devise\Pages\Viewvars\DeviseRouteConfigurationException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class DeviseRouteConfigurationException is thrown in the case where
+devise views.php config has been improperly configured.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Pages/Viewvars/ViewvarComposer.html"><abbr title="Devise\Pages\Viewvars\ViewvarComposer">Devise\Pages\Viewvars\ViewvarComposer</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    View composer here is registered in the
+Devise\Pages\PagesServiceProvider.php for all
+views that are contained within the views config
+file. That is how those views have their data injected
+into them properly - by running through this view composer.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Search/PageSearch.html"><abbr title="Devise\Search\PageSearch">Devise\Search\PageSearch</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class PageSearch is an example of how you could search
+for pages using the SearchableModelTrait
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Search/Pagination.html"><abbr title="Devise\Search\Pagination">Devise\Search\Pagination</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Pagination is used so we can paginate search results
+from many different searched models
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Search/SearchableModelTrait.html"><abbr title="Devise\Search\SearchableModelTrait">Devise\Search\SearchableModelTrait</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class SearchableModelTrait can be applied to an eloquent model
+to give it "searchablity". You have to override the getColumns method
+and/or make a
+ protected $searchable = array('column1' => 1, 'column2' => 2);
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Search/UniversalSearch.html"><abbr title="Devise\Search\UniversalSearch">Devise\Search\UniversalSearch</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class UniversalSearch lets us register new searchable models
+and then search through all of them
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Search/UniversalSearchProvider.html"><abbr title="Devise\Search\UniversalSearchProvider">Devise\Search\UniversalSearchProvider</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class DeviseUniversalSearchProvider registers the universal
+searching mechanism for Devise
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Config/EnvironmentFileManager.html"><abbr title="Devise\Support\Config\EnvironmentFileManager">Devise\Support\Config\EnvironmentFileManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    SettingsManager is used to update the config overrides file
+which allows an admin to override any config variable in devise
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Config/FileManager.html"><abbr title="Devise\Support\Config\FileManager">Devise\Support\Config\FileManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class FileManager is used to manage retrieving and modifying
+Devise config(s) files along with any other management functions
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Config/Overrides.html"><abbr title="Devise\Support\Config\Overrides">Devise\Support\Config\Overrides</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Config/SettingsManager.html"><abbr title="Devise\Support\Config\SettingsManager">Devise\Support\Config\SettingsManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    SettingsManager is used to update the config overrides file
+which allows an admin to override any config variable in devise
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Config/SettingsRepository.html"><abbr title="Devise\Support\Config\SettingsRepository">Devise\Support\Config\SettingsRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Config/SettingsResponseHandler.html"><abbr title="Devise\Support\Config\SettingsResponseHandler">Devise\Support\Config\SettingsResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Console/DeviseInstallCommand.html"><abbr title="Devise\Support\Console\DeviseInstallCommand">Devise\Support\Console\DeviseInstallCommand</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Console/DeviseMigrateCommand.html"><abbr title="Devise\Support\Console\DeviseMigrateCommand">Devise\Support\Console\DeviseMigrateCommand</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Console/DevisePublishAssetsCommand.html"><abbr title="Devise\Support\Console\DevisePublishAssetsCommand">Devise\Support\Console\DevisePublishAssetsCommand</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Console/DevisePublishConfigsCommand.html"><abbr title="Devise\Support\Console\DevisePublishConfigsCommand">Devise\Support\Console\DevisePublishConfigsCommand</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Console/DeviseResetCommand.html"><abbr title="Devise\Support\Console\DeviseResetCommand">Devise\Support\Console\DeviseResetCommand</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Console/DeviseSeedCommand.html"><abbr title="Devise\Support\Console\DeviseSeedCommand">Devise\Support\Console\DeviseSeedCommand</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/DeviseEloquentAddons.html"><abbr title="Devise\Support\DeviseEloquentAddons">Devise\Support\DeviseEloquentAddons</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/DeviseException.html"><abbr title="Devise\Support\DeviseException">Devise\Support\DeviseException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class DeviseException should be the base class exception
+for any exception thrown inside of Devise. This way we can
+catch those specifically if we want and know that they are
+different from just regular exceptions.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/DeviseHttpException.html"><abbr title="Devise\Support\DeviseHttpException">Devise\Support\DeviseHttpException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class DeviseHttpException should be the base class exception
+for any exception thrown inside of Devise. This way we can
+catch those specifically if we want and know that they are
+different from just regular exceptions.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/DevisePaginator.html"><abbr title="Devise\Support\DevisePaginator">Devise\Support\DevisePaginator</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/DeviseResponse.html"><abbr title="Devise\Support\DeviseResponse">Devise\Support\DeviseResponse</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class DeviseResponse for some reason Illuminate\Support\Facades\Response
+is not an actual facade but a real class. So we can't use getFacadeAccessor
+on it. Instead we write a proxy class called DeviseResponse which simply
+calls static methods on Response object.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/DeviseSeeder.html"><abbr title="Devise\Support\DeviseSeeder">Devise\Support\DeviseSeeder</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/DeviseValidationException.html"><abbr title="Devise\Support\DeviseValidationException">Devise\Support\DeviseValidationException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    This validation exception is thrown
+when ever there are validation errors
+somewhere. It is used in the Manager class
+to assert fields are valid.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Framework.html"><abbr title="Devise\Support\Framework">Devise\Support\Framework</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Framework wraps important components that we
+use from Laravel's framework. Components like Config,
+Validator, Request, Response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Installer/DatabaseCreator.html"><abbr title="Devise\Support\Installer\DatabaseCreator">Devise\Support\Installer\DatabaseCreator</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Installer/InstallWizard.html"><abbr title="Devise\Support\Installer\InstallWizard">Devise\Support\Installer\InstallWizard</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Installer/InstallerController.html"><abbr title="Devise\Support\Installer\InstallerController">Devise\Support\Installer\InstallerController</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Middleware/VerifyCsrfToken.html"><abbr title="Devise\Support\Middleware\VerifyCsrfToken">Devise\Support\Middleware\VerifyCsrfToken</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Sortable/EloquentBuilder.html"><abbr title="Devise\Support\Sortable\EloquentBuilder">Devise\Support\Sortable\EloquentBuilder</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class EloquentBuilder is ran on paginate queries only and takes
+the liberty of sorting and filtering results for us smartly and
+magically.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Sortable/Filter.html"><abbr title="Devise\Support\Sortable\Filter">Devise\Support\Sortable\Filter</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Filter
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Sortable/Link.html"><abbr title="Devise\Support\Sortable\Link">Devise\Support\Sortable\Link</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Link returns html <a> anchor tags when given parameters
+this field helps create the up and down sorting links when
+filtering html table columns
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Sortable/Manager.html"><abbr title="Devise\Support\Sortable\Manager">Devise\Support\Sortable\Manager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Manager changes the cookie/session keys for multisorts
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Sortable/Sort.html"><abbr title="Devise\Support\Sortable\Sort">Devise\Support\Sortable\Sort</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class Sort handles creating links and filters for us which
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Sortable/Sortable.html"><abbr title="Devise\Support\Sortable\Sortable">Devise\Support\Sortable\Sortable</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Sortable/SortableFacade.html"><abbr title="Devise\Support\Sortable\SortableFacade">Devise\Support\Sortable\SortableFacade</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class SortableFacade
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Sortable/SortableServiceProvider.html"><abbr title="Devise\Support\Sortable\SortableServiceProvider">Devise\Support\Sortable\SortableServiceProvider</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class SortableServiceProvider registers the Sort facade
+on the Laravel container
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/Str.html"><abbr title="Devise\Support\Str">Devise\Support\Str</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Support/SupportServiceProvider.html"><abbr title="Devise\Support\SupportServiceProvider">Devise\Support\SupportServiceProvider</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class SupportServiceProvider registers support components of
+Devise and other helpers that Devise uses.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Templates/DeviseTemplateNotFoundException.html"><abbr title="Devise\Templates\DeviseTemplateNotFoundException">Devise\Templates\DeviseTemplateNotFoundException</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class DeviseTemplateNotFoundException is thrown in the case where
+devise templates.php config is missing the a view path
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Templates/TemplatesManager.html"><abbr title="Devise\Templates\TemplatesManager">Devise\Templates\TemplatesManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class TemplatesManager manages updating templates,
+removing and additional admin functions
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Templates/TemplatesRepository.html"><abbr title="Devise\Templates\TemplatesRepository">Devise\Templates\TemplatesRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class TemplatesRepository is used to retrieve template data
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Templates/TemplatesResponseHandler.html"><abbr title="Devise\Templates\TemplatesResponseHandler">Devise\Templates\TemplatesResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class TemplatesResponseHandler is used to retrieve template data
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/DeviseUser.html"><abbr title="Devise\Users\DeviseUser">Devise\Users\DeviseUser</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/DeviseUserController.html"><abbr title="Devise\Users\DeviseUserController">Devise\Users\DeviseUserController</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Groups/GroupManager.html"><abbr title="Devise\Users\Groups\GroupManager">Devise\Users\Groups\GroupManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class GroupManager manages the creating,
+updating, and removing of groups.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Groups/GroupsRepository.html"><abbr title="Devise\Users\Groups\GroupsRepository">Devise\Users\Groups\GroupsRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Groups/GroupsResponseHandler.html"><abbr title="Devise\Users\Groups\GroupsResponseHandler">Devise\Users\Groups\GroupsResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Permissions/PermissionsManager.html"><abbr title="Devise\Users\Permissions\PermissionsManager">Devise\Users\Permissions\PermissionsManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class PermissionsManager manages updating permissions,
+removing and additional admin functions
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Permissions/PermissionsRepository.html"><abbr title="Devise\Users\Permissions\PermissionsRepository">Devise\Users\Permissions\PermissionsRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class PermissionsRepository is used to retrieve permission data
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Permissions/PermissionsResponseHandler.html"><abbr title="Devise\Users\Permissions\PermissionsResponseHandler">Devise\Users\Permissions\PermissionsResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class PermissionsResponseHandler is used to retrieve permission data
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Permissions/RedirectHandler.html"><abbr title="Devise\Users\Permissions\RedirectHandler">Devise\Users\Permissions\RedirectHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class RedirectHandler handles redirecting
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Permissions/RuleList.html"><abbr title="Devise\Users\Permissions\RuleList">Devise\Users\Permissions\RuleList</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class RuleList maintains list of built-in and user defined functions (in
+permissions-conditions config) which can be checked using DeviseUser Facade.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Permissions/RuleManager.html"><abbr title="Devise\Users\Permissions\RuleManager">Devise\Users\Permissions\RuleManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class RuleManager manages retrieval, creation/addition, execution
+and evaluation of native and user-defined rules.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Permissions/RuleManagerFacade.html"><abbr title="Devise\Users\Permissions\RuleManagerFacade">Devise\Users\Permissions\RuleManagerFacade</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/Sessions/SessionsRepository.html"><abbr title="Devise\Users\Sessions\SessionsRepository">Devise\Users\Sessions\SessionsRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class SessionsRepository is used to search and retrieve current DvsUser in session
+and things in context of a DvsUser/DvsGroup.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/UserHelper.html"><abbr title="Devise\Users\UserHelper">Devise\Users\UserHelper</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Helper allows specific methods to be easily accessible through
+the DeviseUser facade.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/UserManager.html"><abbr title="Devise\Users\UserManager">Devise\Users\UserManager</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class UserManager manages the creating of new users,
+updating existing users and removing users.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/UserServiceProvider.html"><abbr title="Devise\Users\UserServiceProvider">Devise\Users\UserServiceProvider</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class UserServiceProvider registers the devise user, rulelist and rulemanager
+facades
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/UsersRepository.html"><abbr title="Devise\Users\UsersRepository">Devise\Users\UsersRepository</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Class UsersRepository is used to search and retrieve DvsUser models
+and things in context of a Devise User.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="Devise/Users/UsersResponseHandler.html"><abbr title="Devise\Users\UsersResponseHandler">Devise\Users\UsersResponseHandler</abbr></a>
+                                    </div>
+                <div class="col-md-6">
+                    Response handler takes care of user login/logout, creating,
+updating, destroying users within /admin/users routes
+                </div>
+            </div>
+            </div>
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

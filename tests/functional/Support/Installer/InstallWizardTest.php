@@ -14,6 +14,7 @@ class InstallWizardTest extends \DeviseTestCase
         $this->Framework->Validator = m::mock('\Illuminate\Validation\Factory');
         $this->Framework->Hash = m::mock('\Illuminate\Hashing\BcryptHasher');
         $this->Framework->Schema = m::mock('\Illuminate\Database\Schema\Builder');
+        $this->Framework->File = m::mock('\Illuminate\Filesystem\Filesystem');
         $this->DatabaseCreator = m::mock('\Devise\Support\Installer\DatabaseCreator');
         $this->DeviseInstallCommand = m::mock('\Devise\Support\Console\DeviseInstallCommand');
         $this->DevisePublishAssetsCommand = m::mock('\Devise\Support\Console\DevisePublishAssetsCommand');
@@ -147,6 +148,14 @@ class InstallWizardTest extends \DeviseTestCase
 
     public function test_it_checks_assets()
     {
+        $this->Framework->File->shouldReceive('exists')->andReturn(false);
         $this->assertFalse($this->InstallWizard->checkAssets());
     }
+
+    public function test_it_checks_assets_when_they_already_exist()
+    {
+        $this->Framework->File->shouldReceive('exists')->andReturn(true);
+        $this->assertTrue($this->InstallWizard->checkAssets());
+    }
+
 }

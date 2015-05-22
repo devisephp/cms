@@ -14,9 +14,9 @@ class FileDiff
 	 * Gets the files that exist in both $target and
 	 * $source and have different md5sums
 	 *
-	 * @param  [type] $target
-	 * @param  [type] $source
-	 * @return [type]
+	 * @param  string $target
+	 * @param  string $source
+	 * @return array
 	 */
 	public function different($target, $source)
 	{
@@ -36,10 +36,12 @@ class FileDiff
 	}
 
 	/**
-	 * [unmodified description]
-	 * @param  [type] $target
-	 * @param  [type] $source
-	 * @return [type]
+	 * Returns all $target files that have not been overriden
+	 * inside of $source directory
+	 *
+	 * @param  string $target
+	 * @param  string $source
+	 * @return array
 	 */
 	public function unmodified($target, $source)
 	{
@@ -59,11 +61,36 @@ class FileDiff
 	}
 
 	/**
+	 * Gets the files that are inside of $target but
+	 * missing from $source directory
+	 *
+	 * @param  string $target
+	 * @param  string $source
+	 * @return array
+	 */
+	public function missing($target, $source)
+	{
+		$missing = [];
+		$targetSums = $this->md5($target);
+		$sourceSums = $this->md5($source);
+
+		foreach ($targetSums as $targetFile => $targetSum)
+		{
+			if (!array_key_exists($targetFile, $sourceSums) || $targetSums[$targetFile] == $sourceSums[$targetFile])
+			{
+				$missing[] = $targetFile;
+			}
+		}
+
+		return $missing;
+	}
+
+	/**
 	 * [md5 description]
 	 * @param  [type] $dir
 	 * @return [type]
 	 */
-	public function md5($dir)
+	protected function md5($dir)
 	{
 		$sums = [];
 

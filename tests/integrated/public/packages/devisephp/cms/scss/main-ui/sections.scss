@@ -1,0 +1,35 @@
+#dvs-admin {
+
+	.dvs-pages {
+		@include dvs-sections($pages);
+	}
+
+	.dvs-menus {
+		@include dvs-sections($menus);
+	}
+
+	.dvs-permissions {
+		@include dvs-sections($permissions);
+	}
+
+	.dvs-templates {
+		@include dvs-sections($templates);
+	}
+
+	.dvs-users {
+		@include dvs-sections($users);
+	}
+
+	.dvs-groups {
+		@include dvs-sections($groups);
+	}
+
+	.dvs-languages {
+		@include dvs-sections($languages);
+	}
+
+	.dvs-api {
+		@include dvs-sections($api);
+	}
+
+}

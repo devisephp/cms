@@ -1,0 +1,16 @@
+<div class="dvs-new-collection">
+    <p>Add a new instance by providing the name and clicking 'Add to Collection'</p>
+    <input id="dvs-new-collection-instance-name" type="name" placeholder="Name">
+    <button id="dvs-new-collection-instance" class="dvs-button">Add to Collection</button>
+</div>
+
+<ul id="dvs-collection-instances-sortable">
+	{{#each instances}}
+		<li id="instance_{{ id }}" data-instance-id="{{ id }}" class="ui-sortable-handle" style="position: relative;">
+
+			<input name="id-{{ id }}" type="text" value="{{ name }}" placeholder="{{ name }}" data-instance-id="{{ id }}" class="dvs-collection-instance-name">
+
+			<a class="dvs-collection-instance-remove ion-android-close" data-remove-instance-id="{{ id }}"></a>
+		</li>
+	{{/each}}
+</ul>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Devise\Users\Permissions\PermissionsManager | Devise</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Devise_Users_Permissions_PermissionsManager" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Devise</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Devise.html">Devise</a></li>
+                                        <li><a href="../../../Devise/Users.html">Users</a></li>
+                                        <li><a href="../../../Devise/Users/Permissions.html">Permissions</a></li>
+    
+                <li>PermissionsManager</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>PermissionsManager</h1>
+    </div>
+
+    <p>    class
+    <strong>PermissionsManager</strong></p>
+
+            <div class="description">
+            <p>Class PermissionsManager manages updating permissions,
+removing and additional admin functions</p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_errors">
+                                                                                array
+                </td>
+                <td>$errors</td>
+                <td class="last">Errors are kept in an array and can be
+used later if validation fails and we want to
+know why</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_message">
+                                                                                string
+                </td>
+                <td>$message</td>
+                <td class="last">This is a message that we can store why the
+validation failed</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_messages">
+                                                                                
+                </td>
+                <td>$messages</td>
+                <td class="last">Validation messages</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Devise\Users\Permissions\Devise\Support\Config\FileManager">FileManager</abbr> $ConfigFileManager, <abbr title="Devise\Users\Permissions\Devise\Support\Framework">Framework</abbr> $Framework)
+                                            <p>Construct a new permission manager</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createRules">createRules</a>()
+                                            <p>Create rules for a new permission</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_updateRules">updateRules</a>()
+                                            <p>Create rules to edit a permission</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_storePermission">storePermission</a>(array $input)
+                                            <p>Validates and updates a permission with the given input</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_updatePermission">updatePermission</a>($input)
+                                            <p>Validates and updates a permission with the given input</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_destroyPermission">destroyPermission</a>(string $condition)
+                                            <p>Destroys a permission by retrieving current config contents and
+unsetting the key (condition) then saving the updated contents</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 43</div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Devise\Users\Permissions\Devise\Support\Config\FileManager">FileManager</abbr> $ConfigFileManager, <abbr title="Devise\Users\Permissions\Devise\Support\Framework">Framework</abbr> $Framework)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Construct a new permission manager</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Devise\Users\Permissions\Devise\Support\Config\FileManager">FileManager</abbr></td>
+                <td>$ConfigFileManager</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Devise\Users\Permissions\Devise\Support\Framework">Framework</abbr></td>
+                <td>$Framework</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createRules">
+        <div class="location">at line 68</div>
+        <code>                    array
+    <strong>createRules</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Create rules for a new permission</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_updateRules">
+        <div class="location">at line 80</div>
+        <code>                    array
+    <strong>updateRules</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Create rules to edit a permission</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_storePermission">
+        <div class="location">at line 93</div>
+        <code>                    bool
+    <strong>storePermission</strong>(array $input)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Validates and updates a permission with the given input</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td>| array</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_updatePermission">
+        <div class="location">at line 126</div>
+        <code>                    bool
+    <strong>updatePermission</strong>($input)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Validates and updates a permission with the given input</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$input</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_destroyPermission">
+        <div class="location">at line 163</div>
+        <code>                    boolean
+    <strong>destroyPermission</strong>(string $condition)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Destroys a permission by retrieving current config contents and
+unsetting the key (condition) then saving the updated contents</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$condition</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>| array</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

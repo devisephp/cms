@@ -40,7 +40,8 @@ class LocaleDetector
 		$locale = $this->cookie();
 
 		if (!$locale)
-		{
+		{						
+			$locale = $locale ?: $this->segment();
             $locale = $locale ?: $this->header();
             $locale = $locale ?: $this->universal();
 			$this->update($locale);
@@ -90,7 +91,10 @@ class LocaleDetector
 	 */
    	public function segment()
     {
-        return $this->Framework->Request->segment(1, null);
+    	$segment = $this->Framework->Request->segment(1, null);
+    	$languages = \DvsLanguage::getCodesArray();
+
+    	return in_array($segment, $languages) ? $segment : null;
     }
 
 	/**

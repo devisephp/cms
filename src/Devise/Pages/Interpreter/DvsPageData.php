@@ -107,8 +107,11 @@ class DvsPageData
 	public function toJSON()
 	{
 		// Occurs when there are no data-devise tags on the page
-		if(!$this->pageVersionId) {
-			return $this->jsonEncode(new \StdClass);
+		if(!$this->pageVersionId)
+		{
+			$data = new \StdClass;
+			$data->database = new \StdClass;
+			return $this->jsonEncode($data);
 		}
 
 		$pageVersionId = $this->pageVersionId;

@@ -1,18 +1,17 @@
 @if (DeviseUser::checkConditions('canUseDeviseEditor'))
 
-    <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/main.css') ?>">
-    <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/spectrum.css') ?>">
-    <link rel="stylesheet" type="text/css" href="<?= URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= asset('/packages/devisephp/cms/css/editor-nodes.css') ?>" data-devise-editor-asset>
 
-    <script>
-		if (location.href.indexOf('start-editor=false') === -1
-			&& location.href.indexOf('disable-editor') === -1) {
-			document.writeln(
-				'<style>' +
-					'html, html body { height: 100%; margin: 0; padding: 0; overflow: hidden; }' +
-					'body { display: none; }' +
-				'</style>'
-			);
-		}
-	</script>
+    @if (Input::get('start-editor') !== 'false' or Input::get('disable-editor') !== null)
+
+	    <link rel="stylesheet" type="text/css" href="<?= asset('/packages/devisephp/cms/css/main.css') ?>" data-devise-editor-asset >
+	    <link rel="stylesheet" type="text/css" href="<?= asset('/packages/devisephp/cms/css/spectrum.css') ?>" data-devise-editor-asset >
+	    <link rel="stylesheet" type="text/css" href="<?= asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') ?>" data-devise-editor-asset>
+
+		<style data-devise-editor-asset>
+			html, html body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+			body { display: none; }
+		</style>
+
+	@endif
 @endif

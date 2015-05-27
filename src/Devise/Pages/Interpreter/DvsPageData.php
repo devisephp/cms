@@ -111,6 +111,8 @@ class DvsPageData
 		{
 			$data = new \StdClass;
 			$data->database = new \StdClass;
+			$data->nodes = [];
+			$data->csrfToken = $this->csrfToken;
 			return $this->jsonEncode($data);
 		}
 

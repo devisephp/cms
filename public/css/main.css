@@ -3162,6 +3162,7 @@ button.dvs-no-decoration:hover {
   border: 1px solid #32353f;
   border-bottom: 2px solid #444856;
   border-radius: 4px;
+  overflow: hidden;
   background-color: #202228;
   background: -webkit-linear-gradient(top, #202228, #24262e);
   background: linear-gradient(to bottom, #202228, #24262e);
@@ -3237,6 +3238,7 @@ button.dvs-no-decoration:hover {
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
     border-radius: 4px;
+    overflow: hidden;
     background-color: #202228;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e); }
@@ -4620,6 +4622,7 @@ ul.js-tab-links {
   border: 1px solid #32353f;
   border-bottom: 2px solid #444856;
   border-radius: 4px;
+  overflow: hidden;
   background-color: #202228;
   background: -webkit-linear-gradient(top, #202228, #24262e);
   background: linear-gradient(to bottom, #202228, #24262e);
@@ -4709,6 +4712,7 @@ table.dvs-admin-table {
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
     border-radius: 4px;
+    overflow: hidden;
     background-color: #202228;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e); }
@@ -5709,6 +5713,7 @@ table.dvs-admin-table {
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
     border-radius: 4px;
+    overflow: hidden;
     background-color: #202228;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e); }
@@ -5728,6 +5733,7 @@ table.dvs-admin-table {
     border: 1px solid #32353f;
     border-bottom: 2px solid #444856;
     border-radius: 4px;
+    overflow: hidden;
     background-color: #202228;
     background: -webkit-linear-gradient(top, #202228, #24262e);
     background: linear-gradient(to bottom, #202228, #24262e);
@@ -5756,6 +5762,7 @@ table.dvs-admin-table {
       border: 1px solid #32353f;
       border-bottom: 2px solid #444856;
       border-radius: 4px;
+      overflow: hidden;
       background-color: #202228;
       background: -webkit-linear-gradient(top, #202228, #24262e);
       background: linear-gradient(to bottom, #202228, #24262e);

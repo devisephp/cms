@@ -27,7 +27,7 @@
 		@foreach ($variables as $variable)
 			<li>
 				<h5 class="about-var-name"><?= $variable ?></h5>
-				<div class="about-var-dump"><?= var_dump($data[$variable]) ?></div>
+				<div class="about-var-dump"><pre><?= var_export($data[$variable]) ?></pre></div>
 			</li>
 		@endforeach
 	</ul>

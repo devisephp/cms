@@ -1,7 +1,7 @@
 @extends('devise::admin.layouts.master')
 
 @section('css')
-    @include('devise::assets')
+    @include('devise::styles')
 @stop
 
 @section('title')
@@ -33,4 +33,5 @@
     </table>
 
     <script>hljs.initHighlightingOnLoad();</script>
+    @include('devise::scripts')
 @stop

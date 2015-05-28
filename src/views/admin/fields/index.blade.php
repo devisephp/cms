@@ -1,13 +1,7 @@
 @extends('devise::admin.layouts.master')
 
 @section('css')
-
-    <link href="<?= URL::asset('/packages/devisephp/cms/css/spectrum.css') ?>" rel="stylesheet" >
-    <link href="<?= URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') ?>" rel="stylesheet" >
-
-    <link href="{{ URL::asset('/packages/devisephp/cms/css/highlightjs/tomorrow.min.css') }}" type="text/css" rel="stylesheet" >
-    <script type="text/javascript" src="<?= URL::asset('/packages/devisephp/cms/js/lib/highlight.pack.js') ?>"></script>
-
+    @include('devise::styles')
 @stop
 
 @section('title')
@@ -38,6 +32,6 @@
         </tbody>
     </table>
 
-    @include('devise::scripts')
     <script>hljs.initHighlightingOnLoad();</script>
+    @include('devise::scripts')
 @stop

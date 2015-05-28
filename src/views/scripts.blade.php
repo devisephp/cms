@@ -81,11 +81,11 @@
 
 			devise.editor = new Editor(Templates, PageData);
 
-			devise.editor.start();
-
 			if (devise.editor.shouldStart())
 			{
 				var showNode = query.get('show-node', false);
+
+				devise.editor.start();
 
 				if (showNode !== false) devise.editor.showSidebar(showNode);
 			}

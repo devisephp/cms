@@ -61,6 +61,14 @@ class DvsPageData
 	protected $database = [];
 
 	/**
+	 * We don't need to initialize our dvspagedata object
+	 * more than once
+	 *
+	 * @var boolean
+	 */
+	protected $initialized = false;
+
+	/**
 	 * Tag manager that creates and finds
 	 * fields for our tags
 	 *
@@ -107,7 +115,7 @@ class DvsPageData
 	public function toJSON()
 	{
 		// Occurs when there are no data-devise tags on the page
-		if(!$this->pageVersionId)
+		if (! $this->initialized)
 		{
 			$data = new \StdClass;
 			$data->database = new \StdClass;
@@ -146,6 +154,9 @@ class DvsPageData
 	 */
 	public function initialize($pageId, $pageVersionId, $languageId, $csrfToken)
 	{
+		if ($this->initialized) return;
+
+		$this->initialized = true;
 		$this->pageId = $pageId;
 		$this->pageVersionId = $pageVersionId;
 		$this->languageId = $languageId;

@@ -4380,7 +4380,8 @@ ul.js-tab-links {
   #dvs-admin-sidenav .dvs-admin-links {
     margin: 12px 0 40px 0; }
     #dvs-admin-sidenav .dvs-admin-links li {
-      line-height: 40px; }
+      line-height: 40px;
+      color: #bcbec2; }
       #dvs-admin-sidenav .dvs-admin-links li a {
         display: block;
         color: #bcbec2;

@@ -251,9 +251,8 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
                 // create a finder on this editor
                 editor.finder = new BindingsFinder(editor.data.database)
 
-
                 // find all the bindings
-                editor.bindings = editor.finder.find(contentWindow.document.childNodes[1]);
+                editor.bindings = editor.finder.find(getRootHtmlNode(contentWindow.document.childNodes));
 
                 // apply the bindings now
                 editor.bindings.apply();
@@ -270,6 +269,22 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
         });
 
         iframe.attr('src', query.append('start-editor', 'false', location.origin + location.pathname + location.search)  + location.hash);
+    }
+
+    /**
+     * Finds the html node inside of this array of nodes
+     */
+    function getRootHtmlNode(nodes)
+    {
+        for (var i = 0; i < nodes.length; i++)
+        {
+            if (nodes[i].nodeType === 1)
+            {
+                return nodes[i];
+            }
+        }
+
+        return null;
     }
 
     /**

@@ -224,17 +224,26 @@ devise.define(['jquery'], function($) {
     }
 
     /**
+     * Clean-up routine used to remove placeholder elements from DOM
+     * after getting their coordinates.
+     */
+    function removePlaceholderElements()
+    {
+        $('#dvs-iframe').contents().find('[data-dvs-placeholder]').remove();
+    }
+
+    /**
      * recalculates node positions
      */
     return {
-    	recalculateNodePositions: function(nodesView, nodesData)
-    	{
+        recalculateNodePositions: function(nodesView, nodesData)
+        {
             setNodeHeight(nodesView);
             calculateNodePositions(nodesView, nodesData);
             solveNodeCollisions(nodesView, nodesData);
             adjustNodeDOMPositions(nodesView, nodesData);
-
-    	}
-	};
+            removePlaceholderElements();
+        }
+    };
 
 });

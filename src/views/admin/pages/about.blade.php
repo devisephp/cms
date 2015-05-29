@@ -27,7 +27,17 @@
 		@foreach ($variables as $variable)
 			<li>
 				<h5 class="about-var-name"><?= $variable ?></h5>
-				<div class="about-var-dump"><?= var_dump($data[$variable]) ?></div>
+				<div class="about-var-dump">
+					<pre><code class="php">
+						<?php
+						ob_start();
+						var_dump($data[$variable]);
+						$a=ob_get_contents();
+						ob_end_clean();
+						?>
+						{{ $a }}
+					</code></pre>
+				</div>
 			</li>
 		@endforeach
 	</ul>

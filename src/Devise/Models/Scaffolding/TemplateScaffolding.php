@@ -161,7 +161,7 @@ class TemplateScaffolding {
      */
 	private function getLabelText($field)
 	{
-		return ucwords( str_replace('_', ' ', 
+		return ucwords( str_replace('_', ' ',
 			snake_case($field['name'])
 		));
 	}
@@ -172,9 +172,9 @@ class TemplateScaffolding {
      */
 	private function getLabel($field)
 	{
-		$labelText = (isset($field['label'])) ? 
+		$labelText = (isset($field['label'])) ?
 
-					$field['label'] : 
+					$field['label'] :
 
 					$this->getLabelText($field);
 
@@ -273,7 +273,7 @@ class TemplateScaffolding {
 		$value = is_array($field['value']) ? $field['value'] : 'null';
 		$checked = is_array($field['checked']) ? $field['checked'] : 'null';
 
-		return "<?= Form::radio('" . $field['name'] . "', ". $value . ", ". $checked . ", ".  var_export($options, true) . ") ?>";
+		return "<?= Form::radio('" . $field['name'] . "', '". $value . "', ". $checked . ", ".  var_export($options, true) . ") ?>";
 	}
 
 	/**
@@ -287,7 +287,7 @@ class TemplateScaffolding {
 		$value = is_array($field['value']) ? $field['value'] : 1;
 		$checked = is_array($field['checked']) ? $field['checked'] : 'null';
 
-		return "<?= Form::checkbox('" . $field['name'] . "', ". $value . ", ". $checked . ", ".  var_export($options, true) . ") ?>";
+		return "<?= Form::checkbox('" . $field['name'] . "', '". $value . "', ". $checked . ", ".  var_export($options, true) . ") ?>";
 	}
 
 	/**
@@ -319,7 +319,7 @@ class TemplateScaffolding {
      */
 	private function buildSelectField($field, $default, $options, $choices)
 	{
-		return "<?= Form::select('" . $field['name'] . "', " . var_export($choices, true) . ", " . $default . ", ". var_export($options, true) . ") ?>";
+		return "<?= Form::select('" . $field['name'] . "', " . var_export($choices, true) . ", '" . $default . "', ". var_export($options, true) . ") ?>";
 	}
 
 	/**
@@ -331,11 +331,11 @@ class TemplateScaffolding {
      */
 	private function buildGenericField($field, $default, $options, $type)
 	{
-		return "<?= Form::" . $type . "('" . $field['name'] . "', " . $default . ", ".  var_export($options, true) . ") ?>";
+		return "<?= Form::" . $type . "('" . $field['name'] . "', '" . $default . "', ".  var_export($options, true) . ") ?>";
 	}
 
 	private function buildImageField($field, $default, $options, $type)
 	{
-		return "<?= Form::" . $type . "('" . $field['name'] . "', " . $default . ", ".  var_export($options, true) . ") ?>";
+		return "<?= Form::" . $type . "('" . $field['name'] . "', '" . $default . "', ".  var_export($options, true) . ") ?>";
 	}
 }

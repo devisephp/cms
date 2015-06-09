@@ -95,6 +95,7 @@
     <div class="dvs-form-group">
         <?= Form::label('Administration Page?') ?>
         <div class="fancyCheckbox">
+            <?= Form::hidden('is_admin', false) ?>
             <?= Form::checkbox('is_admin', null, null, array('id' => 'is_admin')) ?>
             <?= Form::label('is_admin', '&nbsp;') ?>
         </div>

@@ -337,6 +337,15 @@
     font-size:11px;
     padding:8px 12px;
 
+    select {
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+      height:100%;
+      -webkit-appearance:none; /* Important for Macs */
+    }
+
     .dvs-holder {
       background-color:transparent;
     }

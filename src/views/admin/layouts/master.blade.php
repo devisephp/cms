@@ -14,6 +14,10 @@
     <link href="{{ URL::asset('/packages/devisephp/cms/css/main.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ URL::asset('/packages/devisephp/cms/css/highlightjs/tomorrow.min.css') }}" type="text/css" rel="stylesheet" >
 
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/ie-9-and-lower.css') }}" />
+    <![endif]-->
+
     @yield('css')
 
     <script src="{{ URL::asset('/packages/devisephp/cms/js/devise.min.js') }}"></script>

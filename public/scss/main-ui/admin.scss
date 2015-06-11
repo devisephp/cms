@@ -333,9 +333,10 @@
 
   .dvs-select-wrapper {
     float:right;
-    width:150px;
-    font-size:11px;
-    padding:8px 12px;
+    width:auto;
+    padding:5px 30px 6px 6px;
+    font-size:10px;
+    margin-left:8px;
 
     select {
       top:0;
@@ -348,6 +349,10 @@
 
     .dvs-holder {
       background-color:transparent;
+    }
+
+    &:after {
+      top:43%;
     }
   }
 }

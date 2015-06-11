@@ -3607,7 +3607,7 @@ button.dvs-no-decoration:hover {
   .dvs-select-wrapper .dvs-holder {
     display: block;
     float: left;
-    margin: 3px 5px 0 12px;
+    margin: 3px 5px 0 10px;
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
@@ -4209,8 +4209,10 @@ ul.js-tab-links {
   font-weight: bold; }
 
 #dvs-docs-toc {
-  list-style-type: disc;
-  padding-left: 35px; }
+  padding-top: 10px; }
+  #dvs-docs-toc ul {
+    list-style-type: disc;
+    padding-left: 35px; }
   #dvs-docs-toc a {
     text-decoration: none; }
 
@@ -4609,9 +4611,10 @@ ul.js-tab-links {
     clear: both; }
   #dvs-admin-actions .dvs-select-wrapper {
     float: right;
-    width: 150px;
-    font-size: 11px;
-    padding: 8px 12px; }
+    width: auto;
+    padding: 5px 30px 6px 6px;
+    font-size: 10px;
+    margin-left: 8px; }
     #dvs-admin-actions .dvs-select-wrapper select {
       top: 0;
       bottom: 0;
@@ -4622,6 +4625,8 @@ ul.js-tab-links {
       /* Important for Macs */ }
     #dvs-admin-actions .dvs-select-wrapper .dvs-holder {
       background-color: transparent; }
+    #dvs-admin-actions .dvs-select-wrapper:after {
+      top: 43%; }
 
 .dvs-inset-text {
   box-sizing: border-box;
@@ -5528,7 +5533,7 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode .dvs-select-wrapper .dvs-holder {
       display: block;
       float: left;
-      margin: 3px 5px 0 12px;
+      margin: 3px 5px 0 10px;
       white-space: nowrap;
       overflow: hidden;
       cursor: pointer;
@@ -6205,6 +6210,18 @@ html.dz-drag-hover body {
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 12px; }
+#devise-documentation-container ul, #devise-documentation-container ol {
+  padding-left: 24px;
+  font-size: 12px; }
+#devise-documentation-container ol {
+  list-style-type: lower-hexadecimal; }
+  #devise-documentation-container ol li {
+    margin-bottom: 10px; }
+#devise-documentation-container ul {
+  display: list-item;
+  text-align: -webkit-match-parent; }
+  #devise-documentation-container ul li {
+    margin: 0 0 10px 10px; }
 
 .dvs-document-button:before {
   content: '?';

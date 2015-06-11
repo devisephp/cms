@@ -97,8 +97,12 @@
 }
 
 #dvs-docs-toc {
-	list-style-type: disc;
-	padding-left:35px;
+  padding-top:10px;
+
+  ul {
+    list-style-type: disc;
+    padding-left:35px;
+  }
 
 	a {
 		text-decoration:none;

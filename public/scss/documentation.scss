@@ -23,8 +23,30 @@
 	p {
 		margin-top: 10px;
 		margin-bottom: 10px;
-		font-size: 12px;
-	}
+    font-size: 12px;
+  }
+
+  ul, ol {
+    padding-left:24px;
+    font-size: 12px;
+  }
+
+  ol {
+    list-style-type:lower-hexadecimal;
+
+    li {
+      margin-bottom:10px;
+    }
+  }
+
+  ul {
+    display: list-item;
+    text-align: -webkit-match-parent;
+
+    li {
+      margin:0 0 10px 10px;
+    }
+  }
 }
 
 .dvs-document-button:before {

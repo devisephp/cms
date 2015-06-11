@@ -146,33 +146,34 @@ class MenusManager
 		{
 			$input['item'] = array();
 		}
+        if (!isset($input['item_order']))
+        {
+            $input['item_order'] = array();
+        }
 
-		if (!isset($input['item_order']))
-		{
-			$input['item_order'] = array();
-		}
+        list($items, $order) = $this->createNewMenuItems($menu, $input['item'], $input['item_order']);
 
-		list($items, $order) = $this->createNewMenuItems($menu, $input['item'], $input['item_order']);
+        // sync up all the menu item data
+        foreach ($items as $id => $item) {
+            $menuItem = $this->MenuItem->findOrFail($id);
 
-		// sync up all the menu item data
-		foreach ($items as $id => $item) {
-			$menuItem = $this->MenuItem->findOrFail($id);
+            if (isset($item['image'])) {
+                $menuItem->image = $item['image'];
+            }
 
-			if (isset($item['image'])) {
-				$menuItem->image = $item['image'];
-			}
-			if (isset($item['url_or_page']) && $item['url_or_page'] !== 'page') {
-				$item['page_id'] = NULL;
-			}
+            if (isset($item['url_or_page']) && $item['url_or_page'] !== 'page') {
+                $item['page_id'] = NULL;
+            }
 
-			$menuItem->parent_item_id = $order[$id] ?: null;
-			$menuItem->url = $item['url'];
-			$menuItem->page_id = $item['page_id'];
-			$menuItem->name = $item['name'];
-			$menuItem->position = $position++;
-			$menuItem->permission = array_get($item, 'permission', null);
-			$menuItem->save();
-		}
+            $menuItem->parent_item_id = $order[$id] ?: null;
+            $menuItem->url = $item['url'];
+            $menuItem->page_id = $item['page_id'];
+            $menuItem->name = $item['name'];
+            $menuItem->position = $position++;
+            $menuItem->permission = array_get($item, 'permission', null);
+            $menuItem->save();
+
+        }
 
 		// user removed these menu items so let's remove in database
 		$removeItems = array_diff($menu->allItems()->lists('id'), array_keys($items));
@@ -221,6 +222,7 @@ class MenusManager
 					'url' => $item['url'],
 					'image' => array_get($item, 'image', NULL),
 					'name' => $item['name'],
+                    'permission' => array_get($item, 'permission', NULL),
 					'position' => 0,
 				]);
 
@@ -228,7 +230,8 @@ class MenusManager
 				$items[$menuItem->id] = array(
 					'url' => $menuItem->url,
 					'name' => $menuItem->name,
-					'page_id' => $menuItem->page_id
+                    'page_id' => $menuItem->page_id,
+					'permission' => $menuItem->permission
 				);
 				$newlyCreated[$id] = $menuItem->id;
 			}

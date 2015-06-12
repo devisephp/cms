@@ -41,7 +41,7 @@ class GroupsRepository
      */
     public function groupList()
     {
-        return $this->Group->lists('name', 'id');
+        return $this->Group->lists('name', 'id')->toArray();
     }
 
     /**

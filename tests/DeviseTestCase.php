@@ -45,7 +45,7 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 
 			static::$application = require __DIR__.'/integrated/bootstrap/app.php';
 
-			static::$application->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
+            static::$application->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
 			Config::set('database.default', 'sqlite');
 

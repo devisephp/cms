@@ -16,10 +16,11 @@ class EloquentBuilder extends BaseBuilder
 	 * Get a paginator for the "select" statement.
 	 *
 	 * @param  int    $perPage
-	 * @param  array  $columns
+     * @param  array  $columns
+	 * @param  string  $pageName
 	 * @return \Illuminate\Pagination\Paginator
 	 */
-	public function paginate($perPage = null, $columns = array('*'))
+	public function paginate($perPage = null, $columns = ['*'], $pageName = 'page')
 	{
 		Sort::handleSorting($this->query, $this->model);
 

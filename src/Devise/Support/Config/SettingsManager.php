@@ -33,7 +33,7 @@ class SettingsManager
 	 */
 	public function update(array $settings)
 	{
-		$contents = $this->prettyVarExport($settings);
+		$contents = $this->varExport($settings);
 
 		$this->files->put($this->overridesFile, $contents);
 	}
@@ -47,9 +47,9 @@ class SettingsManager
 	 */
 	public function merge(array $settings)
 	{
-		$merged = array_merge(require $this->overridesFile, $settings);
+		$merged = array_merge_values(require $this->overridesFile, $settings);
 
-		$contents = $this->prettyVarExport($merged);
+		$contents = $this->varExport($merged);
 
 		$this->files->put($this->overridesFile, $contents);
 	}
@@ -65,14 +65,14 @@ class SettingsManager
 	 */
 	public function remove(array $settings)
 	{
-		$overrides = array_merge(require $this->overridesFile);
+		$overrides = array_merge_values(require $this->overridesFile);
 
 		foreach ($settings as $setting)
 		{
 			unset($overrides[$setting]);
 		}
 
-		$contents = $this->prettyVarExport($overrides);
+		$contents = $this->varExport($overrides);
 
 		$this->files->put($this->overridesFile, $contents);
 	}
@@ -92,6 +92,20 @@ class SettingsManager
         $arrayRep = preg_replace("/\=\>[ \n\t]+array[ ]+\(/", '=> array(', $arrayRep);
         $arrayRep = preg_replace("/\d+ => /", '', $arrayRep);
 		$arrayRep = preg_replace("/\n/", "\n\t", $arrayRep);
+
+        return "<?php return " . $arrayRep . ';';
+    }
+
+    /**
+     * Exports the variable in an uglier version, but doesn't mess
+     * with formatting
+     *
+     * @param  array $content
+     * @return string
+     */
+    protected function varExport($content)
+    {
+        $arrayRep = var_export($content, true);
 
         return "<?php return " . $arrayRep . ';';
     }

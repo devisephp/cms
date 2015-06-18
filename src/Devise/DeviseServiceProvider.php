@@ -62,6 +62,7 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
+        require __DIR__ . '/../macros/array_merge_values.php';
         $this->registerConfigOverrideWrapper();
     }
 

@@ -69,7 +69,7 @@ class LanguagesRepository
             ->orderBy('dvs_pages.language_id')
             ->get(['dvs_languages.*','dvs_pages.slug']);
 
-        return $languages->lists('name', 'slug')->toArray();
+        return $languages->lists('name', 'slug');
     }
 
     /**

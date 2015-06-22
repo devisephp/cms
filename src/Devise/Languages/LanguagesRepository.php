@@ -47,7 +47,7 @@ class LanguagesRepository
      */
     public function activeLanguageList()
     {
-        return $this->Language->where('active', '=', 1)->orderby('updated_at')->lists('human_name', 'id')->toArray();
+        return $this->Language->where('active', '=', 1)->orderby('updated_at')->lists('human_name', 'id')->all();
     }
 
     /**
@@ -69,7 +69,7 @@ class LanguagesRepository
             ->orderBy('dvs_pages.language_id')
             ->get(['dvs_languages.*','dvs_pages.slug']);
 
-        return $languages->lists('name', 'slug');
+        return $languages->lists('name', 'slug')->all();
     }
 
     /**

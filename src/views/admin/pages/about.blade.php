@@ -1,4 +1,4 @@
-<script data-template-name="about-page" type="text/x-handlebars-template">
+<script id="about-page" type="text/x-handlebars-template">
 	<h4>Useful Links</h4>
 	<ul>
 		<li>

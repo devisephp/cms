@@ -522,9 +522,11 @@ class PagesRepository
         foreach ($fields as $field)
         {
             // turn routes into urls GO MAGIC GO! ^_^
-            if (isset($field->value->route) && $field->value->route !== '')
+            if (!isset($field->value->url) || $field->value->url == '')
             {
-                $field->value->url = $this->URL->route($field->value->route);
+                if (isset($field->value->route) && $field->value->route !== '') { 
+                    $field->value->url = $this->URL->route($field->value->route);
+                }
             }
 
             $page->{$field->key} = $field->value;

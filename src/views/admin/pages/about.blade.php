@@ -13,12 +13,12 @@
 		</li>
 	</ul>
 	<h4>Current Route</h4>
-	<ul><li><?= $page->route_name ?></li></ul>
+	<ul><li><?=$page->route_name?></li></ul>
 
 	<h4>Templates Loaded</h4>
 	<ul>
 		@foreach ($templates as $template)
-			<li><?= $template ?></li>
+			<li><?=$template?></li>
 		@endforeach
 	</ul>
 
@@ -26,18 +26,7 @@
 	<ul>
 		@foreach ($variables as $variable)
 			<li>
-				<h5 class="about-var-name"><?= $variable ?></h5>
-				<div class="about-var-dump">
-					<pre><code class="php">
-						<?php
-						ob_start();
-						var_dump($data[$variable]);
-						$a=ob_get_contents();
-						ob_end_clean();
-						?>
-						{{ $a }}
-					</code></pre>
-				</div>
+				<h5 class="about-var-name"><?=$variable?></h5>
 			</li>
 		@endforeach
 	</ul>

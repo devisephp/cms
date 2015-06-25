@@ -182,6 +182,7 @@ devise.define(['jquery'], function($) {
                 if (i != j && hasNodeCollision(nodes[i], nodes[j]))
                 {
                     nodes[i].position.top += nodeHeight;
+                    j = 0;
                 }
             }
         }

@@ -77,7 +77,10 @@
 				Templates.JST['<?php echo $templateName ?>'] = "<?php echo str_replace("\n", "", str_replace('"', '\"', file_get_contents($template))); ?>";
 			<?php endforeach ?>
 
-			Templates.JST['about-page'] = document.querySelector('[data-template-name="about-page"]').innerHTML;
+			$('script[type="text/x-handlebars-template"]').each(function(){
+				var name = $(this).attr('id');
+				Templates.JST[ name ] = $(this).html();
+			});
 
 			devise.editor = new Editor(Templates, PageData);
 
@@ -91,10 +94,12 @@
 			}
 		});
 
-		devise.require(['devise.editor'], function(editor)
-		{
-			// this bootstraps the devise.editor for the first time
-		});
+		@if(!isset($bootstrap) || $bootstrap)
+			devise.require(['devise.editor'], function(editor)
+			{
+				// this bootstraps the devise.editor for the first time
+			});
+		@endif
 	</script>
 
 @endif

@@ -106,6 +106,8 @@ class SettingsManager
     protected function varExport($content)
     {
         $arrayRep = var_export($content, true);
+        $arrayRep = str_replace("=> 'true'", "=> true", $arrayRep);
+        $arrayRep = str_replace("=> 'false'", "=> false", $arrayRep);
 
         return "<?php return " . $arrayRep . ';';
     }

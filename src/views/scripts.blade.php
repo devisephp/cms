@@ -64,7 +64,7 @@
    		});
 
 		// bootstrap the dvsEditor
-		devise.define('devise.editor', ['dvsTemplates', 'dvsEditor', 'dvsPageData', 'query', 'dvsCsrf'], function(Templates, Editor, PageData, query, csrf) {
+		devise.define('devise.editor', ['jquery', 'dvsTemplates', 'dvsEditor', 'dvsPageData', 'query', 'dvsCsrf'], function($, Templates, Editor, PageData, query, csrf) {
 
 			csrf(PageData.csrfToken);
 

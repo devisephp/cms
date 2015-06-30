@@ -24,11 +24,11 @@ class CollectionsManager
      *
      * @param DvsCollectionInstance $CollectionInstance
      */
-	public function __construct(\DvsCollectionInstance $CollectionInstance, \DvsField $Field)
-	{
-		$this->CollectionInstance = $CollectionInstance;
+    public function __construct(\DvsCollectionInstance $CollectionInstance, \DvsField $Field)
+    {
+        $this->CollectionInstance = $CollectionInstance;
         $this->Field = $Field;
-	}
+    }
 
     /**
      * Create a new collection instance
@@ -37,13 +37,13 @@ class CollectionsManager
      * @param  array $inputData
      * @return CollectionInstance
      */
-	public function createNewInstance(array $input)
-	{
-		$instance = $this->CollectionInstance->newInstance();
+    public function createNewInstance(array $input)
+    {
+        $instance = $this->CollectionInstance->newInstance();
         $instance->page_version_id = $input['page_version_id'];
         $instance->collection_set_id = array_get($input, 'collection_set_id', null);
         $instance->name = $input['name'];
-        $instance->sort = $input['sort'];
+        $instance->sort = $this->findSortNumber($instance);
         $instance->save();
 
         $fields = array_get($input, 'fields', []);
@@ -54,7 +54,7 @@ class CollectionsManager
         }
 
         return $this->CollectionInstance->newInstance()->with('fields')->findOrFail($instance->id);
-	}
+    }
 
     /**
      * [createNewInstanceField description]
@@ -84,14 +84,14 @@ class CollectionsManager
      * @param  array $inputData
      * @return CollectionInstance
      */
-	public function updateInstanceSort($id, $sort)
-	{
-		$instance = $this->CollectionInstance->findOrFail($id);
-		$instance->sort = $sort;
-		$instance->save();
+    public function updateInstanceSort($id, $sort)
+    {
+        $instance = $this->CollectionInstance->findOrFail($id);
+        $instance->sort = $sort;
+        $instance->save();
 
-		return $instance;
-	}
+        return $instance;
+    }
 
     /**
      * Update the collection instance name
@@ -99,14 +99,14 @@ class CollectionsManager
      * @param  array $inputData
      * @return CollectionInstance
      */
-	public function updateInstanceName($id, $name)
+    public function updateInstanceName($id, $name)
     {
-		$instance = $this->CollectionInstance->findOrFail($id);
-		$instance->name = $name;
-		$instance->save();
+        $instance = $this->CollectionInstance->findOrFail($id);
+        $instance->name = $name;
+        $instance->save();
 
-		return $instance;
-	}
+        return $instance;
+    }
 
     /**
      * Remove instance from database
@@ -114,12 +114,28 @@ class CollectionsManager
      * @param  integer $id
      * @return bool
      */
-	public function removeInstance($id)
+    public function removeInstance($id)
     {
-		$instance = $this->CollectionInstance->find($id);
+        $instance = $this->CollectionInstance->find($id);
 
         // should we remove all the fields of this instance here?
 
-		return ($instance) ? $instance->delete() : false;
-	}
+        return ($instance) ? $instance->delete() : false;
+    }
+
+    /**
+     * Gets the correct sort number
+     *
+     * @param  [type] $collectionSetId
+     * @param  [type] $pageVersionId
+     * @return [type]
+     */
+    protected function findSortNumber($instance)
+    {
+        $sort = $this->CollectionInstance->where('collection_set_id', '=', $instance->collection_set_id)
+            ->where('page_version_id', '=', $instance->page_version_id)
+            ->max('sort');
+
+        return $sort ? $sort + 1 : 1;
+    }
 }

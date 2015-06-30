@@ -40,10 +40,14 @@ class LocaleDetector
 		$locale = $this->cookie();
 
 		if (!$locale)
-		{						
+		{
 			$locale = $locale ?: $this->segment();
             $locale = $locale ?: $this->header();
-            $locale = $locale ?: $this->universal();
+
+            if (!$locale || $locale === '' || $locale === 'un') {
+            	$locale = $this->universal();
+        	}
+
 			$this->update($locale);
 		}
 

@@ -31,6 +31,7 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 		this.validationErrors = null;
 		this.content = null;
 		this.saveButton = null;
+		this.saveNotification = null;
 	}
 
 	/**
@@ -53,6 +54,7 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
 		this.validationErrors = this.layout.filter('[data-view="validation-errors"]');
 		this.content = this.layout.find('[data-view="content"]');
 		this.saveButton = this.layout.find('[data-view="save-button"]');
+		this.saveNotification = this.layout.find('[data-view="save-notification"]');
 
 		this.saveButton.hide();
 

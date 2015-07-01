@@ -683,17 +683,31 @@
     }
   }
 
+  #dvs-sidebar-save-notification {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: $blue;
+    padding: 15px;
+    width: 100px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-left: -50px;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  }
+
+  .saving {
+    #dvs-sidebar-save-notification {
+      display:block;
+    }
+  }
+
 }
 
 .dvs-sidebar-save-group {
   -webkit-transition: all 2s;
   transition: all 2s;
   pointer: cursor;
-}
-
-.saving {
-  .dvs-sidebar-save-group
-  {
-    opacity: 0.3;
-  }
 }

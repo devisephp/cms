@@ -145,7 +145,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsLiveUpdater'], funct
 		this.sidebar.breadcrumbsView.back();
 		this.sidebar.layout.removeClass('saving');
 		this.showGridView();
-		LiveUpdater.refresh();
+		// LiveUpdater.refresh(); // decided to remove this for now
 	}
 
 	/**

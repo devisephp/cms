@@ -382,7 +382,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 				self.data.instances[instanceIndex] = data;
 				self.renderInstanceSelectorView();
 				self.renderManageView();
-				LiveUpdater.refresh();
+				// LiveUpdater.refresh();	// we decided to take this out...
 			},
 			error: function()
 			{

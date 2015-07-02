@@ -63,7 +63,29 @@ gulp.task('build:js', function()
         'fullCalendar',
         'scrollTo',
         'localScroll',
-        'handlebars'
+        'handlebars',
+        'dvsTemplates',
+        'dvsEditor',
+        'query',
+        'dvsCsrf',
+        'dvsSidebarView',
+        'dvsBaseView',
+        'dvsPositionHelper',
+        'dvsSelectSurrogate',
+        'dvsLiveUpdater',
+        'BindingsFinder',
+        'dvsFieldView',
+        'dvsCollectionView',
+        'dvsModelView',
+        'dvsAttributeView',
+        'dvsCreatorView',
+        'dvsGroupView',
+        'dvsBreadCrumbsView',
+        'dvsLiveUpdate',
+        'AttributeBinding',
+        'ClassBinding',
+        'StyleBinding',
+        'TextBinding'
     ]
   })
   .pipe(concat.header(fs.readFileSync('public/js/devise.require.js', 'utf8') + '\n'))

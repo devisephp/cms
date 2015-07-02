@@ -261,3 +261,14 @@ if (!function_exists('dvsmagic'))
 		return $liveValue;
 	}
 }
+
+if (!function_exists('relativeFileNameFromTemplate'))
+{
+	function relativeFileNameFromTemplate($template)
+	{
+		$templateName = explode('.', str_replace(['/', '\\'], '.', $template->getRelativePathname()));
+		array_pop($templateName);
+		$templateName = implode('.', $templateName);
+		return $templateName;
+	}
+}

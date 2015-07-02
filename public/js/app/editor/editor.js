@@ -10,14 +10,14 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
     /**
      * The editor class we are building
      */
-    var Editor = function (templates, data)
+    var Editor = function (templates, data, csrf)
     {
         this.pageId = data.pageId;
         this.pageVersionId = data.pageVersionId;
         this.events = events;
         this.data = data;
+        this.csrf = csrf;
         this.sidebar = new Sidebar(data);
-        this.aboutPageTemplate = $('[data-template-name="about-page"]');
     }
 
     /**
@@ -63,7 +63,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      */
     Editor.prototype.render = function()
     {
-        this.layoutView             = View.make('editor.layout', this.data);
+        this.layoutView             = $('#dvs-mode');
         this.iframeView             = this.layoutView.find('#dvs-iframe');
         this.nodesView              = $('<div/>');
         this.iframeBodyView         = $('<div/>');
@@ -77,9 +77,6 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
 
         this.aboutPageContainerView.empty();
         this.aboutPageContainerView.append(View.make('about-page'));
-
-        $('body').empty();
-        $('body').append(this.layoutView);
     }
 
     /**
@@ -246,7 +243,10 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
                 if (editor.showingEditor) body.addClass('dvs-node-mode');
 
                 // copy over the database fields for live updates
-                editor.data.database = contentWindow.devise.dvsPageData.database;
+                editor.data = contentWindow.dvsPageData;
+
+                // update csrfToken
+                editor.csrf(editor.data.csrfToken);
 
                 // create a finder on this editor
                 editor.finder = new BindingsFinder(editor.data.database)

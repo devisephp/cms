@@ -13,5 +13,57 @@
 			body { display: none; }
 		</style>
 
+
+
+
+
+		<?
+		/*
+			here we truncate the page for performance reasons... to avoid
+			double-tapping each page everytime when in Editor mode
+		*/
+		?>
+
+		</head>
+		<body>
+
+		<div class="dvs-default" id="dvs-mode">
+			<div id="dvs-container">
+				<div id="dvs-pusher">
+					<iframe id="dvs-iframe" name="dvsiframe" style="height: 100%; width: 100%;"></iframe>
+				</div>
+			</div>
+
+			<button id="dvs-about-page-button">About Page</button>
+			<button id="dvs-node-mode-button">Edit Page</button>
+			<button id="dvs-admin-mode-button" onclick="location.href = '/admin/pages'">Admin</button>
+
+			<div id="dvs-sidebar-container" style="display: none;">
+				<div id="dvs-sidebar-scroller">
+					<div id="dvs-sidebar">
+						<!-- this is where sidebar view goes -->
+					</div>
+				</div>
+			</div>
+
+			<div id="dvs-about-page-container">
+				<!-- this is where the about page view goes -->
+			</div>
+		</div>
+
+		@include('devise::editor', ['bootstrap' => isset($bootstrap) ? $bootstrap : true])
+
+		</body>
+		</html>
+
+		<?php die ?>
+
+		<?
+		/*
+			none of your stuff got loaded here... but it will get loaded inside
+			of the iframe in just another second
+		*/
+		?>
+
 	@endif
 @endif

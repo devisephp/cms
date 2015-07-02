@@ -1,4 +1,4 @@
-devise.define(['handlebars'], function(handlebars)
+devise.define(['jquery', 'handlebars'], function($, handlebars)
 {
 	/**
 	 * store templates in this object
@@ -12,6 +12,11 @@ devise.define(['handlebars'], function(handlebars)
 	{
 		if (typeof this.JST[viewpath] === 'undefined')
 		{
+			this.register(viewpath);
+		}
+
+		if (typeof this.JST[viewpath] === 'undefined')
+		{
 			throw viewpath + ' is not a registered template!';
 		}
 
@@ -22,6 +27,15 @@ devise.define(['handlebars'], function(handlebars)
 
 		return this.JST[viewpath](data);
 	};
+
+	/**
+	 * registers a new view to be cached
+	 */
+	templates.register = function(viewpath)
+	{
+		var html =  $('script[id="' + viewpath + '"]').html();
+		this.JST[viewpath] = html;
+	}
 
 	/**
 	 * register helper for when

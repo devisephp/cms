@@ -33,6 +33,13 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
+        $cachedRoutesPath = \Config::get('devise.routes.cache');
+
+        if (!$this->app->routesAreCached() && file_exists($cachedRoutesPath))
+        {
+            require $cachedRoutesPath;
+        }
+
         require __DIR__. '/routes.php';
 
         // register these field update bindings

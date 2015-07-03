@@ -39,6 +39,8 @@ class CreateDvsPages extends Migration {
 
             $table->index('language_id');
             $table->index('translated_from_page_id');
+            $table->unique(['slug', 'http_verb']);
+            $table->unique('route_name');
         });
     }
 

@@ -14,8 +14,9 @@ class PageManagerTest extends \DeviseTestCase
         $this->PageVersionsRepository = m::mock('Devise\Pages\PageVersionsRepository');
         $this->FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
         $this->FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
+        $this->RoutesGenerator = m::mock('Devise\Pages\RoutesGenerator');
 
-        $this->PageManager = new PageManager($this->DvsPage, $this->PageVersionManager, $this->PageVersionsRepository, $this->FieldsRepository, $this->FieldManager, $Framework);
+        $this->PageManager = new PageManager($this->DvsPage, $this->PageVersionManager, $this->PageVersionsRepository, $this->FieldsRepository, $this->FieldManager, $Framework, $this->RoutesGenerator);
     }
 
     public function test_it_creates_new_page()

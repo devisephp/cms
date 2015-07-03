@@ -7,7 +7,7 @@ class ApiPagesRespostoryTest extends \DeviseTestCase
     public function setUp()
     {
         parent::setUp();
-
+        $this->counter = 0;
         $this->DvsPage = new \DvsPage;
         $this->ApiPagesRepository = new ApiPagesRepository($this->DvsPage);
     }
@@ -34,16 +34,18 @@ class ApiPagesRespostoryTest extends \DeviseTestCase
      */
     protected function createTestPage($input, $type = 'View')
     {
+        $this->counter++;
+
         $input = array_merge([
             'id'                      => '99999',
             'language_id'             => '45',
             'view'                    => 'some.view',
             'title'                   => 'Some test title',
             'http_verb'               => 'get',
-            'route_name'              => 'dvs-test-route-name',
+            'route_name'              => 'page' . $this->counter,
             'is_admin'                => '0',
             'dvs_admin'               => '0',
-            'slug'                    => '/test/pages',
+            'slug'                    => '/page' . $this->counter,
             'response_type'           => $type,
             'short_description'       => 'A short description',
         ], $input);

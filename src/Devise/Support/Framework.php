@@ -33,6 +33,10 @@ class Framework
 
         switch ($name)
         {
+            case 'artisan':                 // 'Illuminate\Contracts\Console\Kernel'
+                return \Artisan::getFacadeRoot();
+            break;
+
             case 'auth':                    // Illuminate\Auth\Guard
                 return \Auth::getFacadeRoot();
             break;
@@ -53,6 +57,10 @@ class Framework
                 return \App::getFacadeRoot();
             break;
 
+            case 'db':                      // Illuminate\Database\DatabaseManager
+                return \DB::getFacadeRoot();
+            break;
+
             case 'file':                    // Illuminate\Filesystem\Filesystem
                 return \File::getFacadeRoot();
             break;
@@ -64,7 +72,7 @@ class Framework
             case 'exception':               // DeviseException
                 return DeviseException::getFacadeRoot();
             break;
-            
+
             case 'hash':                    // Illuminate\Hashing\BcryptHasher
                 return \Hash::getFacadeRoot();
             break;
@@ -99,6 +107,10 @@ class Framework
 
             case 'request':                 // Illuminate\Http\Request
                 return \Request::getFacadeRoot();
+            break;
+
+            case 'route':                   // Illuminate\Routing\Router
+                return \Route::getFacadeRoot();
             break;
 
             case 'schema':

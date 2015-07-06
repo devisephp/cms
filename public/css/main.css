@@ -4940,6 +4940,12 @@ table.dvs-admin-table {
     width: 428px;
     top: 0;
     left: 0; }
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container.fat {
+      width: 900px; }
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container.fat #dvs-sidebar-scroller {
+      width: 950px; }
+    #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container.fat #dvs-sidebar-scroller #dvs-sidebar {
+      width: 800px; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-scroller {
     overflow-y: scroll;
     overflow-x: hidden;

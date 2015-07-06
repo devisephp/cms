@@ -26,13 +26,11 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
             };
 
             $('.dvs-fat-sidebar').click(function(){
-                console.log('need to fatten sidebar up here');
-                // sidebar.fattenUp();
+                $("#dvs-sidebar-container").addClass('fat');
             });
 
             $('.dvs-skinny-sidebar').click(function(){
-                console.log('need to skinny the sidebar');
-                // sidebar.skinnyMe();
+                $("#dvs-sidebar-container").removeClass('fat');
             });
 
             // updates the textarea input for us

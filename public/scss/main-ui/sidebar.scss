@@ -70,6 +70,18 @@
     width:$sidebarWidth + 100;
     top:0;
     left:0;
+
+    &.fat {
+      width: $sidebarFatWidth + 100;
+    }
+
+    &.fat #dvs-sidebar-scroller {
+      width: $sidebarFatWidth + 150;
+    }
+
+    &.fat #dvs-sidebar-scroller #dvs-sidebar{
+      width: $sidebarFatWidth;
+    }
   }
 
   #dvs-sidebar-scroller {

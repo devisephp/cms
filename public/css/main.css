@@ -4941,11 +4941,11 @@ table.dvs-admin-table {
     top: 0;
     left: 0; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container.fat {
-      width: 900px; }
+      width: 80%; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container.fat #dvs-sidebar-scroller {
-      width: 950px; }
+      width: 101%; }
     #dvs-mode.dvs-sidebar-mode #dvs-sidebar-container.fat #dvs-sidebar-scroller #dvs-sidebar {
-      width: 800px; }
+      width: 97%; }
   #dvs-mode.dvs-sidebar-mode #dvs-sidebar-scroller {
     overflow-y: scroll;
     overflow-x: hidden;

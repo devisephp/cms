@@ -72,15 +72,15 @@
     left:0;
 
     &.fat {
-      width: $sidebarFatWidth + 100;
+      width: $sidebarFatWidth;
     }
 
     &.fat #dvs-sidebar-scroller {
-      width: $sidebarFatWidth + 150;
+      width: 101%;
     }
 
     &.fat #dvs-sidebar-scroller #dvs-sidebar{
-      width: $sidebarFatWidth;
+      width: 97%;
     }
   }
 

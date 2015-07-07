@@ -12,12 +12,21 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
      */
     var Editor = function (templates, data, csrf)
     {
-        this.pageId = data.pageId;
-        this.pageVersionId = data.pageVersionId;
         this.events = events;
-        this.data = data;
         this.csrf = csrf;
         this.sidebar = new Sidebar(data);
+        this.updateData(data);
+    }
+
+    /**
+     * Updates the page data for this and sidebar.page
+     */
+   Editor.prototype.updateData = function (data)
+    {
+        this.pageId = data.pageId;
+        this.pageVersionId = data.pageVersionId;
+        this.data = data;
+        this.sidebar.page = data;
     }
 
     /**
@@ -243,7 +252,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
                 if (editor.showingEditor) body.addClass('dvs-node-mode');
 
                 // copy over the database fields for live updates
-                editor.data = contentWindow.dvsPageData;
+                editor.updateData(contentWindow.dvsPageData);
 
                 // update csrfToken
                 editor.csrf(editor.data.csrfToken);

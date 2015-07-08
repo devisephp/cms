@@ -43,6 +43,7 @@ class ApiPagesManager extends PageManager
         {
             $startsAt = new \DateTime; // is published immediately
     		$page->version = $this->PageVersionManager->createDefaultPageVersion($page, $startsAt);
+            $this->RoutesGenerator->cacheRoutes();
         }
 
 		return $page;

@@ -15,13 +15,13 @@ class PageManagerTest extends \DeviseTestCase
         $this->FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
         $this->FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
         $this->RoutesGenerator = m::mock('Devise\Pages\RoutesGenerator');
-
         $this->PageManager = new PageManager($this->DvsPage, $this->PageVersionManager, $this->PageVersionsRepository, $this->FieldsRepository, $this->FieldManager, $Framework, $this->RoutesGenerator);
     }
 
     public function test_it_creates_new_page()
     {
         $this->PageVersionManager->shouldReceive('createDefaultPageVersion')->times(1)->andReturn(new \DvsPageVersion);
+        $this->RoutesGenerator->shouldReceive('cacheRoutes')->once();
         $page = $this->PageManager->createNewPage(['title' => 'Some page title', 'slug' => '/some-page-title', 'http_verb' => 'get', 'view' => 'some.view.path']);
         assertNotFalse($page);
         assertInstanceOf('DvsPageVersion', $page->version);
@@ -30,12 +30,14 @@ class PageManagerTest extends \DeviseTestCase
 
     public function test_it_updates_page()
     {
+        $this->RoutesGenerator->shouldReceive('cacheRoutes')->once();
         $page = $this->PageManager->updatePage(1, ['title' => 'Some page title', 'slug' => '/some-page-title', 'http_verb' => 'get', 'view' => 'some.view.path']);
         assertEquals('Some page title', $page->title);
     }
 
     public function test_it_destroys_page()
     {
+        $this->RoutesGenerator->shouldReceive('cacheRoutes')->once();
         $this->PageManager->destroyPage(1);
         $deletedPage = \DvsPage::find(1);
         assertNull($deletedPage);
@@ -43,6 +45,7 @@ class PageManagerTest extends \DeviseTestCase
 
     public function test_it_copies_page()
     {
+        $this->RoutesGenerator->shouldReceive('cacheRoutes')->once();
         $this->PageVersionManager->shouldReceive('copyPageVersionToAnotherPage')->times(1);
         $newPage = $this->PageManager->copyPage(1, ['title' => 'Some page title', 'slug' => '/some-page-title', 'http_verb' => 'get', 'view' => 'some.view.path']);
         assertNotEquals(1, $newPage->id);

@@ -138,6 +138,7 @@ class PageManager
         {
             $startsAt = array_get($input, 'published', false) ? new \DateTime : null;
             $page->version = $this->PageVersionManager->createDefaultPageVersion($page, $startsAt);
+            $this->RoutesGenerator->cacheRoutes();
         }
 
         return $page;
@@ -160,6 +161,7 @@ class PageManager
         if ($this->validator->passes())
         {
             $page->update($input);
+            $this->RoutesGenerator->cacheRoutes();
             return $page;
         }
 
@@ -179,6 +181,8 @@ class PageManager
         $page = $this->Page->findOrFail($id);
 
         $page->versions()->delete();
+
+        $this->RoutesGenerator->cacheRoutes();
 
         return $page->delete();
     }
@@ -209,6 +213,8 @@ class PageManager
         $toPage = $this->createPageFromInput($input);
 
         $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
+
+        $this->RoutesGenerator->cacheRoutes();
 
         return $toPage;
     }

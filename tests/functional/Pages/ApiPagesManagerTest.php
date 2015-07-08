@@ -20,6 +20,7 @@ class ApiPagesManagerTest extends \DeviseTestCase
 
     public function test_it_creates_new_page()
     {
+        $this->RoutesGenerator->shouldReceive('cacheRoutes')->once();
         $this->PageVersionManager->shouldReceive('createDefaultPageVersion')->times(1)->andReturn(new \DvsPageVersion);
         $page = $this->ApiPagesManager->createNewPage(['title' => 'Some page title', 'slug' => '/some-page-title', 'http_verb' => 'get', 'response_path' => 'some.path','response_params'=>'param1,param2']);
         assertNotFalse($page);

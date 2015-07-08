@@ -521,18 +521,27 @@ class PagesRepository
     {
         foreach ($fields as $field)
         {
-            // turn routes into urls GO MAGIC GO! ^_^
-            if (!isset($field->value->url) || $field->value->url == '')
-            {
-                if (isset($field->value->route) && $field->value->route !== '') { 
-                    $field->value->url = $this->URL->route($field->value->route);
-                }
-            }
-
+            $this->updateUrlsInField($field);
             $page->{$field->key} = $field->value;
         }
 
         return $page;
+    }
+
+    /**
+     * [updateUrlsInField description]
+     * @param  [type] $field
+     * @return [type]
+     */
+    protected function updateUrlsInField($field)
+    {
+        if (isset($field->value->route) && $field->value->route !== '')
+        {
+            if (!isset($field->value->url) || $field->value->url == '')
+            {
+                $field->value->url = dvspage($field->value->route);
+            }
+        }
     }
 
     /**
@@ -547,6 +556,14 @@ class PagesRepository
     {
         foreach ($collections as $key => $collection)
         {
+            foreach ($collection as $fields)
+            {
+                foreach ($fields as $field)
+                {
+                    $this->updateUrlsInField($field);
+                }
+            }
+
             $page->{$key} = $collection;
         }
 

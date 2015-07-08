@@ -11,12 +11,12 @@ use Devise\Pages\Fields\FieldManager;
  */
 class PageManager
 {
-	/**
+    /**
      * DvsPage model to fetch database dvs_pages
      *
-	 * @var Page
-	 */
-	protected $Page;
+     * @var Page
+     */
+    protected $Page;
 
     /**
      * Validator is used to validate page rules
@@ -76,14 +76,14 @@ class PageManager
         'response_params',
     ];
 
-	/**
+    /**
      * Errors are kept in an array and can be
      * used later if validation fails and we want to
      * know why
      *
-	 * @var array
-	 */
-	public $errors;
+     * @var array
+     */
+    public $errors;
 
     /**
      * This is a message that we can store why the
@@ -103,13 +103,14 @@ class PageManager
      * @param FieldManager $FieldManager
      * @param Framework $Framework
      */
-	public function __construct(
+    public function __construct(
         \DvsPage $Page,
         PageVersionManager $PageVersionManager,
         PageVersionsRepository $PageVersionsRepository,
         FieldsRepository $FieldsRepository,
         FieldManager $FieldManager,
-        Framework $Framework
+        Framework $Framework,
+        RoutesGenerator $RoutesGenerator
     ){
         $this->Page = $Page;
         $this->Validator = $Framework->Validator;
@@ -118,38 +119,39 @@ class PageManager
         $this->FieldsRepository = $FieldsRepository;
         $this->FieldManager = $FieldManager;
         $this->Config = $Framework->config;
+        $this->RoutesGenerator = $RoutesGenerator;
         $this->now = new \DateTime;
     }
 
-	/**
-	 * Validates and creates a page with the given input
+    /**
+     * Validates and creates a page with the given input
      *
-	 * @param  array a$input
-	 * @return bool
-	 */
-	public function createNewPage($input)
-	{
+     * @param  array a$input
+     * @return bool
+     */
+    public function createNewPage($input)
+    {
         $input['response_type'] = 'View';
-		$page = $this->createPageFromInput($input);
+        $page = $this->createPageFromInput($input);
 
         if ($page)
         {
             $startsAt = array_get($input, 'published', false) ? new \DateTime : null;
-    		$page->version = $this->PageVersionManager->createDefaultPageVersion($page, $startsAt);
+            $page->version = $this->PageVersionManager->createDefaultPageVersion($page, $startsAt);
         }
 
-		return $page;
+        return $page;
     }
 
-	/**
-	 * Validates and updates a page with the given input
+    /**
+     * Validates and updates a page with the given input
      *
-	 * @param  integer $id
-	 * @param  array   $input
-	 * @return bool
-	 */
-	public function updatePage($id, $input)
-	{
+     * @param  integer $id
+     * @param  array   $input
+     * @return bool
+     */
+    public function updatePage($id, $input)
+    {
         $input = array_only($input, static::$PageFields);
         $page = $this->Page->findOrFail($id);
 
@@ -166,31 +168,31 @@ class PageManager
         return false;
     }
 
-	/**
+    /**
      * Destroys a page
      *
      * @param  integer $id
      * @return boolean
      */
-	public function destroyPage($id)
-	{
-		$page = $this->Page->findOrFail($id);
+    public function destroyPage($id)
+    {
+        $page = $this->Page->findOrFail($id);
 
         $page->versions()->delete();
 
-		return $page->delete();
-	}
+        return $page->delete();
+    }
 
-	/**
+    /**
      * Takes the input provided and runs the create method after stripping necessary fields.
      *
      * @param  integer $fromPageId
      * @param  array   $input
      * @return DvsPage
      */
-	public function copyPage($fromPageId, $input)
-	{
-		$fromPage = $this->Page->findOrFail($fromPageId);
+    public function copyPage($fromPageId, $input)
+    {
+        $fromPage = $this->Page->findOrFail($fromPageId);
 
         if (isset($input['page_version_id']))
         {
@@ -204,16 +206,16 @@ class PageManager
             $fromPageVersion = $fromPage->getLiveVersion();
         }
 
-		$toPage = $this->createPageFromInput($input);
+        $toPage = $this->createPageFromInput($input);
 
         $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
 
-		return $toPage;
-	}
+        return $toPage;
+    }
 
 
 
-	/**
+    /**
      * This helper method keeps looking through suggested route names
      * and adding a number onto the suggested route until it finds an available
      * one that isn't taken in the database. We don't want route names to be
@@ -223,7 +225,7 @@ class PageManager
      * @param  integer $currentIteration
      * @return string
      */
-	protected function findAvailableRoute($suggestedRoute, $currentIteration = 0)
+    protected function findAvailableRoute($suggestedRoute, $currentIteration = 0)
     {
         $modifiedRoute = ($currentIteration == 0) ? $suggestedRoute : $suggestedRoute . '-' . $currentIteration;
 

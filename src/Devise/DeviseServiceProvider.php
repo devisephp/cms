@@ -24,6 +24,7 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
         'devise.permissions',
         'devise.templates',
         'devise.zencoder',
+        'devise.routes',
     ];
 
     /**

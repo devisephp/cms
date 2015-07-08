@@ -10,36 +10,36 @@ use Illuminate\Support\ServiceProvider;
  */
 class SupportServiceProvider extends ServiceProvider
 {
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
-	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		$this->registerDeviseLaravelConsoleCommands();
-	}
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->registerDeviseLaravelConsoleCommands();
+    }
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
         $this->registerSortable();
         $this->app->instance('Framework', function()
         {
             return new \Devise\Support\Framework;
         });
-	}
+    }
 
     /**
      * Register the sortable facade and provider for
@@ -54,15 +54,15 @@ class SupportServiceProvider extends ServiceProvider
         $provider->boot();
     }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array();
-	}
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return array();
+    }
 
     /**
      * Register the installer command for devise
@@ -106,7 +106,12 @@ class SupportServiceProvider extends ServiceProvider
             return new Console\DeviseUpgradeCommand($this->app);
         });
 
-        $this->commands(['command.devise.install', 'command.devise.assets', 'command.devise.configs', 'command.devise.migrate', 'command.devise.seed', 'command.devise.reset', 'command.devise.upgrade']);
+        $this->app->singleton('command.devise.cache', function($app)
+        {
+            return new Console\DeviseCacheCommand($this->app);
+        });
+
+        $this->commands(['command.devise.install', 'command.devise.assets', 'command.devise.configs', 'command.devise.migrate', 'command.devise.seed', 'command.devise.reset', 'command.devise.upgrade', 'command.devise.cache']);
     }
 
 }

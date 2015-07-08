@@ -232,7 +232,10 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
                 // the start-editor=false redirect (see above) will
                 // catch it
                 iframe.contents().find('a').each(function(index, el){
-                    $(el).attr('target', '_top');
+                    var attr = $(this).attr('target');
+                    if (typeof attr == typeof undefined || attr == '_self') {
+                        $(el).attr('target', '_top');
+                    }
                 });
 
                 // check for form submissions, and when we find one

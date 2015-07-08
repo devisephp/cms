@@ -11,14 +11,18 @@ class RoutesGeneratorTest extends \DeviseTestCase
 
         $this->Framework = new Framework;
         $this->Framework->File = m::mock('FilesystemMock');
-        $this->RoutesCacheCommand = m::mock('Devise\Pages\RoutesCacheCommand');
-        $this->RoutesGenerator = new RoutesGenerator($this->Framework, $this->RoutesCacheCommand);
+        $this->Framework->DB = m::mock('DBMock');
+        $this->Framework->Artisan = m::mock('ArtisanMock');
+        $this->RoutesGenerator = new RoutesGenerator($this->Framework);
     }
 
     public function test_it_can_cache_routes()
     {
 		$this->Framework->File->shouldReceive('put')->once();
-		$this->RoutesCacheCommand->shouldReceive('fire')->once();
+		$this->Framework->DB->shouldReceive('table')->once()->andReturnSelf();
+		$this->Framework->DB->shouldReceive('select')->once()->andReturnSelf();
+		$this->Framework->DB->shouldReceive('get')->once()->andReturnSelf();
+		$this->Framework->Artisan->shouldReceive('call')->once()->andReturnSelf();
 		$this->RoutesGenerator->cacheRoutes();
     }
 
@@ -31,6 +35,9 @@ class RoutesGeneratorTest extends \DeviseTestCase
 		$this->RoutesGenerator->Route->shouldReceive('put');
 		$this->RoutesGenerator->Route->shouldReceive('delete');
 		$this->RoutesGenerator->Route->shouldReceive('patch');
+		$this->Framework->DB->shouldReceive('table')->once()->andReturnSelf();
+		$this->Framework->DB->shouldReceive('select')->once()->andReturnSelf();
+		$this->Framework->DB->shouldReceive('get')->once()->andReturnSelf();
 		$this->RoutesGenerator->loadRoutes();
     }
 

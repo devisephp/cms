@@ -268,6 +268,7 @@ class PagesRepository
                 'human_name' => $page->language->human_name,
                 'url' => $this->URL->route($page->route_name),
                 'code' => $page->language->code,
+                'id' => $page->language->id,
             ]
         ];
 
@@ -277,6 +278,7 @@ class PagesRepository
                 'human_name' => $p->language->human_name,
                 'url' => $this->URL->route($p->route_name),
                 'code' => $p->language->code,
+                'id' => $p->language->id,
             ];
         }
 
@@ -287,6 +289,7 @@ class PagesRepository
                 'human_name' => $p->language->human_name,
                 'url' => $this->URL->route($p->route_name),
                 'code' => $p->language->code,
+                'id' => $p->language->id,
             ];
         }
 

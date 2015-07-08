@@ -309,7 +309,7 @@ if (!function_exists('dvspage'))
 		$locale = App::make('Devise\Languages\LocaleDetector')->current();
 
 		return Route::getRoutes()->hasNamedRoute( $locale . '-' . $routeName )
-			? route($locale . '-' . $route, $options)
+			? route($locale . '-' . $routeName, $options)
 			: route($routeName, $options);
 	}
 }

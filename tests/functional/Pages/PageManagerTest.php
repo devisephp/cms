@@ -15,7 +15,8 @@ class PageManagerTest extends \DeviseTestCase
         $this->FieldsRepository = m::mock('Devise\Pages\Fields\FieldsRepository');
         $this->FieldManager = m::mock('Devise\Pages\Fields\FieldManager');
         $this->RoutesGenerator = m::mock('Devise\Pages\RoutesGenerator');
-        $this->PageManager = new PageManager($this->DvsPage, $this->PageVersionManager, $this->PageVersionsRepository, $this->FieldsRepository, $this->FieldManager, $Framework, $this->RoutesGenerator);
+        $this->Language = new \DvsLanguage;
+        $this->PageManager = new PageManager($this->DvsPage, $this->PageVersionManager, $this->PageVersionsRepository, $this->FieldsRepository, $this->FieldManager, $Framework, $this->RoutesGenerator, $this->Language);
     }
 
     public function test_it_creates_new_page()
@@ -26,6 +27,17 @@ class PageManagerTest extends \DeviseTestCase
         assertNotFalse($page);
         assertInstanceOf('DvsPageVersion', $page->version);
         assertEquals($page->title, 'Some page title');
+    }
+
+    public function test_it_creates_new_page_for_spanish_language()
+    {
+        $this->PageVersionManager->shouldReceive('createDefaultPageVersion')->times(1)->andReturn(new \DvsPageVersion);
+        $this->RoutesGenerator->shouldReceive('cacheRoutes')->once();
+        $page = $this->PageManager->createNewPage(['title' => 'Some page title', 'slug' => '/some-page-title', 'http_verb' => 'get', 'view' => 'some.view.path', 'language_id' => 163]);
+        assertNotFalse($page);
+        assertInstanceOf('DvsPageVersion', $page->version);
+        assertEquals($page->title, 'Some page title');
+        assertEquals($page->route_name, 'es-some-page-title');
     }
 
     public function test_it_updates_page()

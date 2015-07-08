@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 use Devise\Support\Framework;
 use Devise\Pages\Fields\FieldsRepository;
 use Devise\Pages\Fields\FieldManager;
+use Devise\Languages\LocaleDetector;
 
 /**
  * Class PageManager manages the creating of new pages,
@@ -59,7 +60,6 @@ class PageManager
         'view',
         'title',
         'http_verb',
-        'route_name',
         'is_admin',
         'dvs_admin',
         'slug',
@@ -110,7 +110,8 @@ class PageManager
         FieldsRepository $FieldsRepository,
         FieldManager $FieldManager,
         Framework $Framework,
-        RoutesGenerator $RoutesGenerator
+        RoutesGenerator $RoutesGenerator,
+        \DvsLanguage $Language
     ){
         $this->Page = $Page;
         $this->Validator = $Framework->Validator;
@@ -120,6 +121,7 @@ class PageManager
         $this->FieldManager = $FieldManager;
         $this->Config = $Framework->config;
         $this->RoutesGenerator = $RoutesGenerator;
+        $this->Language = $Language;
         $this->now = new \DateTime;
     }
 
@@ -231,18 +233,24 @@ class PageManager
      * @param  integer $currentIteration
      * @return string
      */
-    protected function findAvailableRoute($suggestedRoute, $currentIteration = 0)
+    protected function findAvailableRoute($suggestedRoute, $languageId)
     {
-        $modifiedRoute = ($currentIteration == 0) ? $suggestedRoute : $suggestedRoute . '-' . $currentIteration;
+        $sanity = 0;
 
-        $existingRouteSearch = $this->Page->where('route_name', '=', $modifiedRoute)->count();
+        $modifiedRoute = $suggestedRoute;
 
-        if ($existingRouteSearch < 1)
+        if ($languageId != $this->Config->get('devise.languages.primary_language_id'))
         {
-            return $modifiedRoute;
+            $language = $this->Language->findOrFail($languageId);
+            $modifiedRoute = $language->code . '-' . $suggestedRoute;
         }
 
-        return $this->findAvailableRoute($suggestedRoute, $currentIteration + 1);
+        while ($this->Page->where('route_name', '=', $modifiedRoute)->count() > 0 && $sanity++ < 100)
+        {
+            $modifiedRoute .= '-' . $sanity;
+        }
+
+        return $modifiedRoute;
     }
 
 
@@ -254,21 +262,18 @@ class PageManager
      */
     protected function createPageFromInput($input)
     {
-        $primaryLanguageId = $this->Config->get('devise.languages.primary_language_id');
         // fill in some default values
         $input = array_only($input, static::$PageFields);
         $input['is_admin'] = array_get($input, 'is_admin', false);
         $input['dvs_admin'] = array_get($input, 'dvs_admin', false);
-        $input['language_id'] = array_get($input, 'language_id', $primaryLanguageId);
+        $input['language_id'] = array_get($input, 'language_id', $this->Config->get('devise.languages.primary_language_id'));
+        $input['route_name'] = $this->findAvailableRoute(Str::slug(array_get($input, 'title', str_random(42))), $input['language_id']);
 
         // validate the input given before we create the page
         $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);
 
         if ($this->validator->passes())
         {
-            $suggestedRouteName = (!isset($input['route_name'])) ? Str::slug($input['title']) : $input['route_name'];
-            $input['route_name'] = $this->findAvailableRoute($suggestedRouteName);
-
             return $this->Page->create($input);
         }
 

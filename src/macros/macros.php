@@ -180,12 +180,11 @@ if (!function_exists('isActiveLink'))
 
 /*
 |--------------------------------------------------------------------------
-| Devise model
+| Devise tag cid
 |--------------------------------------------------------------------------
 |
-| This adds a model to devise at run time on the page when the
-| view is rendered. It will use the model's key() and get_class()
-| information.
+| This adds a cid to a devise tag at run time. It will use the model's key()
+| and get_class() information.
 |
 */
 if (!function_exists('devise_tag_cid'))
@@ -196,30 +195,15 @@ if (!function_exists('devise_tag_cid'))
     }
 }
 
+
+
 /*
 |--------------------------------------------------------------------------
-| Gets proper url/link in the order precedence, 1) route or 2) url
+| Devise docs
 |--------------------------------------------------------------------------
 |
-*/
-if (!function_exists('getLinkRouteOrUrl'))
-{
-    function getLinkRouteOrUrl($linkValue, $default = '/#')
-    {
-        $link = ($linkValue->url != '') ? $linkValue->url : $default;
-
-        if($linkValue->route != '') {
-            $link = URL::route($linkValue->route);
-        }
-
-        return $link;
-    }
-}
-
-/*
-|--------------------------------------------------------------------------
-| Gets proper url/link in the order precedence, 1) route or 2) url
-|--------------------------------------------------------------------------
+| Creates a documentation page for this particular view. The docs must have
+| view matching the same $viewName as provided or this will just be blank
 |
 */
 if (!function_exists('deviseDocs'))
@@ -231,6 +215,13 @@ if (!function_exists('deviseDocs'))
 }
 
 /*
+|--------------------------------------------------------------------------
+| Devise live code
+|--------------------------------------------------------------------------
+|
+| Allows us to update text inside the documentation by typing in a text
+| field on the page. This allows our examples to remain relevant
+|
 */
 if (!function_exists('deviseLiveCode'))
 {
@@ -240,6 +231,16 @@ if (!function_exists('deviseLiveCode'))
     }
 }
 
+/*
+|--------------------------------------------------------------------------
+| Devise docs link
+|--------------------------------------------------------------------------
+|
+| Creates a button to link to the documentation section. These would be
+| placed on the main page. For example you could put one beside a <input>
+| to #target a section in the documentation sidebar
+|
+*/
 if (!function_exists('deviseDocsLink'))
 {
 	function deviseDocsLink($section = null, $helptext = null)
@@ -251,6 +252,15 @@ if (!function_exists('deviseDocsLink'))
 	}
 }
 
+/*
+|--------------------------------------------------------------------------
+| Devise magic
+|--------------------------------------------------------------------------
+|
+| This macro injects in a ###dvsmagic-field-id### tag in place of the real
+| $value and $name. This allows us to have live updates on the editor
+|
+*/
 if (!function_exists('dvsmagic'))
 {
 	function dvsmagic($value, $name, $parent)
@@ -262,6 +272,15 @@ if (!function_exists('dvsmagic'))
 	}
 }
 
+/*
+|--------------------------------------------------------------------------
+| Relative File Name From Template
+|--------------------------------------------------------------------------
+|
+| Turns a template into a relative file name. This uses the relative path
+| to the template and converts it into 'some.view.path'
+|
+*/
 if (!function_exists('relativeFileNameFromTemplate'))
 {
 	function relativeFileNameFromTemplate($template)
@@ -270,5 +289,27 @@ if (!function_exists('relativeFileNameFromTemplate'))
 		array_pop($templateName);
 		$templateName = implode('.', $templateName);
 		return $templateName;
+	}
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Devise page
+|--------------------------------------------------------------------------
+|
+| Route to a dvspage. This allows us to handle pages in different languages
+| too...
+|
+*/
+if (!function_exists('dvspage'))
+{
+	function dvspage($routeName, $options = [])
+	{
+		$locale = App::make('Devise\Languages\LocaleDetector')->current();
+
+		return Route::getRoutes()->hasNamedRoute( $locale . '-' . $routeName )
+			? route($locale . '-' . $route, $options)
+			: route($routeName, $options);
 	}
 }

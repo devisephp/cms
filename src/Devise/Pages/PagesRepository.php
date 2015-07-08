@@ -431,7 +431,7 @@ class PagesRepository
                                 })
                                 ->lists('title', 'language_id');
 
-        return array_diff_key($languages, $existingLangages);
+        return array_diff_key($languages, $existingLangages->toArray());
     }
 
     /**

@@ -212,6 +212,9 @@ class PageManager
             $fromPageVersion = $fromPage->getLiveVersion();
         }
 
+
+        $input = $this->getTranslatedFromPageId($fromPageId, $input);
+
         $toPage = $this->createPageFromInput($input);
 
         $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
@@ -221,7 +224,31 @@ class PageManager
         return $toPage;
     }
 
+    /**
+     * This ensures that we are translating from the correct "parent" page.
+     *
+     * This happens when a user creates a page and then copies that "parent"
+     * page to a "child" page. When the user tries to copy the "child"
+     * page to a "grandchild" page. We want the "grandchild" to be a
+     * "child" instead of a "grandchild".
+     *
+     * This keeps page nesting down to 1 level instead of nesting under
+     * many levels.
+     *
+     * @param  integer $fromPageId
+     * @param  array $input
+     * @return array
+     */
+    protected function getTranslatedFromPageId($fromPageId, $input)
+    {
+        $fromPage = $this->Page->findOrFail($fromPageId);
 
+        $input['translated_from_page_id'] = $fromPage->translated_from_page_id
+            ? $fromPage->translated_from_page_id
+            : $fromPage->id;
+
+        return $input;
+    }
 
     /**
      * This helper method keeps looking through suggested route names

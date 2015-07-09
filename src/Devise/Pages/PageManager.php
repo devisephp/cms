@@ -217,6 +217,8 @@ class PageManager
 
         $toPage = $this->createPageFromInput($input);
 
+        if (!$toPage) return false;
+
         $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
 
         $this->RoutesGenerator->cacheRoutes();
@@ -296,18 +298,43 @@ class PageManager
         $input['language_id'] = array_get($input, 'language_id', $this->Config->get('devise.languages.primary_language_id'));
         $input['route_name'] = $this->findAvailableRoute(Str::slug(array_get($input, 'title', str_random(42))), $input['language_id']);
 
-        // validate the input given before we create the page
-        $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);
-
-        if ($this->validator->passes())
+        if ($this->isValidInputForNewPage($input))
         {
             return $this->Page->create($input);
         }
 
-        $this->errors = $this->validator->errors()->all();
-        $this->message = "There were validation errors.";
-
         return false;
+    }
+
+    /**
+     * [isValidInputForNewPage description]
+     * @param  [type]  $input
+     * @return boolean
+     */
+    protected function isValidInputForNewPage($input)
+    {
+        // validate the input given before we create the page
+        $this->validator = $this->Validator->make($input, $this->Page->createRules, $this->Page->messages);
+
+        $fails = $this->validator->fails();
+
+        if ($fails)
+        {
+            $this->errors = $this->validator->errors()->all();
+            $this->message = "There were validation errors.";
+        }
+
+        // check to make sure that there is no duplicate slug/method out there
+        $duplicatePage = $this->Page->where('http_verb', $input['http_verb'])->where('slug', $input['slug'])->first();
+
+        if ($duplicatePage)
+        {
+            $this->errors = $this->validator->errors()->all();
+            $this->errors['slug'] = 'There is already a page with this slug/verb pair';
+            $this->message = "There were validation errors.";
+        }
+
+        return count($this->errors) == 0;
     }
 
     /**

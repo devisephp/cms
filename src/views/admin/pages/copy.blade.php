@@ -15,7 +15,7 @@
 @section('main')
 
 @if(!isset($input['reason']))
-    @if(isset($availableLanguages) && count($availableLanguages) <= 1)
+    @if(isset($availableLanguages) && !(count($availableLanguages) >= 1))
         <div class="alert">
             <h2>Notice about copying page <?= $page->title ?></h2>
             <ul class="list"><li>Translate option is unavailable because the page has been translated to all available languages.</li></ul>
@@ -32,7 +32,7 @@
                 @if(isset($availableLanguages) && count($availableLanguages) >= 1)
                     <?= link_to(URL::route('dvs-pages-copy', array($page->id)) . '?reason=translate', 'Translate Page', array('class'=>'dvs-button dvs-button-secondary')) ?>
                 @endif
-            <div class="dvs-helptext">
+            <div class="dvs-helptext" style="margin-left: 0px; padding-left: 0px;">
                 <p>For what purpose are you copying this page.</p>
             </div>`
         </div>

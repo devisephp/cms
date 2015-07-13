@@ -175,7 +175,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 			'page': this.data.page.info
 		};
 
-		this.sidebar.layout.removeClass('saving');
+		this.sidebar.layout.addClass('saving');
 
 		$.ajax(url, {
 			method: 'PUT',

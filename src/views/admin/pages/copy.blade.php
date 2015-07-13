@@ -34,7 +34,7 @@
                 @endif
             <div class="dvs-helptext" style="margin-left: 0px; padding-left: 0px;">
                 <p>For what purpose are you copying this page.</p>
-            </div>`
+            </div>
         </div>
     </div>
 

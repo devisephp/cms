@@ -5266,6 +5266,7 @@ table.dvs-admin-table {
     #dvs-mode.dvs-sidebar-mode .dvs-sidebar-collection-group > div {
       margin: -20px; }
   #dvs-mode.dvs-sidebar-mode .dvs-sidebar-discard, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-group, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-model, #dvs-mode.dvs-sidebar-mode .dvs-sidebar-save-model-groups {
+    cursor: pointer;
     display: block;
     width: 100%;
     padding: 27px 15px;

@@ -39288,13 +39288,12 @@ devise.define('dvsSidebarView',['jquery', 'query', 'dvsBaseView', 'dvsFieldView'
      */
     function onLanguageSelectorChanged(event)
     {
-	   	var url = $(event.currentTarget).find(':selected').data('url');
-    	var languageId = $(event.currentTarget).val();
+    	var url = $(event.currentTarget).find(':selected').data('url');
 
-		if (this.page.languageId != languageId)
-		{
+    	if (url != location.href)
+    	{
     		location.href = url;
-		}
+    	}
     }
 
 	return Sidebar;
@@ -40066,8 +40065,6 @@ devise.define('dvsFieldView',['jquery', 'dvsBaseView', 'dvsLiveUpdater'], functi
 
 		var resetValues = View.make('sidebar.partials.reset-values');
 
-		console.log(field, field.scope);
-
 		var sitewide = View.make('sidebar.partials.site-wide-field', { 'site_wide': field.scope === 'global' });
 
 		this.data['field'] = field;
@@ -40373,7 +40370,7 @@ devise.define('dvsCollectionView',['jquery', 'dvsBaseView', 'dvsFieldView', 'dvs
 			'page': this.data.page.info
 		};
 
-		this.sidebar.layout.removeClass('saving');
+		this.sidebar.layout.addClass('saving');
 
 		$.ajax(url, {
 			method: 'PUT',

@@ -210,8 +210,9 @@ devise.define(['jquery', 'query', 'dvsBaseView', 'dvsFieldView', 'dvsCollectionV
     function onLanguageSelectorChanged(event)
     {
     	var url = $(event.currentTarget).find(':selected').data('url');
+    	var id = $(event.currentTarget).val();
 
-    	if (url != location.href)
+    	if (id != this.page.languageId)
     	{
     		location.href = url;
     	}

@@ -39288,12 +39288,13 @@ devise.define('dvsSidebarView',['jquery', 'query', 'dvsBaseView', 'dvsFieldView'
      */
     function onLanguageSelectorChanged(event)
     {
-    	var url = $(event.currentTarget).find(':selected').data('url');
+	   	var url = $(event.currentTarget).find(':selected').data('url');
+    	var languageId = $(event.currentTarget).val();
 
-    	if (url != location.href)
-    	{
+		if (this.page.languageId != languageId)
+		{
     		location.href = url;
-    	}
+		}
     }
 
 	return Sidebar;
@@ -40065,7 +40066,9 @@ devise.define('dvsFieldView',['jquery', 'dvsBaseView', 'dvsLiveUpdater'], functi
 
 		var resetValues = View.make('sidebar.partials.reset-values');
 
-		var sitewide = View.make('sidebar.partials.site-wide-field', { 'site_wide': field.scope === '  ' });
+		console.log(field, field.scope);
+
+		var sitewide = View.make('sidebar.partials.site-wide-field', { 'site_wide': field.scope === 'global' });
 
 		this.data['field'] = field;
 

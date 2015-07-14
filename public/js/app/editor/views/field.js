@@ -51,7 +51,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 
 		var resetValues = View.make('sidebar.partials.reset-values');
 
-		var sitewide = View.make('sidebar.partials.site-wide-field', { 'site_wide': field.scope === '  ' });
+		var sitewide = View.make('sidebar.partials.site-wide-field', { 'site_wide': field.scope === 'global' });
 
 		this.data['field'] = field;
 

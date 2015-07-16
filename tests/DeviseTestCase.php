@@ -37,6 +37,8 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 
 		$testEnvironment = 'testing';
 
+		$GLOBALS['manuallyRequireDeviseRoutes'] = true;
+
 		if (!static::$setup)
 		{
 			$loader = require __DIR__ . '/../vendor/autoload.php';
@@ -57,9 +59,11 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 
 			Artisan::call('db:seed', array('--class' => 'DeviseTestsOnlySeeder'));
 
-			static::$setup = true;
+			static::manuallyRequireRoutes();
 
 			Mail::pretend(true);
+
+			static::$setup = true;
 		}
 
 		return static::$application;
@@ -197,5 +201,17 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 		}
 
 		return $branch;
+	}
+
+	/**
+	 * Manually requires the routes file in devise
+	 * since we cannot load it prior to the configuration
+	 * of our database.type
+	 *
+	 * @return [type]
+	 */
+	static public function manuallyRequireRoutes()
+	{
+        require __DIR__. '/../src/Devise/Pages/routes.php';
 	}
 }

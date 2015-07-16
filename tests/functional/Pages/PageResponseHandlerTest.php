@@ -57,7 +57,6 @@ class PageResponseHandlerTest extends \DeviseTestCase
     {
         $this->PageManager->shouldReceive('destroyPage')->times(1)->andReturn(true);
         $this->Redirect->shouldReceive('route')->times(1)->andReturnSelf();
-        $this->Redirect->shouldReceive('with')->times(1);
         $this->PageResponseHandler->requestDestroyPage(1);
     }
 

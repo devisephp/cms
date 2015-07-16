@@ -13,11 +13,15 @@ class RoutesGeneratorTest extends \DeviseTestCase
         $this->Framework->File = m::mock('FilesystemMock');
         $this->Framework->DB = m::mock('DBMock');
         $this->Framework->Artisan = m::mock('ArtisanMock');
+        $this->Framework->Config = m::mock('ConfigMock');
+        $this->Framework->Container = m::mock('AppMock');
         $this->RoutesGenerator = new RoutesGenerator($this->Framework);
     }
 
     public function test_it_can_cache_routes()
     {
+    	$this->Framework->Config->shouldReceive('get')->with('devise.routes.enabled')->andReturn(true);
+    	$this->Framework->Config->shouldReceive('get')->with('devise.routes.cache')->andReturn('some file path');
 		$this->Framework->File->shouldReceive('put')->once();
 		$this->Framework->DB->shouldReceive('table')->once()->andReturnSelf();
 		$this->Framework->DB->shouldReceive('select')->once()->andReturnSelf();
@@ -28,6 +32,7 @@ class RoutesGeneratorTest extends \DeviseTestCase
 
     public function test_it_can_load_routes()
     {
+    	$this->Framework->Container->shouldReceive('routesAreCached')->andReturn(false);
 		$this->Framework->File->shouldReceive('exists')->andReturn(false);
 		$this->RoutesGenerator->Route = m::mock('Router');
 		$this->RoutesGenerator->Route->shouldReceive('get');
@@ -43,7 +48,7 @@ class RoutesGeneratorTest extends \DeviseTestCase
 
     public function test_it_does_not_load_routes_when_cache_exists()
     {
-		$this->Framework->File->shouldReceive('exists')->andReturn(true);
+    	$this->Framework->Container->shouldReceive('routesAreCached')->andReturn(true);
 		$this->RoutesGenerator->Route = m::mock('Router');
 		$this->RoutesGenerator->Route->shouldReceive('get')->times(0);
 		$this->RoutesGenerator->Route->shouldReceive('post')->times(0);
@@ -55,6 +60,8 @@ class RoutesGeneratorTest extends \DeviseTestCase
 
     public function test_it_can_load_filters()
     {
+    	$this->Framework->Config->shouldReceive('get')->with('devise.permissions')->andReturn(\Config::get('devise.permissions'));
+    	$this->Framework->Container->shouldReceive('runningInConsole')->andReturn(false);
 		$this->RoutesGenerator->Route = m::mock('Router');
 		$this->RoutesGenerator->Route->shouldReceive('filter');
     	$this->RoutesGenerator->loadFilters();

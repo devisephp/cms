@@ -33,7 +33,16 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        require __DIR__. '/routes.php';
+        // sometimes we want to manually load devise routes because it
+        // requires a database connection to load the routes from dvs_pages
+        // this database connection may not be setup just yet, as in the
+        // case of when we are running functional tests, therefore we
+        // need to manually include our routes file after the database
+        // connection has been setup properly in the DeviseTestCase
+        if (!array_key_exists('manuallyRequireDeviseRoutes', $GLOBALS) || !$GLOBALS['manuallyRequireDeviseRoutes'])
+        {
+            require __DIR__ . '/routes.php';
+        }
 
         // register these field update bindings
         \Event::listen('devise.audio.field.updated', 'Devise\Pages\Fields\Handlers\AudioFieldUpdated');

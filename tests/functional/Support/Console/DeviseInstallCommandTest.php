@@ -33,11 +33,7 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 		$this->DeviseInstallCommand->DevisePublishAssetsCommand = m::mock('Devise\Support\Console\DevisePublishAssetsCommand');
 		$this->DeviseInstallCommand->DevisePublishConfigsCommand = m::mock('Devise\Support\Console\DevisePublishConfigsCommand');
 
-		$this->DeviseInstallCommand->io = m::mock('Devise\Support\Console\DeviseInstallCommand');
-    	$this->DeviseInstallCommand->io->shouldReceive('ask')->andReturn('');
-    	$this->DeviseInstallCommand->io->shouldReceive('comment')->andReturn('');
-    	$this->DeviseInstallCommand->io->shouldReceive('error')->andReturn('');
-
+        $this->DeviseInstallCommand->io = new MockedResponseIOHandlerForDeviseInstallCommand;
     	$this->DeviseInstallCommand->wizard = m::mock('Devise\Support\Installer\InstallWizard');
 
     	$this->DeviseInstallCommand->basePath = 'vfs://basedir';
@@ -102,4 +98,57 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 		$contents = file_get_contents('vfs://basedir/config/auth.php');
 		assertContains("'email' => 'devise::emails.recover-password',", $contents);
 	}
+}
+
+class MockedResponseIOHandlerForDeviseInstallCommand
+{
+    public function ask($question, $default = '')
+    {
+        return $default;
+    }
+
+    public function error($message)
+    {
+        return $message;
+    }
+
+    public function comment($message)
+    {
+        return $message;
+    }
+
+    public function askAboutDatabaseType($type)
+    {
+        return $type;
+    }
+
+    public function askAboutDatabaseHost($host)
+    {
+        return $host;
+    }
+
+    public function askAboutDatabaseName($name)
+    {
+        return $name;
+    }
+
+    public function askAboutDatabaseUser($user)
+    {
+        return $user;
+    }
+
+    public function askAboutDatabasePass($pass)
+    {
+        return $pass;
+    }
+
+    public function askAboutDatabaseMigrations($migrations)
+    {
+        return $migrations;
+    }
+
+    public function askAboutDatabaseSeeds($seeds)
+    {
+        return $seeds;
+    }
 }

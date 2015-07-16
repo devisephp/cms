@@ -65,9 +65,7 @@ class DeviseInstallCommand extends Command
         $this->wizard()->refreshEnvironment();
 
         list($email, $user, $pass) = $this->setupAdminUser();
-        $this->io()->comment('');
         $this->io()->comment("Please wait while devise is installing...");
-        $this->io()->comment('');
 
         $this->runInstallCommands();
         $this->wizard()->createAdminUser($email, $user, $pass);
@@ -171,10 +169,8 @@ class DeviseInstallCommand extends Command
     protected function setupEnvironment()
     {
         $default = $this->env('APP_ENV', 'local');
-        $answer = $this->io()->ask("What environment is this? [{$default}]");
-        $answer = $answer ?: $default;
+        $answer = $this->io()->ask("What environment is this?", $default);
         $this->wizard()->saveEnvironment($answer);
-        $this->io()->comment('');
         return $answer;
     }
 
@@ -185,10 +181,8 @@ class DeviseInstallCommand extends Command
     protected function setupAppName()
     {
         $default = $this->env('APP_NAME', 'App');
-        $answer = $this->io()->ask("What is your Application name? [{$default}]");
-        $answer = $answer ?: $default;
+        $answer = $this->io()->ask("What is your Application name?", $default);
         $this->wizard->saveApplicationNamespace($default);
-        $this->io()->comment('');
         return $answer;
     }
 
@@ -222,9 +216,7 @@ class DeviseInstallCommand extends Command
 
             if ($this->wizard()->errors)
             {
-                $this->io()->comment('');
                 $this->spitOutErrors($this->wizard->errors->all());
-                $this->io()->comment('');
             }
             else
             {
@@ -232,7 +224,6 @@ class DeviseInstallCommand extends Command
             }
         }
 
-        $this->io()->comment('');
     }
 
     /**
@@ -242,10 +233,8 @@ class DeviseInstallCommand extends Command
     protected function setupConfigOverrides()
     {
         $default = $this->env('CONFIGS_OVERRIDE', 'yes');
-        $answer = $this->io()->ask("Do you want override all Devise configs? [{$default}]");
-        $answer = $answer ?: $default;
+        $answer = $this->io()->ask("Do you want override all Devise configs?", $default);
         $this->wizard()->saveConfigsOverride($answer);
-        $this->io()->comment('');
     }
 
     /**
@@ -257,9 +246,9 @@ class DeviseInstallCommand extends Command
         $email = "no-reply@devisephp.com";
         $user = "devise";
         $pass = "password";
-        $email = $this->io()->ask("Admin email [{$email}]") ?: $email;
-        $user = $this->io()->ask("Admin username [{$user}]") ?: $user;
-        $pass = $this->io()->ask("Admin password [{$pass}]") ?: $pass;
+        $email = $this->io()->ask("Admin email", $email);
+        $user = $this->io()->ask("Admin username", $user);
+        $pass = $this->io()->ask("Admin password", $pass);
         return array($email, $user, $pass);
     }
 
@@ -271,14 +260,11 @@ class DeviseInstallCommand extends Command
     {
         $types = ['mysql', 'pgsql', 'sqlite', 'sqlsrv'];
         $typeslist = implode(', ', $types);
-        $answer = $this->io()->ask("What database type are you using? {$typeslist} [{$default}]");
-        $answer = $answer ?: $default;
+        $answer = $this->io()->ask("What database type are you using? {$typeslist}", $default);
         if (!in_array($answer, $types))
         {
-            $this->io()->comment('');
-            $this->io()->error("Invalid database type: {$answer}");
-            $this->io()->comment('');
-            return $this->io()->askAboutDatabaseType($default);
+                $this->io()->error("Invalid database type: {$answer}");
+                return $this->io()->askAboutDatabaseType($default);
         }
         return $answer ?: $default;
     }
@@ -290,8 +276,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseHost($default)
     {
-        $answer = $this->io()->ask("What is your database host? [{$default}]");
-        return $answer ?: $default;
+        return $this->io()->ask("What is your database host?", $default);
     }
 
     /**
@@ -301,8 +286,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseName($default)
     {
-        $answer = $this->io()->ask("What is your database name? [{$default}]");
-        return $answer ?: $default;
+        return $this->io()->ask("What is your database name?", $default);
     }
 
     /**
@@ -312,8 +296,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseUser($default)
     {
-        $answer = $this->io()->ask("What is your database username? [{$default}]");
-        return $answer ?: $default;
+        return $this->io()->ask("What is your database username?", $default);
     }
 
     /**
@@ -323,8 +306,12 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabasePass($default)
     {
-        $answer = $this->io()->ask("What is your database password? [{$default}]");
-        return $answer ?: $default;
+        // allows for empty passwords
+        if ($default === '') $default = ' ';
+
+        $answer = $this->io()->ask("What is your database password?", $default);
+
+        return trim($answer) === '' ? '' : $answer;;
     }
 
     /**
@@ -335,8 +322,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseMigrations($default)
     {
-        $answer = $this->io()->ask("Do you want to run the application's db migrations? [{$default}]");
-        return $answer ?: $default;
+        return $this->io()->ask("Do you want to run the application's db migrations?", $default);
     }
 
     /**
@@ -347,8 +333,7 @@ class DeviseInstallCommand extends Command
      */
     protected function askAboutDatabaseSeeds($default)
     {
-        $answer = $this->io()->ask("Do you want to run the application's db seeds? [{$default}]");
-        return $answer ?: $default;
+        return $this->io()->ask("Do you want to run the application's db seeds?", $default);
     }
 
     /**

@@ -87,8 +87,7 @@ class DeviseResetCommand extends Command
      */
     private function askAboutRefreshingDatabase($default = 'yes')
     {
-        $answer = $this->ask('This will refresh the entire database. Are you sure? ['.$default.']');
-        return $answer ?: $default;
+        return $this->ask('This will refresh the entire database. Are you sure?', $default);
     }
 
     /**
@@ -100,8 +99,7 @@ class DeviseResetCommand extends Command
      */
     private function askAboutExcludingUsersTable($default = 'yes')
     {
-        $answer = $this->ask('Would you like to keep the "users" table? ['.$default.']');
-        return $answer ?: $default;
+        return $this->ask('Would you like to keep the "users" table?', $default);
     }
 
     /**

@@ -140,7 +140,7 @@ class PageManager
         {
             $startsAt = array_get($input, 'published', false) ? new \DateTime : null;
             $page->version = $this->PageVersionManager->createDefaultPageVersion($page, $startsAt);
-            $this->RoutesGenerator->cacheRoutes();
+            $this->cacheDeviseRoutes();
         }
 
         return $page;
@@ -163,7 +163,7 @@ class PageManager
         if ($this->validator->passes())
         {
             $page->update($input);
-            $this->RoutesGenerator->cacheRoutes();
+            $this->cacheDeviseRoutes();
             return $page;
         }
 
@@ -184,7 +184,7 @@ class PageManager
 
         $page->versions()->delete();
 
-        $this->RoutesGenerator->cacheRoutes();
+        $this->cacheDeviseRoutes();
 
         return $page->delete();
     }
@@ -221,7 +221,7 @@ class PageManager
 
         $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
 
-        $this->RoutesGenerator->cacheRoutes();
+        $this->cacheDeviseRoutes();
 
         return $toPage;
     }
@@ -371,5 +371,21 @@ class PageManager
         }
 
         return json_encode(true);
+    }
+
+    /**
+     * Cache the devise routes, and make sure to catch an
+     * exception. Exception thrown is likely due to serialization
+     * error caused by caching routes with closures in them
+     *
+     * @return [type]
+     */
+    protected function cacheDeviseRoutes()
+    {
+        try {
+            $this->RoutesGenerator->cacheRoutes();
+        } catch (\Exception $e) {
+            $this->message = $e->getMessage();
+        }
     }
 }

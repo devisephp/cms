@@ -82,6 +82,7 @@ gulp.task('build:js', function()
         'dvsGroupView',
         'dvsBreadCrumbsView',
         'dvsLiveUpdate',
+        'dvsImagePicker',
         'AttributeBinding',
         'ClassBinding',
         'StyleBinding',

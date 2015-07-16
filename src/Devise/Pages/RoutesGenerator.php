@@ -27,6 +27,8 @@ class RoutesGenerator
      */
     public function loadFilters()
     {
+        if ($this->App->runningInConsole()) return;
+
         $filters = $this->Config->get('devise.permissions');
 
         $names = array_keys( $filters );
@@ -59,8 +61,12 @@ class RoutesGenerator
      */
     public function loadRoutes()
     {
-        if ($this->routesAreCached()) return;
+        // laravel (cache) is handling the routes
+        if ($this->App->routesAreCached()) return;
 
+        // laravel has no cache and there is no
+        // devise routes file, therefore we just
+        // load the routes directly from the DB
         $routes = $this->findDvsPageRoutes();
 
         foreach ($routes as $route)
@@ -85,6 +91,17 @@ class RoutesGenerator
      */
     public function cacheRoutes()
     {
+        // routes are not enabled, so we should not
+        // cache. furthermore we should disable the
+        // laravel cache and clear the devise routes
+        // file if it exists
+        if (! $this->Config->get('devise.routes.enabled'))
+        {
+            $this->clearLaravelCache();
+            $this->clearDeviseRoutes();
+            return false;
+        }
+
         $routeCachePath = $this->Config->get('devise.routes.cache');
 
         $routes = $this->findDvsPageRoutes();
@@ -94,18 +111,46 @@ class RoutesGenerator
         $this->File->put($routeCachePath, $routesAsString);
 
         $this->Artisan->call('route:cache');
+
+        return true;
     }
 
     /**
-     * Are the routes cached or not?
+     * Clear the route cache in Laravel
+     * Devis Pages won't work properly if
+     * these routes are cached
      *
      * @return [type]
      */
-    protected function routesAreCached()
+    protected function clearLaravelCache()
+    {
+        $this->Artisan->call('route:clear');
+    }
+
+    /**
+     * Remove the temporary devise routes file
+     *
+     * @return [type]
+     */
+    protected function clearDeviseRoutes()
     {
         $routeCachePath = $this->Config->get('devise.routes.cache');
 
-        return $this->File->exists($routeCachePath);
+        if ($this->File->exists($routeCachePath)) $this->File->delete($routeCachePath);
+    }
+
+    /**
+     * Returns the route cache path if the file exists
+     *
+     * @return [type]
+     */
+    protected function deviseRoutesFile()
+    {
+        $routeCachePath = $this->Config->get('devise.routes.cache');
+
+        if ($this->File->exists($routeCachePath)) return $routeCachePath;
+
+        return null;
     }
 
     /**

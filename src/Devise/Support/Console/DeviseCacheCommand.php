@@ -1,6 +1,7 @@
 <?php namespace Devise\Support\Console;
 
 use Illuminate\Container\Container;
+use Config;
 
 class DeviseCacheCommand extends Command
 {
@@ -28,6 +29,8 @@ class DeviseCacheCommand extends Command
         $this->app = $app;
 
         $this->RoutesGenerator = $this->app->make('Devise\Pages\RoutesGenerator');
+
+        $this->Config = Config::getFacadeRoot();
     }
 
     /**
@@ -35,6 +38,14 @@ class DeviseCacheCommand extends Command
      */
     public function handle()
     {
-        $this->RoutesGenerator->cacheRoutes();
+        $cached = $this->RoutesGenerator->cacheRoutes();
+
+        if (!$cached)
+        {
+            $this->info('');
+            $this->info('   DEVISE_CACHE_ENABLED=true');
+            $this->info('');
+            $this->error('should be set in .env before route caching can be enabled on devise');
+        }
     }
 }

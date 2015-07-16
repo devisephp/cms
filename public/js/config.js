@@ -77,6 +77,7 @@ require.config({
         dvsDataReplacement: 'app/bindings/data-dvs-replacement',
         dvsChangeTarget:    'app/bindings/data-change-target',
         dvsLiveSpan:        'app/helpers/livespan',
-        dvsDocumentation:   'app/helpers/documentation'
+        dvsDocumentation:   'app/helpers/documentation',
+        dvsImagePicker:     'app/helpers/image-picker'
     }
 });

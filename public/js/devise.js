@@ -90,7 +90,8 @@ devise.require.config({
         dvsDataReplacement: 'app/bindings/data-dvs-replacement',
         dvsChangeTarget:    'app/bindings/data-change-target',
         dvsLiveSpan:        'app/helpers/livespan',
-        dvsDocumentation:   'app/helpers/documentation'
+        dvsDocumentation:   'app/helpers/documentation',
+        dvsImagePicker:     'app/helpers/image-picker'
     }
 });
 devise.define("config", function(){});
@@ -41694,6 +41695,27 @@ devise.define('dvsLiveUpdate',['jquery', 'query'], function($, query)
 	}
 
 	return LiveUpdate;
+});
+devise.define('dvsImagePicker',['jquery'], function($) {
+	$(document).ready(function()
+	{
+		initImagePicker();
+	});
+
+	function initImagePicker()
+	{
+		$('body').on('click', '.image-picker', function()
+	    {
+	        var input = $(this);
+	        var mediaUrl = '/admin/media-manager?cropMode=Preserve&type=image';
+
+	        window.open(mediaUrl, 'Media Manager', "width=1024,height=768,location=no");
+
+	        document.onMediaManagerSelect = function(images){
+	            input.val(images);
+	        };
+	    });
+	}
 });
 devise.define('AttributeBinding',[], function()
 {

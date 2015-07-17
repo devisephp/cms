@@ -349,7 +349,7 @@ class PagesRepository
             array_pop($arr);
             $routeName = implode(' ', $arr);
 
-            if ($routeName != $slugName)
+            if ($routeName != $slugName && $routeName != '')
             {
                 $slugName = ucwords($routeName);
                 $list[ $slugName ][ $route->route_name ] = $route->title;

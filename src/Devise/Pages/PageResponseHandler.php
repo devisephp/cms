@@ -177,12 +177,13 @@ class PageResponseHandler
     /**
      * Request the page listing
      *
-     * @param  array   $input
-     * @param  boolean $includeAdmin
      * @return EloquentCollection
      */
-    public function requestPageList($input, $includeAdmin = false)
+    public function requestPageList()
     {
+        $term = $_GET['term'];
+        $includeAdmin = ($_GET['includeAdmin'] == '1') ? true : false;
+
         return $this->PagesRepository->getPagesList($includeAdmin === true, $input['term']);
     }
 

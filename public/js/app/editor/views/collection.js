@@ -334,21 +334,28 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 		var instanceIndex = View.data.findIndex(this.data.instances, instanceId);
 		var instance = View.data.find(this.data.instances, instanceId);
 		var url = this.data.page.url('remove_collection_instance', {id: instanceId, collectionId: this.data.collection.id});
+		var txtInput = this.manage.find('#dvs-new-collection-instance-name');
 		var data = {};
+
+		this.sidebar.layout.addClass('saving');
 
 		$.ajax(url, {
 			method: 'POST',
 			data: data,
 			success: function()
 			{
+				self.sidebar.layout.removeClass('saving');
 				self.data.instances.splice(instanceIndex, 1);	// remove from instances array
 				self.renderInstanceSelectorView();
 				self.renderManageView();
+				self.manage.find('#dvs-new-collection-instance-name').focus();
 			},
 			error: function()
 			{
 				alert('could not remove instance at this time');
 				console.warn('could not remove instance at this time', arguments);
+				self.sidebar.layout.removeClass('saving');
+				self.manage.find('#dvs-new-collection-instance-name').focus();
 			}
 		});
 	}
@@ -373,23 +380,28 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 		txtInput.val('');
 		this.data.instances[instanceIndex] = instance;
 		this.renderManageView();
+		this.sidebar.layout.addClass('saving');
 
 		$.ajax(url, {
 			method: 'POST',
 			data: instance,
 			success: function(data)
 			{
+				self.sidebar.layout.removeClass('saving');
 				self.data.instances[instanceIndex] = data;
 				self.renderInstanceSelectorView();
 				self.renderManageView();
+				self.manage.find('#dvs-new-collection-instance-name').focus();
 				// LiveUpdater.refresh();	// we decided to take this out...
 			},
 			error: function()
 			{
 				alert('could not add instance at this time');
 				console.warn('could not add instance at this time', arguments);
+				self.sidebar.layout.removeClass('saving');
 				self.data.instances.splice(instanceIndex, 1);	// remove from instances array
 				self.renderManageView();
+				self.manage.find('#dvs-new-collection-instance-name').focus();
 			}
 		});
 	}

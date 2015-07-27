@@ -40,6 +40,7 @@ class DevisePublishAssetsCommand extends Command
     {
         $this->copyPublicAssets();
         $this->copyErrorViewsToApplication();
+        $this->copyHomepageViewToApplication();
     }
 
     /**
@@ -63,5 +64,22 @@ class DevisePublishAssetsCommand extends Command
         $target = $this->__DIR__ . '/../../../views/errors';
         $source = $this->base_path . '/resources/views/errors/';
         $this->File->copyDirectory($target, $source);
+    }
+
+    /**
+     * Copies the homepage view to the application
+     * if this file doesn't already exist
+     *
+     * @return void
+     */
+    protected function copyHomepageViewToApplication()
+    {
+        $target = $this->__DIR__ . '/../../../views/installer/index-post-install.blade.php';
+        $source = $this->base_path . '/resources/views/homepage.blade.php';
+
+        if (!$this->File->exists($source))
+        {
+            $this->File->copy($target, $source);
+        }
     }
 }

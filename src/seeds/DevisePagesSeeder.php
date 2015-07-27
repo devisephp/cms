@@ -1378,10 +1378,10 @@ class DevisePagesSeeder extends DeviseSeeder
             ),
             array(
                 'language_id'             => '45',
-                'title'                   => 'You Have Arrived (Delete)',
-                'view'                    => 'devise::installer.index-post-install',
+                'title'                   => 'You Have Arrived',
+                'view'                    => 'homepage',
                 'http_verb'               => 'get',
-                'route_name'              => 'you-have-arrived',
+                'route_name'              => 'homepage',
                 'is_admin'                => '0',
                 'dvs_admin'               => '0',
                 'before'                  => '',

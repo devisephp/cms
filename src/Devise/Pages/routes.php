@@ -4,6 +4,7 @@ try
 {
     App::make('Devise\Pages\RoutesGenerator')->loadFilters();
     App::make('Devise\Pages\RoutesGenerator')->loadRoutes();
+    Route::controller('install', 'Devise\Support\Installer\InstalledController');
 }
 catch (PDOException $e)
 {
@@ -22,11 +23,7 @@ catch (PDOException $e)
             if (env('DEVISE_INSTALL') != 'ignore')
             {
                 Route::get('/', function() { return Redirect::to("/install/welcome"); });
-
-                // any route non containing string "install"
-                Route::any('{any?}', function() { return Redirect::to("/install/welcome"); })
-                    ->where('any', '^((?!install).)*$');
-
+                Route::any('{any?}', function() { return Redirect::to("/install/welcome"); })->where('any', '^((?!install).)*$');
                 Route::controller('install', 'Devise\Support\Installer\InstallerController');
                 return;
             }

@@ -13,7 +13,7 @@ class ModelManagerTest extends \DeviseTestCase
 	public function test_it_creates_fields()
 	{
 		$page = ['page_version_id' => 50, 'page_id' => 42, 'language_id' => 45];
-		$fields = [['id' => 'Name', 'model_type' => 'DvsTestModel', 'mapping' => 'Name', 'values' => [ 'text' => 'the name here', 'maxlength' => '50' ] ] ];
+		$fields = [['id' => 'Name', 'model_type' => 'DvsTestModel', 'mapping' => 'Name', 'values' => [ 'text' => 'the name here' ] ] ];
 		$previousFieldCount = \DvsModelField::count();
 		$previousModelCount = \DvsTestModel::count();
 		list ($createdFields, $createdModel) = $this->ModelManager->createFieldsAndModel($fields, $page);
@@ -30,7 +30,7 @@ class ModelManagerTest extends \DeviseTestCase
 	public function test_it_validates_fields_on_create()
 	{
 		$page = ['page_version_id' => 50, 'page_id' => 42, 'language_id' => 45];
-		$fields = [['id' => 'Name', 'model_type' => 'DvsTestModel', 'mapping' => 'Name', 'values' => [ 'text' => '', 'maxlength' => '50' ] ] ];
+		$fields = [['id' => 'Name', 'model_type' => 'DvsTestModel', 'mapping' => 'Name', 'values' => [ 'text' => '' ] ] ];
 		$previousFieldCount = \DvsModelField::count();
 		$previousModelCount = \DvsTestModel::count();
 
@@ -55,7 +55,7 @@ class ModelManagerTest extends \DeviseTestCase
 	public function test_it_validates_fields_on_update()
 	{
 		$page = ['page_version_id' => 50, 'page_id' => 42, 'language_id' => 45];
-		$fields = [['id' => 1, 'model_id' => 1, 'model_type' => 'DvsTestModel', 'mapping' => 'Name', 'json_value' => '{}', 'values' => [ 'foo' => 'bar', 'maxlength' => '50' ] ]];
+		$fields = [['id' => 1, 'model_id' => 1, 'model_type' => 'DvsTestModel', 'mapping' => 'Name', 'json_value' => '{}', 'values' => [ 'foo' => 'bar' ] ]];
 		$this->addSomeTestModelFields();
 
 		try
@@ -82,14 +82,14 @@ class ModelManagerTest extends \DeviseTestCase
 	public function test_it_updates_fields()
 	{
 		$page = ['page_version_id' => 50, 'page_id' => 42, 'language_id' => 45];
-		$fields = [['id' => 1, 'model_id' => 1, 'model_type' => 'DvsTestModel', 'mapping' => 'Name', 'json_value' => '{}', 'values' => [ 'text' => 'bar', 'maxlength' => '50' ] ]];
+		$fields = [['id' => 1, 'model_id' => 1, 'model_type' => 'DvsTestModel', 'mapping' => 'Name', 'json_value' => '{}', 'values' => [ 'text' => 'bar' ] ]];
 		$this->addSomeTestModelFields();
 		$this->ModelManager->updateFields($fields, $page);
 		$fields = \DB::table('dvs_model_fields')->where('model_type', '=', 'DvsTestModel')->get();
 		$model = \DvsTestModel::find(1);
 		assertEquals(50, $model->page_version_id);
 		assertEquals('bar', $model->name);
-		assertEquals('{"text":"bar","maxlength":"50"}', $fields[0]->json_value);
+		assertEquals('{"text":"bar"}', $fields[0]->json_value);
 	}
 
 	protected function addSomeTestModelFields()

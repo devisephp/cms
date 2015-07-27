@@ -17,7 +17,6 @@
     'name' => '$page->text1',
     'values' => $page->text1,
     'descriptions' => [
-        'text' => 'The value of the text field',
-        'maxlength' => 'The maximum amount of characters that can be used',
+        'text' => 'The value of the text field'
     ],
 ])

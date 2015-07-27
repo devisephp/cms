@@ -11,7 +11,7 @@ class FieldsTest extends Integrated
 			 ->fill($text, 'text')
 			 ->mousedown('.dvs-sidebar-save-group')
 			 ->wait()
-			 ->seeInDatabase('dvs_model_fields', ['json_value' => '{"text":"'.$text.'","maxlength":""}']);
+			 ->seeInDatabase('dvs_model_fields', ['json_value' => '{"text":"'.$text.'"}']);
 	}
 
 }

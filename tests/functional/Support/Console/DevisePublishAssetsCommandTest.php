@@ -16,6 +16,8 @@ class DevisePublishAssetsCommandTest extends \DeviseTestCase
     	$DevisePublishAssetsCommand->File = m::mock('FileSystem');
         $DevisePublishAssetsCommand->File->shouldReceive('copyDirectory')->with("__DIR__/path/../../../../public", "/base/public/packages/devisephp/cms");
         $DevisePublishAssetsCommand->File->shouldReceive('copyDirectory')->with("__DIR__/path/../../../views/errors", "/base/resources/views/errors/");
+        $DevisePublishAssetsCommand->File->shouldReceive('exists')->andReturn(false);
+        $DevisePublishAssetsCommand->File->shouldReceive('copy')->once();
     	$DevisePublishAssetsCommand->handle();
     }
 }

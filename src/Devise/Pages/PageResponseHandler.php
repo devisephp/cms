@@ -179,12 +179,12 @@ class PageResponseHandler
      *
      * @return EloquentCollection
      */
-    public function requestPageList()
+    public function requestPageList($input)
     {
-        $term = $_GET['term'];
-        $includeAdmin = ($_GET['includeAdmin'] == '1') ? true : false;
+        $term = array_get($input, 'term');
+        $includeAdmin = array_get($input, 'includeAdmin') == '1' ? true : false;
 
-        return $this->PagesRepository->getPagesList($includeAdmin === true, $input['term']);
+        return $this->PagesRepository->getPagesList($includeAdmin, $term);
     }
 
     /**

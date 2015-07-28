@@ -1,10 +1,20 @@
 <?php namespace Devise\Support\Installer;
 
 use Redirect;
+use Devise\Support\Framework;
 use Illuminate\Routing\Controller;
 
 class InstalledController extends Controller
 {
+	/**
+	 * [__construct description]
+	 * @param Framework $Framework
+	 */
+	public function __construct(Framework $Framework)
+	{
+		$this->Redirect = $Framework->Redirect;
+	}
+
 	/**
 	 * Welcome the installer/admin
 	 *
@@ -12,7 +22,7 @@ class InstalledController extends Controller
 	 */
 	public function getIndex()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -22,7 +32,7 @@ class InstalledController extends Controller
 	 */
 	public function getWelcome()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -31,7 +41,7 @@ class InstalledController extends Controller
 	 */
 	public function getInformInstallAssets()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -40,7 +50,7 @@ class InstalledController extends Controller
 	 */
 	public function getAssets()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -50,7 +60,7 @@ class InstalledController extends Controller
 	 */
 	public function getEnvironment()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -60,7 +70,7 @@ class InstalledController extends Controller
 	 */
 	public function postEnvironment()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -70,7 +80,7 @@ class InstalledController extends Controller
 	 */
 	public function getDatabase()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -80,7 +90,7 @@ class InstalledController extends Controller
 	 */
 	public function postDatabase()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -90,7 +100,7 @@ class InstalledController extends Controller
 	 */
 	public function getApplication()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -100,7 +110,7 @@ class InstalledController extends Controller
 	 */
 	public function postApplication()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -110,7 +120,7 @@ class InstalledController extends Controller
 	 */
 	public function getCreateUser()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 
 	/**
@@ -121,6 +131,6 @@ class InstalledController extends Controller
 	 */
 	public function postCreateUser()
 	{
-		return Redirect::to('/');
+		return $this->Redirect->to('/');
 	}
 }

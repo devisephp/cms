@@ -61,6 +61,8 @@ class RoutesGenerator
      */
     public function loadRoutes()
     {
+        $this->assertRouteCachingValid();
+
         // laravel (cache) is handling the routes
         if ($this->App->routesAreCached()) return;
 
@@ -175,5 +177,19 @@ class RoutesGenerator
         }
 
         return $pages;
+    }
+
+    /**
+     * Asserts that the route cache is not in a weird
+     * state
+     *
+     * @return [type]
+     */
+    protected function assertRouteCachingValid()
+    {
+        if ($this->App->routesAreCached() && !$this->Config->get('devise.routes.enabled'))
+        {
+            throw new \Exception('Devise will not work proprely when Laravel routes are cached and DEVISE_CACHE_ENABLED=false. For more information on how to address this error please visit, http://devisephp.com/docs/common-errors#route-caching');
+        }
     }
 }

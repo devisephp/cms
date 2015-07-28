@@ -86,6 +86,12 @@ class PageManager
     public $errors;
 
     /**
+     * [$warnings description]
+     * @var [type]
+     */
+    public $warnings;
+
+    /**
      * This is a message that we can store why the
      * validation failed
      *

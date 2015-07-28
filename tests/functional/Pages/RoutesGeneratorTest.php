@@ -49,6 +49,7 @@ class RoutesGeneratorTest extends \DeviseTestCase
     public function test_it_does_not_load_routes_when_cache_exists()
     {
     	$this->Framework->Container->shouldReceive('routesAreCached')->andReturn(true);
+        $this->Framework->Config->shouldReceive('get')->with('devise.routes.enabled')->andReturn(true);
 		$this->RoutesGenerator->Route = m::mock('Router');
 		$this->RoutesGenerator->Route->shouldReceive('get')->times(0);
 		$this->RoutesGenerator->Route->shouldReceive('post')->times(0);

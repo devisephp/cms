@@ -65,7 +65,9 @@ class PageResponseHandler
 
         if ($page)
         {
-            return $this->Redirect->route('dvs-pages');
+            return $this->Redirect->route('dvs-pages')
+                ->with('warnings', $this->PageManager->warnings)
+                ->with('message', $this->PageManager->message);
         }
 
         return $this->Redirect->route('dvs-pages-create')
@@ -87,7 +89,9 @@ class PageResponseHandler
 
         if ($page)
         {
-            return $this->Redirect->route('dvs-pages');
+            return $this->Redirect->route('dvs-pages')
+                ->with('warnings', $this->PageManager->warnings)
+                ->with('message', $this->PageManager->message);
         }
 
         return $this->Redirect->route('dvs-pages-edit', $id)
@@ -108,7 +112,9 @@ class PageResponseHandler
 
         if ($page)
         {
-            return $this->Redirect->route('dvs-pages');
+            return $this->Redirect->route('dvs-pages')
+                ->with('warnings', $this->PageManager->warnings)
+                ->with('message', $this->PageManager->message);
         }
 
         return $this->Redirect->route('dvs-pages')
@@ -130,7 +136,9 @@ class PageResponseHandler
 
         if ($page)
         {
-            return $this->Redirect->route('dvs-pages');
+            return $this->Redirect->route('dvs-pages')
+                ->with('warnings', $this->PageManager->warnings)
+                ->with('message', $this->PageManager->message);
         }
 
         return $this->Redirect->route('dvs-pages-copy', $id)

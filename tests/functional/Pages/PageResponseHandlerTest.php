@@ -18,7 +18,8 @@ class PageResponseHandlerTest extends \DeviseTestCase
     public function test_it_can_request_new_page_creation()
     {
         $this->PageManager->shouldReceive('createNewPage')->times(1)->andReturn(new \DvsPage);
-        $this->Redirect->shouldReceive('route')->times(1);
+        $this->Redirect->shouldReceive('route')->times(1)->andReturnSelf();
+        $this->Redirect->shouldReceive('with')->times(2)->andReturnSelf();
         $this->PageResponseHandler->requestCreateNewPage(['some' => 'fake input']);
     }
 
@@ -37,7 +38,8 @@ class PageResponseHandlerTest extends \DeviseTestCase
     public function test_it_can_request_page_updates()
     {
         $this->PageManager->shouldReceive('updatePage')->times(1)->andReturn(new \DvsPage);
-        $this->Redirect->shouldReceive('route')->times(1);
+        $this->Redirect->shouldReceive('route')->times(1)->andReturnSelf();
+        $this->Redirect->shouldReceive('with')->times(2)->andReturnSelf();
         $this->PageResponseHandler->requestUpdatePage(1, ['some' => 'fake input']);
     }
 
@@ -57,13 +59,15 @@ class PageResponseHandlerTest extends \DeviseTestCase
     {
         $this->PageManager->shouldReceive('destroyPage')->times(1)->andReturn(true);
         $this->Redirect->shouldReceive('route')->times(1)->andReturnSelf();
+        $this->Redirect->shouldReceive('with')->times(2)->andReturnSelf();
         $this->PageResponseHandler->requestDestroyPage(1);
     }
 
     public function test_it_can_request_page_copy()
     {
         $this->PageManager->shouldReceive('copyPage')->times(1)->andReturn(true);
-        $this->Redirect->shouldReceive('route')->times(1);
+        $this->Redirect->shouldReceive('route')->times(1)->andReturnSelf();
+        $this->Redirect->shouldReceive('with')->times(2)->andReturnSelf();
         $this->PageResponseHandler->requestCopyPage(1, ['some' => 'fake input']);
     }
 

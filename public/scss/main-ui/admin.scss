@@ -490,6 +490,18 @@ table.dvs-admin-table {
     }
   }
 
+  .dvs-ab-testing-section {
+    input[type=text] {
+      width: 70px;
+      min-width: inherit;
+      max-width: inherit;
+      margin-left:0;
+      margin-right:0;
+      font-size:12px;
+      color:darken($french-gray, 25%);
+    }
+  }
+
   .dvs-badge {
     &.dvs-content-requested {
       @include clearfix;

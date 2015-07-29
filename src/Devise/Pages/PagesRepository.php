@@ -53,6 +53,7 @@ class PagesRepository
         $this->Config = $Config ?: \Config::getFacadeRoot();
         $this->URL = $URL ?: \URL::getFacadeRoot();
         $this->File = $File ?: \File::getFacadeRoot();
+        $this->Request = \Request::getFacadeRoot();
 
         $this->ViewOpener = $ViewOpener ?: new ViewOpener;
         $this->now = new \DateTime;
@@ -370,6 +371,19 @@ class PagesRepository
      */
     public function getLivePageVersion($page)
     {
+        if ($page->ab_testing_enabled) return $this->getLivePageVersionByAB($page);
+
+        return $this->getLivePageVersionByDate($page);
+    }
+
+    /**
+     * Gets the live version of this page by date
+     *
+     * @param  [type] $page
+     * @return [type]
+     */
+    public function getLivePageVersionByDate($page)
+    {
         $now = $this->now;
 
         $version = $page->versions()->with('fields')
@@ -383,6 +397,130 @@ class PagesRepository
             ->first();
 
         return $version;
+    }
+
+    /**
+     * Get the live version of this page by id
+     *
+     * @param  [type] $page
+     * @param  [type] $pageVersionId
+     * @return [type]
+     */
+    public function getLivePageVersionById($page, $pageVersionId)
+    {
+        $now = $this->now;
+
+        $version = $page->versions()->with('fields')
+            ->where('starts_at', '<', $now)
+            ->where(function($query) use ($now)
+            {
+                $query->where('ends_at', '>', $now);
+                $query->orWhereNull('ends_at');
+            })
+            ->where('id', '=', $pageVersionId)
+            ->orderBy('starts_at', 'DESC')
+            ->first();
+
+        return $version;
+    }
+
+    /**
+     * Checks to see if the page already has a cookie
+     * set so this user doesn't see different page
+     * versions all the time...
+     *
+     * @param  [type] $page
+     * @return [type]
+     */
+    public function getLivePageVersionByCookie($page)
+    {
+        $pageVersionId = $this->Request->cookie('dvs-ab-testing-' . $page->id);
+
+        if (!$pageVersionId) return null;
+
+        $liveVersion = $this->getLivePageVersionById($page, $pageVersionId);
+
+        if ($liveVersion) return $liveVersion;
+
+        return null;
+    }
+
+    /**
+     * Get the live page using ab testing logic. This
+     * will first search for a cookie and if no version is
+     * found it will use the dice roll. If no page version
+     * is found with this dice roll then it will resort
+     * back to using the old "dates" system.
+     *
+     * @param  [type] $page
+     * @return [type]
+     */
+    public function getLivePageVersionByAB($page)
+    {
+        $liveVersion = $this->getLivePageVersionByCookie($page);
+
+        if ($liveVersion) return $liveVersion;
+
+        $liveVersion = $this->getLivePageVersionByDiceRoll($page);
+
+        if ($liveVersion) return $liveVersion;
+
+        return $this->getLivePageVersionByDate($page);
+    }
+
+    /**
+     * Gets the live page version by a dice roll
+     *
+     * @param  [type] $page
+     * @return [type]
+     */
+    public function getLivePageVersionByDiceRoll($page)
+    {
+        $liveVersion = null;
+
+        $versions = $this->getPageVersionsByAB($page);
+
+        $diceroll = array();
+
+        foreach ($versions as $index => $version)
+        {
+            $diceroll = array_merge(array_fill(0, $version->ab_testing_amount, $index), $diceroll);
+        }
+
+        $diceroll = $diceroll[array_rand($diceroll)];
+
+        if (isset($versions[$diceroll]))
+        {
+            $liveVersion = $versions[$diceroll];
+            $page->ab_cookie_page_version = $liveVersion->id;
+        }
+
+        return $liveVersion;
+    }
+
+    /**
+     * Gets all live page versions when we are
+     * in a A|B testing mode for a page
+     *
+     * @param  [type] $page
+     * @return [type]
+     */
+    public function getPageVersionsByAB($page)
+    {
+        $now = $this->now;
+
+        $versions = $page->versions()->with('fields')
+            ->where('ab_testing_amount', '>', 0)
+            ->where('starts_at', '<', $now)
+            ->where(function($query) use ($now)
+            {
+                $query->where('ends_at', '>', $now);
+                $query->orWhereNull('ends_at');
+            })
+            ->orderBy('starts_at', 'DESC')
+            ->get();
+
+        return $versions;
     }
 
     /**
@@ -608,15 +746,87 @@ class PagesRepository
      */
     protected function wrapPageVersionStatuses($versions, $page)
     {
+        if ($page->ab_testing_enabled && count($this->getPageVersionsByAB($page)) > 0) return $this->wrapPageVersionStatusesByAB($versions, $page);
+
+        return $this->wrapPageVersionStatusesByDate($versions, $page);
+    }
+
+    /**
+     * [wrapPageVersionStatusesByDate description]
+     * @param  [type] $versions
+     * @param  [type] $page
+     * @return [type]
+     */
+    protected function wrapPageVersionStatusesByDate($versions, $page)
+    {
         $page->status = 'unpublished';
-        $currentVersion = $this->getLivePageVersion($page);
+
+        $liveVersion = $this->getLivePageVersionByDate($page);
 
         foreach ($versions as $version)
         {
-            $version = $this->wrapPageVersionStatus($version, $page, $currentVersion);
+            $version = $this->wrapPageVersionStatusByDate($version, $page, $liveVersion);
         }
 
         return $versions;
+    }
+
+    /**
+     * Wraps AB Page Version Statuses on all versions for the page
+     *
+     * @param  [type] $versions
+     * @param  [type] $page
+     * @return [type]
+     */
+    protected function wrapPageVersionStatusesByAB($versions, $page)
+    {
+        $page->status = 'unpublished';
+
+        $liveVersions = $this->getPageVersionsByAB($page);
+
+        foreach ($versions as $version)
+        {
+            $version = $this->wrapPageVersionStatusByAB($version, $page, $liveVersions);
+        }
+
+        return $versions;
+    }
+
+    /**
+     * Wrap the status around a single page version
+     *
+     * @param  [type] $version
+     * @param  [type] $page
+     * @param  [type] $liveVersions
+     * @return [type]
+     */
+    protected function wrapPageVersionStatusByAB($version, $page, $liveVersions)
+    {
+        $startsAt = $version->starts_at;
+        $endsAt = $version->ends_at;
+
+        $version->starts_at_human = $version->starts_at ? $this->toHumanDateFormat($version->starts_at) : 'never starts';
+        $version->ends_at_human = $version->ends_at ? $this->toHumanDateFormat($version->ends_at) : 'never ends';
+
+        $liveVersionIds = $liveVersions->lists('id')->toArray();
+
+        // the current version is live
+        if (in_array($version->id, $liveVersionIds))
+        {
+            $page->status = 'live';
+            $version->status = "live";
+            return $version;
+        }
+
+        // if version has a starts_at date scheduled
+        if ($startsAt && $startsAt > $this->now)
+        {
+            $version->status = 'scheduled';
+            return $version;
+        }
+
+        $version->status = "unpublished";
+        return $version;
     }
 
     /**
@@ -624,17 +834,17 @@ class PagesRepository
      *
      * @param  DvsPageVersion $version
      * @param  DvsPage        $page
-     * @param  DvsPageVersion $currentVersion
+     * @param  DvsPageVersion $liveVersion
      * @return DvsPageVersion
      */
-    protected function wrapPageVersionStatus($version, $page, $currentVersion)
+    protected function wrapPageVersionStatusByDate($version, $page, $liveVersion)
     {
         // sometimes we don't have a current version
         // like when a page is completely unpublished!
-        if (is_null($currentVersion))
+        if (is_null($liveVersion))
         {
-            $currentVersion = new \StdClass;
-            $currentVersion->id = -1;
+            $liveVersion = new \StdClass;
+            $liveVersion->id = -1;
         }
 
         $now = new \DateTime;
@@ -645,7 +855,7 @@ class PagesRepository
         $version->ends_at_human = $version->ends_at ? $this->toHumanDateFormat($version->ends_at) : 'never ends';
 
         // the current version is live
-        if ($version->id == $currentVersion->id)
+        if ($version->id == $liveVersion->id)
         {
             $page->status = 'live';
             $version->status = "live";
@@ -653,7 +863,7 @@ class PagesRepository
         }
 
         // if the version is overriden b/c it has started and has not finished but is not live version
-        if ($version->id != $currentVersion->id && $startsAt && $startsAt < $now && ($endsAt > $now || is_null($endsAt)))
+        if ($version->id != $liveVersion->id && $startsAt && $startsAt < $now && ($endsAt > $now || is_null($endsAt)))
         {
             $version->status = "overridden";
             return $version;

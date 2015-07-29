@@ -226,4 +226,28 @@ class PageResponseHandler
             200
         );
     }
+
+    /**
+     * Request that ab testing be turned on or off
+     *
+     * @param  [type] $input
+     * @return [type]
+     */
+    public function requestToggleAbTesting($input)
+    {
+        $pageId = $input['pageId'];
+        $enabled = $input['enabled'];
+        $this->PageManager->toggleABTesting($pageId, $enabled);
+
+        return '';
+    }
+
+    public function requestUpdatePageVersionAbTesting($input)
+    {
+        $pageVersionId = $input['pageVersionId'];
+        $amount = $input['amount'];
+        $this->PageManager->updatePageVersionABTestingAmount($pageVersionId, $amount);
+
+        return '';
+    }
 }

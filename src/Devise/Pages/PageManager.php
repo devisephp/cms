@@ -380,6 +380,34 @@ class PageManager
     }
 
     /**
+     * [toggleABTesting description]
+     * @param  [type] $pageId
+     * @param  [type] $isEnabled
+     * @return [type]
+     */
+    public function toggleABTesting($pageId, $isEnabled)
+    {
+        $page = $this->Page->findOrFail($pageId);
+
+        $page->ab_testing_enabled = $isEnabled == 'true' ? true : false;
+
+        $page->save();
+
+        return $page;
+    }
+
+    /**
+     * [updatePageVersionABTestingAmount description]
+     * @param  [type] $pageVersionId
+     * @param  [type] $amount
+     * @return [type]
+     */
+    public function updatePageVersionABTestingAmount($pageVersionId, $amount)
+    {
+        return $this->PageVersionManager->updatePageVersionABTestingAmount($pageVersionId, $amount);
+    }
+
+    /**
      * Cache the devise routes, and make sure to catch an
      * exception. Exception thrown is likely due to serialization
      * error caused by caching routes with closures in them

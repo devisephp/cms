@@ -129,6 +129,22 @@ class PageVersionManager
     }
 
     /**
+     * Updates the page version ab testing amount
+     *
+     * @param  [type] $pageVersionId
+     * @param  [type] $amount
+     * @return [type]
+     */
+    public function updatePageVersionABTestingAmount($pageVersionId, $amount)
+    {
+        $version = $this->PageVersion->findOrFail($pageVersionId);
+        $version->ab_testing_amount = $amount;
+        $version->save();
+
+        return $version;
+    }
+
+    /**
      * Changes the timestamp from human readable to database specific
      *
      * @param  string $timestamp

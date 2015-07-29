@@ -38,7 +38,7 @@ class PageController extends Controller
      * @param null $Route
      * @param null $Redirect
      */
-    public function __construct(PagesRepository $PagesRepository, Viewvars\DataBuilder $DataBuilder, $Input = null, $View = null, $Route = null, $Redirect = null)
+    public function __construct(PagesRepository $PagesRepository, Viewvars\DataBuilder $DataBuilder, $Input = null, $View = null, $Route = null, $Redirect = null, $Cookie = null)
     {
         $this->PagesRepository = $PagesRepository;
         $this->DataBuilder = $DataBuilder;
@@ -46,6 +46,7 @@ class PageController extends Controller
         $this->View = $View ?: \View::getFacadeRoot();
         $this->Route = $Route ?: \Route::getFacadeRoot();
         $this->Redirect = $Redirect ?: \Redirect::getFacadeRoot();
+        $this->Cookie = $Cookie ?: \Cookie::getFacadeRoot();
     }
 
 	/**
@@ -144,6 +145,12 @@ class PageController extends Controller
     protected function getView($page)
     {
         $pageData = $this->DataBuilder->getData();
+
+        if (isset($page->ab_cookie_page_version))
+        {
+            $this->Cookie->queue('dvs-ab-testing-' . $page->id, $page->ab_cookie_page_version);
+        }
+
         return $this->View->make($page->view, $pageData);
     }
 }

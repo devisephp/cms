@@ -100,37 +100,70 @@ devise.define(['require', 'jquery', 'query', 'datetimepicker', 'dvsSelectSurroga
         var pageVersionId = getSelectedVersionId($(this));
         var selected = $('option:selected', this);
 
+
         switch(value) {
             case 'publish':
+                $('.dvs-update-template.'+pageVersionId).addClass('hidden');
                 publish(pageId, pageVersionId);
             break;
 
             case 'unpublish':
+                $('.dvs-publish-dates.'+pageVersionId).addClass('hidden');
+                $('.dvs-update-template.'+pageVersionId).addClass('hidden');
                 unpublish(pageId, selected);
             break;
 
             case 'toggle-sharing':
+                $('.dvs-publish-dates.'+pageVersionId).addClass('hidden');
+                $('.dvs-update-template.'+pageVersionId).addClass('hidden');
                 toggleSharing(pageId, selected);
             break;
 
             case 'delete':
+                $('.dvs-publish-dates.'+pageVersionId).addClass('hidden');
+                $('.dvs-update-template.'+pageVersionId).addClass('hidden');
                 deleteVersion(pageId, selected);
             break;
 
             case 'create-version':
+                $('.dvs-publish-dates.'+pageVersionId).addClass('hidden');
+                $('.dvs-update-template.'+pageVersionId).addClass('hidden');
                 createNewPageVersion(pageId, pageVersionId, selected);
             break;
 
+            case 'update-template':
+                $('.dvs-publish-dates.'+pageVersionId).addClass('hidden');
+                updateTemplate(pageId, pageVersionId, selected);
+            break;
+
             case 'preview':
+                $('.dvs-publish-dates.'+pageVersionId).addClass('hidden');
+                $('.dvs-update-template.'+pageVersionId).addClass('hidden');
                 window.open($(this).find(':selected').data('dvs-url'), '_blank');
             break;
         }
     });
 
+    // update the template for a page version
+    var updateTemplate = function(pageId, pageVersionId, select)
+    {
+        // show template selectbox for current version
+        $('.dvs-update-template.'+pageVersionId).removeClass('hidden');
+
+        // handle form submit
+        $('.dvs-update-template.'+pageVersionId+' form').submit(function(event) {
+            var $form = $(this);
+
+            event.preventDefault();
+
+            submitAjaxForm(pageId, $form.serialize(), $form.attr('action'));
+        });
+    };
+
     //  publish page version
     var publish = function(pageId, pageVersionId) {
         // show datetime pickers for current version
-        $('.dvs-publish-dates.'+pageVersionId).show();
+        $('.dvs-publish-dates.'+pageVersionId).removeClass('hidden');
 
         initDatetimePicker();
 

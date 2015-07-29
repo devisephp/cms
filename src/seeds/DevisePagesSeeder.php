@@ -846,6 +846,23 @@ class DevisePagesSeeder extends DeviseSeeder
             array(
                 'language_id'             => '45',
                 'translated_from_page_id' => '0',
+                'view'                    => null,
+                'title'                   => 'Update Devise Page Version Template',
+                'http_verb'               => 'put',
+                'route_name'              => 'dvs-update-page-versions-template',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'ifNotLoggedInGoToLogin',
+                'after'                   => '',
+                'slug'                    => '/admin/page-versions/{pageVersionId}/template',
+                'short_description'       => 'Updates the template for a page version',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestUpdatePageVersionTemplate',
+                'response_params'         => 'params.pageVersionId,input'
+            ),
+            array(
+                'language_id'             => '45',
+                'translated_from_page_id' => '0',
                 'view'                    => 'devise::admin.pages.page-versions._card',
                 'title'                   => 'Page Versions Card',
                 'http_verb'               => 'get',

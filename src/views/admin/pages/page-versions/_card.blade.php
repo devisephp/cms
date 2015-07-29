@@ -24,6 +24,7 @@
                     <option value="publish">Publish</option>
                     <option data-dvs-url="<?= route('dvs-update-page-versions-dates', $version->id) ?>" value="unpublish">Un-Publish</option>
                     <option data-dvs-url="<?= route('dvs-page-version-store') ?>" value="create-version">Create Version from This Version</option>
+                    <option value="update-template">Update This Versions Template</option>
 
                     @if($version->status != 'live')
                         @if(is_null($version->preview_hash))
@@ -47,7 +48,7 @@
                 </div>
             @endif
 
-            <div class="dvs-publish-dates <?= $version->id ?>" style="display:none;">
+            <div class="dvs-publish-dates <?= $version->id ?> hidden">
                 <p>Current Server Time: <strong><?= date('m/d/y H:i:s') ?></strong></p>
 
                 <?= Form::open(array('method' => 'PUT', 'route' => array('dvs-update-page-versions-dates', $version->id))) ?>
@@ -67,6 +68,16 @@
                     <?= Form::submit('Submit', array('class' => 'dvs-button dvs-button-small dvs-button-solid')) ?>
 
                 <?= Form::close() ?>
+            </div>
+
+            <div class="dvs-update-template <?= $version->id ?> hidden">
+                <form class="dvs-admin-form mt sp20" method="PUT" action="<?= route('dvs-update-page-versions-template', $version->id) ?>">
+                    <div class="dvs-form-group">
+                        <label>Template</label>
+                        <?= Form::select('view', ['' => 'Select a Template'] + $templateList + ['custom' => 'Custom'], $version->view, []) ?>
+                    </div>
+                    <?= Form::submit('Submit', array('class' => 'dvs-button dvs-button-small dvs-button-solid')) ?>
+                </form>
             </div>
         </div>
     </div>

@@ -3197,23 +3197,27 @@ button.dvs-no-decoration:hover {
   padding-left: 0; }
 
 .dvs-admin-form-vertical .dvs-submit-margin,
-.dvs-admin-form-horizontal .dvs-submit-margin {
+.dvs-admin-form-horizontal .dvs-submit-margin,
+.dvs-admin-form .dvs-submit-margin {
   display: inline-block;
   width: 22%; }
 .dvs-admin-form-vertical .dvs-form-group,
-.dvs-admin-form-horizontal .dvs-form-group {
+.dvs-admin-form-horizontal .dvs-form-group,
+.dvs-admin-form .dvs-form-group {
   clear: both;
   margin-bottom: 35px;
   color: #a1a4aa;
   display: table;
   width: 100%; }
   .dvs-admin-form-vertical .dvs-form-group:after,
-  .dvs-admin-form-horizontal .dvs-form-group:after {
+  .dvs-admin-form-horizontal .dvs-form-group:after,
+  .dvs-admin-form .dvs-form-group:after {
     content: "";
     display: table;
     clear: both; }
   .dvs-admin-form-vertical .dvs-form-group label,
-  .dvs-admin-form-horizontal .dvs-form-group label {
+  .dvs-admin-form-horizontal .dvs-form-group label,
+  .dvs-admin-form .dvs-form-group label {
     display: table-cell;
     vertical-align: middle;
     width: 20%;
@@ -3228,7 +3232,11 @@ button.dvs-no-decoration:hover {
   .dvs-admin-form-horizontal .dvs-form-group input[type="text"],
   .dvs-admin-form-horizontal .dvs-form-group input[type="password"],
   .dvs-admin-form-horizontal .dvs-form-group textarea,
-  .dvs-admin-form-horizontal .dvs-form-group select {
+  .dvs-admin-form-horizontal .dvs-form-group select,
+  .dvs-admin-form .dvs-form-group input[type="text"],
+  .dvs-admin-form .dvs-form-group input[type="password"],
+  .dvs-admin-form .dvs-form-group textarea,
+  .dvs-admin-form .dvs-form-group select {
     display: table-cell;
     width: 78%;
     box-sizing: border-box;
@@ -3249,7 +3257,11 @@ button.dvs-no-decoration:hover {
     .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-webkit-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-webkit-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group textarea::-webkit-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select::-webkit-input-placeholder {
+    .dvs-admin-form-horizontal .dvs-form-group select::-webkit-input-placeholder,
+    .dvs-admin-form .dvs-form-group input[type="text"]::-webkit-input-placeholder,
+    .dvs-admin-form .dvs-form-group input[type="password"]::-webkit-input-placeholder,
+    .dvs-admin-form .dvs-form-group textarea::-webkit-input-placeholder,
+    .dvs-admin-form .dvs-form-group select::-webkit-input-placeholder {
       color: #797d85; }
     .dvs-admin-form-vertical .dvs-form-group input[type="text"]::-moz-placeholder,
     .dvs-admin-form-vertical .dvs-form-group input[type="password"]::-moz-placeholder,
@@ -3258,7 +3270,11 @@ button.dvs-no-decoration:hover {
     .dvs-admin-form-horizontal .dvs-form-group input[type="text"]::-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="password"]::-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group textarea::-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select::-moz-placeholder {
+    .dvs-admin-form-horizontal .dvs-form-group select::-moz-placeholder,
+    .dvs-admin-form .dvs-form-group input[type="text"]::-moz-placeholder,
+    .dvs-admin-form .dvs-form-group input[type="password"]::-moz-placeholder,
+    .dvs-admin-form .dvs-form-group textarea::-moz-placeholder,
+    .dvs-admin-form .dvs-form-group select::-moz-placeholder {
       color: #797d85; }
     .dvs-admin-form-vertical .dvs-form-group input[type="text"]:-moz-placeholder,
     .dvs-admin-form-vertical .dvs-form-group input[type="password"]:-moz-placeholder,
@@ -3267,7 +3283,11 @@ button.dvs-no-decoration:hover {
     .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-moz-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group textarea:-moz-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select:-moz-placeholder {
+    .dvs-admin-form-horizontal .dvs-form-group select:-moz-placeholder,
+    .dvs-admin-form .dvs-form-group input[type="text"]:-moz-placeholder,
+    .dvs-admin-form .dvs-form-group input[type="password"]:-moz-placeholder,
+    .dvs-admin-form .dvs-form-group textarea:-moz-placeholder,
+    .dvs-admin-form .dvs-form-group select:-moz-placeholder {
       color: #797d85; }
     .dvs-admin-form-vertical .dvs-form-group input[type="text"]:-ms-input-placeholder,
     .dvs-admin-form-vertical .dvs-form-group input[type="password"]:-ms-input-placeholder,
@@ -3276,40 +3296,55 @@ button.dvs-no-decoration:hover {
     .dvs-admin-form-horizontal .dvs-form-group input[type="text"]:-ms-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group input[type="password"]:-ms-input-placeholder,
     .dvs-admin-form-horizontal .dvs-form-group textarea:-ms-input-placeholder,
-    .dvs-admin-form-horizontal .dvs-form-group select:-ms-input-placeholder {
+    .dvs-admin-form-horizontal .dvs-form-group select:-ms-input-placeholder,
+    .dvs-admin-form .dvs-form-group input[type="text"]:-ms-input-placeholder,
+    .dvs-admin-form .dvs-form-group input[type="password"]:-ms-input-placeholder,
+    .dvs-admin-form .dvs-form-group textarea:-ms-input-placeholder,
+    .dvs-admin-form .dvs-form-group select:-ms-input-placeholder {
       color: #797d85; }
   .dvs-admin-form-vertical .dvs-form-group select,
-  .dvs-admin-form-horizontal .dvs-form-group select {
+  .dvs-admin-form-horizontal .dvs-form-group select,
+  .dvs-admin-form .dvs-form-group select {
     height: 31px;
     width: 78%;
     border-radius: 0; }
   .dvs-admin-form-vertical .dvs-form-group input[type=checkbox],
   .dvs-admin-form-vertical .dvs-form-group input[type=radio],
   .dvs-admin-form-horizontal .dvs-form-group input[type=checkbox],
-  .dvs-admin-form-horizontal .dvs-form-group input[type=radio] {
+  .dvs-admin-form-horizontal .dvs-form-group input[type=radio],
+  .dvs-admin-form .dvs-form-group input[type=checkbox],
+  .dvs-admin-form .dvs-form-group input[type=radio] {
     margin-left: 2%; }
   .dvs-admin-form-vertical .dvs-form-group .fancyCheckbox label,
-  .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label {
+  .dvs-admin-form-horizontal .dvs-form-group .fancyCheckbox label,
+  .dvs-admin-form .dvs-form-group .fancyCheckbox label {
     border-radius: 50px;
     width: 34px;
     height: 24px; }
   .dvs-admin-form-vertical .dvs-form-group textarea.short,
-  .dvs-admin-form-horizontal .dvs-form-group textarea.short {
+  .dvs-admin-form-horizontal .dvs-form-group textarea.short,
+  .dvs-admin-form .dvs-form-group textarea.short {
     height: 100px; }
   .dvs-admin-form-vertical .dvs-form-group input[type=text]:disabled,
   .dvs-admin-form-vertical .dvs-form-group textarea:disabled,
   .dvs-admin-form-horizontal .dvs-form-group input[type=text]:disabled,
-  .dvs-admin-form-horizontal .dvs-form-group textarea:disabled {
+  .dvs-admin-form-horizontal .dvs-form-group textarea:disabled,
+  .dvs-admin-form .dvs-form-group input[type=text]:disabled,
+  .dvs-admin-form .dvs-form-group textarea:disabled {
     color: #797d85; }
 .dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle,
 .dvs-admin-form-vertical .dvs-sort-items .ui-sortable-handle,
 .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle,
-.dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle {
+.dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle,
+.dvs-admin-form .dvs-menu-items .ui-sortable-handle,
+.dvs-admin-form .dvs-sort-items .ui-sortable-handle {
   clear: both; }
   .dvs-admin-form-vertical .dvs-menu-items .ui-sortable-handle:after,
   .dvs-admin-form-vertical .dvs-sort-items .ui-sortable-handle:after,
   .dvs-admin-form-horizontal .dvs-menu-items .ui-sortable-handle:after,
-  .dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle:after {
+  .dvs-admin-form-horizontal .dvs-sort-items .ui-sortable-handle:after,
+  .dvs-admin-form .dvs-menu-items .ui-sortable-handle:after,
+  .dvs-admin-form .dvs-sort-items .ui-sortable-handle:after {
     content: "";
     display: table;
     clear: both; }
@@ -3320,7 +3355,11 @@ button.dvs-no-decoration:hover {
 .dvs-admin-form-horizontal .dvs-menu-items select,
 .dvs-admin-form-horizontal .dvs-menu-items input[type=text],
 .dvs-admin-form-horizontal .dvs-sort-items select,
-.dvs-admin-form-horizontal .dvs-sort-items input[type=text] {
+.dvs-admin-form-horizontal .dvs-sort-items input[type=text],
+.dvs-admin-form .dvs-menu-items select,
+.dvs-admin-form .dvs-menu-items input[type=text],
+.dvs-admin-form .dvs-sort-items select,
+.dvs-admin-form .dvs-sort-items input[type=text] {
   width: 23%;
   float: left;
   height: 31px;
@@ -3329,7 +3368,9 @@ button.dvs-no-decoration:hover {
 .dvs-admin-form-vertical .dvs-menu-items select,
 .dvs-admin-form-vertical .dvs-sort-items select,
 .dvs-admin-form-horizontal .dvs-menu-items select,
-.dvs-admin-form-horizontal .dvs-sort-items select {
+.dvs-admin-form-horizontal .dvs-sort-items select,
+.dvs-admin-form .dvs-menu-items select,
+.dvs-admin-form .dvs-sort-items select {
   height: 31px;
   width: 15%; }
 

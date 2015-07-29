@@ -56,6 +56,11 @@
 			'vars' => array(
 				'languages' => 'Devise\Languages\LanguagesRepository.activeLanguageList',
 				'pages' => 'Devise\Pages\PagesRepository.pages',
+				'templateList' => array(
+					'Devise\Templates\TemplatesRepository.registeredTemplatesList' => array(
+						true,
+					),
+				),
 			),
 		),
 		'devise::admin.pages.create' => array(
@@ -228,6 +233,11 @@
 					'Devise\Pages\PagesRepository.find' => array(
 						'{params.pageId}',
 						'{input}',
+					),
+				),
+				'templateList' => array(
+					'Devise\Templates\TemplatesRepository.registeredTemplatesList' => array(
+						true,
 					),
 				),
 			),

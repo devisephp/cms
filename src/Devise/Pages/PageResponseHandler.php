@@ -242,6 +242,14 @@ class PageResponseHandler
         return '';
     }
 
+    /**
+     * Updates the page version's ab testing percentage
+     * amount. This percentage is the chance it will be picked
+     * during the dice roll for A|B testing
+     *
+     * @param  [type] $input
+     * @return [type]
+     */
     public function requestUpdatePageVersionAbTesting($input)
     {
         $pageVersionId = $input['pageVersionId'];
@@ -249,5 +257,19 @@ class PageResponseHandler
         $this->PageManager->updatePageVersionABTestingAmount($pageVersionId, $amount);
 
         return '';
+    }
+
+    /**
+     * Updates the page version's view. This can override the main
+     * page's view if there is one selected.
+     *
+     * @param  [type] $pageVersionId
+     * @param  [type] $input
+     * @return [type]
+     */
+    public function requestUpdatePageVersionTemplate($pageVersionId, $input)
+    {
+        $view = $input['view'];
+        $this->PageManager->updatePageVersionView($pageVersionId, $view);
     }
 }

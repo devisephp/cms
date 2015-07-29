@@ -46,7 +46,6 @@ class PageController extends Controller
         $this->View = $View ?: \View::getFacadeRoot();
         $this->Route = $Route ?: \Route::getFacadeRoot();
         $this->Redirect = $Redirect ?: \Redirect::getFacadeRoot();
-        $this->Cookie = $Cookie ?: \Cookie::getFacadeRoot();
     }
 
 	/**
@@ -146,11 +145,9 @@ class PageController extends Controller
     {
         $pageData = $this->DataBuilder->getData();
 
-        if (isset($page->ab_cookie_page_version))
-        {
-            $this->Cookie->queue('dvs-ab-testing-' . $page->id, $page->ab_cookie_page_version);
-        }
+        // allow a page version to override the page view
+        $view = $page->version->view ?: $page->view;
 
-        return $this->View->make($page->view, $pageData);
+        return $this->View->make($view, $pageData);
     }
 }

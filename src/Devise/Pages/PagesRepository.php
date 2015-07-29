@@ -54,6 +54,7 @@ class PagesRepository
         $this->URL = $URL ?: \URL::getFacadeRoot();
         $this->File = $File ?: \File::getFacadeRoot();
         $this->Request = \Request::getFacadeRoot();
+        $this->Cookie = \Cookie::getFacadeRoot();
 
         $this->ViewOpener = $ViewOpener ?: new ViewOpener;
         $this->now = new \DateTime;
@@ -492,7 +493,7 @@ class PagesRepository
         if (isset($versions[$diceroll]))
         {
             $liveVersion = $versions[$diceroll];
-            $page->ab_cookie_page_version = $liveVersion->id;
+            $this->Cookie->queue('dvs-ab-testing-' . $page->id, $liveVersion->id);
         }
 
         return $liveVersion;

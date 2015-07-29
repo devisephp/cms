@@ -356,6 +356,18 @@ class PageManager
     }
 
     /**
+     * Updates the page version view
+     *
+     * @param  [type] $pageVersionId
+     * @param  [type] $view
+     * @return [type]
+     */
+    public function updatePageVersionView($pageVersionId, $view)
+    {
+        return $this->PageVersionManager->updatePageVersionView($pageVersionId, $view);
+    }
+
+    /**
      * Marks all page's fields with a "true" content_requested value as complete
      *
      * @param  int   $pageVersionId

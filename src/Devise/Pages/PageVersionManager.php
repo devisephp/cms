@@ -255,4 +255,22 @@ class PageVersionManager
         return $pageVersion->update(array('preview_hash' => $previewHashValue));
     }
 
+    /**
+     * Updates the page version view
+     *
+     * @param  [type] $pageVersionId
+     * @param  [type] $view
+     * @return [type]
+     */
+    public function updatePageVersionView($pageVersionId, $view)
+    {
+        $pageVersion = $this->PageVersion->findOrFail($pageVersionId);
+
+        $pageVersion->view = $view ?: null;
+
+        $pageVersion->save();
+
+        return $pageVersion;
+    }
+
 }

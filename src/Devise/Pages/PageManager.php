@@ -218,8 +218,10 @@ class PageManager
             $fromPageVersion = $fromPage->getLiveVersion();
         }
 
-
-        $input = $this->getTranslatedFromPageId($fromPageId, $input);
+        // get translated page id, if page copy is translation and langauges are different
+        if($input['copy_reason'] == 'translate' &&  $input['language_id'] !== $fromPage->language_id) {
+            $input = $this->getTranslatedFromPageId($fromPageId, $input);
+        }
 
         $toPage = $this->createPageFromInput($input);
 

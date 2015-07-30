@@ -1,4 +1,5 @@
 <?= Form::hidden('http_verb','get') ?>
+<?= Form::hidden('copy_reason', array_get($input, 'reason', null)) ?>
 
 <h3>General Page Settings</h3>
 <hr>

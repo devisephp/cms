@@ -97,6 +97,71 @@ class PagesRepositoryTest extends \DeviseTestCase
         assertEquals(1, $version->id);
     }
 
+    public function test_it_gets_live_page_version_by_date()
+    {
+        $page = \DvsPage::find(1);
+        $version = $this->PagesRepository->getLivePageVersionByDate($page);
+        assertEquals(1, $version->id);
+    }
+
+    public function test_it_gets_live_page_version_by_id()
+    {
+        $page = \DvsPage::find(1);
+        $version = $this->PagesRepository->getLivePageVersionById($page, 1);
+        assertEquals(1, $version->id);
+    }
+
+    public function test_it_does_not_get_live_page_version_by_cookie_when_not_set()
+    {
+        $page = \DvsPage::find(1);
+        $version = $this->PagesRepository->getLivePageVersionByCookie($page);
+        assertNull($version);
+    }
+
+    public function test_it_gets_live_page_version_by_cookie_when_cookie_is_set()
+    {
+        $page = \DvsPage::find(1);
+        $this->PagesRepository->Request = m::mock('RequestMock');
+        $this->PagesRepository->Request->shouldReceive('cookie')->andReturn(1);
+        $version = $this->PagesRepository->getLivePageVersionByCookie($page);
+        assertEquals(1, $version->id);
+    }
+
+    public function test_it_gets_live_page_version_by_ab()
+    {
+        $page = \DvsPage::find(1);
+        $version = $this->PagesRepository->getLivePageVersionByAB($page);
+        assertEquals(1, $version->id);
+    }
+
+    public function test_it_gets_live_page_version_by_dice_roll()
+    {
+        $page = \DvsPage::find(1);
+        $defaultVersion = \DvsPageVersion::find(1);
+        $defaultVersion->ab_testing_amount = 50;
+        $defaultVersion->save();
+        $version = $this->PagesRepository->getLivePageVersionByDiceRoll($page);
+        assertEquals(1, $version->id);
+    }
+
+    public function test_it_gets_page_versions_by_ab()
+    {
+        $page = \DvsPage::find(1);
+        $version = \DvsPageVersion::find(1);
+        $version->ab_testing_amount = 50;
+        $version->save();
+        $newVersion = \DvsPageVersion::create([
+            'page_id' => 1,
+            'created_by_user_id' => 1,
+            'name' => 'New Version',
+            'starts_at' => new \DateTime('yesterday'),
+            'ends_at' => null,
+            'ab_testing_amount' => 50
+        ]);
+        $versions = $this->PagesRepository->getPageVersionsByAB($page);
+        assertCount(2, $versions);
+    }
+
     public function test_it_gets_page_version_by_name()
     {
         $page = \DvsPage::find(1);
@@ -128,7 +193,7 @@ class PagesRepositoryTest extends \DeviseTestCase
         $page = \DvsPage::find(1);
         $this->Config->shouldReceive('get')->once()->andReturn($realConfig);
         $vars = $this->PagesRepository->findTemplateVariables($templates);
-        assertEquals(['languages', 'pages'], $vars);
+        assertEquals(['languages', 'pages', 'templateList'], $vars);
     }
 
     /**

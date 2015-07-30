@@ -44,7 +44,6 @@
                 <div class="dvs-ab-testing-section mt sp20" data-dvs-page-id="<?= $page->id ?>" data-dvs-version-id="<?= $version->id ?>" data-dvs-url="<?= route('dvs-update-page-versions-ab-testing') ?>">
                     <label for="ab_test_amount" class="mr sp80">A|B Testing Shown %</label>
                     <input type="text" class="js-ab-testing-amount tac mb sp20" placeholder="%" value="{{ $version->ab_testing_amount }}">
-                    <span data-dvs-document="ab-testing-shown" class="dvs-document-button"></span>
                 </div>
             @endif
 

@@ -9,6 +9,7 @@ class PageControllerTest extends \DeviseTestCase
         $DvsPage = new \DvsPage;
         $DvsPage->response_type = 'View';
         $DvsPage->view = 'some.view.path';
+        $DvsPage->version = new \DvsPageVersion;
 
         $PagesRepository = m::mock('Devise\Pages\PagesRepository');
         $PagesRepository->shouldReceive('findByRouteName')->times(0)->andReturn($DvsPage);

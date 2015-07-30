@@ -77,6 +77,12 @@ class PageResponseHandlerTest extends \DeviseTestCase
         $this->PageResponseHandler->requestStorePageVersion(['page_version_id' => 1, 'name' => 'durka']);
     }
 
+    public function test_it_can_request_page_version_deletion()
+    {
+        $this->PageVersionManager->shouldReceive('destroyPageVersion')->times(1)->with(10)->andReturn(true);
+        $this->PageResponseHandler->requestDestroyPageVersion(10);
+    }
+
     public function test_it_can_request_page_list()
     {
         $input = ['term' => 2014];
@@ -88,5 +94,29 @@ class PageResponseHandlerTest extends \DeviseTestCase
     {
         $this->PageManager->shouldReceive('updatePageVersionDates')->with(1, ['some' => 'fake data']);
         $this->PageResponseHandler->requestUpdatePageVersionDates(1, ['some' => 'fake data']);
+    }
+
+    public function test_it_can_request_toggle_page_version_share()
+    {
+        $this->PageVersionManager->shouldReceive('togglePageVersionPreviewShare')->times(1)->with(1)->andReturn(true);
+        $this->PageResponseHandler->requestTogglePageVersionShare(1);
+    }
+
+    public function test_it_can_request_toggle_ab_testing()
+    {
+        $this->PageManager->shouldReceive('toggleABTesting')->times(1)->with(1, true)->andReturn(true);
+        $this->PageResponseHandler->requestToggleAbTesting(['pageId' => 1, 'enabled' => true]);
+    }
+
+    public function test_it_can_request_update_page_version_ab_testing()
+    {
+        $this->PageManager->shouldReceive('updatePageVersionABTestingAmount')->times(1)->with(1, 50)->andReturnSelf();
+        $this->PageResponseHandler->requestUpdatePageVersionAbTesting(['pageVersionId' => 1, 'amount' => 50]);
+    }
+
+    public function test_it_can_request_update_page_version_template()
+    {
+        $this->PageManager->shouldReceive('updatePageVersionView')->times(1)->with(1, 'some.view')->andReturnSelf();
+        $this->PageResponseHandler->requestUpdatePageVersionTemplate(1, ['view' => 'some.view']);
     }
 }

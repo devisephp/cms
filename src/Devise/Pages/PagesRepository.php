@@ -419,10 +419,14 @@ class PagesRepository
                 $query->orWhereNull('ends_at');
             })
             ->where('id', '=', $pageVersionId)
-            ->orderBy('starts_at', 'DESC')
-            ->first();
+            ->orderBy('starts_at', 'DESC');
 
-        return $version;
+        if ($page->ab_testing_enabled)
+        {
+            $version = $version->where('ab_testing_amount', '>', 0);
+        }
+
+        return $version->first();
     }
 
     /**
@@ -487,6 +491,8 @@ class PagesRepository
         {
             $diceroll = array_merge(array_fill(0, $version->ab_testing_amount, $index), $diceroll);
         }
+
+        if (count($diceroll) == 0) return null;
 
         $diceroll = $diceroll[array_rand($diceroll)];
 

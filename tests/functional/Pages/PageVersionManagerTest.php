@@ -59,6 +59,47 @@ class PageVersionManagerTest extends \DeviseTestCase
         assertEquals($input['ends_at']->format('Y-m-d H:i:s'), $version->ends_at);
     }
 
+    public function test_it_updates_page_version_ab_testing_amount()
+    {
+        $version = $this->PageVersionManager->updatePageVersionABTestingAmount(1, 100);
+        assertEquals(100, $version->ab_testing_amount);
+    }
+
+    /**
+     * @expectedException \Devise\Support\DeviseException
+     */
+    public function test_it_cannot_delete_live_page_version()
+    {
+        $page = \DvsPage::find(1);
+        $pageVersion = \DvsPageVersion::find(1);
+        $this->PagesRepository->shouldReceive('find')->andReturn($page);
+        $this->PagesRepository->shouldReceive('getLivePageVersion')->andReturn($pageVersion);
+        $this->PageVersionManager->destroyPageVersion(1);
+    }
+
+    public function test_it_can_delete_nonlive_page_version()
+    {
+        $page = \DvsPage::find(1);
+        $pageVersion = \DvsPageVersion::find(2);
+        $this->PagesRepository->shouldReceive('find')->andReturn($page);
+        $this->PagesRepository->shouldReceive('getLivePageVersion')->andReturn($pageVersion);
+        $this->PageVersionManager->destroyPageVersion(1);
+    }
+
+    public function test_it_toggles_page_version_preview_share()
+    {
+        $this->PageVersionManager->togglePageVersionPreviewShare(1);
+        $version = \DvsPageVersion::find(1);
+        assertNotNull($version->preview_hash);
+    }
+
+    public function test_it_updates_page_version_view()
+    {
+        $this->PageVersionManager->updatePageVersionView(1, 'some.view');
+        $version = \DvsPageVersion::find(1);
+        assertEquals('some.view', $version->view);
+    }
+
     /**
      * Helper function to create test pages in database
      *

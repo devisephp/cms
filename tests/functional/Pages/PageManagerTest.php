@@ -69,4 +69,34 @@ class PageManagerTest extends \DeviseTestCase
         $this->PageVersionManager->shouldReceive('updatePageVersionDates')->times(1)->with(1, ['some' => 'fake mock input']);
         $this->PageManager->updatePageVersionDates(1, ['some' => 'fake mock input']);
     }
+
+    public function test_it_updates_page_version_view()
+    {
+        $this->PageVersionManager->shouldReceive('updatePageVersionView')->times(1)->with(1, 'view')->andReturn(true);
+        $this->PageManager->updatePageVersionView(1, 'view');
+    }
+
+    public function test_it_can_mark_content_requested_fields_as_complete()
+    {
+        $this->PageVersionsRepository->shouldReceive('getVersionsListForPage')->times(1)->andReturn([1 => 'name1', 2 => 'name2']);
+        $this->FieldsRepository->shouldReceive('findContentRequestedFieldsList')->times(1)->with(1)->andReturn(1);
+        $this->FieldsRepository->shouldReceive('findContentRequestedFieldsList')->times(1)->with(2)->andReturn(2);
+        $this->FieldManager->shouldReceive('markNoContentRequested')->times(1)->with(1)->andReturn(true);
+        $this->FieldManager->shouldReceive('markNoContentRequested')->times(1)->with(2)->andReturn(true);
+        $this->PageManager->markContentRequestedFieldsComplete(1);
+    }
+
+    public function test_it_can_toggle_ab_testing()
+    {
+        $page = $this->PageManager->toggleABTesting(1, true);
+        $this->assertTrue($page->ab_testing_enabled);
+        $page = $this->PageManager->toggleABTesting(1, false);
+        $this->assertFalse($page->ab_testing_enabled);
+    }
+
+    public function test_it_can_update_page_version_ab_testing_amount()
+    {
+        $this->PageVersionManager->shouldReceive('updatePageVersionABTestingAmount')->times(1)->with(1, 50)->andReturnSelf();
+        $this->PageManager->updatePageVersionABTestingAmount(1, 50);
+    }
 }

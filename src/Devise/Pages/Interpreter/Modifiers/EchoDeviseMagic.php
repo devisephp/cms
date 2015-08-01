@@ -122,6 +122,8 @@ class EchoDeviseMagic extends NodeVisitorAbstract
 	{
 		$args = [];
 
+		if (!$this->isWhiteListedFunction($node)) return $node;
+
 		foreach ($node->args as $arg)
 		{
 			$args[] = $this->examineExpression($arg);
@@ -157,4 +159,25 @@ class EchoDeviseMagic extends NodeVisitorAbstract
 		return $dvsmagic;
 	}
 
+	/**
+	 * we don't want to be passing ###dvsmagic-field-1-attr###
+	 * to php functions, except for those functions that have
+	 * been whitelisted. The only one so far is 'e' which is
+	 * created by Laravel's blade to escape variables
+	 *
+	 * For example: {{ $myvar }} becomes <?= e($myvar) ?>
+	 *
+	 * However for functions like route('some-route', $model->id)
+	 * we don't want to be passing the magic field ever... we won't
+	 * ever live update that and we shouldn't even try
+	 *
+	 * @param  [type]  $node
+	 * @return boolean
+	 */
+	protected function isWhiteListedFunction($node)
+	{
+		if ($node->name->getFirst() === 'e') return true;
+
+		return false;
+	}
 }

@@ -6,7 +6,7 @@
     <title>Welcome To Devise | Installing Assets</title>
 
 	<style>
-	@import url("http://fonts.googleapis.com/css?family=Roboto:100");
+	@import url("https://fonts.googleapis.com/css?family=Roboto:100");
 
 	body {
 		background-color:#2D3039;

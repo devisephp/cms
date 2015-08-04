@@ -18,8 +18,13 @@ catch (PDOException $e)
     }
     catch (PDOException $e)
     {
-        if ( in_array($e->getCode(), array("1044", "1045", "1049", "42S02", "HY000")) )
+        if ( in_array($e->getCode(), array("2002", "1044", "1045", "1049", "42S02", "HY000")) )
         {
+            if (App::runningInConsole())
+            {
+                return;
+            }
+
             if (env('DEVISE_INSTALL') != 'ignore')
             {
                 Route::get('/', function() { return Redirect::to("/install/welcome"); });

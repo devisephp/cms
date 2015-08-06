@@ -73,6 +73,7 @@ class PagesServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerDvsMagicMode()
     {
         $this->app->instance('dvsMagicMode', new DvsMagicMode);
+        \Request::query('start-editor') === 'false' && $this->app->make('dvsMagicMode')->enable();
     }
 
     /**

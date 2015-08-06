@@ -265,9 +265,7 @@ if (!function_exists('dvsmagic'))
 {
 	function dvsmagic($value, $name, $parent)
 	{
-		Request::query('start-editor') === 'false' && App::make('dvsMagicMode')->enable();
 		$liveValue = App::make('dvsMagicMode')->live($value, $name, $parent);
-		App::make('dvsMagicMode')->disable();
 		return $liveValue;
 	}
 }

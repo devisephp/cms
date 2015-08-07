@@ -145,8 +145,6 @@ class FieldManager
 	{
 		if ($newScope == 'global')
 		{
-			$field->delete();
-
 			return $this->changeToGlobalField($fieldInput, $pageInput);
 		}
 
@@ -164,7 +162,32 @@ class FieldManager
 	{
 		$field = $this->FieldsRepository->findFieldByGlobalKeyAndLanguage($fieldInput['key'], $pageInput['language_id']);
 
-		return $field ?: $this->newGlobalField($pageInput['language_id'], $fieldInput['key'], $fieldInput['type'], $fieldInput['human_name']);
+		if (!$field)
+		{
+			$field = $this->newGlobalField($pageInput['language_id'], $fieldInput['key'], $fieldInput['type'], $fieldInput['human_name']);
+			$this->removePristinePageFields($fieldInput['key']);
+		}
+
+		return $field;
+	}
+
+	/**
+	 * Removes the pristine page fields
+	 * for this global field. We only
+	 * do this when we *first* create
+	 * the global field
+	 *
+	 * @param  DvsGlobalField $global
+	 * @return void
+	 */
+	protected function removePristinePageFields($key)
+	{
+		$pristine = $this->FieldsRepository->findPristinePageFields($key);
+
+		foreach ($pristine as $field)
+		{
+			$field->delete();
+		}
 	}
 
 	/**

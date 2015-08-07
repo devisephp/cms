@@ -147,4 +147,19 @@ class FieldsRepository
             ->lists('id');
     }
 
+    /**
+     * Find all pristine page fields that match this
+     * key
+     *
+     * @param  string $key
+     * @return Collection
+     */
+	public function findPristinePageFields($key)
+	{
+        return $this->Field
+        	->newInstance()
+            ->where('key', '=', $key)
+            ->where('created_at', '=', \DB::raw('updated_at'))
+            ->get();
+	}
 }

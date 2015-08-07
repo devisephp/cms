@@ -4805,7 +4805,8 @@ table.dvs-admin-table {
     clear: both;
     display: block; }
   table.dvs-admin-table .dvs-ab-testing-section input[type=text] {
-    width: 70px;
+    width: 50px;
+    text-align: center;
     min-width: inherit;
     max-width: inherit;
     margin-left: 0;

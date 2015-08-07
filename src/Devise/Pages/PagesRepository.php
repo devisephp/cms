@@ -796,6 +796,13 @@ class PagesRepository
             $version = $this->wrapPageVersionStatusByAB($version, $page, $liveVersions);
         }
 
+        $avg = array_sum($versions->lists('ab_testing_amount')->toArray());
+
+        foreach ($versions as $version)
+        {
+            $version->ab_percentage_shown = $avg > 0 ? round($version->ab_testing_amount / $avg, 2) * 100 : 0;
+        }
+
         return $versions;
     }
 

@@ -70,15 +70,16 @@ devise.define(['require', 'jquery', 'query', 'datetimepicker', 'dvsSelectSurroga
     // listeners to change ab amount for page version
     function addABTestingAmountListeners()
     {
-        $('.dvs-page-details').on('change', '.js-ab-testing-amount', function(e)
+        $('.dvs-page-details').on('click', '.js-ab-testing-update', function(e)
         {
             var el = $(e.currentTarget);
             var parent = el.closest('[data-dvs-url]');
             var url = parent.data('dvs-url');
             var pageId = parent.data('dvs-page-id');
             var pageVersionId = parent.data('dvs-version-id');
-            var amount = el.val();
+            var amount = parent.find('.js-ab-testing-amount').val();
 
+            el.attr('disabled', 'disabled');
             submitAjaxForm(pageId, {pageVersionId: pageVersionId, amount: amount}, url);
         });
     }

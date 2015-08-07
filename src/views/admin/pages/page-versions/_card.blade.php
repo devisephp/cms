@@ -7,7 +7,8 @@
     <div class="dvs-admin-card dvs-page-versions-card @if ($version->status == 'live') live-card @endif">
         <div class="dvs-card-top"></div>
         <div class="dvs-card-bottom">
-            <h4><?= $version->name ?></h4>
+            <h4 class="mb sp10"><?= $version->name ?></h4>
+            <small><a target="_blank" href="<?= $page->slug . '?page_version=' . htmlentities($version->name) ?>">(view)</a></small>
 
             @if ($version->status == 'live')
                 <p class="dvs-badge green">Live</p>
@@ -25,7 +26,6 @@
                     <option data-dvs-url="<?= route('dvs-update-page-versions-dates', $version->id) ?>" value="unpublish">Un-Publish</option>
                     <option data-dvs-url="<?= route('dvs-page-version-store') ?>" value="create-version">Create Version from This Version</option>
                     <option value="update-template">Update This Versions Template</option>
-
                     @if($version->status != 'live')
                         @if(is_null($version->preview_hash))
                             <option data-dvs-url="<?= route('dvs-toggle-page-version-share', $version->id) ?>" value="toggle-sharing">Enable Sharing</option>
@@ -42,8 +42,9 @@
 
             @if ($page->ab_testing_enabled)
                 <div class="dvs-ab-testing-section mt sp20" data-dvs-page-id="<?= $page->id ?>" data-dvs-version-id="<?= $version->id ?>" data-dvs-url="<?= route('dvs-update-page-versions-ab-testing') ?>">
-                    <label for="ab_test_amount" class="mr sp80">A|B Testing Shown %</label>
-                    <input type="text" class="js-ab-testing-amount tac mb sp20" placeholder="%" value="{{ $version->ab_testing_amount }}">
+                    <label for="ab_test_amount">A|B Chance {{ $version->ab_percentage_shown }}%</label><br>
+                    <input type="text" class="mt mb sp10 js-ab-testing-amount" placeholder="A|B" value="{{ $version->ab_testing_amount }}">
+                    <button class="js-ab-testing-update dvs-button dvs-button-small" type="button">Save</button>
                 </div>
             @endif
 

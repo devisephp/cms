@@ -20,7 +20,7 @@ class EloquentBuilder extends BaseBuilder
 	 * @param  string  $pageName
 	 * @return \Illuminate\Pagination\Paginator
 	 */
-	public function paginate($perPage = null, $columns = ['*'], $pageName = 'page')
+	public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
 	{
 		Sort::handleSorting($this->query, $this->model);
 

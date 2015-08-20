@@ -7,6 +7,7 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
                 filebrowserBrowseUrl: '/admin/media-manager?type=image',
                 filebrowserImageWindowWidth: '1024',
                 filebrowserImageWindowHeight: '768',
+                allowedContent: true,
                 toolbar: [
                     [ 'Source' ],
                     [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo' ],

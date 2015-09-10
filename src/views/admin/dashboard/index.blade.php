@@ -103,4 +103,6 @@
             </div>
         </div>
     </div>
+
+    <script>devise.require(['app/admin/pages-index'])</script>
 @stop

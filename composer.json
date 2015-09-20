@@ -18,7 +18,7 @@
         "symfony/console": "~2.0",
         "illuminate/html": "5.0.*",
         "doctrine/dbal": "~2.3",
-        "league/commonmark": "0.7.*"
+        "league/commonmark": "~0.7"
     },
     "require-dev": {
         "mockery/mockery": "0.9.3",

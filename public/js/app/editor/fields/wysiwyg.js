@@ -3,6 +3,17 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
     return {
         init: function()
         {
+            // This retrieves an optional wysiwyg config override from the base-page.
+            var wysiwygConfigFromPage = document.getElementById("dvs-iframe").contentWindow.wysiwygConfig;
+            var wysiwygStylesFromPage = document.getElementById("dvs-iframe").contentWindow.wysiwygStyles;
+
+            // Load any styles from the page into CKEditor
+            for (var k in wysiwygStylesFromPage){
+                if (wysiwygStylesFromPage.hasOwnProperty(k)) {
+                     CKEDITOR.stylesSet.add( k, wysiwygStylesFromPage[k]);
+                }
+            }
+
             var _config = {
                 filebrowserBrowseUrl: '/admin/media-manager?type=image',
                 filebrowserImageWindowWidth: '1024',
@@ -17,6 +28,9 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
                     [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ]
                 ]
             };
+
+            // Merge the overrides over the default
+            for (var attrname in wysiwygConfigFromPage) { _config[attrname] = wysiwygConfigFromPage[attrname]; }
 
             _config.extraPlugins = 'iframe,iframedialog,justify';
 

@@ -38895,7 +38895,7 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
 
                 body.on('submit', 'form', function(e)
                 {
-                    e.preventDefault();
+                    if (!$(e.currentTarget).hasClass('dvs-allow-submit')) e.preventDefault();
                 });
 
                 // in case the iframe is reloaded, we need to check for these

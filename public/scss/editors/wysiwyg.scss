@@ -2,7 +2,9 @@
 Copyright (c) 2003-2014,  CKSource - Frederico Knabben. All rights reserved.
 For licensing,  see LICENSE.md or http://ckeditor.com/license
 */
-#dvs-mode.dvs-sidebar-mode {
+    .cke.cke_panel {
+        visibility:visible;
+    }
 
     .cke_reset {
         margin: 0;
@@ -1192,4 +1194,3 @@ For licensing,  see LICENSE.md or http://ckeditor.com/license
         background:  url(icons_hidpi.png) no-repeat 0 -1032px !important;
         background-size:  16px !important;
     }
-}

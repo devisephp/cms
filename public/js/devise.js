@@ -91,7 +91,8 @@ devise.require.config({
         dvsChangeTarget:    'app/bindings/data-change-target',
         dvsLiveSpan:        'app/helpers/livespan',
         dvsDocumentation:   'app/helpers/documentation',
-        dvsImagePicker:     'app/helpers/image-picker'
+        dvsImagePicker:     'app/helpers/image-picker',
+        dvsFilePicker:      'app/helpers/file-picker'
     }
 });
 devise.define("config", function(){});

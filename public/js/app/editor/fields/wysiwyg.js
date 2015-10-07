@@ -19,10 +19,13 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
                 filebrowserImageWindowWidth: '1024',
                 filebrowserImageWindowHeight: '768',
                 allowedContent: true,
+                enterMode: CKEDITOR.ENTER_BR, // pressing the ENTER Key puts the <br/> tag
+                shiftEnterMode: CKEDITOR.ENTER_P, //pressing the SHIFT + ENTER Keys puts the <p> tag
+                stylesSet: [ { name: 'Blue Title', element: 'p', attributes: { 'class': 'placeholder' }}],
                 toolbar: [
                     [ 'Source' ],
                     [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo' ],
-                    [ 'Image', 'Table', 'Link', 'Iframe', 'HorizontalRule' ],
+                    [ 'Image', 'Table', 'Link', 'Iframe', 'HorizontalRule', 'Span' ],
                     '/',
                     [ 'FontSize', 'Bold', 'Italic', 'Underline', 'Strike' ],
                     [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ]

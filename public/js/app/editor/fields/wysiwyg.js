@@ -35,7 +35,8 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
             // Merge the overrides over the default
             for (var attrname in wysiwygConfigFromPage) { _config[attrname] = wysiwygConfigFromPage[attrname]; }
 
-            _config.extraPlugins = 'iframe,iframedialog,justify';
+            _config.extraPlugins = 'iframe,iframedialog,justify,widget,image2,lineutils';
+            _config.image2_captionedClass = 'image';
 
             cke = $('textarea.dvs-wysiwyg').ckeditor(_config).editor;
 

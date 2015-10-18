@@ -9,6 +9,7 @@ class ImageFieldUpdatedTest extends \DeviseTestCase
 	{
 		$Images = m::mock('Devise\Media\Images\Images');
 		$MediaPathHelper = m::mock('Devise\Media\MediaPaths');
+		$Framework = m::mock('Devise\Support\Framework');
 		$DvsField = m::mock('DvsField');
 		$FieldValue = new FieldValue('{}');
 
@@ -17,7 +18,7 @@ class ImageFieldUpdatedTest extends \DeviseTestCase
 		$DvsField->shouldReceive('setAttribute')->with('json_value', $FieldValue->toJSON());
 		$DvsField->shouldReceive('save')->times(1);
 
-		$ImageFieldUpdated = new ImageFieldUpdated($Images, $MediaPathHelper);
+		$ImageFieldUpdated = new ImageFieldUpdated($Images, $MediaPathHelper, $Framework);
 		$ImageFieldUpdated->handle($DvsField, [], $DvsField);
 	}
 
@@ -25,6 +26,7 @@ class ImageFieldUpdatedTest extends \DeviseTestCase
 	{
 		$Images = m::mock('Devise\Media\Images\Images');
 		$MediaPathHelper = m::mock('Devise\Media\MediaPaths');
+		$Framework = m::mock('Devise\Support\Framework');
 		$DvsField = m::mock('DvsField');
 		$FieldValue = new FieldValue('{"image" : "/some/path/to/file.jpg"}');
 
@@ -34,7 +36,7 @@ class ImageFieldUpdatedTest extends \DeviseTestCase
 		$DvsField->shouldReceive('setAttribute');
 		$DvsField->shouldReceive('save')->times(1);
 
-		$ImageFieldUpdated = new ImageFieldUpdated($Images, $MediaPathHelper);
+		$ImageFieldUpdated = new ImageFieldUpdated($Images, $MediaPathHelper, $Framework);
 		$ImageFieldUpdated->handle($DvsField, [], $DvsField);
 
 		assertEquals('/some/path/to/file.jpg', $FieldValue->image_url);

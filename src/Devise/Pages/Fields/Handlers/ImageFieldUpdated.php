@@ -3,6 +3,7 @@
 use Devise\Media\Images\Images;
 use Devise\Media\Images\InvalidImageException;
 use Devise\Media\MediaPaths;
+use Devise\Support\Framework;
 
 /**
  * This class should be registered in a service provider
@@ -19,11 +20,12 @@ class ImageFieldUpdated
 	 * @param Images        $Images
 	 * @param MediaPaths 	$MediaPaths
 	 */
-	public function __construct(Images $Images, MediaPaths $MediaPaths)
+	public function __construct(Images $Images, MediaPaths $MediaPaths, Framework $Framework)
 	{
 		$this->MediaPaths = $MediaPaths;
 		$this->Images = $Images;
 		$this->basepath = $this->MediaPaths->basePath();
+		$this->file = $Framework->file;
 	}
 
 	/**
@@ -38,6 +40,7 @@ class ImageFieldUpdated
 	{
 		$imageVersion = $this->createVersionOfImage($field, $input);
 		$thumbnailVersion = $this->createThumbnailOfImage($field, $input);
+		$this->saveCaption($imageVersion, $input);
 
 		$field->values->merge([
 			'has_thumbnail' => array_get($input, 'has_thumbnail', false),
@@ -45,7 +48,7 @@ class ImageFieldUpdated
 			'image' => $imageVersion,
 			'image_url' => $imageVersion,
 			'thumbnail' => $thumbnailVersion,
-			'thumbnail_url' => $thumbnailVersion,
+			'thumbnail_url' => $thumbnailVersion
 		]);
 
 		$field->json_value = $field->values->toJSON();
@@ -71,6 +74,20 @@ class ImageFieldUpdated
 		return array_get($input, '_crop_image', false)
 			? $this->croppedImagePath($field)
 			: $this->versionedImagePath($field);
+	}
+
+	/**
+	 * Save or overwrite caption file for image
+	 *
+	 * @param array $input
+	 * @return string
+	 */
+	protected function saveCaption($imagePath, $input)
+	{
+		if($caption = array_get($input,'caption',false)){
+			$captionPath = $this->MediaPaths->imageCaptionPath($imagePath);
+        	$this->file->put($captionPath, $caption);
+		}
 	}
 
 	/**

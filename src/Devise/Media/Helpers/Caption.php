@@ -49,4 +49,17 @@ class Caption {
         return null;
     }
 
+    /**
+     * Saves the text file using the image path, and text passed
+     *
+     * @param  string $imagePath
+     * @return string $text
+     */
+    public function saveForImage($imagePath, $text)
+    {
+        $captionPath = $this->MediaPaths->imageCaptionPath($imagePath);
+        
+        return $this->File->put($captionPath, $text);
+    }
+
 }

@@ -3,6 +3,7 @@
 use Devise\Media\Images\Images;
 use Devise\Media\Images\InvalidImageException;
 use Devise\Media\MediaPaths;
+use Devise\Media\Helpers\Caption;
 use Devise\Support\Framework;
 
 /**
@@ -20,11 +21,12 @@ class ImageFieldUpdated
 	 * @param Images        $Images
 	 * @param MediaPaths 	$MediaPaths
 	 */
-	public function __construct(Images $Images, MediaPaths $MediaPaths, Framework $Framework)
+	public function __construct(Images $Images, MediaPaths $MediaPaths, Caption $Caption, Framework $Framework)
 	{
 		$this->MediaPaths = $MediaPaths;
 		$this->Images = $Images;
 		$this->basepath = $this->MediaPaths->basePath();
+		$this->Caption = $Caption;
 		$this->file = $Framework->file;
 	}
 
@@ -85,8 +87,7 @@ class ImageFieldUpdated
 	protected function saveCaption($imagePath, $input)
 	{
 		if($caption = array_get($input,'caption',false)){
-			$captionPath = $this->MediaPaths->imageCaptionPath($imagePath);
-        	$this->file->put($captionPath, $caption);
+			$this->Caption->saveForImage($imagePath, $caption);
 		}
 	}
 

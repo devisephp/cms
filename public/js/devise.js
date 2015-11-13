@@ -78,6 +78,7 @@ devise.require.config({
         dvsCsrf:            'app/helpers/csrf',
         dvsAdmin:           'app/admin/admin',
         dvsAdminView:       'app/admin/admin-view',
+        dvsAdminDashboard:  'app/admin/dashboard',
         dvsAdminPages:      'app/admin/pages',
         dvsAdminMenus:      'app/admin/menus',
         dvsReplacement:     'app/helpers/replacement',

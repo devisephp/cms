@@ -104,5 +104,5 @@
         </div>
     </div>
 
-    <script>devise.require(['app/admin/pages-index'])</script>
+    <script>devise.require(['app/admin/dashboard'])</script>
 @stop

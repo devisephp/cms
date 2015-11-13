@@ -84,15 +84,6 @@ devise.define(['require', 'jquery', 'query', 'datetimepicker', 'dvsSelectSurroga
         });
     }
 
-    // make entire "dvs-admin-card" into a link
-    if($('.dvs-admin-card').length > 0) {
-        $('.dvs-admin-card:not(.dvs-page-versions-card)').click(function() {
-            var _url = $(this).data('dvs-url');
-            if (_url != undefined)
-                window.location.href = $(this).data('dvs-url');
-        });
-    }
-
     // "expand details" click listener
     $('.dvs-admin-table').on('click', '.dvs-expand-details', function() {
         togglePageDetailsRow($(this));

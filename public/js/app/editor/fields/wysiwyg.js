@@ -23,7 +23,7 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
                 shiftEnterMode: CKEDITOR.ENTER_P, //pressing the SHIFT + ENTER Keys puts the <p> tag
                 stylesSet: [ { name: 'Blue Title', element: 'p', attributes: { 'class': 'placeholder' }}],
                 toolbar: [
-                    [ 'Source' ],
+                    [ 'Source', 'Templates' ],
                     [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo' ],
                     [ 'Image', 'Table', 'Link', 'Iframe', 'HorizontalRule', 'Span' ],
                     '/',
@@ -32,11 +32,11 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
                 ]
             };
 
+            _config.extraPlugins = 'iframe,iframedialog,justify,widget,image2,lineutils,templates';
+            _config.image2_captionedClass = 'image';
+
             // Merge the overrides over the default
             for (var attrname in wysiwygConfigFromPage) { _config[attrname] = wysiwygConfigFromPage[attrname]; }
-
-            _config.extraPlugins = 'iframe,iframedialog,justify,widget,image2,lineutils';
-            _config.image2_captionedClass = 'image';
 
             cke = $('textarea.dvs-wysiwyg').ckeditor(_config).editor;
 
@@ -75,6 +75,14 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
                 this.document.on("paste", updateInput);
                 this.document.on("keypress", updateInput);
             });
+
+            // broadcast this sucker out so folks can manipulate CKEditor. 
+            // use the following to listen:
+            // parent.devise.$('body').on('customEvent', function(event, dvsCkeditor) {
+
+            $("body").trigger("customEvent", CKEDITOR);
+
         }
     };
 });
+

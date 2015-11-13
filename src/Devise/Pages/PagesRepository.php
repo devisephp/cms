@@ -697,7 +697,7 @@ class PagesRepository
         {
             if (!isset($field->value->url) || $field->value->url == '')
             {
-                $field->value->url = dvspage($field->value->route);
+                $field->value->merge(['url' => dvspage($field->value->route)]);
             }
         }
     }

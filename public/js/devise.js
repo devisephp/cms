@@ -91,7 +91,8 @@ devise.require.config({
         dvsChangeTarget:    'app/bindings/data-change-target',
         dvsLiveSpan:        'app/helpers/livespan',
         dvsDocumentation:   'app/helpers/documentation',
-        dvsImagePicker:     'app/helpers/image-picker'
+        dvsImagePicker:     'app/helpers/image-picker',
+        dvsFilePicker:      'app/helpers/file-picker'
     }
 });
 devise.define("config", function(){});
@@ -38895,7 +38896,7 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
 
                 body.on('submit', 'form', function(e)
                 {
-                    e.preventDefault();
+                    if (!$(e.currentTarget).hasClass('dvs-allow-submit')) e.preventDefault();
                 });
 
                 // in case the iframe is reloaded, we need to check for these
@@ -40319,6 +40320,8 @@ devise.define('dvsCollectionView',['jquery', 'dvsBaseView', 'dvsFieldView', 'dvs
 	CollectionView.prototype.renderCollectionField = function()
 	{
 		var fieldView = new FieldView(this.sidebar);
+		fieldView.loadDefaults = false;
+
 		var html = fieldView.renderField(this.selectedField);
 
 		this.field.empty();
@@ -40328,7 +40331,6 @@ devise.define('dvsCollectionView',['jquery', 'dvsBaseView', 'dvsFieldView', 'dvs
 		this.grid.hide();
 		this.sidebar.saveButton.show();
 		dvsSelectSurrogate();
-
 	}
 
 	/**
@@ -40410,10 +40412,10 @@ devise.define('dvsCollectionView',['jquery', 'dvsBaseView', 'dvsFieldView', 'dvs
 		if (!shouldReset) return;
 
 		var self = this;
+		this.selectedField.values = {};
 
 		setTimeout(function()
 		{
-			self.data.field.values = {};
 			self.renderCollectionField();
 		}, 500);
 	}

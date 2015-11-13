@@ -905,7 +905,7 @@ class DevisePagesSeeder extends DeviseSeeder
                 'slug'                    => '/admin/page-versions/{pageVersionId}',
                 'short_description'       => 'Deletes a page version',
                 'response_type'           => 'Function',
-                'response_path'           => 'Devise\Pages\Response\ResponseHandler.requestDestroyPageVersion',
+                'response_path'           => 'Devise\Pages\PageResponseHandler.requestDestroyPageVersion',
                 'response_params'         => 'params.pageVersionId'
             ),
             array(

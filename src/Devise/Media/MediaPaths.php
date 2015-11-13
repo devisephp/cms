@@ -161,6 +161,21 @@ class MediaPaths
 	}
 
     /**
+     * Get caption path from image path
+     *
+     * @param $path
+     * @return string
+     */
+	public function imageCaptionPath($imagePath)
+	{
+		$imagePath = $this->makeRelativePath($imagePath);
+		$parts = explode('.', $imagePath);
+		array_pop($parts);// dropping extension
+		$pathWithoutExtension = implode('.', $parts);
+        return $this->basepath . $pathWithoutExtension . '.txt';
+	}
+
+    /**
      * Make this path relative to public directory
      *
      * @param $path

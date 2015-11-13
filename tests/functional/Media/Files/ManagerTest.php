@@ -12,8 +12,9 @@ class ManagerTest extends \DeviseTestCase
         $this->CategoryPaths = m::mock('Devise\Media\Categories\CategoryPaths');
         $this->Image = m::mock('Devise\Media\Images\Images');
         $this->MediaPaths = m::mock('Devise\Media\MediaPaths');
+        $this->Caption = m::mock('Devise\Media\Helpers\Caption');
         $this->Config = m::mock('Illuminate\Config\Repository');
-        $this->Manager = new Manager($this->Filesystem, $this->CategoryPaths, $this->MediaPaths, $this->Image, $this->Config);
+        $this->Manager = new Manager($this->Filesystem, $this->CategoryPaths, $this->MediaPaths, $this->Image, $this->Caption, $this->Config);
     }
 
     public function test_it_saves_uploaded_files()
@@ -34,6 +35,7 @@ class ManagerTest extends \DeviseTestCase
     public function test_it_renames_uploaded_files()
     {
         $this->Filesystem->shouldReceive('rename')->times(1)->with($this->Manager->basepath . 'some/path', $this->Manager->basepath . 'new/path');
+        $this->Caption->shouldReceive('exists')->times(1)->andReturn(false);
         $this->Manager->renameUploadedFile('some/path', 'new/path');
     }
 

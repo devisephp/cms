@@ -3,6 +3,7 @@
 use Devise\Media\Categories\CategoryPaths;
 use Devise\Media\Images\Images;
 use Devise\Media\MediaPaths;
+use Devise\Media\Helpers\Caption;
 
 /**
  * Class Manager
@@ -31,13 +32,15 @@ class Manager
      * @param Filesystem $Filesystem
      * @param CategoryPaths $CategoryPaths
      * @param Image $Image
+     * @param Caption $Caption
      */
-    public function __construct(Filesystem $Filesystem, CategoryPaths $CategoryPaths, MediaPaths $MediaPaths, Images $Image, $Config = null)
+    public function __construct(Filesystem $Filesystem, CategoryPaths $CategoryPaths, MediaPaths $MediaPaths, Images $Image, Caption $Caption, $Config = null)
     {
         $this->Filesystem = $Filesystem;
         $this->CategoryPaths = $CategoryPaths;
         $this->MediaPaths = $MediaPaths;
         $this->Image = $Image;
+        $this->Caption = $Caption;
         $this->basepath = public_path() . '/media/';
         $this->Config = $Config ?: \Config::getFacadeRoot();
     }
@@ -82,6 +85,13 @@ class Manager
      */
     public function renameUploadedFile($filepath, $newpath)
     {
+        if($this->Caption->exists($this->basepath . $filepath)){
+            $oldCptPath = $this->MediaPaths->imageCaptionPath($this->basepath . $filepath);
+            $newCptPath = $this->MediaPaths->imageCaptionPath($this->basepath . $newpath);
+            
+            $this->Filesystem->rename($oldCptPath, $newCptPath);            
+        }
+
         return $this->Filesystem->rename($this->basepath . $filepath, $this->basepath . $newpath);
     }
 

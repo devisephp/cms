@@ -1,4 +1,4 @@
-devise.define(['jquery', 'dvsCsrf'], function ($, datetimepicker, selectSurrogate)
+devise.define(['jquery', 'dvsCsrf', 'dvsImagePicker', 'dvsFilePicker'], function ($, datetimepicker, selectSurrogate)
 {
 
 });

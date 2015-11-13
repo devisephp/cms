@@ -3,22 +3,40 @@ devise.define(['require', 'jquery', 'ckeditorJquery'], function (require, $) {
     return {
         init: function()
         {
+            // This retrieves an optional wysiwyg config override from the base-page.
+            var wysiwygConfigFromPage = document.getElementById("dvs-iframe").contentWindow.wysiwygConfig;
+            var wysiwygStylesFromPage = document.getElementById("dvs-iframe").contentWindow.wysiwygStyles;
+
+            // Load any styles from the page into CKEditor
+            for (var k in wysiwygStylesFromPage){
+                if (wysiwygStylesFromPage.hasOwnProperty(k)) {
+                     CKEDITOR.stylesSet.add( k, wysiwygStylesFromPage[k]);
+                }
+            }
+
             var _config = {
                 filebrowserBrowseUrl: '/admin/media-manager?type=image',
                 filebrowserImageWindowWidth: '1024',
                 filebrowserImageWindowHeight: '768',
                 allowedContent: true,
+                enterMode: CKEDITOR.ENTER_BR, // pressing the ENTER Key puts the <br/> tag
+                shiftEnterMode: CKEDITOR.ENTER_P, //pressing the SHIFT + ENTER Keys puts the <p> tag
+                stylesSet: [ { name: 'Blue Title', element: 'p', attributes: { 'class': 'placeholder' }}],
                 toolbar: [
                     [ 'Source' ],
                     [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo' ],
-                    [ 'Image', 'Table', 'Link', 'Iframe', 'HorizontalRule' ],
+                    [ 'Image', 'Table', 'Link', 'Iframe', 'HorizontalRule', 'Span' ],
                     '/',
                     [ 'FontSize', 'Bold', 'Italic', 'Underline', 'Strike' ],
                     [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ]
                 ]
             };
 
-            _config.extraPlugins = 'iframe,iframedialog,justify';
+            // Merge the overrides over the default
+            for (var attrname in wysiwygConfigFromPage) { _config[attrname] = wysiwygConfigFromPage[attrname]; }
+
+            _config.extraPlugins = 'iframe,iframedialog,justify,widget,image2,lineutils';
+            _config.image2_captionedClass = 'image';
 
             cke = $('textarea.dvs-wysiwyg').ckeditor(_config).editor;
 

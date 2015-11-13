@@ -122,6 +122,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 	CollectionView.prototype.renderCollectionField = function()
 	{
 		var fieldView = new FieldView(this.sidebar);
+		fieldView.loadDefaults = false;
+
 		var html = fieldView.renderField(this.selectedField);
 
 		this.field.empty();
@@ -131,7 +133,6 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 		this.grid.hide();
 		this.sidebar.saveButton.show();
 		dvsSelectSurrogate();
-
 	}
 
 	/**
@@ -213,10 +214,10 @@ devise.define(['jquery', 'dvsBaseView', 'dvsFieldView', 'dvsSelectSurrogate', 'd
 		if (!shouldReset) return;
 
 		var self = this;
+		this.selectedField.values = {};
 
 		setTimeout(function()
 		{
-			self.data.field.values = {};
 			self.renderCollectionField();
 		}, 500);
 	}

@@ -136,21 +136,26 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 	FieldView.prototype.resetValuesChanged = function(shouldReset)
 	{
 		if (!shouldReset) return;
-
 		var self = this;
-		var field = self.data.field;
-		var url = self.data.page.url('reset_field', {id: field.id, scope: field.scope});
 
-		$.post(url);	// reset field on server
+		if (window.confirm("Are you sure you want to reset all values for this field?")) {
 
-		setTimeout(function()
-		{
-			field.values = {};
-			self.view.empty();
-			self.loadDefaults = false;
-			self.view.append(self.renderField(field, true));
-			self.loadDefaults = true;
-		}, 500);
+			var field = self.data.field;
+			var url = self.data.page.url('reset_field', {id: field.id, scope: field.scope});
+
+			$.post(url);	// reset field on server
+
+			setTimeout(function()
+			{
+				field.values = {};
+				self.view.empty();
+				self.loadDefaults = false;
+				self.view.append(self.renderField(field, true));
+				self.loadDefaults = true;
+			}, 500);
+		} else {
+			self.view.find('#_reset_values').prop('checked', false);
+		}
 	}
 
 	/**

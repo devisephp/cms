@@ -31,7 +31,7 @@ class ViewvarComposer
      *                              // not set below due to $firstView
      * @var boolean
      */
-    public static $testingMode = false;
+    public static $loadMultipleTimes = false;
 
     /**
      * DataBuilder constructs the data for our
@@ -69,7 +69,7 @@ class ViewvarComposer
      */
     public function compose($view)
     {
-        if (!self::$testingMode && !self::$firstView)
+        if (!self::$loadMultipleTimes && !self::$firstView)
         {
             return;
         }

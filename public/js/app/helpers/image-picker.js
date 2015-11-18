@@ -9,7 +9,7 @@ devise.define(['jquery'], function($) {
 		$('body').on('click', '.image-picker', function()
 	    {
 	        var input = $(this);
-	        var image = $(this).siblings('img');
+	        // var image = $(this).siblings('img');
 
 	        var mediaUrl = '/admin/media-manager?cropMode=Preserve&type=image';
 
@@ -18,8 +18,8 @@ devise.define(['jquery'], function($) {
 
 	        document.onMediaManagerSelect = function(images){
 	            input.val(images);
-	            console.log(images);
-	            input.attr('src', images);
+	            // console.log(images);
+	            // input.attr('src', images);
 	        };
 	    });
 	}

@@ -28,6 +28,7 @@ devise.define(['jquery'], function($) {
             {
                 for (var i = 0; i < node.data.length; i++)
                 {
+                    console.log('here');
                     var current = node.data[i];
                     current.position = getCoordinatesForNode(current, body);
                 }
@@ -61,8 +62,12 @@ devise.define(['jquery'], function($) {
      */
     function getCoordinatesForNode(node, view)
     {
+
+
         if (node.binding === 'group')
         {
+            // if(key == "contentBlock2Icon")
+            // console.log(node);
             return getCoordinatesForGroupNode(node, view);
         }
 
@@ -79,6 +84,7 @@ devise.define(['jquery'], function($) {
      */
     function getCoordinatesForCollectionNode(node, view)
     {
+
         var hidden, coordinates;
         var placeholder = view.find('[data-dvs-placeholder^="' + node.key + '["]').last();
         var element = view.find('[data-devise-' + node.cid + ']').first();
@@ -128,6 +134,9 @@ devise.define(['jquery'], function($) {
         coordinates = placeholder.offset();
         placeholder.hide();
 
+        // if(key == "contentBlock2Icon")
+        //     console.log(coordinates);
+
         if (typeof coordinates === 'object' && coordinates.top) return coordinates;
         return getCoordinatesFromParent(placeholder);
     }
@@ -138,6 +147,10 @@ devise.define(['jquery'], function($) {
     function getCoordinatesForGroupNode(groupNode, view)
     {
         var position = false;
+        var finalTop = 0;
+        var finalLeft = 0;
+        var nodeCountTop = 0;
+        var nodeCountLeft = 0;
 
         $.each(groupNode.data.categories, function(index, category)
         {
@@ -145,8 +158,28 @@ devise.define(['jquery'], function($) {
             {
                 var node = category.nodes[i];
                 var nodePosition = getCoordinatesForNode(node, view);
-                if (!position) position = nodePosition;
+
+                // If the position isn't 0 then lets throw
+                // it in the averages
+                if(nodePosition.left != 0) {
+                    finalLeft += nodePosition.left;
+                    nodeCountLeft++;
+                }
+                if(nodePosition.top != 0) {
+                    finalTop += nodePosition.top;
+                    nodeCountTop++;
+                }
             }
+
+            // Get it in the ballpark with the last one
+            position = nodePosition;
+
+            // Average the top position of the group node
+            position.top = finalTop/nodeCountTop;
+
+            // Average the left position of the group node
+            position.left = finalLeft/nodeCountLeft;
+
         });
 
         return position;

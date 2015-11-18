@@ -138,7 +138,7 @@ devise.define(['jquery', 'dvsBaseView', 'dvsLiveUpdater'], function($, View, Liv
 		if (!shouldReset) return;
 		var self = this;
 
-		if (window.confirm("Are you sure you want to reset all values for this field?")) {
+		if (window.confirm("Are you sure you want to reset all values for this field? This will save immediately.")) {
 
 			var field = self.data.field;
 			var url = self.data.page.url('reset_field', {id: field.id, scope: field.scope});

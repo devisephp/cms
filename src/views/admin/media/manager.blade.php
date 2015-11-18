@@ -4,14 +4,6 @@
     <div id="dvs-media-manager">
 
         <div id="dvs-media-top-action-bar">
-            @if(count($pageData['crumbs']) > 1)
-            <div id="dvs-media-crumbs">
-                @foreach ($pageData['crumbs'] as $crumb)
-                    &nbsp;/&nbsp;<a href="<?= $crumb['url'] ?>"><?= $crumb['name'] ?></a>
-                @endforeach
-            </div>
-            @endif
-
             @include('devise::admin.media._search')
         </div>
 

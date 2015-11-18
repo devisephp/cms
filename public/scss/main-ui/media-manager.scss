@@ -77,9 +77,9 @@
     }
 
     #dvs-media-crumbs {
-        @include clearfix;
-        background-color:darken($bodyBgColor, 10%);
-        padding: 5px 40px;
+        text-align:left;
+        float:left;
+        padding: 12px 40px 12px 0;
 
         a {
             text-decoration: none;
@@ -96,7 +96,7 @@
         clear:both;
         text-align:right;
         background-color:darken($bodyBgColor, 7%);
-        padding: 5px 40px;
+        padding: 15px 40px;
     }
 
     .crop-container {
@@ -150,7 +150,7 @@
             width:150px;
             display: inline-block;
             position: relative;
-            margin: 0 12px 12px 0;
+            margin: 0 5px 5px 0;
             overflow:hidden;
 
             @include background(linear-gradient($white, darken($white, 3%)));
@@ -172,10 +172,6 @@
                 .dvs-media-item-actions {
                     display:block;
                 }
-            }
-
-            &:nth-child(4n+1) {
-                margin-right:0;
             }
         }
 
@@ -214,10 +210,14 @@
     input[type="number"] {
         border-radius: 2px;
         border-width:0;
-        padding: 5px 15px;
+        padding: 9px 15px;
         font-size: 12px;
         background-color:lighten($black, 13%);
         color: darken($white, 10%);
+    }
+
+    input[type="text"] {
+        margin-right:5px;
     }
 }
 

@@ -89,6 +89,7 @@ gulp.task('build:js:vendor', function()
         'scrollTo',
         'localScroll',
         'handlebars',
+        'vueJs',
     ]
   })
   .pipe(concat.header(fs.readFileSync('public/js/devise.require.js', 'utf8') + '\n'))

@@ -58,7 +58,7 @@
 
 		<?php die ?>
 
-		<?
+		<?php
 		/*
 			none of your stuff got loaded here... but it will get loaded inside
 			of the iframe in just another second

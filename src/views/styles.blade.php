@@ -17,7 +17,7 @@
 
 
 
-		<?
+		<?php
 		/*
 			here we truncate the page for performance reasons... to avoid
 			double-tapping each page everytime when in Editor mode

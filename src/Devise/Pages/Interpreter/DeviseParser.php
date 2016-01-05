@@ -1,7 +1,5 @@
 <?php namespace Devise\Pages\Interpreter;
 
-use PhpParser\ParserFactory;
-
 class DeviseParser
 {
 	/**
@@ -11,7 +9,12 @@ class DeviseParser
 	 */
 	public function __construct(Parser $parser = null)
 	{
-		$this->parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+		try {
+			$this->parser = (new PhpParser\ParserFactory)->create(PhpParser\ParserFactory::PREFER_PHP7);
+		} catch(\Exception $e){
+			// backward compatability
+			$this->parser = $parser ?: new PhpParser\Parser(new PhpParser\Lexer);
+		}
 	}
 
 	/**

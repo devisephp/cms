@@ -9,11 +9,11 @@ class DeviseParser
 	 */
 	public function __construct(Parser $parser = null)
 	{
-		try {
-			$this->parser = (new PhpParser\ParserFactory)->create(PhpParser\ParserFactory::PREFER_PHP7);
-		} catch(\Exception $e){
-			// backward compatability
-			$this->parser = $parser ?: new PhpParser\Parser(new PhpParser\Lexer);
+		$className = '\PhpParser\ParserFactory';
+	    if (class_exists($className)) {
+			$this->parser = (new \PhpParser\ParserFactory)->create(\PhpParser\ParserFactory::PREFER_PHP7);
+	    } else {
+			$this->parser = $parser ?: new \PhpParser\Parser(new \PhpParser\Lexer);
 		}
 	}
 

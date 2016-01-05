@@ -11,7 +11,7 @@ class DeviseParser
 	 */
 	public function __construct(Parser $parser = null)
 	{
-		$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+		$this->parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 	}
 
 	/**

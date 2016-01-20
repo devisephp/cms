@@ -32,8 +32,6 @@
 
 <body id="dvs-admin" class="dvs-default">
 
-    <?= deviseDocs($view_name) ?>
-
     <div class="dvs-admin-container">
         @yield('title')
 

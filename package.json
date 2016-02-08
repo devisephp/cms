@@ -19,6 +19,7 @@
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-concat-util": "^0.5.1",
+    "gulp-count": "^0.1.0",
     "gulp-dalek": "0.0.1",
     "gulp-jasmine": "^1.0.1",
     "gulp-notify": "^1.7.1",

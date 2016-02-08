@@ -28,6 +28,7 @@ devise.define(['require', 'jquery', 'dvsSelectSurrogate'], function (require, $,
                 document.location.search = params.join('&');
             }
         });
+
     };
 
     var addDeleteConfirmation = function()

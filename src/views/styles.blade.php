@@ -17,7 +17,7 @@
 
 
 
-		<?
+		<?php
 		/*
 			here we truncate the page for performance reasons... to avoid
 			double-tapping each page everytime when in Editor mode
@@ -58,7 +58,7 @@
 
 		<?php die ?>
 
-		<?
+		<?php
 		/*
 			none of your stuff got loaded here... but it will get loaded inside
 			of the iframe in just another second

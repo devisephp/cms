@@ -42,7 +42,7 @@
                                 <li><a class="dvs-media-controls-upload"></a></li>
                                 <li><a class="dvs-media-controls-gallery"></a></li>
                             </ul>
-                            <img src="<?= URL::asset('img/FOP/placeholder-image.png') ?>" width="320" height="225">
+                            <img src="<?= URL::asset('/img/FOP/placeholder-image.png') ?>" width="320" height="225">
                         </div>
 
                         <ul class="dvs-edit-element">

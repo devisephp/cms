@@ -1,3 +1,5 @@
+
+
 ////////////////////////////////////////////////////////////////
 // Gulp variables
 ////////////////////////////////////////////////////////////////
@@ -9,6 +11,7 @@ var uglify = require('gulp-uglify');
 var gulp = require('gulp');
 var notify  = require('gulp-notify');
 var concat = require('gulp-concat-util');
+// var count = require('gulp-count');
 var fs = require('fs')
 
 
@@ -32,19 +35,41 @@ gulp.task('phpunit', function()
 // watch phpunit as a task and run phpunit whenever changes to
 // files are made within test/ and src/
 ////////////////////////////////////////////////////////////////
+gulp.task('test', function()
+{
+    gulp.watch(['src/**/*.php', 'tests/**/*.php'], ['phpunit']);
+});
+
+
+
+////////////////////////////////////////////////////////////////
+// watch script files and rebuild automatically
+////////////////////////////////////////////////////////////////
 gulp.task('default', function()
 {
-    gulp.watch(['src/**/*.php', 'tests/**/*.php'], function()
-    {
-        gulp.run('phpunit');
-    });
+    gulp.watch(['public/js/app/**/*.js'], ['build:js']);
 });
 
 
 ////////////////////////////////////////////////////////////////
 // Build devise
 ////////////////////////////////////////////////////////////////
-gulp.task('build:js', function()
+gulp.task('build:js', ['build:js:devise'], function()
+{
+  gulp.src(['public/js/devise.vendor.js', 'public/js/devise.app.js'])
+    .pipe(concat('devise.js'))
+    .pipe(gulp.dest('public/js'));
+
+  gulp.src(['public/js/devise.vendor.min.js', 'public/js/devise.app.min.js'])
+    .pipe(concat('devise.min.js'))
+    .pipe(gulp.dest('public/js'));
+});
+
+
+////////////////////////////////////////////////////////////////
+// Build devise vendor files (only run this if you update vendors)
+////////////////////////////////////////////////////////////////
+gulp.task('build:js:vendor', function()
 {
   rjs({
     mainConfigFile : "public/js/config.js",
@@ -52,7 +77,7 @@ gulp.task('build:js', function()
     removeCombined: false,
     findNestedDependencies: false,
     wrap: true,
-    out: 'devise.js',
+    out: 'devise.vendor.js',
     include: [
         'config',
         'jquery',
@@ -64,6 +89,31 @@ gulp.task('build:js', function()
         'scrollTo',
         'localScroll',
         'handlebars',
+        'vueJs',
+    ]
+  })
+  .pipe(concat.header(fs.readFileSync('public/js/devise.require.js', 'utf8') + '\n'))
+  .pipe(gulp.dest('public/js'))
+  .pipe(uglify())
+  .pipe(rename('devise.vendor.min.js'))
+  .pipe(gulp.dest('public/js'));
+});
+
+
+////////////////////////////////////////////////////////////////
+// Build devise application files... this is run everytime as
+// a dependency when you run build:js
+////////////////////////////////////////////////////////////////
+gulp.task('build:js:devise', function()
+{
+  rjs({
+    mainConfigFile : "public/js/config.js",
+    baseUrl: "public/js",
+    removeCombined: false,
+    findNestedDependencies: false,
+    wrap: true,
+    out: 'devise.app.js',
+    include: [
         'dvsTemplates',
         'dvsEditor',
         'query',
@@ -82,17 +132,15 @@ gulp.task('build:js', function()
         'dvsGroupView',
         'dvsBreadCrumbsView',
         'dvsLiveUpdate',
-        'dvsImagePicker',
         'AttributeBinding',
         'ClassBinding',
         'StyleBinding',
         'TextBinding'
     ]
   })
-  .pipe(concat.header(fs.readFileSync('public/js/devise.require.js', 'utf8') + '\n'))
   .pipe(concat.footer("\ndevise.require(['jquery'], function($){ devise.$ = $; });"))
   .pipe(gulp.dest('public/js'))
   .pipe(uglify())
-  .pipe(rename('devise.min.js'))
+  .pipe(rename('devise.app.min.js'))
   .pipe(gulp.dest('public/js'));
 });

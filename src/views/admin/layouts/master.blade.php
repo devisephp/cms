@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="csrf-token" content="<?= Crypt::encrypt(csrf_token()) ?>">
 
+    <base href="<?= URL::asset('/') ?>" />
+
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
     <link href="{{ URL::asset('/packages/devisephp/cms/css/jquery.datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('/packages/devisephp/cms/css/dvs-admin.css') }}" type="text/css" rel="stylesheet">
@@ -15,10 +17,12 @@
     <link href="{{ URL::asset('/packages/devisephp/cms/css/highlightjs/tomorrow.min.css') }}" type="text/css" rel="stylesheet" >
 
     <!--[if lt IE 9]>
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/ie-9-and-lower.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/ie-9-and-lower.css') }}" />
     <![endif]-->
 
     @yield('css')
+
+
 
     <script src="{{ URL::asset('/packages/devisephp/cms/js/devise.min.js') }}"></script>
     <script src="{{ URL::asset('/packages/devisephp/cms/js/highlight.min.js') }}"></script>
@@ -27,8 +31,6 @@
 </head>
 
 <body id="dvs-admin" class="dvs-default">
-
-    <?= deviseDocs($view_name) ?>
 
     <div class="dvs-admin-container">
         @yield('title')

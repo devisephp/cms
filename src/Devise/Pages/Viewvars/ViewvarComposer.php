@@ -21,6 +21,19 @@ class ViewvarComposer
     private static $firstView = true;
 
     /**
+     * This is a hack to get around the $firstView
+     * problem of not loading views after the first
+     * view when testing.
+     *
+     *  $this->call('GET', $url);   // works fine first time
+     *  $this->call('GET', $url);   // second time, 500 error
+     *                              // because the viewvars are
+     *                              // not set below due to $firstView
+     * @var boolean
+     */
+    public static $loadMultipleTimes = false;
+
+    /**
      * DataBuilder constructs the data for our
      * view composer to use
      *
@@ -56,7 +69,7 @@ class ViewvarComposer
      */
     public function compose($view)
     {
-        if (!self::$firstView)
+        if (!self::$loadMultipleTimes && !self::$firstView)
         {
             return;
         }

@@ -22,6 +22,7 @@ require.config({
     paths: {
         jquery:             'lib/jquery',
         'jquery-ui':        'lib/jquery-ui',
+        vueJs:              'lib/vue',
         jqNestedSortable:   'lib/jquery.nestedSortable',
         jqSerializeObject:  'lib/jquery-serialize-object',
         jqueryEasing:       'lib/jquery.easing.1.3',
@@ -65,6 +66,7 @@ require.config({
         dvsCsrf:            'app/helpers/csrf',
         dvsAdmin:           'app/admin/admin',
         dvsAdminView:       'app/admin/admin-view',
+        dvsAdminDashboard:  'app/admin/dashboard',
         dvsAdminPages:      'app/admin/pages',
         dvsAdminMenus:      'app/admin/menus',
         dvsReplacement:     'app/helpers/replacement',

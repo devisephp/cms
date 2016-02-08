@@ -1,10 +1,10 @@
 <h3>Images</h3>
 
-<img src="<?= $page->image1->image( URL::asset('packages/devisephp/cms/img/devise-installer-logo.gif') )?>" class="dvs-test-frame" data-devise="image1, image, Image">
+<img src="<?= $page->image1->image( URL::asset('/packages/devisephp/cms/img/devise-installer-logo.gif') )?>" class="dvs-test-frame" data-devise="image1, image, Image">
 
 <pre class="devise-code-snippet"><code class="html">
 <?= htmlentities('
-<img src="{{ $page->image1->image( URL::asset(\'packages/devisephp/cms/img/devise-installer-logo.gif\') ) }}" class="dvs-test-frame" data-devise="image1, image, Image">
+<img src="{{ $page->image1->image( URL::asset(\'/packages/devisephp/cms/img/devise-installer-logo.gif\') ) }}" class="dvs-test-frame" data-devise="image1, image, Image">
 ') ?>
 </code></pre>
 

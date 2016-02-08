@@ -280,7 +280,14 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
             });
         });
 
-        iframe.attr('src', query.append('start-editor', 'false', location.origin + location.pathname + location.search)  + location.hash);
+        var origin = location.origin;
+
+        if (!window.location.origin)
+        {
+            origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+        }
+
+        iframe.attr('src', query.append('start-editor', 'false', origin + location.pathname + location.search)  + location.hash);
     }
 
     /**

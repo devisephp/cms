@@ -1,2 +1,6 @@
 #dvs-admin-sidenav {
   padding-right: 0; }
+
+#dvs-media-manager {
+  overflow-y: scroll !important;
+  max-height: 600px; }

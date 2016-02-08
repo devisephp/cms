@@ -7390,6 +7390,11 @@ legend.cke_voice_label {
   padding: 40px;
   border-radius: 4px; }
 
+/* IE 10+ */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  #dvs-media-manager {
+    overflow-y: scroll !important;
+    max-height: 600px; } }
 /* Testing */
 .dvs-test-title {
   text-transform: uppercase;

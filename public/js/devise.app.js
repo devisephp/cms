@@ -1650,6 +1650,14 @@ devise.define('dvsFieldView',['jquery', 'dvsBaseView', 'dvsLiveUpdater'], functi
 	{
 		this.data.field.values = values;
 
+		// set original id and scope before saving (for live updates)
+		if (!this.originals)
+		{
+			this.originals = {};
+			this.originals.id = this.data.field.id;
+			this.originals.scope = this.data.field.scope;
+		}
+
 		var self = this;
 		var url = this.data.page.url('update_field', {id: this.data.field.id});
 		var data = {
@@ -1727,8 +1735,15 @@ devise.define('dvsFieldView',['jquery', 'dvsBaseView', 'dvsLiveUpdater'], functi
 	 */
 	function onSaveSuccess(data, response, xhr)
 	{
+		// update id's and scope in case they change
+		// this happens when switching from global
+		// to page specific fields (switching scope)
+		this.data.node.data = data;
+		this.data.node.data.originals = this.originals;
+		this.data.field = this.data.node.data;
+
 		this.view.empty();
-		this.view.append(this.renderField(data, true));
+		this.view.append(this.renderField(this.data.field, true));
 		this.sidebar.layout.removeClass('saving');
 		LiveUpdater.changedField(this.data.field);
 	}
@@ -3248,6 +3263,11 @@ devise.define('dvsLiveUpdate',['jquery', 'query'], function($, query)
 	 */
 	function _key(field, attribute)
 	{
+		if (field.originals)
+		{
+			return field.originals.scope + '-' + field.originals.id + '-' + attribute;
+		}
+
 		return field.scope + '-' + field.id + '-' + attribute;
 	}
 

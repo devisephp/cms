@@ -117,9 +117,9 @@ class TagManager
 	 */
 	protected function getInstanceForField($tag)
 	{
-		$field = $this->findField($tag);
+		$field = $this->findGlobalField($tag);
 
-		$field = $field ?: $this->findGlobalField($tag);
+		$field = $field ?: $this->findField($tag);
 
 		$field = $field ?: $this->restoreFieldInstance($tag);
 

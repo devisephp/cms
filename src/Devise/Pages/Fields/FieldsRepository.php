@@ -131,6 +131,17 @@ class FieldsRepository
 		return $this->GlobalField->where('key', $key)->where('language_id', $languageId)->first();
 	}
 
+	/**
+	 * [findFieldByGlobalKeyAndLanguage description]
+	 * @param  [type] $key
+	 * @param  [type] $languageId
+	 * @return [type]
+	 */
+	public function findTrashedFieldByGlobalKeyAndLanguage($key, $languageId)
+	{
+		return $this->GlobalField->withTrashed()->where('key', $key)->where('language_id', $languageId)->first();
+	}
+
     /**
      * Find all fields where content requested is true for given
      * page version id and builds a list of field keys

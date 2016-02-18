@@ -162,10 +162,23 @@ class FieldManager
 	{
 		$field = $this->FieldsRepository->findFieldByGlobalKeyAndLanguage($fieldInput['key'], $pageInput['language_id']);
 
+		// try to restore a deleted global field if we can't find it normally
+		// it may have been soft deleted at some point
+		if (!$field)
+		{
+			$field = $this->FieldsRepository->findTrashedFieldByGlobalKeyAndLanguage($fieldInput['key'], $pageInput['language_id']);
+
+			if ($field) $field->restore();
+		}
+
 		if (!$field)
 		{
 			$field = $this->newGlobalField($pageInput['language_id'], $fieldInput['key'], $fieldInput['type'], $fieldInput['human_name']);
-			$this->removePristinePageFields($fieldInput['key']);
+
+			// we are not going to delete any page fields now
+			// global fields will allways override page fields now
+			// it used to be the other way around
+			// $this->removePristinePageFields($fieldInput['key']);
 		}
 
 		return $field;
@@ -199,6 +212,16 @@ class FieldManager
 	 */
 	protected function changeToPageField($fieldInput, $pageInput)
 	{
+		// we remove global fields now when converting back to page fields
+		$global = $this->FieldsRepository->findFieldByGlobalKeyAndLanguage($fieldInput['key'], $pageInput['language_id']);
+
+		if ($global)
+		{
+			$global->delete();
+		}
+
+		// probably don't need this logic anymore since we don't remove page fields
+		// but we will keep it for backwards compatibility purposes
 		$field = $this->FieldsRepository->findTrashedFieldByKeyAndPageVersion($fieldInput['key'], $pageInput['page_version_id']);
 
 		if ($field)

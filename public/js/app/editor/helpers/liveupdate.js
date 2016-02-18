@@ -150,6 +150,11 @@ devise.define(['jquery', 'query'], function($, query)
 	 */
 	function _key(field, attribute)
 	{
+		if (field.originals)
+		{
+			return field.originals.scope + '-' + field.originals.id + '-' + attribute;
+		}
+
 		return field.scope + '-' + field.id + '-' + attribute;
 	}
 

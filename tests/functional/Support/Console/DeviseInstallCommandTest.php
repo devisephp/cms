@@ -42,6 +42,8 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
     public function test_it_handles_install_command()
     {
+        \Artisan::shouldReceive('call')->with('db:seed');
+        
         $migrator = m::mock('Migrator');
         $migrator->shouldReceive('run');
         $migrationRepository = m::mock('MigrationRepository');
@@ -67,6 +69,8 @@ class DeviseInstallCommandTest extends \DeviseTestCase
 
 	public function test_it_runs_install_commands()
 	{
+        \Artisan::shouldReceive('call')->with('db:seed');
+
         $migrator = m::mock('Migrator');
         $migrator->shouldReceive('run');
         $migrationRepository = m::mock('MigrationRepository');

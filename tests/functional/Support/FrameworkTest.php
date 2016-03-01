@@ -55,7 +55,7 @@ class FrameworkTest extends \DeviseTestCase
 
     public function test_it_resolves_password()
     {
-        assertInstanceOf('Illuminate\Auth\Passwords\PasswordBroker', $this->Framework->Password);
+        assertInstanceOf('Illuminate\Auth\Passwords\PasswordBrokerManager', $this->Framework->Password);
     }
 
     public function test_it_resolves_redirect()

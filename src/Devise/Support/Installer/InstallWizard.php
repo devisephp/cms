@@ -304,9 +304,8 @@ class InstallWizard
 	{
         $this->EnvironmentFileManager->createIfNotExists();
 
-		\Dotenv::makeMutable();
-		\Dotenv::load(base_path(), '.env');
-		\Dotenv::makeImmutable();
+        $dotenv = new \Dotenv\Dotenv(base_path());
+		$dotenv->load();
 
 		$configToEnvMapping = [
 			'app.debug' => 'APP_DEBUG',

@@ -6,8 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
-        "devisephp/cms": "*"
+        "laravel/framework": "5.2.*",
+        "devisephp/cms": "dev-unstable"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

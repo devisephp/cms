@@ -113,8 +113,6 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
-        Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
@@ -200,7 +198,7 @@ return [
         /*
          * Devise Facades...
          */
-                'Form'            => Collective\Html\FormFacade::class,
+        'Form'            => Collective\Html\FormFacade::class,
         'HTML'            => Collective\Html\HtmlFacade::class,
         'Sort'            => Devise\Support\Sortable\SortableFacade::class,
         'DeviseUser'      => Devise\Users\DeviseUser::class,

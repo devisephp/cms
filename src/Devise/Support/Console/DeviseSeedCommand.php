@@ -1,6 +1,7 @@
 <?php namespace Devise\Support\Console;
 
 use Illuminate\Container\Container;
+use Artisan;
 
 class DeviseSeedCommand extends Command
 {
@@ -33,7 +34,6 @@ class DeviseSeedCommand extends Command
      */
     public function handle()
     {
-        $seeder = $this->app->make('seeder');
-        $seeder->call('DeviseSeeder');
+        Artisan::call('db:seed', array('--class' => 'DeviseSeeder'));
     }
 }

@@ -1,6 +1,7 @@
 <?php namespace Devise\Support\Console;
 
 use Illuminate\Container\Container;
+use Artisan;
 
 class DeviseInstallCommand extends Command
 {
@@ -143,8 +144,7 @@ class DeviseInstallCommand extends Command
      */
     protected function runApplicationSeeds()
     {
-        $seeder = $this->app->make('seeder');
-        $seeder->call('DatabaseSeeder');
+        Artisan::call('db:seed');
     }
 
     /**

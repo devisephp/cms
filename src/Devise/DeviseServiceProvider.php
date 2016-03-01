@@ -128,7 +128,7 @@ class DeviseServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     private function registerLaravelFormAndHtmlProvider()
     {
-        $provider = new \Illuminate\Html\HtmlServiceProvider($this->app);
+        $provider = new \Collective\Html\HtmlServiceProvider($this->app);
         $this->app->register($provider);
     }
 

@@ -11,12 +11,12 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
+        "laravel/framework": "5.2.*",
         "masterminds/html5": "1.*",
         "zencoder/zencoder-php": "*",
         "ext-imagick": "*",
         "symfony/console": "~2.0",
-        "illuminate/html": "5.0.*",
+        "laravelcollective/html": "*",
         "doctrine/dbal": "~2.3",
         "league/commonmark": "~0.7"
     },
@@ -24,7 +24,9 @@
         "mockery/mockery": "0.9.3",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*",
-        "codeception/codeception": "*"
+        "codeception/codeception": "*",
+        "symfony/dom-crawler": "~3.0",
+        "symfony/css-selector": "~3.0"
     },
     "autoload": {
         "classmap": [

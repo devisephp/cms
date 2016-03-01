@@ -119,7 +119,6 @@ return [
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Routing\ControllerServiceProvider::class,
         Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -197,14 +196,16 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+
         /*
          * Devise Facades...
          */
+                'Form'            => Collective\Html\FormFacade::class,
+        'HTML'            => Collective\Html\HtmlFacade::class,
         'Sort'            => Devise\Support\Sortable\SortableFacade::class,
         'DeviseUser'      => Devise\Users\DeviseUser::class,
         'RuleManager'     => Devise\Users\Permissions\RuleManagerFacade::class,
-        'Form'            => Illuminate\Html\FormFacade::class,
-        'HTML'            => Illuminate\Html\HtmlFacade::class,
+
     ],
 
 ];

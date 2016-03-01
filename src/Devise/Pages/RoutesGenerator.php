@@ -21,40 +21,6 @@ class RoutesGenerator
     }
 
     /**
-     * This will load devise routes in case
-     *
-     * @return [type]
-     */
-    public function loadFilters()
-    {
-        if ($this->App->runningInConsole()) return;
-
-        $filters = $this->Config->get('devise.permissions');
-
-        $names = array_keys( $filters );
-
-        foreach ($names as $name)
-        {
-            $this->Route->filter($name, function($route, $request) use ($filters, $name)
-            {
-                $result = DeviseUser::checkConditions($name, true);
-
-                if ($result !== true)
-                {
-                    if (!$this->Request->ajax())
-                    {
-                        return $result;
-                    }
-                    else
-                    {
-                        $this->App->abort(403, 'Unauthorized action.');
-                    }
-                }
-            });
-        }
-    }
-
-    /**
      * Loads the routes
      *
      * @return [type]
@@ -76,8 +42,14 @@ class RoutesGenerator
             $verb = $route->http_verb;
             $uses = ['as' => $route->route_name, 'uses' => $route->uses ];
 
-            if ($route->before) $uses['before'] = $route->before;
-            if ($route->after) $uses['after'] = $route->after;
+            if ($route->before) {
+                $parts = explode('|', $route->before);
+
+                $uses['middleware'] = [];
+                foreach($parts as $rule) {
+                    $uses['middleware'][] = 'devise.permissions:' . $rule;
+                }
+            }
 
             $this->Route->$verb($route->slug, $uses);
         }

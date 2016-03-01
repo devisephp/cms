@@ -2,7 +2,6 @@
 
 try
 {
-    App::make('Devise\Pages\RoutesGenerator')->loadFilters();
     App::make('Devise\Pages\RoutesGenerator')->loadRoutes();
     Route::controller('install', 'Devise\Support\Installer\InstalledController');
 }

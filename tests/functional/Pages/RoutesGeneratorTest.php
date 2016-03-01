@@ -58,13 +58,4 @@ class RoutesGeneratorTest extends \DeviseTestCase
 		$this->RoutesGenerator->Route->shouldReceive('patch')->times(0);
 		$this->RoutesGenerator->loadRoutes();
     }
-
-    public function test_it_can_load_filters()
-    {
-    	$this->Framework->Config->shouldReceive('get')->with('devise.permissions')->andReturn(\Config::get('devise.permissions'));
-    	$this->Framework->Container->shouldReceive('runningInConsole')->andReturn(false);
-		$this->RoutesGenerator->Route = m::mock('Router');
-		$this->RoutesGenerator->Route->shouldReceive('filter');
-    	$this->RoutesGenerator->loadFilters();
-    }
 }

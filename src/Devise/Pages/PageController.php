@@ -56,7 +56,9 @@ class PageController extends Controller
     public function show()
     {
         // what does it mean to be in editing mode? right now it is just when you are logged in
-        $editing = !is_null(\Auth::user()); //&& Input::get('editing', false);
+        // $editing = \DeviseUser::checkConditions('canUseDeviseEditor'); //&& Input::get('editing', false);
+
+        $editing = true;
 
         $pageVersionHash = $this->Input->get('page_version_share', null);
         $pageVersionName = $this->Input->get('page_version', null);

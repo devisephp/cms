@@ -61,8 +61,6 @@ class DeviseTestCase extends Illuminate\Foundation\Testing\TestCase
 
 			static::manuallyRequireRoutes();
 
-			Mail::pretend(true);
-
 			static::$setup = true;
 		}
 

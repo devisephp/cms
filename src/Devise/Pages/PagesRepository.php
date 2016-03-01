@@ -738,7 +738,9 @@ class PagesRepository
     {
         foreach ($pages as $page)
         {
-            $page->availableLanguages = $this->availableLanguagesForPage($page->id);
+            if (!$page->slugHasParameters) {
+                $page->availableLanguages = $this->availableLanguagesForPage($page->id);
+            }
         }
 
         return $pages;

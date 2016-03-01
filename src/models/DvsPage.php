@@ -119,4 +119,13 @@ class DvsPage extends Model
             $this->attributes['is_admin'] = 0;
         }
     }
+
+    public function getSlugHasParametersAttribute()
+    {
+        if (strpos($this->slug, "{")) {
+            return true;
+        }
+
+        return false;
+    }
 }

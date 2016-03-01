@@ -68,6 +68,133 @@ If you would like to run tests inside of firefox instead of phantomjs you will n
 java -jar tests/bootstrap/selenium-server-standalone-2.45.0.jar
 ```
 
+### Upgrading from 1.3 -> 1.4
+
+Add the following to your applications ```config/app.php``` file:
+
+```
+    /*
+	    |--------------------------------------------------------------------------
+	    | Application Environment
+	    |--------------------------------------------------------------------------
+	    |
+	    | This value determines the "environment" your application is currently
+	    | running in. This may determine how you prefer to configure various
+	    | services your application utilizes. Set this in your ".env" file.
+	    |
+	    */
+
+	    'env' => env('APP_ENV', 'production'),
+```
+
+As well as update your service providers
+
+```
+'providers' => [
+
+        /*
+         * Laravel Framework Service Providers...
+         */
+        Illuminate\Auth\AuthServiceProvider::class,
+        Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        Illuminate\Bus\BusServiceProvider::class,
+        Illuminate\Cache\CacheServiceProvider::class,
+        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        Illuminate\Cookie\CookieServiceProvider::class,
+        Illuminate\Database\DatabaseServiceProvider::class,
+        Illuminate\Encryption\EncryptionServiceProvider::class,
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+        Illuminate\Hashing\HashServiceProvider::class,
+        Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
+        Illuminate\Pipeline\PipelineServiceProvider::class,
+        Illuminate\Queue\QueueServiceProvider::class,
+        Illuminate\Redis\RedisServiceProvider::class,
+        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        Illuminate\Session\SessionServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
+        Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
+
+
+        /*
+         * Application Service Providers...
+         */
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
+
+        /*
+         * Devise Service Provider...
+         */
+        Devise\DeviseServiceProvider::class,
+
+    ],
+```
+
+and your facades:
+
+```
+	'aliases' => [
+
+        'App' => Illuminate\Support\Facades\App::class,
+        'Artisan' => Illuminate\Support\Facades\Artisan::class,
+        'Auth' => Illuminate\Support\Facades\Auth::class,
+        'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Cache' => Illuminate\Support\Facades\Cache::class,
+        'Config' => Illuminate\Support\Facades\Config::class,
+        'Cookie' => Illuminate\Support\Facades\Cookie::class,
+        'Crypt' => Illuminate\Support\Facades\Crypt::class,
+        'DB' => Illuminate\Support\Facades\DB::class,
+        'Eloquent' => Illuminate\Database\Eloquent\Model::class,
+        'Event' => Illuminate\Support\Facades\Event::class,
+        'File' => Illuminate\Support\Facades\File::class,
+        'Gate' => Illuminate\Support\Facades\Gate::class,
+        'Hash' => Illuminate\Support\Facades\Hash::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
+        'Lang' => Illuminate\Support\Facades\Lang::class,
+        'Log' => Illuminate\Support\Facades\Log::class,
+        'Mail' => Illuminate\Support\Facades\Mail::class,
+        'Password' => Illuminate\Support\Facades\Password::class,
+        'Queue' => Illuminate\Support\Facades\Queue::class,
+        'Redirect' => Illuminate\Support\Facades\Redirect::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
+        'Request' => Illuminate\Support\Facades\Request::class,
+        'Response' => Illuminate\Support\Facades\Response::class,
+        'Route' => Illuminate\Support\Facades\Route::class,
+        'Schema' => Illuminate\Support\Facades\Schema::class,
+        'Session' => Illuminate\Support\Facades\Session::class,
+        'Storage' => Illuminate\Support\Facades\Storage::class,
+        'URL' => Illuminate\Support\Facades\URL::class,
+        'Validator' => Illuminate\Support\Facades\Validator::class,
+        'View' => Illuminate\Support\Facades\View::class,
+
+        /**
+         * Devise Aliases
+         */
+        'Sort'            => Devise\Support\Sortable\SortableFacade::class,
+        'DeviseUser'      => Devise\Users\DeviseUser::class,
+        'RuleManager'     => Devise\Users\Permissions\RuleManagerFacade::class,
+        'Form'            => Collective\Html\FormFacade::class,
+        'HTML'            => Collective\Html\HtmlFacade::class,
+    ],
+```
+
+Update your middleware to utilize the new Devise Middleware for route permissions. We replaced the default values in the array but you can simply add the 'devise.permissions' to the stack if you like.
+
+```
+    /**
+     * The application's route middleware.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        'devise.permissions' => \Devise\Pages\Http\Middleware\Permissions::class,
+    ];
+```
+
 ###License
 
 Devise is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

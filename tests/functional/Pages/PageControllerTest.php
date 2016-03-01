@@ -6,8 +6,6 @@ class PageControllerTest extends \DeviseTestCase
 {
     public function test_it_shows_view()
     {
-        \Auth::shouldReceive('check')->once()->andReturn(true);
-
         $DvsPage = new \DvsPage;
         $DvsPage->response_type = 'View';
         $DvsPage->view = 'some.view.path';

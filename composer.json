@@ -32,8 +32,7 @@
         "classmap": [
             "src/models",
             "src/seeds",
-            "src/migrations",
-            "tests/DeviseTestCase.php"
+            "src/migrations"
         ],
         "psr-0": {
             "Devise\\": "src/"

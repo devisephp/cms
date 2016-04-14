@@ -118,7 +118,9 @@ class CollectionsManager
     {
         $instance = $this->CollectionInstance->find($id);
 
-        // should we remove all the fields of this instance here?
+        $this->Field
+            ->where('collection_instance_id', $id)
+            ->forceDelete();
 
         return ($instance) ? $instance->delete() : false;
     }

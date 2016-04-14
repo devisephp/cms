@@ -11,9 +11,10 @@ class TemplatesResponseHandler
 {
     protected $TemplatesManager;
 
-    public function __construct(TemplatesManager $TemplatesManager, Framework $Framework)
+    public function __construct(TemplatesManager $TemplatesManager, TemplatesCleaner $TemplatesCleaner, Framework $Framework)
     {
         $this->TemplatesManager = $TemplatesManager;
+        $this->TemplatesCleaner = $TemplatesCleaner;
         $this->Redirect = $Framework->Redirect;
     }
 
@@ -78,6 +79,24 @@ class TemplatesResponseHandler
         return $this->Redirect->route('dvs-templates')
             ->withErrors($this->TemplatesManager->errors)
             ->with('message', 'There were validation errors');
+    }
+
+    /**
+     * Executes cleanOldTemplateFields in TemplatesManager
+     * and properly handles the response.
+     *
+     * @param  string  $templatePath
+     * @return Redirect
+     */
+    public function executeFieldCleanup($templatePath)
+    {
+        if($this->TemplatesCleaner->clearTemplateFields($templatePath)) {
+            return $this->Redirect->route('dvs-templates')
+                ->with('message', 'Template cleaned succesfully');
+        }
+
+        return $this->Redirect->route('dvs-templates')
+            ->with('message', 'There were issues cleaning the template');
     }
 
      /**

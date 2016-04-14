@@ -30,6 +30,7 @@
                     </td>
 					<td class="dvs-tac dvs-button-group">
 						<?= link_to(URL::route('dvs-templates-edit', array($templatePath)), 'Edit', array('class'=>'dvs-button dvs-button-small')) ?>
+						<?= link_to(URL::route('dvs-templates-clean', array($templatePath)), 'Clean', array('class'=>'dvs-button dvs-button-small dvs-button-secondary')) ?>
 						<?= Form::delete(URL::route('dvs-templates-destroy', array($templatePath)), 'Delete', null, array('class'=>'dvs-button dvs-button-small dvs-button-danger')) ?>
 	                </td>
 				</tr>

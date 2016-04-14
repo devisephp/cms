@@ -1185,6 +1185,21 @@ class DevisePagesSeeder extends DeviseSeeder
             ),
             array(
                 'language_id'             => '45',
+                'title'                   => 'Admin Clean Template Fields',
+                'http_verb'               => 'get',
+                'route_name'              => 'dvs-templates-clean',
+                'is_admin'                => '1',
+                'dvs_admin'               => '1',
+                'before'                  => 'ifNotLoggedInGoToLogin|isDeveloper',
+                'after'                   => '',
+                'slug'                    => 'admin/templates/clean/{templatePath}',
+                'short_description'       => 'Attempts to clean old fields from a template',
+                'response_type'           => 'Function',
+                'response_path'           => 'Devise\Templates\TemplatesResponseHandler.executeFieldCleanup',
+                'response_params'         => 'params.templatePath'
+            ),
+            array(
+                'language_id'             => '45',
                 'title'                   => 'Destroy Template',
                 'http_verb'               => 'delete',
                 'route_name'              => 'dvs-templates-destroy',

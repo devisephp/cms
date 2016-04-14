@@ -40,6 +40,7 @@ class PageSearch extends \DvsPage
 
     public function scopeSearch($query, $search)
     {
+        
         if (!$search) return $query;
 
         $query = $this->createSearchQuery($query, $search);
@@ -57,6 +58,13 @@ class PageSearch extends \DvsPage
             $query->orWhereNull('dvs_page_versions.ends_at');
         });
 
+        // make sure to only search on the latest version
+        $query->join(\DB::raw('(SELECT MAX(starts_at) as max_starts, page_id FROM dvs_page_versions GROUP BY page_id) newest_version'), function($join){
+                $join->on('newest_version.max_starts','=','dvs_page_versions.starts_at');
+                $join->on('newest_version.page_id','=','dvs_page_versions.page_id');
+        });
+
         return $query;
+
     }
 }

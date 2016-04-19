@@ -117,6 +117,10 @@ As well as update your service providers
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        /*
+         * Devise Service Provider...
+         */
+        Devise\DeviseServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -125,11 +129,6 @@ As well as update your service providers
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        /*
-         * Devise Service Provider...
-         */
-        Devise\DeviseServiceProvider::class,
 
     ],
 ```
@@ -183,6 +182,8 @@ and your facades:
 ```
 
 Update your middleware to utilize the new Devise Middleware for route permissions. We replaced the default values in the array but you can simply add the 'devise.permissions' to the stack if you like.
+
+This file can be found in app/Http/Kernel.php
 
 ```
     /**

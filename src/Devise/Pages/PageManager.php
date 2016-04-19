@@ -57,6 +57,7 @@ class PageManager
     static protected $PageFields = [
         'language_id',
         'translated_from_page_id',
+        'route_name',
         'view',
         'title',
         'http_verb',
@@ -220,7 +221,8 @@ class PageManager
 
         // get translated page id, if page copy is translation and langauges are different
         if(array_get($input, 'copy_reason') == 'translate' &&  array_get($input, 'language_id') !== $fromPage->language_id) {
-            $input = $this->getTranslatedFromPageId($fromPageId, $input);
+            $this->setTranslatedFromPageId($fromPage, $input);
+            $this->setTranslatedFromRouteName($fromPage, $input);
         }
 
         $toPage = $this->createPageFromInput($input);
@@ -249,15 +251,32 @@ class PageManager
      * @param  array $input
      * @return array
      */
-    protected function getTranslatedFromPageId($fromPageId, $input)
+    protected function setTranslatedFromPageId($fromPage, &$input)
     {
-        $fromPage = $this->Page->findOrFail($fromPageId);
-
         $input['translated_from_page_id'] = $fromPage->translated_from_page_id
             ? $fromPage->translated_from_page_id
             : $fromPage->id;
+    }
 
-        return $input;
+    /**
+     * Sets the route_name equal to the orignal page's route_name
+     *
+     * @param  integer $fromPageId
+     * @param  array $input
+     */
+    protected function setTranslatedFromRouteName($fromPage, &$input)
+    {
+        if($fromPage->translated_from_page_id){
+
+            $origPage = $this->Page
+                            ->select('route_name')
+                            ->findOrFail( $fromPage->translated_from_page_id );
+
+            $input['route_name'] = $origPage->route_name;
+
+        } else {
+            $input['route_name'] = $fromPage->route_name;
+        }
     }
 
     /**
@@ -304,7 +323,13 @@ class PageManager
         $input['is_admin'] = array_get($input, 'is_admin', false);
         $input['dvs_admin'] = array_get($input, 'dvs_admin', false);
         $input['language_id'] = array_get($input, 'language_id', $this->Config->get('devise.languages.primary_language_id'));
-        $input['route_name'] = $this->findAvailableRoute(Str::slug(array_get($input, 'title', str_random(42))), $input['language_id']);
+
+        // if route_name is there then we ave a suggestion
+        if(!isset($input['route_name'])){
+            $input['route_name'] = $this->findAvailableRoute(Str::slug(array_get($input, 'title', str_random(42))), $input['language_id']);
+        } else {
+            $input['route_name'] = $this->findAvailableRoute($input['route_name'], $input['language_id']);
+        }
 
         if ($this->isValidInputForNewPage($input))
         {

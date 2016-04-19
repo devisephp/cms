@@ -8,19 +8,22 @@ devise.define(['require', 'jquery', 'query'], function (require, $, query)
             //
             // looks for all cropped images in url
             // if more than 1 found, the onMediaManagerSelect callback is triggered
-            //
-            if (finalImages && finalImages.length > 0 && opener && opener.document && opener.document.hasOwnProperty('onMediaManagerSelect')){
 
-                if (input.hasOwnProperty('CKEditorFuncNum')){
-                    // we know that this came from the ckeditor plugin
-                    opener.document.onMediaManagerSelect(input.CKEditorFuncNum, finalImages[0]);
-                } else {
-                    opener.document.onMediaManagerSelect(finalImages);
+            // If there is nobody that is currently owning "onMediaManagerSelect" then it's ckeditor
+            if (opener && opener.document && (!opener.document.hasOwnProperty('onMediaManagerSelect') || opener.document.onMediaManagerSelect == null))  {
+
+                opener.document.onMediaManagerSelect = function(images) {
+                    var funcNum = getUrlParam( 'CKEditorFuncNum' );
+                    var fileUrl = images;
+                    window.opener.CKEDITOR.tools.callFunction( funcNum, fileUrl );
+
+                    opener.document.onMediaManagerSelect = null; // Let's null it out for the next guy
+
+                    window.close();
                 }
-
-                window.close();
-
             }
+
+            console.log('init!!!!', !opener.document.hasOwnProperty('onMediaManagerSelect'), opener.document.onMediaManagerSelect);
 
             // add the add categoryListener
             //
@@ -44,6 +47,13 @@ devise.define(['require', 'jquery', 'query'], function (require, $, query)
         }
     };
 
+    function getUrlParam( paramName ) {
+        var reParam = new RegExp( '(?:[\?&]|&)' + paramName + '=([^&]+)', 'i' );
+        var match = window.location.search.match( reParam );
+
+        return ( match && match.length > 1 ) ? match[1] : null;
+    }
+
     //
     // Opens the add new category form
     //
@@ -66,6 +76,8 @@ devise.define(['require', 'jquery', 'query'], function (require, $, query)
 
         var target = query.get('target');
         var url = $(this).attr('href');
+
+        console.log(opener.document);
 
         opener.document.onMediaManagerSelect(url, target, _input);
 

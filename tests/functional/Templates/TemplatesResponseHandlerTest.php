@@ -12,7 +12,8 @@ class TemplatesResponseHandlerTest extends \DeviseTestCase
         $this->Framework->Redirect = m::mock('\Illuminate\Routing\Redirector');
 
         $this->TemplatesManager = m::mock('Devise\Templates\TemplatesManager');
-        $this->TemplatesResponseHandler = new TemplatesResponseHandler($this->TemplatesManager, $this->Framework);
+        $this->TemplatesCleaner = m::mock('Devise\Templates\TemplatesCleaner');
+        $this->TemplatesResponseHandler = new TemplatesResponseHandler($this->TemplatesManager, $this->TemplatesCleaner, $this->Framework);
     }
 
     public function test_it_can_execute_store()

@@ -22,7 +22,7 @@ class ApiPagesManager extends PageManager
         'http_verb',
         'title',
         'slug',
-        'before',
+        'middleware',
         'response_type',
         'response_path',
         'response_params',

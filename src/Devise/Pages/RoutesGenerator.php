@@ -42,13 +42,8 @@ class RoutesGenerator
             $verb = $route->http_verb;
             $uses = ['as' => $route->route_name, 'uses' => $route->uses ];
 
-            if ($route->before) {
-                $parts = explode('|', $route->before);
-
-                $uses['middleware'] = [];
-                foreach($parts as $rule) {
-                    $uses['middleware'][] = 'devise.permissions:' . $rule;
-                }
+            if ($route->middleware) {
+                $uses['middleware'] = explode('|', $route->middleware);
             }
 
             $this->Route->$verb($route->slug, $uses);
@@ -134,7 +129,7 @@ class RoutesGenerator
      */
     protected function findDvsPageRoutes()
     {
-        $pages = $this->DB->table('dvs_pages')->select('http_verb','slug','route_name','before','after')->get();
+        $pages = $this->DB->table('dvs_pages')->select('http_verb','slug','route_name','middleware')->get();
 
         foreach ($pages as $page)
         {

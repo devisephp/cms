@@ -105,7 +105,7 @@
     <hr>
 
     <div class="dvs-form-group">
-        <?= Form::label('Before') ?>
-        <?= Form::text('before', null, array('placeholder' => 'Before Filters')) ?>
+        <?= Form::label('Middleware') ?>
+        <?= Form::text('middleware', null, array('placeholder' => 'Middleware')) ?>
     </div>
 </div>

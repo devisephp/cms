@@ -52,7 +52,6 @@
 <hr>
 
 <div class="dvs-form-group">
-    <?= Form::label('Before') ?>
-    <?= Form::text('before', null, array('placeholder' => 'Before Filters')) ?>
-    <span data-dvs-document="before" class="dvs-document-button"></span>
+    <?= Form::label('Middleware') ?>
+    <?= Form::text('middleware', null, array('placeholder' => 'Middleware')) ?>
 </div>

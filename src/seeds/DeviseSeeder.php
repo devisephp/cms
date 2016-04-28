@@ -22,5 +22,9 @@ class DeviseSeeder extends \Devise\Support\DeviseSeeder
 		$this->call('DevisePagesSeeder');
 		$this->call('DeviseMenusSeeder');
 		$this->call('DeviseTestModelSeeder');
+
+		// has failsafes to make sure only old middleware values
+		// will be updated
+		$this->call('DeviseBeforeToMiddlewareSeeder');
 	}
 }

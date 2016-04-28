@@ -119,7 +119,7 @@ class CrudScaffolding extends BaseScaffolding
 				'slug'           => '/admin/'. $this->constants['slug'],
 				'response_type'  => 'View',
 				'route_name'     => 'admin-' . $this->constants['slug'] . '-index',
-				'before'         => 'ifNotLoggedInGoToLogin'
+				'middleware'         => 'devise.permissions:ifNotLoggedInGoToLogin'
 			],
 			[
 				'language_id'    => 45,
@@ -129,7 +129,7 @@ class CrudScaffolding extends BaseScaffolding
 				'slug'           => '/admin/'. $this->constants['slug'] . '/create',
 				'response_type'  => 'View',
 				'route_name'     => 'admin-' . $this->constants['slug'] . '-create',
-				'before'         => 'ifNotLoggedInGoToLogin'
+				'middleware'         => 'devise.permissions:ifNotLoggedInGoToLogin'
 			],
 			[
 				'language_id'    => 45,
@@ -139,7 +139,7 @@ class CrudScaffolding extends BaseScaffolding
 				'slug'           => '/admin/'. $this->constants['slug'] . '/edit/{' . $this->constants['singularVar'] . 'id}',
 				'response_type'  => 'View',
 				'route_name'     => 'admin-' . $this->constants['slug'] . '-edit',
-				'before'         => 'ifNotLoggedInGoToLogin'
+				'middleware'         => 'devise.permissions:ifNotLoggedInGoToLogin'
 			],
 		];
 	}
@@ -162,7 +162,7 @@ class CrudScaffolding extends BaseScaffolding
 				'response_path'   => $this->constants['namespace'] .'\\'. $this->constants['className'] .'\\'.$this->constants['className'] .'ResponseHandler.requestUpdate',
 				'response_params' => 'params.'.$this->constants['singularVar'].'id, input',
 				'route_name'      => 'admin-' . $this->constants['slug'] . '-update',
-				'before'          => 'ifNotLoggedInGoToLogin'
+				'middleware'          => 'devise.permissions:ifNotLoggedInGoToLogin'
 			],
 			[
 				'language_id'     => 45,
@@ -174,7 +174,7 @@ class CrudScaffolding extends BaseScaffolding
 				'response_path'   => $this->constants['namespace'] .'\\'. $this->constants['className'] .'\\'.$this->constants['className'] .'ResponseHandler.requestDestroy',
 				'response_params' => 'params.'.$this->constants['singularVar'].'id',
 				'route_name'      => 'admin-' . $this->constants['slug'] . '-destroy',
-				'before'          => 'ifNotLoggedInGoToLogin'
+				'middleware'          => 'devise.permissions:ifNotLoggedInGoToLogin'
 			],
 			[
 				'language_id'     => 45,
@@ -186,7 +186,7 @@ class CrudScaffolding extends BaseScaffolding
 				'response_path'   => $this->constants['namespace'] .'\\'. $this->constants['className'] .'\\'.$this->constants['className'] .'ResponseHandler.requestCreate',
 				'response_params' => 'input',
 				'route_name'      => 'admin-' . $this->constants['slug'] . '-store',
-				'before'          => 'ifNotLoggedInGoToLogin'
+				'middleware'          => 'devise.permissions:ifNotLoggedInGoToLogin'
 			],
 		];
 	}

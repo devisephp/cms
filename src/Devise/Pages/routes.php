@@ -33,6 +33,12 @@ catch (PDOException $e)
             }
         }
 
+        if( strpos($e->getMessage(), 'Unknown column \'middleware\'') !== false && App::runningInConsole()) {
+            // ignoring missing column 'middleware' error on command line
+            // allowing users to run "devise:upgrade" without problems
+            return;
+        }
+
         throw $e;
     }
 }

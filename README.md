@@ -204,6 +204,23 @@ After composer has completed
     php artisan devise:upgrade
 ```
 
+Update any dsv_pages seeds that reference 'before' or 'after' fields. Change 'before' to 'middleware'. Remove 'after' field.
+
+If any 'before' values include 'isDeveloper', 'isAdministrator', 'ifNotLoggedInGoToLogin', 'ifLoggedInGoToDash', or 'canUseDeviseEditor' please prefix each rule with 'devise.permissions:'.
+
+Example
+
+```
+    'isAdministrator|isDeveloper'
+```
+
+Should change to
+
+```
+    'devise.permissions:isAdministrator|devise.permissions:isDeveloper'
+```
+
+
 ###License
 
 Devise is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

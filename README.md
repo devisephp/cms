@@ -196,10 +196,6 @@ This file can be found in app/Http/Kernel.php
     ];
 ```
 
-###License
-
-Devise is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-
 ### Upgrading from 1.4 -> 1.5
 
 After composer has completed
@@ -207,5 +203,9 @@ After composer has completed
 ```
     php artisan devise:upgrade
 ```
+
+###License
+
+Devise is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
 [logo]: https://raw.githubusercontent.com/devisephp/cms/master/project-banner.png "Devise Logo"

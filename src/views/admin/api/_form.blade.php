@@ -48,7 +48,7 @@
     <span data-dvs-document="response-parameters" class="dvs-document-button"></span>
 </div>
 
-<h3>Filters</h3>
+<h3>Middleware</h3>
 <hr>
 
 <div class="dvs-form-group">

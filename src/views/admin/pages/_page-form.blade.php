@@ -101,7 +101,7 @@
             <?= Form::label('is_admin', '&nbsp;') ?>
         </div>
     </div>
-    <h3>Filters</h3>
+    <h3>Middleware</h3>
     <hr>
 
     <div class="dvs-form-group">

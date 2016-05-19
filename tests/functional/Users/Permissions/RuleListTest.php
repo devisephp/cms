@@ -90,7 +90,7 @@ class RuleListTest extends \DeviseTestCase
 
     public function test_it_tells_us_if_we_are_not_in_groups()
     {
-        $this->Framework->Auth->shouldReceive('check')->times(3)->andReturn(true);
+        $this->Framework->Auth->shouldReceive('check')->times(6)->andReturn(true);
 
         $currentUser = $this->DvsUser->find(1);
         $this->Framework->Auth->shouldReceive('user')->andReturn($currentUser);

@@ -194,6 +194,8 @@ class RuleList
      */
     protected function isNotInGroups($groupname)
     {
+        if (!$this->isLoggedIn()) return false;
+        
         return ! call_user_func_array([$this, 'isInGroups'], func_get_args());
     }
 

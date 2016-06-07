@@ -31,7 +31,7 @@
                             <option data-dvs-url="<?= route('dvs-toggle-page-version-share', $version->id) ?>" value="toggle-sharing">Enable Sharing</option>
                         @else
                             <option data-dvs-url="<?= route('dvs-toggle-page-version-share', $version->id) ?>" value="toggle-sharing">Disable Sharing</option>
-                            <option data-dvs-url="<?= to($page->slug . '?page_version_share=' . urlencode($version->preview_hash)) ?>" value="preview">Preview</option>
+                            <option data-dvs-url="<?= $page->slug . '?page_version_share=' . urlencode($version->preview_hash) ?>" value="preview">Preview</option>
                         @endif
                         @if(!$page->dvs_admin)
                             <option data-dvs-url="<?= route('dvs-delete-page-version', $version->id) ?>" value="delete">Delete</option>

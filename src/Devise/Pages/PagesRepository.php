@@ -658,9 +658,9 @@ class PagesRepository
 
         $globalFields = $this->GlobalField->where('language_id', $language->id)->get();
 
-        $page = $this->wrapTheseFieldsAroundThisPage($pageVersion->fields, $page);
-
         $page = $this->wrapTheseFieldsAroundThisPage($globalFields, $page);
+
+        $page = $this->wrapTheseFieldsAroundThisPage($pageVersion->fields, $page);
 
         $page = $this->wrapTheseCollectionsAroundThisPage($this->CollectionsRepository->findCollectionsForPageVersion($pageVersion), $page);
 

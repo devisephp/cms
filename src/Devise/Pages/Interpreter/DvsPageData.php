@@ -4,7 +4,7 @@ use Devise\Pages\Collections\CollectionsRepository;
 use Devise\Pages\PagesRepository;
 use Devise\Pages\Interpreter\Exceptions\InvalidDeviseKeyException;
 use Devise\Pages\Interpreter\Exceptions\DuplicateDeviseKeyException;
-
+use Route;
 /**
  * A storage container class that stores collections and fields
  * for a given page. These fields and collections are addeded
@@ -128,7 +128,8 @@ class DvsPageData
 		$pageId = $this->pageId;
 		$languageId = $this->languageId;
 		$csrfToken = $this->csrfToken;
-		$availableLanguages = $this->PagesRepository->availableLanguagesForPage($pageId);
+        $route = Route::getCurrentRoute();
+		$availableLanguages = $this->PagesRepository->availableLanguagesForPage($pageId, $route->parameters());
 	    $pageRoutes = $this->PagesRepository->getRouteList();
 		$pageVersions = $this->PagesRepository->getPageVersions($pageId, $pageVersionId);
 		$collections = $this->filterTags('collection');

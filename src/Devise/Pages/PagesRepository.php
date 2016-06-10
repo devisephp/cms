@@ -17,7 +17,7 @@ class PagesRepository
      *
      * @var Page
      */
-	private $Page;
+    private $Page;
 
     /**
      * @var LanguageDetector
@@ -41,9 +41,9 @@ class PagesRepository
      * @param null $Config
      * @param null $URL
      */
-	public function __construct(\DvsPage $Page, \DvsField $Field, \DvsGlobalField $GlobalField, LanguageDetector $LanguageDetector, CollectionsRepository $CollectionsRepository, $Input = null, $Config = null, $URL = null, $File = null, $ViewOpener = null)
-	{
-		$this->Page = $Page;
+    public function __construct(\DvsPage $Page, \DvsField $Field, \DvsGlobalField $GlobalField, LanguageDetector $LanguageDetector, CollectionsRepository $CollectionsRepository, $Input = null, $Config = null, $URL = null, $File = null, $ViewOpener = null)
+    {
+        $this->Page = $Page;
         $this->Field = $Field;
         $this->GlobalField = $GlobalField;
         $this->LanguageDetector = $LanguageDetector;
@@ -58,7 +58,7 @@ class PagesRepository
 
         $this->ViewOpener = $ViewOpener ?: new ViewOpener;
         $this->now = new \DateTime;
-	}
+    }
 
     /**
      * finds a record by it's id
@@ -68,14 +68,14 @@ class PagesRepository
      * @param bool $editing
      * @return Page
      */
-	public function find($id)
-	{
+    public function find($id)
+    {
         $page = $this->Page->with('versions')->findOrFail($id);
 
         $this->wrapPageVersionStatuses($page->versions, $page);
 
         return $page;
-	}
+    }
 
     /**
      * finds a record by it's id and provide version and field data
@@ -114,9 +114,9 @@ class PagesRepository
      * @internal param string $slug
      * @return Page
      */
-	public function findByRouteName($name, $versionName = null, $editing = false)
-	{
-		$page = $this->Page->whereRouteName($name)->firstOrFail();
+    public function findByRouteName($name, $versionName = null, $editing = false)
+    {
+        $page = $this->Page->whereRouteName($name)->firstOrFail();
 
         // if the user is an admin user they can view any page
         // using the ?page_version query parameter otherwise
@@ -131,7 +131,7 @@ class PagesRepository
         $page = $this->wrapFieldsAroundPage($page, $page->version);
 
         return $page;
-	}
+    }
 
     /**
      * Finds the DvsPage by a route name and preview hash
@@ -261,14 +261,14 @@ class PagesRepository
      * @param  integer $id
      * @return array
      */
-    public function availableLanguagesForPage($id)
+    public function availableLanguagesForPage($id, $params = [])
     {
         $page = $this->Page->with('localizedPages', 'language', 'translatedFromPage.localizedPages')->find($id);
 
         $languages = [
             $page->language_id => [
                 'human_name' => $page->language->human_name,
-                'url' => $this->URL->route($page->route_name),
+                'url' => $this->URL->route($page->route_name, $params),
                 'code' => $page->language->code,
                 'id' => $page->language_id,
             ]
@@ -278,7 +278,7 @@ class PagesRepository
         {
             $languages[$p->language_id] = [
                 'human_name' => $p->language->human_name,
-                'url' => $this->URL->route($p->route_name),
+                'url' => $this->URL->route($p->route_name, $params),
                 'code' => $p->language->code,
                 'id' => $p->language_id,
             ];
@@ -289,7 +289,7 @@ class PagesRepository
             $p = $page->translatedFromPage;
             $languages[$p->language_id] = [
                 'human_name' => $p->language->human_name,
-                'url' => $this->URL->route($p->route_name),
+                'url' => $this->URL->route($p->route_name, $params),
                 'code' => $p->language->code,
                 'id' => $p->language_id,
             ];
@@ -298,7 +298,7 @@ class PagesRepository
             {
                 $languages[$lp->language_id] = [
                     'human_name' => $lp->language->human_name,
-                    'url' => $this->URL->route($lp->route_name),
+                    'url' => $this->URL->route($lp->route_name, $params),
                     'code' => $lp->language->code,
                     'id' => $lp->language_id,
                 ];

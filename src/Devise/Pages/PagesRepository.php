@@ -656,7 +656,10 @@ class PagesRepository
     {
         $language = $this->LanguageDetector->current();
 
-        $globalFields = $this->GlobalField->where('language_id', $language->id)->get();
+        // loading primary language if language cannot be detected
+        $languageId = ($language) ? $language->id : $this->Config->get('devise.primary_language_id.primary_language_id');
+
+        $globalFields = $this->GlobalField->where('language_id', $language)->get();
 
         $page = $this->wrapTheseFieldsAroundThisPage($globalFields, $page);
 

@@ -67,7 +67,7 @@ class PageController extends Controller
 
         $localized = $this->PagesRepository->findLocalizedPage($page);
 
-        return $localized ? $this->Redirect->route($localized->route_name) : $this->retrieveResponse($page);
+        return $localized ? $this->retrieveLocalRedirect($localized) : $this->retrieveResponse($page);
     }
 
     /**
@@ -88,6 +88,20 @@ class PageController extends Controller
         $this->DataBuilder->setData($data);
 
         return $this->getResponse($page);
+    }
+
+    /**
+     * This retrieves the a redirect for the user's language
+     *
+     * @param \DvsPage $localized
+     * @throws PagesException
+     */
+    public function retrieveLocalRedirect($localized)
+    {
+        $route = $this->Route->getCurrentRoute();
+        $params = $route ? $route->parameters() : [];
+
+        return $this->Redirect->route($localized->route_name, $params);
     }
 
     /**

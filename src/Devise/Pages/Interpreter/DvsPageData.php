@@ -128,8 +128,11 @@ class DvsPageData
 		$pageId = $this->pageId;
 		$languageId = $this->languageId;
 		$csrfToken = $this->csrfToken;
+
         $route = Route::getCurrentRoute();
-		$availableLanguages = $this->PagesRepository->availableLanguagesForPage($pageId, $route->parameters());
+        $params = ($route) ? $route->parameters() : [];
+
+		$availableLanguages = $this->PagesRepository->availableLanguagesForPage($pageId, $params);
 	    $pageRoutes = $this->PagesRepository->getRouteList();
 		$pageVersions = $this->PagesRepository->getPageVersions($pageId, $pageVersionId);
 		$collections = $this->filterTags('collection');

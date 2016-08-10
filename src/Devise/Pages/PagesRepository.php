@@ -659,7 +659,7 @@ class PagesRepository
         // loading primary language if language cannot be detected
         $languageId = ($language) ? $language->id : $this->Config->get('devise.primary_language_id.primary_language_id');
 
-        $globalFields = $this->GlobalField->where('language_id', $language)->get();
+        $globalFields = $this->GlobalField->where('language_id', $languageId)->get();
 
         $page = $this->wrapTheseFieldsAroundThisPage($globalFields, $page);
 

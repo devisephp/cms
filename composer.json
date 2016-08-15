@@ -15,7 +15,7 @@
         "masterminds/html5": "1.*",
         "zencoder/zencoder-php": "*",
         "ext-imagick": "*",
-        "symfony/console": "~2.0",
+        "symfony/console": "2.*",
         "laravelcollective/html": "*",
         "doctrine/dbal": "~2.3",
         "league/commonmark": "~0.7"

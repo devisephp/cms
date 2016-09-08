@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////
 // Gulp variables
 ////////////////////////////////////////////////////////////////
-
+var elixir = require('laravel-elixir');
 var phpunit = require('gulp-phpunit');
 var rjs = require('gulp-requirejs');
 var rename = require('gulp-rename');
@@ -97,6 +97,15 @@ gulp.task('build:js:vendor', function()
   .pipe(uglify())
   .pipe(rename('devise.vendor.min.js'))
   .pipe(gulp.dest('public/js'));
+});
+
+
+////////////////////////////////////////////////////////////////
+// Gulp watch
+////////////////////////////////////////////////////////////////
+elixir(function(mix) {
+    mix.sass(['main.scss'], 'public/css/main.css', 'public/scss');
+    mix.sass(['editor-nodes.scss'], 'public/css/editor-nodes.css', 'public/scss');
 });
 
 

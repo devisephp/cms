@@ -49944,16 +49944,7 @@ devise.define('dvsBaseView',['jquery', 'dvsTemplates'], function($, Templates)
 });
 devise.define('dvsPositionHelper',['jquery'], function($) {
 
-    var nodeHeight = 40;
-
-    /**
-     * We need to set the nodeHeight to calculate
-     * offsets.
-     */
-    function setNodeHeight(nodesView)
-    {
-        nodeHeight = nodesView.children().first().children('.dvs-node-inner-wrapper').height();
-    }
+    var nodeHeight = 55;
 
     /**
      * This calculates the node positions for all
@@ -49972,7 +49963,6 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
             {
                 for (var i = 0; i < node.data.length; i++)
                 {
-                    console.log('here');
                     var current = node.data[i];
                     current.position = getCoordinatesForNode(current, body);
                 }
@@ -49996,8 +49986,9 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
             var node = nodesData[cid];
 
             el.css('top', node.position.top);
+            el.css('left', node.position.left);
             el.removeClass('left right');
-            el.addClass(node.position.side);
+            // el.addClass(node.position.side);
         });
     }
 
@@ -50158,8 +50149,9 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
             {
                 if (i != j && hasNodeCollision(nodes[i], nodes[j]))
                 {
-                    nodes[i].position.top += nodeHeight;
+                    nodes[i].position.top += 55;
                     j = 0;
+                    i = 0;
                 }
             }
         }
@@ -50170,9 +50162,8 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
      */
     function hasNodeCollision(node1, node2)
     {
-        if (node1.position.side != node2.position.side) return false;
-
-        return Math.abs(node1.position.top - node2.position.top) < (nodeHeight);
+      console.log(node1.human_name, node2.human_name, node1.position.top, node2.position.top, nodeHeight, Math.abs(node1.position.top - node2.position.top) < 55)
+        return Math.abs(node1.position.top - node2.position.top) < 55;
     }
 
     /**
@@ -50216,7 +50207,6 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
     return {
         recalculateNodePositions: function(nodesView, nodesData)
         {
-            setNodeHeight(nodesView);
             calculateNodePositions(nodesView, nodesData);
             solveNodeCollisions(nodesView, nodesData);
             adjustNodeDOMPositions(nodesView, nodesData);
@@ -50225,6 +50215,7 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
     };
 
 });
+
 devise.define('dvsSelectSurrogate',['require', 'jquery'], function (require, $)
 {
 
@@ -51860,6 +51851,8 @@ devise.define('dvsGroupView',['jquery', 'dvsBaseView', 'dvsSelectSurrogate'], fu
 		this.contentView = null;
 		this.content.empty();
 		this.data.categories[this.showingCategoryIndex].active = 'dvs-active';
+    this.data.categories[this.showingCategoryIndex].nodes.reverse();
+
 		this.grid = View.make('sidebar.groups.grid', this.data);
 		this.sidebar.grid.empty();
 		this.sidebar.grid.append(this.grid);
@@ -51980,6 +51973,7 @@ devise.define('dvsGroupView',['jquery', 'dvsBaseView', 'dvsSelectSurrogate'], fu
 
 	return GroupView;
 });
+
 devise.define('dvsBreadCrumbsView',['jquery', 'dvsBaseView'], function($, View)
 {
 	/**

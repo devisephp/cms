@@ -1,15 +1,6 @@
 devise.define(['jquery'], function($) {
 
-    var nodeHeight = 40;
-
-    /**
-     * We need to set the nodeHeight to calculate
-     * offsets.
-     */
-    function setNodeHeight(nodesView)
-    {
-        nodeHeight = nodesView.children().first().children('.dvs-node-inner-wrapper').height();
-    }
+    var nodeHeight = 55;
 
     /**
      * This calculates the node positions for all
@@ -28,7 +19,6 @@ devise.define(['jquery'], function($) {
             {
                 for (var i = 0; i < node.data.length; i++)
                 {
-                    console.log('here');
                     var current = node.data[i];
                     current.position = getCoordinatesForNode(current, body);
                 }
@@ -52,8 +42,9 @@ devise.define(['jquery'], function($) {
             var node = nodesData[cid];
 
             el.css('top', node.position.top);
+            el.css('left', node.position.left);
             el.removeClass('left right');
-            el.addClass(node.position.side);
+            // el.addClass(node.position.side);
         });
     }
 
@@ -214,8 +205,9 @@ devise.define(['jquery'], function($) {
             {
                 if (i != j && hasNodeCollision(nodes[i], nodes[j]))
                 {
-                    nodes[i].position.top += nodeHeight;
+                    nodes[i].position.top += 55;
                     j = 0;
+                    i = 0;
                 }
             }
         }
@@ -226,9 +218,7 @@ devise.define(['jquery'], function($) {
      */
     function hasNodeCollision(node1, node2)
     {
-        if (node1.position.side != node2.position.side) return false;
-
-        return Math.abs(node1.position.top - node2.position.top) < (nodeHeight);
+        return Math.abs(node1.position.top - node2.position.top) < 55;
     }
 
     /**
@@ -272,7 +262,6 @@ devise.define(['jquery'], function($) {
     return {
         recalculateNodePositions: function(nodesView, nodesData)
         {
-            setNodeHeight(nodesView);
             calculateNodePositions(nodesView, nodesData);
             solveNodeCollisions(nodesView, nodesData);
             adjustNodeDOMPositions(nodesView, nodesData);

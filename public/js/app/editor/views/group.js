@@ -60,6 +60,8 @@ devise.define(['jquery', 'dvsBaseView', 'dvsSelectSurrogate'], function($, View,
 		this.contentView = null;
 		this.content.empty();
 		this.data.categories[this.showingCategoryIndex].active = 'dvs-active';
+    this.data.categories[this.showingCategoryIndex].nodes.reverse();
+
 		this.grid = View.make('sidebar.groups.grid', this.data);
 		this.sidebar.grid.empty();
 		this.sidebar.grid.append(this.grid);

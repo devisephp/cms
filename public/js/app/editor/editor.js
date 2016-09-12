@@ -139,6 +139,7 @@ devise.define(['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', 'dvsPositionH
         this.iframeBodyView.addClass('dvs-node-mode');
         this.showingEditor = true;
         this.nodesView.show();
+        this.recalculateNodePositions();
     }
 
     /**

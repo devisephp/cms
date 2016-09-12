@@ -321,6 +321,12 @@ class DvsPageData
 		$tag['data'] = $this->TagManager->getInstanceForTag($tag);
 		$tag['cid'] = $tag['bindingType'] . $tag['data']->id;
 
+    // If it's global we need to differentiate it so the id
+    // from globals and fields don't collide
+    if (get_class($tag['data']) == 'DvsGlobalField') {
+      $tag['cid'] = $tag['bindingType'] . 'global' . $tag['data']->id;
+    }
+
 		$this->tags[$id] = $tag;
 
 		return $tag;

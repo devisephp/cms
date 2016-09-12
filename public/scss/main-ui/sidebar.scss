@@ -12,7 +12,7 @@
   }
 
   #dvs-pusher {
-    @include transform(translate3d(200px, 0, -1000px) rotateY(-10deg));
+    @include transform(translate3d(100px, 0, -500px) rotateY(-10deg));
   }
 
   #dvs-node-mode-button {

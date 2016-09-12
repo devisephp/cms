@@ -49297,6 +49297,7 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
         this.iframeBodyView.addClass('dvs-node-mode');
         this.showingEditor = true;
         this.nodesView.show();
+        this.recalculateNodePositions();
     }
 
     /**
@@ -49506,6 +49507,7 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
      */
     return Editor;
 });
+
 devise.define('query',['jquery'], (function($)
 {
     var query = {};
@@ -49969,7 +49971,6 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
             }
 
             node.position = getCoordinatesForNode(node, body);
-            node.position.side = getSideForNode(node.position);
         });
     }
 
@@ -49997,12 +49998,8 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
      */
     function getCoordinatesForNode(node, view)
     {
-
-
         if (node.binding === 'group')
         {
-            // if(key == "contentBlock2Icon")
-            // console.log(node);
             return getCoordinatesForGroupNode(node, view);
         }
 
@@ -50011,7 +50008,7 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
             return getCoordinatesForCollectionNode(node, view);
         }
 
-        return getCoordinatesForFieldNode(node.key, node.cid, view);
+        return getCoordinatesForFieldNode(node, view);
     }
 
     /**
@@ -50032,6 +50029,7 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
             coordinates = element.offset();
             if (hidden) element.hide();
 
+
             if (typeof coordinates === 'object' && coordinates.top) return coordinates;
             return getCoordinatesFromParent(element);
         }
@@ -50047,9 +50045,11 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
     /**
      * Get the coordinates for a cid or key inside this view
      */
-    function getCoordinatesForFieldNode(key, cid, view)
+    function getCoordinatesForFieldNode(node, view)
     {
         var hidden, coordinates;
+        var key = node.key
+        var cid = node.cid
         var placeholder = view.find('[data-dvs-placeholder="' + key + '"]').last();
         var element = view.find('[data-devise-' + cid + ']').first();
 
@@ -50068,9 +50068,6 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
         placeholder.show();
         coordinates = placeholder.offset();
         placeholder.hide();
-
-        // if(key == "contentBlock2Icon")
-        //     console.log(coordinates);
 
         if (typeof coordinates === 'object' && coordinates.top) return coordinates;
         return getCoordinatesFromParent(placeholder);
@@ -50121,20 +50118,6 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
     }
 
     /**
-     * Pick left or right side for this node
-     */
-    function getSideForNode(coordinates)
-    {
-        var half = $(window).width() / 2;
-
-        if (typeof coordinates == 'undefined') return 'float';
-
-        if (coordinates.left > half) return 'right';
-
-        return 'left';
-    }
-
-    /**
      * This makes sure that no two nodes touch each other
      */
     function solveNodeCollisions(nodesView, nodesData)
@@ -50162,8 +50145,7 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
      */
     function hasNodeCollision(node1, node2)
     {
-      console.log(node1.human_name, node2.human_name, node1.position.top, node2.position.top, nodeHeight, Math.abs(node1.position.top - node2.position.top) < 55)
-        return Math.abs(node1.position.top - node2.position.top) < 55;
+        return (Math.abs(node1.position.top - node2.position.top) < 55 && Math.abs(node1.position.left - node2.position.left) < 200 );
     }
 
     /**

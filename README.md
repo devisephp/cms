@@ -8,7 +8,7 @@ Devise
 
 ![alt text][logo]
 
-##About
+## About
 
 Devise is a content management system with rich application development in mind. With full-featured front-end content management Devise supports manipulating images, videos, WYSIWYG editing, maps, audio, "simple" controls such as checkboxes, selects, etc, all by placing simple attribute tags in your html markup.
 
@@ -221,7 +221,7 @@ Should change to
 ```
 
 
-###License
+### License
 
 Devise is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 

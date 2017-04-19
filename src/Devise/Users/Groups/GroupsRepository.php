@@ -41,7 +41,7 @@ class GroupsRepository
      */
     public function groupList()
     {
-        return $this->Group->lists('name', 'id')->all();
+        return $this->Group->pluck('name', 'id')->all();
     }
 
     /**
@@ -62,6 +62,6 @@ class GroupsRepository
      */
     public function groupListForUser($userId)
     {
-        return $this->User->findOrFail($userId)->groups()->lists('name', 'id')->all();
+        return $this->User->findOrFail($userId)->groups()->pluck('name', 'id')->all();
     }
 }

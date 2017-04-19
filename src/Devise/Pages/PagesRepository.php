@@ -587,7 +587,7 @@ class PagesRepository
                                     $query->where('id',$pageId)
                                         ->orWhere('translated_from_page_id', $pageId);
                                 })
-                                ->lists('title', 'language_id');
+                                ->pluck('title', 'language_id');
 
         return array_diff_key($languages, $existingLangages->toArray());
     }
@@ -801,7 +801,7 @@ class PagesRepository
             $version = $this->wrapPageVersionStatusByAB($version, $page, $liveVersions);
         }
 
-        $avg = array_sum($versions->lists('ab_testing_amount')->toArray());
+        $avg = array_sum($versions->pluck('ab_testing_amount')->toArray());
 
         foreach ($versions as $version)
         {
@@ -827,7 +827,7 @@ class PagesRepository
         $version->starts_at_human = $version->starts_at ? $this->toHumanDateFormat($version->starts_at) : 'never starts';
         $version->ends_at_human = $version->ends_at ? $this->toHumanDateFormat($version->ends_at) : 'never ends';
 
-        $liveVersionIds = $liveVersions->lists('id')->toArray();
+        $liveVersionIds = $liveVersions->pluck('id')->toArray();
 
         // the current version is live
         if (in_array($version->id, $liveVersionIds))

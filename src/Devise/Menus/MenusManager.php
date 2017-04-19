@@ -176,7 +176,7 @@ class MenusManager
         }
 
 		// user removed these menu items so let's remove in database
-		$removeItems = array_diff($menu->allItems()->lists('id')->all(), array_keys($items));
+		$removeItems = array_diff($menu->allItems()->pluck('id')->all(), array_keys($items));
 
 		foreach ($removeItems as $removeItem) {
 			$item = $this->MenuItem->find($removeItem);

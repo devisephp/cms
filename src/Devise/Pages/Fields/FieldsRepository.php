@@ -155,7 +155,7 @@ class FieldsRepository
             ->where('page_version_id', '=', $pageVersionId)
             ->where('content_requested','=',true)
             ->select('id')
-            ->lists('id');
+            ->pluck('id');
     }
 
     /**

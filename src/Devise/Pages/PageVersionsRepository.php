@@ -49,7 +49,7 @@ class PageVersionsRepository
      */
     public function getVersionsListForPage($page)
     {
-        return $page->versions()->orderBy('created_at','desc')->lists('name','id');
+        return $page->versions()->orderBy('created_at','desc')->pluck('name','id');
     }
 
     /**

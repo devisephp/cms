@@ -3,7 +3,6 @@
 try
 {
     App::make('Devise\Pages\RoutesGenerator')->loadRoutes();
-    Route::controller('install', 'Devise\Support\Installer\InstalledController');
 }
 catch (PDOException $e)
 {

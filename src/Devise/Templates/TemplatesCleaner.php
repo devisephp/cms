@@ -160,7 +160,7 @@ class TemplatesCleaner
                 })
                 ->join('dvs_pages','dvs_pages.id','=','dvs_page_versions.page_id')
                 ->where('dvs_pages.view',$view)
-                ->lists('dvs_page_versions.id');
+                ->pluck('dvs_page_versions.id');
     }
 
     /**

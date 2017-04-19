@@ -46,7 +46,7 @@ class DeviseUserController extends \Controller
      */
     public function create()
     {
-        $groups = $this->Group->lists('name','id');
+        $groups = $this->Group->pluck('name','id');
         $this->data = array_merge($this->data, compact('groups'));
         $this->data['title'] = "Create User";
 
@@ -234,7 +234,7 @@ class DeviseUserController extends \Controller
      */
     public function register()
     {
-        $groups = $this->Group->lists('name','id');
+        $groups = $this->Group->pluck('name','id');
         $this->data = array_merge($this->data, compact('groups'));
 
         return $this->View->make('devise::users.register', $this->data);

@@ -30,7 +30,7 @@ class DevisePagesSeeder extends DeviseSeeder
                 'short_description'       => 'Returns a JSON encoded list of pages',
                 'response_type'           => 'Function',
                 'response_path'           => 'Devise\Pages\PageResponseHandler.requestPageList',
-                'response_params'         => 'params.name, params.page'
+                'response_params'         => 'input'
             ),
             array(
                 'language_id'             => '45',

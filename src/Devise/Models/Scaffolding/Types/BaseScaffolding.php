@@ -13,7 +13,6 @@ use Devise\Support\DeviseSeeder;
  */
 class BaseScaffolding
 {
-	use \Illuminate\Console\AppNamespaceDetectorTrait;
 
 	/**
 	 * @var
@@ -158,7 +157,7 @@ class BaseScaffolding
 			'slug'            => str_slug(str_plural($modelName)), //little-widgets
 			'singularVar'     => lcfirst(camel_case(str_singular($modelName))), // littleWidget
 			'pluralVar'       => lcfirst(camel_case(str_plural($modelName))), // littleWidgets
-			'namespace'       => trim($this->getAppNamespace(), '\\')
+			'namespace'       => trim($this->Framework->container->getInstance()->getNameSpace(), '\\')
 		];
 
 		$this->constants = $englishConstants + $codeConstants;

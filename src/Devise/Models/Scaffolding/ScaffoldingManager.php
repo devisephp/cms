@@ -97,7 +97,7 @@ class ScaffoldingManager
                 $input['fields'][] = [
                     'name' => $timestamp,
                     'type' => 'timestamp',
-                    'default' => '0000-00-00 00:00:00',
+                    'default' => '',
                     'displayForm' => false
                 ];
             }

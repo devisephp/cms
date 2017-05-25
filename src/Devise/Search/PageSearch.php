@@ -45,7 +45,7 @@ class PageSearch extends \DvsPage
 
         $query = $this->createSearchQuery($query, $search);
 
-        $query = $query->distinct('dvs_page_versions.id');
+        $query = $query->groupBy('dvs_pages.slug');
 
         $query = $query->where('dvs_pages.dvs_admin', '<>', 1);
 

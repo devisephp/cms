@@ -47,6 +47,8 @@ class PageSearch extends \DvsPage
 
         $query = $query->distinct('dvs_page_versions.id');
 
+        $query = $query->where('dvs_pages.dvs_admin', '<>', 1);
+
         // only show the languages that are active
         $language = App::make('Devise\Languages\LanguageDetector')->current();
         $query->where('language_id', $language->id);

@@ -49,25 +49,28 @@ class UniversalSearch
      */
 	public function search($for, $page = 1, $perPage = 10)
 	{
-		$limit = 100;
+    $collection = collect();
+    if ($for != '') {
+  		$limit = 100;
 
-		if ($perPage > $limit) throw new \Devise\Support\DeviseException("Cannot have more than $limit results per page");
+  		if ($perPage > $limit) throw new \Devise\Support\DeviseException("Cannot have more than $limit results per page");
 
-		// first pass, give everyone a fair chance to get into the collection
-		$collection = $this->searchRegistered($for, $limit);
+  		// first pass, give everyone a fair chance to get into the collection
+  		$collection = $this->searchRegistered($for, $limit);
 
-		// now that everyone had a chance to get into
-		// the search collection we can add more if needed
-		$leftover = $limit - $collection->count();
+  		// now that everyone had a chance to get into
+  		// the search collection we can add more if needed
+      $leftover = $collection ? $limit - $collection->count() : $limit;
 
-		// second pass to fill the gap of empty results (if we haven't filled it up)
-		if ($leftover)
-		{
-			$collection = $this->searchRegisteredSecondPass($for, $limit, $leftover, $collection);
-		}
+  		// second pass to fill the gap of empty results (if we haven't filled it up)
+  		if ($leftover)
+  		{
+  			$collection = $this->searchRegisteredSecondPass($for, $limit, $leftover, $collection);
+  		}
 
-		// now we sort everything by relevance
-		$collection->sortByDesc('relevance');
+  		// now we sort everything by relevance
+  		$collection->sortByDesc('relevance');
+    }
 
 		// let's paginate!
 		return $this->Pagination->make($collection, $page, $perPage);

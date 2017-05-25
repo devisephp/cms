@@ -40,10 +40,12 @@ class PageSearch extends \DvsPage
 
     public function scopeSearch($query, $search)
     {
-        
+
         if (!$search) return $query;
 
         $query = $this->createSearchQuery($query, $search);
+
+        $query = $query->distinct('dvs_page_versions.id');
 
         // only show the languages that are active
         $language = App::make('Devise\Languages\LanguageDetector')->current();

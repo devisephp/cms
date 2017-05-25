@@ -44,6 +44,10 @@ devise.define(['jquery', 'query'], function($, query)
 		{
 			this.changedFieldAttribute(field, attribute);
 		}
+
+    // Event Dispatch
+    var evt = new CustomEvent('devise-editor-change-field')
+    window.dispatchEvent(evt)
 	}
 
 	/**

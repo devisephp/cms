@@ -49202,6 +49202,10 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
 
         $('body').show();
 
+        window.addEventListener('devise-editor-page-loaded', function (e) {
+          console.log('devise-editor-page-loaded from devise')
+        });
+
         return true;
     }
 
@@ -49298,6 +49302,10 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
         this.showingEditor = true;
         this.nodesView.show();
         this.recalculateNodePositions();
+
+        // Event Dispatch
+        var evt = new CustomEvent('devise-editor-show-editor', { detail: self.sectionKey })
+        window.dispatchEvent(evt)
     }
 
     /**
@@ -49309,6 +49317,10 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
         this.showingEditor = false;
         this.layoutView.removeClass('dvs-node-mode');
         this.iframeBodyView.removeClass('dvs-node-mode');
+
+        // Event Dispatch
+        var evt = new CustomEvent('devise-editor-hide-editor')
+        window.dispatchEvent(evt)
     }
 
     /**
@@ -49328,6 +49340,10 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
         this.iframeBodyView.addClass('dvs-sidebar-mode');
         this.sidebarContainerView.show();
         this.sidebarRendered(node);
+
+        // Event Dispatch
+        var evt = new CustomEvent('devise-editor-show-sidebar')
+        window.dispatchEvent(evt)
     }
 
     /**
@@ -49433,6 +49449,9 @@ devise.define('dvsEditor',['jquery', 'query', 'dvsSidebarView', 'dvsBaseView', '
                 editor.iframeBodyView = body;
                 editor.nodesView = body.find('#dvs-nodes');
                 editor.recalculateNodePositions();
+
+                var evt = new CustomEvent('devise-editor-page-loaded')
+                window.dispatchEvent(evt)
 
                 // sets the iframe up so we can control it's content
                 LiveUpdater.setup(iframe, editor.bindings, editor.data.database);
@@ -52135,6 +52154,10 @@ devise.define('dvsLiveUpdate',['jquery', 'query'], function($, query)
 		{
 			this.changedFieldAttribute(field, attribute);
 		}
+
+    // Event Dispatch
+    var evt = new CustomEvent('devise-editor-change-field')
+    window.dispatchEvent(evt)
 	}
 
 	/**
@@ -52259,6 +52282,7 @@ devise.define('dvsLiveUpdate',['jquery', 'query'], function($, query)
 
 	return LiveUpdate;
 });
+
 devise.define('AttributeBinding',[], function()
 {
 	/**

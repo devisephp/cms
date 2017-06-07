@@ -62,6 +62,7 @@ trait SearchableModelTrait
         }
 
         $this->addSelectsToQuery($query, $selects);
+        $this->addWheresToQuery($query, $words);
         $this->filterQueryWithRelevance($query, ($relevance_count / 4));
 
         $this->makeJoins($query);
@@ -172,5 +173,23 @@ trait SearchableModelTrait
     {
         $selects = new Expression(join(' + ', $selects) . ' as relevance');
         $query->select([$this->getTable() . '.*', $selects]);
+    }
+
+    /**
+     * Puts all where clauses into builder
+     * @param $query
+     * @param $selects
+     */
+    protected function addWheresToQuery(&$query, $words)
+    {
+        $query->where(function($query) use ($words) {
+            foreach ($this->getColumns() as $column => $relevance)
+            {
+                foreach ($words as $word)
+                {
+                    $query->orWhere($column, 'LIKE', '%' . $word . '%');
+                }
+            }
+        });
     }
 }

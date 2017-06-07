@@ -132,10 +132,9 @@ class Pagination implements IteratorAggregate, Jsonable
      */
 	protected function convertItemsToRealModel()
 	{
-		for ($i = 0; $i < count($this->items); $i++)
-		{
-			$this->items[$i]->searchType = $this->items[$i]->searchableType;
-		}
+        foreach($this->items as $i => $item){
+            $this->items[$i]->searchType = $this->items[$i]->searchableType;
+        }
 	}
 
     /**

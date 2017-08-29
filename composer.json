@@ -17,16 +17,16 @@
         "ext-imagick": "*",
         "symfony/console": "*",
         "laravelcollective/html": "*",
-        "doctrine/dbal": "~2.3",
-        "league/commonmark": "~0.7"
+        "doctrine/dbal": "2.3",
+        "league/commonmark": "0.7"
     },
     "require-dev": {
         "mockery/mockery": "0.9.3",
         "phpunit/phpunit": "*",
         "mikey179/vfsStream": "*",
         "codeception/codeception": "*",
-        "symfony/dom-crawler": "~3.0",
-        "symfony/css-selector": "~3.0"
+        "symfony/dom-crawler": "3.0",
+        "symfony/css-selector": "3.0"
     },
     "autoload": {
         "classmap": [

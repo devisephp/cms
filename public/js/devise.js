@@ -49964,7 +49964,6 @@ devise.define('dvsBaseView',['jquery', 'dvsTemplates'], function($, Templates)
     return View;
 });
 devise.define('dvsPositionHelper',['jquery'], function($) {
-
     var nodeHeight = 55;
 
     /**
@@ -49988,7 +49987,6 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
                     current.position = getCoordinatesForNode(current, body);
                 }
             }
-
             node.position = getCoordinatesForNode(node, body);
         });
     }
@@ -50164,7 +50162,15 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
      */
     function hasNodeCollision(node1, node2)
     {
-        return (Math.abs(node1.position.top - node2.position.top) < 55 && Math.abs(node1.position.left - node2.position.left) < 200 );
+      node1.position.top = isNaN(node1.position.top) ? 0 : node1.position.top
+      node1.position.left = isNaN(node1.position.left) ? 0 : node1.position.left
+      node2.position.top = isNaN(node2.position.top) ? 0 : node2.position.top
+      node2.position.left = isNaN(node2.position.left) ? 0 : node2.position.left
+
+      return (
+        Math.abs(node1.position.top - node2.position.top) < 55 &&
+        Math.abs(node1.position.left - node2.position.left) < 200
+      );
     }
 
     /**

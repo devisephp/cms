@@ -50145,8 +50145,23 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
 
         for (var i = 0; i < nodes.length; i++)
         {
+          if (nodes[i].position.top < 0 || isNaN(nodes[i].position.top)) {
+            nodes[i].position.top = 0
+          }
+
+          if (nodes[i].position.left < 0 || isNaN(nodes[i].position.left)) {
+            nodes[i].position.left = 0
+          }
+        }
+
+        for (var i = 0; i < nodes.length; i++)
+        {
             for (var j = 0; j < nodes.length; j++)
             {
+                if (nodes[i].position.top < 0) {
+                  nodes[i].position.top = 0
+                }
+
                 if (i != j && hasNodeCollision(nodes[i], nodes[j]))
                 {
                     nodes[i].position.top += 55;
@@ -50162,11 +50177,6 @@ devise.define('dvsPositionHelper',['jquery'], function($) {
      */
     function hasNodeCollision(node1, node2)
     {
-      node1.position.top = isNaN(node1.position.top) ? 0 : node1.position.top
-      node1.position.left = isNaN(node1.position.left) ? 0 : node1.position.left
-      node2.position.top = isNaN(node2.position.top) ? 0 : node2.position.top
-      node2.position.left = isNaN(node2.position.left) ? 0 : node2.position.left
-
       return (
         Math.abs(node1.position.top - node2.position.top) < 55 &&
         Math.abs(node1.position.left - node2.position.left) < 200

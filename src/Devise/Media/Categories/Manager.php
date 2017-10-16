@@ -42,9 +42,11 @@ class Manager
      */
     public function storeNewCategory($input)
     {
-        if(isset($input['name']) && isset($input['category']))
+        $category = isset($input['category']) ? $input['category'] : null;
+        
+        if(isset($input['name']))
         {
-            $localPath = $this->CategoryPaths->fromDot($input['category']);
+            $localPath = $this->CategoryPaths->fromDot($category);
             $serverPath = $this->CategoryPaths->serverPath($localPath);
 
             if ($this->Filesystem->isDirectory($serverPath . $input['name']))

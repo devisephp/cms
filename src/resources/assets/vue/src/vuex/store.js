@@ -9,7 +9,11 @@ Vue.use(Vuex)
 // root state object.
 // each Vuex instance is just a single state tree.
 const state = {
-  currentDirectory: '/'
+  api: {
+    baseUrl: '/admin/api/'
+  },
+  currentDirectory: '.',
+  files: []
 }
 
 // A Vuex instance is created by combining the state, the actions,

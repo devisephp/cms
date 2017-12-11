@@ -1,10 +1,13 @@
 export default {
-
   /*
   *
   * API and Connection Getters
   */
-  // updateLastPath (state, payload) {
-  //   state.lastPath = payload
-  // }
+  setCurrentDirectory (state, directory) {
+    state.currentDirectory = directory
+  },
+
+  setFiles (state, payload) {
+    state.files = payload
+  }
 }

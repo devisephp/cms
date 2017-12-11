@@ -13,7 +13,8 @@ const state = {
     baseUrl: '/admin/api/'
   },
   currentDirectory: '.',
-  files: []
+  files: [],
+  directories: []
 }
 
 // A Vuex instance is created by combining the state, the actions,

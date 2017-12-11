@@ -9,5 +9,9 @@ export default {
 
   setFiles (state, payload) {
     state.files = payload
+  },
+
+  setDirectories (state, payload) {
+    state.directories = payload
   }
 }

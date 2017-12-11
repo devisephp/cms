@@ -24,9 +24,20 @@ const actions = {
 
   getCurrentFiles (context, directory) {
     return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'media-manager/folder/' + context.state.currentDirectory).then(function (response) {
-        console.log('adfasdasdf', response)
-        context.commit('setFiles', response.data.data)
+      window.axios.get(context.state.api.baseUrl + 'media-manager/files/' + context.state.currentDirectory).then(function (response) {
+        context.commit('setFiles', response.data)
+        resolve(response)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
+  },
+
+  getCurrentDirectories (context, directory) {
+    return new Promise((resolve, reject) => {
+      window.axios.get(context.state.api.baseUrl + 'media-manager/directories/' + context.state.currentDirectory).then(function (response) {
+        console.log('directories', response)
+        context.commit('setDirectories', response.data)
         resolve(response)
       })
     }).catch(function (error) {

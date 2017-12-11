@@ -1,0 +1,9 @@
+.btn {
+  @apply bg-action text-lighter text-sm uppercase py-4 px-6 rounded;
+
+  transition: 0.5s all ease;
+
+  &:hover {
+    @apply bg-action-light shadow-md;
+  }
+}

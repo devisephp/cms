@@ -1,0 +1,26 @@
+fieldset {
+  @apply flex flex-col;
+
+  label + input {
+    @apply mt-2;
+  }
+
+  &.horizontal {
+    @apply flex-row;
+  }
+
+  + fieldset {
+    @apply mt-4;
+  }
+}
+
+label {
+  @apply text-sm font-medium text-stext;
+}
+
+input[type=number],
+input[type=email],
+input[type=password],
+input[type=text] {
+  @apply .bg-transparent .border .border-light .px-4 .py-4 .text-ptext;
+}

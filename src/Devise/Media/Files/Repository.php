@@ -1,5 +1,6 @@
 <?php namespace Devise\Media\Files;
 
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Devise\Media\MediaPaths;
 use Devise\Media\Images\Images;
@@ -216,6 +217,8 @@ class Repository
           $fileData['name'] = $this->getFileName($file);
           $fileData['url'] = $this->getPath($file, $fileData['name']);
           $fileData['size'] = $this->Filesystem->size($file);
+          $fileData['fields'] = $this->getFieldDataForFile($fileData['name']);
+          $fileData['global_fields'] = $this->getGlobalDataForFile($fileData['name']);
 
           $newFilesArray[] = $fileData;
         }
@@ -255,7 +258,8 @@ class Repository
       }
     }
 
-    if(strpos($file, '_opt.txt') !== false){
+    if (strpos($file, '_opt.txt') !== false)
+    {
       return false;
     }
 
@@ -395,5 +399,30 @@ class Repository
     if ($category1['name'] == $category2['name']) return 0;
 
     return $category1['name'] > $category2['name'] ? 1 : -1;
+  }
+
+  private function getFieldDataForFile($name)
+  {
+    return DB::table('dvs_fields')
+      ->join('dvs_page_versions', 'dvs_page_versions.id', '=', 'dvs_fields.page_version_id')
+      ->join('dvs_pages', 'dvs_pages.id', '=', 'dvs_page_versions.page_id')
+      ->where(function ($query) {
+        $query->where('type', 'file')
+          ->orWhere('type', 'image');
+      })->where('json_value', 'LIKE', '%' . $name . '%')
+      ->select('human_name as field_name', 'title as page_title', 'slug as page_slug')
+      ->groupBy('dvs_pages.id')
+      ->get();
+  }
+
+  private function getGlobalDataForFile($name)
+  {
+    return DB::table('dvs_global_fields')
+      ->where(function ($query) {
+        $query->where('type', 'file')
+          ->orWhere('type', 'image');
+      })->where('json_value', 'LIKE', '%' . $name . '%')
+      ->select('human_name as field_name')
+      ->get();
   }
 }

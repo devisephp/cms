@@ -1386,17 +1386,31 @@ class DevisePagesSeeder extends DeviseSeeder
       ),
       array(
         'language_id'       => '45',
-        'title'             => 'Media Manager API: Folder Index',
+        'title'             => 'Media Manager API: Directories',
         'http_verb'         => 'get',
-        'route_name'        => 'dvs-mm-folder',
+        'route_name'        => 'dvs-mm-directories',
         'is_admin'          => '1',
         'dvs_admin'         => '1',
         'middleware'        => 'devise.permissions:canUseDeviseEditor',
-        'slug'              => '/admin/api/media-manager/folder/{folder_dot_path?}',
+        'slug'              => '/admin/api/media-manager/directories/{folder_dot_path?}',
         'short_description' => '',
         'response_type'     => 'Function',
-        'response_path'     => 'Devise\Media\Response.getFolder',
-        'response_params'   => ''
+        'response_path'     => 'Devise\Media\Response.getDirectories',
+        'response_params'   => 'params.folder_dot_path'
+      ),
+      array(
+        'language_id'       => '45',
+        'title'             => 'Media Manager API: Files',
+        'http_verb'         => 'get',
+        'route_name'        => 'dvs-mm-files',
+        'is_admin'          => '1',
+        'dvs_admin'         => '1',
+        'middleware'        => 'devise.permissions:canUseDeviseEditor',
+        'slug'              => '/admin/api/media-manager/files/{folder_dot_path?}',
+        'short_description' => '',
+        'response_type'     => 'Function',
+        'response_path'     => 'Devise\Media\Response.getFiles',
+        'response_params'   => 'params.folder_dot_path'
       ),
     );
 

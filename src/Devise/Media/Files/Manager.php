@@ -61,7 +61,7 @@ class Manager
         }
 
         $originalName = $file->getClientOriginalName();
-        $localPath = (isset($input['category'])) ? $this->CategoryPaths->fromDot($input['category']) : '';
+        $localPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
         $serverPath = $this->CategoryPaths->serverPath($localPath);
 
         $newName = $this->createFile($file, $serverPath, $originalName);
@@ -73,7 +73,7 @@ class Manager
             $this->Image->makeThumbnailImage($serverPath . $newName, $thumbnailPath, $file->getClientMimeType());
         }
 
-        return $localPath . '/' . $newName;
+        return $serverPath . $newName;
     }
 
     /**

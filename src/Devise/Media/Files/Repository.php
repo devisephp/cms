@@ -88,6 +88,19 @@ class Repository
     return $data;
   }
 
+  public function getFileData($file)
+  {
+    $fileData = array();
+    $fileData['thumb'] = $this->getThumbName($file);
+    $fileData['name'] = $this->getFileName($file);
+    $fileData['url'] = $this->getPath($file, $fileData['name']);
+    $fileData['size'] = $this->Filesystem->size($file);
+    $fileData['fields'] = $this->getFieldDataForFile($fileData['name']);
+    $fileData['global_fields'] = $this->getGlobalDataForFile($fileData['name']);
+
+    return $fileData;
+  }
+
   /**
    * Ensures that the media root directory is available
    *
@@ -197,31 +210,11 @@ class Repository
   private function buildMediaItemsFromFiles($files)
   {
     $newFilesArray = array();
-    $lastThumb = null;
-    $croppedFiles = array();
-
     foreach ($files as $file)
     {
       if ($this->passesFilters($file))
       {
-        if (strrpos($file, '.' . $this->config['thumb-key'] . '.') !== false)
-        {
-          $lastThumb = $file;
-        } else if (strrpos($file, '.' . $this->config['crop-key'] . '.') !== false)
-        {
-          $croppedFiles[] = $file;
-        } else
-        {
-          $fileData = array();
-          $fileData['thumb'] = $this->getThumbName($file, $lastThumb);
-          $fileData['name'] = $this->getFileName($file);
-          $fileData['url'] = $this->getPath($file, $fileData['name']);
-          $fileData['size'] = $this->Filesystem->size($file);
-          $fileData['fields'] = $this->getFieldDataForFile($fileData['name']);
-          $fileData['global_fields'] = $this->getGlobalDataForFile($fileData['name']);
-
-          $newFilesArray[] = $fileData;
-        }
+        $newFilesArray[] = $this->getFileData($file);
       }
     }
 
@@ -259,6 +252,16 @@ class Repository
     }
 
     if (strpos($file, '_opt.txt') !== false)
+    {
+      return false;
+    }
+
+    if (strpos($file, $this->config['thumb-key']) !== false)
+    {
+      return false;
+    }
+
+    if (strpos($file, $this->config['crop-key']) !== false)
     {
       return false;
     }
@@ -305,7 +308,7 @@ class Repository
    * @param $possibleThumbPathName
    * @return string
    */
-  private function getThumbName($pathName, $possibleThumbPathName)
+  private function getThumbName($pathName)
   {
     $relativePath = $this->MediaPaths->makeRelativePath($pathName);
 

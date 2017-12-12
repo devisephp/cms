@@ -99,6 +99,7 @@ class Repository
   {
 
     $fileData = array();
+    $fileData['id'] = $file->id;
     $fileData['thumb'] = $this->getThumbName(public_path() . $file->media_path);
     $fileData['name'] = $file->name;
     $fileData['url'] = $file->media_path;

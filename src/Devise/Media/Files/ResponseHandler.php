@@ -52,7 +52,9 @@ class ResponseHandler
     $filepath = array_get($input, 'filepath', '');
     $newpath = array_get($input, 'newpath', '');
 
-    return $this->FileManager->renameUploadedFile($filepath, $newpath);
+    $file = $this->FileManager->renameUploadedFile($filepath, $newpath);
+
+    return $this->Repository->getFileData($file);
   }
 
   /**
@@ -62,6 +64,6 @@ class ResponseHandler
    */
   public function requestRemove($input)
   {
-    return $this->FileManager->removeUploadedFile(array_get($input, 'filepath', ''));
+    $this->FileManager->removeUploadedFile(array_get($input, 'id', ''));
   }
 }

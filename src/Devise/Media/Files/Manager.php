@@ -27,6 +27,8 @@ class Manager
    */
   protected $Image;
 
+  protected $DvsMediaManager;
+
   /**
    * Construct a new File manager
    *
@@ -35,14 +37,15 @@ class Manager
    * @param Image $Image
    * @param Caption $Caption
    */
-  public function __construct(Filesystem $Filesystem, CategoryPaths $CategoryPaths, MediaPaths $MediaPaths, Images $Image, Caption $Caption, $Config = null)
+  public function __construct(DvsMediaManager $DvsMediaManager, Filesystem $Filesystem, CategoryPaths $CategoryPaths, MediaPaths $MediaPaths, Images $Image, Caption $Caption, $Config = null)
   {
+    $this->DvsMediaManager = $DvsMediaManager;
     $this->Filesystem = $Filesystem;
     $this->CategoryPaths = $CategoryPaths;
     $this->MediaPaths = $MediaPaths;
     $this->Image = $Image;
     $this->Caption = $Caption;
-    $this->basepath = public_path() . '/media/';
+    $this->basepath = public_path();
     $this->Config = $Config ?: \Config::getFacadeRoot();
   }
 
@@ -87,6 +90,7 @@ class Manager
 
   /**
    * Renames an uploaded file
+   * @todo should be looking up by id
    *
    * @param  string $filepath
    * @param  string $newpath
@@ -102,18 +106,28 @@ class Manager
       $this->Filesystem->rename($oldCptPath, $newCptPath);
     }
 
-    return $this->Filesystem->rename($this->basepath . $filepath, $this->basepath . $newpath);
+    $this->Filesystem->rename($this->basepath . $filepath, $this->basepath . $newpath);
+
+    $parts = explode('/', $filepath);
+
   }
 
   /**
    * Remove uploaded files from the /media directory
+   * @todo should be looking up by id
    *
    * @param  string $filepath
    * @return void
    */
-  public function removeUploadedFile($filepath)
+  public function removeUploadedFile($id)
   {
-    $this->Filesystem->delete($this->basepath . $filepath);
+    $file = $this->DvsMediaManager
+      ->findOrFail($id);
+
+    $this->Filesystem
+      ->delete($this->basepath . $file->media_path);
+
+    $file->delete();
   }
 
   /**

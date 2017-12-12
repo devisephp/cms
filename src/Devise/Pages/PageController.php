@@ -65,7 +65,10 @@ class PageController extends Controller
             ? $this->PagesRepository->findByRouteNameAndPreviewHash( $this->Route->currentRouteName(), $pageVersionHash)
             : $this->PagesRepository->findByRouteName( $this->Route->currentRouteName(), $pageVersionName, $editing);
 
+        $page = $this->PagesRepository->getTranslatedVersions($page);
+
         $localized = $this->PagesRepository->findLocalizedPage($page);
+        $localized = $this->PagesRepository->getTranslatedVersions($localized);
 
         return $localized ? $this->retrieveLocalRedirect($localized) : $this->retrieveResponse($page);
     }

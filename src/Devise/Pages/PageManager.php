@@ -68,6 +68,7 @@ class PageManager
         'meta_title',
         'meta_description',
         'meta_keywords',
+        'canonical',
         'head',
         'footer',
         'middleware',

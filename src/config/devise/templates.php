@@ -201,29 +201,6 @@
 		'devise::admin.media.manager' => array(
 			'human_name' => 'Devise Media Manager',
 			'extends' => 'devise::admin.layouts.media-manager',
-			'vars' => array(
-				'pageData' => array(
-					'Devise\Media\Files\Repository.compileIndexData' => array(
-						'{input}',
-					),
-				),
-				'finalImages' => array(
-					'Devise\Media\Images\Manager.extractImagesForCallback' => array(
-						'{input}',
-					),
-				),
-			),
-		),
-		'devise::admin.media.crop' => array(
-			'human_name' => 'Devise Media Cropper',
-			'extends' => 'devise::admin.layouts.media-manager',
-			'vars' => array(
-				'imageUrl' => array(
-					'Devise\Media\Images\Manager.getImageUrl' => array(
-						'{input}',
-					),
-				),
-			),
 		),
 		'devise::admin.pages.page-versions._card' => array(
 			'human_name' => 'Devise Page Version Card',

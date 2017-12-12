@@ -1,0 +1,39 @@
+.dropdown {
+    @apply .list-reset .px-4 .py-3 .text-xs ;
+
+    > li {
+        @apply .relative;
+        height:0;
+
+        &:first-child {
+            @apply .mt-0;
+            height:auto;
+        }
+        &:last-child {
+            @apply .mb-0;
+        }
+
+        > ul {
+          @apply .list-reset .max-h-0 .overflow-hidden .absolute .pin-t .pin-l .pin-r .mt-8 .-mx-4 .z-10;
+          transition: 1s max-height;
+
+          li {
+            @apply .text-center .border-b .px-4 .py-2 .cursor-pointer;
+
+            &:last-child {
+              @apply .border-b-0;
+            }
+          }
+        }
+
+        &:hover {
+          > ul {
+            @apply .max-h-999;
+          }
+        }
+    }
+
+    a:hover {
+      @apply no-underline;
+    }
+}

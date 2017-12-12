@@ -671,6 +671,32 @@ class PagesRepository
     }
 
     /**
+     * Gets the primary language Url if the page is translated from another page
+     *
+     * @param  Page $page
+     * @return Page
+     */
+    public function getTranslatedVersions($page)
+    {
+      $language = $this->LanguageDetector->current();
+
+      if ($page !== null) {
+        $page->translations = [];
+        $translations = $this->availableLanguagesForPage($page->id);
+
+        foreach ($translations as $key => $value) {
+          if ($page->language_id === $value['id']) {
+            unset($translations[$key]);
+          }
+        }
+
+        $page->translations = $translations;
+      }
+
+      return $page;
+    }
+
+    /**
      * Takes a list of fields and a page and puts those
      * field values onto a page object to return
      *

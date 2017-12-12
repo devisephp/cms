@@ -59,7 +59,7 @@
 <div class="dvs-form-group">
     <?= Form::label('Show Advanced Options') ?>
     <div class="fancyCheckbox">
-        <?= Form::checkbox('show_advanced', null, null, array('id' => 'show-advanced')) ?>
+        <?= Form::checkbox('show_advanced', 1, false, array('id' => 'show-advanced')) ?>
         <?= Form::label('show-advanced', '&nbsp;') ?>
     </div>
 </div>
@@ -81,6 +81,11 @@
     <div class="dvs-form-group">
         <?= Form::label('Meta Keywords') ?>
         <?= Form::textarea('meta_keywords', null, array('class' => 'short', 'placeholder' => 'Meta Keywords')) ?>
+    </div>
+
+    <div class="dvs-form-group">
+        <?= Form::label('Canonical') ?>
+        <?= Form::textarea('canonical', null, array('class' => 'short', 'placeholder' => 'Canonical')) ?>
     </div>
 
     <div class="dvs-form-group">

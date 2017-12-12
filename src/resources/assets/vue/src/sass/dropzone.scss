@@ -1,0 +1,42 @@
+.dropzone {
+  @apply .relative .text-stext .text-xs .uppercase .font-bold .text-center .cursor-pointer;
+
+  .dz-preview {
+    @apply .hidden
+  }
+
+  .dz-error-mark,
+  .dz-success-mark {
+    @apply .hidden .absolute .absolute-center;
+  }
+
+  .dz-error-message {
+    @apply .hidden;
+  }
+
+  .dz-success {
+    .dz-success-mark {
+      @apply .block;
+    }
+  }
+
+  .dz-started {
+    .dz-message {
+      @apply .hidden;
+    }
+  }
+
+  .dz-progress {
+    @apply .bg-lighter .rounded .mt-4;
+    height:10px;
+
+    span {
+      @apply .bg-grad-blue .block;
+      height:8px;
+    }
+  }
+
+  i {
+    @apply .text-xl;
+  }
+}

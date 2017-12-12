@@ -4,6 +4,7 @@
 namespace Devise\Media\Files;
 
 use DvsMediaManager;
+use Illuminate\Support\Facades\Log;
 
 class MediaFieldObserver
 {
@@ -35,19 +36,26 @@ class MediaFieldObserver
     if ($model->type == 'image' || $model->type == 'file')
     {
       list($path, $fileName) = $this->getNameAndPath($model);
+
       $record = DvsMediaManager::where('directory', $path)
         ->where('name', $fileName)
-        ->firstOrFail();
+        ->first();
+      if(!$record){
 
-      if ($this->isGlobal($model))
-      {
-        $record->global_fields = json_encode($this->repository->getGlobalDataForFile($fileName));
-      } else
-      {
-        $record->fields = json_encode($this->repository->getFieldDataForFile($fileName));
+        Log::info($model->id . '    ' . $path . '    ' . $fileName);
       }
+      if ($record && $record->getDirty())
+      {
+        if ($this->isGlobal($model))
+        {
+          $record->global_fields = json_encode($this->repository->getGlobalDataForFile($fileName));
+        } else
+        {
+          $record->fields = json_encode($this->repository->getFieldDataForFile($fileName));
+        }
 
-      $record->save();
+        $record->save();
+      }
     }
   }
 
@@ -58,7 +66,7 @@ class MediaFieldObserver
     $parts = explode('/', $imagePath);
     $fileName = array_pop($parts);
     array_shift($parts);
-    $path = implode($parts);
+    $path = implode("/", $parts);
 
     return [$path, $fileName];
   }

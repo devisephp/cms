@@ -6,6 +6,7 @@
  *
  * @package Devise\Media\Files
  */
+
 class ResponseHandler
 {
   /**
@@ -36,9 +37,9 @@ class ResponseHandler
    */
   public function requestUpload($input)
   {
-    $path = $this->FileManager->saveUploadedFile($input);
+    $file = $this->FileManager->saveUploadedFile($input);
 
-    return $this->Repository->getFileData($path);
+    return $this->Repository->getFileData($file);
   }
 
   /**

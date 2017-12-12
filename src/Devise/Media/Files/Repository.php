@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Devise\Media\MediaPaths;
 use Devise\Media\Images\Images;
+use DvsMediaManager;
 
 /**
  * Class Repository builds a complex array of data around the file structure
@@ -15,6 +16,11 @@ use Devise\Media\Images\Images;
  */
 class Repository
 {
+  /**
+   * @var DvsMediaManager
+   */
+  protected $DvsMediaManager;
+
   /**
    * @var Filesystem
    */
@@ -38,8 +44,9 @@ class Repository
    * @param null $Request
    * @param null $URL
    */
-  public function __construct(Filesystem $Filesystem, MediaPaths $MediaPaths, Images $Image, $Config = null, $Request = null, $URL = null)
+  public function __construct(DvsMediaManager $DvsMediaManager, Filesystem $Filesystem, MediaPaths $MediaPaths, Images $Image, $Config = null, $Request = null, $URL = null)
   {
+    $this->DvsMediaManager = $DvsMediaManager;
     $this->Filesystem = $Filesystem;
     $this->MediaPaths = $MediaPaths;
     $this->config = $Config ?: \Config::get('devise.media-manager');
@@ -90,14 +97,14 @@ class Repository
 
   public function getFileData($file)
   {
-    $fileData = array();
-    $fileData['thumb'] = $this->getThumbName($file);
-    $fileData['name'] = $this->getFileName($file);
-    $fileData['url'] = $this->getPath($file, $fileData['name']);
-    $fileData['size'] = $this->Filesystem->size($file);
-    $fileData['fields'] = $this->getFieldDataForFile($fileData['name']);
-    $fileData['global_fields'] = $this->getGlobalDataForFile($fileData['name']);
 
+    $fileData = array();
+    $fileData['thumb'] = $this->getThumbName(public_path() . $file->media_path);
+    $fileData['name'] = $file->name;
+    $fileData['url'] = $file->media_path;
+    $fileData['size'] = $file->size;
+    $fileData['fields'] = json_decode($file->fields);
+    $fileData['global_fields'] = json_decode($file->global_fields);
     return $fileData;
   }
 
@@ -196,7 +203,12 @@ class Repository
    */
   private function buildMediaItems($dir)
   {
-    $files = $this->Filesystem->files($dir);
+    $root = public_path() . '/' . $this->config['root-dir'];
+    $dir = ltrim(str_replace($root, '', $dir), '/');
+
+    $files = $this->DvsMediaManager
+      ->where('directory', $dir)
+      ->get();
 
     return $this->buildMediaItemsFromFiles($files);
   }
@@ -212,10 +224,7 @@ class Repository
     $newFilesArray = array();
     foreach ($files as $file)
     {
-      if ($this->passesFilters($file))
-      {
-        $newFilesArray[] = $this->getFileData($file);
-      }
+      $newFilesArray[] = $this->getFileData($file);
     }
 
     return $newFilesArray;
@@ -240,7 +249,7 @@ class Repository
    * @param $file
    * @return bool
    */
-  private function passesFilters($file)
+  public function passesFilters($file)
   {
     if (isset($this->input['type']))
     {
@@ -404,7 +413,7 @@ class Repository
     return $category1['name'] > $category2['name'] ? 1 : -1;
   }
 
-  private function getFieldDataForFile($name)
+  public function getFieldDataForFile($name)
   {
     return DB::table('dvs_fields')
       ->join('dvs_page_versions', 'dvs_page_versions.id', '=', 'dvs_fields.page_version_id')
@@ -413,19 +422,19 @@ class Repository
         $query->where('type', 'file')
           ->orWhere('type', 'image');
       })->where('json_value', 'LIKE', '%' . $name . '%')
-      ->select('human_name as field_name', 'title as page_title', 'slug as page_slug')
+      ->select('dvs_fields.id','human_name as field_name', 'title as page_title', 'slug as page_slug')
       ->groupBy('dvs_pages.id')
       ->get();
   }
 
-  private function getGlobalDataForFile($name)
+  public function getGlobalDataForFile($name)
   {
     return DB::table('dvs_global_fields')
       ->where(function ($query) {
         $query->where('type', 'file')
           ->orWhere('type', 'image');
       })->where('json_value', 'LIKE', '%' . $name . '%')
-      ->select('human_name as field_name')
+      ->select('dvs_global_fields.id','human_name as field_name')
       ->get();
   }
 }

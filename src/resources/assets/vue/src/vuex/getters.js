@@ -10,3 +10,7 @@ export const files = state => {
 export const directories = state => {
   return state.directories
 }
+
+export const currentDirectory = state => {
+  return state.currentDirectory
+}

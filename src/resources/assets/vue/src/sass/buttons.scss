@@ -1,9 +1,20 @@
-.btn {
-  @apply bg-action text-lighter text-sm uppercase py-4 px-6 rounded;
+#dvs-admin {
+  a.btn,
+  .btn {
+    @apply bg-action text-white text-sm uppercase py-4 px-6 rounded font-bold no-underline flex items-center;
 
-  transition: 0.5s all ease;
+    transition: 0.5s all ease;
 
-  &:hover {
-    @apply bg-action-light shadow-md;
+    &:hover {
+      @apply bg-action-light shadow-md;
+    }
+
+    &.btn-sm {
+      @apply py-2 px-4 text-xs;
+    }
+
+    &.btn-xs {
+      @apply py-1 px-2 text-xs;
+    }
   }
 }

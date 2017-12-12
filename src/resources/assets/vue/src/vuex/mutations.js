@@ -13,5 +13,10 @@ export default {
 
   setDirectories (state, payload) {
     state.directories = payload
+  },
+
+  toggleFileOnOff (state, payload) {
+    payload.file.on = payload.on
+    state.files.splice(state.files.indexOf(payload.file), 1, payload.file)
   }
 }

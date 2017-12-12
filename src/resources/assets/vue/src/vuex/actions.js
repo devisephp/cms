@@ -43,6 +43,15 @@ const actions = {
     }).catch(function (error) {
       eventbus.$emit('showError', error)
     })
+  },
+
+  toggleFile (context, theFile) {
+    let match = context.state.files.find(function (file) {
+      return file.name === theFile.name
+    })
+
+    let onOff = typeof match.on === 'undefined' || match.on === false
+    context.commit('toggleFileOnOff', {file: match, on: onOff})
   }
 }
 

@@ -1,5 +1,5 @@
 .alert-message {
-  @apply .fixed .pin-b .z-20 .rounded .rounded-b-none .bg-lighter .shadow-lg .p-4;
+  @apply .fixed .pin-b .pin-r .z-20 .rounded .rounded-b-none .bg-lighter .text-white .shadow-lg .p-4 .mr-8 .w-2/5;
 
   h5 {
     @apply .flex .justify-between .mb-4
@@ -29,7 +29,7 @@
     }
 
     h5, h6, p, li {
-      @apply .text-lighter
+      @apply .text-white
     }
   }
 }

@@ -6,6 +6,15 @@
     <div v-else class="min-h-screen">
       <div class="bg-lighter text-light py-4 px-8 flex justify-between">
         Top Navigation
+
+        <vue-dropzone
+ref="myVueDropzone"
+id="dropzone"
+@vdropzone-success="uploadSuccess()"
+@vdropzone-error="uploadError"
+class="pl-4"
+includeStyling: false
+:options="dropzoneOptions" />
       </div>
 
       <div class="flex items-stretch min-h-screen">
@@ -62,10 +71,12 @@
 </template>
 
 <script>
+  import eventbus from './../event-bus/event-bus'
   import { mapGetters, mapActions } from 'vuex'
 
   import Loadbar from './Loadbar'
   import Breadcrumbs from './Breadcrumbs'
+  import vue2Dropzone from 'vue2-dropzone'
 
   export default {
     data () {
@@ -84,7 +95,6 @@
         'toggleFile'
       ]),
       changeDirectories (directory) {
-        console.log('here')
         let self = this
         self.loaded = false
 
@@ -98,6 +108,13 @@
       },
       isActive (file) {
         return file.fields.length > 0 || file.global_fields.length > 0
+      },
+      uploadSuccess () {
+        eventbus.$emit('showMessage', {title: 'Upload Complete', message: 'Your upload has been successfully completed'})
+        this.changeDirectories(this.currentDirectory)
+      },
+      uploadError (file, message) {
+        eventbus.$emit('showError', {title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.'})
       }
     },
     computed: {
@@ -105,11 +122,23 @@
         'files',
         'directories',
         'currentDirectory'
-      ])
+      ]),
+      dropzoneOptions () {
+        return {
+          url: '/admin/media-manager/upload?directory=' + this.currentDirectory,
+          dictDefaultMessage: "<i class='ion-android-attach'></i>",
+          method: 'post',
+          createImageThumbnails: false,
+          headers: {
+            'X-XSRF-TOKEN': window.csrfToken
+          }
+        }
+      }
     },
     components: {
       'loadbar': Loadbar,
-      'breadcrumbs': Breadcrumbs
+      'breadcrumbs': Breadcrumbs,
+      vueDropzone: vue2Dropzone
     }
   }
 </script>

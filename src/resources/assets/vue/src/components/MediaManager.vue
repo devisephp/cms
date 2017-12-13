@@ -28,7 +28,9 @@ includeStyling: false
           </ul>
         </div>
         <div class=" w-3/4 mx-8">
+
           <breadcrumbs :currentDirectory="currentDirectory" @chooseDirectory="changeDirectories"></breadcrumbs>
+
           <ul class="list-reset">
             <li v-for="file in files" class="bg-light text-darker card p-4 mt-2 w-full cursor-pointer" @click="toggleFile(file)">
               <div v-if="!file.on" class="flex justify-between items-center">
@@ -49,6 +51,9 @@ includeStyling: false
 
                   <h6 class="mt-4">Size</h6>
                   <p class="text-darker">{{ file.size }}</p>
+
+                  <h6 class="mt-4">Select</h6>
+                  <p><button @click="selectFile(file)">Select</button></p>
 
                   <template v-if="isActive(file)">
                     <h6 class="my-2">Appears On</h6>
@@ -99,11 +104,11 @@ includeStyling: false
         self.loaded = false
 
         self.setCurrentDirectory(directory).then(function () {
-          // self.getCurrentFiles().then(function () {
-          self.getCurrentDirectories().then(function () {
-            self.loaded = true
+          self.getCurrentFiles().then(function () {
+            self.getCurrentDirectories().then(function () {
+              self.loaded = true
+            })
           })
-          // })
         })
       },
       isActive (file) {
@@ -115,6 +120,9 @@ includeStyling: false
       },
       uploadError (file, message) {
         eventbus.$emit('showError', {title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.'})
+      },
+      selectFile (file) {
+        
       }
     },
     computed: {

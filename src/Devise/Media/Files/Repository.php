@@ -324,12 +324,16 @@ class Repository
 
     $paths = $this->MediaPaths->fileVersionInfo($relativePath);
 
-    if (!file_exists($paths->thumbnail) && !$this->attemptThumbGeneration($pathName, $paths->thumbnail))
-    {
-      return $this->getDefaultThumb($pathName);
-    }
+    if ($paths) {
+      if (!file_exists($paths->thumbnail) && !$this->attemptThumbGeneration($pathName, $paths->thumbnail))
+      {
+        return $this->getDefaultThumb($pathName);
+      }
 
-    return $paths->thumbnail_url;
+      return $paths->thumbnail_url;
+    } else {
+      return null;
+    }
   }
 
   /**

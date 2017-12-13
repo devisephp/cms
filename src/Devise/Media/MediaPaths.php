@@ -131,7 +131,7 @@ class MediaPaths
 		//
 		if (!is_file($path))
 		{
-			throw new InvalidFileException("This is not a valid file: " . $path);
+			return false;
 		}
 
 		$obj = new stdClass;

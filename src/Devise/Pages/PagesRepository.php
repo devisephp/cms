@@ -682,7 +682,11 @@ class PagesRepository
 
       if ($page !== null) {
         $page->translations = [];
-        $translations = $this->availableLanguagesForPage($page->id);
+
+        $route = \Route::getCurrentRoute();
+        $params = ($route) ? $route->parameters() : [];
+
+        $translations = $this->availableLanguagesForPage($page->id, $params);
 
         foreach ($translations as $key => $value) {
           if ($page->language_id === $value['id']) {

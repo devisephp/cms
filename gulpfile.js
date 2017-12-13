@@ -56,7 +56,10 @@ gulp.task('default', function()
 ////////////////////////////////////////////////////////////////
 gulp.task('build:js', ['build:js:devise'], function()
 {
-  gulp.src(['public/js/devise.vendor.js', 'public/js/devise.app.js'])
+  gulp.src([
+    'public/js/devise.vendor.js',
+    'public/js/devise.app.js',
+  ])
     .pipe(concat('devise.js'))
     .pipe(gulp.dest('public/js'));
 
@@ -104,8 +107,12 @@ gulp.task('build:js:vendor', function()
 // Gulp watch
 ////////////////////////////////////////////////////////////////
 elixir(function(mix) {
-    mix.sass(['main.scss'], 'public/css/main.css', 'public/scss');
-    mix.sass(['editor-nodes.scss'], 'public/css/editor-nodes.css', 'public/scss');
+    // mix.sass(['./public/scss/main.scss'], 'public/css/main.css', 'public/scss');
+    // mix.sass(['editor-nodes.scss'], 'public/css/editor-nodes.css', 'public/scss');
+    mix.copy('src/resources/assets/vue/dist/static/css/app.css', 'public/css/devise-vue.css')
+    mix.copy('src/resources/assets/vue/dist/static/js/app.js', 'public/js/devise-vue.js')
+    mix.copy('src/resources/assets/vue/dist/static/js/manifest.js', 'public/js/devise-vue-manifest.js')
+    mix.copy('src/resources/assets/vue/dist/static/js/vendor.js', 'public/js/devise-vue-vendor.js')
 });
 
 

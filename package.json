@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.8.11",
+    "gulp": "*",
     "gulp-concat-util": "^0.5.1",
     "gulp-count": "^0.1.0",
     "gulp-jasmine": "^1.0.1",

@@ -215,7 +215,7 @@
           eventbus.$emit('showMessage', {title: 'Directory Deleted', message: 'The directory was successfully deleted from the server.'})
           self.changeDirectories('')
         })
-      },
+      }
     },
     computed: {
       ...mapGetters([

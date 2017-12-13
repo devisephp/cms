@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex items-center pt-8">
+  <div class="w-full flex items-center">
     <template v-if="currentDirectory !== ''">
       <span class="cursor-pointer pr-2" @click="goToHome()">Home</span>
       <template v-for="(dir, key) in directoriesObj">

@@ -36,7 +36,6 @@ const actions = {
   getCurrentDirectories (context, directory) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'media-manager/directories/' + context.state.currentDirectory).then(function (response) {
-        console.log('directories', response)
         context.commit('setDirectories', response.data)
         resolve(response)
       })
@@ -52,6 +51,55 @@ const actions = {
 
     let onOff = typeof match.on === 'undefined' || match.on === false
     context.commit('toggleFileOnOff', {file: match, on: onOff})
+  },
+
+  openFile (context, theFile) {
+    let match = context.state.files.find(function (file) {
+      return file.name === theFile.name
+    })
+
+    context.commit('toggleFileOnOff', {file: match, on: true})
+  },
+
+  closeFile (context, theFile) {
+    let match = context.state.files.find(function (file) {
+      return file.name === theFile.name
+    })
+
+    context.commit('toggleFileOnOff', {file: match, on: false})
+  },
+
+  deleteFile (context, file) {
+    return new Promise((resolve, reject) => {
+      window.axios.delete('/admin/media-manager/remove', {params: {id: file.id}})
+      .then(function (response) {
+        resolve(response)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
+  },
+
+  createDirectory (context, payload) {
+    return new Promise((resolve, reject) => {
+      window.axios.post('/admin/media-manager/category/store', {category: payload.directory, name: payload.name})
+      .then(function (response) {
+        resolve(response)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
+  },
+
+  deleteDirectory (context, directory) {
+    return new Promise((resolve, reject) => {
+      window.axios.get('/admin/media-manager/category/destroy', {params: {category: directory}})
+      .then(function (response) {
+        resolve(response)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
   }
 }
 

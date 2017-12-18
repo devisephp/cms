@@ -14,7 +14,8 @@ const state = {
   },
   currentDirectory: '.',
   files: [],
-  directories: []
+  directories: [],
+  meta: []
 }
 
 // A Vuex instance is created by combining the state, the actions,

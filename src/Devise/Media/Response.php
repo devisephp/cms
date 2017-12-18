@@ -20,7 +20,6 @@ class Response
    */
   public function __construct(Repository $Repository)
   {
-
     $this->Repository = $Repository;
   }
 

@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="scss" scoped>
   @import "sass/app.scss";
 </style>
 
@@ -17,6 +17,13 @@ import Messages from './components/Messages'
 export default {
   store: store,
   name: 'app',
+  mounted () {
+    if (window.mode === 'media') {
+      this.$router.push({name: 'MediaManager'})
+    } else {
+      this.$router.push({name: 'Meta'})
+    }
+  },
   components: {
     Messages
   }

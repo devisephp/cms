@@ -14,3 +14,7 @@ export const directories = state => {
 export const currentDirectory = state => {
   return state.currentDirectory
 }
+
+export const meta = state => {
+  return state.meta
+}

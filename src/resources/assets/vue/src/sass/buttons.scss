@@ -1,7 +1,11 @@
 #dvs-admin {
   a.btn,
   .btn {
-    @apply bg-action text-white text-sm uppercase py-4 px-6 rounded font-bold no-underline flex items-center;
+    @apply text-white text-sm uppercase py-4 px-6 rounded font-bold no-underline flex items-center text-center;
+
+    &.btn-action {
+       @apply bg-action;
+    }
 
     transition: 0.5s all ease;
 

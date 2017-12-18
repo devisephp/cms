@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "./../sass/app.scss";
+</style>
+
 <template>
   <div class="text-center w-full flex flex-col items-center">
     <h6 class="mb-2 text-action">Just a moment</h6>

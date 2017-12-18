@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "./../sass/app.scss";
+</style>
+
 <template>
   <div>
     <transition name="fade">
@@ -99,8 +103,8 @@ export default {
       } else {
         self.appendError({
           code: error.status,
-          title: 'Unable to reach server',
-          message: 'Please check your internet connection'
+          title: 'Error',
+          message: 'There was an issue with your request or please check your Internet connection'
         })
       }
     },

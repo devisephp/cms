@@ -2,16 +2,9 @@ import eventbus from './../event-bus/event-bus'
 
 const actions = {
 
-  // getAttributes (context) {
-  //   return new Promise((resolve, reject) => {
-  //     window.axios.get(context.state.api.baseUrl + 'attributes').then(function (response) {
-  //       context.commit('updateAttributes', response.data.data)
-  //       resolve(response)
-  //     })
-  //   }).catch(function (error) {
-  //     eventbus.$emit('showError', error)
-  //   })
-  // },
+  /*
+  * Media Manager
+  */
 
   setCurrentDirectory (context, directory) {
     return new Promise((resolve, reject) => {
@@ -100,7 +93,74 @@ const actions = {
     }).catch(function (error) {
       eventbus.$emit('showError', error)
     })
+  },
+
+  /*
+  * Meta Manager
+  */
+
+  getGlobalMeta (context) {
+    return new Promise((resolve, reject) => {
+      window.axios.get(context.state.api.baseUrl + 'meta/global').then(function (response) {
+        context.commit('setMeta', response.data)
+        resolve(response)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
+  },
+
+  getPageMeta (context, pageId) {
+    return new Promise((resolve, reject) => {
+      window.axios.get(context.state.api.baseUrl + 'meta/page/' + pageId).then(function (response) {
+        context.commit('setMeta', response.data)
+        resolve(response)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
+  },
+
+  createMeta (context, payload) {
+    return new Promise((resolve, reject) => {
+      window.axios.post('/admin/api/meta/store', {meta: payload.meta, pageId: payload.pageId})
+      .then(function (response) {
+        context.commit('appendMeta', response.data)
+        resolve(response)
+      }).catch(function (error) {
+        eventbus.$emit('showError', error.response.data)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
+  },
+
+  updateMeta (context, payload) {
+    return new Promise((resolve, reject) => {
+      window.axios.put('/admin/api/meta/update/' + payload.meta.id, {meta: payload.meta, pageId: payload.pageId})
+      .then(function (response) {
+        context.commit('updateMeta', response.data)
+        resolve(response)
+      }).catch(function (error) {
+        eventbus.$emit('showError', error.response.data)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
+  },
+
+  deleteMeta (context, meta) {
+    return new Promise((resolve, reject) => {
+      window.axios.delete('/admin/api/meta/delete/' + meta.id)
+      .then(function (response) {
+        context.commit('deleteMeta', meta)
+        resolve(response)
+      })
+    }).catch(function (error) {
+      eventbus.$emit('showError', error)
+    })
   }
+
 }
 
 export default actions

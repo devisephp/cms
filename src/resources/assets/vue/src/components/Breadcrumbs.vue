@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "./../sass/app.scss";
+</style>
+
 <template>
   <div class="w-full flex items-center">
     <template v-if="currentDirectory !== ''">

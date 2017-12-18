@@ -7,9 +7,9 @@
 @section('main')
   <div id="app"></div>
   <script>
-    window.input = {{ json_encode($input) }}
+    window.mode = "media"
   </script>
-	<!-- <script src="http://localhost:8080/app.js"></script> -->
+	{{-- <script src="https://localhost:8080/app.js"></script> --}}
 
   <script type=text/javascript src="/packages/devisephp/cms/js/devise-vue-manifest.js"></script>
   <script type=text/javascript src="/packages/devisephp/cms/js/devise-vue-vendor.js"></script>

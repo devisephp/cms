@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "./../sass/app.scss";
+</style>
+
 <template>
   <div class="text-ptext min-h-screen">
     <div v-if="!loaded" class="absolute absolute-center w-1/2">

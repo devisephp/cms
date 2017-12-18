@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "./../sass/app.scss";
+</style>
+
 <template>
     <div>
       <form class="dropzone compact" :id="id">

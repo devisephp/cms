@@ -17,8 +17,8 @@ class CreateMediaMangerMeta extends Migration
       $table->string('directory');
       $table->string('name');
       $table->integer('size');
-      $table->json('fields');
-      $table->json('global_fields');
+      $table->text('fields');
+      $table->text('global_fields');
       $table->timestamps();
     });
   }

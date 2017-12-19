@@ -123,6 +123,7 @@ const actions = {
 
   createMeta (context, payload) {
     return new Promise((resolve, reject) => {
+      console.log(payload)
       window.axios.post('/admin/api/meta/store', {meta: payload.meta, pageId: payload.pageId})
       .then(function (response) {
         context.commit('appendMeta', response.data)

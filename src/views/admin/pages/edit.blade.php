@@ -40,10 +40,10 @@
       window.pageId = {{ $page->id }}
     </script>
 
-    {{-- <script src="https://localhost:8080/app.js"></script> --}}
-    <script type=text/javascript src="/packages/devisephp/cms/js/devise-vue-manifest.js"></script>
+    <script src="https://localhost:8080/app.js"></script>
+    {{-- <script type=text/javascript src="/packages/devisephp/cms/js/devise-vue-manifest.js"></script>
     <script type=text/javascript src="/packages/devisephp/cms/js/devise-vue-vendor.js"></script>
-    <script type=text/javascript src="/packages/devisephp/cms/js/devise-vue.js"></script>
+    <script type=text/javascript src="/packages/devisephp/cms/js/devise-vue.js"></script> --}}
 
     <script data-main="<?= URL::asset('/packages/devisephp/cms/js/config') ?>" src="<?= URL::asset('/packages/devisephp/cms/js/require.js') ?>"></script>
     <script>devise.require(['app/admin/pages'])</script>

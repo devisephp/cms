@@ -87,7 +87,7 @@
       requestCreate () {
         let self = this
 
-        this.createMeta({meta: this.newMeta, pageId: this.pageId}).then(function () {
+        this.createMeta({meta: this.newMeta, pageId: window.pageId}).then(function () {
           self.newMeta.property = ''
           self.newMeta.value = ''
           self.newMeta.key = ''

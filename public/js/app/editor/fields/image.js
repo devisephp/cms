@@ -10,7 +10,7 @@ devise.define(['require', 'jquery', 'dvsSidebarView', 'ckeditorJquery'], functio
 
         parentForm.find(selector).val(image);
 
-        if (settings.crop)
+        if (settings && settings.crop)
         {
             parentForm.find('input[name="_crop_' + target + '"]').val(1);
             parentForm.find('input[name="' + target + '_width"]').val(settings.crop.width);

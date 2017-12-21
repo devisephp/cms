@@ -62,13 +62,17 @@ class MediaFieldObserver
   private function getNameAndPath($model)
   {
     $val = json_decode($model->json_value);
-    $imagePath = $val->image;
-    $parts = explode('/', $imagePath);
-    $fileName = array_pop($parts);
-    array_shift($parts);
-    $path = implode("/", $parts);
 
-    return [$path, $fileName];
+    if (isset($val->image)) {
+      $imagePath = $val->image;
+      $parts = explode('/', $imagePath);
+      $fileName = array_pop($parts);
+      array_shift($parts);
+      $path = implode("/", $parts);
+
+      return [$path, $fileName];
+    }
+    return ['', ''];
   }
 
   private function isGlobal($model)

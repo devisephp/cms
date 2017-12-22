@@ -172,7 +172,7 @@
         return (match && match.length > 1) ? match[1] : null
       },
       selectFile (file) {
-        var target = null
+        var target = window.input.target
         var url = file.url
 
         opener.document.onMediaManagerSelect(url, target, window.input)

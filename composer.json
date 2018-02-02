@@ -10,43 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=5.6.4",
+        "php": ">=7.0.0",
         "laravel/framework": "5.5.*",
-        "masterminds/html5": "1.*",
-        "zencoder/zencoder-php": "*",
-        "ext-imagick": "*",
-        "symfony/console": "*",
-        "laravelcollective/html": "*",
-        "doctrine/dbal": "2.3",
-        "league/commonmark": "0.7"
-    },
-    "require-dev": {
-        "mockery/mockery": "0.9.3",
-        "phpunit/phpunit": "*",
-        "mikey179/vfsStream": "*",
-        "codeception/codeception": "*",
-        "symfony/dom-crawler": "3.0",
-        "symfony/css-selector": "3.0"
-    },
-    "autoload": {
-        "classmap": [
-            "src/models",
-            "src/seeds",
-            "src/migrations"
-        ],
-        "psr-0": {
-            "Devise\\": "src/"
-        }
-    },
-    "scripts": {
-        "docs" : "vendor/bin/sami.php update sami.php",
-        "acceptance": "tests/bootstrap/acceptance.sh",
-        "post-install-cmd": [
-            "PhantomInstaller\\Installer::installPhantomJS"
-        ],
-        "post-update-cmd": [
-            "PhantomInstaller\\Installer::installPhantomJS"
-        ]
     },
     "minimum-stability": "stable"
 }

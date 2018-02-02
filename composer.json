@@ -21,5 +21,12 @@
             "Devise\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Devise\\Providers\\DeviseServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "stable"
 }

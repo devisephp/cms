@@ -8,7 +8,7 @@ class DeviseLanguagesSeeder extends Seeder
 
   public function run()
   {
-    DB::table('users')->insert([
+    DB::table('dvs_languages')->insert([
       array(
         'id'                  => '1',
         'code'                => 'aa',

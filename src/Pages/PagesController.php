@@ -100,46 +100,12 @@ class PagesController extends Controller
    * Gets the response for this page
    *
    * @param \DvsPage $page
+   * @return mixed
    * @throws PagesException
    */
   protected function getResponse($page)
   {
-    if (strtolower($page->response_type) == 'view')
-    {
-      return $this->getView($page);
-    }
-
-    if (strtolower($page->response_type) == 'function')
-    {
-      return $this->getFunction($page);
-    }
-
-    throw new PagesException("Unknown response type [" . $page->response_type . "]");
-  }
-
-  /**
-   * Get the results from a function as the response type
-   *
-   * @param \DvsPage $page
-   * @return array
-   * @throws Viewvars\DeviseRouteConfigurationException
-   */
-  protected function getFunction($page)
-  {
-    $config = ($page->response_params != null && $page->response_params != '')
-      ? [$page->response_path => explode(',', $page->response_params)]
-      : $page->response_path;
-
-    if (isset($config[$page->response_path]))
-    {
-      // wrapping params in curly braces
-      foreach ($config[$page->response_path] as &$param)
-      {
-        $param = '{' . $param . '}';
-      }
-    }
-
-//    return $this->DataBuilder->getValue($config);
+    return $this->getView($page);
   }
 
   /**
@@ -150,11 +116,11 @@ class PagesController extends Controller
    */
   protected function getView($page)
   {
-    $pageData = $this->DataBuilder->getData();
+//    $pageData = $this->DataBuilder->getData();
 
     // allow a page version to override the page view
     $view = $page->version->view ?: $page->view;
 
-    return $this->View->make($view, $pageData);
+    return $this->View->make($view, []);
   }
 }

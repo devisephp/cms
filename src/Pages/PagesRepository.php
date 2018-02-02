@@ -48,6 +48,7 @@ class PagesRepository
     $this->File = $Framework->File;
     $this->Request = $Framework->Request;
     $this->Cookie = $Framework->Cookie;
+    $this->Route = $Framework->Route;
 
     $this->now = new \DateTime;
   }
@@ -673,13 +674,11 @@ class PagesRepository
    */
   public function getTranslatedVersions($page)
   {
-    $language = $this->LanguageDetector->current();
-
     if ($page !== null)
     {
       $page->translations = [];
 
-      $route = \Route::getCurrentRoute();
+      $route = $this->Route->getCurrentRoute();
       $params = ($route) ? $route->parameters() : [];
 
       $translations = $this->availableLanguagesForPage($page->id, $params);

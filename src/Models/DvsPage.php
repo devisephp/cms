@@ -59,15 +59,15 @@ class DvsPage extends Model
     return $this->belongsTo(DvsSite::class, 'language_id');
   }
 
-  public function getAttribute($key)
-  {
-    if ($this->hasAttribute($key))
-    {
-      return parent::getAttribute($key);
-    }
-
-    return in_array($key, ['softDelete']) ? null : new FieldValue('{}');
-  }
+//  public function getAttribute($key)
+//  {
+//    if ($this->hasAttribute($key))
+//    {
+//      return parent::getAttribute($key);
+//    }
+//
+//    return in_array($key, ['softDelete']) ? null : new FieldValue('{}');
+//  }
 
   public function getResponseClassAttribute()
   {

@@ -19,8 +19,7 @@ class CreateDvsLanguages extends Migration
       $table->string('human_name', 255)->nullable();
       $table->string('regional_human_name')->nullable();
       $table->boolean('active')->default('0');
-      $table->timestamp('created_at')->default('0000-00-00 00:00:00');
-      $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+      $table->timestamps();
     });
   }
 

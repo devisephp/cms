@@ -15,7 +15,7 @@
     },
     "autoload": {
         "classmap": [
-            "migrations"
+            "seeds"
         ],
         "psr-0": {
             "Devise\\": "src/"

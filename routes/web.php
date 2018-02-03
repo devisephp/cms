@@ -1,3 +1,10 @@
 <?php
 
-App::make('Devise\Pages\RoutesGenerator')->loadRoutes();
+
+try
+{
+  App::make('Devise\Pages\RoutesGenerator')->loadRoutes();
+} catch (PDOException $e)
+{
+
+}

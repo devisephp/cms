@@ -17,6 +17,7 @@ class CreateDvsPageVersions extends Migration
       $table->increments('id');
       $table->integer('page_id')->unsigned();
       $table->integer('created_by_user_id')->unsigned();
+      $table->integer('template_id')->unsigned();
       $table->string('name', 255);
       $table->string('view')->nullable();
       $table->timestamp('starts_at')->nullable();

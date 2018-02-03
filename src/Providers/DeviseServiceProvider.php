@@ -2,6 +2,7 @@
 
 namespace Devise\Providers;
 
+use Devise\Pages\PageData;
 use Illuminate\Support\ServiceProvider;
 
 class DeviseServiceProvider extends ServiceProvider
@@ -15,6 +16,14 @@ class DeviseServiceProvider extends ServiceProvider
   {
     $this->loadMigrationsFrom(__DIR__ . '/../../migrations');
 
-    $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+    $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+  }
+
+  public function register()
+  {
+    if (!class_exists('Devise'))
+    {
+      class_alias(PageData::class, 'Devise');
+    }
   }
 }

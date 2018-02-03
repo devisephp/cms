@@ -1,6 +1,7 @@
 <?php namespace Devise\Pages;
 
 use Devise\Support\Framework;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 /**
@@ -14,12 +15,15 @@ use Illuminate\Routing\Controller;
  */
 class PagesController extends Controller
 {
-  /**
-   * Repository for retrieving pages
-   *
-   * @var PagesRepository
-   */
   protected $PagesRepository;
+
+  private $Redirect;
+
+  private $View;
+
+  private $Request;
+
+  private $Route;
 
   /**
    * Creates a new DvsPagesController instance.
@@ -42,7 +46,7 @@ class PagesController extends Controller
    *
    * @return Response
    */
-  public function show()
+  public function show(Request $request)
   {
     // @todo rename var and check user permissions
     $editing = true;
@@ -67,7 +71,7 @@ class PagesController extends Controller
    * view's vars set on the response
    *
    * @param \DvsPage $page
-   * @throws PagesException
+   * @return mixed
    */
   public function retrieveResponse($page)
   {
@@ -85,7 +89,7 @@ class PagesController extends Controller
   /**
    * This retrieves the a redirect for the user's language
    *
-   * @param \DvsPage $localized
+   * @param DvsPage $localized
    * @throws PagesException
    */
   public function retrieveLocalRedirect($localized)
@@ -116,11 +120,13 @@ class PagesController extends Controller
    */
   protected function getView($page)
   {
+    $page->version->load('template.slices');
+
+    $data = PageData::build($page);
 //    $pageData = $this->DataBuilder->getData();
 
     // allow a page version to override the page view
-    $view = $page->version->view ?: $page->view;
 
-    return $this->View->make($view, []);
+    return $this->View->make($page->version->view, ['page' => $data->toArray(request())]);
   }
 }

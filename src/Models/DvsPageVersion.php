@@ -27,7 +27,6 @@ class DvsPageVersion extends Model
   }
 
   /**
-   * Page versions belong to a page
    *
    */
   public function page()
@@ -36,7 +35,14 @@ class DvsPageVersion extends Model
   }
 
   /**
-   * Page version has many fields
+   *
+   */
+  public function template()
+  {
+    return $this->belongsTo(DvsTemplate::class, 'template_id');
+  }
+
+  /**
    *
    */
   public function fields()
@@ -45,7 +51,7 @@ class DvsPageVersion extends Model
   }
 
   /**
-   * Page version has many collection fields
+   *
    */
   public function collectionFields()
   {
@@ -53,7 +59,7 @@ class DvsPageVersion extends Model
   }
 
   /**
-   * Page version has many collection instances
+   *
    */
   public function collectionInstances()
   {

@@ -14,12 +14,22 @@ class PageDataResource extends Resource
    */
   public function toArray($request)
   {
-    return [
-      'id'         => $this->id,
-      'title'       => $this->title,
-
-      // Relationships
-      'version' => new PageVersionResource($this->version)
+    $data = [
+      'meta'   => [
+        'id'          => $this->id,
+        'title'       => $this->meta_title,
+        'description' => $this->meta_description,
+        'canonical'   => $this->canonical,
+      ],
+      'slices' => []
     ];
+
+    // Relationships
+    if ($this->version->template)
+    {
+      $data['slices'] = SliceInstanceResource::collection($this->version->template->slices);
+    }
+
+    return $data;
   }
 }

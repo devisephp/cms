@@ -1,24 +1,18 @@
 <?php namespace Devise\Pages;
 
+use Devise\Devise;
 use Devise\Resources\PageDataResource;
 use Devise\Models\DvsPage;
 use Devise\Models\DvsSlice;
+
 use Illuminate\Support\Facades\View;
 
 class PageData
 {
-  private static $components = [];
 
   public static function build(DvsPage $page)
   {
     self::compileVueData($page->version->template);
-
-    return new PageDataResource($page);
-  }
-
-  public static function getTemplates()
-  {
-    return implode(',', self::$components);
   }
 
   private static function compileVueData($slice)
@@ -30,7 +24,7 @@ class PageData
 
     foreach ($slice->slices as $child)
     {
-      self::compileVueData($child);
+      self::compileVueData($child->slice);
     }
   }
 
@@ -59,9 +53,9 @@ class PageData
     array_shift($parts);
     $partial = implode('{', $parts);
 
-    $code = $slice->name . ": {\ntemplate:\"" . $template . "\"," . $partial;
+    $code = 'Devise' . $slice->name . ": {\ntemplate:\"" . $template . "\"," . $partial;
 
-    self::$components[] = $code;
+    Devise::addComponent($code);
   }
 
   private static function clean($html)
@@ -69,6 +63,6 @@ class PageData
     $html = str_replace(PHP_EOL, '', $html);
     $html = preg_replace('/(\>)\s*(\<)/m', '$1$2', $html);
 
-    return addslashes($html);
+    return htmlspecialchars($html, ENT_QUOTES, 'UTF-8', true);
   }
 }

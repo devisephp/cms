@@ -48,6 +48,7 @@ class PagesController extends Controller
    */
   public function show(Request $request)
   {
+
     // @todo rename var and check user permissions
     $editing = true;
 
@@ -120,13 +121,13 @@ class PagesController extends Controller
    */
   protected function getView($page)
   {
-    $page->version->load('template.slices');
+    $page->version->load('template.slices.fields', 'template.slices.slice');
 
-    $data = PageData::build($page);
+    PageData::build($page);
 //    $pageData = $this->DataBuilder->getData();
 
     // allow a page version to override the page view
 
-    return $this->View->make($page->version->view, ['page' => $data->toArray(request())]);
+    return $this->View->make($page->version->view, ['page' => $page]);
   }
 }

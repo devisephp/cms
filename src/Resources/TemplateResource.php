@@ -19,7 +19,7 @@ class TemplateResource extends Resource
       'name'     => $this->name,
 
       // Relationships
-      'slices' => SliceResource::collection($this->whenLoaded('slices'))
+      'slices' => SliceInstanceResource::collection($this->whenLoaded('slices'))
     ];
   }
 }

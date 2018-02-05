@@ -27,6 +27,6 @@ class DvsTemplate extends Model
 
   public function slices()
   {
-    return $this->belongsToMany(DvsSlice::class, 'dvs_slice_instances', 'parent_slice_id', 'slice_id');
+    return $this->hasMany(DvsSliceInstance::class, 'parent_slice_id');
   }
 }

@@ -2,8 +2,10 @@
 
 namespace Devise\Providers;
 
-use Devise\Pages\PageData;
+use Devise\Devise;
+
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 
 class DeviseServiceProvider extends ServiceProvider
 {
@@ -12,8 +14,10 @@ class DeviseServiceProvider extends ServiceProvider
    *
    * @return void
    */
-  public function boot()
+  public function boot(BladeCompiler $blade)
   {
+    $blade->doubleEncode();
+
     $this->loadMigrationsFrom(__DIR__ . '/../../migrations');
 
     $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
@@ -23,7 +27,7 @@ class DeviseServiceProvider extends ServiceProvider
   {
     if (!class_exists('Devise'))
     {
-      class_alias(PageData::class, 'Devise');
+      class_alias(Devise::class, 'Devise');
     }
   }
 }

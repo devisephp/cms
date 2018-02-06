@@ -16,7 +16,7 @@ class SliceInstanceResource extends Resource
   {
     $data = [
       'id'   => $this->slice->id,
-      'name' => 'Devise' . $this->slice->name,
+      'name' => $this->slice->component_name,
     ];
 
     // Relationships

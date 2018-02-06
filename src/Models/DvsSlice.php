@@ -29,4 +29,9 @@ class DvsSlice extends Model
   {
     return $this->hasMany(DvsSliceInstance::class, 'parent_slice_id');
   }
+
+  public function getComponentNameAttribute()
+  {
+    return 'Devise' . studly_case(preg_replace('/[^A-Za-z0-9\-]/', '', $this->name));
+  }
 }

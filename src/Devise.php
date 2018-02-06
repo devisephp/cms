@@ -10,12 +10,15 @@ class Devise
 
   public static function components()
   {
-    return "window.deviseComponents = {\n" . implode(',', self::$components) . "};\n";
+    return "window.deviseComponents = {" . implode(',', self::$components) . "};\n";
   }
 
-  public static function addComponent($object)
+  public static function addComponent($name, $object)
   {
-    self::$components[] = $object;
+    if (!isset(self::$components[$name]))
+    {
+      self::$components[$name] = self::compress_script($object);
+    }
   }
 
   public static function pageData($page)
@@ -23,5 +26,49 @@ class Devise
     $resource = new PageDataResource($page);
 
     return "window.page = " . json_encode($resource->toArray(request())) . ";\n";
+  }
+
+  private static function compress_script($buffer)
+  {
+    $replace = array(
+      '#\'([^\n\']*?)/\*([^\n\']*)\'#' => "'\1/'+\'\'+'*\2'",
+      '#\"([^\n\"]*?)/\*([^\n\"]*)\"#' => '"\1/"+\'\'+"*\2"',
+      '#/\*.*?\*/#s'                   => "",
+      '#[\r\n]+#'                      => "\n",
+      '#\n([ \t]*//.*?\n)*#s'          => "\n",
+      '#([^\\])//([^\'"\n]*)\n#s'      => "\\1\n",
+      '#\n\s+#'                        => "\n",
+      '#\s+\n#'                        => "\n",
+      '#(//[^\n]*\n)#s'                => "\\1\n",
+      '#/([\'"])\+\'\'\+([\'"])\*#'    => "/*"
+    );
+
+    $search = array_keys($replace);
+    $script = preg_replace($search, $replace, $buffer);
+
+    $replace = array(
+      "&&\n" => "&&",
+      "||\n" => "||",
+      "(\n"  => "(",
+      ")\n"  => ")",
+      "[\n"  => "[",
+      "]\n"  => "]",
+      "+\n"  => "+",
+      ",\n"  => ",",
+      "?\n"  => "?",
+      ":\n"  => ":",
+      ";\n"  => ";",
+      "{\n"  => "{",
+      "\n]"  => "]",
+      "\n)"  => ")",
+      "\n}"  => "}",
+      "\n\n" => "\n"
+    );
+
+    $search = array_keys($replace);
+    $script = str_replace($search, $replace, $script);
+
+    return trim($script);
+
   }
 }

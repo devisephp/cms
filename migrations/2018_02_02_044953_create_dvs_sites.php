@@ -15,7 +15,8 @@ class CreateDvsSites extends Migration
   {
     Schema::create('dvs_sites', function (Blueprint $table) {
       $table->increments('id');
-      $table->string('domains');
+      $table->string('name');
+      $table->string('domain');
       $table->timestamps();
     });
   }

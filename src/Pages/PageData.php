@@ -43,7 +43,7 @@ class PageData
     $sections = $view->renderSections();
 
     $component = $sections['component'];
-    $template = self::clean($sections['template']);
+    $template = self::cleanHtml($sections['template']);
 
     preg_match("#<\s*?script\b[^>]*>(.*?)</script\b[^>]*>#s", $component, $match);
     $javascript = $match[1];
@@ -51,18 +51,29 @@ class PageData
     $parts = explode('{', $javascript);
 
     array_shift($parts);
-    $partial = implode('{', $parts);
+    $partial = trim(implode('{', $parts));
 
-    $code = 'Devise' . $slice->name . ": {\ntemplate:\"" . $template . "\"," . $partial;
+    $name = $slice->component_name;
 
-    Devise::addComponent($code);
+    $code = $name . ": {name:\"" . $name . "\",template:\"" . $template . "\"," . $partial;
+
+    Devise::addComponent($name, $code);
   }
 
-  private static function clean($html)
+  private static function cleanHtml($html)
   {
-    $html = str_replace(PHP_EOL, '', $html);
-    $html = preg_replace('/(\>)\s*(\<)/m', '$1$2', $html);
+    $html = preg_replace(
+      array(
+        '/ {2,}/',
+        '/<!--.*?-->|\t|(?:\r?\n[ \t]*)+/s'
+      ),
+      array(
+        ' ',
+        ''
+      ),
+      $html
+    );
 
-    return htmlspecialchars($html, ENT_QUOTES, 'UTF-8', true);
+    return trim(addslashes($html));
   }
 }

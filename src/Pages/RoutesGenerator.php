@@ -22,10 +22,14 @@ class RoutesGenerator
   /**
    * Loads the routes
    *
-   * @return [type]
    */
   public function loadRoutes()
   {
+    if ($this->App->runningInConsole())
+    {
+      return;
+    }
+
     $this->assertRouteCachingValid();
 
     // laravel (cache) is handling the routes
@@ -36,26 +40,53 @@ class RoutesGenerator
     // load the routes directly from the DB
     $routes = $this->findDvsPageRoutes();
 
-    foreach ($routes as $route)
+    $domains = $routes->groupBy('site_id');
+    $domainList = $this->DB->table('dvs_sites')->pluck('domains', 'id');
+
+    foreach ($domains as $siteId => $routes)
     {
-      $verb = $route->http_verb;
-      $uses = ['as' => $route->route_name, 'uses' => $route->uses];
-
-      if ($route->middleware)
+      if ($siteId > 0)
       {
-        $uses['middleware'] = explode('|', $route->middleware);
-      }
+        $overwrite = env('SITE_' . $siteId . '_DOMAIN');
+        $domain = (!$overwrite) ? $domainList[$siteId] : $overwrite;
+        $this->Route->group(['domain' => $domain], function () use ($routes) {
 
-      $this->Route->$verb($route->slug, $uses);
+          foreach ($routes as $route)
+          {
+            $verb = $route->http_verb;
+            $uses = ['as' => $route->route_name, 'uses' => $route->uses];
+
+            if ($route->middleware)
+            {
+              $uses['middleware'] = explode('|', $route->middleware);
+            }
+
+            $this->Route->$verb($route->slug, $uses);
+          }
+
+        });
+      } else
+      {
+
+        foreach ($routes as $route)
+        {
+          $verb = $route->http_verb;
+          $uses = ['as' => $route->route_name, 'uses' => $route->uses];
+
+          if ($route->middleware)
+          {
+            $uses['middleware'] = explode('|', $route->middleware);
+          }
+
+          $this->Route->$verb($route->slug, $uses);
+        }
+      }
     }
   }
 
   /**
    * Uses the routes array and spits out
    * a string of laravel routes
-   *
-   * @param  array $routes
-   * @param  string $filename
    * @return string
    */
   public function cacheRoutes()
@@ -90,7 +121,6 @@ class RoutesGenerator
    * Devis Pages won't work properly if
    * these routes are cached
    *
-   * @return [type]
    */
   protected function clearLaravelCache()
   {
@@ -129,7 +159,7 @@ class RoutesGenerator
    */
   protected function findDvsPageRoutes()
   {
-    $pages = $this->DB->table('dvs_pages')->select('http_verb', 'slug', 'route_name', 'middleware')->get();
+    $pages = $this->DB->table('dvs_pages')->select('http_verb', 'slug', 'route_name', 'middleware', 'site_id')->get();
 
     foreach ($pages as $page)
     {

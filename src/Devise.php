@@ -2,11 +2,25 @@
 
 namespace Devise;
 
-use Devise\Resources\PageDataResource;
+use Devise\Models\DvsSite;
+use Devise\Resources\Vue\PageResource;
+use Devise\Resources\Vue\SiteResource;
 
+/**
+ * @todo refactor to a facade pattern
+ */
 class Devise
 {
   private static $components = [];
+
+  public static function sites()
+  {
+    $sites = DvsSite::with('languages')->get();
+
+    $resource = SiteResource::collection($sites);
+
+    return "window.sites = " . json_encode($resource->toArray(request())) . ";\n";
+  }
 
   public static function components()
   {
@@ -23,7 +37,7 @@ class Devise
 
   public static function pageData($page)
   {
-    $resource = new PageDataResource($page);
+    $resource = new PageResource($page);
 
     return "window.page = " . json_encode($resource->toArray(request())) . ";\n";
   }

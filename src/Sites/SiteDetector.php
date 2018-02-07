@@ -2,30 +2,45 @@
 
 namespace Devise\Sites;
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
+use Devise\Models\DvsSite;
 use Illuminate\Support\Facades\Request;
 
 class SiteDetector
 {
-  protected static $siteId;
+  protected static $site;
 
-  /**
-   * @return int
-   */
-  public static function getCurrentSiteId()
+  public function current()
   {
-    if (self::$siteId)
+    if (self::$site)
     {
-      return self::$siteId;
+      return self::$site;
     }
 
     $domain = preg_replace('#^https?://#', '', Request::root());
 
-    $site = DB::table('sites')
-      ->where('domains', 'LIKE', '%' . $domain . '%')
+    if (env('APP_ENV') !== 'production')
+    {
+      // let's try env params
+      $allSites = DvsSite::all();
+      foreach ($allSites as $site)
+      {
+        if ($domain === env('SITE_' . $site->id . '_DOMAIN'))
+        {
+          self::$site = $site;
+
+          return $site;
+        }
+      }
+    }
+
+    $site = DvsSite::where('domain', $domain)
       ->first();
 
-    return ($site) ? $site->id : 1;
+    if ($site)
+    {
+      self::$site = $site;
+
+      return $site;
+    }
   }
 }

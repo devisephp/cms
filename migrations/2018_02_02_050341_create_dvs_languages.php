@@ -18,7 +18,6 @@ class CreateDvsLanguages extends Migration
       $table->string('code', 2);
       $table->string('human_name', 255)->nullable();
       $table->string('regional_human_name')->nullable();
-      $table->boolean('active')->default('0');
       $table->timestamps();
     });
   }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Devise\Resources;
+namespace Devise\Resources\Vue;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class PageVersionResource extends Resource
+class LanguageResource extends Resource
 {
   /**
    * Transform the resource into an array.
@@ -15,11 +15,9 @@ class PageVersionResource extends Resource
   public function toArray($request)
   {
     return [
-      'id'         => $this->id,
-      'title'       => $this->title,
-
-      // Relationships
-      'template' => new TemplateResource($this->template)
+      'id'   => $this->id,
+      'name' => $this->name,
+      'path' => ($this->pivot->default) ? '/' : '/' . $this->code,
     ];
   }
 }

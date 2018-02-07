@@ -1,10 +1,10 @@
 <?php
 
-namespace Devise\Resources;
+namespace Devise\Resources\Vue;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class FieldResource extends Resource
+class TemplateResource extends Resource
 {
   /**
    * Transform the resource into an array.
@@ -14,10 +14,9 @@ class FieldResource extends Resource
    */
   public function toArray($request)
   {
-    $data = $this->value;
-
-    $data->id = $this->id;
-
-    return $data;
+    return [
+      'id'       => $this->id,
+      'name'     => $this->name
+    ];
   }
 }

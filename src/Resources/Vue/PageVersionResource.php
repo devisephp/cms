@@ -1,10 +1,10 @@
 <?php
 
-namespace Devise\Resources;
+namespace Devise\Resources\Vue;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class TemplateResource extends Resource
+class PageVersionResource extends Resource
 {
   /**
    * Transform the resource into an array.
@@ -15,11 +15,11 @@ class TemplateResource extends Resource
   public function toArray($request)
   {
     return [
-      'id'       => $this->id,
-      'name'     => $this->name,
+      'id'         => $this->id,
+      'title'       => $this->title,
 
       // Relationships
-      'slices' => SliceInstanceResource::collection($this->whenLoaded('slices'))
+      'template' => new TemplateResource($this->template)
     ];
   }
 }

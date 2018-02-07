@@ -40,15 +40,15 @@ class RoutesGenerator
     // load the routes directly from the DB
     $routes = $this->findDvsPageRoutes();
 
-    $domains = $routes->groupBy('site_id');
-    $domainList = $this->DB->table('dvs_sites')->pluck('domains', 'id');
+    $routesBySite = $routes->groupBy('site_id');
+    $domains = $this->DB->table('dvs_sites')->pluck('domain', 'id');
 
-    foreach ($domains as $siteId => $routes)
+    foreach ($routesBySite as $siteId => $routes)
     {
       if ($siteId > 0)
       {
         $overwrite = env('SITE_' . $siteId . '_DOMAIN');
-        $domain = (!$overwrite) ? $domainList[$siteId] : $overwrite;
+        $domain = (!$overwrite) ? $domains[$siteId] : $overwrite;
         $this->Route->group(['domain' => $domain], function () use ($routes) {
 
           foreach ($routes as $route)

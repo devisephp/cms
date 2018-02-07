@@ -1,6 +1,6 @@
 <?php
 
-namespace Devise\Resources;
+namespace Devise\Resources\Vue;
 
 use Illuminate\Http\Resources\Json\Resource;
 

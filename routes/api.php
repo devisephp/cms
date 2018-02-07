@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'api/devise'], function () {
+Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'], function () {
 
   /**
    * Media
@@ -23,5 +23,10 @@ Route::group(['prefix' => 'api/devise'], function () {
   Route::put('media/categories', 'MediaCategoriesController@rename');
 
   Route::delete('media/categories', 'MediaCategoriesController@remove');
+
+  /**
+   * Templates
+   */
+  Route::get('templates', 'TemplatesController@all');
 
 });

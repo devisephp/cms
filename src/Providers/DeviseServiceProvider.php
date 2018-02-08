@@ -27,6 +27,10 @@ class DeviseServiceProvider extends ServiceProvider
 
   public function register()
   {
+    $this->mergeConfigFrom(
+      __DIR__.'/../../config/devise.php', 'devise'
+    );
+
     if (!class_exists('Devise'))
     {
       class_alias(Devise::class, 'Devise');

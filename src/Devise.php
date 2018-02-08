@@ -4,6 +4,7 @@ namespace Devise;
 
 use Devise\Http\Resources\Vue\PageResource;
 use Devise\Http\Resources\Vue\SiteResource;
+use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsSite;
 
 /**
@@ -12,6 +13,21 @@ use Devise\Models\DvsSite;
 class Devise
 {
   private static $components = [];
+
+  public static function data($page)
+  {
+    if(!request()->input('template-editor', false)){
+      $js = self::sites();
+      $js .= self::pageData($page);
+    } else
+    {
+      $js = self::template($page->version->template);
+    }
+
+    $js .= self::components();
+
+    return $js;
+  }
 
   public static function sites()
   {
@@ -40,6 +56,13 @@ class Devise
     $resource = new PageResource($page);
 
     return "window.page = " . json_encode($resource->toArray(request())) . ";\n";
+  }
+
+  public static function template($template)
+  {
+    $resource = new TemplateResource($template);
+
+    return "window.template = " . json_encode($resource->toArray(request())) . ";\n";
   }
 
   private static function compress_script($buffer)

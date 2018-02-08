@@ -7,22 +7,18 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
    */
   Route::get('media/{folder_dot_path?}', 'MediaController@all');
 
-  Route::post('media', 'MediaController@upload')
-  ;
-  Route::put('media', 'MediaController@rename');
+  Route::post('media', 'MediaController@store');
 
-  Route::delete('media', 'MediaController@remove');
+  Route::delete('media/{media_id}', 'MediaController@remove');
 
   /**
    * Media Categories
    */
-  Route::get('media/categories/{folder_dot_path?}', 'MediaCategoriesController@all');
+  Route::get('media/directories/{folder_dot_path?}', 'MediaDirectoriesController@all');
 
-  Route::post('media/categories', 'MediaCategoriesController@store');
+  Route::post('media/directories', 'MediaDirectoriesController@store');
 
-  Route::put('media/categories', 'MediaCategoriesController@rename');
-
-  Route::delete('media/categories', 'MediaCategoriesController@remove');
+  Route::delete('media/directories', 'MediaDirectoriesController@remove');
 
   /**
    * Templates

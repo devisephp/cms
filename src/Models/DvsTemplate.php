@@ -22,7 +22,7 @@ class DvsTemplate extends Model
     $this->attributes['slots'] = json_encode($value);
   }
 
-  public function getSlotsObjectAttribute()
+  public function getSlotsArrayAttribute()
   {
     return json_decode($this->slots);
   }

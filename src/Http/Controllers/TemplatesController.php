@@ -1,6 +1,6 @@
 <?php
 
-namespace Devise\Http\Controllers;;
+namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
 use Devise\Http\Requests\Templates\SaveTemplate;
@@ -8,6 +8,7 @@ use Devise\Http\Requests\Templates\DeleteTemplate;
 use Devise\Http\Resources\Api\TemplateResource;
 use Devise\Models\DvsTemplate;
 
+use Devise\Support\Framework;
 use Illuminate\Routing\Controller;
 
 class TemplatesController extends Controller
@@ -22,9 +23,10 @@ class TemplatesController extends Controller
    * TemplatesController constructor.
    * @param DvsTemplate $DvsTemplate
    */
-  public function __construct(DvsTemplate $DvsTemplate)
+  public function __construct(DvsTemplate $DvsTemplate, Framework $Framework)
   {
     $this->DvsTemplate = $DvsTemplate;
+    $this->View = $Framework->View;
   }
 
   public function all(ApiRequest $request)
@@ -33,6 +35,14 @@ class TemplatesController extends Controller
       ->get();
 
     return TemplateResource::collection($all);
+  }
+
+  public function show(ApiRequest $request, $id)
+  {
+    $template = $this->DvsTemplate
+      ->find($id);
+
+    return $this->View->make($template->layout, ['page' => $template]);
   }
 
   public function store(SaveTemplate $request)

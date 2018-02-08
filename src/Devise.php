@@ -5,7 +5,9 @@ namespace Devise;
 use Devise\Http\Resources\Vue\PageResource;
 use Devise\Http\Resources\Vue\SiteResource;
 use Devise\Http\Resources\Vue\TemplateResource;
+use Devise\Models\DvsPage;
 use Devise\Models\DvsSite;
+use Devise\Models\DvsSlice;
 
 /**
  * @todo refactor to a facade pattern
@@ -16,12 +18,13 @@ class Devise
 
   public static function data($page)
   {
-    if(!request()->input('template-editor', false)){
+    if (get_class($page) == DvsPage::class)
+    {
       $js = self::sites();
       $js .= self::pageData($page);
     } else
     {
-      $js = self::template($page->version->template);
+      $js = self::template($page);
     }
 
     $js .= self::components();
@@ -43,11 +46,12 @@ class Devise
     return "window.deviseComponents = {" . implode(',', self::$components) . "};\n";
   }
 
-  public static function addComponent($name, $object)
+  public static function addComponent($slice)
   {
+    $name = $slice->component_name;
     if (!isset(self::$components[$name]))
     {
-      self::$components[$name] = self::compress_script($object);
+      self::$components[$name] = $slice->component_code;
     }
   }
 
@@ -62,50 +66,25 @@ class Devise
   {
     $resource = new TemplateResource($template);
 
+    self::getComponents($template->slots_array);
+
     return "window.template = " . json_encode($resource->toArray(request())) . ";\n";
   }
 
-  private static function compress_script($buffer)
+  private static function getComponents($slots)
   {
-    $replace = array(
-      '#\'([^\n\']*?)/\*([^\n\']*)\'#' => "'\1/'+\'\'+'*\2'",
-      '#\"([^\n\"]*?)/\*([^\n\"]*)\"#' => '"\1/"+\'\'+"*\2"',
-      '#/\*.*?\*/#s'                   => "",
-      '#[\r\n]+#'                      => "\n",
-      '#\n([ \t]*//.*?\n)*#s'          => "\n",
-      '#([^\\])//([^\'"\n]*)\n#s'      => "\\1\n",
-      '#\n\s+#'                        => "\n",
-      '#\s+\n#'                        => "\n",
-      '#(//[^\n]*\n)#s'                => "\\1\n",
-      '#/([\'"])\+\'\'\+([\'"])\*#'    => "/*"
-    );
+    foreach ($slots as $slot)
+    {
+      if ($slot->id)
+      {
+        $slice = DvsSlice::find($slot->id);
+        self::addComponent($slice);
+      }
 
-    $search = array_keys($replace);
-    $script = preg_replace($search, $replace, $buffer);
-
-    $replace = array(
-      "&&\n" => "&&",
-      "||\n" => "||",
-      "(\n"  => "(",
-      ")\n"  => ")",
-      "[\n"  => "[",
-      "]\n"  => "]",
-      "+\n"  => "+",
-      ",\n"  => ",",
-      "?\n"  => "?",
-      ":\n"  => ":",
-      ";\n"  => ";",
-      "{\n"  => "{",
-      "\n]"  => "]",
-      "\n)"  => ")",
-      "\n}"  => "}",
-      "\n\n" => "\n"
-    );
-
-    $search = array_keys($replace);
-    $script = str_replace($search, $replace, $script);
-
-    return trim($script);
-
+      if(isset($slot->slices))
+      {
+        self::getComponents($slot->slices);
+      }
+    }
   }
 }

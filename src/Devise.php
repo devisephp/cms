@@ -2,9 +2,9 @@
 
 namespace Devise;
 
+use Devise\Http\Resources\Vue\PageResource;
+use Devise\Http\Resources\Vue\SiteResource;
 use Devise\Models\DvsSite;
-use Devise\Resources\Vue\PageResource;
-use Devise\Resources\Vue\SiteResource;
 
 /**
  * @todo refactor to a facade pattern

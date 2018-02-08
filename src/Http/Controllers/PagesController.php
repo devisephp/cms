@@ -1,6 +1,9 @@
-<?php namespace Devise\Pages;
+<?php namespace Devise\Http\Controllers;
 
+use Devise\Pages\PageData;
+use Devise\Pages\PagesRepository;
 use Devise\Support\Framework;
+
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -82,8 +85,6 @@ class PagesController extends Controller
     $data['input'] = $this->Request->all();
     $data['params'] = $route ? $route->parameters() : [];
 
-//    $this->DataBuilder->setData($data);
-
     return $this->getResponse($page);
   }
 
@@ -121,13 +122,13 @@ class PagesController extends Controller
    */
   protected function getView($page)
   {
-    $page->version->load('template.slices.fields', 'template.slices.slice');
+    $page->version->load('slices.slice', 'slices.fields');
 
     PageData::build($page);
 //    $pageData = $this->DataBuilder->getData();
 
     // allow a page version to override the page view
 
-    return $this->View->make($page->version->view, ['page' => $page]);
+    return $this->View->make($page->version->template->layout, ['page' => $page]);
   }
 }

@@ -1,10 +1,11 @@
 <?php namespace Devise\Pages;
 
 use Devise\Devise;
-use Devise\Resources\PageDataResource;
+use Devise\Http\Resources\PageDataResource;
 use Devise\Models\DvsPage;
 use Devise\Models\DvsSlice;
 
+use Devise\Models\DvsSliceInstance;
 use Illuminate\Support\Facades\View;
 
 class PageData
@@ -12,31 +13,27 @@ class PageData
 
   public static function build(DvsPage $page)
   {
-    self::compileVueData($page->version->template);
+    self::compileVueData($page->version->slices);
   }
 
-  private static function compileVueData($slice)
+  private static function compileVueData($slices)
   {
-    if ($slice->view)
+    foreach ($slices as $child)
     {
-      self::extractComponents($slice);
-    }
-
-    foreach ($slice->slices as $child)
-    {
-      self::compileVueData($child->slice);
+      self::extractComponents($child);
+      self::compileVueData($child->slices);
     }
   }
 
-  private static function extractComponents(DvsSlice $slice)
+  private static function extractComponents(DvsSliceInstance $instance)
   {
-    if (View::exists($slice->view))
+    if (View::exists($instance->slice->view))
     {
-      self::addComponent($slice);
+      self::addComponent($instance->slice);
     }
   }
 
-  private static function addComponent($slice)
+  private static function addComponent(DvsSlice $slice)
   {
     $view = View::make($slice->view);
 

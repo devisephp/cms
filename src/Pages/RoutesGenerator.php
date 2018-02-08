@@ -170,7 +170,7 @@ class RoutesGenerator
         return strtolower($matches[0]);
       }, $page->slug, -1, $count);
 
-      $page->uses = 'Devise\Pages\PagesController@show';
+      $page->uses = 'Devise\Http\Controllers\PagesController@show';
     }
 
     return $pages;

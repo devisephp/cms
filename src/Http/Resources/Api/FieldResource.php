@@ -1,10 +1,10 @@
 <?php
 
-namespace Devise\Resources\Vue;
+namespace Devise\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class LanguageResource extends Resource
+class FieldResource extends Resource
 {
   /**
    * Transform the resource into an array.
@@ -14,10 +14,10 @@ class LanguageResource extends Resource
    */
   public function toArray($request)
   {
-    return [
-      'id'   => $this->id,
-      'name' => $this->name,
-      'path' => ($this->pivot->default) ? '/' : '/' . $this->code,
-    ];
+    $data = $this->value;
+
+    $data->id = $this->id;
+
+    return $data;
   }
 }

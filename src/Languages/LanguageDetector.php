@@ -11,6 +11,7 @@ use Devise\Sites\SiteDetector;
  */
 class LanguageDetector
 {
+  protected static $currentLangauge;
   /**
    * Protected fields for this class
    *
@@ -39,6 +40,10 @@ class LanguageDetector
    */
   public function current()
   {
+    if(self::$currentLangauge){
+      return self::$currentLangauge;
+    }
+
     $locale = $this->LocaleDetector->current();
 
     $site = $this->SiteDetector->current();
@@ -53,6 +58,8 @@ class LanguageDetector
       $this->LocaleDetector->update($locale);
       $language = $this->Language->where('code', $locale)->first();
     }
+
+    self::$currentLangauge = $language;
 
     return $language;
   }

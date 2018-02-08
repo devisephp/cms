@@ -25,7 +25,7 @@ class CreateDvsPages extends Migration
       $table->string('canonical')->nullable();
       $table->text('head')->nullable();
       $table->text('footer')->nullable();
-      $table->text('middleware')->nullable()->default('web');
+      $table->text('middleware')->nullable();
       $table->boolean('ab_testing_enabled')->default(false);
       $table->timestamps();
       $table->softDeletes();

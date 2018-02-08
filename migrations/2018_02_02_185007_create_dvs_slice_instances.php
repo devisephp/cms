@@ -15,8 +15,10 @@ class CreateDvsSliceInstances extends Migration
   {
     Schema::create('dvs_slice_instances', function (Blueprint $table) {
       $table->increments('id');
-      $table->integer('parent_slice_id');
+      $table->integer('page_version_id');
+      $table->integer('parent_instance_id');
       $table->integer('slice_id');
+      $table->string('label');
       $table->timestamps();
     });
   }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Devise\Resources\Vue;
+namespace Devise\Http\Resources\Vue;
 
 use Illuminate\Http\Resources\Json\Resource;
 
@@ -27,7 +27,7 @@ class PageResource extends Resource
     // Relationships
     if ($this->version->template)
     {
-      $data['slices'] = SliceInstanceResource::collection($this->version->template->slices);
+      $data['slices'] = SliceInstanceResource::collection($this->version->slices);
     }
 
     return $data;

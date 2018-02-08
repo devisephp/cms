@@ -45,24 +45,9 @@ class DvsPageVersion extends Model
   /**
    *
    */
-  public function fields()
+  public function slices()
   {
-    return $this->hasMany('DvsField', 'page_version_id')->where('collection_instance_id', null);
-  }
-
-  /**
-   *
-   */
-  public function collectionFields()
-  {
-    return $this->hasMany('DvsField', 'page_version_id')->whereNotNull('collection_instance_id');
-  }
-
-  /**
-   *
-   */
-  public function collectionInstances()
-  {
-    return $this->hasMany('DvsCollectionInstance', 'page_version_id');
+    return $this->hasMany(DvsSliceInstance::class, 'page_version_id')
+      ->where('parent_instance_id', 0);
   }
 }

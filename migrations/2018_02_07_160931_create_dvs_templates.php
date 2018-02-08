@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDvsSlices extends Migration
+class CreateDvsTemplates extends Migration
 {
   /**
    * Run the migrations.
@@ -13,10 +13,11 @@ class CreateDvsSlices extends Migration
    */
   public function up()
   {
-    Schema::create('dvs_slices', function (Blueprint $table) {
+    Schema::create('dvs_templates', function (Blueprint $table) {
       $table->increments('id');
       $table->string('name');
-      $table->string('view');
+      $table->string('layout');
+      $table->longText('slots');
       $table->timestamps();
     });
   }
@@ -28,6 +29,6 @@ class CreateDvsSlices extends Migration
    */
   public function down()
   {
-    Schema::drop('dvs_slices');
+    Schema::drop('dvs_templates');
   }
 }

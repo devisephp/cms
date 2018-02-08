@@ -16,6 +16,11 @@ class DvsSliceInstance extends Model
     return $this->belongsTo(DvsSlice::class, 'slice_id');
   }
 
+  public function slices()
+  {
+    return $this->hasMany(DvsSliceInstance::class, 'parent_instance_id');
+  }
+
   public function fields()
   {
     return $this->hasMany(DvsField::class, 'slice_instance_id');

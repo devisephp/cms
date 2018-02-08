@@ -1,6 +1,6 @@
 <?php
 
-namespace Devise\Resources\Vue;
+namespace Devise\Http\Resources\Vue;
 
 use Illuminate\Http\Resources\Json\Resource;
 
@@ -15,17 +15,18 @@ class SliceInstanceResource extends Resource
   public function toArray($request)
   {
     $data = [
-      'id'   => $this->slice->id,
-      'name' => $this->slice->component_name,
+      'id'    => $this->slice->id,
+      'name'  => $this->slice->component_name,
+      'label' => $this->label
     ];
 
     // Relationships
-    if ($this->slice && $this->slice->slices->count())
+    if ($this->slices->count())
     {
-      $data['slices'] = SliceInstanceResource::collection($this->slice->slices);
+      $data['slices'] = SliceInstanceResource::collection($this->slices);
     }
 
-    if($this->fields->count())
+    if ($this->fields->count())
     {
       $data['fields'] = [];
       foreach ($this->fields as $field)

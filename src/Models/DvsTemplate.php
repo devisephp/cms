@@ -2,31 +2,28 @@
 
 namespace Devise\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-
 class DvsTemplate extends Model
 {
-  protected $guarded = array();
+  protected $fillable = ['name', 'layout', 'slots'];
 
-  protected $table = 'dvs_slices';
+  protected $table = 'dvs_templates';
 
-  /**
-   * The "booting" method of the model.
-   *
-   * @return void
-   */
-  protected static function boot()
+  protected $attributes = [
+    'slots' => '[]'
+  ];
+
+  public function pages()
   {
-    parent::boot();
-
-    static::addGlobalScope('template', function (Builder $builder) {
-      $builder->whereNull('view');
-    });
+    return $this->hasMany(DvsPageVersion::class, 'template_id');
   }
 
-  public function slices()
+  public function setSlotsAttribute($value)
   {
-    return $this->hasMany(DvsSliceInstance::class, 'parent_slice_id');
+    $this->attributes['slots'] = json_encode($value);
+  }
+
+  public function getSlotsObjectAttribute()
+  {
+    return json_decode($this->slots);
   }
 }

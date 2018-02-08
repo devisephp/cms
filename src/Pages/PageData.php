@@ -29,7 +29,7 @@ class PageData
   {
     if (View::exists($instance->slice->view))
     {
-      Devise::addComponent($slice);
+      Devise::addComponent($instance->slice);
     }
   }
 

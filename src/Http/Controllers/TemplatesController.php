@@ -9,7 +9,6 @@ use Devise\Http\Resources\Api\TemplateResource;
 use Devise\Models\DvsTemplate;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Validation\ValidationException;
 
 class TemplatesController extends Controller
 {

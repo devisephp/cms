@@ -71,7 +71,7 @@ class SlicesController extends Controller
     $template = $this->DvsSlice
       ->findOrFail($id);
 
-    if($template->pages->count()) abort(422, 'Slice must be removed from all pages before deleting.');
+    if($template->pageVersions->count()) abort(422, 'Slice must be removed from all pages before deleting.');
 
     $template->delete();
   }

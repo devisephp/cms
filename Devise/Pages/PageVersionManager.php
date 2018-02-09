@@ -2,6 +2,7 @@
 
 use DateTime;
 use Devise\Models\DvsField;
+use Devise\Models\DvsPage;
 use Devise\Models\DvsPageVersion;
 
 /**
@@ -34,10 +35,11 @@ class PageVersionManager
      * @param  int $createdByUserId
      * @return PageVersion
      */
-    public function createNewPageVersion($pageId, $name, $startsAt = null, $endsAt = null)
+    public function createNewPageVersion($pageId, $name, $templateId, $startsAt = null, $endsAt = null)
     {
         $version = $this->DvsPageVersion->newInstance();
         $version->page_id = $pageId;
+        $version->template_id = $templateId;
         $version->name = $name;
         $version->starts_at = $startsAt;
         $version->ends_at = $endsAt;
@@ -50,12 +52,12 @@ class PageVersionManager
     /**
      * Create a new default page version for given page
      *
-     * @param  Page $page
+     * @param  DvsPa $page
      * @return PageVersion
      */
-    public function createDefaultPageVersion($page, $startsAt = null)
+    public function createDefaultPageVersion(DvsPage $page, $templateId, $startsAt = null)
     {
-        return $this->createNewPageVersion($page->id, 'Default', $startsAt);
+        return $this->createNewPageVersion($page->id, 'Default', $templateId, $startsAt);
     }
 
     /**
@@ -68,7 +70,7 @@ class PageVersionManager
      */
     public function copyPageVersionToAnotherPage($fromVersion, $toPage) {
         // create a new page version
-        $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name);
+        $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $fromVersion->template_id);
 
         $this->copyFieldsFromVersionToVersion($fromVersion, $newVersion);
 
@@ -90,7 +92,7 @@ class PageVersionManager
         $oldVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
 
         // create a new page version
-        $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name);
+        $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name, $oldVersion->template_id);
 
         // copy all existing fields from oldVersion to newVersion
         $this->copyFieldsFromVersionToVersion($oldVersion, $newVersion);

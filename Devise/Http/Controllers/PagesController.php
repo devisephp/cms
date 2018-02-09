@@ -1,6 +1,6 @@
 <?php namespace Devise\Http\Controllers;
 
-use Devise\Pages\PageData;
+use Devise\Http\Resources\Api\PageResource;
 use Devise\Pages\PagesManager;
 use Devise\Pages\PagesRepository;
 use Devise\Support\Framework;
@@ -90,6 +90,18 @@ class PagesController extends Controller
    * Request the page listing
    *
    */
+  public function page(Request $request)
+  {
+    $term = array_get($input, 'term');
+    $includeAdmin = array_get($input, 'includeAdmin') == '1' ? true : false;
+
+    return $this->PagesRepository->getPagesList($includeAdmin, $term);
+  }
+
+  /**
+   * Request the page listing
+   *
+   */
   public function requestPageList($input)
   {
     $term = array_get($input, 'term');
@@ -101,24 +113,15 @@ class PagesController extends Controller
   /**
    * Request a new page be created
    *
-   * @param  array $input
-   * @return Redirector
+   * @param Request $request
+   * @return PageResource
+   * @internal param array $input
    */
   public function store(Request $request)
   {
     $page = $this->PagesManager->createNewPage($request->all());
 
-    if ($page)
-    {
-      return $this->Redirect->route('dvs-pages')
-        ->with('warnings', $this->PagesManager->warnings)
-        ->with('message', $this->PagesManager->message);
-    }
-
-    return $this->Redirect->route('dvs-pages-create')
-      ->withInput()
-      ->withErrors($this->PagesManager->errors)
-      ->with('message', $this->PagesManager->message);
+    return new PageResource($page);
   }
 
   /**

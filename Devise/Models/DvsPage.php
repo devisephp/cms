@@ -10,14 +10,9 @@ class DvsPage extends Model
 
   protected $table = 'dvs_pages';
 
-  public $createRules = array(
-    'title'     => 'required|min:3',
-    'slug'      => 'required|min:1',
-  );
-
   public $updateRules = array(
-    'title'     => 'min:1',
-    'slug'      => 'min:1',
+    'title' => 'min:1',
+    'slug'  => 'min:1',
   );
 
   public $messages = array(

@@ -219,7 +219,7 @@ class PagesRepository
    * Finds lots of pages in the system that
    * are not admin pages and belong to the current language
    *
-   * @return Page
+   * @return DvsPage
    */
   public function pages()
   {

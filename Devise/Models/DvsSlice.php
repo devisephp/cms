@@ -3,7 +3,6 @@
 namespace Devise\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
 
 class DvsSlice extends Model

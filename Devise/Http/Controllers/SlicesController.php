@@ -35,6 +35,10 @@ class SlicesController extends Controller
     return SliceResource::collection($all);
   }
 
+  /**
+   * @param SaveSlice $request
+   * @return SliceResource
+   */
   public function store(SaveSlice $request)
   {
     $new = $this->DvsSlice
@@ -43,6 +47,11 @@ class SlicesController extends Controller
     return new SliceResource($new);
   }
 
+  /**
+   * @param SaveSlice $request
+   * @param $id
+   * @return SliceResource
+   */
   public function update(SaveSlice $request, $id)
   {
     $template = $this->DvsSlice
@@ -53,6 +62,10 @@ class SlicesController extends Controller
     return new SliceResource($template);
   }
 
+  /**
+   * @param DeleteSlice $request
+   * @param $id
+   */
   public function delete(DeleteSlice $request, $id)
   {
     $template = $this->DvsSlice

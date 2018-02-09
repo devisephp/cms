@@ -66,25 +66,6 @@ class Devise
   {
     $resource = new TemplateResource($template);
 
-    self::getComponents($template->slots_array);
-
     return "window.template = " . json_encode($resource->toArray(request())) . ";\n";
-  }
-
-  private static function getComponents($slots)
-  {
-    foreach ($slots as $slot)
-    {
-      if ($slot->id)
-      {
-        $slice = DvsSlice::find($slot->id);
-        self::addComponent($slice);
-      }
-
-      if(isset($slot->slices))
-      {
-        self::getComponents($slot->slices);
-      }
-    }
   }
 }

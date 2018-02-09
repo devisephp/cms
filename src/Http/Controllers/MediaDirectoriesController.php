@@ -1,4 +1,11 @@
-<?php namespace Devise\Media\Categories;
+<?php namespace Devise\Http\Controllers;
+
+use Devise\Media\Categories\CategoryAlreadyExistsException;
+use Devise\Media\Categories\Manager;
+
+use Devise\Media\Files\Repository;
+use Devise\Support\Framework;
+use Illuminate\Http\Request;
 
 /**
  * Class ResponseHandler handles the controller side
@@ -9,60 +16,61 @@
  */
 class MediaDirectoriesController
 {
-    /**
-     * @var CategoryManager
-     */
-    protected $CategoryManager;
+  /**
+   * @var Manager
+   */
+  protected $Manager;
 
-    /**
-     * Construct a new response handler for categories
-     *
-     * @param Manager $CategoryManager
-     */
-    public function __construct(Manager $CategoryManager, $Redirect = null)
+  /**
+   * Construct a new response handler for categories
+   *
+   * @param Manager $Manager
+   */
+  public function __construct(Manager $Manager, Repository $Repository, Framework $Framework)
+  {
+    $this->Manager = $Manager;
+    $this->Repository = $Repository;
+    $this->Redirect = $Framework->Redirect;
+  }
+
+  public function all(Request $request, $folderPath = '')
+  {
+    $input = $request->all();
+    $input['category'] = $folderPath;
+    $results = $this->Repository->compileIndexData($input, ['categories']);
+
+    return $results['categories'];
+  }
+
+  /**
+   * Request a category be stored
+   *
+   * @param Request $request
+   * @return mixed
+   */
+  public function store(Request $request)
+  {
+    try
     {
-        $this->CategoryManager = $CategoryManager;
-        $this->Redirect = $Redirect ?: \Redirect::getFacadeRoot();
+      $this->Manager->storeNewCategory($request->all());
+    } catch (CategoryAlreadyExistsException $e)
+    {
+      \Session::flash('dvs-error-message', "The category {$request->input('name')} already exists!");
     }
 
-    /**
-     * Request a category be stored
-     *
-     * @param $input
-     * @return mixed
-     */
-    public function requestStore($input)
-    {
-        try {
-            $this->CategoryManager->storeNewCategory($input);
-        } catch (CategoryAlreadyExistsException $e) {
-            \Session::flash('dvs-error-message', "The category {$input['name']} already exists!");
-        }
+    return $this->Redirect->back();
+  }
 
-        return $this->Redirect->back();
-    }
+  /**
+   * Request a category be destroyed
+   *
+   * @param Request $request
+   * @return mixed
+   */
+  public function remove(Request $request)
+  {
+    $this->Manager->destroyCategory($request->all());
 
-    /**
-     * Request a category be destroyed
-     *
-     * @param $input
-     * @return mixed
-     */
-    public function requestDestroy($input)
-    {
-        $this->CategoryManager->destroyCategory($input);
-        return $this->Redirect->back();
-    }
-
-    /**
-     * Request a category be renamed
-     *
-     * @param $input
-     */
-    public function requestRename($input)
-    {
-        $path = array_get($input, 'path');
-        $newName = array_get($input, 'newname');
-        $this->CategoryManager->renameCategory($path, $newName);
-    }
+    return $this->Redirect->back();
+  }
 }

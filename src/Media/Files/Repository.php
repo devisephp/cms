@@ -4,9 +4,12 @@ use Devise\Media\Paths;
 use Devise\Media\Images\Images;
 use Devise\Models\DvsMedia;
 
+use Devise\Sites\SiteDetector;
+use Devise\Support\Framework;
 use Illuminate\Support\Facades\DB;
 
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
+use Whoops\Exception\Frame;
 
 /**
  * Class Repository builds a complex array of data around the file structure
@@ -46,17 +49,20 @@ class Repository
    * @param null $Request
    * @param null $URL
    */
-  public function __construct(DvsMedia $DvsMedia, Filesystem $Filesystem, Paths $Paths, Images $Image, $Config = null, $Request = null, $URL = null)
+  public function __construct(DvsMedia $DvsMedia, Filesystem $Filesystem, Paths $Paths, Images $Image, SiteDetector $SiteDetector, Framework $Framework)
   {
     $this->DvsMedia = $DvsMedia;
     $this->Filesystem = $Filesystem;
     $this->Paths = $Paths;
-    $this->config = $Config ?: \Config::get('devise.media-manager');
-    $this->Request = $Request ?: \Request::getFacadeRoot();
-    $this->URL = $URL ?: \URL::getFacadeRoot();
-    $this->guesser = MimeTypeGuesser::getInstance();
-    $this->basepath = public_path() . '/' . $this->config['root-dir'] . '/';
     $this->Image = $Image;
+
+    $this->config = $Framework->Config;
+    $this->Request = $Framework->Request;
+    $this->URL = $Framework->URL;
+    $this->guesser = $Framework->MimeTypeGuesser;
+
+    $site = $SiteDetector->current();
+    $this->basepath = public_path() . '/' . $this->config->get('devise.media.root-directory') . '/' . $site->domain;
   }
 
   /**
@@ -77,7 +83,7 @@ class Repository
     $this->ensureRootDirectoryAvailable();
     $this->setCurrentDirectory($input, $openLastCategory);
 
-    $currentDirectory = $this->getCurrentDirectory($input);
+    $currentDirectory = $this->getCurrentDirectory();
 
     if (in_array('categories', $include))
     {
@@ -116,9 +122,10 @@ class Repository
    */
   private function ensureRootDirectoryAvailable()
   {
-    if (!$this->Filesystem->exists(public_path() . '/' . $this->config['root-dir']))
+
+    if (!$this->Filesystem->exists($this->basepath))
     {
-      $this->Filesystem->makeDirectory(public_path() . '/' . $this->config['root-dir'], 0775);
+      $this->Filesystem->makeDirectory($this->basepath, 0775);
     }
 
     return true;
@@ -143,11 +150,11 @@ class Repository
    * @param $input
    * @return string
    */
-  private function getCurrentDirectory($input)
+  private function getCurrentDirectory()
   {
     $category = $this->getCurrentCategory();
 
-    $root = public_path() . '/' . $this->config['root-dir'];
+    $root = $this->basepath;
 
     if ($category)
     {
@@ -182,8 +189,9 @@ class Repository
     {
       $dirArr = explode('/', $dir);
       $dirName = end($dirArr);
-      $dirArr = explode('/' . $this->config['root-dir'] . '/', $dir);
-      $path = implode('.', explode('/', end($dirArr)));
+      $path = str_replace($this->basepath . '/', '', $dir);
+
+      $path = implode('.', explode('/', $path));
       $categories[] = array(
         'name' => $dirName,
         'path' => $path
@@ -204,7 +212,7 @@ class Repository
    */
   private function buildMediaItems($dir)
   {
-    $root = public_path() . '/' . $this->config['root-dir'];
+    $root = $this->basepath;
     $dir = ltrim(str_replace($root, '', $dir), '/');
 
     $files = $this->DvsMedia

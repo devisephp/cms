@@ -32,9 +32,4 @@ class PageData
       Devise::addComponent($instance->slice);
     }
   }
-
-  private static function addComponent(DvsSlice $slice)
-  {
-
-  }
 }

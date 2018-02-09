@@ -12,9 +12,9 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   /**
    * Media Categories
    */
-  Route::get('media/directories/{folder_dot_path?}', 'MediaDirectoriesController@all');
-  Route::post('media/directories', 'MediaDirectoriesController@store');
-  Route::delete('media/directories', 'MediaDirectoriesController@remove');
+  Route::get('media-directories/{folder_dot_path?}', 'MediaDirectoriesController@all');
+  Route::post('media-directories', 'MediaDirectoriesController@store');
+  Route::delete('media-directories', 'MediaDirectoriesController@remove');
 
   /**
    * Slices

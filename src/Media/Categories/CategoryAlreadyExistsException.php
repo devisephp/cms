@@ -1,5 +1,7 @@
 <?php namespace Devise\Media\Categories;
 
+use Exception;
+
 /**
  * Class CategoryAlreadyExistsException is thrown
  * whenever the Categories/Manager finds a duplicate
@@ -7,6 +9,6 @@
  *
  * @package Devise\Media\Categories
  */
-class CategoryAlreadyExistsException extends \Devise\Support\DeviseException
+class CategoryAlreadyExistsException extends Exception
 {
 }

@@ -46,15 +46,6 @@ class Devise
     return "window.deviseComponents = {" . implode(',', self::$components) . "};\n";
   }
 
-  public static function addComponent($slice)
-  {
-    $name = $slice->component_name;
-    if (!isset(self::$components[$name]))
-    {
-      self::$components[$name] = $slice->component_code;
-    }
-  }
-
   public static function pageData($page)
   {
     $resource = new PageResource($page);
@@ -66,25 +57,15 @@ class Devise
   {
     $resource = new TemplateResource($template);
 
-    self::getComponents($template->slots_array);
-
     return "window.template = " . json_encode($resource->toArray(request())) . ";\n";
   }
 
-  private static function getComponents($slots)
+  public static function addComponent($slice)
   {
-    foreach ($slots as $slot)
+    $name = $slice->component_name;
+    if (!isset(self::$components[$name]))
     {
-      if ($slot->id)
-      {
-        $slice = DvsSlice::find($slot->id);
-        self::addComponent($slice);
-      }
-
-      if(isset($slot->slices))
-      {
-        self::getComponents($slot->slices);
-      }
+      self::$components[$name] = $slice->component_code;
     }
   }
 }

@@ -2,8 +2,10 @@
 
 namespace Devise\Models;
 
+use Devise\Devise;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\View;
 
 class DvsPageVersion extends Model
 {
@@ -49,5 +51,27 @@ class DvsPageVersion extends Model
   {
     return $this->hasMany(DvsSliceInstance::class, 'page_version_id')
       ->where('parent_instance_id', 0);
+  }
+
+  public function registerComponents()
+  {
+    $this->findComponents($this->slices);
+  }
+
+  private function findComponents($slices)
+  {
+    foreach ($slices as $child)
+    {
+      $this->extractComponents($child);
+      $this->findComponents($child->slices);
+    }
+  }
+
+  private function extractComponents(DvsSliceInstance $instance)
+  {
+    if (View::exists($instance->slice->view))
+    {
+      Devise::addComponent($instance->slice);
+    }
   }
 }

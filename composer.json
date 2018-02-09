@@ -18,7 +18,7 @@
             "seeds"
         ],
         "psr-0": {
-            "Devise\\": "src/"
+            "Devise\\": "Devise/"
         }
     },
     "extra": {

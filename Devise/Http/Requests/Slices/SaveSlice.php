@@ -19,7 +19,8 @@ class SaveSlice extends ApiRequest
       'name' => 'required',
       'view' => [
         'filled',
-        new ViewExists
+        new ViewExists,
+        'unique:dvs_slices,view'
       ]
     ];
   }

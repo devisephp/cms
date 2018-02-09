@@ -124,10 +124,7 @@ class PagesController extends Controller
   {
     $page->version->load('slices.slice', 'slices.fields');
 
-    PageData::build($page);
-//    $pageData = $this->DataBuilder->getData();
-
-    // allow a page version to override the page view
+    $page->version->registerComponents();
 
     return $this->View->make($page->version->template->layout, ['page' => $page]);
   }

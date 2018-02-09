@@ -17,6 +17,11 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::delete('media-directories', 'MediaDirectoriesController@remove');
 
   /**
+   * Pages
+   */
+  Route::post('pages', 'PagesController@store');
+
+  /**
    * Slices
    */
   Route::get('slices', 'SlicesController@all');

@@ -1,6 +1,7 @@
 <?php namespace Devise\Http\Controllers;
 
 use Devise\Pages\PageData;
+use Devise\Pages\PagesManager;
 use Devise\Pages\PagesRepository;
 use Devise\Support\Framework;
 
@@ -20,6 +21,8 @@ class PagesController extends Controller
 {
   protected $PagesRepository;
 
+  private $PagesManager;
+
   private $Redirect;
 
   private $View;
@@ -34,9 +37,10 @@ class PagesController extends Controller
    * @param  PagesRepository $PagesRepository
    * @param Framework $Framework
    */
-  public function __construct(PagesRepository $PagesRepository, Framework $Framework)
+  public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, Framework $Framework)
   {
     $this->PagesRepository = $PagesRepository;
+    $this->PagesManager = $PagesManager;
 
     $this->Redirect = $Framework->Redirect;
     $this->View = $Framework->View;
@@ -51,7 +55,6 @@ class PagesController extends Controller
    */
   public function show(Request $request)
   {
-
     // @todo rename var and check user permissions
     $editing = true;
 
@@ -67,65 +70,141 @@ class PagesController extends Controller
     $localized = $this->PagesRepository->findLocalizedPage($page);
     $localized = $this->PagesRepository->getTranslatedVersions($localized);
 
-    return $localized ? $this->retrieveLocalRedirect($localized) : $this->retrieveResponse($page);
+    if ($localized)
+    {
+      $route = $this->Route->getCurrentRoute();
+      $params = $route ? $route->parameters() : [];
+
+      return $this->Redirect->route($localized->route_name, $params);
+    } else
+    {
+      $page->version->load('slices.slice', 'slices.fields');
+
+      $page->version->registerComponents();
+
+      return $this->View->make($page->version->template->layout, ['page' => $page]);
+    }
   }
 
   /**
-   * This retrieves a page with all the
-   * view's vars set on the response
+   * Request the page listing
    *
-   * @param \DvsPage $page
-   * @return mixed
    */
-  public function retrieveResponse($page)
+  public function requestPageList($input)
   {
-    $route = $this->Route->getCurrentRoute();
+    $term = array_get($input, 'term');
+    $includeAdmin = array_get($input, 'includeAdmin') == '1' ? true : false;
 
-    $data['page'] = $page;
-    $data['input'] = $this->Request->all();
-    $data['params'] = $route ? $route->parameters() : [];
-
-    return $this->getResponse($page);
+    return $this->PagesRepository->getPagesList($includeAdmin, $term);
   }
 
   /**
-   * This retrieves the a redirect for the user's language
+   * Request a new page be created
    *
-   * @param DvsPage $localized
-   * @throws PagesException
+   * @param  array $input
+   * @return Redirector
    */
-  public function retrieveLocalRedirect($localized)
+  public function store(Request $request)
   {
-    $route = $this->Route->getCurrentRoute();
-    $params = $route ? $route->parameters() : [];
+    $page = $this->PagesManager->createNewPage($request->all());
 
-    return $this->Redirect->route($localized->route_name, $params);
+    if ($page)
+    {
+      return $this->Redirect->route('dvs-pages')
+        ->with('warnings', $this->PagesManager->warnings)
+        ->with('message', $this->PagesManager->message);
+    }
+
+    return $this->Redirect->route('dvs-pages-create')
+      ->withInput()
+      ->withErrors($this->PagesManager->errors)
+      ->with('message', $this->PagesManager->message);
   }
 
   /**
-   * Gets the response for this page
+   * Request page be updated with given input
    *
-   * @param \DvsPage $page
-   * @return mixed
-   * @throws PagesException
+   * @param  integer $id
+   * @param  array   $input
+   * @return Redirector
    */
-  protected function getResponse($page)
+  public function requestUpdatePage(Request $request, $id)
   {
-    return $this->getView($page);
+    $page = $this->PagesManager->updatePage($id, $request->all());
+
+    if ($page)
+    {
+      return $this->Redirect->route('dvs-pages')
+        ->with('warnings', $this->PagesManager->warnings)
+        ->with('message', $this->PagesManager->message);
+    }
+
+    return $this->Redirect->route('dvs-pages-edit', $id)
+      ->withInput()
+      ->withErrors($this->PagesManager->errors)
+      ->with('message', $this->PagesManager->message);
   }
 
   /**
-   * Gets a view as the response type
+   * Request that ab testing be turned on or off
    *
-   * @param $page
-   * @return mixed
+   * @param  [type] $input
+   * @return [type]
    */
-  protected function getView($page)
+  public function requestToggleAbTesting(Request $request)
   {
-    $page->version->load('slices.slice', 'slices.fields');
+    $input = $request->all();
+    $pageId = $input['pageId'];
+    $enabled = $input['enabled'];
+    $this->PagesManager->toggleABTesting($pageId, $enabled);
 
-    $page->version->registerComponents();
+    return '';
+  }
 
-    return $this->View->make($page->version->template->layout, ['page' => $page]);
+  /**
+   * Request the page be copied to another page (duplicated)
+   *
+   * @param  integer $id
+   * @param  array   $input
+   * @return Redirector
+   */
+  public function requestCopyPage(Request $request, $id)
+  {
+    $page = $this->PagesManager->copyPage($id, $request->all());
+
+    if ($page)
+    {
+      return $this->Redirect->route('dvs-pages')
+        ->with('warnings', $this->PagesManager->warnings)
+        ->with('message', $this->PagesManager->message);
+    }
+
+    return $this->Redirect->route('dvs-pages-copy', $id)
+      ->withInput()
+      ->withErrors($this->PagesManager->errors)
+      ->with('message', $this->PagesManager->message);
+  }
+
+  /**
+   * Request the page be deleted from database
+   *
+   * @param  integer $id
+   * @return Redirector
+   */
+  public function requestDestroyPage(Request $request, $id)
+  {
+    $page = $this->PagesManager->destroyPage($id);
+
+    if ($page)
+    {
+      return $this->Redirect->route('dvs-pages')
+        ->with('warnings', $this->PagesManager->warnings)
+        ->with('message', $this->PagesManager->message);
+    }
+
+    return $this->Redirect->route('dvs-pages')
+      ->withInput()
+      ->withErrors($this->PagesManager->errors)
+      ->with('message', $this->PagesManager->message);
   }
 }

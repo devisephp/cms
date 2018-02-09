@@ -19,7 +19,6 @@ class CreateDvsPages extends Migration
       $table->integer('language_id');
       $table->integer('translated_from_page_id')->default(0);
       $table->string('title', 255);
-      $table->string('http_verb', 255)->default('get');
       $table->string('route_name', 255);
       $table->string('slug', 255);
       $table->string('canonical')->nullable();
@@ -32,7 +31,7 @@ class CreateDvsPages extends Migration
 
       $table->index('language_id');
       $table->index('translated_from_page_id');
-      $table->unique(['slug', 'http_verb']);
+      $table->unique(['slug', 'site_id'], 'slug_site_unique');
       $table->unique('route_name');
     });
   }

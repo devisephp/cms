@@ -2,22 +2,23 @@
 
 namespace Devise\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class DvsPage extends Model
 {
-  protected $guarded = array();
+  protected $fillable = [
+    'site_id',
+    'language_id',
+    'translated_from_page_id',
+    'route_name',
+    'title',
+    'slug',
+    'canonical',
+    'head',
+    'footer',
+    'middleware',
+    'ab_testing_enabled'
+  ];
 
   protected $table = 'dvs_pages';
-
-  public $updateRules = array(
-    'title' => 'min:1',
-    'slug'  => 'min:1',
-  );
-
-  public $messages = array(
-    'response_path.required_if' => 'The response path is required'
-  );
 
 
   public function versions()

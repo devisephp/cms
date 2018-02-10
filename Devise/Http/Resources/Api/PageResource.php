@@ -15,11 +15,16 @@ class PageResource extends Resource
   public function toArray($request)
   {
     $data = [
-      'meta'   => [
-        'id'          => $this->id,
-        'title'       => $this->title,
-        'canonical'   => $this->canonical,
-      ]
+      'id'                 => $this->id,
+      'title'              => $this->title,
+      'canonical'          => $this->canonical,
+      'ab_testing_enabled' => $this->ab_testing_enabled,
+
+      // Relationships
+      'versions'           => PageVersionResource::collection($this->whenLoaded('versions')),
+
+      'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+      'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
     ];
 
     return $data;

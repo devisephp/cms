@@ -19,7 +19,11 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   /**
    * Pages
    */
+  Route::get('pages', 'PagesController@pages');
+  Route::get('pages-suggest', 'PagesController@suggestList');
   Route::post('pages', 'PagesController@store');
+  Route::put('pages/{page_id}', 'PagesController@update');
+  Route::delete('pages/{page_id}', 'PagesController@delete');
 
   /**
    * Slices

@@ -50,29 +50,6 @@ class PagesManager
   protected $FieldManager;
 
   /**
-   * List of database fields/columns for a dvs_page
-   * we don't want to be vulnerable to mass assignment
-   * attack so we need to specify these...
-   *
-   * @var array
-   */
-  static protected $PageFields = [
-    'site_id',
-    'language_id',
-    'translated_from_page_id',
-    'route_name',
-    'title',
-    'is_admin',
-    'dvs_admin',
-    'slug',
-    'short_description',
-    'canonical',
-    'head',
-    'footer',
-    'middleware'
-  ];
-
-  /**
    * Errors are kept in an array and can be
    * used later if validation fails and we want to
    * know why
@@ -138,12 +115,12 @@ class PagesManager
   {
     $page = $this->createPageFromInput($input);
 
-    if ($page)
-    {
-      $startsAt = array_get($input, 'published', false) ? new \DateTime : null;
-      $page->version = $this->PageVersionManager->createDefaultPageVersion($page, $input['template_id'], $startsAt);
-      $this->cacheDeviseRoutes();
-    }
+    $startsAt = array_get($input, 'published', false) ? new \DateTime : null;
+
+    $this->PageVersionManager->createDefaultPageVersion($page, $input['template_id'], $startsAt);
+    $this->cacheDeviseRoutes();
+
+    $page->load('versions.template');
 
     return $page;
   }
@@ -157,23 +134,14 @@ class PagesManager
    */
   public function updatePage($id, $input)
   {
-    $input = array_only($input, static::$PageFields);
-    $page = $this->Page->findOrFail($id);
+    $page = $this->Page
+      ->with('versions.template')
+      ->findOrFail($id);
 
-    $validator = $this->Validator->make($input, $this->Page->updateRules, $this->Page->messages);
+    $page->updateFromArray($input);
+    $this->cacheDeviseRoutes();
 
-    if ($validator->passes())
-    {
-      $page->update($input);
-      $this->cacheDeviseRoutes();
-
-      return $page;
-    }
-
-    $this->errors = $validator->errors()->all();
-    $this->message = "There were validation errors.";
-
-    return false;
+    return $page;
   }
 
   /**
@@ -317,11 +285,6 @@ class PagesManager
    */
   protected function createPageFromInput($input)
   {
-    // fill in some default values
-    $input = array_only($input, static::$PageFields);
-    $input['language_id'] = array_get($input, 'language_id', $this->Config->get('devise.languages.primary_language_id'));
-
-    // if route_name is there then we ave a suggestion
     if (!isset($input['route_name']))
     {
       $input['route_name'] = $this->findAvailableRoute(Str::slug(array_get($input, 'title', str_random(42))), $input['language_id']);
@@ -330,34 +293,7 @@ class PagesManager
       $input['route_name'] = $this->findAvailableRoute($input['route_name'], $input['language_id']);
     }
 
-    $this->validateInputForCreate($input);
-
-    return $this->Page->create($input);
-  }
-
-  /**
-   * [validateInputForCreate description]
-   */
-  protected function validateInputForCreate($input)
-  {
-    $rules = [
-      'title' => 'required|min:3',
-      'slug'  => [
-        'required',
-        'min:1',
-        Rule::unique('dvs_pages')->where(function ($query) use ($input) {
-          return $query->where('site_id', $input['site_id']);
-        })
-      ]
-    ];
-
-    // validate the input given before we create the page
-    $validator = $this->Validator->make($input, $rules);
-
-    if ($validator->fails())
-    {
-      throw new ValidationException($validator);
-    }
+    return $this->Page->createFromArray($input);
   }
 
   /**
@@ -408,23 +344,6 @@ class PagesManager
     }
 
     return json_encode(true);
-  }
-
-  /**
-   * [toggleABTesting description]
-   * @param  [type] $pageId
-   * @param  [type] $isEnabled
-   * @return [type]
-   */
-  public function toggleABTesting($pageId, $isEnabled)
-  {
-    $page = $this->Page->findOrFail($pageId);
-
-    $page->ab_testing_enabled = $isEnabled == 'true' ? true : false;
-
-    $page->save();
-
-    return $page;
   }
 
   /**

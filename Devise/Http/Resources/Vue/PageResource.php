@@ -15,13 +15,12 @@ class PageResource extends Resource
   public function toArray($request)
   {
     $data = [
-      'meta'   => [
-        'id'          => $this->id,
-        'title'       => $this->meta_title,
-        'description' => $this->meta_description,
-        'canonical'   => $this->canonical,
-      ],
-      'slices' => []
+      'id'                 => $this->id,
+      'title'              => $this->meta_title,
+      'description'        => $this->meta_description,
+      'canonical'          => $this->canonical,
+      'ab_testing_enabled' => $this->ab_testing_enabled,
+      'slices'             => []
     ];
 
     // Relationships

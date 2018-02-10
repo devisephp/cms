@@ -1,8 +1,12 @@
 <?php namespace Devise\Http\Controllers;
 
+use Devise\Http\Requests\ApiRequest;
+use Devise\Http\Requests\Pages\StorePage;
+use Devise\Http\Requests\Pages\UpdatePage;
 use Devise\Http\Resources\Api\PageResource;
 use Devise\Pages\PagesManager;
 use Devise\Pages\PagesRepository;
+use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 
 use Illuminate\Http\Request;
@@ -23,6 +27,8 @@ class PagesController extends Controller
 
   private $PagesManager;
 
+  private $SiteDetector;
+
   private $Redirect;
 
   private $View;
@@ -37,10 +43,11 @@ class PagesController extends Controller
    * @param  PagesRepository $PagesRepository
    * @param Framework $Framework
    */
-  public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, Framework $Framework)
+  public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, Framework $Framework)
   {
     $this->PagesRepository = $PagesRepository;
     $this->PagesManager = $PagesManager;
+    $this->SiteDetector = $SiteDetector;
 
     $this->Redirect = $Framework->Redirect;
     $this->View = $Framework->View;
@@ -53,7 +60,7 @@ class PagesController extends Controller
    *
    * @return Response
    */
-  public function show(Request $request)
+  public function show(ApiRequest $request)
   {
     // @todo rename var and check user permissions
     $editing = true;
@@ -90,36 +97,47 @@ class PagesController extends Controller
    * Request the page listing
    *
    */
-  public function page(Request $request)
+  public function pages(ApiRequest $request)
   {
-    $term = array_get($input, 'term');
-    $includeAdmin = array_get($input, 'includeAdmin') == '1' ? true : false;
+    $site = $this->SiteDetector->current();
 
-    return $this->PagesRepository->getPagesList($includeAdmin, $term);
+    $defaultLanguage = $site->default_language;
+
+    $languageId = $request->input('language_id', $defaultLanguage->id);
+
+    $pages = $this->PagesRepository->pages($site->id, $languageId);
+
+    return PageResource::collection($pages);
   }
 
   /**
    * Request the page listing
    *
    */
-  public function requestPageList($input)
+  public function suggestList(ApiRequest $request)
   {
-    $term = array_get($input, 'term');
-    $includeAdmin = array_get($input, 'includeAdmin') == '1' ? true : false;
+    $term = $request->input('term');
 
-    return $this->PagesRepository->getPagesList($includeAdmin, $term);
+    return $this->PagesRepository->getPagesList($term);
   }
 
   /**
    * Request a new page be created
    *
-   * @param Request $request
+   * @param StorePage $request
    * @return PageResource
-   * @internal param array $input
    */
-  public function store(Request $request)
+  public function store(StorePage $request)
   {
-    $page = $this->PagesManager->createNewPage($request->all());
+    $site = $this->SiteDetector->current();
+
+    $defaultLanguage = $site->default_language;
+
+    $input = $request->all();
+    $input['site_id'] = $site->id;
+    $input['language_id'] = $request->input('language_id', $defaultLanguage->id);
+
+    $page = $this->PagesManager->createNewPage($input);
 
     return new PageResource($page);
   }
@@ -127,87 +145,41 @@ class PagesController extends Controller
   /**
    * Request page be updated with given input
    *
+   * @param UpdatePage $request
    * @param  integer $id
-   * @param  array   $input
-   * @return Redirector
+   * @return PageResource
    */
-  public function requestUpdatePage(Request $request, $id)
+  public function update(UpdatePage $request, $id)
   {
     $page = $this->PagesManager->updatePage($id, $request->all());
 
-    if ($page)
-    {
-      return $this->Redirect->route('dvs-pages')
-        ->with('warnings', $this->PagesManager->warnings)
-        ->with('message', $this->PagesManager->message);
-    }
-
-    return $this->Redirect->route('dvs-pages-edit', $id)
-      ->withInput()
-      ->withErrors($this->PagesManager->errors)
-      ->with('message', $this->PagesManager->message);
+    return new PageResource($page);
   }
 
   /**
-   * Request that ab testing be turned on or off
+   * ApiRequest the page be copied to another page (duplicated)
    *
-   * @param  [type] $input
-   * @return [type]
-   */
-  public function requestToggleAbTesting(Request $request)
-  {
-    $input = $request->all();
-    $pageId = $input['pageId'];
-    $enabled = $input['enabled'];
-    $this->PagesManager->toggleABTesting($pageId, $enabled);
-
-    return '';
-  }
-
-  /**
-   * Request the page be copied to another page (duplicated)
-   *
+   * @param ApiRequest $request
    * @param  integer $id
-   * @param  array   $input
-   * @return Redirector
+   * @return PageResource
+   * @todo make this onework
    */
-  public function requestCopyPage(Request $request, $id)
+  public function requestCopyPage(ApiRequest $request, $id)
   {
     $page = $this->PagesManager->copyPage($id, $request->all());
 
-    if ($page)
-    {
-      return $this->Redirect->route('dvs-pages')
-        ->with('warnings', $this->PagesManager->warnings)
-        ->with('message', $this->PagesManager->message);
-    }
-
-    return $this->Redirect->route('dvs-pages-copy', $id)
-      ->withInput()
-      ->withErrors($this->PagesManager->errors)
-      ->with('message', $this->PagesManager->message);
+    return new PageResource($page);
   }
 
   /**
    * Request the page be deleted from database
    *
+   * @param ApiRequest $request
    * @param  integer $id
-   * @return Redirector
+   * @return PageResource
    */
-  public function requestDestroyPage(Request $request, $id)
+  public function delete(ApiRequest $request, $id)
   {
-    $page = $this->PagesManager->destroyPage($id);
-
-    if ($page)
-    {
-      return $this->Redirect->route('dvs-pages')
-        ->with('warnings', $this->PagesManager->warnings)
-        ->with('message', $this->PagesManager->message);
-    }
-
-    return $this->Redirect->route('dvs-pages')
-      ->withInput()
-      ->withErrors($this->PagesManager->errors)
-      ->with('message', $this->PagesManager->message);
+    $this->PagesManager->destroyPage($id);
   }
 }

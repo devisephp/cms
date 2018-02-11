@@ -297,30 +297,6 @@ class PagesManager
   }
 
   /**
-   * Updates the page version dates
-   *
-   * @param  int $pageVersionId
-   * @param  array $input
-   * @return void
-   */
-  public function updatePageVersionDates($pageVersionId, $input)
-  {
-    return $this->PageVersionManager->updatePageVersionDates($pageVersionId, $input);
-  }
-
-  /**
-   * Updates the page version view
-   *
-   * @param  [type] $pageVersionId
-   * @param  [type] $view
-   * @return [type]
-   */
-  public function updatePageVersionView($pageVersionId, $view)
-  {
-    return $this->PageVersionManager->updatePageVersionView($pageVersionId, $view);
-  }
-
-  /**
    * Marks all page's fields with a "true" content_requested value as complete
    *
    * @param  int $pageVersionId
@@ -344,17 +320,6 @@ class PagesManager
     }
 
     return json_encode(true);
-  }
-
-  /**
-   * [updatePageVersionABTestingAmount description]
-   * @param  [type] $pageVersionId
-   * @param  [type] $amount
-   * @return [type]
-   */
-  public function updatePageVersionABTestingAmount($pageVersionId, $amount)
-  {
-    return $this->PageVersionManager->updatePageVersionABTestingAmount($pageVersionId, $amount);
   }
 
   /**

@@ -4,7 +4,6 @@ namespace Devise\Models;
 
 use Devise\Devise;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
 
 class DvsPageVersion extends Model
@@ -15,7 +14,13 @@ class DvsPageVersion extends Model
 
   protected $table = 'dvs_page_versions';
 
-  protected $guarded = array();
+  protected $fillable = [
+    'template_id',
+    'starts_at',
+    'ends_at',
+    'ab_testing_amount',
+    'preview_hash'
+  ];
 
   /**
    * Accessor on this model to get value
@@ -26,6 +31,16 @@ class DvsPageVersion extends Model
   public function getValuesAttribute()
   {
     return json_decode($this->value);
+  }
+
+  public function setStartsAtAttribute($value)
+  {
+    $this->attributes['starts_at'] = date('Y-m-d H:i:s', strtotime($value));
+  }
+
+  public function setEndsAtAttribute($value)
+  {
+    $this->attributes['ends_at'] = date('Y-m-d H:i:s', strtotime($value));
   }
 
   /**

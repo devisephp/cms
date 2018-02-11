@@ -26,6 +26,14 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::delete('pages/{page_id}', 'PagesController@delete');
 
   /**
+   * Page Versions
+   */
+  Route::post('page-versions', 'PageVersionsController@copy');
+  Route::put('page-versions/{page_version_id}', 'PageVersionsController@update');
+  Route::put('page-versions/{page_version_id}/toggle-share', 'PageVersionsController@toggleSharing');
+  Route::delete('page-versions/{page_version_id}', 'PageVersionsController@delete');
+
+  /**
    * Slices
    */
   Route::get('slices', 'SlicesController@all');

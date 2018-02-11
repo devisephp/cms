@@ -1,4 +1,6 @@
-<?php namespace Devise\Http\Controllers;
+<?php
+
+namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
 use Devise\Http\Requests\Pages\StorePage;
@@ -9,18 +11,8 @@ use Devise\Pages\PagesRepository;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-/**
- * All pages registered in dvs_pages database table
- * come through this controller show method. The reason
- * for this is so that the database can be in charge of
- * the routes and a non developer can construct new
- * pages with predefined templates in a dropdown selectbox.
- * The templates have already been designed by the developer
- * but new pages can be added easily by the cms administrator.
- */
 class PagesController extends Controller
 {
   protected $PagesRepository;

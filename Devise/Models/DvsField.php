@@ -2,7 +2,6 @@
 
 namespace Devise\Models;
 
-use Devise\Fields\LiveFieldValue;
 use Illuminate\Database\Eloquent\Model;
 
 class DvsField extends Model
@@ -12,8 +11,6 @@ class DvsField extends Model
   protected $softDelete = true;
 
   protected $table = 'dvs_fields';
-
-  protected $guarded = array();
 
   protected $_value;
 
@@ -25,7 +22,6 @@ class DvsField extends Model
    * Accessor on this model to get value
    * for the latestVersion of this field
    *
-   * @return  LiveFieldValue
    */
   public function getValueAttribute()
   {
@@ -38,7 +34,6 @@ class DvsField extends Model
    * Sometimes we've been using values instead of value
    * so this is here for backwards compatability support
    *
-   * @return  LiveFieldValue
    */
   public function getValuesAttribute()
   {

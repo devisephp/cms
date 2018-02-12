@@ -1,6 +1,6 @@
 <?php
 
-namespace Devise\Http\Resources\Vue;
+namespace Devise\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\Resource;
 
@@ -16,18 +16,16 @@ class PageResource extends Resource
   {
     $data = [
       'id'                 => $this->id,
-      'title'              => $this->meta_title,
-      'description'        => $this->meta_description,
+      'title'              => $this->title,
       'canonical'          => $this->canonical,
       'ab_testing_enabled' => $this->ab_testing_enabled,
-      'slices'             => []
-    ];
 
-    // Relationships
-    if ($this->version->template)
-    {
-      $data['slices'] = SliceInstanceResource::collection($this->version->slices);
-    }
+      // Relationships
+      'versions'           => PageVersionResource::collection($this->whenLoaded('versions')),
+
+      'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+      'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
+    ];
 
     return $data;
   }

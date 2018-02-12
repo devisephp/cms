@@ -16,7 +16,6 @@ class CreateDvsPageVersions extends Migration
     Schema::create('dvs_page_versions', function ($table) {
       $table->increments('id');
       $table->integer('page_id')->unsigned();
-      $table->integer('created_by_user_id')->unsigned();
       $table->integer('template_id')->unsigned();
       $table->string('name', 255);
       $table->timestamp('starts_at')->nullable();
@@ -27,7 +26,6 @@ class CreateDvsPageVersions extends Migration
       $table->softDeletes();
 
       $table->index('page_id');
-      $table->index('created_by_user_id');
     });
   }
 

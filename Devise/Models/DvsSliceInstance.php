@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DvsSliceInstance extends Model
 {
-  protected $guarded = array();
+  protected $fillable = ['page_version_id','parent_instance_id','slice_id','label'];
 
   protected $table = 'dvs_slice_instances';
 

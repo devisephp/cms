@@ -3,6 +3,11 @@
 Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'], function () {
 
   /**
+   * Fields
+   */
+  Route::put('fields/{field_id}', 'FieldsController@update');
+
+  /**
    * Media
    */
   Route::get('media/{folder_dot_path?}', 'MediaController@all');
@@ -15,6 +20,23 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::get('media-directories/{folder_dot_path?}', 'MediaDirectoriesController@all');
   Route::post('media-directories', 'MediaDirectoriesController@store');
   Route::delete('media-directories', 'MediaDirectoriesController@remove');
+
+  /**
+   * Pages
+   */
+  Route::get('pages', 'PagesController@pages');
+  Route::get('pages-suggest', 'PagesController@suggestList');
+  Route::post('pages', 'PagesController@store');
+  Route::put('pages/{page_id}', 'PagesController@update');
+  Route::delete('pages/{page_id}', 'PagesController@delete');
+
+  /**
+   * Page Versions
+   */
+  Route::post('page-versions', 'PageVersionsController@copy');
+  Route::put('page-versions/{page_version_id}', 'PageVersionsController@update');
+  Route::put('page-versions/{page_version_id}/toggle-share', 'PageVersionsController@toggleSharing');
+  Route::delete('page-versions/{page_version_id}', 'PageVersionsController@delete');
 
   /**
    * Slices

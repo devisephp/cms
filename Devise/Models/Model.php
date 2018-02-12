@@ -13,22 +13,28 @@ class Model extends BaseModel
     return $this->create($this->getFillableData($request));
   }
 
+  public function createFromArray($input)
+  {
+    return $this->create($this->getFillableData($input));
+  }
+
   public function updateFromRequest(ApiRequest $request)
   {
     return $this->update($this->getFillableData($request));
   }
 
-  protected function getFillableData(ApiRequest $request)
+  public function updateFromArray($input)
   {
-    $data = [];
-    foreach ($this->fillable as $field)
+    return $this->update($this->getFillableData($input));
+  }
+
+  protected function getFillableData($request)
+  {
+    if(is_a($request, ApiRequest::class))
     {
-      if ($request->has($field))
-      {
-        $data[$field] = $request->get($field);
-      }
+      return $request->only($this->fillable);
     }
 
-    return $data;
+    return array_only($request, $this->fillable);
   }
 }

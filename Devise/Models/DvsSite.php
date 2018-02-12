@@ -26,4 +26,13 @@ class DvsSite extends Model
 
     return ($site->id === $this->id);
   }
+
+  public function getDefaultLanguageAttribute()
+  {
+    $lang = $this->languages()
+      ->wherePivot('default', 1)
+      ->first();
+
+    return $lang;
+  }
 }

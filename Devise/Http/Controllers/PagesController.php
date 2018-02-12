@@ -1,24 +1,25 @@
-<?php namespace Devise\Http\Controllers;
+<?php
 
-use Devise\Pages\PageData;
+namespace Devise\Http\Controllers;
+
+use Devise\Http\Requests\ApiRequest;
+use Devise\Http\Requests\Pages\StorePage;
+use Devise\Http\Requests\Pages\UpdatePage;
+use Devise\Http\Resources\Api\PageResource;
+use Devise\Pages\PagesManager;
 use Devise\Pages\PagesRepository;
+use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-/**
- * All pages registered in dvs_pages database table
- * come through this controller show method. The reason
- * for this is so that the database can be in charge of
- * the routes and a non developer can construct new
- * pages with predefined templates in a dropdown selectbox.
- * The templates have already been designed by the developer
- * but new pages can be added easily by the cms administrator.
- */
 class PagesController extends Controller
 {
   protected $PagesRepository;
+
+  private $PagesManager;
+
+  private $SiteDetector;
 
   private $Redirect;
 
@@ -34,9 +35,11 @@ class PagesController extends Controller
    * @param  PagesRepository $PagesRepository
    * @param Framework $Framework
    */
-  public function __construct(PagesRepository $PagesRepository, Framework $Framework)
+  public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, Framework $Framework)
   {
     $this->PagesRepository = $PagesRepository;
+    $this->PagesManager = $PagesManager;
+    $this->SiteDetector = $SiteDetector;
 
     $this->Redirect = $Framework->Redirect;
     $this->View = $Framework->View;
@@ -49,9 +52,8 @@ class PagesController extends Controller
    *
    * @return Response
    */
-  public function show(Request $request)
+  public function show(ApiRequest $request)
   {
-
     // @todo rename var and check user permissions
     $editing = true;
 
@@ -67,65 +69,109 @@ class PagesController extends Controller
     $localized = $this->PagesRepository->findLocalizedPage($page);
     $localized = $this->PagesRepository->getTranslatedVersions($localized);
 
-    return $localized ? $this->retrieveLocalRedirect($localized) : $this->retrieveResponse($page);
+    if ($localized)
+    {
+      $route = $this->Route->getCurrentRoute();
+      $params = $route ? $route->parameters() : [];
+
+      return $this->Redirect->route($localized->route_name, $params);
+    } else
+    {
+      $page->version->load('slices.slice', 'slices.fields');
+
+      $page->version->registerComponents();
+
+      return $this->View->make($page->version->template->layout, ['page' => $page]);
+    }
   }
 
   /**
-   * This retrieves a page with all the
-   * view's vars set on the response
+   * Request the page listing
    *
-   * @param \DvsPage $page
-   * @return mixed
    */
-  public function retrieveResponse($page)
+  public function pages(ApiRequest $request)
   {
-    $route = $this->Route->getCurrentRoute();
+    $site = $this->SiteDetector->current();
 
-    $data['page'] = $page;
-    $data['input'] = $this->Request->all();
-    $data['params'] = $route ? $route->parameters() : [];
+    $defaultLanguage = $site->default_language;
 
-    return $this->getResponse($page);
+    $languageId = $request->input('language_id', $defaultLanguage->id);
+
+    $pages = $this->PagesRepository->pages($site->id, $languageId);
+
+    return PageResource::collection($pages);
   }
 
   /**
-   * This retrieves the a redirect for the user's language
+   * Request the page listing
    *
-   * @param DvsPage $localized
-   * @throws PagesException
    */
-  public function retrieveLocalRedirect($localized)
+  public function suggestList(ApiRequest $request)
   {
-    $route = $this->Route->getCurrentRoute();
-    $params = $route ? $route->parameters() : [];
+    $term = $request->input('term');
 
-    return $this->Redirect->route($localized->route_name, $params);
+    return $this->PagesRepository->getPagesList($term);
   }
 
   /**
-   * Gets the response for this page
+   * Request a new page be created
    *
-   * @param \DvsPage $page
-   * @return mixed
-   * @throws PagesException
+   * @param StorePage $request
+   * @return PageResource
    */
-  protected function getResponse($page)
+  public function store(StorePage $request)
   {
-    return $this->getView($page);
+    $site = $this->SiteDetector->current();
+
+    $defaultLanguage = $site->default_language;
+
+    $input = $request->all();
+    $input['site_id'] = $site->id;
+    $input['language_id'] = $request->input('language_id', $defaultLanguage->id);
+
+    $page = $this->PagesManager->createNewPage($input);
+
+    return new PageResource($page);
   }
 
   /**
-   * Gets a view as the response type
+   * Request page be updated with given input
    *
-   * @param $page
-   * @return mixed
+   * @param UpdatePage $request
+   * @param  integer $id
+   * @return PageResource
    */
-  protected function getView($page)
+  public function update(UpdatePage $request, $id)
   {
-    $page->version->load('slices.slice', 'slices.fields');
+    $page = $this->PagesManager->updatePage($id, $request->all());
 
-    $page->version->registerComponents();
+    return new PageResource($page);
+  }
 
-    return $this->View->make($page->version->template->layout, ['page' => $page]);
+  /**
+   * ApiRequest the page be copied to another page (duplicated)
+   *
+   * @param ApiRequest $request
+   * @param  integer $id
+   * @return PageResource
+   * @todo make this onework
+   */
+  public function requestCopyPage(ApiRequest $request, $id)
+  {
+    $page = $this->PagesManager->copyPage($id, $request->all());
+
+    return new PageResource($page);
+  }
+
+  /**
+   * Request the page be deleted from database
+   *
+   * @param ApiRequest $request
+   * @param  integer $id
+   * @return PageResource
+   */
+  public function delete(ApiRequest $request, $id)
+  {
+    $this->PagesManager->destroyPage($id);
   }
 }

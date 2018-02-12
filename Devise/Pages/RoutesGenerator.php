@@ -53,7 +53,6 @@ class RoutesGenerator
 
           foreach ($routes as $route)
           {
-            $verb = $route->http_verb;
             $uses = ['as' => $route->route_name, 'uses' => $route->uses];
 
             if ($route->middleware)
@@ -61,7 +60,7 @@ class RoutesGenerator
               $uses['middleware'] = explode('|', $route->middleware);
             }
 
-            $this->Route->$verb($route->slug, $uses);
+            $this->Route->get($route->slug, $uses);
           }
 
         });
@@ -70,7 +69,6 @@ class RoutesGenerator
 
         foreach ($routes as $route)
         {
-          $verb = $route->http_verb;
           $uses = ['as' => $route->route_name, 'uses' => $route->uses];
 
           if ($route->middleware)
@@ -78,7 +76,7 @@ class RoutesGenerator
             $uses['middleware'] = explode('|', $route->middleware);
           }
 
-          $this->Route->$verb($route->slug, $uses);
+          $this->Route->get($route->slug, $uses);
         }
       }
     }
@@ -159,7 +157,7 @@ class RoutesGenerator
    */
   protected function findDvsPageRoutes()
   {
-    $pages = $this->DB->table('dvs_pages')->select('http_verb', 'slug', 'route_name', 'middleware', 'site_id')->get();
+    $pages = $this->DB->table('dvs_pages')->select('slug', 'route_name', 'middleware', 'site_id')->get();
 
     foreach ($pages as $page)
     {

@@ -5,6 +5,7 @@ use Devise\Pages\Collections\CollectionsRepository;
 use Devise\Pages\Interpreter\ViewOpener;
 use Devise\Models\DvsPage;
 use Devise\Support\Framework;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class PagesRepository is used to search and retrieve DvsPage models
@@ -219,29 +220,15 @@ class PagesRepository
    * Finds lots of pages in the system that
    * are not admin pages and belong to the current language
    *
-   * @return Page
+   * @return DvsPage
    */
-  public function pages()
+  public function pages($siteId, $languageId)
   {
-    $languageId = $this->Request->get('language_id', $this->Config->get('devise.languages.primary_language_id'));
-
-    $showAdmin = $this->Request->get('show_admin', false);
-
-    $pages = $this->Page->where('response_type', 'View')->where('language_id', $languageId);
-
-    if ($showAdmin !== 'true')
-    {
-      $pages = $pages->where('dvs_admin', '<>', 1)->where('is_admin', '<>', 1);
-    }
-
-    $pages = $pages->paginate();
-
-    foreach ($pages as $page)
-    {
-      $this->wrapPageVersionStatuses($page->versions, $page);
-    }
-
-    return $this->wrapLanguagesAroundPages($pages);
+    return $this->Page
+      ->with('versions.template')
+      ->where('site_id', $siteId)
+      ->where('language_id', $languageId)
+      ->paginate();
   }
 
   /**
@@ -539,27 +526,15 @@ class PagesRepository
    */
   public function getPagesList($includeAdmin = false, $search = null)
   {
-    $pages = $this->Page->with('language');
+    $pages = $this->Page->join('dvs_languages','dvs_languages.id','=','dvs_pages.language_id');
 
     if ($search != null)
     {
       $pages = $pages->where('title', 'LIKE', '%' . $search . '%');
     }
 
-    if (!$includeAdmin)
-    {
-      $pages = $pages->where('is_admin', '=', 0)->where('dvs_admin', '=', 0);
-    }
-
-    $pageCollection = $pages->get();
-
-    $pageList = array();
-    foreach ($pageCollection as $page)
-    {
-      $pageList[$page->id] = $page->title . ' (' . $page->language->code . ')';
-    }
-
-    return $pageList;
+    return $pages->select(DB::raw("CONCAT(title,' (',dvs_languages.code, ')') AS name"),'dvs_pages.id')
+      ->pluck('name', 'id');
   }
 
 

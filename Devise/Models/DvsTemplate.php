@@ -6,12 +6,12 @@ use Devise\Devise;
 
 class DvsTemplate extends Model
 {
-  protected $fillable = ['name', 'layout', 'slots'];
+  protected $fillable = ['name', 'layout', 'slices'];
 
   protected $table = 'dvs_templates';
 
   protected $attributes = [
-    'slots' => '[]'
+    'slices' => '[]'
   ];
 
   public function pages()
@@ -19,24 +19,24 @@ class DvsTemplate extends Model
     return $this->hasMany(DvsPageVersion::class, 'template_id');
   }
 
-  public function setSlotsAttribute($value)
+  public function setSlicesAttribute($value)
   {
-    $this->attributes['slots'] = json_encode($value);
+    $this->attributes['slices'] = json_encode($value);
   }
 
-  public function getSlotsArrayAttribute()
+  public function getSlicesArrayAttribute()
   {
-    return json_decode($this->slots);
+    return json_decode($this->slices);
   }
 
   public function registerComponents()
   {
-    $this->findComponents($this->slots_array);
+    $this->findComponents($this->slices_array);
   }
 
-  private function findComponents($slots)
+  private function findComponents($slices)
   {
-    foreach ($slots as $slot)
+    foreach ($slices as $slot)
     {
       if ($slot->id)
       {

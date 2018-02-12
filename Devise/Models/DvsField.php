@@ -12,8 +12,6 @@ class DvsField extends Model
 
   protected $table = 'dvs_fields';
 
-  protected $guarded = array();
-
   protected $_value;
 
   protected $dates = ['deleted_at'];

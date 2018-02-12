@@ -3,6 +3,11 @@
 Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'], function () {
 
   /**
+   * Fields
+   */
+  Route::put('fields/{field_id}', 'FieldsController@update');
+
+  /**
    * Media
    */
   Route::get('media/{folder_dot_path?}', 'MediaController@all');

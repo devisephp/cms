@@ -115,7 +115,7 @@ class PagesManager
   {
     $page = $this->createPageFromInput($input);
 
-    $startsAt = array_get($input, 'published', false) ? new \DateTime : null;
+    $startsAt = array_get($input, 'published', false) ? date('Y-m-d H:i:s') : null;
 
     $this->PageVersionManager->createDefaultPageVersion($page, $input['template_id'], $startsAt);
     $this->cacheDeviseRoutes();

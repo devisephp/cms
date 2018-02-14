@@ -18,6 +18,7 @@ class CreateDvsSites extends Migration
       $table->string('name');
       $table->string('domain');
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

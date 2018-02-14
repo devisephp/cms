@@ -75,12 +75,14 @@ class PagesManager
   /**
    * Construct a new page manager
    *
-   * @param \DvsPage $Page
-   * @param Validator $Validator
+   * @param DvsPage|\DvsPage $Page
    * @param PageVersionManager $PageVersionManager
+   * @param PageVersionsRepository $PageVersionsRepository
    * @param FieldsRepository $FieldsRepository
    * @param FieldManager $FieldManager
    * @param Framework $Framework
+   * @param RoutesGenerator $RoutesGenerator
+   * @param DvsLanguage $Language
    */
   public function __construct(
     DvsPage $Page,
@@ -115,7 +117,7 @@ class PagesManager
   {
     $page = $this->createPageFromInput($input);
 
-    $startsAt = array_get($input, 'published', false) ? new \DateTime : null;
+    $startsAt = array_get($input, 'published', false) ? date('Y-m-d H:i:s') : null;
 
     $this->PageVersionManager->createDefaultPageVersion($page, $input['template_id'], $startsAt);
     $this->cacheDeviseRoutes();
@@ -139,6 +141,12 @@ class PagesManager
       ->findOrFail($id);
 
     $page->updateFromArray($input);
+
+    if (isset($input['slices']) && $input['slices'])
+    {
+      $this->FieldManager->saveSliceInstanceFields($input['slices']);
+    }
+
     $this->cacheDeviseRoutes();
 
     return $page;

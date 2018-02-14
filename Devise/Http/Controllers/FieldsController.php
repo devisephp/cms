@@ -1,6 +1,6 @@
 <?php
 
-namespace Devise\Http\Controllers;;
+namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
 use Devise\Http\Resources\Api\FieldResource;

@@ -35,12 +35,12 @@ class DvsPageVersion extends Model
 
   public function setStartsAtAttribute($value)
   {
-    $this->attributes['starts_at'] = date('Y-m-d H:i:s', strtotime($value));
+    $this->attributes['starts_at'] = $value ? date('Y-m-d H:i:s', strtotime($value)) : null;
   }
 
   public function setEndsAtAttribute($value)
   {
-    $this->attributes['ends_at'] = date('Y-m-d H:i:s', strtotime($value));
+    $this->attributes['ends_at'] = $value ? date('Y-m-d H:i:s', strtotime($value)) : null;
   }
 
   /**

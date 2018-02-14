@@ -3,12 +3,14 @@
 namespace Devise\Models;
 
 use Devise\Sites\SiteDetector;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
 
 class DvsSite extends Model
 {
-  protected $guarded = array();
+  use SoftDeletes;
+
+  public $fillable = array('name', 'domain');
 
   protected $table = 'dvs_sites';
 
@@ -29,10 +31,8 @@ class DvsSite extends Model
 
   public function getDefaultLanguageAttribute()
   {
-    $lang = $this->languages()
+    return $this->languages()
       ->wherePivot('default', 1)
       ->first();
-
-    return $lang;
   }
 }

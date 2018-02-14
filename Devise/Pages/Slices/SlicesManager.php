@@ -56,8 +56,6 @@ class SlicesManager
     {
       $this->DvsField->create([
         "slice_instance_id" => $newSlice->id,
-        "type"              => $field->type,
-        "human_name"        => $field->human_name,
         "key"               => $field->key,
         "json_value"        => $field->json_value,
         "content_requested" => $field->content_requested

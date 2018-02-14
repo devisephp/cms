@@ -8,7 +8,7 @@ class DvsField extends Model
 {
   protected $table = 'dvs_fields';
 
-  protected $fillable = ['slice_instance_id', 'key'];
+  protected $fillable = ['slice_instance_id', 'key', 'json_value', 'content_requested'];
 
   /**
    * Accessor on this model to get value

@@ -35,11 +35,6 @@ class UsersController extends Controller
     $all = $this->User
       ->get();
 
-    if (method_exists($this->User, 'groups'))
-    {
-      $all->load('groups');
-    }
-
     return UserResource::collection($all);
   }
 
@@ -78,17 +73,6 @@ class UsersController extends Controller
 
     $user->update($data);
 
-    $user->groups()->sync(
-      collect($request->input('groups'))
-        ->pluck('id')
-        ->toArray()
-    );
-
-    if (method_exists($this->User, 'groups'))
-    {
-      $user->load('groups');
-    }
-
     return new UserResource($user);
   }
 
@@ -100,8 +84,6 @@ class UsersController extends Controller
   {
     $user = $this->User
       ->findOrFail($id);
-
-    if ($user->pageVersions->count()) abort(422, 'User must be removed from all pages before deleting.');
 
     $user->delete();
   }

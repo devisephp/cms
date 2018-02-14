@@ -8,6 +8,13 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::put('fields/{field_id}', 'FieldsController@update');
 
   /**
+   * Languages
+   */
+  Route::get('languages', 'LanguagesController@all');
+  Route::post('languages', 'LanguagesController@store');
+  Route::put('languages/{languages_id}', 'LanguagesController@update');
+
+  /**
    * Media
    */
   Route::get('media/{folder_dot_path?}', 'MediaController@all');
@@ -37,6 +44,14 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::put('page-versions/{page_version_id}', 'PageVersionsController@update');
   Route::put('page-versions/{page_version_id}/toggle-share', 'PageVersionsController@toggleSharing');
   Route::delete('page-versions/{page_version_id}', 'PageVersionsController@delete');
+
+  /**
+   * Sites
+   */
+  Route::get('sites', 'SitesController@all');
+  Route::post('sites', 'SitesController@store');
+  Route::put('sites/{sites_id}', 'SitesController@update');
+  Route::delete('sites/{sites_id}', 'SitesController@delete');
 
   /**
    * Slices

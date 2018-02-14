@@ -17,8 +17,6 @@ class CreateDvsFields extends Migration
       {
         $table->increments('id');
         $table->unsignedInteger('slice_instance_id')->nullable();
-        $table->string('type', 25);
-        $table->string('human_name', 255)->nullable();
         $table->string('key', 100);
         $table->longText('json_value');
         $table->boolean('content_requested')->default(false);

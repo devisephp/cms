@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\Resource;
 
 class PageResource extends Resource
 {
+
   /**
    * Transform the resource into an array.
    *
@@ -20,13 +21,39 @@ class PageResource extends Resource
       'description'        => $this->meta_description,
       'canonical'          => $this->canonical,
       'ab_testing_enabled' => $this->ab_testing_enabled,
-      'slices'             => []
+      'versions'           => PageVersionResource::collection($this->versions),
+      'slices'             => [],
+      'languages'          => []
     ];
 
-    // Relationships
-    if ($this->liveVersion && $this->liveVersion->template)
+
+    if ($this->translatedFromPage)
     {
-      $data['slices'] = SliceInstanceResource::collection($this->liveVersion->slices);
+      $data['languages'][] = [
+        'name'    => $this->translatedFromPage->language->human_name,
+        'url'     => $this->translatedFromPage->slug,
+        'current' => ($this->translatedFromPage->id == $this->id)
+      ];
+
+      $localizedPages = $this->translatedFromPage->localizedPages;
+    } else
+    {
+      $localizedPages = $this->localizedPages;
+    }
+
+    foreach ($localizedPages as $language)
+    {
+      $data['languages'][] = [
+        'name'    => $language->language->human_name,
+        'url'     => $language->slug,
+        'current' => ($this->translatedFromPage->id == $this->id)
+      ];
+    }
+
+    // Relationships
+    if ($this->currentVersion && $this->currentVersion->template)
+    {
+      $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
     }
 
     return $data;

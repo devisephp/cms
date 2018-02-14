@@ -28,6 +28,18 @@ class DvsPage extends Model
     return $this->hasMany(DvsPageVersion::class, 'page_id');
   }
 
+  public function currentVersion()
+  {
+    if (request()->has('version_id'))
+    {
+      return $this->hasOne(DvsPageVersion::class, 'page_id')
+        ->where('id', request()->input('version_id'));
+    } else
+    {
+      return $this->liveVersion();
+    }
+  }
+
   public function liveVersion()
   {
     $now = new DateTime;

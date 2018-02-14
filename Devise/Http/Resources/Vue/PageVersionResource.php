@@ -15,11 +15,10 @@ class PageVersionResource extends Resource
   public function toArray($request)
   {
     return [
-      'id'         => $this->id,
-      'title'       => $this->title,
-
-      // Relationships
-      'template' => new TemplateResource($this->template)
+      'id'          => $this->id,
+      'name'        => $this->name,
+      'template_id' => $this->template_id,
+      'current'     => ($this->page->currentVersion->id == $this->id)
     ];
   }
 }

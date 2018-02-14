@@ -2,6 +2,8 @@
 
 namespace Devise\Models;
 
+use DateTime;
+
 class DvsPage extends Model
 {
   protected $fillable = [
@@ -24,6 +26,19 @@ class DvsPage extends Model
   public function versions()
   {
     return $this->hasMany(DvsPageVersion::class, 'page_id');
+  }
+
+  public function liveVersion()
+  {
+    $now = new DateTime;
+
+    return $this->hasOne(DvsPageVersion::class, 'page_id')
+      ->where('starts_at', '<', $now)
+      ->where(function ($query) use ($now) {
+        $query->where('ends_at', '>', $now);
+        $query->orWhereNull('ends_at');
+      })
+      ->orderBy('starts_at', 'DESC');
   }
 
   public function localizedPages()

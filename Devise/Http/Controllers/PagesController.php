@@ -99,7 +99,7 @@ class PagesController extends Controller
 
     $pages = $this->PagesRepository->pages($site->id, $languageId);
 
-    return PageResource::collection($pages);
+    return \Devise\Http\Resources\Vue\PageResource::collection($pages);
   }
 
   /**

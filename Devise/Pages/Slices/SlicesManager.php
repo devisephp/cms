@@ -7,10 +7,14 @@ use Devise\Models\DvsSliceInstance;
 
 class SlicesManager
 {
+  private $DvsSliceInstance;
+  private $DvsField;
 
 
   /**
    * SlicesManager constructor.
+   * @param DvsSliceInstance $DvsSliceInstance
+   * @param DvsField $DvsField
    */
   public function __construct(DvsSliceInstance $DvsSliceInstance, DvsField $DvsField)
   {
@@ -35,7 +39,9 @@ class SlicesManager
 
   /**
    * @param $instance
-   * @param int $parentId
+   * @param $pageVersionId
+   * @param int $parentSliceId
+   * @internal param int $parentId
    */
   private function copySlice($instance, $pageVersionId, $parentSliceId = 0)
   {

@@ -24,9 +24,9 @@ class PageResource extends Resource
     ];
 
     // Relationships
-    if ($this->version->template)
+    if ($this->liveVersion && $this->liveVersion->template)
     {
-      $data['slices'] = SliceInstanceResource::collection($this->version->slices);
+      $data['slices'] = SliceInstanceResource::collection($this->liveVersion->slices);
     }
 
     return $data;

@@ -75,12 +75,14 @@ class PagesManager
   /**
    * Construct a new page manager
    *
-   * @param \DvsPage $Page
-   * @param Validator $Validator
+   * @param DvsPage|\DvsPage $Page
    * @param PageVersionManager $PageVersionManager
+   * @param PageVersionsRepository $PageVersionsRepository
    * @param FieldsRepository $FieldsRepository
    * @param FieldManager $FieldManager
    * @param Framework $Framework
+   * @param RoutesGenerator $RoutesGenerator
+   * @param DvsLanguage $Language
    */
   public function __construct(
     DvsPage $Page,
@@ -139,6 +141,12 @@ class PagesManager
       ->findOrFail($id);
 
     $page->updateFromArray($input);
+
+    if (isset($input['slices']) && $input['slices'])
+    {
+      $this->FieldManager->saveSliceInstanceFields($input['slices']);
+    }
+
     $this->cacheDeviseRoutes();
 
     return $page;

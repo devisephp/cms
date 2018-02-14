@@ -14,10 +14,6 @@ class FieldResource extends Resource
    */
   public function toArray($request)
   {
-    $data = $this->value;
-
-    $data->id = $this->id;
-
-    return $data;
+    return $this->value;
   }
 }

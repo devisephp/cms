@@ -14,14 +14,7 @@ class FieldManager
    *
    * @var DvsField
    */
-  private $Field;
-
-  /**
-   * DvsGlobalField model
-   *
-   * @var DvsGlobalField
-   */
-  private $GlobalField;
+  private $DvsField;
 
   /**
    * FieldsRepository lets us fetch fields from database
@@ -33,15 +26,13 @@ class FieldManager
   /**
    * Construct a new Field Manager
    *
-   * @param \DvsField $Field
-   * @param \DvsGlobalField $GlobalField
+   * @param DvsField $DvsField
    * @param FieldsRepository $FieldsRepository
    * @param Framework $Framework
    */
-  public function __construct(DvsField $Field, FieldsRepository $FieldsRepository, Framework $Framework)
+  public function __construct(DvsField $DvsField, FieldsRepository $FieldsRepository, Framework $Framework)
   {
-    $this->Field = $Field;
-//    $this->GlobalField = $GlobalField;
+    $this->DvsField = $DvsField;
     $this->FieldsRepository = $FieldsRepository;
     $this->Event = $Framework->Event;
   }
@@ -51,7 +42,7 @@ class FieldManager
    *
    * @param  integer $fieldId
    * @param  array $input
-   * @return \DvsField | \DvsGlobaField
+   * @return DvsField
    */
   public function updateField($fieldId, $input)
   {
@@ -88,7 +79,7 @@ class FieldManager
    */
   public function resetField($fieldId, $scope)
   {
-    $field = $scope === 'global' ? $this->GlobalField->findOrFail($fieldId) : $this->Field->findOrFail($fieldId);
+    $field = $scope === 'global' ? $this->GlobalField->findOrFail($fieldId) : $this->DvsField->findOrFail($fieldId);
 
     $field->json_value = '{}';
 
@@ -106,7 +97,33 @@ class FieldManager
    */
   public function markNoContentRequested($fieldIds)
   {
-    return $this->Field->whereIn('id', $fieldIds)->update(['content_requested' => false]);
+    return $this->DvsField->whereIn('id', $fieldIds)->update(['content_requested' => false]);
+  }
+
+
+  /**
+   * @param $slices
+   */
+  public function saveSliceInstanceFields($slices)
+  {
+    foreach ($slices as $slice)
+    {
+      foreach ($slice['fields'] as $fieldKey => $fieldValue)
+      {
+        $field = $this->DvsField
+          ->firstOrNew(['slice_instance_id' => $slice['instance_id'], 'key' => $fieldKey]);
+
+        $field->slice_instance_id = $slice['instance_id'];
+        $field->key = $fieldKey;
+        $field->json_value = json_encode($fieldValue);
+        $field->save();
+      }
+
+      if (isset($slice['slices']) && $slice['slices'])
+      {
+        $this->saveSliceInstanceFields($slice['slices']);
+      }
+    }
   }
 
   /**
@@ -124,7 +141,7 @@ class FieldManager
 
     $field = $scope == 'global'
       ? $this->GlobalField->whereId($fieldId)->firstOrFail()
-      : $this->Field->whereId($fieldId)->firstOrFail();
+      : $this->DvsField->whereId($fieldId)->firstOrFail();
 
     if ($newScope !== $scope)
     {
@@ -246,7 +263,7 @@ class FieldManager
    */
   protected function newPageField($pageVersionId, $key, $type, $humanName)
   {
-    $field = $this->Field->newInstance();
+    $field = $this->DvsField->newInstance();
 
     $field->page_version_id = $pageVersionId;
     $field->type = $type;

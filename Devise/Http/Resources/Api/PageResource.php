@@ -23,6 +23,7 @@ class PageResource extends Resource
 
       // Relationships
       'versions'           => PageVersionResource::collection($this->whenLoaded('versions')),
+      'meta'               => MetaResource::collection($this->whenLoaded('metas')),
 
       'created_at' => $this->created_at->format('Y-m-d H:i:s'),
       'updated_at' => $this->updated_at->format('Y-m-d H:i:s')

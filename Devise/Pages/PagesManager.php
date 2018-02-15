@@ -92,7 +92,8 @@ class PagesManager
     FieldManager $FieldManager,
     Framework $Framework,
     RoutesGenerator $RoutesGenerator,
-    DvsLanguage $Language
+    DvsLanguage $Language,
+    PageMetaManager $PageMetaManager
   )
   {
     $this->Page = $Page;
@@ -104,6 +105,7 @@ class PagesManager
     $this->Config = $Framework->config;
     $this->RoutesGenerator = $RoutesGenerator;
     $this->Language = $Language;
+    $this->PageMetaManager = $PageMetaManager;
     $this->now = new \DateTime;
   }
 
@@ -146,6 +148,8 @@ class PagesManager
     {
       $this->FieldManager->saveSliceInstanceFields($input['slices']);
     }
+
+    $this->PageMetaManager->savePageMeta($page->id, array_get($input, 'meta', []));
 
     $this->cacheDeviseRoutes();
 

@@ -145,6 +145,8 @@ class PagesController extends Controller
   {
     $page = $this->PagesManager->updatePage($id, $request->all());
 
+    $page->load('versions','metas');
+
     return new PageResource($page);
   }
 

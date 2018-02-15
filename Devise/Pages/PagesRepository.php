@@ -225,7 +225,7 @@ class PagesRepository
   public function pages($siteId, $languageId)
   {
     return $this->Page
-      ->with('versions.template')
+      ->with('versions.template', 'metas')
       ->where('site_id', $siteId)
       ->where('language_id', $languageId)
       ->paginate();

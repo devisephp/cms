@@ -58,6 +58,11 @@ class DvsPage extends Model
     return $this->hasMany(DvsPage::class, 'translated_from_page_id');
   }
 
+  public function metas()
+  {
+    return $this->hasMany(DvsPageMeta::class, 'page_id');
+  }
+
   public function translatedFromPage()
   {
     return $this->belongsTo(DvsPage::class, 'translated_from_page_id');

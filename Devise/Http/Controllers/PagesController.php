@@ -3,6 +3,7 @@
 namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
+use Devise\Http\Requests\Pages\CopyPage;
 use Devise\Http\Requests\Pages\StorePage;
 use Devise\Http\Requests\Pages\UpdatePage;
 use Devise\Http\Resources\Api\PageResource;
@@ -144,6 +145,22 @@ class PagesController extends Controller
   public function update(UpdatePage $request, $id)
   {
     $page = $this->PagesManager->updatePage($id, $request->all());
+
+    $page->load('versions','metas');
+
+    return new PageResource($page);
+  }
+
+  /**
+   * Request page be copied
+   *
+   * @param CopyPage $request
+   * @param  integer $id
+   * @return PageResource
+   */
+  public function copy(CopyPage $request, $id)
+  {
+    $page = $this->PagesManager->copyPage($id, $request->all());
 
     $page->load('versions','metas');
 

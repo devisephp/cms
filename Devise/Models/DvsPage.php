@@ -3,9 +3,12 @@
 namespace Devise\Models;
 
 use DateTime;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DvsPage extends Model
 {
+  use SoftDeletes;
+  
   protected $fillable = [
     'site_id',
     'language_id',

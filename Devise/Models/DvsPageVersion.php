@@ -10,8 +10,6 @@ class DvsPageVersion extends Model
 {
   use SoftDeletes;
 
-  protected $softDelete = true;
-
   protected $table = 'dvs_page_versions';
 
   protected $fillable = [

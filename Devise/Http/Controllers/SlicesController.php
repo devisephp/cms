@@ -54,12 +54,12 @@ class SlicesController extends Controller
    */
   public function update(SaveSlice $request, $id)
   {
-    $template = $this->DvsSlice
+    $slice = $this->DvsSlice
       ->findOrFail($id);
 
-    $template->updateFromRequest($request);
+    $slice->updateFromRequest($request);
 
-    return new SliceResource($template);
+    return new SliceResource($slice);
   }
 
   /**
@@ -68,11 +68,11 @@ class SlicesController extends Controller
    */
   public function delete(DeleteSlice $request, $id)
   {
-    $template = $this->DvsSlice
+    $slice = $this->DvsSlice
       ->findOrFail($id);
 
-    if($template->pageVersions->count()) abort(422, 'Slice must be removed from all pages before deleting.');
+    if($slice->pageVersions->count()) abort(422, 'Slice must be removed from all pages before deleting.');
 
-    $template->delete();
+    $slice->delete();
   }
 }

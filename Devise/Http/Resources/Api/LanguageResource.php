@@ -15,15 +15,14 @@ class LanguageResource extends Resource
   public function toArray($request)
   {
     return [
-      'id'                  => $this->id,
-      'code'                => $this->code,
-      'human_name'          => $this->human_name,
-      'regional_human_name' => $this->regional_human_name,
-      'default'          => $this->whenPivotLoaded('dvs_site_element', function () {
+      'id'         => $this->id,
+      'code'       => $this->code,
+      'name'       => $this->name,
+      'default'    => $this->whenPivotLoaded('dvs_site_element', function () {
         return $this->pivot->default;
       }),
-      'created_at'          => $this->created_at->format('Y-m-d H:i:s'),
-      'updated_at'          => $this->updated_at->format('Y-m-d H:i:s'),
+      'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+      'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
     ];
   }
 }

@@ -15,7 +15,7 @@ class DvsLanguage extends Model
 
   public function getNameAttribute()
   {
-    return $this->regional_human_name ?: $this->human_name;
+    return trans('devise::languages.' . $this->code);
   }
 
   public static function getCodesArray()

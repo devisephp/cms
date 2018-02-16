@@ -41,12 +41,12 @@ class PageResource extends Resource
       $localizedPages = $this->localizedPages;
     }
 
-    foreach ($localizedPages as $language)
+    foreach ($localizedPages as $page)
     {
       $data['languages'][] = [
-        'name'    => $language->language->human_name,
-        'url'     => $language->slug,
-        'current' => ($this->translatedFromPage->id == $this->id)
+        'name'    => $page->language->human_name,
+        'url'     => $page->slug,
+        'current' => ($page->translatedFromPage->id == $this->id)
       ];
     }
 

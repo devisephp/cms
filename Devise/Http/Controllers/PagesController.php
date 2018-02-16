@@ -71,7 +71,7 @@ class PagesController extends Controller
     } else
     {
       if(!$page->currentVersion) abort(404);
-      
+
       $page->currentVersion->registerComponents();
 
       return $this->View->make($page->currentVersion->template->layout, ['page' => $page]);

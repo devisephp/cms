@@ -15,6 +15,7 @@ class DvsPageVersion extends Model
   protected $table = 'dvs_page_versions';
 
   protected $fillable = [
+    'name',
     'template_id',
     'starts_at',
     'ends_at',

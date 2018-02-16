@@ -16,8 +16,6 @@ class SaveLanguage extends ApiRequest
   {
     return [
       'code'                => 'required|unique:dvs_languages,code',
-      'human_name'          => 'required',
-      'regional_human_name' => 'filled'
     ];
   }
 }

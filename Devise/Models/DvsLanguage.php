@@ -6,7 +6,7 @@ class DvsLanguage extends Model
 {
   protected $table = 'dvs_languages';
 
-  public $fillable = ['code', 'human_name', 'regional_human_name'];
+  public $fillable = ['code'];
 
   public function pages()
   {

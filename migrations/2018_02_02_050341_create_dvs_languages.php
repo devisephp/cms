@@ -16,8 +16,6 @@ class CreateDvsLanguages extends Migration
     Schema::create('dvs_languages', function ($table) {
       $table->increments('id');
       $table->string('code', 2);
-      $table->string('human_name', 255)->nullable();
-      $table->string('regional_human_name')->nullable();
       $table->timestamps();
     });
   }

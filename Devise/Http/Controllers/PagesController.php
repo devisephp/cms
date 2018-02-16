@@ -70,6 +70,8 @@ class PagesController extends Controller
       return $this->Redirect->route($localized->route_name, $params);
     } else
     {
+      if(!$page->currentVersion) abort(404);
+      
       $page->currentVersion->registerComponents();
 
       return $this->View->make($page->currentVersion->template->layout, ['page' => $page]);

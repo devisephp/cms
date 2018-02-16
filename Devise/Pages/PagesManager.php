@@ -92,7 +92,8 @@ class PagesManager
     FieldManager $FieldManager,
     Framework $Framework,
     RoutesGenerator $RoutesGenerator,
-    DvsLanguage $Language
+    DvsLanguage $Language,
+    PageMetaManager $PageMetaManager
   )
   {
     $this->Page = $Page;
@@ -104,6 +105,7 @@ class PagesManager
     $this->Config = $Framework->config;
     $this->RoutesGenerator = $RoutesGenerator;
     $this->Language = $Language;
+    $this->PageMetaManager = $PageMetaManager;
     $this->now = new \DateTime;
   }
 
@@ -147,6 +149,8 @@ class PagesManager
       $this->FieldManager->saveSliceInstanceFields($input['slices']);
     }
 
+    $this->PageMetaManager->savePageMeta($page->id, array_get($input, 'meta', []));
+
     $this->cacheDeviseRoutes();
 
     return $page;
@@ -180,22 +184,16 @@ class PagesManager
   {
     $fromPage = $this->Page->findOrFail($fromPageId);
 
-    if (isset($input['page_version_id']))
-    {
-      // a specific version has been requested to copy
-      $fromPageVersion = $fromPage->versions()->findOrFail($input['page_version_id']);
-      $fromPageVersion->name = 'Default';
-    } else
-    {
-      // we'll use the current live version to copy
-      $fromPageVersion = $fromPage->getLiveVersion();
-    }
+    // we'll use the current live version to copy
+    $fromPageVersion = $fromPage->getLiveVersion();
 
-    // get translated page id, if page copy is translation and langauges are different
-    if (array_get($input, 'copy_reason') == 'translate' && array_get($input, 'language_id') !== $fromPage->language_id)
+    if (array_get($input, 'language_id', false))
     {
       $this->setTranslatedFromPageId($fromPage, $input);
       $this->setTranslatedFromRouteName($fromPage, $input);
+    } else {
+      // inject default language id
+      $input['language_id'] = $fromPage->language_id;
     }
 
     $toPage = $this->createPageFromInput($input);

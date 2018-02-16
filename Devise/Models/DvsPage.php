@@ -3,9 +3,12 @@
 namespace Devise\Models;
 
 use DateTime;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DvsPage extends Model
 {
+  use SoftDeletes;
+  
   protected $fillable = [
     'site_id',
     'language_id',
@@ -56,6 +59,11 @@ class DvsPage extends Model
   public function localizedPages()
   {
     return $this->hasMany(DvsPage::class, 'translated_from_page_id');
+  }
+
+  public function metas()
+  {
+    return $this->hasMany(DvsPageMeta::class, 'page_id');
   }
 
   public function translatedFromPage()

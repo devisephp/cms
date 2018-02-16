@@ -29,12 +29,21 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::delete('media-directories', 'MediaDirectoriesController@remove');
 
   /**
+   * Meta
+   */
+  Route::get('meta', 'MetaController@all');
+  Route::post('meta', 'MetaController@store');
+  Route::put('meta/{meta_id}', 'MetaController@update');
+  Route::delete('meta/{meta_id}', 'MetaController@delete');
+
+  /**
    * Pages
    */
   Route::get('pages', 'PagesController@pages');
   Route::get('pages-suggest', 'PagesController@suggestList');
   Route::post('pages', 'PagesController@store');
   Route::put('pages/{page_id}', 'PagesController@update');
+  Route::put('pages/{page_id}/copy', 'PagesController@copy');
   Route::delete('pages/{page_id}', 'PagesController@delete');
 
   /**

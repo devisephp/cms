@@ -55,20 +55,12 @@ class PagesController extends Controller
    */
   public function show(ApiRequest $request)
   {
-    // @todo rename var and check user permissions
-    $editing = true;
+    $page = $this->PagesRepository->findByRouteName($this->Route->currentRouteName());
 
-    $pageVersionHash = $this->Request->get('page_version_share', null);
-    $pageVersionName = $this->Request->get('page_version', null);
-
-    $page = $pageVersionHash
-      ? $this->PagesRepository->findByRouteNameAndPreviewHash($this->Route->currentRouteName(), $pageVersionHash)
-      : $this->PagesRepository->findByRouteName($this->Route->currentRouteName(), $pageVersionName, $editing);
-
-    $page = $this->PagesRepository->getTranslatedVersions($page);
+    $page = $this->PagesRepository->getLocalized($page);
 
     $localized = $this->PagesRepository->findLocalizedPage($page);
-    $localized = $this->PagesRepository->getTranslatedVersions($localized);
+    $localized = $this->PagesRepository->getLocalized($localized);
 
     if ($localized)
     {
@@ -78,11 +70,9 @@ class PagesController extends Controller
       return $this->Redirect->route($localized->route_name, $params);
     } else
     {
-      $page->version->load('slices.slice', 'slices.fields');
+      $page->currentVersion->registerComponents();
 
-      $page->version->registerComponents();
-
-      return $this->View->make($page->version->template->layout, ['page' => $page]);
+      return $this->View->make($page->currentVersion->template->layout, ['page' => $page]);
     }
   }
 

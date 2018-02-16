@@ -139,12 +139,12 @@ class PageVersionManager
   {
     $pageVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
 
-    $page = $this->PagesRepository->find($pageVersion['page_id']);
-
-    $liveVersionId = $this->PagesRepository->getLivePageVersion($page)->id;
+    $page = $this->PagesRepository
+      ->with('liveVersion')
+      ->find($pageVersion['page_id']);
 
     // throw exception if attempt to delete live page version
-    if ($liveVersionId == $pageVersion['id'])
+    if ($page->liveVersion)
     {
       abort(422, 'Cannot delete live page version');
     }

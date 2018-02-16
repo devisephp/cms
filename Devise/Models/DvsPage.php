@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DvsPage extends Model
 {
   use SoftDeletes;
-  
+
   protected $fillable = [
     'site_id',
     'language_id',
@@ -35,15 +35,20 @@ class DvsPage extends Model
   {
     if (request()->has('version_id'))
     {
-      return $this->hasOne(DvsPageVersion::class, 'page_id')
-        ->where('id', request()->input('version_id'));
-    } else
-    {
-      return $this->liveVersion();
+      return $this->versionById(request()->get('version_id'));
     }
+
+    return $this->liveVersion();
   }
 
   public function liveVersion()
+  {
+    if ($this->ab_testing_enabled) return $this->livePageVersionByAB();
+
+    return $this->livePageVersionByDate();
+  }
+
+  public function livePageVersionByDate()
   {
     $now = new DateTime;
 
@@ -54,6 +59,78 @@ class DvsPage extends Model
         $query->orWhereNull('ends_at');
       })
       ->orderBy('starts_at', 'DESC');
+  }
+
+  public function abEnabledLiveVersions()
+  {
+    $now = new DateTime;
+
+    return $this->hasMany(DvsPageVersion::class, 'page_id')
+      ->where('ab_testing_amount', '>', 0)
+      ->where('starts_at', '<', $now)
+      ->where(function ($query) use ($now) {
+        $query->where('ends_at', '>', $now);
+        $query->orWhereNull('ends_at');
+      })
+      ->orderBy('starts_at', 'DESC');
+  }
+
+  public function livePageVersionByAB()
+  {
+    $liveVersion = $this->livePageVersionByCookie();
+
+    if ($liveVersion) return $liveVersion;
+
+    $liveVersion = $this->livePageVersionByDiceRoll();
+
+    if ($liveVersion) return $liveVersion;
+
+    return $this->livePageVersionByDate();
+  }
+
+  public function versionById($id)
+  {
+    return $this->hasOne(DvsPageVersion::class, 'page_id')
+      ->where('id', $id);
+  }
+
+  public function livePageVersionByCookie()
+  {
+    $pageVersionId = $this->Request->cookie('dvs-ab-testing-' . $this->id);
+
+    if (!$pageVersionId) return null;
+
+    $liveVersion = $this->versionById($pageVersionId);
+
+    if ($liveVersion) return $liveVersion;
+
+    return null;
+  }
+
+  public function livePageVersionByDiceRoll()
+  {
+    $liveVersion = null;
+
+    $versions = $this->abEnabledLiveVersions();
+
+    $diceroll = array();
+
+    foreach ($versions as $index => $version)
+    {
+      $diceroll = array_merge(array_fill(0, $version->ab_testing_amount, $index), $diceroll);
+    }
+
+    if (count($diceroll) == 0) return null;
+
+    $diceroll = $diceroll[array_rand($diceroll)];
+
+    if (isset($versions[$diceroll]))
+    {
+      $liveVersion = $versions[$diceroll];
+      $this->Cookie->queue('dvs-ab-testing-' . $this->id, $liveVersion->id);
+    }
+
+    return $this->liveVersionById($liveVersion->id);
   }
 
   public function localizedPages()

@@ -112,6 +112,7 @@ class Repository
     $fileData['name'] = $file->name;
     $fileData['url'] = $file->media_path;
     $fileData['size'] = $file->size;
+    $fileData['used_count'] = $file->used_count;
     return $fileData;
   }
 

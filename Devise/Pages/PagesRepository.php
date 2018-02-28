@@ -160,17 +160,16 @@ class PagesRepository
    * Gets a list of pages in array format probably used for
    * drop down boxes.
    *
-   * @param  boolean $includeAdmin
-   * @param  string $search
+   * @param  string $searchTerm
    * @return array
    */
-  public function getPagesList($includeAdmin = false, $search = null)
+  public function getPagesList($searchTerm = null)
   {
     $pages = $this->Page->join('dvs_languages', 'dvs_languages.id', '=', 'dvs_pages.language_id');
 
-    if ($search != null)
+    if ($searchTerm != null)
     {
-      $pages = $pages->where('title', 'LIKE', '%' . $search . '%');
+      $pages = $pages->where('title', 'LIKE', '%' . $searchTerm . '%');
     }
 
     return $pages->select(DB::raw("CONCAT(title,' (',dvs_languages.code, ')') AS name"), 'dvs_pages.id')

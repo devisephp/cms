@@ -50,15 +50,7 @@ class MediaDirectoriesController
    */
   public function store(Request $request)
   {
-    try
-    {
-      $this->Manager->storeNewCategory($request->all());
-    } catch (CategoryAlreadyExistsException $e)
-    {
-      \Session::flash('dvs-error-message', "The category {$request->input('name')} already exists!");
-    }
-
-    return $this->Redirect->back();
+    $this->Manager->storeNewCategory($request->all());
   }
 
   /**
@@ -70,7 +62,5 @@ class MediaDirectoriesController
   public function remove(Request $request)
   {
     $this->Manager->destroyCategory($request->all());
-
-    return $this->Redirect->back();
   }
 }

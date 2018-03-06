@@ -55,6 +55,14 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::delete('page-versions/{page_version_id}', 'PageVersionsController@delete');
 
   /**
+   * Redirects
+   */
+  Route::get('redirects', 'RedirectsController@all');
+  Route::post('redirects', 'RedirectsController@store');
+  Route::put('redirects/{redirect_id}', 'RedirectsController@update');
+  Route::delete('redirects/{redirect_id}', 'RedirectsController@delete');
+
+  /**
    * Sites
    */
   Route::get('sites', 'SitesController@all');

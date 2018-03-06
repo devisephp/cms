@@ -1,6 +1,8 @@
 <?php namespace Devise\Pages;
 
+use Devise\Http\Requests\Redirects\ExecuteRedirect;
 use Devise\Support\Framework;
+use Illuminate\Http\Request;
 
 class RoutesGenerator
 {
@@ -43,6 +45,16 @@ class RoutesGenerator
     $routesBySite = $routes->groupBy('site_id');
     $domains = $this->DB->table('dvs_sites')->pluck('domain', 'id');
 
+    $this->setPageRoutes($routesBySite, $domains);
+
+    $redirects = $this->findDvsRedirects();
+    $redirectsBySite = $redirects->groupBy('site_id');
+
+    $this->setRedirects($redirectsBySite, $domains);
+  }
+
+  private function setPageRoutes($routesBySite, $domains)
+  {
     foreach ($routesBySite as $siteId => $routes)
     {
       if ($siteId > 0)
@@ -77,6 +89,36 @@ class RoutesGenerator
           }
 
           $this->Route->get($route->slug, $uses);
+        }
+      }
+    }
+  }
+
+  private function setRedirects($redirectsBySite, $domains)
+  {
+    foreach ($redirectsBySite as $siteId => $routes)
+    {
+      if ($siteId > 0)
+      {
+        $overwrite = env('SITE_' . $siteId . '_DOMAIN');
+        $domain = (!$overwrite) ? $domains[$siteId] : $overwrite;
+        $this->Route->group(['domain' => $domain], function () use ($routes) {
+
+          foreach ($routes as $route)
+          {
+            $this->Route->get($route->from_url, function (ExecuteRedirect $request) use ($route) {
+              return redirect($request->newUrl($route), $route->type);
+            });
+          }
+
+        });
+      } else
+      {
+        foreach ($routes as $route)
+        {
+          $this->Route->get($route->from_url, function (ExecuteRedirect $request) use ($route) {
+            return redirect($request->newUrl($route), $route->type);
+          });
         }
       }
     }
@@ -148,6 +190,16 @@ class RoutesGenerator
     if ($this->File->exists($routeCachePath)) return $routeCachePath;
 
     return null;
+  }
+
+  /**
+   * Returns the dvs page routes in this system
+   *
+   * @return array
+   */
+  protected function findDvsRedirects()
+  {
+    return $this->DB->table('dvs_redirects')->get();
   }
 
   /**

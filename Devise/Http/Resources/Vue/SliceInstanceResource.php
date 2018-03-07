@@ -15,9 +15,11 @@ class SliceInstanceResource extends Resource
   public function toArray($request)
   {
     $data = [
-      'instance_id' => $this->id,
-      'name'        => $this->slice->component_name,
-      'label'       => $this->label
+      'meta-data' => [
+        'instance_id' => $this->id,
+        'name'        => $this->slice->component_name,
+        'label'       => $this->label
+      ]
     ];
 
     // Relationships
@@ -28,10 +30,9 @@ class SliceInstanceResource extends Resource
 
     if ($this->fields->count())
     {
-      $data['fields'] = [];
       foreach ($this->fields as $field)
       {
-        $data['fields'][$field->key] = new FieldResource($field);
+        $data[$field->key] = new FieldResource($field);
       }
     }
 

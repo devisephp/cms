@@ -4,6 +4,7 @@ namespace Devise\Pages\Slices;
 
 use Devise\Models\DvsField;
 use Devise\Models\DvsSliceInstance;
+use Devise\Models\DvsTemplate;
 
 class SlicesManager
 {
@@ -35,6 +36,24 @@ class SlicesManager
     {
       $this->copySlice($sliceInstance, $newVersion->id);
     }
+  }
+
+  public function updateSlicesFromTemplate(DvsTemplate $template)
+  {
+    $flat = array_flatten($template->slices_array);
+    dd($flat, 'me');
+  }
+
+  private function updateSlices($slices = null, $index = 0)
+  {
+//    $all = ($slices) ? $slices : $this->slices_array;
+//    foreach ($all as $slice)
+//    {
+//
+//      if(isset($slice->slices)){
+//        $this->updateSlices($slice->slices);
+//      }
+//    }
   }
 
   /**

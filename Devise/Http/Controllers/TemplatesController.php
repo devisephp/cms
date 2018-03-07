@@ -8,24 +8,29 @@ use Devise\Http\Requests\Templates\DeleteTemplate;
 use Devise\Http\Resources\Api\TemplateResource;
 use Devise\Models\DvsTemplate;
 
+use Devise\Pages\Slices\SlicesManager;
 use Devise\Support\Framework;
 use Illuminate\Routing\Controller;
 
 class TemplatesController extends Controller
 {
-  /**
-   * @var DvsTemplate
-   */
   private $DvsTemplate;
+
+  private $SlicesManager;
+
+  private $View;
 
 
   /**
    * TemplatesController constructor.
    * @param DvsTemplate $DvsTemplate
+   * @param SlicesManager $SlicesManager
+   * @param Framework $Framework
    */
-  public function __construct(DvsTemplate $DvsTemplate, Framework $Framework)
+  public function __construct(DvsTemplate $DvsTemplate, SlicesManager $SlicesManager, Framework $Framework)
   {
     $this->DvsTemplate = $DvsTemplate;
+    $this->SlicesManager = $SlicesManager;
     $this->View = $Framework->View;
   }
 
@@ -62,6 +67,8 @@ class TemplatesController extends Controller
 
     $template->updateFromRequest($request);
 
+    $this->SlicesManager->updateSlicesFromTemplate($template);
+
     return new TemplateResource($template);
   }
 
@@ -70,7 +77,7 @@ class TemplatesController extends Controller
     $template = $this->DvsTemplate
       ->findOrFail($id);
 
-    if($template->pages->count()) abort(422, 'Template must be removed from all pages before deleting.');
+    if ($template->pages->count()) abort(422, 'Template must be removed from all pages before deleting.');
 
     $template->delete();
   }

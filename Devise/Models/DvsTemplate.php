@@ -31,23 +31,10 @@ class DvsTemplate extends Model
 
   public function registerComponents()
   {
-    $this->findComponents($this->slices_array);
-  }
-
-  private function findComponents($slices)
-  {
-    foreach ($slices as $slot)
+    $slices = DvsSlice::get();
+    foreach ($slices as $slice)
     {
-      if ($slot->id)
-      {
-        $slice = DvsSlice::find($slot->id);
-        Devise::addComponent($slice);
-      }
-
-      if(isset($slot->slices))
-      {
-        $this->findComponents($slot->slices);
-      }
+      Devise::addComponent($slice);
     }
   }
 }

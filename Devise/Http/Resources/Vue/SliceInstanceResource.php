@@ -15,7 +15,7 @@ class SliceInstanceResource extends Resource
   public function toArray($request)
   {
     $data = [
-      'meta-data' => [
+      'metadata' => [
         'instance_id' => $this->id,
         'name'        => $this->slice->component_name,
         'label'       => $this->label

@@ -17,7 +17,7 @@ class CreateDvsTemplates extends Migration
       $table->increments('id');
       $table->string('name');
       $table->string('layout');
-      $table->longText('slices');
+      $table->text('model_queries');
       $table->timestamps();
     });
   }

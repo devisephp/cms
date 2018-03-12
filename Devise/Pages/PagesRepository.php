@@ -64,7 +64,7 @@ class PagesRepository
   public function findByRouteName($name)
   {
     return $this->Page
-      ->with('currentVersion.slices.slice', 'currentVersion.slices.fields', 'versions.page.currentVersion')
+      ->with('currentVersion.slices.templateSlice.slice', 'currentVersion.slices.fields', 'versions.page.currentVersion')
       ->whereRouteName($name)
       ->firstOrFail();
   }

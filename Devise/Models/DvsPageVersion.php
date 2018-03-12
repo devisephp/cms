@@ -64,7 +64,8 @@ class DvsPageVersion extends Model
   public function slices()
   {
     return $this->hasMany(DvsSliceInstance::class, 'page_version_id')
-      ->where('parent_instance_id', 0);
+      ->where('parent_instance_id', 0)
+      ->orderBy('position');
   }
 
   public function registerComponents()
@@ -83,9 +84,9 @@ class DvsPageVersion extends Model
 
   private function extractComponents(DvsSliceInstance $instance)
   {
-    if (View::exists($instance->slice->view))
+    if (View::exists($instance->templateSlice->slice->view))
     {
-      Devise::addComponent($instance->slice);
+      Devise::addComponent($instance->templateSlice->slice);
     }
   }
 }

@@ -67,7 +67,7 @@ class TemplatesController extends Controller
 
     $template->updateFromRequest($request);
 
-    $this->SlicesManager->updateSlicesFromTemplate($template);
+    $this->SlicesManager->saveAllSlices($template->id, $request->get('slices'));
 
     return new TemplateResource($template);
   }

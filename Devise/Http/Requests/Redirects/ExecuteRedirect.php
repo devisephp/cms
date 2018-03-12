@@ -17,6 +17,10 @@ class ExecuteRedirect extends ApiRequest
     return [];
   }
 
+  /**
+   * @param $route
+   * @return string
+   */
   public function newUrl($route)
   {
     $query = '';

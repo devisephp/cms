@@ -6,7 +6,7 @@ use Devise\Devise;
 
 class DvsTemplate extends Model
 {
-  protected $fillable = ['name', 'layout', 'slices'];
+  protected $fillable = ['name', 'layout'];
 
   protected $table = 'dvs_templates';
 
@@ -19,14 +19,11 @@ class DvsTemplate extends Model
     return $this->hasMany(DvsPageVersion::class, 'template_id');
   }
 
-  public function setSlicesAttribute($value)
+  public function slices()
   {
-    $this->attributes['slices'] = json_encode($value);
-  }
-
-  public function getSlicesArrayAttribute()
-  {
-    return json_decode($this->slices);
+    return $this->hasMany(DvsTemplateSlice::class, 'template_id')
+      ->orderBy('position')
+      ->where('parent_id', 0);
   }
 
   public function registerComponents()

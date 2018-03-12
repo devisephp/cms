@@ -70,7 +70,7 @@ class DvsPageVersion extends Model
 
   public function registerComponents()
   {
-    $this->findComponents($this->slices);
+    $this->findComponents($this->template->slices);
   }
 
   private function findComponents($slices)

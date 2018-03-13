@@ -15,12 +15,20 @@ class SliceInstanceResource extends Resource
    */
   public function toArray($request)
   {
+    $childConfig = $this->childConfig;
+
+    $childMeta = ($childConfig) ? [
+      'id'   => $childConfig->id,
+      'type' => $childConfig->type
+    ] : null;
+
     $data = [
       'metadata' => [
         'instance_id' => $this->id,
         'name'        => $this->templateSlice->slice->component_name,
         'label'       => $this->templateSlice->label,
-        'enabled'     => $this->enabled
+        'enabled'     => $this->enabled,
+        'childmeta'  => $childMeta
       ]
     ];
 
@@ -30,9 +38,9 @@ class SliceInstanceResource extends Resource
       $data['slices'] = SliceInstanceResource::collection($this->slices);
     }
 
-    if($modelSlice = $this->modelSlice)
+    if ($childConfig && $childConfig->type == 'model')
     {
-      $data['slices'] = $this->setModelSlices($modelSlice);
+      $data['slices'] = $this->setModelSlices($childConfig);
     }
 
     if ($this->fields->count())
@@ -56,9 +64,9 @@ class SliceInstanceResource extends Resource
     foreach ($records as $record)
     {
       $data['metadata'] = [
-        'name'        => $modelSlice->slice->component_name,
-        'label'       => $modelSlice->label,
-        'enabled'     => 1
+        'name'    => $modelSlice->slice->component_name,
+        'label'   => $modelSlice->label,
+        'enabled' => 1
       ];
 
       foreach ($record->slice as $field)

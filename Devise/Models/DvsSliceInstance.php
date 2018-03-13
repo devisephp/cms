@@ -23,15 +23,13 @@ class DvsSliceInstance extends Model
       ->orderBy('position');
   }
 
+  public function childConfig()
+  {
+    return $this->hasOne(DvsTemplateSlice::class, 'parent_id', 'template_slice_id');
+  }
+
   public function fields()
   {
     return $this->hasMany(DvsField::class, 'slice_instance_id');
-  }
-
-  public function getModelSliceAttribute()
-  {
-    return DvsTemplateSlice::where('parent_id', $this->template_slice_id)
-      ->where('type', 'model')
-      ->first();
   }
 }

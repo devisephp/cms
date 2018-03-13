@@ -70,7 +70,7 @@ class DvsPageVersion extends Model
 
   public function registerComponents()
   {
-    $this->findComponents($this->slices);
+    $this->findComponents($this->template->slices);
   }
 
   private function findComponents($slices)
@@ -82,11 +82,11 @@ class DvsPageVersion extends Model
     }
   }
 
-  private function extractComponents(DvsSliceInstance $instance)
+  private function extractComponents(DvsTemplateSlice $templateSlice)
   {
-    if (View::exists($instance->templateSlice->slice->view))
+    if (View::exists($templateSlice->slice->view))
     {
-      Devise::addComponent($instance->templateSlice->slice);
+      Devise::addComponent($templateSlice->slice);
     }
   }
 }

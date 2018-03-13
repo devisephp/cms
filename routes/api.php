@@ -37,6 +37,12 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::delete('meta/{meta_id}', 'MetaController@delete');
 
   /**
+   * Models
+   */
+  Route::get('models', 'ModelsController@all');
+  Route::get('models/query', 'ModelsController@query');
+
+  /**
    * Pages
    */
   Route::get('pages', 'PagesController@pages');

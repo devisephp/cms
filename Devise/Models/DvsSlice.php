@@ -10,9 +10,16 @@ class DvsSlice extends Model
 
   protected $table = 'dvs_slices';
 
+  private $hasSliceSlot = false;
+
   public function getComponentNameAttribute()
   {
     return 'Devise' . studly_case(preg_replace('/[^A-Za-z0-9\-]/', '', $this->name));
+  }
+
+  public function getHasChildSlotAttribute()
+  {
+    return $this->hasSliceSlot;
   }
 
   public function pageVersions()
@@ -27,6 +34,9 @@ class DvsSlice extends Model
     $sections = $view->renderSections();
 
     $component = $sections['component'];
+
+    $this->detectSlotAvailability($sections);
+
     $template = $this->cleanHtml($sections['template']);
 
     preg_match("#<\s*?script\b[^>]*>(.*?)</script\b[^>]*>#s", $component, $match);
@@ -103,5 +113,14 @@ class DvsSlice extends Model
 
     return trim($script);
 
+  }
+
+  private function detectSlotAvailability($sections)
+  {
+    $this->hasSliceSlot = (strpos($sections['template'], '<slices') !== false);
+
+    if(!$this->hasSliceSlot){
+      $this->hasSliceSlot = ((strpos($sections['component'], 'hasChildSlot: true') !== false) || (strpos($sections['component'], 'hasChildSlot:true') !== false));
+    }
   }
 }

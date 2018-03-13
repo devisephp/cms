@@ -14,13 +14,16 @@ class SliceResource extends Resource
    */
   public function toArray($request)
   {
+    $this->getComponentCodeAttribute();
+
     return [
-      'id'         => $this->id,
-      'name'       => $this->name,
-      'component'  => $this->component_name,
-      'view'       => $this->view,
-      'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-      'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
+      'id'             => $this->id,
+      'name'           => $this->name,
+      'component'      => $this->component_name,
+      'view'           => $this->view,
+      'has_child_slot' => $this->has_child_slot,
+      'created_at'     => $this->created_at->format('Y-m-d H:i:s'),
+      'updated_at'     => $this->updated_at->format('Y-m-d H:i:s')
     ];
   }
 }

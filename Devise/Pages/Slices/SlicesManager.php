@@ -82,7 +82,6 @@ class SlicesManager
       $templateSlice->type = $slice["type"];
       $templateSlice->label = $slice["label"];
       $templateSlice->position = $index;
-      $templateSlice->model = $slice["model"] ?: "";
       $templateSlice->model_query = $slice["model_query"] ?: "";
       $templateSlice->config = $slice["config"] ?: "";
       $templateSlice->save();

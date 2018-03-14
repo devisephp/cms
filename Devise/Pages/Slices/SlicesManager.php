@@ -103,9 +103,9 @@ class SlicesManager
       }
 
       $index++;
-      if (isset($slice->slices))
+      if (isset($slice['slices']) && is_array($slice['slices']))
       {
-        $this->saveAllSlices($templateId, $slice->slices, $templateSlice->id, $index);
+        $this->saveAllSlices($templateId, $slice['slices'], $templateSlice->id, $index);
       }
     }
   }
@@ -150,7 +150,7 @@ class SlicesManager
   {
     $parent = $this->DvsSliceInstance
       ->where('page_version_id', $pageVersionId)
-      ->where('template_slide_id', $parentTemplateSliceId)
+      ->where('template_slice_id', $parentTemplateSliceId)
       ->first();
 
     return $parent->id;

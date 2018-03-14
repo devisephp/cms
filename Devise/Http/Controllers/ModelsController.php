@@ -3,7 +3,7 @@
 namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
-use Devise\Models\DvsSlice;
+use Devise\Models\Repository as ModelRepository;
 
 use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Database\Eloquent\Model;
@@ -19,18 +19,18 @@ class ModelsController extends Controller
   use DetectsApplicationNamespace;
 
   /**
-   * @var DvsSlice
+   * @var ModelRepository
    */
-  private $DvsSlice;
+  private $ModelRepository;
 
 
   /**
    * SlicesController constructor.
-   * @param DvsSlice $DvsSlice
+   * @param ModelRepository $ModelRepository
    */
-  public function __construct(DvsSlice $DvsSlice)
+  public function __construct(ModelRepository $ModelRepository)
   {
-    $this->DvsSlice = $DvsSlice;
+    $this->ModelRepository = $ModelRepository;
   }
 
   public function all(ApiRequest $request)
@@ -40,18 +40,8 @@ class ModelsController extends Controller
 
   public function query(ApiRequest $request)
   {
-    $model = App::make($request->get('class'));
-
-    $model = $model->filter($request->get('filters'))
-      ->sort($request->get('sort', null));
-
-    if ($request->get('paginated', false))
-    {
-      return $model->paginate($request->get('limit', 25));
-    } else
-    {
-      return $model->get();
-    }
+    return $this->ModelRepository
+      ->runQuery($request->all());
   }
 
   private function findAllModels()

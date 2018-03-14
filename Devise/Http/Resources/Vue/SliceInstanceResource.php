@@ -2,11 +2,14 @@
 
 namespace Devise\Http\Resources\Vue;
 
+use Devise\Models\Repository as ModelRepository;
+
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Facades\App;
 
 class SliceInstanceResource extends Resource
 {
+
   /**
    * Transform the resource into an array.
    *
@@ -56,9 +59,12 @@ class SliceInstanceResource extends Resource
 
   private function setModelSlices($modelSlice)
   {
-    $model = App::make($modelSlice->model);
+    parse_str($modelSlice->model_query, $input);
 
-    $records = $model->get();
+    $repository = App::make(ModelRepository::class);
+
+    $records = $repository
+      ->runQuery($input);
 
     $all = [];
     foreach ($records as $record)

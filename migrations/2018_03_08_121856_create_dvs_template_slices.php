@@ -21,7 +21,6 @@ class CreateDvsTemplateSlices extends Migration
       $table->string('type');
       $table->string('label');
       $table->integer('position')->unsigned();
-      $table->string('model');
       $table->text('model_query');
       $table->text('config');
       $table->timestamps();

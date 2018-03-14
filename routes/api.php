@@ -40,6 +40,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
    * Models
    */
   Route::get('models', 'ModelsController@all');
+  Route::get('models/settings', 'ModelsController@settings');
   Route::get('models/query', 'ModelsController@query');
 
   /**

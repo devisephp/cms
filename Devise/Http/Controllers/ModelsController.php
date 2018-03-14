@@ -38,6 +38,17 @@ class ModelsController extends Controller
     return $this->findAllModels();
   }
 
+  public function settings(ApiRequest $request)
+  {
+    $model = App::make($request->get('class'));
+
+    return [
+      'name'    => class_basename($model),
+      'class'   => get_class($model),
+      'columns' => $model->tableColumns ?: []
+    ];
+  }
+
   public function query(ApiRequest $request)
   {
     return $this->ModelRepository

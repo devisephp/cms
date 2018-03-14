@@ -34,4 +34,10 @@ class DvsTemplate extends Model
       Devise::addComponent($slice);
     }
   }
+
+  public function setConfigAttribute($value)
+  {
+    $this->attributes['config'] = ($value) ? json_encode($value) : "";
+  }
+
 }

@@ -96,7 +96,7 @@ class SlicesManager
           $instance->page_version_id = $pageVersionId;
           $instance->parent_instance_id = ($templateSlice->parent_id) ? $this->getParentInstanceId($pageVersionId, $templateSlice->parent_id) : 0;
           $instance->template_slice_id = $templateSlice->id;
-          $instance->enabled = $slice['enabled'];
+          $instance->enabled = array_get($slice, 'enabled', true);
           $instance->position = $index;
           $instance->save();
         }

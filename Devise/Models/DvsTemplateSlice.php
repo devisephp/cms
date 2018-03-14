@@ -29,4 +29,14 @@ class DvsTemplateSlice extends Model
     return $this->hasMany(DvsTemplateSlice::class, 'parent_id')
       ->orderBy('position');
   }
+
+  public function setConfigAttribute($value)
+  {
+    $this->attributes['config'] = ($value) ? json_encode($value) : "";
+  }
+
+  public function getConfigAttribute($value)
+  {
+    return json_decode($value);
+  }
 }

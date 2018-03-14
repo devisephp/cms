@@ -35,9 +35,4 @@ class DvsTemplate extends Model
     }
   }
 
-  public function setConfigAttribute($value)
-  {
-    $this->attributes['config'] = ($value) ? json_encode($value) : "";
-  }
-
 }

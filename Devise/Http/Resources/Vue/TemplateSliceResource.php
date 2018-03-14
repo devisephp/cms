@@ -20,7 +20,8 @@ class TemplateSliceResource extends Resource
       'type'        => $this->type,
       'label'       => $this->label,
       'name'        => $this->slice->component_name,
-      'model_query' => $this->model_query
+      'model_query' => $this->model_query,
+      'config'      => $this->config
     ];
 
     // Relationships

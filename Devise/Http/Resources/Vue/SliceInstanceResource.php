@@ -29,9 +29,10 @@ class SliceInstanceResource extends Resource
       'metadata' => [
         'instance_id' => $this->id,
         'name'        => $this->templateSlice->slice->component_name,
+        'type'        => $this->templateSlice->type,
         'label'       => $this->templateSlice->label,
         'enabled'     => $this->enabled,
-        'childmeta'  => $childMeta
+        'childmeta'   => $childMeta
       ]
     ];
 
@@ -70,9 +71,11 @@ class SliceInstanceResource extends Resource
     foreach ($records as $record)
     {
       $data['metadata'] = [
-        'name'    => $modelSlice->slice->component_name,
-        'label'   => $modelSlice->label,
-        'enabled' => 1
+        'instance_id' => 0,
+        'name'        => $modelSlice->slice->component_name,
+        'type'        => $modelSlice->type,
+        'label'       => $modelSlice->label,
+        'enabled'     => 1
       ];
 
       foreach ($record->slice as $field)

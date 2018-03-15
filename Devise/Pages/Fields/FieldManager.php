@@ -1,6 +1,8 @@
 <?php namespace Devise\Pages\Fields;
 
 use Devise\Models\DvsField;
+use Devise\Models\DvsSliceInstance;
+use Devise\Models\DvsTemplateSlice;
 use Devise\Support\Framework;
 
 /**
@@ -9,30 +11,30 @@ use Devise\Support\Framework;
  */
 class FieldManager
 {
-  /**
-   * DvsField model
-   *
-   * @var DvsField
-   */
   private $DvsField;
 
-  /**
-   * FieldsRepository lets us fetch fields from database
-   *
-   * @var FieldsRepository
-   */
+  private $DvsSliceInstance;
+
+  private $DvsTemplateSlice;
+
   private $FieldsRepository;
+
+  private $Event;
 
   /**
    * Construct a new Field Manager
    *
    * @param DvsField $DvsField
+   * @param DvsSliceInstance $DvsSliceInstance
+   * @param DvsTemplateSlice $DvsTemplateSlice
    * @param FieldsRepository $FieldsRepository
    * @param Framework $Framework
    */
-  public function __construct(DvsField $DvsField, FieldsRepository $FieldsRepository, Framework $Framework)
+  public function __construct(DvsField $DvsField, DvsSliceInstance $DvsSliceInstance, DvsTemplateSlice $DvsTemplateSlice, FieldsRepository $FieldsRepository, Framework $Framework)
   {
     $this->DvsField = $DvsField;
+    $this->DvsSliceInstance = $DvsSliceInstance;
+    $this->DvsTemplateSlice = $DvsTemplateSlice;
     $this->FieldsRepository = $FieldsRepository;
     $this->Event = $Framework->Event;
   }
@@ -104,24 +106,44 @@ class FieldManager
   /**
    * @param $slices
    */
-  public function saveSliceInstanceFields($slices)
+  public function saveSliceInstanceFields($pageVersionId, $slices, $parentId = 0, &$index = 0)
   {
     foreach ($slices as $slice)
     {
-      foreach ($slice['fields'] as $fieldKey => $fieldValue)
-      {
-        $field = $this->DvsField
-          ->firstOrNew(['slice_instance_id' => $slice['instance_id'], 'key' => $fieldKey]);
+      $sliceInstanceId = $slice['metadata']['instance_id'];
 
-        $field->slice_instance_id = $slice['instance_id'];
-        $field->key = $fieldKey;
-        $field->json_value = json_encode($fieldValue);
-        $field->save();
+      if ($slice['metadata']['type'] != 'model')
+      {
+        $sliceInstance = $this->DvsSliceInstance->firstOrNew(['id' => $sliceInstanceId]);
+        $sliceInstance->page_version_id = $pageVersionId;
+        $sliceInstance->parent_instance_id = $parentId;
+        $sliceInstance->template_slice_id = ($sliceInstance->id) ? $sliceInstance->template_slice_id : $this->getTemplateSliceId($parentId);
+        $sliceInstance->enabled = $slice['metadata']['enabled'];
+        $sliceInstance->position = $index;
+        $sliceInstance->save();
+
+        $sliceInstanceId = $sliceInstance->id;
+
+        foreach ($slice as $fieldKey => $fieldValue)
+        {
+          if ($fieldKey != 'metadata' && $fieldKey != 'slices')
+          {
+            $field = $this->DvsField
+              ->firstOrNew(['slice_instance_id' => $sliceInstanceId, 'key' => $fieldKey]);
+
+            $field->slice_instance_id = $sliceInstanceId;
+            $field->key = $fieldKey;
+            $field->json_value = json_encode($fieldValue);
+            $field->save();
+          }
+        }
+
+        $index++;
       }
 
       if (isset($slice['slices']) && $slice['slices'])
       {
-        $this->saveSliceInstanceFields($slice['slices']);
+        $this->saveSliceInstanceFields($pageVersionId, $slice['slices'], $sliceInstanceId, $index);
       }
     }
   }
@@ -133,7 +155,8 @@ class FieldManager
    * @param  array $input
    * @return Field
    */
-  protected function getFieldToUpdate($fieldId, $fieldInput, $pageInput)
+  protected
+  function getFieldToUpdate($fieldId, $fieldInput, $pageInput)
   {
     $scope = array_get($fieldInput, 'scope');
 
@@ -159,7 +182,8 @@ class FieldManager
    * @param  array $input
    * @return DvsField|DvsGlobalField
    */
-  protected function changeFieldScope($field, $newScope, $fieldInput, $pageInput)
+  protected
+  function changeFieldScope($field, $newScope, $fieldInput, $pageInput)
   {
     if ($newScope == 'global')
     {
@@ -178,7 +202,8 @@ class FieldManager
    * @param  array $pageInput
    * @return DvsGlobalField
    */
-  protected function changeToGlobalField($fieldInput, $pageInput)
+  protected
+  function changeToGlobalField($fieldInput, $pageInput)
   {
     $field = $this->FieldsRepository->findFieldByGlobalKeyAndLanguage($fieldInput['key'], $pageInput['language_id']);
 
@@ -200,7 +225,8 @@ class FieldManager
    * @param  DvsGlobalField $global
    * @return void
    */
-  protected function removePristinePageFields($key)
+  protected
+  function removePristinePageFields($key)
   {
     $pristine = $this->FieldsRepository->findPristinePageFields($key);
 
@@ -217,7 +243,8 @@ class FieldManager
    * @param  array $pageInput
    * @return DvsField
    */
-  protected function changeToPageField($fieldInput, $pageInput)
+  protected
+  function changeToPageField($fieldInput, $pageInput)
   {
     $field = $this->FieldsRepository->findTrashedFieldByKeyAndPageVersion($fieldInput['key'], $pageInput['page_version_id']);
 
@@ -240,7 +267,8 @@ class FieldManager
    * @internal param Field $field
    * @return PageField
    */
-  protected function newGlobalField($languageId, $key, $type, $humanName)
+  protected
+  function newGlobalField($languageId, $key, $type, $humanName)
   {
     $field = $this->GlobalField->newInstance();
 
@@ -261,7 +289,8 @@ class FieldManager
    * @internal param Field $field
    * @return PageField
    */
-  protected function newPageField($pageVersionId, $key, $type, $humanName)
+  protected
+  function newPageField($pageVersionId, $key, $type, $humanName)
   {
     $field = $this->DvsField->newInstance();
 
@@ -274,5 +303,16 @@ class FieldManager
     $field->save();
 
     return $field;
+  }
+
+  private function getTemplateSliceId($parentId)
+  {
+    $sliceInstance = $this->DvsSliceInstance->findOrFail($parentId);
+
+    $templateSlice = $this->DvsTemplateSlice
+      ->where('parent_id', $sliceInstance->template_slice_id)
+      ->firstOrFail();
+
+    return $templateSlice->id;
   }
 }

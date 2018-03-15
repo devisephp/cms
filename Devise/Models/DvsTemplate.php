@@ -10,9 +10,7 @@ class DvsTemplate extends Model
 
   protected $table = 'dvs_templates';
 
-  protected $attributes = [
-    'slices' => '[]'
-  ];
+  protected $attributes = [];
 
   public function pages()
   {

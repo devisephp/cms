@@ -17,11 +17,12 @@ class PageResource extends Resource
   {
     $data = [
       'id'                 => $this->id,
-      'title'              => $this->meta_title,
+      'title'              => $this->title,
       'slug'               => $this->slug,
       'canonical'          => $this->canonical,
       'ab_testing_enabled' => $this->ab_testing_enabled,
       'versions'           => PageVersionResource::collection($this->versions),
+      'meta'               => MetaResource::collection($this->metas),
       'slices'             => [],
       'languages'          => []
     ];

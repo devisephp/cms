@@ -2,6 +2,8 @@
 
 namespace Devise\Http\Resources\Api;
 
+use Devise\Http\Resources\Vue\SliceInstanceResource;
+
 use Illuminate\Http\Resources\Json\Resource;
 
 class PageResource extends Resource
@@ -28,6 +30,12 @@ class PageResource extends Resource
       'created_at' => $this->created_at->format('Y-m-d H:i:s'),
       'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
     ];
+
+    // Relationships
+    if ($this->currentVersion && $this->currentVersion->template)
+    {
+      $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
+    }
 
     return $data;
   }

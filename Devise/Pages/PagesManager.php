@@ -139,14 +139,14 @@ class PagesManager
   public function updatePage($id, $input)
   {
     $page = $this->Page
-      ->with('versions.template')
+      ->with('versions.template', 'currentVersion')
       ->findOrFail($id);
 
     $page->updateFromArray($input);
 
     if (isset($input['slices']) && $input['slices'])
     {
-      $this->FieldManager->saveSliceInstanceFields($input['slices']);
+      $this->FieldManager->saveSliceInstanceFields($page->currentVersion->id, $input['slices']);
     }
 
     $this->PageMetaManager->savePageMeta($page->id, array_get($input, 'meta', []));

@@ -124,6 +124,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
 
+    // Builds Laravel Mix compatible manifest file
     new WebpackLaravelMixManifest()
   ]
 })

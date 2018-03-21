@@ -11,20 +11,8 @@ import TemplatesIndex from '../components/templates/Index'
 import TemplatesEdit from '../components/templates/Edit'
 import UsersIndex from '../components/users/Index'
 import UsersEdit from '../components/users/Edit'
-// import Test from '../../../devise2-demo/resources/assets/js/components/Test'
 
 var routes = [
-  // {
-  //   path: '/devise/whatever2',
-  //   name: 'devise-test-adminasdfasdf',
-  //   components: {
-  //     'devise': Test
-  //   },
-  //   meta: {
-  //     title: 'Testing',
-  //     wide: true
-  //   },
-  // },
   {
     path: '/devise/developers',
     name: 'devise-developers-index',

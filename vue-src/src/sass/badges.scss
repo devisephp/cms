@@ -1,0 +1,9 @@
+.dvs-badge {
+  @apply dvs-p-1;
+}
+
+.dvs-badge-empty {
+  width:10px;
+  height:10px;
+  border-radius: 9999px;
+}

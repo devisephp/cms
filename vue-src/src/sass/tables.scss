@@ -1,0 +1,28 @@
+table {
+  &.dvs-table {
+    @apply .dvs-w-full;
+    border-collapse: collapse;
+
+    th {
+      @apply dvs-bg-grey-lighter dvs-pt-4 dvs-pb-2 dvs-px-4 dvs-font-bold dvs-border-b dvs-border-grey dvs-text-left dvs-relative dvs-text-sm;
+    }
+
+    td {
+      @apply dvs-py-4 dvs-px-4 dvs-border-b dvs-border-grey dvs-text-left dvs-text-sm;
+    }
+
+    &.tight td {
+      @apply dvs-py-4;
+    }
+  }
+}
+
+.dvs-column-control-modules {
+  > div {
+    @apply dvs-border-b dvs-border-grey;
+
+    &:last-child {
+      @apply dvs-border-b-0
+    }
+  }
+}

@@ -1,0 +1,45 @@
+.dvs-collapsable {
+  .dvs-switch-sm,
+  .dvs-switch {
+    @apply dvs-rounded-sm dvs-bg-grey-light dvs-font-bold dvs-p-4 dvs-cursor-pointer dvs-opacity-75;
+  }
+
+  .dvs-switch-sm {
+    @apply dvs-py-3 dvs-text-sm;
+  }
+
+  > .dvs-collapsed {
+    @apply dvs-hidden dvs-h-0;
+  }
+
+  &.dvs-open {
+    > .dvs-switch-sm,
+    > .dvs-switch {
+      @apply dvs-opacity-100 dvs-bg-blue-dark dvs-text-white;
+    }
+
+    > .dvs-collapsed {
+      @apply dvs-block dvs-h-auto;
+    }
+  }
+}
+
+.dvs-template-editor-collapsable {
+  .dvs-template-switch-sm {
+    @apply dvs-rounded-sm dvs-bg-grey-light dvs-font-bold dvs-p-4 dvs-cursor-pointer dvs-py-3 dvs-text-sm;
+  }
+
+  .dvs-collapsed {
+    @apply dvs-hidden dvs-h-0;
+  }
+
+  &.dvs-open {
+    .dvs-template-switch-sm {
+      @apply dvs-opacity-100 dvs-bg-blue-dark dvs-text-white;
+    }
+
+    .dvs-collapsed {
+      @apply dvs-block dvs-h-auto;
+    }
+  }
+}

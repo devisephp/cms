@@ -1,0 +1,32 @@
+h1,h2,h3,h4,h5,h6 { @apply dvs-font-light;}
+
+h1 { @apply dvs-text-5xl dvs-font-thin dvs-tracking-tight; }
+h2 { @apply dvs-text-4xl dvs-font-thin dvs-tracking-tight; }
+h3 { @apply dvs-text-3xl; }
+h4 { @apply dvs-text-2xl; }
+h5 { @apply dvs-text-xl; }
+h6 { @apply dvs-uppercase dvs-tracking-wide dvs-font-bold dvs-text-xs dvs-tracking-superwide; }
+
+a {
+  @apply dvs-no-underline dvs-text-blue;
+
+  &:hover {
+    @apply dvs-underline;
+  }
+}
+
+p {
+  @apply dvs-pb-4 dvs-leading-normal;
+
+  &:last-child {
+    @apply dvs-pb-0;
+  }
+}
+
+small {
+  @apply dvs-text-xs;
+}
+
+.strikethrough {
+  text-decoration:dvs-line-through;
+}

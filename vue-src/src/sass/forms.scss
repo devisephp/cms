@@ -1,0 +1,69 @@
+.dvs-fieldset {
+  label {
+    @apply dvs-block dvs-mb-2 dvs-text-xs dvs-uppercase dvs-font-bold dvs-tracking-superwide;
+
+    &.dvs-large-label {
+      @apply dvs-text-base dvs-font-normal dvs-normal-case dvs-tracking-normal;
+    }
+
+    &.dvs-small-label {
+      @apply dvs-text-sm dvs-font-normal dvs-normal-case dvs-tracking-normal;
+    }
+  }
+
+  textarea,
+  select,
+  input[type="text"],
+  input[type="password"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="number"],
+  input[type="email"],
+  input[type="phone"] {
+    @apply dvs-p-4 dvs-w-full dvs-bg-grey-lighter dvs-rounded-sm dvs-appearance-none;
+
+    &.dvs-w-auto {
+      @apply dvs-w-auto;
+    }
+  }
+}
+
+.dvs-toggle {
+  @apply dvs-inline-block dvs-relative;
+
+  height: 34px;
+  width: 60px;
+
+  input {
+    @apply dvs-hidden;
+
+    &:checked + .dvs-toggle-slider {
+      background-color: #66bb6a;
+
+      &:before {
+        transform: translateX(26px);
+      }
+    }
+  }
+
+  .dvs-toggle-slider {
+    @apply dvs-cursor-pointer dvs-absolute dvs-pin;
+
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+
+    &:before {
+      @apply dvs-absolute;
+
+      content: "";
+      background-color: #fff;
+      bottom: 4px;
+      left: 4px;
+      height: 26px;
+      width: 26px;
+      border-radius: 50%;
+      transition: .4s;
+    }
+  }
+}

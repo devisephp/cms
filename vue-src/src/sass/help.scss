@@ -1,0 +1,11 @@
+.help {
+  @apply dvs-rounded dvs-p-8 dvs-bg-grey-lightest dvs-text-sm dvs-border-l-4 dvs-border-blue;
+
+  &.danger {
+    @apply dvs-bg-red dvs-text-white;
+  }
+
+  p {
+    @apply dvs-text-blue;
+  }
+}

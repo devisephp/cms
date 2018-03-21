@@ -1,0 +1,28 @@
+@tailwind preflight;
+
+@import "./badges";
+@import "./blocker";
+@import "./buttons";
+@import "./cards";
+@import "./color-picker";
+@import "./container";
+@import "./dropzone";
+@import "./font-awesome/fontawesome";
+@import "./forms";
+@import "./help";
+@import "./lists";
+@import "./loadbar";
+@import "./messages";
+@import "./media-manager";
+@import "./modal";
+@import "./positions";
+@import "./tables";
+@import "./tags";
+@import "./template-editor";
+@import "./tooltips";
+@import "./transform";
+@import "./transitions";
+@import "./typography";
+@import "./wysiwyg";
+
+@tailwind utilities;

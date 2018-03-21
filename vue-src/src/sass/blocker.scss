@@ -1,0 +1,7 @@
+.dvs-blocker {
+  @apply dvs-bg-black dvs-opacity-75 dvs-fixed dvs-pin dvs-z-40;
+
+  &.dvs-blocker-light {
+    @apply dvs-opacity-25;
+  }
+}

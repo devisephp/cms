@@ -1,0 +1,162 @@
+#devise-container {
+  @apply dvs-font-sans dvs-w-full dvs-flex dvs-flex-row-reverse dvs-overflow-scroll;
+}
+
+#devise-admin-open {
+  @apply dvs-fixed dvs-pin-b dvs-pin-l dvs-opacity-25 dvs-cursor-pointer dvs-text-3xl  dvs-ml-4 dvs-mb-4 dvs-z-50;
+
+  transition: all 0.5s;
+
+  &:hover {
+    @apply dvs-opacity-100;
+
+    margin-left:1.1rem;
+    margin-bottom:1.1rem;
+  }
+}
+
+#devise-admin {
+  @apply dvs-z-30 dvs-fixed dvs-pin-l dvs-pin-t dvs-pin-b dvs-overflow-scroll dvs--ml-px;
+
+  width:350px;
+
+  transition: left 0.5s ease-out;
+}
+
+#devise-admin-shim {
+  @apply dvs-border-r dvs-border-grey-light dvs-bg-white;
+
+  min-width:350px;
+  width:350px;
+
+  transition: width 0.25s ease-out, min-width 0.25s ease-out;
+}
+
+.devise-content {
+  @apply dvs-z-10;
+
+  transition: width 0.25s ease-out, height 0.25s ease-out, margin 0.25s ease-out;
+
+  width:100%;
+
+  &.tablet {
+    @apply dvs-shadow-lg dvs-my-8 dvs-rounded;
+
+    width:768px;
+    height:1024px;
+  }
+
+  &.mobile-landscape {
+    @apply dvs-shadow-lg dvs-my-12 dvs-rounded;
+
+    width:600px;
+    height:320px;
+  }
+
+  &.mobile-portrait {
+    @apply dvs-shadow-lg dvs-my-10 dvs-rounded;
+
+    width:320px;
+    height:600px;
+  }
+}
+
+#devise-container {
+  &.admin-closed {
+    #devise-admin {
+      left: -500px;
+    }
+
+    #devise-admin-shim {
+      @apply dvs-min-w-0;
+      width: 0px;
+    }
+
+    #devise-content {
+      width:100%;
+
+      &.tablet {
+        @apply dvs-shadow-lg dvs-my-8 dvs-rounded;
+
+        width:768px;
+        height:1024px;
+      }
+
+      &.mobile-landscape {
+        @apply dvs-shadow-lg dvs-my-12 dvs-rounded;
+
+        width:600px;
+        height:320px;
+      }
+
+      &.mobile-portrait {
+        @apply dvs-shadow-lg dvs-my-10 dvs-rounded;
+
+        width:320px;
+        height:600px;
+      }
+    }
+  }
+
+  #devise-user {
+    > div {
+      width: 350px;
+      height:99px;
+
+      :first-child {
+        @apply dvs-w-3/4;
+      }
+      :nth-child(2) {
+        @apply dvs-w-1/4 dvs-justify-center;
+      }
+    }
+  }
+
+  &.preview-frame {
+    .devise-content {
+      width:100vw;
+    }
+  }
+
+  &.wide-admin {
+    #devise-admin {
+      @apply dvs-w-full
+    }
+
+    #devise-admin-shim {
+      @apply dvs-w-full;
+    }
+
+    #devise-content {
+      display:none;
+    }
+  }
+}
+
+#devise-sidebar {
+  @apply dvs-border-r dvs-border-grey-light dvs-bg-white dvs-p-8 dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-overflow-y-scroll dvs-z-20;
+
+  top:100px;
+  min-width:350px;
+  width:350px;
+
+  &.devise-iframe-sidebar {
+    top:0;
+  }
+}
+
+#devise-admin-content {
+  @apply dvs-absolute dvs-pin-t dvs-pin-r dvs-pin-b dvs-z-10 dvs-p-8 dvs-overflow-scroll;
+
+  width: calc(100% - 350px);
+}
+
+#devise-preview-content {
+  @apply dvs-z-10 dvs-absolute dvs-pin-t dvs-pin-r dvs-pin-b;
+
+  width: calc(100% - 350px);
+}
+
+#devise-preview-iframe {
+  height: calc(100vh - 100px);
+}

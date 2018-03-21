@@ -1,0 +1,29 @@
+.media-manager {
+  @apply dvs-absolute dvs-absolute-center dvs-bg-white dvs-z-50 dvs-rounded;
+
+  .media-manager-interface {
+    @apply dvs-flex dvs-flex-col dvs-items-stretch;
+
+    height:70vh;
+    width:70vw;
+  }
+
+  .dropzone {
+    @apply dvs-flex;
+
+    .dz-error,
+    .dz-complete {
+      @apply dvs-absolute dvs-pin-t dvs-pin-r dvs-bg-white dvs-shadow dvs-p-4 dvs-rounded-sm dvs-mt-11 dvs-mr-4;
+    }
+  }
+
+  .dvs-grid-preview {
+
+    .dvs-preview {
+      @apply dvs-bg-cover;
+
+      width:150px;
+      height:150px;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.tippy-tooltip {
+
+    &.devise-theme {
+        @apply dvs-bg-blue-dark dvs-text-white dvs-leading-normal;
+        max-width:400px;
+
+        .tippy-content {}
+    }
+}
+
+.tippy-popper[x-placement^=top] {
+     .devise-theme {
+        .tippy-arrow {
+            border-top: 7px solid config('colors.blue-dark')
+        }
+    }
+}
+
+.tippy-popper[x-placement^=bottom] {
+     .devise-theme {
+        .tippy-arrow {
+            border-bottom: 7px solid config('colors.blue-dark')
+        }
+    }
+}

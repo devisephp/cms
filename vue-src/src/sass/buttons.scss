@@ -1,0 +1,55 @@
+.dvs-btn {
+  @apply dvs-p-4 dvs-bg-blue-dark dvs-rounded dvs-text-white dvs-uppercase dvs-text-sm;
+
+  transition: background-color 0.5s;
+
+  &:focus {
+    outline-style: none;
+  }
+
+  &.dvs-toggle {
+    @apply dvs-bg-grey-dark;
+
+    &.dvs-on {
+      @apply dvs-bg-green;
+    }
+  }
+
+  &.dvs-btn-plain {
+    @apply dvs-bg-grey;
+
+    &:hover {
+      @apply dvs-bg-blue-dark;
+    }
+  }
+
+  &.dvs-btn-ghost {
+    @apply dvs-bg-transparent dvs-border-2 dvs-border-blue-dark dvs-text-blue-dark;
+
+    &:hover {
+      @apply dvs-bg-blue-dark dvs-text-white;
+    }
+  }
+
+  &.dvs-btn-sm {
+    @apply dvs-py-3 dvs-px-4;
+  }
+
+  &.dvs-btn-xs {
+    @apply dvs-py-2 dvs-px-3 dvs-text-xs;
+  }
+
+  &.dvs-btn-lg {
+    @apply dvs-py-6 dvs-px-4 dvs-text-lg;
+  }
+
+  &:disabled {
+    @apply dvs-bg-grey-light
+  }
+}
+
+.dvs-outline-none {
+  &:focus {
+    outline:0;
+  }
+}

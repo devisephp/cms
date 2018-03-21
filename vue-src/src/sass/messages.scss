@@ -1,0 +1,35 @@
+.alert-message {
+  @apply dvs-fixed dvs-pin-b dvs-pin-l dvs-ml-8 dvs-z-50 dvs-rounded dvs-bg-blue-dark dvs-text-white dvs-shadow-lg dvs-p-4;
+
+  h5 {
+    @apply dvs-flex dvs-justify-between dvs-mb-4
+  }
+
+  h6 {
+    @apply dvs-mb-1
+  }
+
+  h5, h6, p, li {
+    @apply dvs-text-white
+  }
+
+  ul {
+    @apply dvs-list-reset;
+
+    li {
+      @apply dvs-border-b dvs-border-white dvs-mb-4 dvs-pb-2;
+
+      &:last-child {
+        @apply dvs-mb-0
+      }
+    }
+  }
+
+  &.error {
+    @apply dvs-bg-red-dark;
+
+    li {
+      @apply dvs-border-pink;
+    }
+  }
+}

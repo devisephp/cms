@@ -16,6 +16,8 @@ class DeviseServiceProvider extends ServiceProvider
    */
   public function boot(BladeCompiler $blade)
   {
+    $this->setPublishables();
+
     $this->loadMigrationsFrom(__DIR__ . '/../../migrations');
 
     $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');
@@ -35,5 +37,16 @@ class DeviseServiceProvider extends ServiceProvider
     {
       class_alias(Devise::class, 'Devise');
     }
+  }
+
+  private function setPublishables()
+  {
+    $this->publishes([
+      __DIR__ . '/../../vue/dist/static' => public_path('devise'),
+    ], 'devise-public');
+
+    $this->publishes([
+      __DIR__ . '/../../vue/src' => resource_path('assets/devise-dev'),
+    ], 'devise-assets');
   }
 }

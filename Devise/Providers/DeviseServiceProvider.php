@@ -16,8 +16,6 @@ class DeviseServiceProvider extends ServiceProvider
    */
   public function boot(BladeCompiler $blade)
   {
-    $blade->doubleEncode();
-
     $this->loadMigrationsFrom(__DIR__ . '/../../migrations');
 
     $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');

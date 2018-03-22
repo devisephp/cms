@@ -10,8 +10,8 @@ import Devise from './main.js'
 // Devise requires a bus, vue-router and vuex. We initialize these in your application
 // so that both apps can share the same store and router. All devise vuex
 // is namespaced under the "devise" namespace.
-import { EventBus } from './event-bus.js'
-window.bus = EventBus
+import { DeviseBus } from './event-bus.js'
+window.bus = DeviseBus
 import router from './router/route-boilerplate-app.config'
 import store from './vuex/store-boilerplate-app'
 import { sync } from 'vuex-router-sync'

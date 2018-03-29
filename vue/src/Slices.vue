@@ -7,7 +7,6 @@ export default {
   functional: true,
   render (h, ctx) {
     if (ctx.props.devise.slices && ctx.props.devise.slices.length) {
-      console.log(ctx.props.devise)
       return ctx.props.devise.slices.map(function (s) {
         if (s.settings && s.settings.numberOfInstances) {
           var placeholderSlices = []

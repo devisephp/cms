@@ -1,30 +1,18 @@
-import DevelopersIndex from '../components/developers/Index'
-import LanguagesManage from '../components/languages/Manage'
-import MetaManage from '../components/meta/Manage'
-import PageEditor from '../components/pages/Editor'
-import PagesIndex from '../components/pages/Index'
-import PagesView from '../components/pages/View'
-import SettingsIndex from '../components/settings/Index'
-import SitesIndex from '../components/sites/Index'
-import SlicesIndex from '../components/slices/Index'
-import TemplatesIndex from '../components/templates/Index'
-import TemplatesEdit from '../components/templates/Edit'
-import UsersIndex from '../components/users/Index'
-import UsersEdit from '../components/users/Edit'
-// import Test from '../../../devise2-demo/resources/assets/js/components/Test'
+const DevelopersIndex = () => import('../components/developers/Index')
+const LanguagesManage = () => import('../components/languages/Manage')
+const MetaManage = () => import('../components/meta/Manage')
+const PageEditor = () => import('../components/pages/Editor')
+const PagesIndex = () => import('../components/pages/Index')
+const PagesView = () => import('../components/pages/View')
+const SettingsIndex = () => import('../components/settings/Index')
+const SitesIndex = () => import('../components/sites/Index')
+const SlicesIndex = () => import('../components/slices/Index')
+const TemplatesIndex = () => import('../components/templates/Index')
+const TemplatesEdit = () => import('../components/templates/Edit')
+const UsersIndex = () => import('../components/users/Index')
+const UsersEdit = () => import('../components/users/Edit')
 
 var routes = [
-  // {
-  //   path: '/devise/whatever2',
-  //   name: 'devise-test-adminasdfasdf',
-  //   components: {
-  //     'devise': Test
-  //   },
-  //   meta: {
-  //     title: 'Testing',
-  //     wide: true
-  //   },
-  // },
   {
     path: '/devise/developers',
     name: 'devise-developers-index',

@@ -1203,7 +1203,7 @@ bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
 
-cacache@^10.0.4:
+cacache@^10.0.1, cacache@^10.0.4:
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/cacache/-/cacache-10.0.4.tgz#6452367999eff9d4188aefd9a14e9d7c6a263460"
   dependencies:
@@ -1285,12 +1285,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000817"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000817.tgz#c9f8e236887cf60ae623d1fb1e5ec92877ab1229"
+  version "1.0.30000819"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000819.tgz#c3b7dd559e5e6d63d5dcaa62bac6bd04c7619709"
 
 caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805:
-  version "1.0.30000817"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000817.tgz#e993c380eb4bfe76a2aed4223f841c02d6e0d832"
+  version "1.0.30000819"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000819.tgz#aabee5fd15a080febab6ae5d30c9ea15f4c6d4e2"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -1455,8 +1455,8 @@ clone-deep@^2.0.1:
     shallow-clone "^1.0.0"
 
 clone@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.3.tgz#298d7e2231660f40c003c2ed3140decf3f53085f"
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
 
 co@^4.6.0:
   version "4.6.0"
@@ -1554,6 +1554,16 @@ compressible@~2.0.13:
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.13.tgz#0d1020ab924b2fdb4d6279875c7d6daba6baa7a9"
   dependencies:
     mime-db ">= 1.33.0 < 2"
+
+compression-webpack-plugin@^1.1.11:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-1.1.11.tgz#8384c7a6ead1d2e2efb190bdfcdcf35878ed8266"
+  dependencies:
+    cacache "^10.0.1"
+    find-cache-dir "^1.0.0"
+    neo-async "^2.5.0"
+    serialize-javascript "^1.4.0"
+    webpack-sources "^1.0.1"
 
 compression@^1.5.2:
   version "1.7.2"
@@ -2218,8 +2228,8 @@ error-stack-parser@^2.0.0:
     stackframe "^1.0.3"
 
 es-abstract@^1.7.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.10.0.tgz#1ecb36c197842a00d8ee4c2dfd8646bb97d60864"
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.11.0.tgz#cce87d518f0496893b1a30cd8461835535480681"
   dependencies:
     es-to-primitive "^1.1.1"
     function-bind "^1.1.1"
@@ -2382,8 +2392,8 @@ eslint-plugin-standard@^3.0.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-3.0.1.tgz#34d0c915b45edc6f010393c7eef3823b08565cf2"
 
 eslint-plugin-vue@^4.0.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-4.3.0.tgz#478c6267269dbaa20f6e8b2cfae7a0ccc98c1d72"
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-4.4.0.tgz#bfc3a71f76bd0e139313e4425a807257ae42f768"
   dependencies:
     vue-eslint-parser "^2.0.3"
 
@@ -2399,8 +2409,8 @@ eslint-visitor-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
 eslint@^4.15.0:
-  version "4.19.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.19.0.tgz#9e900efb5506812ac374557034ef6f5c3642fc4c"
+  version "4.19.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.19.1.tgz#32d1d653e1d90408854bfb296f076ec7e186a300"
   dependencies:
     ajv "^5.3.0"
     babel-code-frame "^6.22.0"
@@ -2778,8 +2788,8 @@ flat-cache@^1.2.1:
     write "^0.2.1"
 
 flatpickr@^4.2.4:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.3.2.tgz#6a477043c075ef36c3ff54fadb49b936a64d635f"
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.4.0.tgz#44410ba77fd4feb6a24fa22a14a6111efe7882cb"
 
 flatten@^1.0.2:
   version "1.0.2"
@@ -4264,7 +4274,7 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   dependencies:
     minimist "0.0.8"
 
-moment@^2.10.2:
+moment@^2.10.2, moment@^2.21.0:
   version "2.21.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
 
@@ -6086,8 +6096,8 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.0.tgz#7a7cd28470cc6d3a1cfe6d66886f6bc430d3ac87"
 
 spdy-transport@^2.0.18:
-  version "2.0.20"
-  resolved "https://registry.yarnpkg.com/spdy-transport/-/spdy-transport-2.0.20.tgz#735e72054c486b2354fe89e702256004a39ace4d"
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/spdy-transport/-/spdy-transport-2.1.0.tgz#4bbb15aaffed0beefdd56ad61dbdc8ba3e2cb7a1"
   dependencies:
     debug "^2.6.8"
     detect-node "^2.0.3"
@@ -6228,21 +6238,15 @@ string.prototype.repeat@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/string.prototype.repeat/-/string.prototype.repeat-0.2.0.tgz#aba36de08dcee6a5a337d49b2ea1da1b28fc0ecf"
 
-string_decoder@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.1.0.tgz#384f322ee8a848e500effde99901bba849c5d403"
+string_decoder@^1.0.0, string_decoder@~1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.3.tgz#0fc67d7c141825de94282dd536bec6b9bce860ab"
   dependencies:
     safe-buffer "~5.1.0"
 
 string_decoder@~0.10.x:
   version "0.10.31"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
-
-string_decoder@~1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.3.tgz#0fc67d7c141825de94282dd536bec6b9bce860ab"
-  dependencies:
-    safe-buffer "~5.1.0"
 
 stringstream@~0.0.4:
   version "0.0.5"

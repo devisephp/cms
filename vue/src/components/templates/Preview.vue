@@ -167,7 +167,7 @@
 </template>
 
 <script>
-import faker from 'faker'
+import faker from 'faker/locale/en'
 
 import { mapGetters, mapActions } from 'vuex'
 import SuperTable from '../utilities/tables/SuperTable'

@@ -124,6 +124,10 @@ const webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
 
+    // Strips out the unnecessary locales from moment
+    // TODO - do we really need moment?
+    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/),
+
     // Builds Laravel Mix compatible manifest file
     new WebpackLaravelMixManifest()
   ]

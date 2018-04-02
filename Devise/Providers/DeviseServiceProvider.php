@@ -23,9 +23,7 @@ class DeviseServiceProvider extends ServiceProvider
 
     $this->setRoutes();
 
-    $this->loadMigrationsFrom(__DIR__ . '/../../migrations');
-
-    $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');
+    $this->loadLaravelResources();
   }
 
   public function register()
@@ -66,5 +64,14 @@ class DeviseServiceProvider extends ServiceProvider
     $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
 
     $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+  }
+
+  private function loadLaravelResources()
+  {
+    $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+
+    $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'devise');
+
+    $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');
   }
 }

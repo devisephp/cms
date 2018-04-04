@@ -2,8 +2,10 @@
 
 namespace Devise\Models;
 
+use Devise\Models\Repository as ModelRepository;
 use DateTime;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\App;
 
 class DvsPage extends Model
 {
@@ -156,6 +158,29 @@ class DvsPage extends Model
   public function site()
   {
     return $this->belongsTo(DvsSite::class, 'language_id');
+  }
+
+  public function getDataAttribute()
+  {
+    $data = [];
+
+    if($this->currentVersion && $this->currentVersion->template && $this->currentVersion->template->model_queries){
+      $queries = json_decode($this->currentVersion->template->model_queries);
+      if($queries){
+        $repository = App::make(ModelRepository::class);
+
+        foreach ($queries as $name => $config){
+          parse_str($config, $input);
+
+          $records = $repository
+            ->runQuery($input);
+
+          $data[ $name ] = $records;
+        }
+      }
+    }
+
+    return $data;
   }
 
   public function getResponseClassAttribute()

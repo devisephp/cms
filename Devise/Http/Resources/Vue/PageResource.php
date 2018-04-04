@@ -21,6 +21,7 @@ class PageResource extends Resource
       'slug'               => $this->slug,
       'canonical'          => $this->canonical,
       'ab_testing_enabled' => $this->ab_testing_enabled,
+      'data'               => $this->data,
       'versions'           => PageVersionResource::collection($this->versions),
       'meta'               => MetaResource::collection($this->metas),
       'slices'             => [],

@@ -110,7 +110,7 @@ trait Filterable
   {
     extract($filter);
 
-    return $query->where($field, $value);
+    return $query->where($field, $this->getRealValue($value));
   }
 
   /**
@@ -243,6 +243,27 @@ trait Filterable
     $keys = array_keys($array);
 
     return reset($keys);
+  }
+
+  /**
+   * $param mixed
+   * @return mixed
+   */
+  private function getRealValue($value)
+  {
+    if(strpos($value, 'params.') === 0){
+      $param = str_replace('params.', '', $value);
+
+      return request()->route($param);
+    }
+
+    if(strpos($value, 'input.') === 0){
+      $input = str_replace('input.', '', $value);
+
+      return request()->get($input);
+    }
+
+    return $value;
   }
 
 }

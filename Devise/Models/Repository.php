@@ -14,6 +14,7 @@ class Repository
     {
       $filters = array_get($input, 'filters');
       $paginated = array_get($input, 'paginated', false);
+      $single = array_get($input, 'single', false);
       $sort = array_get($input, 'sort');
       $limit = array_get($input, 'limit', 25);
 
@@ -22,12 +23,18 @@ class Repository
       $model = $model->filter($filters)
         ->sort($sort);
 
-      if ($paginated)
+      if (!$single)
       {
-        return $model->paginate($limit);
+        if ($paginated)
+        {
+          return $model->paginate($limit);
+        } else
+        {
+          return $model->get();
+        }
       } else
       {
-        return $model->get();
+        return $model->first();
       }
     }
 

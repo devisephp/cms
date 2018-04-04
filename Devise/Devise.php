@@ -8,7 +8,6 @@ use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsPage;
 use Devise\Models\DvsSite;
 use Devise\Models\DvsSlice;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @todo refactor to a facade pattern
@@ -19,15 +18,13 @@ class Devise
 
   public static function data($page)
   {
-    $js = self::user();
-
     if (get_class($page) == DvsPage::class)
     {
-      $js .= self::sites();
+      $js = self::sites();
       $js .= self::pageData($page);
     } else
     {
-      $js .= self::template($page);
+      $js = self::template($page);
     }
 
     $js .= self::components();
@@ -70,10 +67,5 @@ class Devise
     {
       self::$components[$name] = $slice->component_code;
     }
-  }
-
-  public static function user()
-  {
-    return "window.user = " . json_encode(Auth::user()) . ";\n";
   }
 }

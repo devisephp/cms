@@ -15,7 +15,7 @@
     },
     "autoload": {
         "classmap": [
-            "database/seeds"
+            "seeds"
         ],
         "psr-0": {
             "Devise\\": "Devise/"

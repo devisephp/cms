@@ -13,23 +13,11 @@ if (mix.inProduction()) {
 }
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackLaravelMixManifest = require('webpack-laravel-mix-manifest').default;
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
-const createLintingRule = () => ({
-  test: /\.(js|vue)$/,
-  loader: 'eslint-loader',
-  enforce: 'pre',
-  include: [resolve('src'), resolve('test')],
-  options: {
-    formatter: require('eslint-friendly-formatter'),
-    emitWarning: !config.dev.showEslintErrorsInOverlay
-  }
-})
 
 class DeviseMix {
   /**
@@ -76,8 +64,6 @@ class DeviseMix {
    * @return {void}
    */
   webpackEntry(entry) {
-      // Example:
-      // entry.add('foo', 'bar');
   }
 
   /**
@@ -86,24 +72,33 @@ class DeviseMix {
    * @return {Array|Object}
    */
   webpackRules() {
-      // Example:
-      // return {
-      //     test: /\.less$/,
-      //     loaders: ['...']
-      // });
-    return [
-      // ...(config.dev.useEslint ? [createLintingRule()] : []),
-      // {
-      //   test: /\.vue$/,
-      //   loader: 'vue-loader',
-      //   // `vue-loader` options goes here
-      //   options: {
-      //     config: {
-      //       path: '../vue/src/tailwind/tailwind.js'
-      //     }
-      //   }
-      // }
-    ]
+      return [
+        // {
+        //   test: /\.vue$/,
+        //   loader: 'vue-loader',
+        //   exclude: /bower_components/,
+        //   options: {
+        //     extractCSS: new ExtractTextPlugin("style.css"),
+        //     config: {
+        //       path: '../vue/src/tailwind/tailwind.js'
+        //     }
+        //   }
+        // }
+        // {
+        //   test: /devise\.s[ac]ss$/,
+        //   loaders: [ 'style-loader', 'css-loader', 'sass-loader' ]
+        // },
+        // {
+        //   test: /devise\.s[ac]ss$/,
+        //   use: ExtractTextPlugin.extract({
+        //     fallback: 'style-loader',
+        //     use: [
+        //       { loader: 'css-loader', options: { importLoaders: 1 } },
+        //       'postcss-loader'
+        //     ]
+        //   })
+        // }
+      ]
   }
 
   /*
@@ -149,36 +144,6 @@ class DeviseMix {
         })
       )
 
-        // new UglifyJsPlugin({
-        //   uglifyOptions: {
-        //     compress: {
-        //       warnings: false
-        //     }
-        //   },
-        //   sourceMap: config.build.productionSourceMap,
-        //   parallel: true
-        // }),
-
-        // // extract css into its own file
-        // new ExtractTextPlugin({
-        //   filename: utils.assetsPath('css/[name].[contenthash].css'),
-        //   // Setting the following option to `false` will not extract CSS from codesplit chunks.
-        //   // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-        //   // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
-        //   // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
-        //   allChunks: true,
-        // }),
-        // new PrerenderSpaPlugin(
-        //   // Path to compiled app
-        //   path.join(__dirname, '../dist'),
-        //   // List of endpoints you wish to prerender
-        //   [ '/' ]
-        // ),
-        // keep module.id stable when vendor modules does not change
-        // new webpack.HashedModuleIdsPlugin(),
-        // // // enable scope hoisting
-        // new webpack.optimize.ModuleConcatenationPlugin(),
-
       plugins.push(
         // This instance extracts shared chunks from code splitted chunks and bundles them
         // in a separate chunk, similar to the vendor chunk
@@ -197,24 +162,28 @@ class DeviseMix {
         new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
       )
 
-      plugins.push(
-        new purgeCss({
-          paths: glob.sync([
-            path.join(__dirname, '../vue/src/components/**/*.vue')
-          ]),
-          extractors: [
-            {
-              extractor: class {
-                static extract(content) {
-                  return content.match(/[A-z0-9-:\/]+/g)
-                }
-              },
-              extensions: ['html', 'js', 'php', 'vue']
-            }
-          ]
-        })
-      )
+      // plugins.push(
+      //   new purgeCss({
+      //     paths: glob.sync([
+      //       path.join(__dirname, '../vue/src/components/**/*.vue')
+      //     ]),
+      //     extractors: [
+      //       {
+      //         extractor: class {
+      //           static extract(content) {
+      //             return content.match(/[A-z0-9-:\/]+/g)
+      //           }
+      //         },
+      //         extensions: ['html', 'js', 'php', 'vue']
+      //       }
+      //     ]
+      //   })
+      // )
     }
+
+    plugins.push(
+      // new ExtractTextPlugin("css/devise.css")
+    )
 
     plugins.push(
       // Builds Laravel Mix compatible manifest file
@@ -234,21 +203,44 @@ class DeviseMix {
     // Example:
     // webpackConfig.resolve.extensions.push('.ts', '.tsx');
 
-    // delete mix's vue loader and replace it with mine for custom tailwind config
-    let vueLoader = webpackConfig.module.rules.filter(rule => {
-      return rule.loader === 'vue-loader'
-    })
+    console.log(webpackConfig.module.rules)
 
-    webpackConfig.module.rules.splice(webpackConfig.module.rules.indexOf(vueLoader), 1, {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        exclude: /bower_components/,
-        options: {
-          config: {
-            path: '../vue/src/tailwind/tailwind.js'
-          }
-        }
-    })
+    // delete mix's vue loader and replace it with mine for custom tailwind config
+    // let vueLoader = webpackConfig.module.rules.filter(rule => {
+    //   return rule.loader === 'vue-loader'
+    // })
+
+    // Trying (and failing) WITH the scss included in Devise.vue
+    // Results were that it built out the devise.css correctly but ALSO appended it to the
+    // app.css from the application.
+    // webpackConfig.module.rules.splice(webpackConfig.module.rules.indexOf(vueLoader), 1,
+    //     {
+    //       test: /\.vue$/,
+    //       loader: 'vue-loader',
+    //       exclude: /bower_components/,
+    //       options: {
+    //         extractCSS: true,
+    //         config: {
+    //           path: '../vue/src/tailwind/tailwind.js'
+    //         }
+    //       }
+    //     }
+    //   )
+
+    // Trying (and failing) without the scss included in Devise.vue
+    // webpackConfig.module.rules.push(
+    //   {
+    //     test: /devise\.scss$/,
+    //     loader: 'postcss-loader',
+    //     exclude: /bower_components/,
+    //     options: {
+    //       extractCSS: true,
+    //       config: {
+    //         path: '../vue/src/tailwind/tailwind.js'
+    //       }
+    //     }
+    //   }
+    // )
   }
 
   /**

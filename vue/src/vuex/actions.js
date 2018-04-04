@@ -347,6 +347,21 @@ const actions = {
     })
   },
 
+  // This is the save used from the page editor
+  savePage (context, page) {
+    return new Promise((resolve, reject) => {
+      window.axios.put(context.state.api.baseUrl + 'pages/' + page.id, page).then(function (response) {
+        window.bus.$emit('showMessage', {title: 'Success!', message: page.title + ' has been saved.'})
+        context.commit('updatePage', {page: page, data: response.data})
+        resolve(response)
+      }).catch(function (error) {
+        window.bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      window.bus.$emit('showError', error)
+    })
+  },
+
   // Page versions
   copyPageVersion (context, payload) {
     return new Promise((resolve, reject) => {

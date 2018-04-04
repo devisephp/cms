@@ -3,7 +3,7 @@
     <h2 class="dvs-font-bold dvs-mb-2">Edit Page</h2>
     <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-index')">Go to Administration</a>
 
-    <button class="dvs-btn dvs-btn-ghost dvs-w-full dvs-mb-8">Save This Page</button>
+    <button class="dvs-btn dvs-btn-ghost dvs-w-full dvs-mb-8" @click="requestSavePage()">Save This Page</button>
 
     <div class="dvs-flex dvs-w-full dvs-justify-center dvs-items-center dvs-mb-8">
       <i class="ion-android-desktop dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green-dark': previewMode === 'desktop'}" @click="setPreviewMode('desktop')"></i>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 import SliceEditor from './SliceEditor'
 
@@ -74,6 +74,13 @@ export default {
     this.slices = this.page.slices
   },
   methods: {
+    ...mapActions('devise', [
+      'savePage'
+    ]),
+    requestSavePage () {
+      let self = this
+      this.savePage(this.page)
+    },
     togglePageSettings () {
       this.pageSettingsOpen = !this.pageSettingsOpen
       this.pageContentOpen = false

@@ -1,16 +1,16 @@
-const DevelopersIndex = () => import('../components/developers/Index')
-const LanguagesManage = () => import('../components/languages/Manage')
-const MetaManage = () => import('../components/meta/Manage')
-const PageEditor = () => import('../components/pages/Editor')
-const PagesIndex = () => import('../components/pages/Index')
-const PagesView = () => import('../components/pages/View')
-const SettingsIndex = () => import('../components/settings/Index')
-const SitesIndex = () => import('../components/sites/Index')
-const SlicesIndex = () => import('../components/slices/Index')
-const TemplatesIndex = () => import('../components/templates/Index')
-const TemplatesEdit = () => import('../components/templates/Edit')
-const UsersIndex = () => import('../components/users/Index')
-const UsersEdit = () => import('../components/users/Edit')
+const DevelopersIndex = () => import(/* webpackChunkName: "devise-developers" */ '../components/developers/Index')
+const LanguagesManage = () => import(/* webpackChunkName: "devise-languages" */ '../components/languages/Manage')
+const MetaManage = () => import(/* webpackChunkName: "devise-meta" */ '../components/meta/Manage')
+const PageEditor = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/Editor')
+const PagesIndex = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/Index')
+const PagesView = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/View')
+const SettingsIndex = () => import(/* webpackChunkName: "devise-settings" */ '../components/settings/Index')
+const SitesIndex = () => import(/* webpackChunkName: "devise-sites" */ '../components/sites/Index')
+const SlicesIndex = () => import(/* webpackChunkName: "devise-slices" */ '../components/slices/Index')
+const TemplatesIndex = () => import(/* webpackChunkName: "devise-templates" */ '../components/templates/Index')
+const TemplatesEdit = () => import(/* webpackChunkName: "devise-templates" */ '../components/templates/Edit')
+const UsersIndex = () => import(/* webpackChunkName: "devise-users" */ '../components/users/Index')
+const UsersEdit = () => import(/* webpackChunkName: "devise-users" */ '../components/users/Edit')
 
 var routes = [
   {
@@ -41,7 +41,7 @@ var routes = [
     }
   },
   {
-    path: '/devise/edit-page',
+    path: '*',
     name: 'devise-page-editor',
     components: {
       'devise': PageEditor

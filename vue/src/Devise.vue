@@ -5,7 +5,6 @@
       <loadbar/>
       <messages/>
       <media-manager/>
-
       <div id="devise-container" :class="{'admin-closed': adminClosed, 'wide-admin': wideAdmin, 'preview-frame': isPreviewFrame}">
         <div id="devise-admin" v-if="!isPreviewFrame" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
             <user></user>
@@ -65,7 +64,7 @@ export default {
       loadbarPercentage: 0,
       templateMode: false,
       editorMode: false,
-      adminClosed: false,
+      adminClosed: true,
       wideAdmin: false,
       page: {
         title: null,
@@ -155,9 +154,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-@import "./sass/devise";
-
-</style>

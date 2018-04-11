@@ -70,6 +70,8 @@ class RoutesGenerator
             if ($route->middleware)
             {
               $uses['middleware'] = explode('|', $route->middleware);
+            } else {
+              $uses['middleware'] = 'web';
             }
 
             $this->Route->get($route->slug, $uses);
@@ -86,6 +88,8 @@ class RoutesGenerator
           if ($route->middleware)
           {
             $uses['middleware'] = explode('|', $route->middleware);
+          } else {
+            $uses['middleware'] = 'web';
           }
 
           $this->Route->get($route->slug, $uses);

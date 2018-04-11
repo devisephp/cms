@@ -57,10 +57,7 @@ class PagesController extends Controller
   {
     $page = $this->PagesRepository->findByRouteName($this->Route->currentRouteName());
 
-    $page = $this->PagesRepository->getLocalized($page);
-
     $localized = $this->PagesRepository->findLocalizedPage($page);
-    $localized = $this->PagesRepository->getLocalized($localized);
 
     if ($localized)
     {

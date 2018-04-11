@@ -7,7 +7,9 @@ use Devise\Http\Resources\Vue\SiteResource;
 use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsPage;
 use Devise\Models\DvsSite;
-use Devise\Models\DvsSlice;
+
+use Devise\Sites\SiteDetector;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -37,7 +39,8 @@ class Devise
 
   public static function sites()
   {
-    $sites = DvsSite::with('languages')->get();
+    $detector = App::make(SiteDetector::class);
+    $sites = $detector->all();
 
     $resource = SiteResource::collection($sites);
 

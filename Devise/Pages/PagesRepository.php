@@ -28,11 +28,6 @@ class PagesRepository
   private $LanguageDetector;
 
   /**
-   * @var CollectionsRepository
-   */
-  private $CollectionsRepository;
-
-  /**
    * Create a new PageRepostiry instance.
    *
    * @param DvsPage $Page
@@ -64,7 +59,24 @@ class PagesRepository
   public function findByRouteName($name)
   {
     return $this->Page
-      ->with('currentVersion.slices.templateSlice.slice', 'currentVersion.slices.fields', 'versions.page.currentVersion')
+      ->with(
+        'currentVersion.slices.templateSlice.slice',
+        'currentVersion.template.slices.slices.slices.slices',
+        'currentVersion.template.slices.slice',
+        'currentVersion.template.slices.slices.slice',
+        'currentVersion.template.slices.slices.slices.slice',
+        'currentVersion.template.slices.slices.slices.slices.slice',
+        'currentVersion.slices.slices.slices.slices',
+        'currentVersion.slices.childConfig.slice',
+        'currentVersion.slices.slices.childConfig.slice',
+        'currentVersion.slices.slices.slices.childConfig.slice',
+        'currentVersion.slices.slices.slices.slices.childConfig.slice',
+        'currentVersion.slices.fields',
+        'versions.page.currentVersion',
+        'translatedFromPage',
+        'localizedPages',
+        'metas'
+      )
       ->whereRouteName($name)
       ->firstOrFail();
   }

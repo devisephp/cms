@@ -9,6 +9,20 @@ class SiteDetector
 {
   protected static $site;
 
+  protected static $allSites;
+
+  public function all()
+  {
+    if (self::$allSites)
+    {
+      return self::$allSites;
+    }
+
+    $all = DvsSite::with('languages')->get();
+    self::$allSites = $all;
+    return $all;
+  }
+
   public function current()
   {
     if (self::$site)
@@ -21,7 +35,7 @@ class SiteDetector
     if (env('APP_ENV') !== 'production')
     {
       // let's try env params
-      $allSites = DvsSite::all();
+      $allSites = $this->all();
       foreach ($allSites as $site)
       {
         if ($domain === env('SITE_' . $site->id . '_DOMAIN'))
@@ -33,7 +47,8 @@ class SiteDetector
       }
     }
 
-    $site = DvsSite::where('domain', $domain)
+    $site = DvsSite::with('languages')
+      ->where('domain', $domain)
       ->first();
 
     if ($site)

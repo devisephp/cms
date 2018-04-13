@@ -26,6 +26,7 @@ class CreateDvsPageVersions extends Migration
       $table->softDeletes();
 
       $table->index('page_id');
+      $table->index('template_id');
     });
   }
 

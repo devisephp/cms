@@ -24,6 +24,10 @@ class CreateDvsTemplateSlices extends Migration
       $table->text('model_query');
       $table->text('config');
       $table->timestamps();
+
+      $table->index('template_id');
+      $table->index('parent_id');
+      $table->index('slice_id');
     });
   }
 

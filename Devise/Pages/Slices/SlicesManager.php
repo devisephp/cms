@@ -53,13 +53,26 @@ class SlicesManager
    * @param int $parentId
    * @param int $index
    */
-  public function saveAllSlices($templateId, $slices, $parentId = 0, $index = 0)
+  public function saveAllSlices($templateId, $slices, $parentId = 0, $index = 0, &$savedIds = [])
   {
     $pageVersionIds = $this->DvsPageVersion
       ->where('template_id', $templateId)
       ->pluck('id');
 
-    $this->iterateSlices($templateId, $slices, $parentId, $index, $pageVersionIds);
+    $this->iterateSlices($templateId, $slices, $parentId, $index, $pageVersionIds, $savedIds);
+
+    if ($parentId == 0 && $index == 0)
+    {
+      $this->DvsTemplateSlice
+        ->where('template_id', $templateId)
+        ->whereNotIn('id', $savedIds)
+        ->delete();
+
+      $this->DvsSliceInstance
+        ->leftJoin('dvs_template_slice', 'dvs_template_slice.id', '=', 'dvs_slice_instances.template_slice_id')
+        ->whereNull('dvs_template_slice.id')
+        ->delete();
+    }
   }
 
   /**
@@ -69,7 +82,7 @@ class SlicesManager
    * @param int $index
    * @param array $pageVersionIds
    */
-  public function iterateSlices($templateId, $slices, $parentId = 0, $index = 0, $pageVersionIds = [])
+  public function iterateSlices($templateId, $slices, $parentId = 0, $index = 0, $pageVersionIds = [], &$savedIds = [])
   {
     foreach ($slices as $slice)
     {
@@ -85,6 +98,8 @@ class SlicesManager
       $templateSlice->model_query = $slice["model_query"] ?: "";
       $templateSlice->config = $slice["config"] ?: "";
       $templateSlice->save();
+
+      $savedIds[] = $templateSlice->id;
 
       if ($templateSlice->type == 'single' || $templateSlice->type == 'model')
       {
@@ -105,7 +120,7 @@ class SlicesManager
       $index++;
       if (isset($slice['slices']) && is_array($slice['slices']))
       {
-        $this->saveAllSlices($templateId, $slice['slices'], $templateSlice->id, $index);
+        $this->saveAllSlices($templateId, $slice['slices'], $templateSlice->id, $index, $savedIds);
       }
     }
   }

@@ -48,7 +48,7 @@ class LanguageDetector
 
     $site = $this->SiteDetector->current();
 
-    $language = $site->languages()->where('code', $locale)->first();
+    $language = $site->languages->where('code', $locale)->first();
 
     // this language is not active, so let's get locale
     // to be something different, like the default one

@@ -21,6 +21,7 @@ class CreateDvsSiteElements extends Migration
         $table->timestamps();
 
         $table->index('site_id');
+        $table->index('element_id');
       });
     }
 

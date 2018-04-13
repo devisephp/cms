@@ -9,65 +9,87 @@ use Illuminate\Support\Facades\File;
 
 class SlicesController extends Controller
 {
-  private $data = [];
 
   public function all(ApiRequest $request)
   {
-    $all = File::allFiles(resource_path('views/slices'));
+    return $this->scanSlicesDir(resource_path('views/slices'));
+  }
 
-    $options = [];
+  function scanSlicesDir($dir)
+  {
+    $found = scandir($dir);
 
-    foreach ($all as $file)
+    $directories = [];
+    $files = [];
+
+    foreach ($found as $key => $value)
     {
-      $path = str_replace(resource_path('views/slices'), '', $file->getPath());
+      $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
-      if($path){
-        $path = substr($path, 1);
-        $path = str_replace('/','.', $path);
-      }
-
-      $this->addFile([
-        'path' => $path,
-        'name' => $this->getName($file->getFilename()),
-        'view' => $this->getViewName($path, $file->getFilename())
-      ]);
-    }
-  }
-
-  private function getName($getFilename)
-  {
-    $name = str_replace('.blade.php','', $getFilename);
-    $name = str_replace('-',' ', $name);
-
-    return ucwords($name);
-  }
-
-  private function getViewName($path, $getFilename)
-  {
-    $name = str_replace('.blade.php','', $getFilename);
-
-    $path = $path ? $path . '.' : '';
-
-    return $path . $name;
-  }
-
-  private function addFile($file)
-  {
-    if($file['path']){
-
-      $directories = explode('.', $file['path']);
-      $depth = count($directories);
-
-      foreach ($this->data as $data){
-        if(!isset($data['directories'])){
-          $data['directories'] = [
-            'directories' => []
+      if ($value != "." && $value != ".." && $value != ".DS_Store")
+      {
+        if (!is_dir($path))
+        {
+          $files[] = [
+            'name'  => $this->getFileName($path),
+            'value' => $this->getViewName($path)
           ];
+        } else
+        {
+          $results = $this->scanSlicesDir($path);
+          $directories[] = $results;
         }
       }
-
-    } else {
-      $this->data[] = $file;
     }
+
+    return [
+      'name'        => $this->getDirName($dir),
+      'directories' => $directories,
+      'files'       => $files
+    ];
+  }
+
+  private function getFileName($path)
+  {
+    $name = $this->getName($path);
+    $name = str_replace('.blade.php', '', $name);
+
+    return $this->toHuman($name);
+  }
+
+  private function getViewName($path)
+  {
+    $name = $this->getName($path);
+
+    $path = str_replace($name, '', $path);
+    $path = str_replace(resource_path('views/slices'), '', $path);
+    $path = str_replace('/', '.', $path);
+
+    $name = str_replace('.blade.php', '', $name);
+
+    return substr($path . $name, 1);
+  }
+
+  private function getDirName($path)
+  {
+    $path = $this->getName($path);
+
+    if ($path == "") return 'Slices';
+
+    return $this->toHuman($path);
+  }
+
+  private function toHuman($string)
+  {
+    $string = preg_replace("/[^a-zA-Z]/", " ", $string);
+
+    return ucwords($string);
+  }
+
+  private function getName($path)
+  {
+    $parts = explode('/', $path);
+
+    return $parts[count($parts) - 1];
   }
 }

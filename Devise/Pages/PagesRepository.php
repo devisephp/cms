@@ -60,17 +60,13 @@ class PagesRepository
   {
     return $this->Page
       ->with(
-        'currentVersion.slices.templateSlice.slice',
+        'currentVersion.slices.templateSlice',
         'currentVersion.template.slices.slices.slices.slices',
-        'currentVersion.template.slices.slice',
-        'currentVersion.template.slices.slices.slice',
-        'currentVersion.template.slices.slices.slices.slice',
-        'currentVersion.template.slices.slices.slices.slices.slice',
         'currentVersion.slices.slices.slices.slices',
-        'currentVersion.slices.childConfig.slice',
-        'currentVersion.slices.slices.childConfig.slice',
-        'currentVersion.slices.slices.slices.childConfig.slice',
-        'currentVersion.slices.slices.slices.slices.childConfig.slice',
+        'currentVersion.slices.childConfig',
+        'currentVersion.slices.slices.childConfig',
+        'currentVersion.slices.slices.slices.childConfig',
+        'currentVersion.slices.slices.slices.slices.childConfig',
         'currentVersion.slices.fields',
         'versions.page.currentVersion',
         'translatedFromPage',

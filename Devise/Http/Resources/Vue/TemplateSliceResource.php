@@ -16,10 +16,10 @@ class TemplateSliceResource extends Resource
   {
     $data = [
       'id'          => $this->id,
-      'slice_id'    => $this->slice_id,
+      'view'        => $this->view,
       'type'        => $this->type,
       'label'       => $this->label,
-      'name'        => $this->slice->component_name,
+      'name'        => $this->component_name,
       'model_query' => $this->model_query,
       'config'      => $this->config
     ];

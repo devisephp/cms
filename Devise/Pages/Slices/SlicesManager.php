@@ -91,7 +91,7 @@ class SlicesManager
 
       $templateSlice->template_id = $templateId;
       $templateSlice->parent_id = $parentId;
-      $templateSlice->slice_id = $slice["slice_id"];
+      $templateSlice->view = $slice["view"];
       $templateSlice->type = $slice["type"];
       $templateSlice->label = $slice["label"];
       $templateSlice->position = $index;
@@ -136,7 +136,7 @@ class SlicesManager
     $newSlice = $this->DvsSliceInstance->create([
       'page_version_id'    => $pageVersionId,
       'parent_instance_id' => $parentSliceId,
-      'slice_id'           => $instance->slice_id,
+      'view'               => $instance->view,
       'label'              => $instance->label
     ]);
 

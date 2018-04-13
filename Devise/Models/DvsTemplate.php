@@ -28,7 +28,10 @@ class DvsTemplate extends Model
 
   public function registerComponents()
   {
-    $slices = DvsSlice::get();
+    $slices = DvsTemplateSlice::groupBy('view')
+      ->select("view")
+      ->get();
+
     foreach ($slices as $slice)
     {
       Devise::addComponent($slice);

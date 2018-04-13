@@ -21,6 +21,10 @@ class CreateDvsSliceInstances extends Migration
       $table->boolean('enabled');
       $table->integer('position');
       $table->timestamps();
+
+      $table->index('page_version_id');
+      $table->index('parent_instance_id');
+      $table->index('template_slice_id');
     });
   }
 

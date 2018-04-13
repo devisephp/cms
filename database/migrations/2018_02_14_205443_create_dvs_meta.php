@@ -20,6 +20,8 @@ class CreateDvsMeta extends Migration
       $table->string('attribute_value');
       $table->string('content');
       $table->timestamps();
+
+      $table->index('page_id');
     });
   }
 

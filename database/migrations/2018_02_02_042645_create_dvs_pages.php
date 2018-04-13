@@ -29,6 +29,8 @@ class CreateDvsPages extends Migration
       $table->timestamps();
       $table->softDeletes();
 
+
+      $table->index('site_id');
       $table->index('language_id');
       $table->index('translated_from_page_id');
       $table->unique(['slug', 'site_id'], 'slug_site_unique');

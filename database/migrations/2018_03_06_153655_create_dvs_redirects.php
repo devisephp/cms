@@ -20,6 +20,8 @@ class CreateDvsRedirects extends Migration
       $table->string('from_url');
       $table->string('to_url');
       $table->timestamps();
+
+      $table->index('site_id');
     });
   }
 

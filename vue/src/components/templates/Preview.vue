@@ -98,7 +98,7 @@
             <div v-if="localValue.slices">
               <ul class="dvs-list-reset">
                 <li v-for="(slice, key) in localValue.slices" v-if="theSlice(slice) && slice.metadata" class="dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': slice.metadata.open}">
-                  <template-preview-settings v-model="localValue.slices[key]" @addSlice="requestAddSlice" @toggleSlice="toggleSlice(slice)" @toggleModelControls="toggleModelControls" @toggleCreateChildrenSlices="toggleCreateChildrenSlices"></template-preview-settings>
+                  <template-preview-settings v-model="localValue.slices[key]" @move="requestMoveSlice" @addSlice="requestAddSlice" @removeSlice="requestRemoveSlice(slice)" @toggleSlice="toggleSlice(slice)" @toggleModelControls="toggleModelControls" @toggleCreateChildrenSlices="toggleCreateChildrenSlices"></template-preview-settings>
                 </li>
               </ul>
             </div>
@@ -171,6 +171,7 @@ import faker from 'faker/locale/en'
 
 import { mapGetters, mapActions } from 'vuex'
 import SuperTable from '../utilities/tables/SuperTable'
+import Arrays from '../../mixins/Arrays'
 
 export default {
   name: 'TemplatePreview',
@@ -229,20 +230,30 @@ export default {
         return slice.id === s.slice_id
       })
     },
+    requestMoveSlice ({delta, slice}) {
+      this.moveInArray(this.localValue.slices, slice, delta)
+    },
     requestAddSlice ({direction, slice}) {
+      console.log(slice)
       this.addSlice.direction = direction
       this.addSlice.show = true
       this.addSlice.referenceSlice = slice
     },
+    requestRemoveSlice (slice) {
+      this.localValue.slices.splice(this.localValue.slices.indexOf(slice), 1)
+    },
     confirmAddSlice () {
       this.addSlice.show = false
+      
       let position = this.localValue.slices.indexOf(this.addSlice.referenceSlice)
       if (position < 0) {
         position = 0
       }
 
-      let newSlice = this.buildSliceForPreview(this.addSlice.slice)
+      let newSlice = Object.assign({}, this.buildSliceForPreview(this.addSlice.slice))
       newSlice.type = this.addSlice.type
+      newSlice.id = 0
+      newSlice.slice_id = this.addSlice.referenceSlice.slice_id
 
       if (this.addSlice.direction === 'above') {
         this.localValue.slices.splice(position, 0, newSlice)
@@ -259,8 +270,9 @@ export default {
       this.templateSettingsOpen = false
     },
     toggleSlice (slice) {
+      let sliceStatus = slice.metadata.open
       this.localValue.slices.map(s => this.closeSlice(s))
-      this.$set(slice.metadata, 'open', !slice.metadata.open)
+      this.$set(slice.metadata, 'open', !sliceStatus)
     },
     toggleModelControls (component) {
       if (this.modelEditor === null) {
@@ -410,8 +422,6 @@ export default {
 
       slice.name = this.theSlice(slice).component
 
-      console.log(slice)
-
       return slice
     },
     buildParentSliceForPreview (slice) {
@@ -437,6 +447,7 @@ export default {
   },
   components: {
     SuperTable
-  }
+  },
+  mixins: [ Arrays ]
 }
 </script>

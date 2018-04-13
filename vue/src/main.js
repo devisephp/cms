@@ -113,7 +113,10 @@ const DevisePlugin = {
       },
       computed: {
         models () {
-          return window.page.data
+          if (window.page && window.page.data) {
+            return window.page.data
+          }
+          return null
         }
       },
       // This sets a prop to be accepted by all components in a custom Vue

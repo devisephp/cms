@@ -152,7 +152,7 @@ export default {
   },
   watch: {
     '$route': function (newRoute) {
-      if (newRoute.name !== null) {
+      if (newRoute.name !== null && newRoute.name !== 'devise-page-editor') {
         this.adminClosed = false
       }
       this.checkWidthOfInterface(newRoute)

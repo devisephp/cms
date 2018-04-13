@@ -553,6 +553,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'templates/' + template.id, template).then(function (response) {
         context.commit('updateTemplate', {template: template, data: response.data})
+        window.bus.$emit('showMessage', {title: 'Success!', message: template.name + ' has been updated!'})
         resolve(response)
       }).catch(function (error) {
         window.bus.$emit('showError', error)

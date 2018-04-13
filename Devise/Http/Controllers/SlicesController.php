@@ -3,76 +3,71 @@
 namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
-use Devise\Http\Requests\Slices\SaveSlice;
-use Devise\Http\Requests\Slices\DeleteSlice;
-use Devise\Http\Resources\Api\SliceResource;
-use Devise\Models\DvsSlice;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\File;
 
 class SlicesController extends Controller
 {
-  /**
-   * @var DvsSlice
-   */
-  private $DvsSlice;
-
-
-  /**
-   * SlicesController constructor.
-   * @param DvsSlice $DvsSlice
-   */
-  public function __construct(DvsSlice $DvsSlice)
-  {
-    $this->DvsSlice = $DvsSlice;
-  }
+  private $data = [];
 
   public function all(ApiRequest $request)
   {
-    $all = $this->DvsSlice
-      ->get();
+    $all = File::allFiles(resource_path('views/slices'));
 
-    return SliceResource::collection($all);
+    $options = [];
+
+    foreach ($all as $file)
+    {
+      $path = str_replace(resource_path('views/slices'), '', $file->getPath());
+
+      if($path){
+        $path = substr($path, 1);
+        $path = str_replace('/','.', $path);
+      }
+
+      $this->addFile([
+        'path' => $path,
+        'name' => $this->getName($file->getFilename()),
+        'view' => $this->getViewName($path, $file->getFilename())
+      ]);
+    }
   }
 
-  /**
-   * @param SaveSlice $request
-   * @return SliceResource
-   */
-  public function store(SaveSlice $request)
+  private function getName($getFilename)
   {
-    $new = $this->DvsSlice
-      ->createFromRequest($request);
+    $name = str_replace('.blade.php','', $getFilename);
+    $name = str_replace('-',' ', $name);
 
-    return new SliceResource($new);
+    return ucwords($name);
   }
 
-  /**
-   * @param SaveSlice $request
-   * @param $id
-   * @return SliceResource
-   */
-  public function update(SaveSlice $request, $id)
+  private function getViewName($path, $getFilename)
   {
-    $slice = $this->DvsSlice
-      ->findOrFail($id);
+    $name = str_replace('.blade.php','', $getFilename);
 
-    $slice->updateFromRequest($request);
+    $path = $path ? $path . '.' : '';
 
-    return new SliceResource($slice);
+    return $path . $name;
   }
 
-  /**
-   * @param DeleteSlice $request
-   * @param $id
-   */
-  public function delete(DeleteSlice $request, $id)
+  private function addFile($file)
   {
-    $slice = $this->DvsSlice
-      ->findOrFail($id);
+    if($file['path']){
 
-    if($slice->pageVersions->count()) abort(422, 'Slice must be removed from all pages before deleting.');
+      $directories = explode('.', $file['path']);
+      $depth = count($directories);
 
-    $slice->delete();
+      foreach ($this->data as $data){
+        if(!isset($data['directories'])){
+          $data['directories'] = [
+            'directories' => []
+          ];
+        }
+      }
+
+    } else {
+      $this->data[] = $file;
+    }
   }
 }

@@ -17,7 +17,7 @@ class CreateDvsTemplateSlices extends Migration
       $table->increments('id');
       $table->integer('template_id')->unsigned();
       $table->integer('parent_id')->unsigned();
-      $table->integer('slice_id')->unsigned();
+      $table->string('view');
       $table->string('type');
       $table->string('label');
       $table->integer('position')->unsigned();

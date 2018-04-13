@@ -84,9 +84,9 @@ class DvsPageVersion extends Model
 
   private function extractComponents(DvsTemplateSlice $templateSlice)
   {
-    if (View::exists($templateSlice->slice->view))
+    if (View::exists($templateSlice->view))
     {
-      Devise::addComponent($templateSlice->slice);
+      Devise::addComponent($templateSlice);
     }
   }
 }

@@ -28,7 +28,7 @@ class SliceInstanceResource extends Resource
     $data = [
       'metadata' => [
         'instance_id' => $this->id,
-        'name'        => $this->templateSlice->slice->component_name,
+        'name'        => $this->templateSlice->component_name,
         'type'        => $this->templateSlice->type,
         'label'       => $this->templateSlice->label,
         'enabled'     => $this->enabled,
@@ -72,7 +72,7 @@ class SliceInstanceResource extends Resource
     {
       $data['metadata'] = [
         'instance_id' => 0,
-        'name'        => $modelSlice->slice->component_name,
+        'name'        => $modelSlice->component_name,
         'type'        => $modelSlice->type,
         'label'       => $modelSlice->label,
         'enabled'     => 1

@@ -27,7 +27,6 @@ class CreateDvsTemplateSlices extends Migration
 
       $table->index('template_id');
       $table->index('parent_id');
-      $table->index('slice_id');
     });
   }
 

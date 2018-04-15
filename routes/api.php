@@ -82,6 +82,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
    * Slices
    */
   Route::get('slices', 'SlicesController@all');
+  Route::get('slices-directories', 'SlicesController@allDirectories');
   Route::post('slices', 'SlicesController@store');
   Route::put('slices/{slice_id}', 'SlicesController@update');
   Route::delete('slices/{slice_id}', 'SlicesController@delete');

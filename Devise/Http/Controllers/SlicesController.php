@@ -12,6 +12,22 @@ class SlicesController extends Controller
 
   public function all(ApiRequest $request)
   {
+    $slices = [];
+    $directories = $this->scanSlicesDir(resource_path('views/slices'));
+    return $this->flattenSlice($slices, $directories);
+  }
+
+  function flattenSlice ($slices, $directories) {
+    $slices = array_merge($slices, $directories['files']);
+    foreach($directories['directories'] as $directory) {
+      $slices = array_merge($slices, $this->flattenSlice($slices, $directory));
+    }
+
+    return $slices;
+  }
+
+  public function allDirectories(ApiRequest $request)
+  {
     return $this->scanSlicesDir(resource_path('views/slices'));
   }
 

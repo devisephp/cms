@@ -5,8 +5,10 @@ namespace Devise\Pages\Slices;
 use Devise\Models\DvsField;
 use Devise\Models\DvsPageVersion;
 use Devise\Models\DvsSliceInstance;
-use Devise\Models\DvsTemplate;
 use Devise\Models\DvsTemplateSlice;
+use Devise\Devise;
+
+use Illuminate\Support\Facades\File;
 
 class SlicesManager
 {
@@ -169,5 +171,16 @@ class SlicesManager
       ->first();
 
     return $parent->id;
+  }
+
+  public function registerAllComponents()
+  {
+    $files = collect(File::allFiles(resource_path('views/slices')));
+
+    $files = $files->mapInto(Component::class);
+
+    foreach ($files as $file){
+      Devise::addComponent($file);
+    }
   }
 }

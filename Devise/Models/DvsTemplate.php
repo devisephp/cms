@@ -2,8 +2,6 @@
 
 namespace Devise\Models;
 
-use Devise\Devise;
-
 class DvsTemplate extends Model
 {
   protected $fillable = ['name', 'layout'];
@@ -24,18 +22,6 @@ class DvsTemplate extends Model
     return $this->hasMany(DvsTemplateSlice::class, 'template_id')
       ->orderBy('position')
       ->where('parent_id', 0);
-  }
-
-  public function registerComponents()
-  {
-    $slices = DvsTemplateSlice::groupBy('view')
-      ->select("view")
-      ->get();
-
-    foreach ($slices as $slice)
-    {
-      Devise::addComponent($slice);
-    }
   }
 
 }

@@ -47,7 +47,8 @@ class TemplatesController extends Controller
     $template = $this->DvsTemplate
       ->find($id);
 
-    $template->registerComponents();
+    $this->SlicesManager
+      ->registerAllComponents();
 
     return $this->View->make($template->layout, ['page' => $template]);
   }

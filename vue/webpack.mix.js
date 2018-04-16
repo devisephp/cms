@@ -1,6 +1,8 @@
 let mix = require('laravel-mix');
 var tailwindcss = require('tailwindcss');
 
+require('./mix/DeviseMix');
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,6 +16,8 @@ var tailwindcss = require('tailwindcss');
 mix.setPublicPath('./')
 
 mix
+  .deviseMix()
+  .js('src/main.js', './dist/devise.js')
   .sass('src/sass/devise.scss', './dist/devise.css')
   .options({
     processCssUrls: false,

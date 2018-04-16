@@ -6,7 +6,6 @@ const PagesIndex = () => import(/* webpackChunkName: "devise-pages" */ '../compo
 const PagesView = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/View')
 const SettingsIndex = () => import(/* webpackChunkName: "devise-settings" */ '../components/settings/Index')
 const SitesIndex = () => import(/* webpackChunkName: "devise-sites" */ '../components/sites/Index')
-const SlicesIndex = () => import(/* webpackChunkName: "devise-slices" */ '../components/slices/Index')
 const TemplatesIndex = () => import(/* webpackChunkName: "devise-templates" */ '../components/templates/Index')
 const TemplatesEdit = () => import(/* webpackChunkName: "devise-templates" */ '../components/templates/Edit')
 const UsersIndex = () => import(/* webpackChunkName: "devise-users" */ '../components/users/Index')

@@ -31,6 +31,11 @@ class DvsTemplateSlice extends Model
     $this->attributes['config'] = ($value) ? json_encode($value) : "";
   }
 
+  public function getNameAttribute($value)
+  {
+    return $this->getNameFromView();
+  }
+
   public function getConfigAttribute($value)
   {
     return json_decode($value);

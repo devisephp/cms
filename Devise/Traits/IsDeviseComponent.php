@@ -119,4 +119,19 @@ trait IsDeviseComponent
     }
   }
 
+  private function getNameFromView()
+  {
+    $name = str_replace('slices.', '', $this->view);
+    $name = str_replace('.', ' ', $name);
+
+    return $this->toHuman( $name );
+  }
+
+  private function toHuman($string)
+  {
+    $string = preg_replace("/[^a-zA-Z]/", " ", $string);
+
+    return ucwords($string);
+  }
+
 }

@@ -29,7 +29,9 @@ class Component
   public function __construct(SplFileInfo $file)
   {
     $this->setViewName($file->getRealPath());
-    $this->setFileName($file->getRealPath());
+
+    $this->name = $this->getNameFromView();
+
     $this->setComponentName();
     $this->setComponentCode();
   }
@@ -45,21 +47,6 @@ class Component
     $name = str_replace('.blade.php', '', $name);
 
     $this->view = 'slices.' . substr($path . $name, 1);
-  }
-
-  private function setFileName($path)
-  {
-    $name = $this->getName($path);
-    $name = str_replace('.blade.php', '', $name);
-
-    $this->name = $this->toHuman($name);
-  }
-
-  private function toHuman($string)
-  {
-    $string = preg_replace("/[^a-zA-Z]/", " ", $string);
-
-    return ucwords($string);
   }
 
   private function getName($path)

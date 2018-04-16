@@ -126,6 +126,10 @@ export default {
     state.slices = payload
   },
 
+  setSlicesDirectories (state, payload) {
+    state.slicesDirectories = payload
+  },
+
   createSlice (state, slice) {
     state.slices.data.push(slice)
   },

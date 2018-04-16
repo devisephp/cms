@@ -33,9 +33,8 @@ const state = {
   sites: {
     data: []
   },
-  slices: {
-    data: []
-  },
+  slices: [],
+  slicesDirectories: [],
   templates: {
     data: []
   },

@@ -3,10 +3,10 @@
     <template v-if="editorMode">
 
       <loadbar/>
-      <messages v-if="!adminDisabled"/>
-      <media-manager v-if="!adminDisabled"/>
+      <messages/>
+      <media-manager/>
       <div id="devise-container" :class="{'admin-closed': adminClosed, 'wide-admin': wideAdmin, 'preview-frame': isPreviewFrame}">
-        <div id="devise-admin" v-if="!isPreviewFrame && !adminDisabled" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
+        <div id="devise-admin" v-if="!isPreviewFrame" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
             <user></user>
             <transition name="fade" mode="out-in">
               <router-view name="devise" :page="page"></router-view>
@@ -19,25 +19,20 @@
 
             <slot name="on-top"></slot>
 
-            <slot name="static-content"></slot>
-
             <slice v-for="(slice, key) in page.slices" :key="key" :slice="slice"/>
-
-            <slot name="static-content-bottom"></slot>
 
             <slot name="on-bottom"></slot>
 
           </div>
 
           <!-- Preview mode in editor -->
-          <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && !adminDisabled" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
+          <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
 
         </div>
-        <div id="devise-admin-shim" v-if="!isPreviewFrame && !adminDisabled"></div>
-        <i id="devise-admin-open" v-if="!isPreviewFrame && !adminDisabled" class="ion-gear-a" @click="closeAdmin"></i>
+        <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
+        <i id="devise-admin-open" v-if="!isPreviewFrame" class="ion-gear-a" @click="closeAdmin"></i>
       </div>
     </template>
-
     <template v-if="templateMode">
 
       <template-preview>
@@ -65,7 +60,6 @@ export default {
   name: 'Devise',
   data () {
     return {
-      adminDisabled: true,
       showLoadbar: false,
       loadbarPercentage: 0,
       templateMode: false,
@@ -81,10 +75,6 @@ export default {
     }
   },
   mounted () {
-    if (this.isLoggedIn()) {
-      this.adminDisabled = false
-    }
-
     if (typeof window.template !== 'undefined') {
       this.templateMode = true
     } else {
@@ -101,10 +91,6 @@ export default {
     this.checkWidthOfInterface(this.$route)
   },
   methods: {
-    isLoggedIn () {
-      let user = window.user
-      return user
-    },
     initDevise () {
       try {
         if (!this.isPreviewFrame) {
@@ -152,9 +138,6 @@ export default {
   },
   watch: {
     '$route': function (newRoute) {
-      if (newRoute.name !== null && newRoute.name !== 'devise-page-editor') {
-        this.adminClosed = false
-      }
       this.checkWidthOfInterface(newRoute)
     }
   },

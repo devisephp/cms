@@ -1,9 +1,9 @@
 <template>
 
-  <div v-if="slices.data.length > 0 && localValue.name">
+  <div v-if="slices.length > 0 && localValue.label">
 
     <div class="dvs-flex dvs-justify-between dvs-block dvs-mb-2 dvs-template-switch-sm dvs-ml-4">
-      <strong>{{ theSlice().name }}</strong>
+      <strong>{{ localValue.label }}</strong>
       <div class="dvs-relative">
         <i class="ion-arrow-expand dvs-absolute dvs-pin-r dvs-pin-t mr-6 dvs-rounded-sm" @click="toggleSlice()" />
         <i class="ion-gear-a dvs-absolute dvs-pin-r dvs-pin-t dvs-rounded-sm" @click="toggleShowControls()" />
@@ -11,7 +11,7 @@
         <div class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-10 dvs-bg-white dvs-rounded-sm dvs-min-w-64 dvs-text-center dvs-shadow-lg dvs-z-40" v-if="showControls">
           <div class="dvs-bg-grey-lighter dvs-text-grey-darker dvs-p-4 dvs-font-normal dvs-relative">
             <i class="ion-android-close dvs-absolute dvs-pin-t dvs-pin-r dvs-m-4 dvs-text-lg" @click="toggleShowControls()"></i>
-            <strong>Managing</strong> <br>{{ theSlice().name }}
+            <strong>Managing</strong> <br>{{ localValue.label }}
           </div>
           <div class="dvs-p-8 dvs-py-6">
             <button class="dvs-btn dvs-btn-xs dvs-w-full dvs-btn-ghost dvs-mb-2" @click="toggleModelControls(localValue)" v-if="localValue.type === 'model'">Set Data</button>
@@ -27,14 +27,14 @@
     <div class="dvs-collapsed dvs-pl-4">
 
       <fieldset v-if="localValue.type === 'repeats'" class="dvs-fieldset dvs-mb-4">
-        <label class="dvs-font-bold dvs-mb-1 dvs-block dvs-large-label"><strong>Amount of Demo "{{ theSlice().name }}" Instances</strong></label>
+        <label class="dvs-font-bold dvs-mb-1 dvs-block dvs-large-label"><strong>Amount of Demo "{{ theComponent.name }}" Instances</strong></label>
         <div class="dvs-flex">
           <input type="number" min="0" max="50" class="dvs-mr-4 dvs-min-w-1/4 dvs-max-w-1/4" v-model.number="localValue.settings.numberOfInstances" @keyup="updateValue">
           <input type="range" v-model.number="localValue.settings.numberOfInstances" max="50" class="dvs-w-3/4" @change="updateValue">
         </div>
       </fieldset>
 
-      <fieldset v-for="(field, fieldKey) in getComponent(theSlice().component).config" class="dvs-mb-4" :key="fieldKey">
+      <fieldset v-for="(field, fieldKey) in theComponent.config" class="dvs-mb-4" :key="fieldKey">
         <template v-if="field.type">
           <label class="dvs-font-bold dvs-mb-1 dvs-block dvs-large-label">{{ field.label }}</label>
           <component v-bind:is="field.type.charAt(0).toUpperCase() + field.type.slice(1) + 'Controls'" v-model="localValue.config[fieldKey]" @change="updateValue()"></component>
@@ -43,7 +43,7 @@
 
       <div v-if="typeof localValue.slices !== 'undefined' && localValue.slices.length > 0">
         <ul class="dvs-list-reset">
-          <li v-for="(subSlice, key) in localValue.slices" v-if="theSlice(subSlice) && subSlice.metadata" class="dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': subSlice.metadata.open}">
+          <li v-for="(subSlice, key) in localValue.slices" v-if="subSlice.metadata" class="dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': subSlice.metadata.open}">
             <template-preview-settings v-model="localValue.slices[key]" @addSlice="addSlice" @removeSlice="requestRemoveChildSlice" @toggleSlice="toggleSlice(subSlice)" @toggleModelControls="toggleModelControls" @toggleCreateChildrenSlices="toggleCreateChildrenSlices"></template-preview-settings>
           </li>
         </ul>
@@ -90,17 +90,15 @@ export default {
       this.$emit('input', this.localValue)
       this.$emit('change', this.localValue)
     },
-    theSlice () {
-      let self = this
-      return this.slices.data.find(slice => {
-        return slice.id === self.localValue.slice_id
-      })
-    },
     toggleSlice () {
       this.$emit('toggleSlice')
     },
     toggleShowControls () {
-      this.showControls = !this.showControls
+      if (this.localValue.type === 'model') {
+        this.$emit('toggleModelControls', this.localValue)
+      } else {
+        this.showControls = !this.showControls
+      }
     },
     toggleModelControls (component) {
       this.$emit('toggleModelControls', component)
@@ -135,9 +133,6 @@ export default {
         this.getModels()
       }
       this.showControls = false
-    },
-    getComponent (component) {
-      return window.deviseComponents[component]
     }
   },
   computed: {
@@ -146,7 +141,16 @@ export default {
       'sliceConfig',
       'fieldConfig',
       'template'
-    ])
+    ]),
+    theComponent () {
+      for (var component in window.deviseComponents) {
+        if (window.deviseComponents.hasOwnProperty(component)) {
+          if (window.deviseComponents[component].view === this.localValue.view) {
+            return window.deviseComponents[component]
+          }
+        }
+      }
+    }
   },
   watch: {
     value (newValue) {

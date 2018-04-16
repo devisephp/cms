@@ -44,7 +44,7 @@ trait IsDeviseComponent
 
     $name = $this->component_name;
 
-    $code = $name . ": {name:\"" . $name . "\",template:\"" . $template . "\"," . $partial;
+    $code = $name . ": {name:\"" . $name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\"," . $partial;
 
     return $this->compress_script($code);
   }

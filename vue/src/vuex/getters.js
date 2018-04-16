@@ -64,6 +64,10 @@ const getters = {
     return state.slices
   },
 
+  slicesDirectories: state => {
+    return state.slicesDirectories
+  },
+
   // Templates
   templates: state => {
     return state.templates

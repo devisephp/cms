@@ -46,7 +46,11 @@
           <label>Select a Slice</label>
           <select v-model="sliceToAdd">
             <option :value="null">Select a Slice</option>
-            <option :value="slice" v-for="slice in slices.data">{{ slice.name }}</option>
+            <optgroup v-for="(group, name) in sliceDirectoriesOptions" :label="name">
+              <option v-for="option in group" :value="option">
+                {{ option.name }}
+              </option>
+            </optgroup>
           </select>
         </fieldset>
         <button class="dvs-btn" :disabled="!sliceToAdd" @click="selectSliceForNewChild()">Select</button>
@@ -97,7 +101,7 @@
 
             <div v-if="localValue.slices">
               <ul class="dvs-list-reset">
-                <li v-for="(slice, key) in localValue.slices" v-if="theSlice(slice) && slice.metadata" class="dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': slice.metadata.open}">
+                <li v-for="(slice, key) in localValue.slices" v-if="theComponent(slice) && slice.metadata" class="dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': slice.metadata.open}">
                   <template-preview-settings v-model="localValue.slices[key]" @move="requestMoveSlice" @addSlice="requestAddSlice" @removeSlice="requestRemoveSlice(slice)" @toggleSlice="toggleSlice(slice)" @toggleModelControls="toggleModelControls" @toggleCreateChildrenSlices="toggleCreateChildrenSlices"></template-preview-settings>
                 </li>
               </ul>
@@ -105,7 +109,6 @@
 
             <div v-if="localValue.slices && localValue.slices.length < 1">
               <button class="dvs-btn dvs-btn-lg dvs-font-bold dvs-w-full" @click="requestAddSlice({direction: 'below', slice: null})">Add first slice</button>
-
             </div>
 
           </div>
@@ -113,17 +116,17 @@
       </ul>
     </div>
 
-    <div id="devise-preview-content" v-if="slices.data.length && dataLoaded">
+    <div id="devise-preview-content" v-if="slices.length && dataLoaded">
 
       <slot name="on-top"></slot>
 
       <template v-if="localValue.slices">
         <div v-for="(slice, key) in localValue.slices" class="dvs-slot">
           <template v-if="slice.metadata.type === 'single'">
-            <component v-bind:is="getComponent(theSlice(slice).component)" :devise="localValue.slices[key].config" :key="key"></component>
+            <component v-bind:is="theComponent(slice)" :devise="localValue.slices[key].config" :key="key"></component>
           </template>
           <template v-if="slice.metadata.type === 'multiple'" v-for="s in slice.metadata.settings.numberOfInstances">
-            <component v-bind:is="getComponent(theSlice(s).component)" :devise="localValue.slices[key].config" :key="key"></component>
+            <component v-bind:is="theComponent(slice)" :devise="localValue.slices[key].config" :key="key"></component>
           </template>
         </div>
       </template>
@@ -146,16 +149,11 @@
           <label>Slice</label>
           <select v-model="addSlice.slice">
             <option :value="null">Select a Slice</option>
-            <option :value="slice" v-for="slice in slices.data">{{ slice.name }}</option>
-          </select>
-        </fieldset>
-
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Type</label>
-          <select v-model="addSlice.type">
-            <option value="single">Single</option>
-            <option value="repeatable">Repeatable</option>
-            <option value="model">Model</option>
+            <optgroup v-for="(group, name) in sliceDirectoriesOptions" :label="name">
+              <option v-for="option in group" :value="option">
+                {{ option.name }}
+              </option>
+            </optgroup>
           </select>
         </fieldset>
         <button class="dvs-btn dvs-mr-2" :disabled="addSlice.slice === null" @click="confirmAddSlice">Add Slice</button>
@@ -172,6 +170,7 @@ import faker from 'faker/locale/en'
 import { mapGetters, mapActions } from 'vuex'
 import SuperTable from '../utilities/tables/SuperTable'
 import Arrays from '../../mixins/Arrays'
+import Slices from '../../mixins/Slices'
 
 export default {
   name: 'TemplatePreview',
@@ -198,6 +197,7 @@ export default {
     let self = this
     self.getTemplates().then(function () {
       self.localValue = window.template
+      self.getSlicesDirectories()
       self.getSlices().then(function () {
         self.localValue.slices = self.buildTemplateForPreview()
         self.dataLoaded = true
@@ -209,6 +209,7 @@ export default {
       'getTemplates',
       'updateTemplate',
       'getSlices',
+      'getSlicesDirectories',
       'getModels',
       'getModelSettings'
     ]),
@@ -222,19 +223,19 @@ export default {
     goToTemplates () {
       window.parent.postMessage('goBack', '*')
     },
-    theSlice (s) {
-      if (!s.hasOwnProperty('slice_id')) {
-        s.slice_id = s.id
+    theComponent (s) {
+      for (var component in window.deviseComponents) {
+        if (window.deviseComponents.hasOwnProperty(component)) {
+          if (window.deviseComponents[component].view === s.view) {
+            return window.deviseComponents[component]
+          }
+        }
       }
-      return this.slices.data.find(slice => {
-        return slice.id === s.slice_id
-      })
     },
     requestMoveSlice ({delta, slice}) {
       this.moveInArray(this.localValue.slices, slice, delta)
     },
     requestAddSlice ({direction, slice}) {
-      console.log(slice)
       this.addSlice.direction = direction
       this.addSlice.show = true
       this.addSlice.referenceSlice = slice
@@ -244,7 +245,7 @@ export default {
     },
     confirmAddSlice () {
       this.addSlice.show = false
-      
+
       let position = this.localValue.slices.indexOf(this.addSlice.referenceSlice)
       if (position < 0) {
         position = 0
@@ -253,7 +254,10 @@ export default {
       let newSlice = Object.assign({}, this.buildSliceForPreview(this.addSlice.slice))
       newSlice.type = this.addSlice.type
       newSlice.id = 0
-      newSlice.slice_id = this.addSlice.referenceSlice.slice_id
+      newSlice.parent_id = 0
+      if (this.addSlice.referenceSlice !== null) {
+        newSlice.parent_id = this.addSlice.referenceSlice.id
+      }
 
       if (this.addSlice.direction === 'above') {
         this.localValue.slices.splice(position, 0, newSlice)
@@ -311,6 +315,12 @@ export default {
     pushNewChildSlice () {
       let modelQuery = (this.childModelToAdd) ? 'class=' + this.childModelToAdd.class : null
 
+      if (typeof this.createChildren.childToCreate.slice.view === 'undefined') {
+        this.$set(this.createChildren.childToCreate.slice, 'view', 'slices.' + this.createChildren.childToCreate.slice.value)
+      }
+
+      console.log(this.createChildren.childToCreate)
+
       this.createChildren.slices.push({
         id: 0,
         label: this.createChildren.childToCreate.slice.name,
@@ -320,11 +330,10 @@ export default {
             numberOfInstances: 1
           }
         },
-        config: {},
+        config: this.theComponent(this.createChildren.childToCreate.slice),
         type: this.createChildren.childToCreate.type,
         model_query: modelQuery,
-        name: this.createChildren.childToCreate.slice.component,
-        slice_id: this.createChildren.childToCreate.slice.id,
+        view: this.createChildren.childToCreate.slice.view,
         slices: []
       })
 
@@ -346,8 +355,13 @@ export default {
     },
     buildSliceForPreview (slice) {
       let self = this
-      let sliceInfo = this.theSlice(slice)
-      let component = window.deviseComponents[sliceInfo.component]
+
+      // Set the type to single if it isn't present
+      if (typeof slice.view === 'undefined') {
+        this.$set(slice, 'view', 'slices.' + slice.value)
+      }
+
+      let component = this.theComponent(slice)
 
       // Set the metadata object if it isn't present
       if (typeof slice.metadata === 'undefined') {
@@ -373,7 +387,7 @@ export default {
 
       // Set the label property if it isn't present
       if (typeof slice.label === 'undefined') {
-        this.$set(slice, 'label', sliceInfo.name)
+        this.$set(slice, 'label', slice.name)
       }
 
       // Set the model_query property if it isn't present
@@ -415,12 +429,9 @@ export default {
         }
       })
 
-      //
       slice = this.buildParentSliceForPreview(slice)
 
       self.$set(slice.config, 'slices', slice.slices)
-
-      slice.name = this.theSlice(slice).component
 
       return slice
     },
@@ -440,6 +451,7 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'slices',
+      'slicesDirectories',
       'template',
       'models',
       'modelSettings'
@@ -448,6 +460,6 @@ export default {
   components: {
     SuperTable
   },
-  mixins: [ Arrays ]
+  mixins: [ Arrays, Slices ]
 }
 </script>

@@ -111,14 +111,6 @@ const DevisePlugin = {
           this.$router.push({name: pageName})
         }
       },
-      computed: {
-        models () {
-          if (window.page && window.page.data) {
-            return window.page.data
-          }
-          return null
-        }
-      },
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass
       // down any data to custom child components

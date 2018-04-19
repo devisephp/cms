@@ -35,10 +35,10 @@
     </template>
     <template v-if="templateMode">
 
-      <template-preview>
+      <template-editor>
         <slot name="on-top" slot="on-top"></slot>
         <slot name="on-bottom" slot="on-bottom"></slot>
-      </template-preview>
+      </template-editor>
 
     </template>
 
@@ -53,7 +53,7 @@ import PageEditor from './components/pages/Editor'
 import Slice from './Slice'
 import TemplateIndex from './components/templates/Index'
 import TemplateEdit from './components/templates/Edit'
-import TemplatePreview from './components/templates/Preview'
+import TemplateEditor from './components/templates/TemplateEditor'
 import User from './components/menu/User'
 
 export default {
@@ -153,7 +153,7 @@ export default {
     Slice,
     TemplateIndex,
     TemplateEdit,
-    TemplatePreview,
+    TemplateEditor,
     User
   }
 }

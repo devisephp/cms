@@ -139,6 +139,10 @@ export default {
   watch: {
     '$route': function (newRoute) {
       this.checkWidthOfInterface(newRoute)
+
+      if (newRoute.name !== null) {
+        this.adminClosed = false
+      }
     }
   },
   components: {

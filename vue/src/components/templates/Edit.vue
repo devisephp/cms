@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="template && slices.data.length > 0">
+    <template v-if="template && slices.length > 0">
       <iframe :src="`/templates/${template.id}`" class="dvs-w-full" id="devise-preview-iframe"></iframe>
     </template>
   </div>
@@ -19,9 +19,6 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(function () {
-      window.bus.$emit('devise-wide-admin')
-    })
     this.retrieveAllTemplates()
     this.getSlices()
     this.addListeners()

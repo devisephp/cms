@@ -74,6 +74,9 @@ export default {
       }
     }
   },
+  created () {
+    console.log('asdfasdfasdf')
+  },
   mounted () {
     this.retrieveAllUsers()
   },

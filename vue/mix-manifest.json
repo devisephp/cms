@@ -1,12 +1,5 @@
 {
-    "/devise-pages.js": "/devise-pages.js?id=12bbc2dce2981680bcf8",
-    "/devise-users.js": "/devise-users.js?id=ec752c24ae2c82d59d8b",
-    "/devise-sites.js": "/devise-sites.js?id=c20402ce469f6f5b76ae",
-    "/devise-settings.js": "/devise-settings.js?id=706b132b0f5a0ccf30a8",
-    "/devise-meta.js": "/devise-meta.js?id=19c220c015671e38d583",
-    "/devise-languages.js": "/devise-languages.js?id=f404c63d52c7fda76f85",
-    "/devise-developers.js": "/devise-developers.js?id=0ce5171a3d415c6cbb90",
-    "/dist/devise.js": "/dist/devise.js?id=a1261421a452bfc3b59b",
-    "/dist/devise.css": "/dist/devise.css?id=0e3da5891e21bc049e19",
-    "/manifest.js": "/manifest.js?id=1533db99598f6bb69d3f"
+    "/dist/js/devise.js": "/dist/js/devise.js",
+    "/dist/css/devise.css": "/dist/css/devise.css",
+    "/manifest.js": "/manifest.js"
 }

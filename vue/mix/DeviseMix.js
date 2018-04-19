@@ -12,7 +12,7 @@ if (mix.inProduction()) {
   env = require('./config/prod.env')
 }
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+// const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackLaravelMixManifest = require('webpack-laravel-mix-manifest').default;
 
 function resolve (dir) {

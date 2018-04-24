@@ -45,6 +45,11 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::get('models/query', 'ModelsController@query');
 
   /**
+   * Mothership
+   */
+  Route::post('releases', 'ReleasesController@send');
+
+  /**
    * Pages
    */
   Route::get('pages', 'PagesController@pages');

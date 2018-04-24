@@ -6,7 +6,7 @@
       <messages/>
       <media-manager/>
       <div id="devise-container" :class="{'admin-closed': adminClosed, 'wide-admin': wideAdmin, 'preview-frame': isPreviewFrame}">
-        <div id="devise-admin" v-if="!isPreviewFrame" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
+        <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
             <user></user>
             <transition name="fade" mode="out-in">
               <router-view name="devise" :page="page"></router-view>
@@ -16,21 +16,19 @@
 
           <!-- Desktop mode in editor or just viewing page -->
           <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame" >
-
-            <slot name="on-top"></slot>
-
-            <slice v-for="(slice, key) in page.slices" :key="key" :slice="slice"/>
-
-            <slot name="on-bottom"></slot>
-
+            <slices :devise="{slices: page.slices}"></slices>
           </div>
 
           <!-- Preview mode in editor -->
           <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
 
         </div>
-        <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
-        <i id="devise-admin-open" v-if="!isPreviewFrame" class="ion-gear-a" @click="closeAdmin"></i>
+
+        <template v-if="isLoggedIn">
+          <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
+          <i id="devise-admin-open" v-if="!isPreviewFrame" class="ion-gear-a" @click="closeAdmin"></i>
+        </template>
+
       </div>
     </template>
     <template v-if="templateMode">
@@ -134,6 +132,9 @@ export default {
       } catch (e) {
         return true
       }
+    },
+    isLoggedIn () {
+      return window.user !== null
     }
   },
   watch: {

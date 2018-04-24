@@ -1,4 +1,11 @@
 const getters = {
+  // This takes a component name and returns the corresponding component from
+  // window.deviseComponents. This contains the name, template, and field
+  // configuration.
+  component: state => (name) => {
+    return window.deviseComponents[name]
+  },
+
   sliceConfig: state => (slice) => {
     return window.deviseComponents[slice.metadata.name] ? window.deviseComponents[slice.metadata.name] : window.deviseComponents[slice.name]
   },

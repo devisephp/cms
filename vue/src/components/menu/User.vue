@@ -4,16 +4,25 @@
       <div class="dvs-min-w-1/4 dvs-border-r dvs-border-grey dvs-flex dvs-justify-between">
         <div class="dvs-flex dvs-justify-start dvs-items-center pr-4 dvs-w-3/5 dvs-flex-wrap dvs-p-4 dvs-pl-8">
           <div class="dvs-py-2 dvs-pr-4">
-            Gary Williams<br>
-            <span class="dvs-text-grey">gary@lbm.co</span>
+            {{user.name}}<br>
+            <span class="dvs-text-grey">{{user.email}}</span>
           </div>
         </div>
         <div class="dvs-w-1/5 dvs-flex dvs-justify-center dvs-items-center">
-          <i class="ion-gear-a text-3xl"></i>
+          <router-link :to="{ name: 'devise-users-edit', params: { userId: user.id }}">
+            <i class="ion-gear-a text-3xl"></i>
+          </router-link>
         </div>
       </div>
       <div class="dvs-flex dvs-flex-grow dvs-items-center dvs-border-l dvs-border-white dvs-w-1/5 dvs-text-center">
-        <i class="ion-power text-2xl p-4"></i>
+
+        <a href="/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+          <i class="ion-power text-2xl p-4"></i>
+        </a>
+
+        <form id="logout-form" action="/logout" method="POST" style="display: none;">
+            <input type="hidden" name="_token" :value="csrf_field">
+        </form>
       </div>
     </div>
   </div>
@@ -24,6 +33,14 @@ export default {
   name: 'DeviseUser',
   data () {
     return {
+    }
+  },
+  computed: {
+    user () {
+      return window.user
+    },
+    csrf_field () {
+      return window.axios.defaults.headers.common['X-CSRF-TOKEN']
     }
   }
 }

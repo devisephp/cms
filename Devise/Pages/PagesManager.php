@@ -122,7 +122,6 @@ class PagesManager
     $startsAt = array_get($input, 'published', false) ? date('Y-m-d H:i:s') : null;
 
     $this->PageVersionManager->createDefaultPageVersion($page, $input['template_id'], $startsAt);
-    $this->cacheDeviseRoutes();
 
     $page->load('versions.template');
 
@@ -151,7 +150,6 @@ class PagesManager
 
     $this->PageMetaManager->savePageMeta($page->id, array_get($input, 'meta', []));
 
-    $this->cacheDeviseRoutes();
 
     return $page;
   }
@@ -168,7 +166,6 @@ class PagesManager
 
     $page->versions()->delete();
 
-    $this->cacheDeviseRoutes();
 
     return $page->delete();
   }
@@ -202,7 +199,6 @@ class PagesManager
 
     $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
 
-    $this->cacheDeviseRoutes();
 
     return $toPage;
   }
@@ -326,23 +322,5 @@ class PagesManager
     }
 
     return json_encode(true);
-  }
-
-  /**
-   * Cache the devise routes, and make sure to catch an
-   * exception. Exception thrown is likely due to serialization
-   * error caused by caching routes with closures in them
-   *
-   * @return [type]
-   */
-  protected function cacheDeviseRoutes()
-  {
-    try
-    {
-      $this->RoutesGenerator->cacheRoutes();
-    } catch (\Exception $e)
-    {
-      $this->message = $e->getMessage();
-    }
   }
 }

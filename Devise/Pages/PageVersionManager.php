@@ -5,6 +5,7 @@ use Devise\Models\DvsField;
 use Devise\Models\DvsPage;
 use Devise\Models\DvsPageVersion;
 use Devise\Models\DvsSliceInstance;
+use Devise\Models\DvsTemplate;
 use Devise\Pages\Slices\SlicesManager;
 
 /**
@@ -14,6 +15,11 @@ use Devise\Pages\Slices\SlicesManager;
  */
 class PageVersionManager
 {
+  /**
+   * @var DvsTemplate
+   */
+  private $DvsTemplate;
+
   /**
    * Construction
    * depends on PageVersin model and UserHelper to get current user id
@@ -25,11 +31,12 @@ class PageVersionManager
    * @internal param \DvsPageVersion $PageVersion
    * @internal param \DvsField $Field
    */
-  public function __construct(DvsPageVersion $DvsPageVersion, PagesRepository $PagesRepository, SlicesManager $SlicesManager)
+  public function __construct(DvsPageVersion $DvsPageVersion, PagesRepository $PagesRepository, SlicesManager $SlicesManager, DvsTemplate $DvsTemplate)
   {
     $this->PagesRepository = $PagesRepository;
     $this->DvsPageVersion = $DvsPageVersion;
     $this->SlicesManager = $SlicesManager;
+    $this->DvsTemplate = $DvsTemplate;
     $this->Hash = \Hash::getFacadeRoot();
   }
 
@@ -66,6 +73,12 @@ class PageVersionManager
     $version->ends_at = $endsAt;
     $version->preview_hash = null;
     $version->save();
+
+    $template = $this->DvsTemplate
+      ->with('slices')
+      ->findOrFail($templateId);
+
+    $this->SlicesManager->copySlicesForNewPageVersion($template->slices, $version->id);
 
     return $version;
   }

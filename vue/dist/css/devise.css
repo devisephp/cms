@@ -978,7 +978,7 @@ button,
   font-size: .75rem;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: .1em;
+  letter-spacing: .075em;
 }
 
 .dvs-fieldset label.dvs-large-label {
@@ -1138,7 +1138,7 @@ button,
   height: 0;
 }
 
-.dvs-template-editor-collapsable.dvs-open .dvs-template-switch-sm {
+.dvs-template-editor-collapsable.dvs-open > div > .dvs-template-switch-sm {
   opacity: 1;
   background-color: #2b6ed8;
   color: #fff;
@@ -1451,7 +1451,7 @@ h6 {
   letter-spacing: .05em;
   font-weight: 700;
   font-size: .75rem;
-  letter-spacing: .1em;
+  letter-spacing: .075em;
 }
 
 a {
@@ -4653,7 +4653,7 @@ trix-editor {
 }
 
 .dvs-tracking-superwide {
-  letter-spacing: .1em;
+  letter-spacing: .075em;
 }
 
 .dvs-visible {
@@ -7444,7 +7444,7 @@ trix-editor {
   }
 
   .md\:dvs-tracking-superwide {
-    letter-spacing: .1em;
+    letter-spacing: .075em;
   }
 
   .md\:dvs-visible {
@@ -10236,7 +10236,7 @@ trix-editor {
   }
 
   .lg\:dvs-tracking-superwide {
-    letter-spacing: .1em;
+    letter-spacing: .075em;
   }
 
   .lg\:dvs-visible {

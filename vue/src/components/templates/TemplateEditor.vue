@@ -29,11 +29,12 @@
           <div class="dvs-collapsed dvs-mt-4">
 
             <div v-if="localValue.slices">
-              <ul class="dvs-list-reset">
+              <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset" :options="{handle: '.handle'}">
                 <li v-for="(slice, key) in localValue.slices" class="dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': slice.metadata.open}">
+                  {{ localValue.slices[key].label }}
                   <template-slice-editor v-model="localValue.slices[key]"></template-slice-editor>
                 </li>
-              </ul>
+              </draggable>
             </div>
 
           </div>
@@ -41,13 +42,13 @@
       </ul>
     </div>
 
-    <div id="devise-preview-content" v-if="slices.length && dataLoaded">
+    <div id="devise-preview-content" v-if="localValue.slices.length && dataLoaded">
 
       <slot name="on-top"></slot>
       <slot name="static-content"></slot>
 
       <template v-if="localValue.slices">
-        <slices :devise="{slices: localValue.slices}"></slices>
+        <slices :slices="localValue.slices"></slices>
       </template>
 
       <slot name="static-content-bottom"></slot>
@@ -59,6 +60,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
+  import draggable from 'vuedraggable'
 
   import TemplateSliceEditor from './TemplateSliceEditor'
   import Slices from '../../Slices'
@@ -94,6 +96,9 @@
         'getModels',
         'getModelSettings'
       ]),
+      updateValue () {
+        window.template = this.localValue
+      },
       requestAddSlice () {
 
       },
@@ -112,17 +117,18 @@
       },
 
       // Prepare the slices data to contain information necessary for the editor
-      prepareSlices (slices) {
+      prepareSlices (sliceSlices) {
         let self = this
 
-        if (slices === undefined) {
-          slices = this.localValue.slices
+        if (sliceSlices === undefined) {
+          sliceSlices = this.localValue.slices
         }
 
-        slices.map(function (slice) {
+        sliceSlices.map(function (slice) {
           self.addMetaDataToSlice(slice)
-          console.log(slice.config.slices === undefined)
-          // self.prepareSlices(slice.config.slices)
+          if (slice.slices !== undefined && slice.slices.length > 0) {
+            self.prepareSlices(slice.slices)
+          }
         })
       },
 
@@ -147,7 +153,7 @@
     computed: {
       ...mapGetters('devise', [
         'component',
-        'slices',
+        'slicesList',
         'slicesDirectories',
         'template',
         'models',
@@ -155,7 +161,8 @@
       ])
     },
     components: {
-      TemplateSliceEditor
+      TemplateSliceEditor,
+      draggable
     }
   }
 </script>

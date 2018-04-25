@@ -67,7 +67,7 @@ const getters = {
   },
 
   // Slices
-  slices: state => {
+  slicesList: state => {
     return state.slices
   },
 

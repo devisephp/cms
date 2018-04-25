@@ -85,7 +85,6 @@ const DevisePlugin = {
         // Returns only the slices that match the name passed
         // Primarily this is a helper function for getCollectionData
         getCollection (slices, name) {
-          console.log(slices)
           let collection = slices.filter(function (slice) {
             return slice.metadata.name === name
           })
@@ -114,7 +113,7 @@ const DevisePlugin = {
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass
       // down any data to custom child components
-      props: ['devise'],
+      props: ['devise', 'slices'],
       store: store
     })
   }

@@ -34,7 +34,7 @@
   }
 
   &.dvs-open {
-    .dvs-template-switch-sm {
+    > div > .dvs-template-switch-sm {
       @apply dvs-opacity-100 dvs-bg-blue-dark dvs-text-white;
     }
 

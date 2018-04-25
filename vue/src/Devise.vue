@@ -16,7 +16,7 @@
 
           <!-- Desktop mode in editor or just viewing page -->
           <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame" >
-            <slices :devise="{slices: page.slices}"></slices>
+            <slices :slices="page.slices"></slices>
           </div>
 
           <!-- Preview mode in editor -->
@@ -110,9 +110,6 @@ export default {
       } else {
         this.wideAdmin = false
       }
-    },
-    getComponent (slice) {
-      return window.deviseComponents[slice.name]
     },
     closeAdmin () {
       this.adminClosed = !this.adminClosed

@@ -2,9 +2,9 @@
   <div>
     <template v-if="editorMode">
 
-      <loadbar/>
-      <messages/>
-      <media-manager/>
+      <loadbar v-if="isLoggedIn" />
+      <messages v-if="isLoggedIn" />
+      <media-manager v-if="isLoggedIn" />
       <div id="devise-container" :class="{'admin-closed': adminClosed, 'wide-admin': wideAdmin, 'preview-frame': isPreviewFrame}">
         <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
             <user></user>
@@ -16,7 +16,15 @@
 
           <!-- Desktop mode in editor or just viewing page -->
           <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame" >
-            <slices :slices="page.slices"></slices>
+            <slot name="on-top"></slot>
+            <slot name="static-content"></slot>
+
+            <template v-if="page.slices">
+              <slices :slices="page.slices"></slices>
+            </template>
+
+            <slot name="static-content-bottom"></slot>
+            <slot name="on-bottom"></slot>
           </div>
 
           <!-- Preview mode in editor -->
@@ -131,7 +139,7 @@ export default {
       }
     },
     isLoggedIn () {
-      return window.user !== null
+      return window.user
     }
   },
   watch: {

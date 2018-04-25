@@ -51851,39 +51851,6 @@ var DevisePlugin = {
       },
 
       methods: {
-        // The collectionData looks at the slices passed to it and extracts
-        // the data for easier access
-        getCollectionData: function getCollectionData(slices, name) {
-          var collection = this.getCollection(slices, name);
-          return collection.map(function (record) {
-            return record.data;
-          });
-        },
-
-        // Returns only the slices that match the name passed
-        // Primarily this is a helper function for getCollectionData
-        getCollection: function getCollection(slices, name) {
-          var collection = slices.filter(function (slice) {
-            return slice.metadata.name === name;
-          });
-
-          // If settings property is present we know we are in template builder
-          // We clear out the existing placeholder data and store it in a temp
-          // variable to repopulate based on the number of instances the User
-          // has set.
-          if (collection[0] && collection[0].settings) {
-            var tempCollection = collection[0];
-            collection.splice(0, collection.length);
-
-            for (var i = 0; i < tempCollection.settings.numberOfInstances; i++) {
-              collection.push(tempCollection);
-            }
-          }
-
-          return collection;
-        },
-
-
         // Convienience method to push things into the router from templates
         goToPage: function goToPage(pageName) {
           this.$router.push({ name: pageName });
@@ -57105,6 +57072,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -57194,7 +57169,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     isLoggedIn: function isLoggedIn() {
-      return window.user !== null;
+      return window.user;
     }
   },
   watch: {
@@ -63199,13 +63174,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       previewMode: 'desktop',
-      slices: [],
+      pageSlices: [],
       pageSettingsOpen: false,
       pageContentOpen: true
     };
   },
   mounted: function mounted() {
-    this.slices = this.page.slices;
+    this.pageSlices = this.page.slices;
   },
 
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('devise', ['savePage']), {
@@ -63222,7 +63197,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.pageContentOpen = !this.pageContentOpen;
       if (!this.pageContentOpen) {
-        this.slices.map(function (s) {
+        this.pageSlices.map(function (s) {
           return _this.closeSlice(s);
         });
       }
@@ -63231,7 +63206,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     toggleSlice: function toggleSlice(slice) {
       var _this2 = this;
 
-      this.slices.map(function (s) {
+      this.pageSlices.map(function (s) {
         return _this2.closeSlice(s);
       });
       this.$set(slice.metadata, 'open', !slice.metadata.open);
@@ -63345,18 +63320,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   name: 'SliceEditor',
   data: function data() {
     return {
-      slices: []
+      pageSlices: []
     };
   },
   mounted: function mounted() {
-    this.slices = this.slice.slices;
+    this.pageSlices = this.slice.slices;
   },
 
   methods: {
     toggleSlice: function toggleSlice(slice) {
       var _this = this;
 
-      this.slices.map(function (s) {
+      this.pageSlices.map(function (s) {
         return _this.closeSlice(s);
       });
       this.$set(slice.metadata, 'open', !slice.metadata.open);
@@ -66276,7 +66251,7 @@ var render = function() {
       _c(
         "ul",
         { staticClass: "dvs-list-reset" },
-        _vm._l(_vm.slice.slices, function(s, key) {
+        _vm._l(_vm.slice.pageSlices, function(s, key) {
           return _c(
             "li",
             {
@@ -66454,7 +66429,7 @@ var render = function() {
             _c(
               "ul",
               { staticClass: "dvs-list-reset" },
-              _vm._l(_vm.slices, function(slice, key) {
+              _vm._l(_vm.pageSlices, function(slice, key) {
                 return _c(
                   "li",
                   {
@@ -66575,6 +66550,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // going to add in a stub for the render.
         if (!this.devise.hasOwnProperty(prop)) {
           this.addMissingProperty(prop);
+
+          // If defaults are set then set them on top of the placeholder missing properties
+          if (config[prop].default) {
+            this.setDefaults(prop, config[prop].default);
+          }
         }
       }
     },
@@ -66585,11 +66565,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         url: null,
         target: null,
         color: null,
-        checked: null
+        checked: null,
+        enabled: false
       });
+    },
+    setDefaults: function setDefaults(property, defaults) {
+      // loop through the defaults and apply them to the field
+      for (var d in defaults) {
+        this.$set(this.devise[property], d, defaults[d]);
+      }
     }
   },
   computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['sliceConfig']), {
+    deviseForSlice: function deviseForSlice() {
+      if (this.devise.config) {
+        return this.devise.config;
+      }
+      return this.devise;
+    },
     currentView: function currentView() {
       if (this.devise.config) {
         return window.deviseComponents[this.devise.name];
@@ -66612,7 +66605,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(_vm.currentView, {
     tag: "component",
-    attrs: { devise: _vm.devise.config, slices: _vm.devise.slices }
+    attrs: { devise: _vm.deviseForSlice, slices: _vm.devise.slices }
   })
 }
 var staticRenderFns = []
@@ -67311,6 +67304,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -67342,6 +67342,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('devise', ['getTemplates', 'updateTemplate', 'getSlices', 'getSlicesDirectories', 'getModels', 'getModelSettings']), {
+    requestSaveTemplate: function requestSaveTemplate() {
+      var self = this;
+
+      this.updateTemplate(this.localValue).then(function () {
+        window.parent.postMessage('saveSuccessful', '*');
+      });
+    },
     updateValue: function updateValue() {
       window.template = this.localValue;
     },
@@ -67388,9 +67395,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     toggleTemplateLayout: function toggleTemplateLayout() {
       this.templateLayoutOpen = !this.templateLayoutOpen;
       this.templateSettingsOpen = false;
+    },
+    goToTemplates: function goToTemplates() {
+      window.parent.postMessage('goBack', '*');
     }
   }),
   computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['component', 'slicesList', 'slicesDirectories', 'template', 'models', 'modelSettings'])),
+  watch: {
+    localValue: {
+      handler: function handler(newValue) {
+        console.log('here');
+        this.showSave = true;
+      },
+
+      deep: true
+    }
+  },
   components: {
     TemplateSliceEditor: __WEBPACK_IMPORTED_MODULE_3__TemplateSliceEditor___default.a,
     draggable: __WEBPACK_IMPORTED_MODULE_2_vuedraggable___default.a
@@ -68104,7 +68124,36 @@ var render = function() {
               ],
               2
             )
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-shadow-lg dvs-bg-white dvs-p-4 dvs-z-40"
+          },
+          [
+            _c("h6", { staticClass: "mb-4" }, [_vm._v("Template Controls")]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "dvs-btn dvs-mr-2",
+                on: { click: _vm.requestSaveTemplate }
+              },
+              [_vm._v("Save Template")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "dvs-btn dvs-btn-plain",
+                on: { click: _vm.goToTemplates }
+              },
+              [_vm._v("Cancel")]
+            )
+          ]
+        )
       ])
     : _vm._e()
 }
@@ -68353,11 +68402,11 @@ var render = function() {
     [
       _vm.editorMode
         ? [
-            _c("loadbar"),
+            _vm.isLoggedIn ? _c("loadbar") : _vm._e(),
             _vm._v(" "),
-            _c("messages"),
+            _vm.isLoggedIn ? _c("messages") : _vm._e(),
             _vm._v(" "),
-            _c("media-manager"),
+            _vm.isLoggedIn ? _c("media-manager") : _vm._e(),
             _vm._v(" "),
             _c(
               "div",
@@ -68405,9 +68454,23 @@ var render = function() {
                           "div",
                           { staticClass: "devise-content" },
                           [
-                            _c("slices", { attrs: { slices: _vm.page.slices } })
+                            _vm._t("on-top"),
+                            _vm._v(" "),
+                            _vm._t("static-content"),
+                            _vm._v(" "),
+                            _vm.page.slices
+                              ? [
+                                  _c("slices", {
+                                    attrs: { slices: _vm.page.slices }
+                                  })
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._t("static-content-bottom"),
+                            _vm._v(" "),
+                            _vm._t("on-bottom")
                           ],
-                          1
+                          2
                         )
                       : _vm._e(),
                     _vm._v(" "),

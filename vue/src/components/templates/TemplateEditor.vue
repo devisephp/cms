@@ -55,6 +55,13 @@
       <slot name="on-bottom"></slot>
 
     </div>
+
+    <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-shadow-lg dvs-bg-white dvs-p-4 dvs-z-40">
+      <h6 class="mb-4">Template Controls</h6>
+      <button class="dvs-btn dvs-mr-2" @click="requestSaveTemplate">Save Template</button>
+      <button class="dvs-btn dvs-btn-plain" @click="goToTemplates">Cancel</button>
+    </div>
+
   </div>
 </template>
 
@@ -96,6 +103,14 @@
         'getModels',
         'getModelSettings'
       ]),
+      requestSaveTemplate () {
+        var self = this
+
+        this.updateTemplate(this.localValue).then(function () {
+          window.parent.postMessage('saveSuccessful', '*')
+        })
+      },
+
       updateValue () {
         window.template = this.localValue
       },
@@ -148,6 +163,10 @@
       toggleTemplateLayout () {
         this.templateLayoutOpen = !this.templateLayoutOpen
         this.templateSettingsOpen = false
+      },
+
+      goToTemplates () {
+        window.parent.postMessage('goBack', '*')
       }
     },
     computed: {
@@ -159,6 +178,15 @@
         'models',
         'modelSettings'
       ])
+    },
+    watch: {
+      localValue: {
+        handler(newValue) {
+          console.log('here')
+          this.showSave = true
+        },
+        deep: true
+      }
     },
     components: {
       TemplateSliceEditor,

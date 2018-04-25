@@ -1,6 +1,6 @@
 <template>
   <!-- We pass in the config to simplify what the template needs to traverse -->
-  <component v-bind:is="currentView" :devise="devise.config" :slices="devise.slices"></component>
+  <component v-bind:is="currentView" :devise="deviseForSlice" :slices="devise.slices"></component>
 </template>
 
 <script>
@@ -25,6 +25,11 @@ export default {
         // going to add in a stub for the render.
         if (!this.devise.hasOwnProperty(prop)) {
           this.addMissingProperty(prop)
+
+          // If defaults are set then set them on top of the placeholder missing properties
+          if (config[prop].default) {
+            this.setDefaults(prop, config[prop].default)
+          }
         }
       }
     },
@@ -35,14 +40,27 @@ export default {
         url: null,
         target: null,
         color: null,
-        checked: null
+        checked: null,
+        enabled: false
       })
+    },
+    setDefaults (property, defaults) {
+      // loop through the defaults and apply them to the field
+      for (var d in defaults) {
+        this.$set(this.devise[property], d, defaults[d])
+      }
     }
   },
   computed: {
     ...mapGetters('devise', [
       'sliceConfig'
     ]),
+    deviseForSlice () {
+      if (this.devise.config) {
+        return this.devise.config
+      }
+      return this.devise
+    },
     currentView () {
       if (this.devise.config) {
         return window.deviseComponents[this.devise.name]

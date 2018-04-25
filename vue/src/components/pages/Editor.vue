@@ -42,7 +42,7 @@
 
         <div class="dvs-collapsed dvs-mt-4">
           <ul class="dvs-list-reset">
-            <li v-for="(slice, key) in slices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
+            <li v-for="(slice, key) in pageSlices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
               <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4" @click="toggleSlice(slice)">{{ slice.metadata.label }}</strong>
               <div class="dvs-collapsed">
                 <slice-editor :slice="slice" />
@@ -65,13 +65,13 @@ export default {
   data () {
     return {
       previewMode: 'desktop',
-      slices: [],
+      pageSlices: [],
       pageSettingsOpen: false,
       pageContentOpen: true
     }
   },
   mounted () {
-    this.slices = this.page.slices
+    this.pageSlices = this.page.slices
   },
   methods: {
     ...mapActions('devise', [
@@ -88,12 +88,12 @@ export default {
     togglePageContent () {
       this.pageContentOpen = !this.pageContentOpen
       if (!this.pageContentOpen) {
-        this.slices.map(s => this.closeSlice(s))
+        this.pageSlices.map(s => this.closeSlice(s))
       }
       this.pageSettingsOpen = false
     },
     toggleSlice (slice) {
-      this.slices.map(s => this.closeSlice(s))
+      this.pageSlices.map(s => this.closeSlice(s))
       this.$set(slice.metadata, 'open', !slice.metadata.open)
     },
     closeSlice (slice) {

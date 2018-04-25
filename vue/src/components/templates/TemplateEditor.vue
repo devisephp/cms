@@ -126,9 +126,6 @@
       removeSlice (slice) {
 
       },
-      reorderSlices () {
-
-      },
 
       // Prepare the slices data to contain information necessary for the editor
       prepareSlices (sliceSlices) {
@@ -181,7 +178,6 @@
     watch: {
       localValue: {
         handler(newValue) {
-          console.log('here')
           this.showSave = true
         },
         deep: true

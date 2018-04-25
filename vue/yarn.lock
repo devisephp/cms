@@ -2727,7 +2727,7 @@ es6-weak-map@^2.0.1:
     es6-iterator "^2.0.1"
     es6-symbol "^3.1.1"
 
-escape-html@~1.0.1, escape-html@~1.0.3:
+escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
 
@@ -3801,12 +3801,6 @@ hmac-drbg@^1.0.0:
 hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
-
-holderjs@^2.9.4:
-  version "2.9.4"
-  resolved "https://registry.yarnpkg.com/holderjs/-/holderjs-2.9.4.tgz#a165dbc2532ebff975491312259d0c520c059898"
-  dependencies:
-    shaven "^0.8.1"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -7077,12 +7071,6 @@ shallow-clone@^1.0.0:
     is-extendable "^0.1.1"
     kind-of "^5.0.0"
     mixin-object "^2.0.1"
-
-shaven@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/shaven/-/shaven-0.8.1.tgz#0f42d4fb32c4048349ff9ee9c296f5effb2dcaaf"
-  dependencies:
-    escape-html "~1.0.1"
 
 shebang-command@^1.2.0:
   version "1.2.0"

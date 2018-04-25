@@ -2,7 +2,6 @@
 
 import Slice from './Slice'
 
-
 export default {
   name: 'DeviseSlices',
   functional: true,

@@ -146,6 +146,11 @@ export default {
       required: true
     }
   },
+  watch: {
+    value (newValue) {
+      this.localValue = newValue
+    }
+  },
   components: {
     draggable,
     CheckboxControls,

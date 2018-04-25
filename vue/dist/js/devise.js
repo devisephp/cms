@@ -67310,7 +67310,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -67592,6 +67591,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   props: {
     value: {
       required: true
+    }
+  },
+  watch: {
+    value: function value(newValue) {
+      this.localValue = newValue;
     }
   },
   components: {
@@ -68069,13 +68073,6 @@ var render = function() {
                                     class: { "dvs-open": slice.metadata.open }
                                   },
                                   [
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(
-                                          _vm.localValue.slices[key].label
-                                        ) +
-                                        "\n                "
-                                    ),
                                     _c("template-slice-editor", {
                                       model: {
                                         value: _vm.localValue.slices[key],

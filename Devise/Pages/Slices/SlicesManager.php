@@ -77,6 +77,29 @@ class SlicesManager
     }
   }
 
+  public function copySlicesForNewPageVersion($slices, $pageVersionId, $index = 0)
+  {
+    foreach ($slices as $slice)
+    {
+      if ($slice->type == 'single' || $slice->type == 'model')
+      {
+        $instance = $this->DvsSliceInstance
+          ->firstOrNew(['page_version_id' => $pageVersionId, 'template_slice_id' => $slice->id]);
+
+        $instance->page_version_id = $pageVersionId;
+        $instance->parent_instance_id = ($slice->parent_id) ? $this->getParentInstanceId($pageVersionId, $slice->parent_id) : 0;
+        $instance->template_slice_id = $slice->id;
+        $instance->enabled = true;
+        $instance->position = $index;
+        $instance->save();
+
+        $index++;
+
+        $this->copySlicesForNewPageVersion($slice->slices, $pageVersionId, $index);
+      }
+    }
+  }
+
   /**
    * @param $templateId
    * @param $slices

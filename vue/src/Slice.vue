@@ -17,18 +17,20 @@ export default {
     hydrateMissingProperties () {
       let config = this.sliceConfig(this.devise).config
 
-      // Loop through the config for this slice and check to see that all the
-      // fields are present. If they aren't it's just because they haven't been
-      // hydrated via the editor yet.
-      for (var prop in config) {
-        // Ok, so the property is missing from the slice.fields object so we're
-        // going to add in a stub for the render.
-        if (!this.devise.hasOwnProperty(prop)) {
-          this.addMissingProperty(prop)
+      if (config) {
+        // Loop through the config for this slice and check to see that all the
+        // fields are present. If they aren't it's just because they haven't been
+        // hydrated via the editor yet.
+        for (var prop in config) {
+          // Ok, so the property is missing from the slice.fields object so we're
+          // going to add in a stub for the render.
+          if (!this.devise.hasOwnProperty(prop)) {
+            this.addMissingProperty(prop)
 
-          // If defaults are set then set them on top of the placeholder missing properties
-          if (config[prop].default) {
-            this.setDefaults(prop, config[prop].default)
+            // If defaults are set then set them on top of the placeholder missing properties
+            if (config[prop].default) {
+              this.setDefaults(prop, config[prop].default)
+            }
           }
         }
       }

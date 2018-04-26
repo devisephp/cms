@@ -81,22 +81,19 @@ class SlicesManager
   {
     foreach ($slices as $slice)
     {
-      if ($slice->type == 'single' || $slice->type == 'model')
-      {
-        $instance = $this->DvsSliceInstance
-          ->firstOrNew(['page_version_id' => $pageVersionId, 'template_slice_id' => $slice->id]);
+      $instance = $this->DvsSliceInstance
+        ->firstOrNew(['page_version_id' => $pageVersionId, 'template_slice_id' => $slice->id]);
 
-        $instance->page_version_id = $pageVersionId;
-        $instance->parent_instance_id = ($slice->parent_id) ? $this->getParentInstanceId($pageVersionId, $slice->parent_id) : 0;
-        $instance->template_slice_id = $slice->id;
-        $instance->enabled = true;
-        $instance->position = $index;
-        $instance->save();
+      $instance->page_version_id = $pageVersionId;
+      $instance->parent_instance_id = ($slice->parent_id) ? $this->getParentInstanceId($pageVersionId, $slice->parent_id) : 0;
+      $instance->template_slice_id = $slice->id;
+      $instance->enabled = true;
+      $instance->position = $index;
+      $instance->save();
 
-        $index++;
+      $index++;
 
-        $this->copySlicesForNewPageVersion($slice->slices, $pageVersionId, $index);
-      }
+      $this->copySlicesForNewPageVersion($slice->slices, $pageVersionId, $index);
     }
   }
 
@@ -126,20 +123,17 @@ class SlicesManager
 
       $savedIds[] = $templateSlice->id;
 
-      if ($templateSlice->type == 'single' || $templateSlice->type == 'model')
+      foreach ($pageVersionIds as $pageVersionId)
       {
-        foreach ($pageVersionIds as $pageVersionId)
-        {
-          $instance = $this->DvsSliceInstance
-            ->firstOrNew(['page_version_id' => $pageVersionId, 'template_slice_id' => $templateSlice->id]);
+        $instance = $this->DvsSliceInstance
+          ->firstOrNew(['page_version_id' => $pageVersionId, 'template_slice_id' => $templateSlice->id]);
 
-          $instance->page_version_id = $pageVersionId;
-          $instance->parent_instance_id = ($templateSlice->parent_id) ? $this->getParentInstanceId($pageVersionId, $templateSlice->parent_id) : 0;
-          $instance->template_slice_id = $templateSlice->id;
-          $instance->enabled = array_get($slice, 'enabled', true);
-          $instance->position = $index;
-          $instance->save();
-        }
+        $instance->page_version_id = $pageVersionId;
+        $instance->parent_instance_id = ($templateSlice->parent_id) ? $this->getParentInstanceId($pageVersionId, $templateSlice->parent_id) : 0;
+        $instance->template_slice_id = $templateSlice->id;
+        $instance->enabled = array_get($slice, 'enabled', true);
+        $instance->position = $index;
+        $instance->save();
       }
 
       $index++;
@@ -202,7 +196,8 @@ class SlicesManager
 
     $files = $files->mapInto(Component::class);
 
-    foreach ($files as $file){
+    foreach ($files as $file)
+    {
       Devise::addComponent($file);
     }
   }

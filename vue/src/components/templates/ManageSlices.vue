@@ -71,6 +71,17 @@
           @done="selectDataToAdd"
           />
       </div>
+
+      <div class="dvs-mb-4" v-if="mode === 'remove'">
+        <fieldset class="dvs-fieldset mb-4">
+          <label>Are you sure you want to delete this slice?</label>
+        </fieldset>
+        <help>
+          If you delete this slice it will effect all pages that implement this template.
+        </help>
+        <button class="dvs-btn" @click="closeManager()">Cancel</button>
+        <button class="dvs-btn dvs-btn-danger" @click="removeSlice()">Confirm</button>
+      </div>
     </div>
 
     <!-- Model Controls -->
@@ -136,12 +147,39 @@
         this.$emit('closeManager')
       },
       addSlice (finalSlice) {
-        this.localValue.push(finalSlice)
+        this.originSlice.push(finalSlice)
         this.updateValue()
         this.closeManager()
       },
-      removeSlice (slice) {
+      removeSlice () {
+        let parent = this.findParentOfSlice(this.localValue)
 
+        if (parent) {
+          parent.splice(parent.indexOf(this.originSlice), 1)
+          this.updateValue()
+          this.closeManager()
+        } else {
+          console.warn('Could not find the parent of the slice you are trying to remove. You shouldn\'t see this warning so if you do please submit an issue @ https://github.com/devisephp/cms')
+        }
+      },
+      findParentOfSlice (parent) {
+        for (var i = 0; i < parent.length; i++) {
+          // Look to see if this slice matches what we're looking for. If so,
+          // return the parent array
+          if (parent[i] === this.originSlice) {
+            return parent
+          }
+
+          // It didn't match so check any children of this slice to see if it's
+          // in there.
+          if (parent[i].slices && parent[i].slices.length) {
+            let searchInChild = this.findParentOfSlice(parent[i].slices)
+            if (searchInChild) {
+              return searchInChild
+            }
+          }
+        }
+        return false
       },
       resetData () {
         this.sliceToAdd.show = false,

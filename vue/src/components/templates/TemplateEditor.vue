@@ -100,6 +100,7 @@
         dataLoaded: false,
         localValue: {},
         manageSlice: {
+          parent: null,
           origin: null,
           mode: 'add',
           root: true

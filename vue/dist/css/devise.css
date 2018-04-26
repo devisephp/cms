@@ -731,6 +731,11 @@ button,
   background-color: #dae1e7;
 }
 
+.dvs-btn.dvs-btn-danger {
+  background-color: #cc1f1a;
+  color: #fff;
+}
+
 .dvs-outline-none:focus {
   outline: 0;
 }

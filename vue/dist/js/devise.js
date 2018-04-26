@@ -57915,7 +57915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
 
     this.$nextTick(function () {
-      if (self.$route.name !== null) {
+      if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
         self.adminClosed = false;
       }
       setTimeout(function () {
@@ -68141,6 +68141,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -68158,6 +68159,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       dataLoaded: false,
       localValue: {},
       manageSlice: {
+        parent: null,
         origin: null,
         mode: 'add',
         root: true
@@ -68192,9 +68194,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.manageSlice.root = isRoot ? isRoot : false;
       this.manageSlice.origin = origin;
     },
-    requestRemoveSlice: function requestRemoveSlice(slice) {
+    requestRemoveSlice: function requestRemoveSlice(data) {
       this.manageSlice.mode = 'remove';
-      this.manageSlice.origin = slice;
+      this.manageSlice.origin = data.slice;
+      this.manageSlice.parent = data.parent;
     },
     requestManageSlice: function requestManageSlice(slice) {
       this.manageSlice.mode = 'manage';
@@ -69926,6 +69929,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -69963,17 +69971,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
     },
-    addSlice: function addSlice() {
+    addSlice: function addSlice(slices) {
       this.toggleSliceTools();
-      this.$emit('addSlice', this.localValue.slices);
+      this.$emit('addSlice', slices);
     },
-    modifySlice: function modifySlice() {
+    modifySlice: function modifySlice(slice) {
       this.toggleSliceTools();
-      this.$emit('modifySlice', this.localValue.slices);
+      this.$emit('modifySlice', slice);
     },
-    removeSlice: function removeSlice() {
+    removeSlice: function removeSlice(slice) {
       this.toggleSliceTools();
-      this.$emit('removeSlice', this.localValue.slices);
+      this.$emit('removeSlice', { parent: this.value, slice: slice });
     },
     toggleSlice: function toggleSlice() {
       this.localValue.metadata.open = !this.localValue.metadata.open;
@@ -69995,12 +70003,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.$set(self.localValue, 'slices', []);
       }
 
-      if (!self.localValue.metadata || !self.localValue.metadata.open) {
-        this.$set(self.localValue, 'metadata', {
-          open: false,
-          tools: false
-        });
-      }
+      this.$set(self.localValue, 'metadata', {
+        open: false,
+        tools: false
+      });
 
       // If this slice type is "model" or "repeats" then let's set the number of
       // instances if it doesn't exist and set it to 1
@@ -91618,140 +91624,138 @@ var render = function() {
               _c("i", {
                 staticClass: "ion-gear-b",
                 on: { click: _vm.toggleSliceTools }
-              }),
-              _vm._v(" "),
-              _vm.localValue.metadata.tools
-                ? _c("div", {
-                    staticClass: "dvs-blocker dvs-blocker-light",
-                    on: {
-                      click: function($event) {
-                        _vm.localValue.metadata.tools = false
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dvs-cn-wrapper",
-                  class: { "dvs-opened-nav": _vm.localValue.metadata.tools }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "cn-close-button",
-                      on: {
-                        click: function($event) {
-                          _vm.localValue.metadata.tools = false
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "ion-close-round" })]
-                  ),
-                  _vm._v(" "),
-                  _c("ul", { staticClass: "dvs-list-reset" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        {
-                          directives: [
-                            {
-                              name: "tippy",
-                              rawName: "v-tippy",
-                              value: _vm.tippyConfiguration,
-                              expression: "tippyConfiguration"
-                            }
-                          ],
-                          staticClass: "dvs-cursor-pointer",
-                          attrs: {
-                            title:
-                              "Create new child slice under " +
-                              _vm.localValue.label,
-                            "data-tippy-followcursor": "true"
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.addSlice()
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "ion-plus" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        {
-                          directives: [
-                            {
-                              name: "tippy",
-                              rawName: "v-tippy",
-                              value: _vm.tippyConfiguration,
-                              expression: "tippyConfiguration"
-                            }
-                          ],
-                          staticClass: "dvs-cursor-pointer",
-                          attrs: {
-                            title:
-                              "Modify the data that drives " +
-                              _vm.localValue.label,
-                            "data-tippy-followcursor": "true"
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.modifySlice()
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "ion-cube" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        {
-                          directives: [
-                            {
-                              name: "tippy",
-                              rawName: "v-tippy",
-                              value: _vm.tippyConfiguration,
-                              expression: "tippyConfiguration"
-                            }
-                          ],
-                          staticClass: "dvs-cursor-pointer",
-                          attrs: {
-                            title: "Remove " + _vm.localValue.label,
-                            "data-tippy-followcursor": "true"
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.removeSlice()
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "ion-trash-a" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _vm._m(3)
-                  ])
-                ]
-              )
+              })
             ]),
             _vm._v("\n    " + _vm._s(_vm.localValue.label) + "\n  ")
+          ]
+        ),
+        _vm._v(" "),
+        _vm.localValue.metadata.tools
+          ? _c("div", {
+              staticClass: "dvs-blocker dvs-blocker-light",
+              on: {
+                click: function($event) {
+                  _vm.localValue.metadata.tools = false
+                }
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "dvs-cn-wrapper",
+            class: { "dvs-opened-nav": _vm.localValue.metadata.tools }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "cn-close-button",
+                on: {
+                  click: function($event) {
+                    _vm.localValue.metadata.tools = false
+                  }
+                }
+              },
+              [_c("i", { staticClass: "ion-close-round" })]
+            ),
+            _vm._v(" "),
+            _c("ul", { staticClass: "dvs-list-reset" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    directives: [
+                      {
+                        name: "tippy",
+                        rawName: "v-tippy",
+                        value: _vm.tippyConfiguration,
+                        expression: "tippyConfiguration"
+                      }
+                    ],
+                    staticClass: "dvs-cursor-pointer",
+                    attrs: {
+                      title:
+                        "Create new child slice under " + _vm.localValue.label,
+                      "data-tippy-followcursor": "true"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.addSlice(_vm.localValue.slices)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "ion-plus" })]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    directives: [
+                      {
+                        name: "tippy",
+                        rawName: "v-tippy",
+                        value: _vm.tippyConfiguration,
+                        expression: "tippyConfiguration"
+                      }
+                    ],
+                    staticClass: "dvs-cursor-pointer",
+                    attrs: {
+                      title:
+                        "Modify the data that drives " + _vm.localValue.label,
+                      "data-tippy-followcursor": "true"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.modifySlice(_vm.localValue)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "ion-cube" })]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    directives: [
+                      {
+                        name: "tippy",
+                        rawName: "v-tippy",
+                        value: _vm.tippyConfiguration,
+                        expression: "tippyConfiguration"
+                      }
+                    ],
+                    staticClass: "dvs-cursor-pointer",
+                    attrs: {
+                      title: "Remove " + _vm.localValue.label,
+                      "data-tippy-followcursor": "true"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.removeSlice(_vm.localValue)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "ion-trash-a" })]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
           ]
         ),
         _vm._v(" "),
@@ -91949,6 +91953,11 @@ var render = function() {
                             [
                               _c("template-slice-editor", {
                                 key: key,
+                                on: {
+                                  addSlice: _vm.addSlice,
+                                  removeSlice: _vm.removeSlice,
+                                  modifySlice: _vm.modifySlice
+                                },
                                 model: {
                                   value: _vm.localValue.slices[key],
                                   callback: function($$v) {
@@ -92314,6 +92323,7 @@ var render = function() {
           _vm._v(" "),
           _c("manage-slices", {
             attrs: {
+              parent: _vm.manageSlice.parent,
               "origin-slice": _vm.manageSlice.origin,
               mode: _vm.manageSlice.mode,
               root: _vm.manageSlice.root
@@ -121805,6 +121815,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -121862,7 +121883,11 @@ This component manages the following:
       this.updateValue();
       this.closeManager();
     },
-    removeSlice: function removeSlice(slice) {},
+    removeSlice: function removeSlice() {
+      this.parent.slices.splice(this.parent.slices.indexOf(this.originSlice), 1);
+      this.updateValue();
+      this.closeManager();
+    },
     resetData: function resetData() {
       this.sliceToAdd.show = false, this.sliceToAdd.type = 'single';
       this.sliceToAdd.direction = null;
@@ -121925,7 +121950,7 @@ This component manages the following:
   components: {
     SuperTable: __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable___default.a
   },
-  props: ['originSlice', 'value', 'mode', 'root'],
+  props: ['parent', 'originSlice', 'value', 'mode', 'root'],
   mixins: [__WEBPACK_IMPORTED_MODULE_3__mixins_Slices__["a" /* default */]]
 });
 
@@ -122229,13 +122254,65 @@ var render = function() {
                   ],
                   1
                 )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.mode === "remove"
+              ? _c(
+                  "div",
+                  { staticClass: "dvs-mb-4" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("help", [
+                      _vm._v(
+                        "\n        If you delete this slice it will effect all pages that implement this template.\n      "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "dvs-btn",
+                        on: {
+                          click: function($event) {
+                            _vm.closeManager()
+                          }
+                        }
+                      },
+                      [_vm._v("Cancel")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "dvs-btn dvs-btn-danger",
+                        on: {
+                          click: function($event) {
+                            _vm.removeSlice()
+                          }
+                        }
+                      },
+                      [_vm._v("Confirm")]
+                    )
+                  ],
+                  1
+                )
               : _vm._e()
           ]
         )
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
+      _c("label", [_vm._v("Are you sure you want to delete this slice?")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

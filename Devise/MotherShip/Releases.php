@@ -4,56 +4,57 @@
 namespace Devise\MotherShip;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 class Releases
 {
+  /**
+   * @var Api
+   */
+  private $api;
+  /**
+   * @var Migrations
+   */
+  private $migrations;
+
+  /**
+   * Releases constructor.
+   */
+  public function __construct(Api $api, Migrations $migrations)
+  {
+    $this->api = $api;
+    $this->migrations = $migrations;
+  }
+
   public function sendAndSync($toBeReleased)
   {
-    DependenciesMap::newRelease();
-
     $currentRelease = DvsRelease::where('model_name', 'Release')->orderBy('created_at', 'desc')->first();
-    $currentReleaseId = $currentRelease ? $currentRelease->msh_id : 0;
-    $currentReleaseDate = $currentRelease ? $currentRelease->created_at : '00-00-00 00:00:00';
 
-    $rows = DvsRelease::with('model')
-      ->where(function ($query) use ($currentReleaseDate) {
-        $query->where('msh_id', 0)
-          ->orWhere('updated_at', '>', $currentReleaseDate)
-          ->orWhere('deleted_at', '>', $currentReleaseDate);
-      })
-      ->get();
+    $rows = $this->getNewRows($currentRelease);
 
     if ($rows->count())
     {
+      $migrations = $this->getPendingMigrations($rows);
+
+      DependenciesMap::newRelease();
+
       $rows->each(function ($item, $key) {
         $item->type = ($item->msh_id) ? 'update' : 'create';
         $item->model->prepRelease();
       });
 
       $data = [
-        'commit'          => trim(shell_exec('git rev-parse --verify HEAD')),
-        'environment'     => App::environment(),
-        'rows'            => $rows,
-        'release_ids'     => $toBeReleased,
-        'release'         => $currentReleaseId,
+        'commit'      => trim(shell_exec('git rev-parse --verify HEAD')),
+        'environment' => App::environment(),
+        'rows'        => $rows,
+        'release_ids' => $toBeReleased,
+        'release'     => $currentRelease ? $currentRelease->msh_id : 0,
+        'migrations'  => $migrations
       ];
 
-      try
-      {
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', 'http://c01c2f0a.ngrok.io/api/v1/projects/4/releases', [
-          'json' => $data,
-        ]);
-
-        $responseData = json_decode($response->getBody());
-      } catch (\Exception $e)
-      {
-        $response = $e->getResponse();
-        echo $response->getBody()->getContents();
-        exit;
-      }
+      $responseData = $this->api->store($data);
 
       $releases = collect($responseData->releases);
       $rows = collect($responseData->rows);
@@ -62,6 +63,7 @@ class Releases
       array_pop($releaseIds);
 
       dd($responseData);
+
       /**
        * !!!!!
        * !!!!!
@@ -74,19 +76,7 @@ class Releases
        */
       if ($releaseIds)
       {
-        $releaseIds = implode(',', $releaseIds);
-
-        try
-        {
-          $client = new \GuzzleHttp\Client();
-          $response = $client->request('GET', 'http://c01c2f0a.ngrok.io/api/v1/projects/4/releases/' . $releaseIds);
-          $query = $response->getBody();
-        } catch (\GuzzleHttp\Exception\ClientException $e)
-        {
-          $response = $e->getResponse();
-          echo $response->getBody()->getContents();
-          exit;
-        }
+        $query = $this->api->store($releaseIds);
       }
 
       $lastRelease = $releases->last();
@@ -109,9 +99,9 @@ class Releases
         $record = DvsRelease::with('model')
           ->find($row->id);
 
-        $record->model->saveRelease = false;
-        $record->model->id = $row->msh_id;
-        $record->model->save();
+        $record->modelRecord->saveRelease = false;
+        $record->modelRecord->id = $row->msh_id;
+        $record->modelRecord->save();
 
         $record->timestamps = false;
         $record->model_id = $row->msh_id;
@@ -134,5 +124,39 @@ class Releases
 
       echo $query;
     }
+  }
+
+  private function getNewRows($currentRelease)
+  {
+    $currentReleaseDate = $currentRelease ? $currentRelease->created_at : '00-00-00 00:00:00';
+
+    return DvsRelease::with('model')
+      ->where(function ($query) use ($currentReleaseDate) {
+        $query->where('msh_id', 0)
+          ->orWhere('updated_at', '>', $currentReleaseDate)
+          ->orWhere('deleted_at', '>', $currentReleaseDate);
+      })
+      ->orderBy('created_at')
+      ->get();
+  }
+
+  private function getPendingMigrations($newRows)
+  {
+    $startAtRelease = $this->getNewestReleasedDate();
+    $endAtRelease = $newRows->orderBy('created_at', 'desc')->first();
+
+    return $this->migrations
+      ->getQueriesBetweenDates($startAtRelease->created_at, $endAtRelease->created_at);
+  }
+
+  private function getNewestReleasedDate()
+  {
+    $newestOld = DvsRelease::with('model')
+      ->where('model_name', '!=', 'Release')
+      ->where('msh_id', '!=', 0)
+      ->orderBy('created_at', 'desc')
+      ->first();
+
+    return $newestOld ? $newestOld->created_at : date('Y-m-d', strtotime('now -1 year'));
   }
 }

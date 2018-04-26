@@ -17,7 +17,7 @@ class DvsRelease extends Model
 
   public $appends = ['table','max_id'];
 
-  public function model()
+  public function modelRecord()
   {
     return $this->morphTo('model','model_name','model_id');
   }

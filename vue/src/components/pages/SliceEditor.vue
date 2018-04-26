@@ -85,27 +85,29 @@ export default {
       this.pageSlices.map(s => this.closeSlice(s))
       this.$set(slice.metadata, 'open', !sliceOpen)
     },
-    toggleSliceTools() {
-      this.slice.metadata.tools = !this.slice.metadata.tools
-    },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
     },
+    toggleSliceTools() {
+      this.slice.metadata.tools = !this.slice.metadata.tools
+    },
     addInstance () {
-      let component = Object.assign({}, this.component(this.slice.metadata.name))
-
-      if (!this.slice.slices) {
-        this.$set(this.slice, 'slices', [])
-      }
-
+      // Setup the slice data
       var data = {
         metadata: Object.assign({}, this.slice.metadata)
       }
       data.metadata.placeholder = false
       data.metadata.instance_id = 0
 
+      // Set the slices prop if it isn't there
+      if (!this.slice.slices) {
+        this.$set(this.slice, 'slices', [])
+      }
+
+      // Hydrate missing properties which also sets the defaults
       this.hydrateMissingProperties(data)
 
+      // Push the slice into the slices array
       this.slice.slices.push(data)
     },
     hydrateMissingProperties (data) {

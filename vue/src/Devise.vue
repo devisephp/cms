@@ -91,7 +91,7 @@ export default {
     }
 
     this.$nextTick(function () {
-      if (self.$route.name !== null) {
+      if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
         self.adminClosed = false
       }
       setTimeout(function () {

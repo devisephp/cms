@@ -57915,7 +57915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
 
     this.$nextTick(function () {
-      if (self.$route.name !== null) {
+      if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
         self.adminClosed = false;
       }
       setTimeout(function () {
@@ -69829,33 +69829,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_keys__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_keys___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_keys__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_object_assign__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_object_assign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_faker_locale_en__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_faker_locale_en___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_faker_locale_en__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuedraggable__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__controls_Color__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__controls_Color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__controls_Color__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__controls_Checkbox__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__controls_Checkbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__controls_Checkbox__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__controls_Image__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__controls_Image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__controls_Image__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__controls_Link__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__controls_Link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__controls_Link__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__controls_Number__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__controls_Number___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__controls_Number__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__controls_Textarea__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__controls_Textarea___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__controls_Textarea__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__controls_Text__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__controls_Text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__controls_Text__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__controls_Wysiwyg__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__controls_Wysiwyg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__controls_Wysiwyg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_faker_locale_en__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_faker_locale_en___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_faker_locale_en__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuedraggable__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vuedraggable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__controls_Color__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__controls_Color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__controls_Color__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__controls_Checkbox__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__controls_Checkbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__controls_Checkbox__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__controls_Image__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__controls_Image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__controls_Image__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__controls_Link__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__controls_Link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__controls_Link__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__controls_Number__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__controls_Number___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__controls_Number__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__controls_Textarea__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__controls_Textarea___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__controls_Textarea__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__controls_Text__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__controls_Text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__controls_Text__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__controls_Wysiwyg__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__controls_Wysiwyg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__controls_Wysiwyg__);
 
 
-
-//
 //
 //
 //
@@ -69964,7 +69960,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.$options.components.TemplateSliceEditor = __webpack_require__(83);
   },
   mounted: function mounted() {
-    this.localValue = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_object_assign___default()({}, this.value);
+    this.localValue = this.value;
     this.prepareSliceForTemplatePreview();
     this.loaded = true;
   },
@@ -70007,12 +70003,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.$set(self.localValue, 'slices', []);
       }
 
-      if (!self.localValue.metadata || !self.localValue.metadata.open) {
-        this.$set(self.localValue, 'metadata', {
-          open: false,
-          tools: false
-        });
-      }
+      this.$set(self.localValue, 'metadata', {
+        open: false,
+        tools: false
+      });
 
       // If this slice type is "model" or "repeats" then let's set the number of
       // instances if it doesn't exist and set it to 1
@@ -70024,10 +70018,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_keys___default()(self.componentConfiguration).forEach(function (key, index) {
         if (typeof self.localValue.config[key] === 'undefined') {
           if (self.componentConfiguration[key].type === 'text') {
-            self.$set(self.localValue.config, key, { enabled: true, text: __WEBPACK_IMPORTED_MODULE_4_faker_locale_en___default.a.lorem.words(5) });
+            self.$set(self.localValue.config, key, { enabled: true, text: __WEBPACK_IMPORTED_MODULE_3_faker_locale_en___default.a.lorem.words(5) });
           }
           if (self.componentConfiguration[key].type === 'wysiwyg') {
-            self.$set(self.localValue.config, key, { enabled: true, text: '<div>' + __WEBPACK_IMPORTED_MODULE_4_faker_locale_en___default.a.lorem.words(15) + '</div>' });
+            self.$set(self.localValue.config, key, { enabled: true, text: '<div>' + __WEBPACK_IMPORTED_MODULE_3_faker_locale_en___default.a.lorem.words(15) + '</div>' });
           }
           if (self.componentConfiguration[key].type === 'color') {
             self.$set(self.localValue.config, key, { enabled: true, color: '#f66d9b' });
@@ -70036,19 +70030,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.$set(self.localValue.config, key, { enabled: true, text: '1000' });
           }
           if (self.componentConfiguration[key].type === 'textarea') {
-            self.$set(self.localValue.config, key, { enabled: true, text: __WEBPACK_IMPORTED_MODULE_4_faker_locale_en___default.a.lorem.words(15) });
+            self.$set(self.localValue.config, key, { enabled: true, text: __WEBPACK_IMPORTED_MODULE_3_faker_locale_en___default.a.lorem.words(15) });
           }
           if (self.componentConfiguration[key].type === 'link') {
-            self.$set(self.localValue.config, key, { enabled: true, text: 'A Link', url: __WEBPACK_IMPORTED_MODULE_4_faker_locale_en___default.a.internet.url(), target: '_self' });
+            self.$set(self.localValue.config, key, { enabled: true, text: 'A Link', url: __WEBPACK_IMPORTED_MODULE_3_faker_locale_en___default.a.internet.url(), target: '_self' });
           }
           if (self.componentConfiguration[key].type === 'image') {
-            self.$set(self.localValue.config, key, { enabled: true, url: __WEBPACK_IMPORTED_MODULE_4_faker_locale_en___default.a.image.cats() });
+            self.$set(self.localValue.config, key, { enabled: true, url: __WEBPACK_IMPORTED_MODULE_3_faker_locale_en___default.a.image.cats() });
           }
         }
       });
     }
   },
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])('devise', ['component']), {
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['component']), {
     componentConfiguration: function componentConfiguration() {
       if (this.component(this.localValue.name)) {
         return this.component(this.localValue.name).config;
@@ -70078,15 +70072,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   components: {
-    draggable: __WEBPACK_IMPORTED_MODULE_5_vuedraggable___default.a,
-    CheckboxControls: __WEBPACK_IMPORTED_MODULE_7__controls_Checkbox___default.a,
-    ColorControls: __WEBPACK_IMPORTED_MODULE_6__controls_Color___default.a,
-    ImageControls: __WEBPACK_IMPORTED_MODULE_8__controls_Image___default.a,
-    LinkControls: __WEBPACK_IMPORTED_MODULE_9__controls_Link___default.a,
-    NumberControls: __WEBPACK_IMPORTED_MODULE_10__controls_Number___default.a,
-    TextareaControls: __WEBPACK_IMPORTED_MODULE_11__controls_Textarea___default.a,
-    TextControls: __WEBPACK_IMPORTED_MODULE_12__controls_Text___default.a,
-    WysiwygControls: __WEBPACK_IMPORTED_MODULE_13__controls_Wysiwyg___default.a
+    draggable: __WEBPACK_IMPORTED_MODULE_4_vuedraggable___default.a,
+    CheckboxControls: __WEBPACK_IMPORTED_MODULE_6__controls_Checkbox___default.a,
+    ColorControls: __WEBPACK_IMPORTED_MODULE_5__controls_Color___default.a,
+    ImageControls: __WEBPACK_IMPORTED_MODULE_7__controls_Image___default.a,
+    LinkControls: __WEBPACK_IMPORTED_MODULE_8__controls_Link___default.a,
+    NumberControls: __WEBPACK_IMPORTED_MODULE_9__controls_Number___default.a,
+    TextareaControls: __WEBPACK_IMPORTED_MODULE_10__controls_Textarea___default.a,
+    TextControls: __WEBPACK_IMPORTED_MODULE_11__controls_Text___default.a,
+    WysiwygControls: __WEBPACK_IMPORTED_MODULE_12__controls_Wysiwyg___default.a
   }
 });
 
@@ -91630,140 +91624,138 @@ var render = function() {
               _c("i", {
                 staticClass: "ion-gear-b",
                 on: { click: _vm.toggleSliceTools }
-              }),
-              _vm._v(" "),
-              _vm.localValue.metadata.tools
-                ? _c("div", {
-                    staticClass: "dvs-blocker dvs-blocker-light",
-                    on: {
-                      click: function($event) {
-                        _vm.localValue.metadata.tools = false
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dvs-cn-wrapper",
-                  class: { "dvs-opened-nav": _vm.localValue.metadata.tools }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "cn-close-button",
-                      on: {
-                        click: function($event) {
-                          _vm.localValue.metadata.tools = false
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "ion-close-round" })]
-                  ),
-                  _vm._v(" "),
-                  _c("ul", { staticClass: "dvs-list-reset" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        {
-                          directives: [
-                            {
-                              name: "tippy",
-                              rawName: "v-tippy",
-                              value: _vm.tippyConfiguration,
-                              expression: "tippyConfiguration"
-                            }
-                          ],
-                          staticClass: "dvs-cursor-pointer",
-                          attrs: {
-                            title:
-                              "Create new child slice under " +
-                              _vm.localValue.label,
-                            "data-tippy-followcursor": "true"
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.addSlice(_vm.localValue.slices)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "ion-plus" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        {
-                          directives: [
-                            {
-                              name: "tippy",
-                              rawName: "v-tippy",
-                              value: _vm.tippyConfiguration,
-                              expression: "tippyConfiguration"
-                            }
-                          ],
-                          staticClass: "dvs-cursor-pointer",
-                          attrs: {
-                            title:
-                              "Modify the data that drives " +
-                              _vm.localValue.label,
-                            "data-tippy-followcursor": "true"
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.modifySlice(_vm.localValue)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "ion-cube" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        {
-                          directives: [
-                            {
-                              name: "tippy",
-                              rawName: "v-tippy",
-                              value: _vm.tippyConfiguration,
-                              expression: "tippyConfiguration"
-                            }
-                          ],
-                          staticClass: "dvs-cursor-pointer",
-                          attrs: {
-                            title: "Remove " + _vm.localValue.label,
-                            "data-tippy-followcursor": "true"
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.removeSlice(_vm.localValue)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "ion-trash-a" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _vm._m(3)
-                  ])
-                ]
-              )
+              })
             ]),
             _vm._v("\n    " + _vm._s(_vm.localValue.label) + "\n  ")
+          ]
+        ),
+        _vm._v(" "),
+        _vm.localValue.metadata.tools
+          ? _c("div", {
+              staticClass: "dvs-blocker dvs-blocker-light",
+              on: {
+                click: function($event) {
+                  _vm.localValue.metadata.tools = false
+                }
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "dvs-cn-wrapper",
+            class: { "dvs-opened-nav": _vm.localValue.metadata.tools }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "cn-close-button",
+                on: {
+                  click: function($event) {
+                    _vm.localValue.metadata.tools = false
+                  }
+                }
+              },
+              [_c("i", { staticClass: "ion-close-round" })]
+            ),
+            _vm._v(" "),
+            _c("ul", { staticClass: "dvs-list-reset" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    directives: [
+                      {
+                        name: "tippy",
+                        rawName: "v-tippy",
+                        value: _vm.tippyConfiguration,
+                        expression: "tippyConfiguration"
+                      }
+                    ],
+                    staticClass: "dvs-cursor-pointer",
+                    attrs: {
+                      title:
+                        "Create new child slice under " + _vm.localValue.label,
+                      "data-tippy-followcursor": "true"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.addSlice(_vm.localValue.slices)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "ion-plus" })]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    directives: [
+                      {
+                        name: "tippy",
+                        rawName: "v-tippy",
+                        value: _vm.tippyConfiguration,
+                        expression: "tippyConfiguration"
+                      }
+                    ],
+                    staticClass: "dvs-cursor-pointer",
+                    attrs: {
+                      title:
+                        "Modify the data that drives " + _vm.localValue.label,
+                      "data-tippy-followcursor": "true"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.modifySlice(_vm.localValue)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "ion-cube" })]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    directives: [
+                      {
+                        name: "tippy",
+                        rawName: "v-tippy",
+                        value: _vm.tippyConfiguration,
+                        expression: "tippyConfiguration"
+                      }
+                    ],
+                    staticClass: "dvs-cursor-pointer",
+                    attrs: {
+                      title: "Remove " + _vm.localValue.label,
+                      "data-tippy-followcursor": "true"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.removeSlice(_vm.localValue)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "ion-trash-a" })]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
           ]
         ),
         _vm._v(" "),
@@ -121738,13 +121730,10 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_tables_SuperTable__ = __webpack_require__(608);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_tables_SuperTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utilities_tables_SuperTable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_Slices__ = __webpack_require__(637);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable__ = __webpack_require__(608);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_Slices__ = __webpack_require__(637);
 
 //
 //
@@ -121874,12 +121863,12 @@ This component manages the following:
     };
   },
   mounted: function mounted() {
-    this.localValue = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign___default()({}, this.value);
+    this.localValue = this.value;
     this.getSlicesDirectories();
     this.getSlices();
   },
 
-  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])('devise', ['getSlicesDirectories', 'getSlices', 'getModels', 'getModelSettings']), {
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('devise', ['getSlicesDirectories', 'getSlices', 'getModels', 'getModelSettings']), {
     updateValue: function updateValue() {
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
@@ -121957,12 +121946,12 @@ This component manages the following:
       };
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['componentFromView', 'models', 'modelSettings', 'slicesList', 'slicesDirectories'])),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['componentFromView', 'models', 'modelSettings', 'slicesList', 'slicesDirectories'])),
   components: {
-    SuperTable: __WEBPACK_IMPORTED_MODULE_3__utilities_tables_SuperTable___default.a
+    SuperTable: __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable___default.a
   },
   props: ['parent', 'originSlice', 'value', 'mode', 'root'],
-  mixins: [__WEBPACK_IMPORTED_MODULE_4__mixins_Slices__["a" /* default */]]
+  mixins: [__WEBPACK_IMPORTED_MODULE_3__mixins_Slices__["a" /* default */]]
 });
 
 /***/ }),

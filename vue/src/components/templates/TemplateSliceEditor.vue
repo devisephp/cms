@@ -5,32 +5,31 @@
       <div>
         <i class="handle ion-navicon-round mr-2"></i>
         <i class="ion-gear-b" @click="toggleSliceTools"></i>
-
-        <!-- Menu for manipulating this slice -->
-        <div class="dvs-blocker dvs-blocker-light" @click="localValue.metadata.tools = false" v-if="localValue.metadata.tools"></div>
-        <div class="dvs-cn-wrapper" :class="{'dvs-opened-nav': localValue.metadata.tools}">
-          <button class="cn-close-button" @click="localValue.metadata.tools = false">
-            <i class="ion-close-round"></i>
-          </button>
-          <ul class="dvs-list-reset">
-            <li><a class="disabled">&nbsp;</a></li>
-            <li><a class="disabled">&nbsp;</a></li>
-            <li><a @click.prevent="addSlice(localValue.slices)" class="dvs-cursor-pointer" :title="`Create new child slice under ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-              <i class="ion-plus"></i>
-            </a></li>
-            <li><a @click.prevent="modifySlice(localValue)" class="dvs-cursor-pointer" :title="`Modify the data that drives ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-              <i class="ion-cube"></i>
-            </a></li>
-            <li><a @click.prevent="removeSlice(localValue)" class="dvs-cursor-pointer" :title="`Remove ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-              <i class="ion-trash-a"></i>
-            </a></li>
-            <li><a class="disabled">&nbsp;</a></li>
-            <li><a class="disabled">&nbsp;</a></li>
-          </ul>
-        </div>
-
       </div>
       {{ localValue.label }}
+    </div>
+
+    <!-- Menu for manipulating this slice -->
+    <div class="dvs-blocker dvs-blocker-light" @click="localValue.metadata.tools = false" v-if="localValue.metadata.tools"></div>
+    <div class="dvs-cn-wrapper" :class="{'dvs-opened-nav': localValue.metadata.tools}">
+      <button class="cn-close-button" @click="localValue.metadata.tools = false">
+        <i class="ion-close-round"></i>
+      </button>
+      <ul class="dvs-list-reset">
+        <li><a class="disabled">&nbsp;</a></li>
+        <li><a class="disabled">&nbsp;</a></li>
+        <li><a @click.prevent="addSlice(localValue.slices)" class="dvs-cursor-pointer" :title="`Create new child slice under ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
+          <i class="ion-plus"></i>
+        </a></li>
+        <li><a @click.prevent="modifySlice(localValue)" class="dvs-cursor-pointer" :title="`Modify the data that drives ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
+          <i class="ion-cube"></i>
+        </a></li>
+        <li><a @click.prevent="removeSlice(localValue)" class="dvs-cursor-pointer" :title="`Remove ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
+          <i class="ion-trash-a"></i>
+        </a></li>
+        <li><a class="disabled">&nbsp;</a></li>
+        <li><a class="disabled">&nbsp;</a></li>
+      </ul>
     </div>
 
     <!-- Collapsed Section -->
@@ -107,7 +106,7 @@ export default {
     this.$options.components.TemplateSliceEditor = require('./TemplateSliceEditor.vue')
   },
   mounted () {
-    this.localValue = Object.assign({}, this.value)
+    this.localValue = this.value
     this.prepareSliceForTemplatePreview()
     this.loaded = true
   },
@@ -149,12 +148,10 @@ export default {
         self.$set(self.localValue, 'slices', [])
       }
 
-      if (!self.localValue.metadata || !self.localValue.metadata.open) {
-        this.$set(self.localValue, 'metadata', {
-          open: false,
-          tools: false
-        })
-      }
+      this.$set(self.localValue, 'metadata', {
+        open: false,
+        tools: false
+      })
 
       // If this slice type is "model" or "repeats" then let's set the number of
       // instances if it doesn't exist and set it to 1

@@ -126,7 +126,7 @@
       }
     },
     mounted () {
-      this.localValue = Object.assign({}, this.value)
+      this.localValue = this.value
       this.getSlicesDirectories()
       this.getSlices()
     },

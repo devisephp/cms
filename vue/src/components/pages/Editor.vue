@@ -93,8 +93,9 @@ export default {
       this.pageSettingsOpen = false
     },
     toggleSlice (slice) {
+      let sliceOpen = slice.metadata.open
       this.pageSlices.map(s => this.closeSlice(s))
-      this.$set(slice.metadata, 'open', !slice.metadata.open)
+      this.$set(slice.metadata, 'open', !sliceOpen)
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)

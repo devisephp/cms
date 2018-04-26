@@ -31,9 +31,36 @@
 
       </fieldset>
     </div>
+
+    <div class="dvs-pl-4" v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
+      <div class="dvs-cn-wrapper" :class="{'dvs-opened-nav': localValue.metadata.tools}">
+        <button class="cn-close-button" @click="localValue.metadata.tools = false">
+          <i class="ion-close-round"></i>
+        </button>
+        <ul class="dvs-list-reset">
+          <li><a class="disabled">&nbsp;</a></li>
+          <li><a class="disabled">&nbsp;</a></li>
+          <li><a @click.prevent="addSlice(localValue.slices)" class="dvs-cursor-pointer" :title="`Create new child slice under ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
+            <i class="ion-plus"></i>
+          </a></li>
+          <li><a class="disabled">&nbsp;</a></li>
+          <li><a @click.prevent="removeSlice(localValue)" class="dvs-cursor-pointer" :title="`Remove ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
+            <i class="ion-minus"></i>
+          </a></li>
+          <li><a class="disabled">&nbsp;</a></li>
+          <li><a class="disabled">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="dvs-collapsed dvs-pl-4">
+
+      <help v-if="slice.metadata.type === 'model'" class="mb-4">
+        Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
+      </help>
+
       <ul class="dvs-list-reset">
-        <li v-for="(s, key) in slice.pageSlices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': s.metadata.open}">
+        <li v-for="(s, key) in slice.slices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': s.metadata.open}">
           <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4" @click="toggleSlice(s)">{{ s.metadata.label }}</strong>
           <div class="dvs-collapsed">
             <slice-editor :key="key" :slice="s" />
@@ -69,8 +96,9 @@ export default {
   },
   methods: {
     toggleSlice (slice) {
+      let sliceOpen = slice.metadata.open
       this.pageSlices.map(s => this.closeSlice(s))
-      this.$set(slice.metadata, 'open', !slice.metadata.open)
+      this.$set(slice.metadata, 'open', !sliceOpen)
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)

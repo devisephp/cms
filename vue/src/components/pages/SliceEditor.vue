@@ -6,7 +6,7 @@
     </strong>
 
     <div class="dvs-collapsed">
-      <div class="dvs-pt-4">
+      <div class="dvs-pt-4" v-if="!slice.metadata.placeholder">
         <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-8 dvs-pl-4" :key="key">
           <div>
 
@@ -92,7 +92,7 @@ export default {
       this.$set(slice.metadata, 'open', false)
     },
     addInstance () {
-      let component = this.component(this.slice.metadata.name)
+      let component = Object.assign({}, this.component(this.slice.metadata.name))
 
       if (!this.slice.slices) {
         this.$set(this.slice, 'slices', [])
@@ -102,15 +102,51 @@ export default {
         metadata: Object.assign({}, this.slice.metadata)
       }
       data.metadata.placeholder = false
+      data.metadata.instance_id = 0
 
-      for (var prop in component.config) {
-        if (component.config.hasOwnProperty(prop)) {
-          data[prop] = component.config[prop]
+      this.hydrateMissingProperties(data)
+
+      this.slice.slices.push(data)
+    },
+    hydrateMissingProperties (data) {
+      let config = this.component(this.slice.metadata.name).config
+
+      if (config) {
+        // Loop through the config for this slice and check to see that all the
+        // fields are present. If they aren't it's just because they haven't been
+        // hydrated via the editor yet.
+        for (var prop in config) {
+          // Ok, so the property is missing from the slice.fields object so we're
+          // going to add in a stub for the render.
+          if (!data.hasOwnProperty(prop)) {
+            this.addMissingProperty(data, prop)
+
+            // If defaults are set then set them on top of the placeholder missing properties
+            if (config[prop].default) {
+              this.setDefaults(data, prop, config[prop].default)
+            }
+          }
         }
       }
 
-      this.slice.slices.push(data)
-
+      return data
+    },
+    addMissingProperty (data, property) {
+      // We just add all the properties because.... why not?
+      this.$set(data, property, {
+        text: null,
+        url: null,
+        target: null,
+        color: null,
+        checked: null,
+        enabled: false
+      })
+    },
+    setDefaults (data, property, defaults) {
+      // loop through the defaults and apply them to the field
+      for (var d in defaults) {
+        this.$set(data[property], d, defaults[d])
+      }
     }
   },
   computed: {

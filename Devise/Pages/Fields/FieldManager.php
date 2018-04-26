@@ -309,6 +309,10 @@ class FieldManager
   {
     $sliceInstance = $this->DvsSliceInstance->findOrFail($parentId);
 
+    if($sliceInstance != 'single'){
+      return $sliceInstance->template_slice_id;
+    }
+
     $templateSlice = $this->DvsTemplateSlice
       ->where('parent_id', $sliceInstance->template_slice_id)
       ->firstOrFail();

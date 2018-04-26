@@ -63,10 +63,6 @@ class PagesRepository
         'currentVersion.slices.templateSlice',
         'currentVersion.template.slices.slices.slices.slices',
         'currentVersion.slices.slices.slices.slices',
-        'currentVersion.slices.childConfig',
-        'currentVersion.slices.slices.childConfig',
-        'currentVersion.slices.slices.slices.childConfig',
-        'currentVersion.slices.slices.slices.slices.childConfig',
         'currentVersion.slices.fields',
         'versions.page.currentVersion',
         'translatedFromPage',
@@ -75,6 +71,28 @@ class PagesRepository
       )
       ->whereRouteName($name)
       ->firstOrFail();
+  }
+
+  /**
+   *
+   * @param $id
+   * @return Page
+   * @internal param string $versionName
+   */
+  public function findById($id)
+  {
+    return $this->Page
+      ->with(
+        'currentVersion.slices.templateSlice',
+        'currentVersion.template.slices.slices.slices.slices',
+        'currentVersion.slices.slices.slices.slices',
+        'currentVersion.slices.fields',
+        'versions.page.currentVersion',
+        'translatedFromPage',
+        'localizedPages',
+        'metas'
+      )
+      ->findOrFail($id);
   }
 
   /**

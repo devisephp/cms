@@ -2,6 +2,7 @@
 
 namespace Devise\Http\Controllers;
 
+use Devise\Devise;
 use Devise\Http\Requests\ApiRequest;
 use Devise\Http\Requests\Pages\CopyPage;
 use Devise\Http\Requests\Pages\StorePage;
@@ -73,6 +74,15 @@ class PagesController extends Controller
 
       return $this->View->make($page->currentVersion->template->layout, ['page' => $page]);
     }
+  }
+
+  public function getVueData(ApiRequest $request, $pageId)
+  {
+    $page = $this->PagesRepository->findById($pageId);
+
+    $page->currentVersion->registerComponents();
+
+    return Devise::dataAsArray($page);
   }
 
   /**

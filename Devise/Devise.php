@@ -37,6 +37,15 @@ class Devise
     return $js;
   }
 
+  public static function dataAsArray($page)
+  {
+    $resource = new PageResource($page);
+
+    return [
+      'page' => $resource->toArray(request())
+    ];
+  }
+
   public static function sites()
   {
     $detector = App::make(SiteDetector::class);

@@ -12,6 +12,8 @@ class DvsSliceInstance extends Model
 
   protected $table = 'dvs_slice_instances';
 
+  public $parent_type = 'single';
+
   public function templateSlice()
   {
     return $this->belongsTo(DvsTemplateSlice::class, 'template_slice_id');
@@ -21,11 +23,6 @@ class DvsSliceInstance extends Model
   {
     return $this->hasMany(DvsSliceInstance::class, 'parent_instance_id')
       ->orderBy('position');
-  }
-
-  public function childConfig()
-  {
-    return $this->hasOne(DvsTemplateSlice::class, 'parent_id', 'template_slice_id');
   }
 
   public function fields()

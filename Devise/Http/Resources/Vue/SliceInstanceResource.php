@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\App;
 class SliceInstanceResource extends Resource
 {
 
+
   /**
    * Transform the resource into an array.
    *
@@ -18,33 +19,30 @@ class SliceInstanceResource extends Resource
    */
   public function toArray($request)
   {
-    $childConfig = $this->childConfig;
-
-    $childMeta = ($childConfig) ? [
-      'id'   => $childConfig->id,
-      'type' => $childConfig->type
-    ] : null;
-
     $data = [
       'metadata' => [
         'instance_id' => $this->id,
-        'name'        => $this->templateSlice->component_name,
+        'name'        => ($this->templateSlice->type == 'single' || $this->parent_type == 'repeats' ) ? $this->templateSlice->component_name : null,
         'type'        => $this->templateSlice->type,
         'label'       => $this->templateSlice->label,
-        'enabled'     => $this->enabled,
-        'childmeta'   => $childMeta
+        'enabled'     => $this->enabled
       ]
     ];
 
     // Relationships
     if ($this->slices->count())
     {
+      $this->slices->map(function ($slice) {
+        $slice->parent_type = $this->templateSlice->type;
+        return $slice;
+      });
+
       $data['slices'] = SliceInstanceResource::collection($this->slices);
     }
 
-    if ($childConfig && $childConfig->type == 'model')
+    if ($this->templateSlice->type == 'model')
     {
-      $data['slices'] = $this->setModelSlices($childConfig);
+      $data['slices'] = $this->setModelSlices($this->templateSlice);
     }
 
     if ($this->fields->count())

@@ -24,14 +24,17 @@ export default {
           // If it's a placeholder for model or repeatable's we need to dig down
           // one level and use the placeholder's slices.
           if (s.metadata.name === null) {
-            let slices = s.slices.map(s => h(Slice, { props: { devise: s } }))
-            return slices
-          }
-          return h(Slice, {
-            props: {
-              devise: s
+            if (s.slices) {
+              let slices = s.slices.map(s => h(Slice, { props: { devise: s } }))
+              return slices
             }
-          })
+          } else {
+            return h(Slice, {
+              props: {
+                devise: s
+              }
+            })
+          }
         }
       })
     }

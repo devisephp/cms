@@ -2,11 +2,11 @@
   <div>
     <template v-if="editorMode">
 
-      <loadbar/>
-      <messages/>
-      <media-manager/>
+      <loadbar v-if="isLoggedIn" />
+      <messages v-if="isLoggedIn" />
+      <media-manager v-if="isLoggedIn" />
       <div id="devise-container" :class="{'admin-closed': adminClosed, 'wide-admin': wideAdmin, 'preview-frame': isPreviewFrame}">
-        <div id="devise-admin" v-if="!isPreviewFrame" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
+        <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
             <user></user>
             <transition name="fade" mode="out-in">
               <router-view name="devise" :page="page"></router-view>
@@ -16,29 +16,35 @@
 
           <!-- Desktop mode in editor or just viewing page -->
           <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame" >
-
             <slot name="on-top"></slot>
+            <slot name="static-content"></slot>
 
-            <slice v-for="(slice, key) in page.slices" :key="key" :slice="slice"/>
+            <template v-if="page.slices">
+              <slices :slices="page.slices"></slices>
+            </template>
 
+            <slot name="static-content-bottom"></slot>
             <slot name="on-bottom"></slot>
-
           </div>
 
           <!-- Preview mode in editor -->
           <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
 
         </div>
-        <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
-        <i id="devise-admin-open" v-if="!isPreviewFrame" class="ion-gear-a" @click="closeAdmin"></i>
+
+        <template v-if="isLoggedIn">
+          <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
+          <i id="devise-admin-open" v-if="!isPreviewFrame" class="ion-gear-a" @click="closeAdmin"></i>
+        </template>
+
       </div>
     </template>
     <template v-if="templateMode">
 
-      <template-preview>
+      <template-editor>
         <slot name="on-top" slot="on-top"></slot>
         <slot name="on-bottom" slot="on-bottom"></slot>
-      </template-preview>
+      </template-editor>
 
     </template>
 
@@ -53,7 +59,7 @@ import PageEditor from './components/pages/Editor'
 import Slice from './Slice'
 import TemplateIndex from './components/templates/Index'
 import TemplateEdit from './components/templates/Edit'
-import TemplatePreview from './components/templates/Preview'
+import TemplateEditor from './components/templates/TemplateEditor'
 import User from './components/menu/User'
 
 export default {
@@ -75,6 +81,8 @@ export default {
     }
   },
   mounted () {
+    let self = this
+
     if (typeof window.template !== 'undefined') {
       this.templateMode = true
     } else {
@@ -83,6 +91,9 @@ export default {
     }
 
     this.$nextTick(function () {
+      if (self.$route.name !== null) {
+        self.adminClosed = false
+      }
       setTimeout(function () {
         window.bus.$emit('devise-loaded')
       }, 10)
@@ -113,9 +124,6 @@ export default {
         this.wideAdmin = false
       }
     },
-    getComponent (slice) {
-      return window.deviseComponents[slice.name]
-    },
     closeAdmin () {
       this.adminClosed = !this.adminClosed
       if (this.adminClosed) {
@@ -134,11 +142,18 @@ export default {
       } catch (e) {
         return true
       }
+    },
+    isLoggedIn () {
+      return window.user
     }
   },
   watch: {
     '$route': function (newRoute) {
       this.checkWidthOfInterface(newRoute)
+
+      if (newRoute.name !== null) {
+        this.adminClosed = false
+      }
     }
   },
   components: {
@@ -149,7 +164,7 @@ export default {
     Slice,
     TemplateIndex,
     TemplateEdit,
-    TemplatePreview,
+    TemplateEditor,
     User
   }
 }

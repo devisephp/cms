@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
   if (typeof to.meta.title !== 'undefined') {
     document.title = to.meta.title
   } else {
-    document.title = 'Welcome to Devise Sea Cruises'
+    document.title = 'Welcome to Devise'
   }
   next()
 })

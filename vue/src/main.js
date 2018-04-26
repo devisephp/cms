@@ -74,38 +74,6 @@ const DevisePlugin = {
         }
       },
       methods: {
-        // The collectionData looks at the slices passed to it and extracts
-        // the data for easier access
-        getCollectionData (slices, name) {
-          let collection = this.getCollection(slices, name)
-          return collection.map(function (record) {
-            return record.data
-          })
-        },
-        // Returns only the slices that match the name passed
-        // Primarily this is a helper function for getCollectionData
-        getCollection (slices, name) {
-          console.log(slices)
-          let collection = slices.filter(function (slice) {
-            return slice.metadata.name === name
-          })
-
-          // If settings property is present we know we are in template builder
-          // We clear out the existing placeholder data and store it in a temp
-          // variable to repopulate based on the number of instances the User
-          // has set.
-          if (collection[0] && collection[0].settings) {
-            let tempCollection = collection[0]
-            collection.splice(0, collection.length)
-
-            for (var i = 0; i < tempCollection.settings.numberOfInstances; i++) {
-              collection.push(tempCollection)
-            }
-          }
-
-          return collection
-        },
-
         // Convienience method to push things into the router from templates
         goToPage (pageName) {
           this.$router.push({name: pageName})
@@ -114,7 +82,7 @@ const DevisePlugin = {
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass
       // down any data to custom child components
-      props: ['devise'],
+      props: ['devise', 'slices'],
       store: store
     })
   }

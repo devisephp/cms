@@ -6,15 +6,15 @@ export default {
   name: 'DeviseSlices',
   functional: true,
   render (h, ctx) {
-    if (ctx.props.devise.slices && ctx.props.devise.slices.length) {
-      return ctx.props.devise.slices.map(function (s) {
-        if (s.settings && s.settings.numberOfInstances) {
+    if (ctx.props.slices && ctx.props.slices.length) {
+      return ctx.props.slices.map(function (s) {
+        if (s.config && s.config.numberOfInstances) {
           var placeholderSlices = []
-          for (var i = 0; i < s.settings.numberofInstances; i++) {
+          for (var i = 0; i < s.config.numberOfInstances; i++) {
             placeholderSlices.push(
               h(Slice, {
                 props: {
-                  slice: s
+                  devise: s
                 }
               })
             )
@@ -23,7 +23,7 @@ export default {
         } else {
           return h(Slice, {
             props: {
-              slice: s
+              devise: s
             }
           })
         }

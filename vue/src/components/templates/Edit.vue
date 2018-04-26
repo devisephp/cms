@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <template v-if="template && slices.data.length > 0">
+  <div v-if="localValue.slices">
+    <template v-if="template && localValue.slices.length > 0">
       <iframe :src="`/templates/${template.id}`" class="dvs-w-full" id="devise-preview-iframe"></iframe>
     </template>
   </div>
@@ -19,9 +19,6 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(function () {
-      window.bus.$emit('devise-wide-admin')
-    })
     this.retrieveAllTemplates()
     this.getSlices()
     this.addListeners()
@@ -40,15 +37,21 @@ export default {
     addListeners () {
       let self = this
       window.addEventListener('message', function (event) {
-        if (event.data === 'goBack') {
+        if (event.data.type === 'goBack') {
           self.goToPage('devise-templates-index')
+        }
+        if (event.data.type === 'error') {
+          window.bus.$emit('showError', event.data.message)
+        }
+        if (event.data.type === 'saveSuccessful') {
+          window.bus.$emit('showMessage', {title: 'Saving Template', message: 'Template successfully saved'})
         }
       }, false)
     }
   },
   computed: {
     ...mapGetters('devise', [
-      'slices',
+      'slicesList',
       'template'
     ])
   },

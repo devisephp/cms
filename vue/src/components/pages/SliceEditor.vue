@@ -33,7 +33,7 @@
     </div>
     <div class="dvs-collapsed dvs-pl-4">
       <ul class="dvs-list-reset">
-        <li v-for="(s, key) in slice.slices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': s.metadata.open}">
+        <li v-for="(s, key) in slice.pageSlices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': s.metadata.open}">
           <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4" @click="toggleSlice(s)">{{ s.metadata.label }}</strong>
           <div class="dvs-collapsed">
             <slice-editor :key="key" :slice="s" />
@@ -61,15 +61,15 @@ export default {
   name: 'SliceEditor',
   data () {
     return {
-      slices: []
+      pageSlices: []
     }
   },
   mounted () {
-    this.slices = this.slice.slices
+    this.pageSlices = this.slice.slices
   },
   methods: {
     toggleSlice (slice) {
-      this.slices.map(s => this.closeSlice(s))
+      this.pageSlices.map(s => this.closeSlice(s))
       this.$set(slice.metadata, 'open', !slice.metadata.open)
     },
     closeSlice (slice) {

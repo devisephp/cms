@@ -13,15 +13,18 @@ require('./mix/DeviseMix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.setPublicPath('./')
+ mix.webpackConfig({
+   output: {
+     publicPath: '/',
+     chunkFilename: 'dist/js/[name].[chunkhash].js',
+   },
+ });
 
 mix
   .deviseMix()
-  .js('src/main.js', './dist/devise.js')
-  .sass('src/sass/devise.scss', './dist/devise.css')
+  .js('src/devise-app.js', 'dist/js/devise.js')
+  .sass('src/sass/devise.scss', './dist/css/devise.css')
   .options({
     processCssUrls: false,
     postCss: [ tailwindcss('./tailwind.js') ],
   })
-  .sourceMaps()
-  .version();

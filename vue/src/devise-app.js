@@ -1,11 +1,9 @@
 /* eslint-disable */
-import Vue from 'vue'
+require('./bootstrap');
+
 window.Vue = require('vue')
 // Devise in Boilerplate
 import Devise from './main.js'
-
-// Should be the path when rebuilding in app
-// import Devise from './devise-dev/main.js'
 
 // Devise requires a bus, vue-router and vuex. We initialize these in your application
 // so that both apps can share the same store and router. All devise vuex

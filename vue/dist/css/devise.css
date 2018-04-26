@@ -1323,6 +1323,7 @@ button,
   bottom: 0;
   left: 0;
   margin-left: 2rem;
+  margin-right: 2rem;
   z-index: 50;
   border-radius: .25rem;
   background-color: #2b6ed8;

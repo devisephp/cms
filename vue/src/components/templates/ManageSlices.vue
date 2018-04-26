@@ -155,7 +155,7 @@
       },
       chooseTypeToAdd (type) {
         if (type !== 'single' && this.root) {
-          window.bus.$emit('showError', 'You cannot add a model or repeatable to the root of a template. You can add these as a child to any component and render them with <slices :slices="slices"/> in the container\'s blade file')
+          window.parent.postMessage({type: 'error', message: 'You cannot add a model or repeatable to the root of a template. You can add these as a child to any component and render them with <slices :slices="slices"/> in the container\'s blade file'}, '*')
           return
         }
 

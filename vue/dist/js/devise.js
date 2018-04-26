@@ -67933,8 +67933,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addListeners: function addListeners() {
       var self = this;
       window.addEventListener('message', function (event) {
-        if (event.data === 'goBack') {
+        if (event.data.type === 'goBack') {
           self.goToPage('devise-templates-index');
+        }
+        if (event.data.type === 'error') {
+          window.bus.$emit('showError', event.data.message);
+        }
+        if (event.data.type === 'saveSuccessful') {
+          window.bus.$emit('showMessage', { title: 'Saving Template', message: 'Template successfully saved' });
         }
       }, false);
     }
@@ -68175,7 +68181,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var self = this;
 
       this.updateTemplate(this.localValue).then(function () {
-        window.parent.postMessage('saveSuccessful', '*');
+        window.parent.postMessage({ type: 'saveSuccessful' }, '*');
       });
     },
     updateValue: function updateValue() {
@@ -68229,7 +68235,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.templateSettingsOpen = false;
     },
     goToTemplates: function goToTemplates() {
-      window.parent.postMessage('goBack', '*');
+      window.parent.postMessage({ type: 'goBack' }, '*');
     }
   }),
   computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['component', 'slicesList', 'slicesDirectories', 'template', 'models', 'modelSettings']), {
@@ -121868,7 +121874,7 @@ This component manages the following:
     },
     chooseTypeToAdd: function chooseTypeToAdd(type) {
       if (type !== 'single' && this.root) {
-        window.bus.$emit('showError', 'You cannot add a model or repeatable to the root of a template. You can add these as a child to any component and render them with <slices :slices="slices"/> in the container\'s blade file');
+        window.parent.postMessage({ type: 'error', message: 'You cannot add a model or repeatable to the root of a template. You can add these as a child to any component and render them with <slices :slices="slices"/> in the container\'s blade file' }, '*');
         return;
       }
 

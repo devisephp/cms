@@ -130,7 +130,7 @@
         var self = this
 
         this.updateTemplate(this.localValue).then(function () {
-          window.parent.postMessage('saveSuccessful', '*')
+          window.parent.postMessage({type: 'saveSuccessful'}, '*')
         })
       },
 
@@ -183,7 +183,7 @@
       },
 
       goToTemplates () {
-        window.parent.postMessage('goBack', '*')
+        window.parent.postMessage({type: 'goBack'}, '*')
       }
     },
     computed: {

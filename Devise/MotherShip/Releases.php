@@ -39,7 +39,6 @@ class Releases
       $migrations = $this->getPendingMigrations($rows);
 
       DependenciesMap::newRelease();
-
       $rows->each(function ($item, $key) {
         $item->type = ($item->msh_id) ? 'update' : 'create';
         $item->model->prepRelease();
@@ -130,8 +129,8 @@ class Releases
   {
     $currentReleaseDate = $currentRelease ? $currentRelease->created_at : '00-00-00 00:00:00';
 
-    return DvsRelease::with('model')
-      ->where(function ($query) use ($currentReleaseDate) {
+    return DvsRelease
+      ::where(function ($query) use ($currentReleaseDate) {
         $query->where('msh_id', 0)
           ->orWhere('updated_at', '>', $currentReleaseDate)
           ->orWhere('deleted_at', '>', $currentReleaseDate);
@@ -142,11 +141,11 @@ class Releases
 
   private function getPendingMigrations($newRows)
   {
-    $startAtRelease = $this->getNewestReleasedDate();
-    $endAtRelease = $newRows->orderBy('created_at', 'desc')->first();
+    $start = $this->getNewestReleasedDate();
+    $endAtRelease = $newRows->sortByDesc('created_at')->first();
 
     return $this->migrations
-      ->getQueriesBetweenDates($startAtRelease->created_at, $endAtRelease->created_at);
+      ->getQueriesBetweenDates($start, $endAtRelease->created_at->format('Y-m-d H:i:s'));
   }
 
   private function getNewestReleasedDate()
@@ -157,6 +156,6 @@ class Releases
       ->orderBy('created_at', 'desc')
       ->first();
 
-    return $newestOld ? $newestOld->created_at : date('Y-m-d', strtotime('now -1 year'));
+    return $newestOld ? $newestOld->created_at : date('Y-m-d H:i:s', strtotime('now -1 year'));
   }
 }

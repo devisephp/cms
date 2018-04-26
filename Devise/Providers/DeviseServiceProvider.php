@@ -5,6 +5,7 @@ namespace Devise\Providers;
 use Devise\Console\Commands\Install;
 use Devise\Devise;
 
+use Devise\MotherShip\Migrations;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 
@@ -24,6 +25,8 @@ class DeviseServiceProvider extends ServiceProvider
     $this->setRoutes();
 
     $this->loadLaravelResources();
+
+    $this->registerMigration();
   }
 
   public function register()
@@ -73,5 +76,22 @@ class DeviseServiceProvider extends ServiceProvider
     $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'devise');
 
     $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');
+  }
+
+  /**
+   * Register the migrator service.
+   *
+   * @return void
+   */
+  protected function registerMigration()
+  {
+    // The migrator is responsible for actually running and rollback the migration
+    // files in the application. We'll pass in our database connection resolver
+    // so the migrator can resolve any of these connections when it needs to.
+    $this->app->singleton('migrations', function ($app) {
+      $repository = $app['migration.repository'];
+
+      return new Migrations($repository, $app['db'], $app['files']);
+    });
   }
 }

@@ -1,74 +1,57 @@
 <template>
-  <div>
-    <div class="dvs-pt-4">
-      <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-8 dvs-pl-4" :key="key">
-        <div>
+  <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
+    <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4 dvs-flex dvs-justify-between" @click="toggleSlice(slice)">
+      {{ slice.metadata.label }}
+      <i v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'" class="ion-plus" @click="addInstance(slice)"></i>
+    </strong>
 
-          <color-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'color'">
-          </color-editor>
+    <div class="dvs-collapsed">
+      <div class="dvs-pt-4">
+        <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-8 dvs-pl-4" :key="key">
+          <div>
 
-          <checkbox-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'checkbox'">
-          </checkbox-editor>
+            <color-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'color'">
+            </color-editor>
 
-          <image-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'image'">
-          </image-editor>
+            <checkbox-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'checkbox'">
+            </checkbox-editor>
 
-          <link-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'link'">
-          </link-editor>
+            <image-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'image'">
+            </image-editor>
 
-          <number-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'number'">
-          </number-editor>
+            <link-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'link'">
+            </link-editor>
 
-          <textarea-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'textarea'">
-          </textarea-editor>
+            <number-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'number'">
+            </number-editor>
 
-          <text-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'text'">
-          </text-editor>
+            <textarea-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'textarea'">
+            </textarea-editor>
 
-          <wysiwyg-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'wysiwyg'">
-          </wysiwyg-editor>
-        </div>
+            <text-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'text'">
+            </text-editor>
 
-      </fieldset>
-    </div>
+            <wysiwyg-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'wysiwyg'">
+            </wysiwyg-editor>
+          </div>
 
-    <div class="dvs-pl-4" v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
-      <div class="dvs-cn-wrapper" :class="{'dvs-opened-nav': localValue.metadata.tools}">
-        <button class="cn-close-button" @click="localValue.metadata.tools = false">
-          <i class="ion-close-round"></i>
-        </button>
+        </fieldset>
+      </div>
+
+      <div class="dvs-collapsed dvs-pl-4">
+
+        <help v-if="slice.metadata.type === 'model'" class="mb-4">
+          Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
+        </help>
+
         <ul class="dvs-list-reset">
-          <li><a class="disabled">&nbsp;</a></li>
-          <li><a class="disabled">&nbsp;</a></li>
-          <li><a @click.prevent="addSlice(localValue.slices)" class="dvs-cursor-pointer" :title="`Create new child slice under ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-            <i class="ion-plus"></i>
-          </a></li>
-          <li><a class="disabled">&nbsp;</a></li>
-          <li><a @click.prevent="removeSlice(localValue)" class="dvs-cursor-pointer" :title="`Remove ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-            <i class="ion-minus"></i>
-          </a></li>
-          <li><a class="disabled">&nbsp;</a></li>
-          <li><a class="disabled">&nbsp;</a></li>
+          <template v-for="(s, key) in slice.slices">
+            <slice-editor :key="key" :slice="s" />
+          </template>
         </ul>
       </div>
     </div>
-
-    <div class="dvs-collapsed dvs-pl-4">
-
-      <help v-if="slice.metadata.type === 'model'" class="mb-4">
-        Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
-      </help>
-
-      <ul class="dvs-list-reset">
-        <li v-for="(s, key) in slice.slices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': s.metadata.open}">
-          <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4" @click="toggleSlice(s)">{{ s.metadata.label }}</strong>
-          <div class="dvs-collapsed">
-            <slice-editor :key="key" :slice="s" />
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
+  </li>
 </template>
 
 <script>
@@ -92,7 +75,9 @@ export default {
     }
   },
   mounted () {
-    this.pageSlices = this.slice.slices
+    if (this.slice.slices) {
+      this.pageSlices = this.slice.slices
+    }
   },
   methods: {
     toggleSlice (slice) {
@@ -100,12 +85,37 @@ export default {
       this.pageSlices.map(s => this.closeSlice(s))
       this.$set(slice.metadata, 'open', !sliceOpen)
     },
+    toggleSliceTools() {
+      this.slice.metadata.tools = !this.slice.metadata.tools
+    },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
+    },
+    addInstance () {
+      let component = this.component(this.slice.metadata.name)
+
+      if (!this.slice.slices) {
+        this.$set(this.slice, 'slices', [])
+      }
+
+      var data = {
+        metadata: Object.assign({}, this.slice.metadata)
+      }
+      data.metadata.placeholder = false
+
+      for (var prop in component.config) {
+        if (component.config.hasOwnProperty(prop)) {
+          data[prop] = component.config[prop]
+        }
+      }
+
+      this.slice.slices.push(data)
+
     }
   },
   computed: {
     ...mapGetters('devise', [
+      'component',
       'fieldConfig'
     ]),
     fields () {

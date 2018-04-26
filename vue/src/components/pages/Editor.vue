@@ -42,12 +42,9 @@
 
         <div class="dvs-collapsed dvs-mt-4">
           <ul class="dvs-list-reset">
-            <li v-for="(slice, key) in pageSlices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
-              <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4" @click="toggleSlice(slice)">{{ slice.metadata.label }}</strong>
-              <div class="dvs-collapsed">
-                <slice-editor :slice="slice" />
-              </div>
-            </li>
+            <template v-for="(slice, key) in pageSlices">
+              <slice-editor :slice="slice" />
+            </template>
           </ul>
         </div>
       </li>

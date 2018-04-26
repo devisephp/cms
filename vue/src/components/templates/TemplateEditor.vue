@@ -67,6 +67,7 @@
     <!-- Slice Management for adding, modifying data, removing slices -->
     <manage-slices
       v-model="localValue.slices"
+      :parent="manageSlice.parent"
       :origin-slice="manageSlice.origin"
       :mode="manageSlice.mode"
       :root="manageSlice.root"
@@ -100,6 +101,7 @@
         dataLoaded: false,
         localValue: {},
         manageSlice: {
+          parent: null,
           origin: null,
           mode: 'add',
           root: true
@@ -142,9 +144,10 @@
         this.manageSlice.root = isRoot ? isRoot : false
         this.manageSlice.origin = origin
       },
-      requestRemoveSlice (slice) {
+      requestRemoveSlice (data) {
         this.manageSlice.mode = 'remove'
-        this.manageSlice.origin = slice
+        this.manageSlice.origin = data.slice
+        this.manageSlice.parent = data.parent
       },
       requestManageSlice (slice) {
         this.manageSlice.mode = 'manage'

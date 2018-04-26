@@ -71,6 +71,17 @@
           @done="selectDataToAdd"
           />
       </div>
+
+      <div class="dvs-mb-4" v-if="mode === 'remove'">
+        <fieldset class="dvs-fieldset mb-4">
+          <label>Are you sure you want to delete this slice?</label>
+        </fieldset>
+        <help>
+          If you delete this slice it will effect all pages that implement this template.
+        </help>
+        <button class="dvs-btn" @click="closeManager()">Cancel</button>
+        <button class="dvs-btn dvs-btn-danger" @click="removeSlice()">Confirm</button>
+      </div>
     </div>
 
     <!-- Model Controls -->
@@ -115,7 +126,7 @@
       }
     },
     mounted () {
-      this.localValue = this.value
+      this.localValue = Object.assign({}, this.value)
       this.getSlicesDirectories()
       this.getSlices()
     },
@@ -140,8 +151,10 @@
         this.updateValue()
         this.closeManager()
       },
-      removeSlice (slice) {
-
+      removeSlice () {
+        this.parent.slices.splice(this.parent.slices.indexOf(this.originSlice), 1)
+        this.updateValue()
+        this.closeManager()
       },
       resetData () {
         this.sliceToAdd.show = false,
@@ -214,7 +227,7 @@
     components: {
       SuperTable
     },
-    props: ['originSlice', 'value', 'mode', 'root'],
+    props: ['parent', 'originSlice', 'value', 'mode', 'root'],
     mixins: [SlicesMixin]
   }
 </script>

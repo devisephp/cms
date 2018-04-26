@@ -15,13 +15,13 @@
           <ul class="dvs-list-reset">
             <li><a class="disabled">&nbsp;</a></li>
             <li><a class="disabled">&nbsp;</a></li>
-            <li><a @click.prevent="addSlice()" class="dvs-cursor-pointer" :title="`Create new child slice under ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
+            <li><a @click.prevent="addSlice(localValue.slices)" class="dvs-cursor-pointer" :title="`Create new child slice under ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
               <i class="ion-plus"></i>
             </a></li>
-            <li><a @click.prevent="modifySlice()" class="dvs-cursor-pointer" :title="`Modify the data that drives ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
+            <li><a @click.prevent="modifySlice(localValue)" class="dvs-cursor-pointer" :title="`Modify the data that drives ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
               <i class="ion-cube"></i>
             </a></li>
-            <li><a @click.prevent="removeSlice()" class="dvs-cursor-pointer" :title="`Remove ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
+            <li><a @click.prevent="removeSlice(localValue)" class="dvs-cursor-pointer" :title="`Remove ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
               <i class="ion-trash-a"></i>
             </a></li>
             <li><a class="disabled">&nbsp;</a></li>
@@ -66,7 +66,13 @@
         <div class="dvs-mt-4 dvs-w-full" v-if="localValue.slices">
           <draggable v-model="localValue.slices" element="ul" :options="{handle: '.handle'}" class="dvs-list-reset dvs-ml-4">
             <li v-for="(slice, key) in localValue.slices" class="item dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': slice.metadata.open}">
-              <template-slice-editor v-model="localValue.slices[key]" :key="key"></template-slice-editor>
+              <template-slice-editor
+                v-model="localValue.slices[key]"
+                :key="key"
+                @addSlice="addSlice"
+                @removeSlice="removeSlice"
+                @modifySlice="modifySlice">
+              </template-slice-editor>
             </li>
           </draggable>
         </div>
@@ -101,7 +107,7 @@ export default {
     this.$options.components.TemplateSliceEditor = require('./TemplateSliceEditor.vue')
   },
   mounted () {
-    this.localValue = this.value
+    this.localValue = Object.assign({}, this.value)
     this.prepareSliceForTemplatePreview()
     this.loaded = true
   },
@@ -111,17 +117,17 @@ export default {
       this.$emit('input', this.localValue)
       this.$emit('change', this.localValue)
     },
-    addSlice () {
+    addSlice (slices) {
       this.toggleSliceTools()
-      this.$emit('addSlice', this.localValue.slices)
+      this.$emit('addSlice', slices)
     },
-    modifySlice () {
+    modifySlice (slice) {
       this.toggleSliceTools()
-      this.$emit('modifySlice', this.localValue.slices)
+      this.$emit('modifySlice', slice)
     },
-    removeSlice () {
+    removeSlice (slice) {
       this.toggleSliceTools()
-      this.$emit('removeSlice', this.localValue.slices)
+      this.$emit('removeSlice', {parent: this.value, slice: slice})
     },
     toggleSlice () {
       this.localValue.metadata.open = !this.localValue.metadata.open

@@ -46,6 +46,10 @@
   &:disabled {
     @apply dvs-bg-grey-light
   }
+
+  &.dvs-btn-danger {
+    @apply dvs-bg-red-dark dvs-text-white
+  }
 }
 
 .dvs-outline-none {

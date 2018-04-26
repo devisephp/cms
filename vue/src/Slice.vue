@@ -11,7 +11,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'DeviseSlice',
   created () {
-    // this.hydrateMissingProperties()
+    this.hydrateMissingProperties()
   },
   methods: {
     hydrateMissingProperties () {

@@ -81,6 +81,8 @@ export default {
     }
   },
   mounted () {
+    let self = this
+
     if (typeof window.template !== 'undefined') {
       this.templateMode = true
     } else {
@@ -89,6 +91,9 @@ export default {
     }
 
     this.$nextTick(function () {
+      if (self.$route.name !== null) {
+        self.adminClosed = false
+      }
       setTimeout(function () {
         window.bus.$emit('devise-loaded')
       }, 10)

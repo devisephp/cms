@@ -6,6 +6,15 @@ const getters = {
     return window.deviseComponents[name]
   },
 
+  componentFromView: state => (view) => {
+    for (var component in window.deviseComponents) {
+      if (window.deviseComponents[component].view === 'slices.' + view) {
+        return window.deviseComponents[component]
+      }
+    }
+    return false
+  },
+
   sliceConfig: state => (slice) => {
     return window.deviseComponents[slice.metadata.name] ? window.deviseComponents[slice.metadata.name] : window.deviseComponents[slice.name]
   },

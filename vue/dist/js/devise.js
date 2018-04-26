@@ -57905,6 +57905,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   mounted: function mounted() {
+    var self = this;
+
     if (typeof window.template !== 'undefined') {
       this.templateMode = true;
     } else {
@@ -57913,6 +57915,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
 
     this.$nextTick(function () {
+      if (self.$route.name !== null) {
+        self.adminClosed = false;
+      }
       setTimeout(function () {
         window.bus.$emit('devise-loaded');
       }, 10);
@@ -67330,7 +67335,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'DeviseSlice',
   created: function created() {
-    // this.hydrateMissingProperties()
+    this.hydrateMissingProperties();
   },
 
   methods: {
@@ -67934,7 +67939,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, false);
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['slices', 'template'])),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['slicesList', 'template'])),
   components: {
     Slice: __WEBPACK_IMPORTED_MODULE_2__Slice___default.a
   }
@@ -67948,23 +67953,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm.template && _vm.slices.length > 0
-        ? [
-            _c("iframe", {
-              staticClass: "dvs-w-full",
-              attrs: {
-                src: "/templates/" + _vm.template.id,
-                id: "devise-preview-iframe"
-              }
-            })
-          ]
-        : _vm._e()
-    ],
-    2
-  )
+  return _vm.localValue.slices
+    ? _c(
+        "div",
+        [
+          _vm.template && _vm.localValue.slices.length > 0
+            ? [
+                _c("iframe", {
+                  staticClass: "dvs-w-full",
+                  attrs: {
+                    src: "/templates/" + _vm.template.id,
+                    id: "devise-preview-iframe"
+                  }
+                })
+              ]
+            : _vm._e()
+        ],
+        2
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68034,10 +68041,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuedraggable__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TemplateSliceEditor__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TemplateSliceEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__TemplateSliceEditor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ManageSlices__ = __webpack_require__(634);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ManageSlices___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ManageSlices__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Slices__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Slices___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Slices__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utilities_tables_SuperTable__ = __webpack_require__(608);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utilities_tables_SuperTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__utilities_tables_SuperTable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TemplateSliceEditor__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TemplateSliceEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__TemplateSliceEditor__);
 
 //
 //
@@ -68105,6 +68116,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -68119,8 +68151,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       templateLayoutOpen: true,
       dataLoaded: false,
       localValue: {},
-      showRemoveSlice: false,
-      showAddSlice: false
+      manageSlice: {
+        origin: null,
+        mode: 'add',
+        root: true
+      }
     };
   },
   mounted: function mounted() {
@@ -68146,14 +68181,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateValue: function updateValue() {
       window.template = this.localValue;
     },
-    requestAddSlice: function requestAddSlice() {},
-    addSlice: function addSlice(slice) {
-      // Needs parent
-      // Needs location
+    requestAddSlice: function requestAddSlice(origin, isRoot) {
+      this.manageSlice.mode = 'add';
+      this.manageSlice.root = isRoot ? isRoot : false;
+      this.manageSlice.origin = origin;
     },
-    requestRemoveSlice: function requestRemoveSlice(slice) {},
-    removeSlice: function removeSlice(slice) {},
-
+    requestRemoveSlice: function requestRemoveSlice(slice) {
+      this.manageSlice.mode = 'remove';
+      this.manageSlice.origin = slice;
+    },
+    requestManageSlice: function requestManageSlice(slice) {
+      this.manageSlice.mode = 'manage';
+      this.manageSlice.origin = slice;
+    },
 
     // Prepare the slices data to contain information necessary for the editor
     prepareSlices: function prepareSlices(sliceSlices) {
@@ -68164,15 +68204,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       sliceSlices.map(function (slice) {
-        self.addMetaDataToSlice(slice);
+
+        self.$set(slice, 'metadata', {
+          open: false
+        });
+
         if (slice.slices !== undefined && slice.slices.length > 0) {
           self.prepareSlices(slice.slices);
         }
-      });
-    },
-    addMetaDataToSlice: function addMetaDataToSlice(slice) {
-      this.$set(slice, 'metadata', {
-        open: false
       });
     },
 
@@ -68193,7 +68232,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window.parent.postMessage('goBack', '*');
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['component', 'slicesList', 'slicesDirectories', 'template', 'models', 'modelSettings'])),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['component', 'slicesList', 'slicesDirectories', 'template', 'models', 'modelSettings']), {
+    anySliceOpen: function anySliceOpen() {
+      for (var i = 0; i < this.localValue.slices.length; i++) {
+        if (this.localValue.slices[i].metadata.open) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  }),
   watch: {
     localValue: {
       handler: function handler(newValue) {
@@ -68204,8 +68253,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   components: {
-    TemplateSliceEditor: __WEBPACK_IMPORTED_MODULE_3__TemplateSliceEditor___default.a,
-    draggable: __WEBPACK_IMPORTED_MODULE_2_vuedraggable___default.a
+    draggable: __WEBPACK_IMPORTED_MODULE_2_vuedraggable___default.a,
+    ManageSlices: __WEBPACK_IMPORTED_MODULE_3__ManageSlices___default.a,
+    SuperTable: __WEBPACK_IMPORTED_MODULE_5__utilities_tables_SuperTable___default.a,
+    TemplateSliceEditor: __WEBPACK_IMPORTED_MODULE_6__TemplateSliceEditor___default.a
   }
 });
 
@@ -69840,6 +69891,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -69877,8 +69957,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
     },
+    addSlice: function addSlice() {
+      this.toggleSliceTools();
+      this.$emit('addSlice', this.localValue.slices);
+    },
+    modifySlice: function modifySlice() {
+      this.toggleSliceTools();
+      this.$emit('modifySlice', this.localValue.slices);
+    },
+    removeSlice: function removeSlice() {
+      this.toggleSliceTools();
+      this.$emit('removeSlice', this.localValue.slices);
+    },
     toggleSlice: function toggleSlice() {
       this.localValue.metadata.open = !this.localValue.metadata.open;
+      this.updateValue();
+    },
+    toggleSliceTools: function toggleSliceTools() {
+      this.localValue.metadata.tools = !this.localValue.metadata.tools;
       this.updateValue();
     },
     prepareSliceForTemplatePreview: function prepareSliceForTemplatePreview() {
@@ -69887,6 +69983,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // If the config is null let's set it
       if (!self.localValue.config) {
         self.$set(self.localValue, 'config', {});
+      }
+
+      if (!self.localValue.slices) {
+        self.$set(self.localValue, 'slices', []);
+      }
+
+      if (!self.localValue.metadata || !self.localValue.metadata.open) {
+        this.$set(self.localValue, 'metadata', {
+          open: false,
+          tools: false
+        });
       }
 
       // If this slice type is "model" or "repeats" then let's set the number of
@@ -69929,6 +70036,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return this.component(this.localValue.name).config;
       }
       return null;
+    },
+    anySliceOpen: function anySliceOpen() {
+      if (this.localValue.slices) {
+        for (var i = 0; i < this.localValue.slices.length; i++) {
+          if (this.localValue.slices[i].metadata.open) {
+            return true;
+          }
+        }
+      }
+
+      return false;
     }
   }),
   props: {
@@ -91488,218 +91606,393 @@ var render = function() {
             }
           },
           [
-            _c("i", { staticClass: "handle ion-navicon-round mr-2" }),
-            _vm._v(" " + _vm._s(_vm.localValue.label) + "\n  ")
+            _c("div", [
+              _c("i", { staticClass: "handle ion-navicon-round mr-2" }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass: "ion-gear-b",
+                on: { click: _vm.toggleSliceTools }
+              }),
+              _vm._v(" "),
+              _vm.localValue.metadata.tools
+                ? _c("div", {
+                    staticClass: "dvs-blocker dvs-blocker-light",
+                    on: {
+                      click: function($event) {
+                        _vm.localValue.metadata.tools = false
+                      }
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dvs-cn-wrapper",
+                  class: { "dvs-opened-nav": _vm.localValue.metadata.tools }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "cn-close-button",
+                      on: {
+                        click: function($event) {
+                          _vm.localValue.metadata.tools = false
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "ion-close-round" })]
+                  ),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "dvs-list-reset" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "tippy",
+                              rawName: "v-tippy",
+                              value: _vm.tippyConfiguration,
+                              expression: "tippyConfiguration"
+                            }
+                          ],
+                          staticClass: "dvs-cursor-pointer",
+                          attrs: {
+                            title:
+                              "Create new child slice under " +
+                              _vm.localValue.label,
+                            "data-tippy-followcursor": "true"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.addSlice()
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "ion-plus" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "tippy",
+                              rawName: "v-tippy",
+                              value: _vm.tippyConfiguration,
+                              expression: "tippyConfiguration"
+                            }
+                          ],
+                          staticClass: "dvs-cursor-pointer",
+                          attrs: {
+                            title:
+                              "Modify the data that drives " +
+                              _vm.localValue.label,
+                            "data-tippy-followcursor": "true"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.modifySlice()
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "ion-cube" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "tippy",
+                              rawName: "v-tippy",
+                              value: _vm.tippyConfiguration,
+                              expression: "tippyConfiguration"
+                            }
+                          ],
+                          staticClass: "dvs-cursor-pointer",
+                          attrs: {
+                            title: "Remove " + _vm.localValue.label,
+                            "data-tippy-followcursor": "true"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.removeSlice()
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "ion-trash-a" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3)
+                  ])
+                ]
+              )
+            ]),
+            _vm._v("\n    " + _vm._s(_vm.localValue.label) + "\n  ")
           ]
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "dvs-collapsed" },
-          [
-            _vm.localValue.type === "repeats"
-              ? _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
-                  _c("div", [
-                    _c(
-                      "label",
-                      {
-                        staticClass:
-                          "dvs-font-bold dvs-mb-1 dvs-block dvs-uppercase"
-                      },
-                      [
-                        _c("strong", [
-                          _vm._v(
-                            'Amount of Demo "' +
-                              _vm._s(_vm.localValue.label) +
-                              '" Instances'
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "dvs-flex" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model.number",
-                            value: _vm.localValue.config.numberOfInstances,
-                            expression: "localValue.config.numberOfInstances",
-                            modifiers: { number: true }
-                          }
-                        ],
-                        staticClass: "dvs-mr-4 dvs-min-w-1/4 dvs-max-w-1/4",
-                        attrs: { type: "number", min: "0", max: "50" },
-                        domProps: {
-                          value: _vm.localValue.config.numberOfInstances
-                        },
-                        on: {
-                          keyup: _vm.updateValue,
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.localValue.config,
-                              "numberOfInstances",
-                              _vm._n($event.target.value)
-                            )
-                          },
-                          blur: function($event) {
-                            _vm.$forceUpdate()
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model.number",
-                            value: _vm.localValue.config.numberOfInstances,
-                            expression: "localValue.config.numberOfInstances",
-                            modifiers: { number: true }
-                          }
-                        ],
-                        staticClass: "dvs-w-3/4",
-                        attrs: { type: "range", max: "50" },
-                        domProps: {
-                          value: _vm.localValue.config.numberOfInstances
-                        },
-                        on: {
-                          change: _vm.updateValue,
-                          __r: function($event) {
-                            _vm.$set(
-                              _vm.localValue.config,
-                              "numberOfInstances",
-                              _vm._n($event.target.value)
-                            )
-                          },
-                          blur: function($event) {
-                            _vm.$forceUpdate()
-                          }
-                        }
-                      })
-                    ])
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.componentConfiguration
-              ? [
-                  _vm._l(_vm.componentConfiguration, function(field, fieldKey) {
-                    return field.type
-                      ? [
-                          _c("div", [
-                            _c(
-                              "div",
-                              { key: fieldKey, staticClass: "dvs-mb-4" },
-                              [
-                                _c(
-                                  "fieldset",
-                                  { staticClass: "dvs-fieldset" },
-                                  [
-                                    _c(
-                                      "label",
-                                      {
-                                        staticClass:
-                                          "dvs-font-bold dvs-mb-1 dvs-block dvs-uppercase"
-                                      },
-                                      [_vm._v(_vm._s(field.label))]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  field.type.charAt(0).toUpperCase() +
-                                    field.type.slice(1) +
-                                    "Controls",
-                                  {
-                                    tag: "component",
-                                    on: {
-                                      change: function($event) {
-                                        _vm.updateValue()
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.localValue.config[fieldKey],
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.localValue.config,
-                                          fieldKey,
-                                          $$v
-                                        )
-                                      },
-                                      expression: "localValue.config[fieldKey]"
-                                    }
-                                  }
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        ]
-                      : _vm._e()
-                  })
-                ]
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.localValue.config
-              ? _c(
-                  "div",
-                  { staticClass: "dvs-mt-4" },
-                  [
-                    _c(
-                      "draggable",
-                      {
-                        staticClass: "dvs-list-reset dvs-ml-4",
-                        attrs: {
-                          element: "ul",
-                          options: { handle: ".handle" }
-                        },
-                        model: {
-                          value: _vm.localValue.slices,
-                          callback: function($$v) {
-                            _vm.$set(_vm.localValue, "slices", $$v)
-                          },
-                          expression: "localValue.slices"
-                        }
-                      },
-                      _vm._l(_vm.localValue.slices, function(slice, key) {
-                        return _c(
-                          "li",
+        _c("div", { staticClass: "dvs-collapsed dvs-mb-8" }, [
+          _c(
+            "div",
+            { staticClass: " dvs-flex dvs-flex-col dvs-items-center" },
+            [
+              _vm.localValue.type === "repeats"
+                ? _c(
+                    "fieldset",
+                    { staticClass: "dvs-fieldset dvs-mb-8 dvs-w-full" },
+                    [
+                      _c("div", [
+                        _c(
+                          "label",
                           {
                             staticClass:
-                              "item dvs-mb-2 dvs-template-editor-collapsable",
-                            class: { "dvs-open": slice.metadata.open }
+                              "dvs-font-bold dvs-mb-1 dvs-block dvs-uppercase"
                           },
                           [
-                            _c("template-slice-editor", {
-                              key: key,
-                              model: {
-                                value: _vm.localValue.slices[key],
-                                callback: function($$v) {
-                                  _vm.$set(_vm.localValue.slices, key, $$v)
-                                },
-                                expression: "localValue.slices[key]"
+                            _c("strong", [
+                              _vm._v(
+                                'Amount of Demo "' +
+                                  _vm._s(_vm.localValue.label) +
+                                  '" Instances'
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "dvs-flex" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model.number",
+                                value: _vm.localValue.config.numberOfInstances,
+                                expression:
+                                  "localValue.config.numberOfInstances",
+                                modifiers: { number: true }
                               }
-                            })
-                          ],
-                          1
-                        )
-                      })
-                    )
-                  ],
-                  1
-                )
-              : _vm._e()
-          ],
-          2
-        )
+                            ],
+                            staticClass: "dvs-mr-4 dvs-min-w-1/4 dvs-max-w-1/4",
+                            attrs: { type: "number", min: "0", max: "50" },
+                            domProps: {
+                              value: _vm.localValue.config.numberOfInstances
+                            },
+                            on: {
+                              keyup: _vm.updateValue,
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.localValue.config,
+                                  "numberOfInstances",
+                                  _vm._n($event.target.value)
+                                )
+                              },
+                              blur: function($event) {
+                                _vm.$forceUpdate()
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model.number",
+                                value: _vm.localValue.config.numberOfInstances,
+                                expression:
+                                  "localValue.config.numberOfInstances",
+                                modifiers: { number: true }
+                              }
+                            ],
+                            staticClass: "dvs-w-3/4",
+                            attrs: { type: "range", max: "50" },
+                            domProps: {
+                              value: _vm.localValue.config.numberOfInstances
+                            },
+                            on: {
+                              change: _vm.updateValue,
+                              __r: function($event) {
+                                _vm.$set(
+                                  _vm.localValue.config,
+                                  "numberOfInstances",
+                                  _vm._n($event.target.value)
+                                )
+                              },
+                              blur: function($event) {
+                                _vm.$forceUpdate()
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.componentConfiguration
+                ? [
+                    _vm._l(_vm.componentConfiguration, function(
+                      field,
+                      fieldKey
+                    ) {
+                      return field.type
+                        ? [
+                            _c("div", { staticClass: "dvs-w-full" }, [
+                              _c(
+                                "div",
+                                { key: fieldKey, staticClass: "dvs-mb-4" },
+                                [
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "dvs-fieldset" },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "dvs-font-bold dvs-mb-1 dvs-block dvs-uppercase"
+                                        },
+                                        [_vm._v(_vm._s(field.label))]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    field.type.charAt(0).toUpperCase() +
+                                      field.type.slice(1) +
+                                      "Controls",
+                                    {
+                                      tag: "component",
+                                      on: {
+                                        change: function($event) {
+                                          _vm.updateValue()
+                                        }
+                                      },
+                                      model: {
+                                        value: _vm.localValue.config[fieldKey],
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.localValue.config,
+                                            fieldKey,
+                                            $$v
+                                          )
+                                        },
+                                        expression:
+                                          "localValue.config[fieldKey]"
+                                      }
+                                    }
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ]
+                        : _vm._e()
+                    })
+                  ]
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.localValue.slices
+                ? _c(
+                    "div",
+                    { staticClass: "dvs-mt-4 dvs-w-full" },
+                    [
+                      _c(
+                        "draggable",
+                        {
+                          staticClass: "dvs-list-reset dvs-ml-4",
+                          attrs: {
+                            element: "ul",
+                            options: { handle: ".handle" }
+                          },
+                          model: {
+                            value: _vm.localValue.slices,
+                            callback: function($$v) {
+                              _vm.$set(_vm.localValue, "slices", $$v)
+                            },
+                            expression: "localValue.slices"
+                          }
+                        },
+                        _vm._l(_vm.localValue.slices, function(slice, key) {
+                          return _c(
+                            "li",
+                            {
+                              staticClass:
+                                "item dvs-mb-2 dvs-template-editor-collapsable",
+                              class: { "dvs-open": slice.metadata.open }
+                            },
+                            [
+                              _c("template-slice-editor", {
+                                key: key,
+                                model: {
+                                  value: _vm.localValue.slices[key],
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.localValue.slices, key, $$v)
+                                  },
+                                  expression: "localValue.slices[key]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        })
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ],
+            2
+          )
+        ])
       ])
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("a", { staticClass: "disabled" }, [_vm._v(" ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("a", { staticClass: "disabled" }, [_vm._v(" ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("a", { staticClass: "disabled" }, [_vm._v(" ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("a", { staticClass: "disabled" }, [_vm._v(" ")])])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -91765,248 +92058,305 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.dataLoaded
-    ? _c("div", [
-        _c(
-          "div",
-          {
-            staticClass: "devise-iframe-sidebar",
-            attrs: { id: "devise-sidebar" }
-          },
-          [
-            _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-              _vm._v("Edit Template")
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.goToTemplates($event)
-                  }
-                }
-              },
-              [_vm._v("Back to Templates")]
-            ),
-            _vm._v(" "),
-            _c("ul", { staticClass: "dvs-list-reset" }, [
+    ? _c(
+        "div",
+        [
+          _c(
+            "div",
+            {
+              staticClass: "devise-iframe-sidebar",
+              attrs: { id: "devise-sidebar" }
+            },
+            [
+              _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
+                _vm._v("Edit Template")
+              ]),
+              _vm._v(" "),
               _c(
-                "li",
+                "a",
                 {
-                  staticClass: "dvs-collapsable dvs-mb-2",
-                  class: { "dvs-open": _vm.templateSettingsOpen }
+                  staticClass:
+                    "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.goToTemplates($event)
+                    }
+                  }
                 },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "dvs-switch",
-                      on: { click: _vm.toggleTemplateSettings }
-                    },
-                    [_vm._v("\n          Template Settings\n        ")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "dvs-collapsed dvs-mt-4" }, [
-                    _c("fieldset", { staticClass: "dvs-fieldset" }, [
-                      _c("label", [_vm._v("Template Name")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.localValue.name,
-                            expression: "localValue.name"
-                          }
-                        ],
-                        attrs: {
-                          type: "text",
-                          placeholder: "Name of the Template"
-                        },
-                        domProps: { value: _vm.localValue.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.localValue,
-                              "name",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
+                [_vm._v("Back to Templates")]
+              ),
+              _vm._v(" "),
+              _c("ul", { staticClass: "dvs-list-reset" }, [
+                _c(
+                  "li",
+                  {
+                    staticClass: "dvs-collapsable dvs-mb-2",
+                    class: { "dvs-open": _vm.templateSettingsOpen }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dvs-switch",
+                        on: { click: _vm.toggleTemplateSettings }
+                      },
+                      [_vm._v("\n          Template Settings\n        ")]
+                    ),
                     _vm._v(" "),
-                    _c("fieldset", { staticClass: "dvs-fieldset" }, [
-                      _c("label", [_vm._v("Template Layout")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.localValue.layout,
-                            expression: "localValue.layout"
-                          }
-                        ],
-                        attrs: {
-                          type: "text",
-                          disabled: "",
-                          placeholder: "Blade File Name"
-                        },
-                        domProps: { value: _vm.localValue.layout },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                    _c("div", { staticClass: "dvs-collapsed dvs-mt-4" }, [
+                      _c("fieldset", { staticClass: "dvs-fieldset" }, [
+                        _c("label", [_vm._v("Template Name")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.localValue.name,
+                              expression: "localValue.name"
                             }
-                            _vm.$set(
-                              _vm.localValue,
-                              "layout",
-                              $event.target.value
-                            )
+                          ],
+                          attrs: {
+                            type: "text",
+                            placeholder: "Name of the Template"
+                          },
+                          domProps: { value: _vm.localValue.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.localValue,
+                                "name",
+                                $event.target.value
+                              )
+                            }
                           }
-                        }
-                      })
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("fieldset", { staticClass: "dvs-fieldset" }, [
+                        _c("label", [_vm._v("Template Layout")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.localValue.layout,
+                              expression: "localValue.layout"
+                            }
+                          ],
+                          attrs: {
+                            type: "text",
+                            disabled: "",
+                            placeholder: "Blade File Name"
+                          },
+                          domProps: { value: _vm.localValue.layout },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.localValue,
+                                "layout",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
                     ])
-                  ])
-                ]
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "dvs-collapsable dvs-mb-2",
+                    class: { "dvs-open": _vm.templateLayoutOpen }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dvs-switch",
+                        on: { click: _vm.toggleTemplateLayout }
+                      },
+                      [_vm._v("\n          Template Layout\n        ")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "dvs-collapsed dvs-mt-4" }, [
+                      _vm.localValue.slices
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "dvs-flex dvs-flex-col dvs-items-center"
+                            },
+                            [
+                              _c(
+                                "draggable",
+                                {
+                                  staticClass:
+                                    "dvs-list-reset dvs-mb-2 dvs-w-full",
+                                  attrs: {
+                                    element: "ul",
+                                    options: { handle: ".handle" }
+                                  },
+                                  model: {
+                                    value: _vm.localValue.slices,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.localValue, "slices", $$v)
+                                    },
+                                    expression: "localValue.slices"
+                                  }
+                                },
+                                _vm._l(_vm.localValue.slices, function(
+                                  slice,
+                                  key
+                                ) {
+                                  return _c(
+                                    "li",
+                                    {
+                                      staticClass:
+                                        "dvs-mb-2 dvs-template-editor-collapsable dvs-w-full",
+                                      class: { "dvs-open": slice.metadata.open }
+                                    },
+                                    [
+                                      _c("template-slice-editor", {
+                                        on: {
+                                          addSlice: _vm.requestAddSlice,
+                                          removeSlice: _vm.requestRemoveSlice,
+                                          manageSlice: _vm.requestManageSlice
+                                        },
+                                        model: {
+                                          value: _vm.localValue.slices[key],
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.localValue.slices,
+                                              key,
+                                              $$v
+                                            )
+                                          },
+                                          expression: "localValue.slices[key]"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                })
+                              ),
+                              _vm._v(" "),
+                              !_vm.anySliceOpen
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "dvs-btn dvs-btn-sm mx-2 dvs-btn-ghost dvs-w-4/5",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.requestAddSlice(
+                                            _vm.localValue.slices,
+                                            true
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Add Slice to Layout")]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm.localValue.slices.length && _vm.dataLoaded
+            ? _c(
+                "div",
+                { attrs: { id: "devise-preview-content" } },
+                [
+                  _vm._t("on-top"),
+                  _vm._v(" "),
+                  _vm._t("static-content"),
+                  _vm._v(" "),
+                  _vm.localValue.slices
+                    ? [
+                        _c("slices", {
+                          attrs: { slices: _vm.localValue.slices }
+                        })
+                      ]
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._t("static-content-bottom"),
+                  _vm._v(" "),
+                  _vm._t("on-bottom")
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("manage-slices", {
+            attrs: {
+              "origin-slice": _vm.manageSlice.origin,
+              mode: _vm.manageSlice.mode,
+              root: _vm.manageSlice.root
+            },
+            on: {
+              closeManager: function($event) {
+                _vm.manageSlice.origin = null
+              }
+            },
+            model: {
+              value: _vm.localValue.slices,
+              callback: function($$v) {
+                _vm.$set(_vm.localValue, "slices", $$v)
+              },
+              expression: "localValue.slices"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-shadow-lg dvs-bg-white dvs-p-4 dvs-z-40"
+            },
+            [
+              _c("h6", { staticClass: "mb-4" }, [_vm._v("Template Controls")]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "dvs-btn dvs-mr-2",
+                  on: { click: _vm.requestSaveTemplate }
+                },
+                [_vm._v("Save Template")]
               ),
               _vm._v(" "),
               _c(
-                "li",
+                "button",
                 {
-                  staticClass: "dvs-collapsable dvs-mb-2",
-                  class: { "dvs-open": _vm.templateLayoutOpen }
+                  staticClass: "dvs-btn dvs-btn-plain",
+                  on: { click: _vm.goToTemplates }
                 },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "dvs-switch",
-                      on: { click: _vm.toggleTemplateLayout }
-                    },
-                    [_vm._v("\n          Template Layout\n        ")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "dvs-collapsed dvs-mt-4" }, [
-                    _vm.localValue.slices
-                      ? _c(
-                          "div",
-                          [
-                            _c(
-                              "draggable",
-                              {
-                                staticClass: "dvs-list-reset",
-                                attrs: {
-                                  element: "ul",
-                                  options: { handle: ".handle" }
-                                },
-                                model: {
-                                  value: _vm.localValue.slices,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.localValue, "slices", $$v)
-                                  },
-                                  expression: "localValue.slices"
-                                }
-                              },
-                              _vm._l(_vm.localValue.slices, function(
-                                slice,
-                                key
-                              ) {
-                                return _c(
-                                  "li",
-                                  {
-                                    staticClass:
-                                      "dvs-mb-2 dvs-template-editor-collapsable",
-                                    class: { "dvs-open": slice.metadata.open }
-                                  },
-                                  [
-                                    _c("template-slice-editor", {
-                                      model: {
-                                        value: _vm.localValue.slices[key],
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.localValue.slices,
-                                            key,
-                                            $$v
-                                          )
-                                        },
-                                        expression: "localValue.slices[key]"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              })
-                            )
-                          ],
-                          1
-                        )
-                      : _vm._e()
-                  ])
-                ]
+                [_vm._v("Cancel")]
               )
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _vm.localValue.slices.length && _vm.dataLoaded
-          ? _c(
-              "div",
-              { attrs: { id: "devise-preview-content" } },
-              [
-                _vm._t("on-top"),
-                _vm._v(" "),
-                _vm._t("static-content"),
-                _vm._v(" "),
-                _vm.localValue.slices
-                  ? [_c("slices", { attrs: { slices: _vm.localValue.slices } })]
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._t("static-content-bottom"),
-                _vm._v(" "),
-                _vm._t("on-bottom")
-              ],
-              2
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-shadow-lg dvs-bg-white dvs-p-4 dvs-z-40"
-          },
-          [
-            _c("h6", { staticClass: "mb-4" }, [_vm._v("Template Controls")]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "dvs-btn dvs-mr-2",
-                on: { click: _vm.requestSaveTemplate }
-              },
-              [_vm._v("Save Template")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "dvs-btn dvs-btn-plain",
-                on: { click: _vm.goToTemplates }
-              },
-              [_vm._v("Cancel")]
-            )
-          ]
-        )
-      ])
+            ]
+          )
+        ],
+        1
+      )
     : _vm._e()
 }
 var staticRenderFns = []
@@ -94799,6 +95149,17 @@ var getters = {
   component: function component(state) {
     return function (name) {
       return window.deviseComponents[name];
+    };
+  },
+
+  componentFromView: function componentFromView(state) {
+    return function (view) {
+      for (var component in window.deviseComponents) {
+        if (window.deviseComponents[component].view === 'slices.' + view) {
+          return window.deviseComponents[component];
+        }
+      }
+      return false;
     };
   },
 
@@ -119197,6 +119558,2720 @@ function cloneRoute (to, from) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 607 */,
+/* 608 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(609)
+/* template */
+var __vue_template__ = __webpack_require__(633)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/SuperTable.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-460c9578", Component.options)
+  } else {
+    hotAPI.reload("data-v-460c9578", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 609 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vuex_utils_common__ = __webpack_require__(502);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ColumnControls__ = __webpack_require__(610);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ColumnControls___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ColumnControls__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ToggleColumns__ = __webpack_require__(625);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ToggleColumns___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ToggleColumns__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Pagination__ = __webpack_require__(628);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Pagination___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Pagination__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Cell__ = __webpack_require__(631);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Cell___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Cell__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuex__ = __webpack_require__(4);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SuperTable',
+  data: function data() {
+    return {
+      theOptions: {
+        showLinks: true
+      },
+      filters: {
+        related: {},
+        search: {},
+        sort: {},
+        dates: {},
+        page: '1'
+      },
+      refreshRecords: null,
+      records: [],
+      meta: {}
+    };
+  },
+
+  mounted: function mounted() {
+    // Merge options
+    this.theOptions.showLinks = this.showLinks;
+    this.requestRefreshRecords();
+  },
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_6_vuex__["b" /* mapActions */])('devise', ['getModelRecords']), {
+    updateValue: function updateValue() {
+      var modelQuery = this.value + '&' + __WEBPACK_IMPORTED_MODULE_1__vuex_utils_common__["a" /* default */].buildFilterParams(this.filters);
+      this.$emit('input', modelQuery);
+      this.$emit('change', modelQuery);
+      this.$nextTick(function () {
+        this.$emit('done', modelQuery);
+      });
+    },
+    cancel: function cancel() {
+      this.$emit('cancel');
+    },
+    requestRefreshRecords: function requestRefreshRecords() {
+      var self = this;
+
+      clearTimeout(this.refreshRecords);
+
+      this.refreshRecords = setTimeout(function () {
+        self.getModelRecords({
+          model: self.value,
+          filters: self.filters
+        }).then(function (response) {
+          self.records = response.data;
+        });
+      }, 500);
+    },
+    showControls: function showControls(key) {
+      if (this.$refs.hasOwnProperty(key) && this.$refs[key][0].show === false) {
+        this.$refs[key][0].show = true;
+      }
+    },
+
+    // Checks to see if the key includes a period meaning that its a property of a property
+    getRecordColumn: function getRecordColumn(record, key) {
+      if (!key.includes('.')) {
+        return record[key];
+      } else {
+        return this.getRecordColumnTraversal(record, key);
+      }
+    },
+
+    // Get in there and get the property at the bottom of the stack
+    getRecordColumnTraversal: function getRecordColumnTraversal(record, key) {
+      var parts = key.split('.[].');
+
+      for (var i = 0; i < parts.length; i++) {
+        var part = parts[i];
+
+        // If it's the array part
+        if (i % 2 === 1) {
+          record = this.getFormattedStringFromArray(record, part);
+        } else {
+          record = [record].concat(part.split('.')).reduce(function (a, b) {
+            return a[b];
+          });
+        }
+      }
+
+      return record;
+    },
+    getFormattedStringFromArray: function getFormattedStringFromArray(record, part) {
+      var finalString = '';
+
+      for (var i = 0; i < record.length; i++) {
+        if (i > 0) {
+          finalString += ', ';
+        }
+
+        finalString += record[i][part];
+      }
+
+      return finalString;
+    },
+    showColumn: function showColumn(column) {
+      return column.show === true || typeof column.show === 'undefined';
+    }
+  }),
+  watch: {
+    filters: function filters() {
+      this.requestRefreshRecords();
+    }
+  },
+  props: {
+    value: {
+      type: String
+    },
+    columns: {
+      type: Array,
+      required: true
+    },
+    showLinks: {
+      type: Boolean
+    }
+  },
+  components: {
+    'column-controls': __WEBPACK_IMPORTED_MODULE_2__ColumnControls___default.a,
+    'toggle-columns': __WEBPACK_IMPORTED_MODULE_3__ToggleColumns___default.a,
+    'pagination': __WEBPACK_IMPORTED_MODULE_4__Pagination___default.a,
+    'cell': __WEBPACK_IMPORTED_MODULE_5__Cell___default.a
+  }
+});
+
+/***/ }),
+/* 610 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(611)
+/* template */
+var __vue_template__ = __webpack_require__(624)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/ColumnControls.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a5eb2cde", Component.options)
+  } else {
+    hotAPI.reload("data-v-a5eb2cde", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 611 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Search__ = __webpack_require__(612);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Search___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Search__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Sort__ = __webpack_require__(615);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Sort___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Sort__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Related__ = __webpack_require__(618);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Related___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Related__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Dates__ = __webpack_require__(621);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Dates___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Dates__);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ColumnControls',
+  data: function data() {
+    return {
+      show: false,
+      localFilters: null
+    };
+  },
+  mounted: function mounted() {
+    this.localFilters = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, this.localFilters, this.value);
+  },
+
+  methods: {
+    updateValue: function updateValue() {
+      this.$emit('input', this.localFilters);
+      this.$emit('change', this.localFilters);
+    },
+    clearAll: function clearAll() {
+      this.localFilters = {
+        related: {},
+        search: {},
+        sort: {},
+        dates: {},
+        page: '1'
+      };
+      this.updateValue();
+    },
+    hide: function hide() {
+      var self = this;
+      // hacky need to find a better way to have the column clickable
+      this.$nextTick(function () {
+        self.show = false;
+      });
+    }
+  },
+  computed: {
+    shouldDisplayControls: function shouldDisplayControls() {
+      return typeof this.column.sort !== 'undefined' || typeof this.column.search !== 'undefined' || typeof this.column.related !== 'undefined' || typeof this.column.dates !== 'undefined';
+    }
+  },
+  props: {
+    column: {
+      type: Object,
+      required: true
+    },
+    value: {}
+  },
+  components: {
+    search: __WEBPACK_IMPORTED_MODULE_1__Search___default.a,
+    sort: __WEBPACK_IMPORTED_MODULE_2__Sort___default.a,
+    dates: __WEBPACK_IMPORTED_MODULE_4__Dates___default.a,
+    related: __WEBPACK_IMPORTED_MODULE_3__Related___default.a
+  }
+});
+
+/***/ }),
+/* 612 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(613)
+/* template */
+var __vue_template__ = __webpack_require__(614)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/Search.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0fbd060d", Component.options)
+  } else {
+    hotAPI.reload("data-v-0fbd060d", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 613 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_Strings__ = __webpack_require__(24);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SuperTableSearch',
+  data: function data() {
+    return {
+      localFilters: null
+    };
+  },
+  mounted: function mounted() {
+    var self = this;
+    this.$nextTick(function () {
+      self.localFilters = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, this.localFilters, this.value);
+    });
+  },
+
+  methods: {
+    updateValue: function updateValue() {
+      this.$emit('input', this.localFilters);
+      this.$emit('change', this.localFilters);
+    },
+    clear: function clear() {
+      this.localFilters = '';
+      this.updateValue();
+    }
+  },
+  computed: {
+    uiType: function uiType() {
+      if (typeof this.options !== 'undefined') {
+        if (Array.isArray(this.options)) {
+          return 'array-select';
+        } else {
+          return 'object-select';
+        }
+      }
+
+      return 'field';
+    }
+  },
+  watch: {
+    value: function value(newValue) {
+      this.localFilters = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, this.localFilters, newValue);
+    }
+  },
+  props: ['value', 'column', 'options'],
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_Strings__["a" /* default */]]
+});
+
+/***/ }),
+/* 614 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.localFilters && _vm.localFilters.search
+    ? _c("div", { staticClass: "dvs-flex dvs-px-4 dvs-py-8" }, [
+        _c("fieldset", { staticClass: "dvs-w-full dvs-fieldset" }, [
+          _c("label", { staticClass: "dvs-pb-2" }, [_vm._v("Search")]),
+          _vm._v(" "),
+          _vm.uiType === "field"
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.localFilters.search[_vm.column],
+                    expression: "localFilters.search[column]"
+                  }
+                ],
+                staticClass: "dvs-w-full",
+                attrs: { type: "text" },
+                domProps: { value: _vm.localFilters.search[_vm.column] },
+                on: {
+                  keyup: _vm.updateValue,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.localFilters.search,
+                      _vm.column,
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.uiType === "array-select"
+            ? _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.localFilters.search[_vm.column],
+                      expression: "localFilters.search[column]"
+                    }
+                  ],
+                  staticClass: "fancy w-full",
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.localFilters.search,
+                          _vm.column,
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      _vm.updateValue
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [_vm._v("Any")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.options, function(option) {
+                    return _c("option", [_vm._v(_vm._s(option))])
+                  })
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.uiType === "object-select"
+            ? _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.localFilters.search[_vm.column],
+                      expression: "localFilters.search[column]"
+                    }
+                  ],
+                  staticClass: "fancy w-full",
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.localFilters.search,
+                          _vm.column,
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      _vm.updateValue
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [_vm._v("Any")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.options, function(option, value) {
+                    return _c("option", { domProps: { value: value } }, [
+                      _vm._v(_vm._s(option))
+                    ])
+                  })
+                ],
+                2
+              )
+            : _vm._e()
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0fbd060d", module.exports)
+  }
+}
+
+/***/ }),
+/* 615 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(616)
+/* template */
+var __vue_template__ = __webpack_require__(617)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/Sort.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2ab88b7a", Component.options)
+  } else {
+    hotAPI.reload("data-v-2ab88b7a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 616 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SuperTableSort',
+  data: function data() {
+    return {
+      direction: null
+    };
+  },
+  mounted: function mounted() {
+    var sort = this.filters[this.type].sort;
+    if (sort.hasOwnProperty(this.column)) {
+      this.direction = sort[this.column];
+    }
+  },
+
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['updateFilters']), {
+    clear: function clear() {
+      this.removeFilter();
+    },
+    update: function update() {
+      var filterPayload = {};
+
+      filterPayload[this.type] = this.filters[this.type];
+      filterPayload[this.type].sort[this.column] = this.direction;
+
+      this.updateFilters(filterPayload);
+    },
+    checkRemove: function checkRemove(value) {
+      if (this.direction === value) {
+        this.removeFilter();
+      }
+    },
+    removeFilter: function removeFilter() {
+      this.direction = null;
+      var filterPayload = {};
+
+      filterPayload[this.type] = this.filters[this.type];
+      delete filterPayload[this.type].sort[this.column];
+
+      this.updateFilters(filterPayload);
+    }
+  }),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])(['filters'])),
+  props: ['type', 'column']
+});
+
+/***/ }),
+/* 617 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "flex px-4 py-8" }, [
+    _c("fieldset", { staticClass: "mr-4 flex" }, [
+      _c("div", { staticClass: "flex items-center" }, [
+        _c("label", { staticClass: "pr-2" }, [_vm._v("Ascending")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.direction,
+              expression: "direction"
+            }
+          ],
+          staticClass: "fancy",
+          attrs: { type: "radio", value: "asc" },
+          domProps: { checked: _vm._q(_vm.direction, "asc") },
+          on: {
+            change: [
+              function($event) {
+                _vm.direction = "asc"
+              },
+              _vm.update
+            ],
+            click: function($event) {
+              _vm.checkRemove($event.target.value)
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("fieldset", { staticClass: "ml-4" }, [
+      _c("div", { staticClass: "flex items-center" }, [
+        _c("label", { staticClass: "pr-2" }, [_vm._v("Descending")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.direction,
+              expression: "direction"
+            }
+          ],
+          staticClass: "fancy",
+          attrs: { type: "radio", value: "desc" },
+          domProps: { checked: _vm._q(_vm.direction, "desc") },
+          on: {
+            change: [
+              function($event) {
+                _vm.direction = "desc"
+              },
+              _vm.update
+            ],
+            click: function($event) {
+              _vm.checkRemove($event.target.value)
+            }
+          }
+        })
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2ab88b7a", module.exports)
+  }
+}
+
+/***/ }),
+/* 618 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(619)
+/* template */
+var __vue_template__ = __webpack_require__(620)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/Related.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4cff7916", Component.options)
+  } else {
+    hotAPI.reload("data-v-4cff7916", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 619 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SuperTableRelated',
+  data: function data() {
+    return {
+      selected: [],
+      relatedFilter: ''
+    };
+  },
+  mounted: function mounted() {
+    var related = this.filters[this.type].related;
+    if (related.hasOwnProperty(this.options.field)) {
+      this.selected = this.filters[this.type].related[this.options.field];
+    }
+  },
+
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['updateFilters']), {
+    clear: function clear() {
+      this.selected = [];
+      this.relatedFilter = '';
+      this.update();
+    },
+    update: function update() {
+      var filterPayload = this.filters;
+
+      if (this.selected.length > 0) {
+        filterPayload[this.type].related[this.options.field] = this.selected;
+        filterPayload[this.type].page = 1;
+      } else {
+        delete filterPayload[this.type].related[this.options.field];
+      }
+
+      this.updateFilters(filterPayload);
+    }
+  }),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({
+    filteredOptions: function filteredOptions() {
+      var filteredRelated = [];
+      var self = this;
+
+      if (typeof self.relatedFilter !== 'undefined' && self.relatedFilter !== '') {
+        // TODO - REDO THIS SO WE DON'T HAVE TO USE UNDERSCORE
+        // filteredRelated = _.pick(self[self.options.data], function (value, key) {
+        //   return value.name.toLowerCase().includes(self.relatedFilter.toLowerCase())
+        // })
+      } else {
+        return this[this.options.data];
+      }
+
+      return filteredRelated;
+    }
+  }, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])(['filters', 'categoriesList'])),
+  props: ['options', 'type']
+});
+
+/***/ }),
+/* 620 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "flex px-4 py-8 flex flex-col max-h-200  overflow-y-scroll"
+    },
+    [
+      _c("div", [
+        _c("fieldset", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.relatedFilter,
+                expression: "relatedFilter"
+              }
+            ],
+            staticClass: "fancy w-full mb-4",
+            attrs: { type: "text", placeholder: "Filter" },
+            domProps: { value: _vm.relatedFilter },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.relatedFilter = $event.target.value
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.filteredOptions, function(option, key) {
+        return _c("div", [
+          _c("fieldset", { staticClass: "mr-4 flex mb-2" }, [
+            _c("div", { staticClass: "flex items-center" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selected,
+                    expression: "selected"
+                  }
+                ],
+                staticClass: "fancy",
+                attrs: { type: "checkbox" },
+                domProps: {
+                  value: option[_vm.options.key],
+                  checked: Array.isArray(_vm.selected)
+                    ? _vm._i(_vm.selected, option[_vm.options.key]) > -1
+                    : _vm.selected
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = _vm.selected,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = option[_vm.options.key],
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.selected = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.selected = $$c
+                      }
+                    },
+                    _vm.update
+                  ]
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "pl-2" }, [
+                _vm._v(_vm._s(option[_vm.options.label]))
+              ])
+            ])
+          ])
+        ])
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4cff7916", module.exports)
+  }
+}
+
+/***/ }),
+/* 621 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(622)
+/* template */
+var __vue_template__ = __webpack_require__(623)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/Dates.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5f5fff30", Component.options)
+  } else {
+    hotAPI.reload("data-v-5f5fff30", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 622 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_flatpickr_component__ = __webpack_require__(528);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_flatpickr_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_flatpickr_component__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(4);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SuperTableDates',
+  data: function data() {
+    return {
+      afterConfig: {
+        enableTime: false,
+        dateFormat: 'F d Y'
+      },
+      beforeConfig: {
+        enableTime: false,
+        dateFormat: 'F d Y'
+      },
+      after: '',
+      before: '',
+      dates: {
+        after: '',
+        before: ''
+      },
+      searchMethod: null,
+      preventUpdate: false
+    };
+  },
+  created: function created() {
+    var dates = this.filters[this.type].dates;
+    if (dates.hasOwnProperty(this.column)) {
+      var range = dates[this.column];
+      if (range.hasOwnProperty('after') && range.after !== '') {
+        this.after = __WEBPACK_IMPORTED_MODULE_2_moment___default()(range.after, 'YYYY-MM-DD').format('MMMM D YYYY');
+        this.dates.after = range.after;
+      }
+      if (range.hasOwnProperty('before') && range.before !== '') {
+        this.before = __WEBPACK_IMPORTED_MODULE_2_moment___default()(range.before, 'YYYY-MM-DD').format('MMMM D YYYY');
+        this.dates.before = range.before;
+      }
+    }
+  },
+
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])(['updateFilters']), {
+    onAfterChange: function onAfterChange(selectedDates, dateStr, instance) {
+      this.dates.after = dateStr ? __WEBPACK_IMPORTED_MODULE_2_moment___default()(dateStr, 'MMMM D YYYY').format('YYYY-MM-DD') : '';
+      this.update();
+    },
+    onBeforeChange: function onBeforeChange(selectedDates, dateStr, instance) {
+      this.dates.before = dateStr ? __WEBPACK_IMPORTED_MODULE_2_moment___default()(dateStr, 'MMMM D YYYY').format('YYYY-MM-DD') : '';
+      this.update();
+    },
+    clear: function clear() {
+      this.after = '';
+      this.before = '';
+    },
+    update: function update() {
+      var filterPayload = {};
+
+      filterPayload[this.type] = this.filters[this.type];
+      filterPayload[this.type].dates[this.column] = this.dates;
+      filterPayload[this.type].page = 1;
+
+      this.updateFilters(filterPayload);
+    }
+  }),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])(['filters'])),
+  components: {
+    flatPickr: __WEBPACK_IMPORTED_MODULE_1_vue_flatpickr_component___default.a
+  },
+  props: ['type', 'column']
+});
+
+/***/ }),
+/* 623 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "flex px-4 py-8" }, [
+    _c(
+      "fieldset",
+      { staticClass: "w-full" },
+      [
+        _c("label", { staticClass: "pb-2" }, [_vm._v("Date Range")]),
+        _vm._v(" "),
+        _c("flat-pickr", {
+          staticClass: "fancy w-full mb-4",
+          attrs: { config: _vm.afterConfig, placeholder: "After" },
+          on: { "on-change": _vm.onAfterChange },
+          model: {
+            value: _vm.after,
+            callback: function($$v) {
+              _vm.after = $$v
+            },
+            expression: "after"
+          }
+        }),
+        _vm._v(" "),
+        _c("flat-pickr", {
+          staticClass: "fancy w-full",
+          attrs: { config: _vm.beforeConfig, placeholder: "Before" },
+          on: { "on-change": _vm.onBeforeChange },
+          model: {
+            value: _vm.before,
+            callback: function($$v) {
+              _vm.before = $$v
+            },
+            expression: "before"
+          }
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5f5fff30", module.exports)
+  }
+}
+
+/***/ }),
+/* 624 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.shouldDisplayControls
+    ? _c("div", { staticClass: "dvs-ml-4" }, [
+        _c("i", {
+          staticClass: "ion-ios-settings-strong dvs-cursor-pointer",
+          on: {
+            click: function($event) {
+              _vm.show = true
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.show,
+                expression: "show"
+              }
+            ]
+          },
+          [
+            _c("div", {
+              staticClass: "dvs-blocker dvs-z-20",
+              on: { click: _vm.hide }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.show,
+                    expression: "show"
+                  }
+                ],
+                staticClass:
+                  "dvs-absolute dvs-pin-b dvs-pin-l dvs-mb-1 dvs-bg-white dvs-min-w-250 dvs-z-40 dvs-shadow-lg dvs-border-t-2 dvs-border-grey-lighter"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "bg-background-darker pt-4 pb-2 px-4 flex justify-between"
+                  },
+                  [
+                    _vm._v(
+                      "\n        " + _vm._s(this.column.label) + "\n        "
+                    ),
+                    _c("div", [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "dvs-pr-4 dvs-uppercase dvs-text-xs dvs-outline-none",
+                          on: {
+                            click: function($event) {
+                              _vm.clearAll()
+                            }
+                          }
+                        },
+                        [_vm._v("Clear")]
+                      ),
+                      _vm._v("|\n          "),
+                      _c("i", {
+                        staticClass:
+                          "ion-close-round dvs-pl-4 dvs-cursor-pointer dvs-float-right",
+                        on: { click: _vm.hide }
+                      })
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "dvs-px-4 dvs-column-control-modules" },
+                  [
+                    typeof _vm.column.search !== "undefined"
+                      ? _c("search", {
+                          ref: "search",
+                          attrs: {
+                            column: _vm.column.search,
+                            options: _vm.column.options
+                          },
+                          on: { change: _vm.updateValue },
+                          model: {
+                            value: _vm.localFilters,
+                            callback: function($$v) {
+                              _vm.localFilters = $$v
+                            },
+                            expression: "localFilters"
+                          }
+                        })
+                      : _vm._e()
+                  ],
+                  1
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a5eb2cde", module.exports)
+  }
+}
+
+/***/ }),
+/* 625 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(626)
+/* template */
+var __vue_template__ = __webpack_require__(627)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/ToggleColumns.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ab9b9cd8", Component.options)
+  } else {
+    hotAPI.reload("data-v-ab9b9cd8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 626 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ToggleColumns',
+  data: function data() {
+    return {
+      show: false,
+      columns: []
+    };
+  },
+  mounted: function mounted() {
+    this.columns = this.value;
+
+    for (var i = 0; i < this.columns.length; i++) {
+      if (typeof this.columns[i].show === 'undefined') {
+        this.$set(this.columns[i], 'show', true);
+      }
+    }
+  },
+
+  methods: {
+    update: function update() {
+      // TODO - This is current an error and needs to be ported for Devise
+      // local.set(this.type + '-columns-' + this.currentTeam.id, this.columns)
+
+      this.$emit('input', this.columns);
+    }
+  },
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])(['currentTeam'])),
+  props: {
+    value: {
+      type: Array,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
+    }
+  }
+});
+
+/***/ }),
+/* 627 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "mr-4 relative" }, [
+    _c("i", {
+      staticClass: "ion-ios-toggle-outline cursor-pointer",
+      on: {
+        click: function($event) {
+          _vm.show = true
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.show,
+            expression: "show"
+          }
+        ],
+        staticClass:
+          "absolute pin-t pin-r mt-1 bg-background-lighter min-w-250 z-40 shadow-lg border-t-2 border-background-lighter"
+      },
+      [
+        _c("div", { staticClass: "bg-background-darker pt-4 pb-2 px-4 " }, [
+          _vm._v("\n      Toggle Columns "),
+          _c("i", {
+            staticClass: "ion-close-round cursor-pointer float-right",
+            on: {
+              click: function($event) {
+                _vm.show = false
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "px-4" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "flex px-4 py-8 flex flex-col max-h-200 overflow-y-scroll"
+            },
+            [
+              _c(
+                "div",
+                _vm._l(_vm.columns, function(column, index) {
+                  return !column.toggleColumns
+                    ? _c(
+                        "fieldset",
+                        { key: column.key, staticClass: "mr-4 flex mb-2" },
+                        [
+                          _c("div", { staticClass: "flex items-center" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: column.show,
+                                  expression: "column.show"
+                                }
+                              ],
+                              staticClass: "fancy",
+                              attrs: { type: "checkbox" },
+                              domProps: {
+                                checked: Array.isArray(column.show)
+                                  ? _vm._i(column.show, null) > -1
+                                  : column.show
+                              },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$a = column.show,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            column,
+                                            "show",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            column,
+                                            "show",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(column, "show", $$c)
+                                    }
+                                  },
+                                  _vm.update
+                                ]
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "pl-2" }, [
+                              _vm._v(_vm._s(column.label))
+                            ])
+                          ])
+                        ]
+                      )
+                    : _vm._e()
+                })
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-ab9b9cd8", module.exports)
+  }
+}
+
+/***/ }),
+/* 628 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(629)
+/* template */
+var __vue_template__ = __webpack_require__(630)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/Pagination.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1f043f02", Component.options)
+  } else {
+    hotAPI.reload("data-v-1f043f02", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 629 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SuperTablePagination',
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['updateFilters']), {
+    update: function update(page) {
+      var filterPayload = {};
+
+      filterPayload[this.type] = this.filters[this.type];
+      filterPayload[this.type].page = page;
+
+      this.updateFilters(filterPayload);
+    },
+    isCurrentPage: function isCurrentPage(page) {
+      return page === this.meta.pagination.current_page;
+    }
+  }),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])(['filters'])),
+  props: ['meta', 'type']
+});
+
+/***/ }),
+/* 630 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.meta.pagination && _vm.meta.pagination.total_pages > 1
+    ? _c(
+        "ul",
+        { staticClass: "pagination" },
+        _vm._l(_vm.meta.pagination.total_pages, function(n) {
+          return _c(
+            "li",
+            {
+              staticClass: "ghost",
+              class: { "bg-action": _vm.isCurrentPage(n) },
+              on: {
+                click: function($event) {
+                  _vm.update(n)
+                }
+              }
+            },
+            [_vm._v("\n    " + _vm._s(n) + "\n  ")]
+          )
+        })
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1f043f02", module.exports)
+  }
+}
+
+/***/ }),
+/* 631 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(632)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/tables/Cell.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-50e4cc07", Component.options)
+  } else {
+    hotAPI.reload("data-v-50e4cc07", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 632 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Cell',
+  data: function data() {
+    return {
+      eventName: ''
+    };
+  },
+  created: function created() {
+    this.$options.template = '<div>' + this.contents + '</div>';
+  },
+
+  methods: {
+    emit: function emit(event) {
+      this.eventName = event;
+      // TODO - Bus needs to be defined
+      // Bus.$emit(event, this.record)
+    }
+  },
+  props: ['contents', 'record']
+});
+
+/***/ }),
+/* 633 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "table",
+        { staticClass: "dvs-table" },
+        [
+          _c(
+            "tr",
+            _vm._l(_vm.columns, function(column, key) {
+              return _vm.showColumn(column)
+                ? _c(
+                    "th",
+                    {
+                      key: column.key,
+                      class: {
+                        "dvs-hidden lg:dvs-table-cell": !column.showMobile
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.showControls(column.key)
+                        }
+                      }
+                    },
+                    [
+                      !column.toggleColumns
+                        ? _c(
+                            "div",
+                            { staticClass: "dvs-flex" },
+                            [
+                              _c("div", [
+                                _vm._v(" " + _vm._s(column.label) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("column-controls", {
+                                ref: column.key,
+                                refInFor: true,
+                                staticClass: "dvs-hidden lg:dvs-block",
+                                attrs: { column: column },
+                                model: {
+                                  value: _vm.filters,
+                                  callback: function($$v) {
+                                    _vm.filters = $$v
+                                  },
+                                  expression: "filters"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _c(
+                            "div",
+                            { staticClass: "flex" },
+                            [
+                              _c("toggle-columns", {
+                                staticClass: "dvs-hidden lg:dvs-block",
+                                model: {
+                                  value: _vm.columns,
+                                  callback: function($$v) {
+                                    _vm.columns = $$v
+                                  },
+                                  expression: "columns"
+                                }
+                              }),
+                              _vm._v(
+                                "\n          " +
+                                  _vm._s(column.label) +
+                                  "\n        "
+                              )
+                            ],
+                            1
+                          )
+                    ]
+                  )
+                : _vm._e()
+            })
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.records, function(record, rkey) {
+            return _c(
+              "tr",
+              { key: record.id },
+              [
+                _vm._l(_vm.columns, function(column, index) {
+                  return _vm.showColumn(column)
+                    ? [
+                        _c(
+                          "td",
+                          {
+                            class: {
+                              "dvs-hidden lg:dvs-table-cell": !column.showMobile
+                            }
+                          },
+                          [
+                            column.template
+                              ? _c("cell", {
+                                  attrs: {
+                                    record: record,
+                                    contents: _vm.getRecordColumn(
+                                      record,
+                                      column.key
+                                    )
+                                  }
+                                })
+                              : _c("span", [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.getRecordColumn(record, column.key)
+                                    )
+                                  )
+                                ])
+                          ],
+                          1
+                        )
+                      ]
+                    : _vm._e()
+                })
+              ],
+              2
+            )
+          }),
+          _vm._v(" "),
+          !_vm.records.length
+            ? _c("tr", [
+                _c(
+                  "td",
+                  {
+                    staticClass: "dvs-text-center",
+                    attrs: { colspan: _vm.columns.length }
+                  },
+                  [_vm._v("No Results Found")]
+                )
+              ])
+            : _vm._e()
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm.meta ? _c("pagination", { attrs: { meta: _vm.meta } }) : _vm._e(),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "button",
+          { staticClass: "dvs-btn", on: { click: _vm.updateValue } },
+          [_vm._v("Done")]
+        ),
+        _vm._v(" "),
+        _c("button", { staticClass: "dvs-btn", on: { click: _vm.cancel } }, [
+          _vm._v("Cancel")
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-460c9578", module.exports)
+  }
+}
+
+/***/ }),
+/* 634 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(635)
+/* template */
+var __vue_template__ = __webpack_require__(636)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/templates/ManageSlices.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-74db922c", Component.options)
+  } else {
+    hotAPI.reload("data-v-74db922c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 635 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable__ = __webpack_require__(608);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_Slices__ = __webpack_require__(637);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/*
+Manage Slices
+
+This component manages the following:
+
+  * Adding new slices to the origin slice
+    1. Choose the type
+    2. Choose the view
+    3. If the type is modal set the data
+
+  * Removing slices
+
+  * Modifying modal data of a slice
+
+*/
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      modelEditor: null,
+      localValue: null,
+      step: 'type',
+      sliceToAdd: {
+        show: false,
+        type: 'single',
+        slice: null,
+        model: null,
+        modelQuery: null
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.localValue = this.value;
+    this.getSlicesDirectories();
+    this.getSlices();
+  },
+
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('devise', ['getSlicesDirectories', 'getSlices', 'getModels', 'getModelSettings']), {
+    updateValue: function updateValue() {
+      // Emit the number value through the input event
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
+    },
+    closeManager: function closeManager() {
+      this.resetData();
+      this.$emit('closeManager');
+    },
+    addSlice: function addSlice(finalSlice) {
+      this.localValue.push(finalSlice);
+      this.updateValue();
+      this.closeManager();
+    },
+    removeSlice: function removeSlice(slice) {},
+    resetData: function resetData() {
+      this.sliceToAdd.show = false, this.sliceToAdd.type = 'single';
+      this.sliceToAdd.direction = null;
+      this.sliceToAdd.slice = null;
+      this.sliceToAdd.model = null;
+      this.sliceToAdd.modelQuery = null;
+      this.mode = 'add';
+      this.step = 'type';
+    },
+    chooseTypeToAdd: function chooseTypeToAdd(type) {
+      if (type !== 'single' && this.root) {
+        window.bus.$emit('showError', 'You cannot add a model or repeatable to the root of a template. You can add these as a child to any component and render them with <slices :slices="slices"/> in the container\'s blade file');
+        return;
+      }
+
+      this.sliceToAdd.type = type;
+      this.step = 'view';
+
+      if (type === 'model') {
+        this.getModels();
+      }
+    },
+    selectSliceToAdd: function selectSliceToAdd(type) {
+      if (this.sliceToAdd.type === 'model') {
+        this.step = 'model';
+      } else {
+        var slice = this.buildSlice();
+        this.addSlice(slice);
+      }
+    },
+    selectModelToAdd: function selectModelToAdd() {
+      this.sliceToAdd.modelQuery = this.sliceToAdd.model.class;
+      this.step = 'data';
+    },
+    selectDataToAdd: function selectDataToAdd() {
+      var slice = this.buildSlice();
+
+      if (this.mode === 'add') {
+        this.addSlice(slice);
+      }
+    },
+    buildSlice: function buildSlice() {
+      return {
+        config: {},
+        id: 0,
+        label: this.sliceToAdd.slice.name,
+        metadata: {
+          open: false,
+          tools: false
+        },
+        model_query: 'class=' + this.sliceToAdd.modelQuery,
+        name: this.componentFromView(this.sliceToAdd.slice.value).name,
+        slices: [],
+        type: this.sliceToAdd.type,
+        view: 'slices.' + this.sliceToAdd.slice.value
+      };
+    }
+  }),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['componentFromView', 'models', 'modelSettings', 'slicesList', 'slicesDirectories'])),
+  components: {
+    SuperTable: __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable___default.a
+  },
+  props: ['originSlice', 'value', 'mode', 'root'],
+  mixins: [__WEBPACK_IMPORTED_MODULE_3__mixins_Slices__["a" /* default */]]
+});
+
+/***/ }),
+/* 636 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.originSlice
+      ? _c("div", {
+          staticClass: "dvs-blocker dvs-blocker-light",
+          on: {
+            click: function($event) {
+              _vm.closeManager()
+            }
+          }
+        })
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.originSlice
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-4 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2"
+          },
+          [
+            _vm.mode === "add" && _vm.step === "type"
+              ? _c(
+                  "div",
+                  [
+                    _c("help", { staticClass: "dvs-mb-8" }, [
+                      _vm._v(
+                        "\n        These controls allow you to add sub-slices to the slice you selected. You can add as many single slices as you wish or you can add a one model or one repeatable slice. Models and repeatables allow you to generate many of the same slice with dynamic data from your database (models) or via the Devise editor (repeatables).\n      "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "dvs-flex dvs-justify-center dvs-mb-4" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white",
+                            on: {
+                              click: function($event) {
+                                _vm.chooseTypeToAdd("single")
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "ion-android-remove dvs-text-4xl"
+                            }),
+                            _vm._v(" "),
+                            _c("h6", [_vm._v("Single")])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white",
+                            on: {
+                              click: function($event) {
+                                _vm.chooseTypeToAdd("repeats")
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "ion-android-menu dvs-text-4xl"
+                            }),
+                            _vm._v(" "),
+                            _c("h6", [_vm._v("Repeatable")])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white",
+                            on: {
+                              click: function($event) {
+                                _vm.chooseTypeToAdd("model")
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "ion-cube dvs-text-4xl" }),
+                            _vm._v(" "),
+                            _c("h6", [_vm._v("Model")])
+                          ]
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.mode === "add" && _vm.step === "view"
+              ? _c("div", { staticClass: "dvs-mb-4" }, [
+                  _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
+                    _c("label", [_vm._v("Select a Slice")]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sliceToAdd.slice,
+                            expression: "sliceToAdd.slice"
+                          }
+                        ],
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.sliceToAdd,
+                              "slice",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { domProps: { value: null } }, [
+                          _vm._v("Select a Slice")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.sliceDirectoriesOptions, function(
+                          group,
+                          name
+                        ) {
+                          return _c(
+                            "optgroup",
+                            { attrs: { label: name } },
+                            _vm._l(group, function(option) {
+                              return _c(
+                                "option",
+                                { domProps: { value: option } },
+                                [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(option.name) +
+                                      "\n            "
+                                  )
+                                ]
+                              )
+                            })
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dvs-btn",
+                      attrs: { disabled: !_vm.sliceToAdd },
+                      on: {
+                        click: function($event) {
+                          _vm.selectSliceToAdd()
+                        }
+                      }
+                    },
+                    [_vm._v("Select")]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.mode === "add" && _vm.step === "model"
+              ? _c(
+                  "div",
+                  { staticClass: "dvs-mb-4" },
+                  [
+                    _c("help", { staticClass: "dvs-mb-8" }, [
+                      _vm._v(
+                        "\n        The models below are loaded by Devise by scanning your Laravel application directory for anything that extends the Model class. Ensure it does this for it to appear below.\n      "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
+                      _c("label", [_vm._v("Select a Model")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.sliceToAdd.model,
+                              expression: "sliceToAdd.model"
+                            }
+                          ],
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.sliceToAdd,
+                                "model",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { domProps: { value: null } }, [
+                            _vm._v("Select a Model")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.models, function(model) {
+                            return _c(
+                              "option",
+                              { domProps: { value: model } },
+                              [_vm._v(_vm._s(model.name))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "dvs-btn",
+                        attrs: { disabled: !_vm.sliceToAdd.model },
+                        on: {
+                          click: function($event) {
+                            _vm.selectModelToAdd()
+                          }
+                        }
+                      },
+                      [_vm._v("Select")]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.mode === "add" && _vm.step === "data"
+              ? _c(
+                  "div",
+                  [
+                    _c("help", [
+                      _vm._v(
+                        "\n        This is a model slice and allows you to set the query that will be performed every time it is loaded. Provide the filters and sorting that gives you the data you need, save, and that query will be loaded every time. Need to lean on variables such as URL parameters? No problem. Click here to see variables available to you.\n\n        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("super-table", {
+                      attrs: {
+                        columns: _vm.sliceToAdd.model.columns,
+                        showLinks: false
+                      },
+                      on: {
+                        cancel: _vm.closeManager,
+                        done: _vm.selectDataToAdd
+                      },
+                      model: {
+                        value: _vm.sliceToAdd.modelQuery,
+                        callback: function($$v) {
+                          _vm.$set(_vm.sliceToAdd, "modelQuery", $$v)
+                        },
+                        expression: "sliceToAdd.modelQuery"
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e()
+          ]
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-74db922c", module.exports)
+  }
+}
+
+/***/ }),
+/* 637 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  methods: {
+    buildSliceDirectoryOptions: function buildSliceDirectoryOptions(options, directory) {
+      if (directory.files.length > 0) {
+        options[directory.name] = [];
+        options[directory.name] = directory.files;
+      }
+
+      for (var i = 0; i < directory.directories.length; i++) {
+        options = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, options, this.buildSliceDirectoryOptions(options, directory.directories[i]));
+      }
+
+      return options;
+    }
+  },
+  computed: {
+    sliceDirectoriesOptions: function sliceDirectoriesOptions() {
+      var options = {};
+      if (this.slicesDirectories.files && (this.slicesDirectories.files.length > 0 || this.slicesDirectories.directories.length > 0)) {
+        options = this.buildSliceDirectoryOptions(options, this.slicesDirectories);
+      }
+      return options;
+    }
+  }
+});
 
 /***/ })
 ],[229]);

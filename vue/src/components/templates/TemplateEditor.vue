@@ -28,12 +28,20 @@
           </div>
           <div class="dvs-collapsed dvs-mt-4">
 
-            <div v-if="localValue.slices">
-              <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset" :options="{handle: '.handle'}">
-                <li v-for="(slice, key) in localValue.slices" class="dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': slice.metadata.open}">
-                  <template-slice-editor v-model="localValue.slices[key]"></template-slice-editor>
+            <div v-if="localValue.slices" class="dvs-flex dvs-flex-col dvs-items-center">
+              <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset dvs-mb-2 dvs-w-full" :options="{handle: '.handle'}">
+                <li v-for="(slice, key) in localValue.slices" class="dvs-mb-2 dvs-template-editor-collapsable dvs-w-full" :class="{'dvs-open': slice.metadata.open}">
+
+                  <template-slice-editor
+                    v-model="localValue.slices[key]"
+                    @addSlice="requestAddSlice"
+                    @removeSlice="requestRemoveSlice"
+                    @manageSlice="requestManageSlice">
+                  </template-slice-editor>
+
                 </li>
               </draggable>
+              <button class="dvs-btn dvs-btn-sm mx-2 dvs-btn-ghost dvs-w-4/5" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)">Add Slice to Layout</button>
             </div>
 
           </div>
@@ -41,6 +49,7 @@
       </ul>
     </div>
 
+    <!-- Preview Pane - Duplicates what is happening at Devise.vue -->
     <div id="devise-preview-content" v-if="localValue.slices.length && dataLoaded">
 
       <slot name="on-top"></slot>
@@ -55,6 +64,16 @@
 
     </div>
 
+    <!-- Slice Management for adding, modifying data, removing slices -->
+    <manage-slices
+      v-model="localValue.slices"
+      :origin-slice="manageSlice.origin"
+      :mode="manageSlice.mode"
+      :root="manageSlice.root"
+      @closeManager="manageSlice.origin = null"
+      />
+
+    <!-- Save Controls -->
     <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-shadow-lg dvs-bg-white dvs-p-4 dvs-z-40">
       <h6 class="mb-4">Template Controls</h6>
       <button class="dvs-btn dvs-mr-2" @click="requestSaveTemplate">Save Template</button>
@@ -68,8 +87,10 @@
   import { mapGetters, mapActions } from 'vuex'
   import draggable from 'vuedraggable'
 
-  import TemplateSliceEditor from './TemplateSliceEditor'
+  import ManageSlices from './ManageSlices'
   import Slices from '../../Slices'
+  import SuperTable from '../utilities/tables/SuperTable'
+  import TemplateSliceEditor from './TemplateSliceEditor'
 
   export default {
     data () {
@@ -78,8 +99,11 @@
         templateLayoutOpen: true,
         dataLoaded: false,
         localValue: {},
-        showRemoveSlice: false,
-        showAddSlice: false
+        manageSlice: {
+          origin: null,
+          mode: 'add',
+          root: true
+        }
       }
     },
     mounted () {
@@ -113,20 +137,19 @@
       updateValue () {
         window.template = this.localValue
       },
-      requestAddSlice () {
-
-      },
-      addSlice (slice) {
-        // Needs parent
-        // Needs location
+      requestAddSlice (origin, isRoot) {
+        this.manageSlice.mode = 'add'
+        this.manageSlice.root = isRoot ? isRoot : false
+        this.manageSlice.origin = origin
       },
       requestRemoveSlice (slice) {
-
+        this.manageSlice.mode = 'remove'
+        this.manageSlice.origin = slice
       },
-      removeSlice (slice) {
-
+      requestManageSlice (slice) {
+        this.manageSlice.mode = 'manage'
+        this.manageSlice.origin = slice
       },
-
       // Prepare the slices data to contain information necessary for the editor
       prepareSlices (sliceSlices) {
         let self = this
@@ -136,16 +159,14 @@
         }
 
         sliceSlices.map(function (slice) {
-          self.addMetaDataToSlice(slice)
+
+          self.$set(slice, 'metadata', {
+            open: false
+          })
+
           if (slice.slices !== undefined && slice.slices.length > 0) {
             self.prepareSlices(slice.slices)
           }
-        })
-      },
-
-      addMetaDataToSlice (slice) {
-        this.$set(slice, 'metadata', {
-          open: false
         })
       },
 
@@ -173,7 +194,16 @@
         'template',
         'models',
         'modelSettings'
-      ])
+      ]),
+      anySliceOpen () {
+        for (var i = 0; i < this.localValue.slices.length; i++) {
+          if (this.localValue.slices[i].metadata.open) {
+            return true
+          }
+        }
+
+        return false
+      }
     },
     watch: {
       localValue: {
@@ -184,8 +214,10 @@
       }
     },
     components: {
-      TemplateSliceEditor,
-      draggable
+      draggable,
+      ManageSlices,
+      SuperTable,
+      TemplateSliceEditor
     }
   }
 </script>

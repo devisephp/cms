@@ -742,6 +742,154 @@ button,
   border-radius: .125rem;
 }
 
+.dvs-cn-wrapper {
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  z-index: 60;
+  margin-top: -13em;
+  margin-left: -13.5em;
+  width: 27em;
+  height: 27em;
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  -webkit-transition: all .3s ease .3s;
+  transition: all .3s ease .3s;
+  -webkit-transform: scale(.1);
+          transform: scale(.1);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dvs-cn-wrapper:after {
+  color: transparent;
+  content: ".";
+  display: block;
+  font-size: 2em;
+  width: 6.2em;
+  height: 6.2em;
+  position: absolute;
+  left: 50%;
+  margin-left: -3.1em;
+  top: 50%;
+  margin-top: -3.1em;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.dvs-cn-wrapper li {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  overflow: hidden;
+  margin-top: -1.3em;
+  margin-left: -10em;
+  width: 10em;
+  height: 10em;
+  font-size: 1.5em;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  -webkit-transform: rotate(76deg) skew(60deg);
+          transform: rotate(76deg) skew(60deg);
+  -webkit-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+  pointer-events: none;
+}
+
+.dvs-cn-wrapper li a {
+  position: absolute;
+  position: fixed;
+  /* fix the "displacement" bug in webkit browsers when using tab key */
+  right: -7.25em;
+  bottom: -7.25em;
+  display: block;
+  width: 14.5em;
+  height: 14.5em;
+  border-radius: 50%;
+  background: #2b6ed8;
+  background: radial-gradient(transparent 35%, #2b6ed8 37%);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.2em;
+  line-height: 2;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  -webkit-transform: skew(-60deg) rotate(-75deg) scale(1);
+          transform: skew(-60deg) rotate(-75deg) scale(1);
+  pointer-events: auto;
+}
+
+.dvs-cn-wrapper li a:hover,
+.dvs-cn-wrapper li a:focus,
+.dvs-cn-wrapper li a:active {
+  background: radial-gradient(transparent 35%, #2b6ed8 37%);
+}
+
+.dvs-cn-wrapper li a.disabled {
+  background: radial-gradient(transparent 35%, rgba(0, 0, 0, .1) 37%);
+}
+
+.dvs-cn-wrapper li a i {
+  position: relative;
+  top: .4em;
+  display: block;
+  font-size: 1.25em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.dvs-opened-nav {
+  border-radius: 50%;
+  opacity: 1;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  pointer-events: auto;
+}
+
+.dvs-opened-nav li {
+  -webkit-transition: all .3s ease .3s;
+  transition: all .3s ease .3s;
+}
+
+.dvs-opened-nav li:first-child {
+  -webkit-transform: rotate(-20deg) skew(60deg);
+          transform: rotate(-20deg) skew(60deg);
+}
+
+.dvs-opened-nav li:nth-child(2) {
+  -webkit-transform: rotate(12deg) skew(60deg);
+          transform: rotate(12deg) skew(60deg);
+}
+
+.dvs-opened-nav li:nth-child(3) {
+  -webkit-transform: rotate(44deg) skew(60deg);
+          transform: rotate(44deg) skew(60deg);
+}
+
+.dvs-opened-nav li:nth-child(4) {
+  -webkit-transform: rotate(76deg) skew(60deg);
+          transform: rotate(76deg) skew(60deg);
+}
+
+.dvs-opened-nav li:nth-child(5) {
+  -webkit-transform: rotate(108deg) skew(60deg);
+          transform: rotate(108deg) skew(60deg);
+}
+
+.dvs-opened-nav li:nth-child(6) {
+  -webkit-transform: rotate(140deg) skew(60deg);
+          transform: rotate(140deg) skew(60deg);
+}
+
+.dvs-opened-nav li:nth-child(7) {
+  -webkit-transform: rotate(172deg) skew(60deg);
+          transform: rotate(172deg) skew(60deg);
+}
+
 .vc-photoshop {
   font-family: system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 }
@@ -1144,7 +1292,7 @@ button,
   color: #fff;
 }
 
-.dvs-template-editor-collapsable.dvs-open .dvs-collapsed {
+.dvs-template-editor-collapsable.dvs-open > div > .dvs-collapsed {
   display: block;
   height: auto;
 }

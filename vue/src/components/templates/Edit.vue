@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <template v-if="template && slices.length > 0">
+  <div v-if="localValue.slices">
+    <template v-if="template && localValue.slices.length > 0">
       <iframe :src="`/templates/${template.id}`" class="dvs-w-full" id="devise-preview-iframe"></iframe>
     </template>
   </div>
@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'slices',
+      'slicesList',
       'template'
     ])
   },

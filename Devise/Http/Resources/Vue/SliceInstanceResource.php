@@ -22,10 +22,11 @@ class SliceInstanceResource extends Resource
     $data = [
       'metadata' => [
         'instance_id' => $this->id,
-        'name'        => ($this->templateSlice->type == 'single' || $this->parent_type == 'repeats' ) ? $this->templateSlice->component_name : null,
+        'name'        => $this->templateSlice->component_name,
         'type'        => $this->templateSlice->type,
         'label'       => $this->templateSlice->label,
-        'enabled'     => $this->enabled
+        'enabled'     => $this->enabled,
+        'placeholder' => ($this->templateSlice->type == 'single' || $this->parent_type == 'repeats') ? false : true,
       ]
     ];
 
@@ -34,6 +35,7 @@ class SliceInstanceResource extends Resource
     {
       $this->slices->map(function ($slice) {
         $slice->parent_type = $this->templateSlice->type;
+
         return $slice;
       });
 
@@ -73,7 +75,8 @@ class SliceInstanceResource extends Resource
         'name'        => $modelSlice->component_name,
         'type'        => $modelSlice->type,
         'label'       => $modelSlice->label,
-        'enabled'     => 1
+        'enabled'     => 1,
+        'placeholder' => false,
       ];
 
       foreach ($record->slice as $field)

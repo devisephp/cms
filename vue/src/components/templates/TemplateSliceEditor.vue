@@ -126,7 +126,7 @@ export default {
     },
     removeSlice (slice) {
       this.toggleSliceTools()
-      this.$emit('removeSlice', {parent: this.value, slice: slice})
+      this.$emit('removeSlice', slice)
     },
     toggleSlice () {
       this.localValue.metadata.open = !this.localValue.metadata.open

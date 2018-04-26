@@ -3,7 +3,6 @@ import VueTippy from 'vue-tippy'
 import Devise from './Devise'
 import Help from './components/utilities/Help'
 import Slices from './Slices'
-import TemplatePreviewSettings from './components/templates/PreviewSettings' // Required for recursion
 import DeviseStore from './vuex/store'
 import { DeviseBus } from './event-bus.js'
 import routes from './router/route.config.js'
@@ -48,7 +47,6 @@ const DevisePlugin = {
     Vue.component('Devise', Devise)
     Vue.component('Help', Help)
     Vue.component('Slices', Slices)
-    Vue.component('TemplatePreviewSettings', TemplatePreviewSettings)
 
     // Register devise vuex module and sync it with the store
     store.registerModule('devise', DeviseStore)

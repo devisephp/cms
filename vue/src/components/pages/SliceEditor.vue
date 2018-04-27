@@ -2,7 +2,7 @@
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
     <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4 dvs-flex dvs-justify-between" @click="toggleSlice(slice)">
       {{ slice.metadata.label }}
-      <i v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'" class="ion-plus" @click="addInstance(slice)"></i>
+      <i v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'" class="ion-plus" @click.stop="addInstance(slice)"></i>
     </strong>
 
     <div class="dvs-collapsed">

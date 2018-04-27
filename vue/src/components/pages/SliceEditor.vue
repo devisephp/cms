@@ -1,74 +1,57 @@
 <template>
-  <div>
-    <div class="dvs-pt-4">
-      <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-8 dvs-pl-4" :key="key">
-        <div>
+  <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
+    <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4 dvs-flex dvs-justify-between" @click="toggleSlice(slice)">
+      {{ slice.metadata.label }}
+      <i v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'" class="ion-plus" @click.stop="addInstance(slice)"></i>
+    </strong>
 
-          <color-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'color'">
-          </color-editor>
+    <div class="dvs-collapsed">
+      <div class="dvs-pt-4" v-if="!slice.metadata.placeholder">
+        <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-8 dvs-pl-4" :key="key">
+          <div>
 
-          <checkbox-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'checkbox'">
-          </checkbox-editor>
+            <color-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'color'">
+            </color-editor>
 
-          <image-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'image'">
-          </image-editor>
+            <checkbox-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'checkbox'">
+            </checkbox-editor>
 
-          <link-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'link'">
-          </link-editor>
+            <image-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'image'">
+            </image-editor>
 
-          <number-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'number'">
-          </number-editor>
+            <link-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'link'">
+            </link-editor>
 
-          <textarea-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'textarea'">
-          </textarea-editor>
+            <number-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'number'">
+            </number-editor>
 
-          <text-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'text'">
-          </text-editor>
+            <textarea-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'textarea'">
+            </textarea-editor>
 
-          <wysiwyg-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'wysiwyg'">
-          </wysiwyg-editor>
-        </div>
+            <text-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'text'">
+            </text-editor>
 
-      </fieldset>
-    </div>
+            <wysiwyg-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'wysiwyg'">
+            </wysiwyg-editor>
+          </div>
 
-    <div class="dvs-pl-4" v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
-      <div class="dvs-cn-wrapper" :class="{'dvs-opened-nav': localValue.metadata.tools}">
-        <button class="cn-close-button" @click="localValue.metadata.tools = false">
-          <i class="ion-close-round"></i>
-        </button>
+        </fieldset>
+      </div>
+
+      <div class="dvs-collapsed dvs-pl-4">
+
+        <help v-if="slice.metadata.type === 'model'" class="mb-4">
+          Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
+        </help>
+
         <ul class="dvs-list-reset">
-          <li><a class="disabled">&nbsp;</a></li>
-          <li><a class="disabled">&nbsp;</a></li>
-          <li><a @click.prevent="addSlice(localValue.slices)" class="dvs-cursor-pointer" :title="`Create new child slice under ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-            <i class="ion-plus"></i>
-          </a></li>
-          <li><a class="disabled">&nbsp;</a></li>
-          <li><a @click.prevent="removeSlice(localValue)" class="dvs-cursor-pointer" :title="`Remove ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-            <i class="ion-minus"></i>
-          </a></li>
-          <li><a class="disabled">&nbsp;</a></li>
-          <li><a class="disabled">&nbsp;</a></li>
+          <template v-for="(s, key) in slice.slices">
+            <slice-editor :key="key" :slice="s" />
+          </template>
         </ul>
       </div>
     </div>
-
-    <div class="dvs-collapsed dvs-pl-4">
-
-      <help v-if="slice.metadata.type === 'model'" class="mb-4">
-        Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
-      </help>
-
-      <ul class="dvs-list-reset">
-        <li v-for="(s, key) in slice.slices" class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': s.metadata.open}">
-          <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-4" @click="toggleSlice(s)">{{ s.metadata.label }}</strong>
-          <div class="dvs-collapsed">
-            <slice-editor :key="key" :slice="s" />
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
+  </li>
 </template>
 
 <script>
@@ -92,7 +75,9 @@ export default {
     }
   },
   mounted () {
-    this.pageSlices = this.slice.slices
+    if (this.slice.slices) {
+      this.pageSlices = this.slice.slices
+    }
   },
   methods: {
     toggleSlice (slice) {
@@ -102,10 +87,73 @@ export default {
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
+    },
+    toggleSliceTools() {
+      this.slice.metadata.tools = !this.slice.metadata.tools
+    },
+    addInstance () {
+      // Setup the slice data
+      var data = {
+        metadata: Object.assign({}, this.slice.metadata)
+      }
+      data.metadata.placeholder = false
+      data.metadata.instance_id = 0
+
+      // Set the slices prop if it isn't there
+      if (!this.slice.slices) {
+        this.$set(this.slice, 'slices', [])
+      }
+
+      // Hydrate missing properties which also sets the defaults
+      this.hydrateMissingProperties(data)
+
+      // Push the slice into the slices array
+      this.slice.slices.push(data)
+    },
+    hydrateMissingProperties (data) {
+      let config = this.component(this.slice.metadata.name).config
+
+      if (config) {
+        // Loop through the config for this slice and check to see that all the
+        // fields are present. If they aren't it's just because they haven't been
+        // hydrated via the editor yet.
+        for (var prop in config) {
+          // Ok, so the property is missing from the slice.fields object so we're
+          // going to add in a stub for the render.
+          if (!data.hasOwnProperty(prop)) {
+            this.addMissingProperty(data, prop)
+
+            // If defaults are set then set them on top of the placeholder missing properties
+            if (config[prop].default) {
+              this.setDefaults(data, prop, config[prop].default)
+            }
+          }
+        }
+      }
+
+      return data
+    },
+    addMissingProperty (data, property) {
+      // We just add all the properties because.... why not?
+      this.$set(data, property, {
+        text: null,
+        url: null,
+        target: null,
+        color: null,
+        checked: null,
+        enabled: false
+      })
+    },
+    setDefaults (data, property, defaults) {
+      // loop through the defaults and apply them to the field
+      for (var d in defaults) {
+        this.$set(data[property], d, defaults[d])
+      }
     }
   },
   computed: {
     ...mapGetters('devise', [
+      'component',
       'fieldConfig'
     ]),
     fields () {

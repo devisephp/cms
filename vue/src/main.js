@@ -80,7 +80,7 @@ const DevisePlugin = {
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass
       // down any data to custom child components
-      props: ['devise', 'slices'],
+      props: ['devise', 'slices', 'models'],
       store: store
     })
   }

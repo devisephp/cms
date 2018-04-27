@@ -1,6 +1,6 @@
 <template>
-  <div v-if="localValue.slices">
-    <template v-if="template && localValue.slices.length > 0">
+  <div v-if="dataLoaded">
+    <template v-if="template">
       <iframe :src="`/templates/${template.id}`" class="dvs-w-full" id="devise-preview-iframe"></iframe>
     </template>
   </div>
@@ -15,12 +15,16 @@ export default {
   name: 'TemplateEdit',
   data () {
     return {
+      dataLoaded: false,
       localValue: {}
     }
   },
   mounted () {
+    let self = this
     this.retrieveAllTemplates()
-    this.getSlices()
+    this.getSlices().then(function () {
+      self.dataLoaded = true
+    })
     this.addListeners()
   },
   methods: {

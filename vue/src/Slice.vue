@@ -1,6 +1,6 @@
 <template>
   <!-- We pass in the config to simplify what the template needs to traverse -->
-  <component v-bind:is="currentView" :devise="deviseForSlice" :slices="devise.slices"></component>
+  <component v-bind:is="currentView" :devise="deviseForSlice" :slices="devise.slices" :models="pageData"></component>
 </template>
 
 <script>
@@ -62,6 +62,12 @@ export default {
         return this.devise.config
       }
       return this.devise
+    },
+    pageData () {
+      if (window.page && window.page.data) {
+        return window.page.data
+      }
+      return null
     },
     currentView () {
       if (this.devise.config) {

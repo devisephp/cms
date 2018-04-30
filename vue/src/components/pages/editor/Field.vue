@@ -2,7 +2,7 @@
   <div class="dvs-relative">
     <div class="dvs-flex dvs-justify-between dvs-items-center">
       <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4">
-        <div class="dvs-badge dvs-badge-empty dvs-mr-2" :class="{'dvs-bg-green-dark': localValue.enabled, 'dvs-bg-grey-light': !localValue.enabled}" :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration"></div>
+        <div class="dvs-badge dvs-badge-empty dvs-mr-2" :class="{'dvs-bg-green-dark': localValue.enabled, 'dvs-bg-grey-light': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration"></div>
         {{ options.label }}
       </div>
       <button class="dvs-btn dvs-btn-ghost dvs-btn-xs dvs-min-w-24" @click="showEditor = !showEditor">Edit Field</button>
@@ -18,7 +18,7 @@
           <button class="dvs-btn dvs-mr-2" @click="showEditor = false">Done</button>
           <button class="dvs-btn" @click="cancel">Cancel</button>
         </div>
-        <div class="dvs-flex dvs-items-center dvs-justify-between">
+        <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabled">
           <label class="dvs-mr-2">Field Enabled</label>
           <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
         </div>

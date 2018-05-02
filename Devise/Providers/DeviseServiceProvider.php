@@ -50,13 +50,17 @@ class DeviseServiceProvider extends ServiceProvider
 
   private function setPublishables()
   {
-    $this->publishes([
-      __DIR__ . '/../../vue/dist' => public_path('devise'),
-    ], 'devise-public');
+    // $this->publishes([
+    //   __DIR__ . '/../../vue/dist' => public_path('devise'),
+    // ], 'devise-public');
+    //
+    // $this->publishes([
+    //   __DIR__ . '/../../vue/src' => resource_path('assets/devise-dev'),
+    // ], 'devise-assets');
 
     $this->publishes([
-      __DIR__ . '/../../vue/src' => resource_path('assets/devise-dev'),
-    ], 'devise-assets');
+        __DIR__.'/../../config/devise.php' => config_path('devise.php'),
+    ]);
   }
 
   private function setRoutes()

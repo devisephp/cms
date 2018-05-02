@@ -23,6 +23,7 @@ export default {
   methods: {
     updateValue: function (value) {
       this.$emit('input', value)
+      this.$emit('update', value)
     }
   },
   props: ['value', 'settings', 'placeholder']

@@ -2118,67 +2118,8 @@ trix-toolbar .trix-button-group button:not(:first-child) {
 
 trix-toolbar .trix-button-group button::before {
   border-width: 0;
-  background-image: none !important;
-  font-family: 'FontAwesome';
+  margin: .5rem;
   font-size: 12px;
-  line-height: 3rem;
-  text-indent: 0;
-}
-
-trix-toolbar .trix-button--icon:disabled::before {
-  opacity: 1;
-}
-
-trix-toolbar .trix-button--icon-bold:before {
-  content: '\F032';
-}
-
-trix-toolbar .trix-button--icon-italic::before {
-  content: '\F033';
-}
-
-trix-toolbar .trix-button--icon-link::before {
-  content: '\F0C1';
-}
-
-trix-toolbar .trix-button--icon-strike::before {
-  content: '\F0CC';
-}
-
-trix-toolbar .trix-button--icon-quote::before {
-  content: '\F10E';
-}
-
-trix-toolbar .trix-button--icon-code::before {
-  content: '\F121';
-}
-
-trix-toolbar .trix-button--icon-bullet-list::before {
-  content: '\F03A';
-}
-
-trix-toolbar .trix-button--icon-number-list::before {
-  content: '\F0CB';
-}
-
-trix-toolbar .trix-button--icon-decrease-nesting-level::before {
-  content: '\F03B';
-}
-
-trix-toolbar .trix-button--icon-increase-nesting-level::before {
-  content: '\F03C';
-}
-
-trix-toolbar .trix-button--icon-undo::before {
-  content: '\F0E2';
-}
-
-trix-toolbar .trix-button--icon-redo::before {
-  content: '\F01E';
-}
-
-trix-toolbar .trix-button--icon-heading-1::before {
-  content: '\F1DC';
 }
 
 trix-editor {

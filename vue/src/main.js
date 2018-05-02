@@ -75,6 +75,13 @@ const DevisePlugin = {
         // Convienience method to push things into the router from templates
         goToPage (pageName) {
           this.$router.push({name: pageName})
+        },
+        launchMediaManager (callbackObject, callbackProperty) {
+          window.bus.$emit('devise-launch-media-manager', {
+            callback: function (media) {
+              callbackObject[callbackProperty] = media.url
+            }
+          })
         }
       },
       // This sets a prop to be accepted by all components in a custom Vue

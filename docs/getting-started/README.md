@@ -23,6 +23,11 @@ Devise does this by providing your clients with a super-slick, highly customizab
 * XML PHP Extension
 * Ctype PHP Extension
 * JSON PHP Extension
+* One of the Laravel supported databases
+  * MySQL
+  * PostgreSQL
+  * SQLite
+  * SQL Server
 
 ### Software Requirements
 

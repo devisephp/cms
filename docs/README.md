@@ -4,9 +4,15 @@
 
 This is where installation files should be
 
-## Documentation
+[Learn More](http://devisephp.com)
 
-This is a link to the documentation
+## Contributing
+<!-- TODO: Provide link to the contribution page -->
+We welcome pull requests and issues with open arms. However, please take a quick look at our contribution guidelines so that you can quick get up and running building Devise in the appropriate environment and so that your issues get resolved as quickly as possible.
+
+## Legacy Versions
+<!-- TODO: Provide link to the 1.x branch once it's created -->
+If you are looking for the 1.x version of Devise take a look here: Link to the 1.x branch
 
 ## License
 

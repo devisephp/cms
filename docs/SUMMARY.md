@@ -2,8 +2,7 @@ y
 
 * [Devise Documentation](README.md)
 * [Getting Started](getting-started/README.md)
-  * [About](getting-started/README.md)
-  * [Requirements](getting-started/README.md)
+  * [Requirements](getting-started/requirements.md)
   * [Installation](getting-started/installation/README.md)
     * [Full Installation](getting-started/installation/full-installation-instructions.md)
     * ["I Know Laravel" Installation](getting-started/installation/devise-installation-instructions.md)

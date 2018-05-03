@@ -16,9 +16,9 @@ Creating administration sections in your application that is already doing a bun
 
 This provides your team to be creative when making new templates, easier code to maintain, and quickly and cheaply test different scenarios with end users.
 
-## Available Fields
+## Available Field Types
 
-Devise ships with a bunch of useful fields.
+Devise ships with a bunch of useful fields for you to drop in. Additionally, you can add your own as well
 
 ### Checkbox
 
@@ -109,8 +109,100 @@ Loads a field to put the address of an image or select an image from the media m
     let module = {
       config: {
         myLink: {
-          type: 'myLink',
-          label: 'The Image'
+          type: 'link',
+          label: 'The Link'
+        }
+      }
+    }
+  </script>
+@endsection
+```
+
+### Number
+
+```
+@section('template')
+  <div>
+    @{{ devise.myNumberField.text }}
+  </div>
+@endsection
+
+@section('component')
+  <script>
+    let module = {
+      config: {
+        myNumberField: {
+          type: 'number',
+          label: 'The Number'
+        }
+      }
+    }
+  </script>
+@endsection
+```
+
+### Text
+
+```
+@section('template')
+  <div>
+    @{{ devise.myTextField.text }}
+  </div>
+@endsection
+
+@section('component')
+  <script>
+    let module = {
+      config: {
+        myTextField: {
+          type: 'text',
+          label: 'The Text Field'
+        }
+      }
+    }
+  </script>
+@endsection
+```
+
+### Text Area
+
+```
+@section('template')
+  <div>
+    @{{ devise.myTextareaField.text }}
+  </div>
+@endsection
+
+@section('component')
+  <script>
+    let module = {
+      config: {
+        myTextareaField: {
+          type: 'textarea',
+          label: 'The Textarea'
+        }
+      }
+    }
+  </script>
+@endsection
+```
+
+### Wysiwyg
+
+```
+@section('template')
+  <div>
+    <div v-html="devise.wysiwygField.text"></div>
+  </div>
+@endsection
+
+@section('component')
+  <script>
+    let module = {
+      config: {
+        wysiwygField: {
+          type: 'wysiwyg',
+          label: 'Some HTML content'
         }
       }
     }

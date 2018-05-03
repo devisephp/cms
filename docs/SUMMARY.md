@@ -6,7 +6,6 @@
     * ["I Know Laravel" Installation](getting-started/installation/devise-installation-instructions.md)
 * [Introduction: How Devise Works](how-devise-works/README.md)
   * [Slices](how-devise-works/slices/README.md)
-    * [Creating Your First Slice](how-devise-works/slices/creating-your-first-slice.md)
     * [Devise Fields](how-devise-works/slices/fields.md)
     * [Configuration](how-devise-works/slices/configuration.md)
     * [Model Data](how-devise-works/slices/model-data.md)

@@ -7,8 +7,6 @@ export default {
       var day = ('0' + dateObj.getDate()).slice(-2)
       var year = dateObj.getUTCFullYear()
 
-      console.log(day)
-
       return `${year}-${month}-${day}`
     }
   }

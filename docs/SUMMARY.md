@@ -6,7 +6,7 @@ y
   * [Requirements](getting-started/README.md)
   * [Installation](getting-started/installation/README.md)
     * [Full Installation](getting-started/installation/full-installation-instructions.md)
-    * ["I Know Laravel" Installation](getting-started/installation/devise-installation-instructionsE.md)
+    * ["I Know Laravel" Installation](getting-started/installation/devise-installation-instructions.md)
 * [Introduction: How Devise Works](how-devise-works/README.md)
   * [Structure](how-devise-works/README.md)
   * [Slices](how-devise-works/README.md)

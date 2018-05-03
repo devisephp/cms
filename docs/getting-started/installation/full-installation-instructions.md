@@ -26,4 +26,4 @@ This will create a new Laravel application directory.
 
 ## Congratulations!
 
-If you're seeing the Laravel welcome screen you can move on to the [Devise Installation Instructions](devise-installation-instructions)
+If you're seeing the Laravel welcome screen you can move on to the [Devise Installation Instructions](devise-installation-instructions.md)

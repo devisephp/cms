@@ -6,4 +6,4 @@ If you've never worked with Laravel before take a look at our [full installation
 
 ## "I'm a Laravel Ninja"
 
-If you've been down the Laravel road before set yourself up a new laravel project and then head here: [Devise installation instructions](devise-installation-instructions.md)
+If you've been down the Laravel road before set yourself up a new laravel project and then head here: [Devise installation instructions](./i-know-laravel-installation)

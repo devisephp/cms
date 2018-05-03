@@ -6,6 +6,7 @@ use Devise\Console\Commands\Install;
 use Devise\Devise;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Compilers\BladeCompiler;
 
 class DeviseServiceProvider extends ServiceProvider
@@ -24,6 +25,8 @@ class DeviseServiceProvider extends ServiceProvider
     $this->setRoutes();
 
     $this->loadLaravelResources();
+
+    $this->setCustomDirectives();
   }
 
   public function register()
@@ -77,5 +80,11 @@ class DeviseServiceProvider extends ServiceProvider
     $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'devise');
 
     $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');
+  }
+
+  private function setCustomDirectives() {
+    Blade::directive('slices', function ($expression) {
+        return "<?php echo '<slices :slices=\"slices\"/>' ?>";
+    });
   }
 }

@@ -72,7 +72,7 @@ Instructions give a little context to your content manager. It can also serve as
   </script>
 @endsection
 ```
-
+<!--
 ## Slice Types
 
 By default a slice can be used as any type in a template (single, repeats and model) but you can help filter this for your users when they don't make any sense to be included in certain ways. For instance, having the following slice wouldn't make sense to be included as a model because it doesn't utilize any so we'll just include it in the single and repeats.
@@ -98,4 +98,4 @@ By default a slice can be used as any type in a template (single, repeats and mo
     }
   </script>
 @endsection
-```
+``` -->

@@ -64266,27 +64266,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SliceEditor__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SliceEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__SliceEditor__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__editor_Checkbox__ = __webpack_require__(292);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__editor_Checkbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__editor_Checkbox__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__editor_Color__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__editor_Color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__editor_Color__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__editor_Image__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__editor_Image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__editor_Image__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__editor_Link__ = __webpack_require__(306);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__editor_Link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__editor_Link__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editor_Number__ = __webpack_require__(309);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editor_Number___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__editor_Number__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__editor_Textarea__ = __webpack_require__(312);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__editor_Textarea___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__editor_Textarea__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__editor_Text__ = __webpack_require__(315);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__editor_Text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__editor_Text__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__editor_Wysiwyg__ = __webpack_require__(318);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__editor_Wysiwyg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__editor_Wysiwyg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_object_assign__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_object_assign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SliceEditor__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SliceEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__SliceEditor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__editor_Checkbox__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__editor_Checkbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__editor_Checkbox__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__editor_Color__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__editor_Color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__editor_Color__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__editor_Image__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__editor_Image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__editor_Image__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editor_Link__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editor_Link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__editor_Link__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__editor_Number__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__editor_Number___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__editor_Number__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__editor_Textarea__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__editor_Textarea___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__editor_Textarea__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__editor_Text__ = __webpack_require__(315);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__editor_Text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__editor_Text__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__editor_Wysiwyg__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__editor_Wysiwyg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__editor_Wysiwyg__);
 
 
+
+//
 //
 //
 //
@@ -64384,9 +64388,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     toggleSliceTools: function toggleSliceTools() {
       this.slice.metadata.tools = !this.slice.metadata.tools;
+    },
+    addInstance: function addInstance() {
+      // Setup the slice data
+      var data = {
+        metadata: __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_object_assign___default()({}, this.slice.metadata)
+      };
+      data.metadata.placeholder = false;
+      data.metadata.instance_id = 0;
+
+      // Set the slices prop if it isn't there
+      if (!this.slice.slices) {
+        this.$set(this.slice, 'slices', []);
+      }
+
+      // Hydrate missing properties which also sets the defaults
+      this.hydrateMissingProperties(data);
+
+      // Push the slice into the slices array
+      this.slice.slices.push(data);
+    },
+    hydrateMissingProperties: function hydrateMissingProperties(data) {
+      var config = this.component(this.slice.metadata.name).config;
+
+      if (config) {
+        // Loop through the config for this slice and check to see that all the
+        // fields are present. If they aren't it's just because they haven't been
+        // hydrated via the editor yet.
+        for (var prop in config) {
+          // Ok, so the property is missing from the slice.fields object so we're
+          // going to add in a stub for the render.
+          if (!data.hasOwnProperty(prop)) {
+            this.addMissingProperty(data, prop);
+
+            // If defaults are set then set them on top of the placeholder missing properties
+            if (config[prop].default) {
+              this.setDefaults(data, prop, config[prop].default);
+            }
+          }
+        }
+      }
+
+      return data;
+    },
+    addMissingProperty: function addMissingProperty(data, property) {
+      // We just add all the properties because.... why not?
+      this.$set(data, property, {
+        text: null,
+        url: null,
+        target: null,
+        color: null,
+        checked: null,
+        enabled: false
+      });
+    },
+    setDefaults: function setDefaults(data, property, defaults) {
+      // loop through the defaults and apply them to the field
+      for (var d in defaults) {
+        this.$set(data[property], d, defaults[d]);
+      }
     }
   },
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['component', 'fieldConfig']), {
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])('devise', ['component', 'fieldConfig']), {
     fields: function fields() {
       var fields = {};
       for (var potentialField in this.slice) {
@@ -64402,15 +64465,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   }),
   props: ['slice'],
   components: {
-    SliceEditor: __WEBPACK_IMPORTED_MODULE_3__SliceEditor___default.a,
-    CheckboxEditor: __WEBPACK_IMPORTED_MODULE_4__editor_Checkbox___default.a,
-    ColorEditor: __WEBPACK_IMPORTED_MODULE_5__editor_Color___default.a,
-    ImageEditor: __WEBPACK_IMPORTED_MODULE_6__editor_Image___default.a,
-    LinkEditor: __WEBPACK_IMPORTED_MODULE_7__editor_Link___default.a,
-    NumberEditor: __WEBPACK_IMPORTED_MODULE_8__editor_Number___default.a,
-    TextareaEditor: __WEBPACK_IMPORTED_MODULE_9__editor_Textarea___default.a,
-    TextEditor: __WEBPACK_IMPORTED_MODULE_10__editor_Text___default.a,
-    WysiwygEditor: __WEBPACK_IMPORTED_MODULE_11__editor_Wysiwyg___default.a
+    SliceEditor: __WEBPACK_IMPORTED_MODULE_4__SliceEditor___default.a,
+    CheckboxEditor: __WEBPACK_IMPORTED_MODULE_5__editor_Checkbox___default.a,
+    ColorEditor: __WEBPACK_IMPORTED_MODULE_6__editor_Color___default.a,
+    ImageEditor: __WEBPACK_IMPORTED_MODULE_7__editor_Image___default.a,
+    LinkEditor: __WEBPACK_IMPORTED_MODULE_8__editor_Link___default.a,
+    NumberEditor: __WEBPACK_IMPORTED_MODULE_9__editor_Number___default.a,
+    TextareaEditor: __WEBPACK_IMPORTED_MODULE_10__editor_Textarea___default.a,
+    TextEditor: __WEBPACK_IMPORTED_MODULE_11__editor_Text___default.a,
+    WysiwygEditor: __WEBPACK_IMPORTED_MODULE_12__editor_Wysiwyg___default.a
   }
 });
 
@@ -68477,7 +68540,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     });
   },
 
-  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('devise', ['getTemplates', 'updateTemplate', 'getSlices', 'getSlicesDirectories', 'getModels', 'getModelSettings']), {
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])('devise', ['getTemplates', 'updateTemplate', 'getSlices', 'getSlicesDirectories']), {
     requestSaveTemplate: function requestSaveTemplate() {
       var self = this;
 
@@ -68539,7 +68602,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window.parent.postMessage({ type: 'goBack' }, '*');
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['component', 'slicesList', 'slicesDirectories', 'template', 'models', 'modelSettings']), {
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['component', 'slicesList', 'slicesDirectories', 'template']), {
     anySliceOpen: function anySliceOpen() {
       for (var i = 0; i < this.localValue.slices.length; i++) {
         if (this.localValue.slices[i].metadata.open) {

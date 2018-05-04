@@ -52,7 +52,7 @@ const getters = {
   },
 
   // Models
-  models: state => {
+  storeModels: state => {
     return state.models
   },
 

@@ -70413,7 +70413,7 @@ This component manages the following:
       };
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['componentFromView', 'models', 'modelSettings', 'slicesList', 'slicesDirectories'])),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['componentFromView', 'storeModels', 'modelSettings', 'slicesList', 'slicesDirectories'])),
   components: {
     SuperTable: __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable___default.a
   },
@@ -75132,7 +75132,7 @@ var render = function() {
                             _vm._v("Select a Model")
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.models, function(model) {
+                          _vm._l(_vm.storeModels, function(model) {
                             return _c(
                               "option",
                               { domProps: { value: model } },
@@ -100197,7 +100197,7 @@ var getters = {
   },
 
   // Models
-  models: function models(state) {
+  storeModels: function storeModels(state) {
     return state.models;
   },
 

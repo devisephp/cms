@@ -135,7 +135,7 @@ class Framework
         break;
 
       case 'mimetypeguesser':
-        return App::make(MimeTypeGuesser::class);
+        return MimeTypeGuesser::getInstance();
         break;
     }
 

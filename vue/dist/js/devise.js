@@ -65950,6 +65950,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -66030,34 +66033,42 @@ var render = function() {
           _vm._v("Image")
         ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.localValue.url,
-              expression: "localValue.url"
-            }
-          ],
-          attrs: { type: "text", maxlength: _vm.getMaxLength },
-          domProps: { value: _vm.localValue.url },
-          on: {
-            input: [
-              function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.localValue, "url", $event.target.value)
-              },
-              function($event) {
-                _vm.updateValue()
+        _c("div", { staticClass: "dvs-flex dvs-items-center" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.localValue.url,
+                expression: "localValue.url"
               }
             ],
-            focus: function($event) {
-              _vm.launchMediaManager($event)
+            attrs: { type: "text", maxlength: _vm.getMaxLength },
+            domProps: { value: _vm.localValue.url },
+            on: {
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.localValue, "url", $event.target.value)
+                },
+                function($event) {
+                  _vm.updateValue()
+                }
+              ]
             }
-          }
-        }),
+          }),
+          _vm._v(" "),
+          _c("i", {
+            staticClass: "ion-images dvs-text-3xl dvs-ml-4 dvs-cursor-pointer",
+            on: {
+              click: function($event) {
+                _vm.launchMediaManager($event)
+              }
+            }
+          })
+        ]),
         _vm._v(" "),
         _c("label", { staticClass: "dvs-mt-4 dvs-large-label" }, [
           _vm._v("Alt Tag")

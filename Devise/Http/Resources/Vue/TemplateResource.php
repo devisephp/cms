@@ -15,12 +15,13 @@ class TemplateResource extends Resource
   public function toArray($request)
   {
     return [
-      'id'         => $this->id,
-      'name'       => $this->name,
-      'layout'     => $this->layout,
-      'slices'     => TemplateSliceResource::collection($this->slices),
-      'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-      'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
+      'id'            => $this->id,
+      'name'          => $this->name,
+      'layout'        => $this->layout,
+      'slices'        => TemplateSliceResource::collection($this->slices),
+      'model_queries' => $this->model_queries,
+      'created_at'    => $this->created_at->format('Y-m-d H:i:s'),
+      'updated_at'    => $this->updated_at->format('Y-m-d H:i:s')
     ];
   }
 }

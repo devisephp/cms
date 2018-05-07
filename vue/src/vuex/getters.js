@@ -1,4 +1,12 @@
 const getters = {
+  breakpoint: state => {
+    return state.breakpoint.breakpoint
+  },
+
+  breakpointAndDimensions: state => {
+    return state.breakpoint
+  },
+
   // This takes a component name and returns the corresponding component from
   // window.deviseComponents. This contains the name, template, and field
   // configuration.

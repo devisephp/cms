@@ -3,6 +3,18 @@ import commonUtils from './utils/common'
 const actions = {
 
   /*
+  * Breakpoint
+  */
+  setBreakpoint (context, data) {
+    return new Promise((resolve, reject) => {
+      context.commit('setBreakpoint', data)
+      resolve(data)
+    }).catch(function (error) {
+      window.bus.$emit('showError', error)
+    })
+  },
+
+  /*
   * Languages
   */
   getLanguages (context) {

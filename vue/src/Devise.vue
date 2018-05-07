@@ -5,17 +5,17 @@
       <loadbar v-if="isLoggedIn" />
       <messages v-if="isLoggedIn" />
       <media-manager v-if="isLoggedIn" />
-      <div id="devise-container" :class="{'admin-closed': adminClosed, 'wide-admin': wideAdmin, 'preview-frame': isPreviewFrame}">
+      <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
             <user></user>
             <transition name="fade" mode="out-in">
               <router-view name="devise" :page="page"></router-view>
             </transition>
         </div>
-        <div class="dvs-flex-grow dvs-flex dvs-justify-center">
+        <div class="dvs-flex-grow dvs-flex dvs-justify-center dvs-max-w-full">
 
           <!-- Desktop mode in editor or just viewing page -->
-          <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame" >
+          <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
             <slot name="on-top"></slot>
             <slot name="static-content"></slot>
 
@@ -28,7 +28,7 @@
           </div>
 
           <!-- Preview mode in editor -->
-          <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
+          <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
 
         </div>
 
@@ -61,6 +61,8 @@ import TemplateIndex from './components/templates/Index'
 import TemplateEdit from './components/templates/Edit'
 import TemplateEditor from './components/templates/TemplateEditor'
 import User from './components/menu/User'
+
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Devise',
@@ -100,8 +102,13 @@ export default {
     })
 
     this.checkWidthOfInterface(this.$route)
+    this.setSizeAndBreakpoint()
+    this.addWatchers()
   },
   methods: {
+    ...mapActions('devise', [
+      'setBreakpoint'
+    ]),
     initDevise () {
       try {
         if (!this.isPreviewFrame) {
@@ -130,9 +137,35 @@ export default {
         this.goToPage('devise-page-editor')
         this.wideAdmin = false
       }
+    },
+    addWatchers () {
+      window.onresize = this.setSizeAndBreakpoint
+    },
+    setSizeAndBreakpoint () {
+      let width = window.innerWidth
+      let height = window.innerHeight
+      let breakpoint = this.findBreakpoint(width)
+
+      this.setBreakpoint({
+        breakpoint: breakpoint,
+        diminsions: {width: width, height: height}
+      })
+    },
+    findBreakpoint (width) {
+      for (var breakpoint in this.deviseOptions.breakpoints) {
+        if (this.deviseOptions.breakpoints.hasOwnProperty(breakpoint)) {
+          if (width < this.deviseOptions.breakpoints[breakpoint]) {
+            return breakpoint
+          }
+        }
+      }
+      return 'ultraWideDesktop'
     }
   },
   computed: {
+    ...mapGetters('devise', [
+      'breakpoint'
+    ]),
     currentUrl () {
       return window.location.href
     },

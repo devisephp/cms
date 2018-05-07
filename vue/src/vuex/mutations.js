@@ -1,6 +1,11 @@
 export default {
 
   // Languages
+  setBreakpoint (state, payload) {
+    state.breakpoint = payload
+  },
+
+  // Languages
   setLanguages (state, payload) {
     state.languages = payload
   },

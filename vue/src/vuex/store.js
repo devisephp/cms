@@ -13,6 +13,13 @@ const state = {
   api: {
     baseUrl: '/api/devise/'
   },
+  breakpoint: {
+    breakpoint: null,
+    diminsions: {
+      width: null,
+      height: null
+    }
+  },
   // Media Manager
   currentDirectory: '.',
   files: [],

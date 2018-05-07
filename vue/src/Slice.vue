@@ -1,6 +1,6 @@
 <template>
   <!-- We pass in the config to simplify what the template needs to traverse -->
-  <component v-bind:is="currentView" :devise="deviseForSlice" :slices="devise.slices" :models="pageData"></component>
+  <component v-bind:is="currentView" :devise="deviseForSlice" :slices="devise.slices" :models="pageData" :responsive-breakpoint="breakpoint"></component>
 </template>
 
 <script>
@@ -66,7 +66,8 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'sliceConfig'
+      'sliceConfig',
+      'breakpoint'
     ]),
     deviseForSlice () {
       if (this.devise.config) {

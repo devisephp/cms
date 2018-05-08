@@ -165,7 +165,7 @@ class DvsPage extends Model
     $data = [];
 
     if($this->currentVersion && $this->currentVersion->template && $this->currentVersion->template->model_queries){
-      $queries = json_decode($this->currentVersion->template->model_queries);
+      $queries = $this->currentVersion->template->model_queries;
       if($queries){
         $repository = App::make(ModelRepository::class);
 

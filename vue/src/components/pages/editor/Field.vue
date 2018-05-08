@@ -9,7 +9,7 @@
     </div>
     <div class="dvs-bg-grey-lighter dvs-relative dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded-sm">
       <slot name="preview"></slot>
-      <i class="ion-help-circled dvs-absolute dvs-pin-t dvs-pin-r dvs-text-lg dvs-mr-2 dvs-mt-2" :title="`Notes from the developer: ${localValue.instructions}`" v-tippy="tippyConfiguration"></i>
+      <i class="ion-help-circled dvs-absolute dvs-pin-t dvs-pin-r dvs-text-lg dvs-mr-2 dvs-mt-2" :title="`Notes from the developer: ${localValue.instructions}`" v-tippy="tippyConfiguration" v-if="localValue.instructions"></i>
     </div>
     <div v-show="showEditor" class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-l dvs-mx-8 dvs-mb-8 dvs-z-10 dvs-min-w-3/5">
       <slot name="editor"></slot>

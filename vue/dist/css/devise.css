@@ -895,6 +895,10 @@ button,
           transform: rotate(172deg) skew(60deg);
 }
 
+.dvs-bg-black-50 {
+  background-color: rgba(0, 0, 0, .5);
+}
+
 .vc-photoshop {
   font-family: system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 }
@@ -1083,8 +1087,7 @@ button,
   left: 0;
   bottom: 0;
   top: 0;
-  overflow-y: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
+  overflow-y: scroll;
   z-index: 20;
   top: 100px;
   min-width: 350px;
@@ -1429,10 +1432,15 @@ button,
   margin-right: 1rem;
 }
 
-.media-manager .dvs-grid-preview .dvs-preview {
+.media-manager .dvs-grid-preview {
   background-size: cover;
-  width: 150px;
-  height: 150px;
+  overflow: hidden;
+  background-position: center;
+  border-radius: .125rem;
+  width: 200px;
+  height: 200px;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .dvs-modal {
@@ -2131,22 +2139,6 @@ trix-editor {
   padding: 1rem;
 }
 
-.dvs-container {
-  width: 100%;
-}
-
-@media (min-width: 768px) {
-  .dvs-container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 992px) {
-  .dvs-container {
-    max-width: 992px;
-  }
-}
-
 .dvs-list-reset {
   list-style: none;
   padding: 0;
@@ -2292,6 +2284,46 @@ trix-editor {
 
 .hover\:dvs-bg-pink:hover {
   background-color: #f66d9b;
+}
+
+.dvs-bg-bottom {
+  background-position: bottom;
+}
+
+.dvs-bg-center {
+  background-position: center;
+}
+
+.dvs-bg-left {
+  background-position: left;
+}
+
+.dvs-bg-left-bottom {
+  background-position: left bottom;
+}
+
+.dvs-bg-left-top {
+  background-position: left top;
+}
+
+.dvs-bg-right {
+  background-position: right;
+}
+
+.dvs-bg-right-bottom {
+  background-position: right bottom;
+}
+
+.dvs-bg-right-top {
+  background-position: right top;
+}
+
+.dvs-bg-top {
+  background-position: top;
+}
+
+.dvs-bg-auto {
+  background-size: auto;
 }
 
 .dvs-bg-cover {
@@ -2748,6 +2780,14 @@ trix-editor {
 
 .dvs-cursor-pointer {
   cursor: pointer;
+}
+
+.dvs-cursor-wait {
+  cursor: wait;
+}
+
+.dvs-cursor-move {
+  cursor: move;
 }
 
 .dvs-cursor-not-allowed {
@@ -4072,14 +4112,20 @@ trix-editor {
   overflow: scroll;
 }
 
-.dvs-overflow-x-scroll {
+.dvs-overflow-x-auto {
   overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.dvs-overflow-y-auto {
+  overflow-y: auto;
+}
+
+.dvs-overflow-x-scroll {
+  overflow-x: scroll;
 }
 
 .dvs-overflow-y-scroll {
-  overflow-y: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
+  overflow-y: scroll;
 }
 
 .dvs-scrolling-touch {
@@ -4382,6 +4428,11 @@ trix-editor {
 
 .dvs-relative {
   position: relative;
+}
+
+.dvs-sticky {
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 .dvs-pin-none {
@@ -5085,6 +5136,46 @@ trix-editor {
     background-color: #f66d9b;
   }
 
+  .md\:dvs-bg-bottom {
+    background-position: bottom;
+  }
+
+  .md\:dvs-bg-center {
+    background-position: center;
+  }
+
+  .md\:dvs-bg-left {
+    background-position: left;
+  }
+
+  .md\:dvs-bg-left-bottom {
+    background-position: left bottom;
+  }
+
+  .md\:dvs-bg-left-top {
+    background-position: left top;
+  }
+
+  .md\:dvs-bg-right {
+    background-position: right;
+  }
+
+  .md\:dvs-bg-right-bottom {
+    background-position: right bottom;
+  }
+
+  .md\:dvs-bg-right-top {
+    background-position: right top;
+  }
+
+  .md\:dvs-bg-top {
+    background-position: top;
+  }
+
+  .md\:dvs-bg-auto {
+    background-size: auto;
+  }
+
   .md\:dvs-bg-cover {
     background-size: cover;
   }
@@ -5539,6 +5630,14 @@ trix-editor {
 
   .md\:dvs-cursor-pointer {
     cursor: pointer;
+  }
+
+  .md\:dvs-cursor-wait {
+    cursor: wait;
+  }
+
+  .md\:dvs-cursor-move {
+    cursor: move;
   }
 
   .md\:dvs-cursor-not-allowed {
@@ -6863,14 +6962,20 @@ trix-editor {
     overflow: scroll;
   }
 
-  .md\:dvs-overflow-x-scroll {
+  .md\:dvs-overflow-x-auto {
     overflow-x: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  .md\:dvs-overflow-y-auto {
+    overflow-y: auto;
+  }
+
+  .md\:dvs-overflow-x-scroll {
+    overflow-x: scroll;
   }
 
   .md\:dvs-overflow-y-scroll {
-    overflow-y: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow-y: scroll;
   }
 
   .md\:dvs-scrolling-touch {
@@ -7173,6 +7278,11 @@ trix-editor {
 
   .md\:dvs-relative {
     position: relative;
+  }
+
+  .md\:dvs-sticky {
+    position: -webkit-sticky;
+    position: sticky;
   }
 
   .md\:dvs-pin-none {
@@ -7877,6 +7987,46 @@ trix-editor {
     background-color: #f66d9b;
   }
 
+  .lg\:dvs-bg-bottom {
+    background-position: bottom;
+  }
+
+  .lg\:dvs-bg-center {
+    background-position: center;
+  }
+
+  .lg\:dvs-bg-left {
+    background-position: left;
+  }
+
+  .lg\:dvs-bg-left-bottom {
+    background-position: left bottom;
+  }
+
+  .lg\:dvs-bg-left-top {
+    background-position: left top;
+  }
+
+  .lg\:dvs-bg-right {
+    background-position: right;
+  }
+
+  .lg\:dvs-bg-right-bottom {
+    background-position: right bottom;
+  }
+
+  .lg\:dvs-bg-right-top {
+    background-position: right top;
+  }
+
+  .lg\:dvs-bg-top {
+    background-position: top;
+  }
+
+  .lg\:dvs-bg-auto {
+    background-size: auto;
+  }
+
   .lg\:dvs-bg-cover {
     background-size: cover;
   }
@@ -8331,6 +8481,14 @@ trix-editor {
 
   .lg\:dvs-cursor-pointer {
     cursor: pointer;
+  }
+
+  .lg\:dvs-cursor-wait {
+    cursor: wait;
+  }
+
+  .lg\:dvs-cursor-move {
+    cursor: move;
   }
 
   .lg\:dvs-cursor-not-allowed {
@@ -9655,14 +9813,20 @@ trix-editor {
     overflow: scroll;
   }
 
-  .lg\:dvs-overflow-x-scroll {
+  .lg\:dvs-overflow-x-auto {
     overflow-x: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  .lg\:dvs-overflow-y-auto {
+    overflow-y: auto;
+  }
+
+  .lg\:dvs-overflow-x-scroll {
+    overflow-x: scroll;
   }
 
   .lg\:dvs-overflow-y-scroll {
-    overflow-y: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow-y: scroll;
   }
 
   .lg\:dvs-scrolling-touch {
@@ -9965,6 +10129,11 @@ trix-editor {
 
   .lg\:dvs-relative {
     position: relative;
+  }
+
+  .lg\:dvs-sticky {
+    position: -webkit-sticky;
+    position: sticky;
   }
 
   .lg\:dvs-pin-none {

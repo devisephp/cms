@@ -3,7 +3,7 @@
     <div class="dvs-blocker dvs-z-30" @click="show = false"></div>
     <div class="media-manager">
       <div v-if="!loaded" class="media-manager-interface">
-        <div class="absolute absolute-center w-1/2">
+        <div class="dvs-absolute dvs-absolute-center dvs-w-1/2">
           <loadbar :percentage="0.5"/>
         </div>
       </div>
@@ -30,7 +30,7 @@
 
           <div class="dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter dvs-min-w-1/3">
 
-            <ul class="list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">
+            <ul class="dvs-list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">
               <li v-for="directory in directories" class="dvs-cursor-pointer dvs-mt-2 dvs-text-bold" @click="changeDirectories(directory.path)">
                 <i class="ion-folder dvs-mr-2"></i>
                 {{ directory.name }}
@@ -76,10 +76,12 @@
                 'dvs-flex dvs-flex-wrap': !listMode
               }"
              v-else>
-              <li v-for="file in files" class="dvs-relative dvs-bg-white dvs-card dvs-p-4 dvs-mt-2 dvs-px`-8"
+              <li v-for="file in files" class="dvs-relative dvs-bg-white dvs-card dvs-mt-2"
                 :class="{
-                  'cursor-pointer': !file.on,
-                  'dvs-border-b dvs-border-lighter': listMode
+                  'dvs-cursor-pointer': !file.on,
+                  'dvs-border-b dvs-border-lighter': listMode,
+                  'dvs-p-4 dvs-px-8': listMode,
+                  'dvs-p-0 dvs-m-2' : !listMode
                 }"
                 @click="openFile(file)">
 
@@ -100,19 +102,21 @@
                   </div>
 
                   <!-- Grid Mode -->
-                  <div class="dvs-shadow dvs-p-4 dvs-grid-preview" v-else>
-                    <div class="dvs-preview" :style="`background-image:url(${file.url})`"></div>
-                    <h6>{{ file.name }}</h6>
+                  <div class="dvs-grid-preview" :style="`background-image:url(${file.url})`" v-else>
+                    <h6 class="dvs-text-xs dvs-w-full dvs-py-2 dvs-bg-black-50 dvs-text-white dvs-absolute dvs-pin-b dvs-text-center dvs-rounded-sm">{{ file.name }}</h6>
                   </div>
                 </div>
 
                 <!-- Open File -->
-                <div v-else class="flex">
+                <div v-else class="dvs-flex dvs-p-4">
                   <!-- List Mode -->
                   <template v-if="listMode">
                     <div class="dvs-w-1/2 dvs-mr-8 dvs-flex dvs-flex-col dvs-justify-between">
-                      <a :href="file.url" target="_blank"><img :src="file.url"></a>
-                      <i class="ion-trash-a dvs-mt-4 dvs-mr-4 dvs-cursor-pointer dvs-text-xl" v-devise-alert-confirm="{callback: requestDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}"></i>
+                      <img :src="file.url" class="dvs-cursor-pointer" @click="selectFile(file)">
+                      <div class="dvs-flex">
+                        <i class="ion-trash-a dvs-text-2xl dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: requestDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}"></i>
+                        <a :href="file.url" target="_blank"><i class="ion-link dvs-mt-4 dvs-mr-4 dvs-cursor-pointer dvs-text-2xl"></i></a>
+                      </div>
                     </div>
                     <div class="dvs-w-1/2">
                       <h6>Filename</h6>

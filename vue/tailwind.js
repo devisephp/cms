@@ -863,7 +863,7 @@ module.exports = {
     appearance: ['responsive'],
     backgroundAttachment: false,
     backgroundColors: ['responsive', 'hover'],
-    backgroundPosition: false,
+    backgroundPosition: ['responsive'],
     backgroundRepeat: false,
     backgroundSize: ['responsive'],
     borderColors: ['responsive', 'hover'],

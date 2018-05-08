@@ -19,11 +19,11 @@
 
   .dvs-grid-preview {
 
-    .dvs-preview {
-      @apply dvs-bg-cover;
+    @apply dvs-bg-cover dvs-overflow-hidden dvs-bg-center dvs-rounded-sm;
 
-      width:150px;
-      height:150px;
-    }
+    width:200px;
+    height:200px;
+    max-width:200px;
+    max-height:200px;
   }
 }

@@ -5,6 +5,7 @@
       <i v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'" class="ion-plus" @click.stop="addInstance(slice)"></i>
     </strong>
 
+
     <div class="dvs-collapsed">
       <div class="dvs-pt-4" v-if="!slice.metadata.placeholder">
         <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-8 dvs-pl-4" :key="key">

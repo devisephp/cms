@@ -54,11 +54,20 @@ const DevisePlugin = {
     // Register alert / confirm directive
     Vue.directive('devise-alert-confirm', alertConfirm)
 
+    let deviseOptions = Object.assign({
+      breakpoints: {
+        mobile: 575,
+        tablet: 768,
+        desktop: 991,
+        largeDesktop: 1199
+      }
+    }, options)
+
     // We call Vue.mixin() here to inject functionality into all components.
     Vue.mixin({
       data () {
         return {
-          deviseOptions: options,
+          deviseOptions: deviseOptions,
           tippyConfiguration: {
             interactive: true,
             animation: 'shift-toward',
@@ -75,12 +84,19 @@ const DevisePlugin = {
         // Convienience method to push things into the router from templates
         goToPage (pageName) {
           this.$router.push({name: pageName})
+        },
+        launchMediaManager (callbackObject, callbackProperty) {
+          window.bus.$emit('devise-launch-media-manager', {
+            callback: function (media) {
+              callbackObject[callbackProperty] = media.url
+            }
+          })
         }
       },
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass
       // down any data to custom child components
-      props: ['devise', 'slices', 'models'],
+      props: ['devise', 'slices', 'models', 'responsiveBreakpoint'],
       store: store
     })
   }

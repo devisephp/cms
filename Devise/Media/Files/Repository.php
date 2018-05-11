@@ -126,7 +126,7 @@ class Repository
 
     if (!$this->Filesystem->exists($this->basepath))
     {
-      $this->Filesystem->makeDirectory($this->basepath, 0775);
+      $this->Filesystem->makeDirectory($this->basepath, 0775, true);
     }
 
     return true;

@@ -135,6 +135,9 @@ class Manager
    */
   private function getThumbnailPath($currentName)
   {
+    if(strpos($currentName, '/') > 0){
+      $currentName = '/' . $currentName;
+    }
     return $this->Paths->fileVersionInfo($this->CategoryPaths->basePath() . $currentName)->thumbnail;
   }
 

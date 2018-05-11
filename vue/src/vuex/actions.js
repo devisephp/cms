@@ -3,6 +3,18 @@ import commonUtils from './utils/common'
 const actions = {
 
   /*
+  * Breakpoint
+  */
+  setBreakpoint (context, data) {
+    return new Promise((resolve, reject) => {
+      context.commit('setBreakpoint', data)
+      resolve(data)
+    }).catch(function (error) {
+      window.bus.$emit('showError', error)
+    })
+  },
+
+  /*
   * Languages
   */
   getLanguages (context) {
@@ -407,8 +419,7 @@ const actions = {
 
   getAnalytics (context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.get('http://104.236.153.6/api/v1/analytics').then(function (response) {
-        context.commit('updatePageVersionAnalytics', {page: payload.page, version: payload.version, data: response.data})
+      window.axios.get(`http://104.236.153.6/api/v1/analytics?key=${window.mothership['project-key']}&view=${window.mothership['analytics-view']}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         window.bus.$emit('showError', error)

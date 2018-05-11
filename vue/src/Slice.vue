@@ -1,6 +1,6 @@
 <template>
   <!-- We pass in the config to simplify what the template needs to traverse -->
-  <component v-bind:is="currentView" :devise="deviseForSlice" :slices="devise.slices" :models="pageData"></component>
+  <component v-bind:is="currentView" :devise="deviseForSlice" :slices="devise.slices" :models="pageData" :responsive-breakpoint="breakpoint"></component>
 </template>
 
 <script>
@@ -26,11 +26,15 @@ export default {
           // going to add in a stub for the render.
           if (!this.devise.hasOwnProperty(prop)) {
             this.addMissingProperty(prop)
+            this.addPropertyConfigurations(config, prop)
 
             // If defaults are set then set them on top of the placeholder missing properties
             if (config[prop].default) {
               this.setDefaults(prop, config[prop].default)
             }
+          } else {
+            // The property is present but we need to make sure all the custom set properties are moved over
+            this.addPropertyConfigurations(config, prop)
           }
         }
       }
@@ -43,8 +47,15 @@ export default {
         target: null,
         color: null,
         checked: null,
-        enabled: false
+        enabled: true
       })
+    },
+    addPropertyConfigurations (config, prop) {
+      for (var pp in config[prop]) {
+        if (!this.devise[prop].hasOwnProperty(pp)) {
+          this.$set(this.devise[prop], pp, config[prop][pp])
+        }
+      }
     },
     setDefaults (property, defaults) {
       // loop through the defaults and apply them to the field
@@ -55,7 +66,8 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'sliceConfig'
+      'sliceConfig',
+      'breakpoint'
     ]),
     deviseForSlice () {
       if (this.devise.config) {

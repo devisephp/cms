@@ -50,7 +50,7 @@
           <label>Select a Model</label>
           <select v-model="sliceToAdd.model">
             <option :value="null">Select a Model</option>
-            <option :value="model" v-for="model in models">{{ model.name }}</option>
+            <option :value="model" v-for="model in storeModels">{{ model.name }}</option>
           </select>
         </fieldset>
         <button class="dvs-btn" :disabled="!sliceToAdd.model" @click="selectModelToAdd()">Select</button>
@@ -243,7 +243,7 @@
     computed: {
       ...mapGetters('devise', [
         'componentFromView',
-        'models',
+        'storeModels',
         'modelSettings',
         'slicesList',
         'slicesDirectories'

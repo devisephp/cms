@@ -27,6 +27,10 @@ class Devise
     {
       $js .= self::sites();
       $js .= self::pageData($page);
+
+      if (Auth::user()) {
+        $js .= self::mothership();
+      }
     } else
     {
       $js .= self::template($page);
@@ -59,6 +63,11 @@ class Devise
   public static function components()
   {
     return "window.deviseComponents = {" . implode(',', self::$components) . "};\n";
+  }
+
+  public static function mothership()
+  {
+    return "window.mothership = " . json_encode(config('devise.mothership')) . ";\n";
   }
 
   public static function pageData($page)

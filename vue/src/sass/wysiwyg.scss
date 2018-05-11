@@ -302,72 +302,13 @@ trix-toolbar {
       }
 
       &::before {
-        @apply dvs-border-0;
-        background-image: none !important;
-        font-family: 'FontAwesome';
+        @apply dvs-border-0 dvs-m-2;
         font-size: 12px;
-        line-height: 3rem;
-        text-indent:0;
       }
     }
   }
 }
 
-trix-toolbar .trix-button--icon:disabled::before {
-  opacity:1;
-}
-
-trix-toolbar .trix-button--icon-bold:before {
-  content: '\f032';
-}
-
-trix-toolbar .trix-button--icon-italic::before {
-  content: '\f033';
-}
-
-trix-toolbar .trix-button--icon-link::before {
-  content: '\f0c1';
-}
-
-trix-toolbar .trix-button--icon-strike::before {
-  content: '\f0cc';
-}
-
-trix-toolbar .trix-button--icon-quote::before {
-  content: '\f10e';
-}
-
-trix-toolbar .trix-button--icon-code::before {
-  content: '\f121';
-}
-
-trix-toolbar .trix-button--icon-bullet-list::before {
-  content: '\f03a';
-}
-
-trix-toolbar .trix-button--icon-number-list::before {
-  content: '\f0cb';
-}
-
-trix-toolbar .trix-button--icon-decrease-nesting-level::before {
-  content: '\f03b';
-}
-
-trix-toolbar .trix-button--icon-increase-nesting-level::before {
-  content: '\f03c';
-}
-
-trix-toolbar .trix-button--icon-undo::before {
-  content: '\f0e2';
-}
-
-trix-toolbar .trix-button--icon-redo::before {
-  content: '\f01e';
-}
-
-trix-toolbar .trix-button--icon-heading-1::before {
-  content: '\f1dc';
-}
 
 trix-editor {
   @apply dvs-rounded-none dvs-rounded-b dvs-border-grey-dark dvs-text-grey-dark dvs-p-4;

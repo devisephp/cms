@@ -23,6 +23,23 @@
       </ul>
     </div>
     <div id="devise-admin-content">
+      <template v-if="analytics.data">
+        <h3 class="dvs-mb-8">{{ localValue.title }} Analytics</h3>
+        <div class="flex mb-8">
+          <fieldset class="dvs-fieldset mr-8">
+            <label>Analytics Start Date</label>
+            <date-picker v-model="analyticsDateRange.start" :settings="{date: true, time: false}" placeholder="Start Date" @update="retrieveAnalytics()" />
+          </fieldset>
+          <fieldset class="dvs-fieldset">
+            <label>Analytics End Date</label>
+            <date-picker v-model="analyticsDateRange.end" :settings="{date: true, time: false}" placeholder="End Date" @update="retrieveAnalytics()" />
+          </fieldset>
+        </div>
+        <div>
+          <line-chart class="dvs-mb-8" :chart-data="analytics.data" :options="{width: '8000px'}" :width="800" :height="200" />
+        </div>
+      </template>
+
       <h3 class="dvs-mb-8">{{ localValue.title }} Page Versions</h3>
 
       <help class="dvs-mb-8">Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
@@ -39,12 +56,8 @@
                 <input v-show="version.editName" type="text" v-model="localValue.versions[key].name" />
               </fieldset>
             </div>
-            <div>
-              <button class="dvs-btn dvs-btn-xs" @click="closeVersionSettings(version)">Analytics</button>
-              <button class="dvs-btn dvs-btn-xs" @click="openVersionSettings(version)">Settings</button>
-            </div>
           </div>
-          <div v-if="version.showSettings">
+          <div>
             <div class="dvs-mb-4">
               <fieldset class="dvs-fieldset mb-8">
                 <label>Start Date</label>
@@ -74,11 +87,6 @@
                 <i class="ion-trash-b dvs-text-xl" />
               </button>
             </div>
-          </div>
-          <div v-else>
-            Analytics
-
-            <line-chart :data="theData" />
           </div>
         </div>
       </div>
@@ -175,12 +183,19 @@ import DatePicker from './../utilities/DatePicker'
 import DeviseModal from './../utilities/Modal'
 import LineChart from './analytics/Line'
 
+import Dates from './../../mixins/Dates'
+
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'PagesView',
   data () {
     return {
+      analytics: {},
+      analyticsDateRange: {
+        start: null,
+        end: null
+      },
       localValue: {},
       modulesToLoad: 3,
       showCopy: false,
@@ -195,36 +210,40 @@ export default {
         slug: null,
         language_id: null
       },
-      theData: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Visitors',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      }
+      colors: [
+        {
+          background:'rgba(54, 162, 235, 0.5)',
+          border: 'rgba(54, 162, 235, 1)'
+        },
+        {
+          background:'rgba(75, 192, 192, 0.2)',
+          border: 'rgba(75, 192, 192, 1)'
+        },
+        {
+          background:'rgba(255, 206, 86, 0.2)',
+          border: 'rgba(255, 206, 86, 1)'
+        },
+        {
+          background:'rgba(255, 99, 132, 0.2)',
+          border: 'rgba(255,99,132,1)'
+        },
+        {
+          background:'rgba(153, 102, 255, 0.2)',
+          border: 'rgba(153, 102, 255, 1)',
+        },
+        {
+          background:'rgba(255, 159, 64, 0.2)',
+          border: 'rgba(255, 159, 64, 1)'
+        }
+      ]
     }
   },
   mounted () {
     this.retrieveAllPages()
     this.retrieveAllTemplates()
     this.retrieveAllLanguages()
+    this.setDefaultAnalytics()
+    this.retrieveAnalytics()
   },
   methods: {
     ...mapActions('devise', [
@@ -289,7 +308,6 @@ export default {
 
         self.localValue.versions.map(version => {
           self.$set(version, 'editName', false)
-          // self.$set(version, 'analytics', retrieveAnalytics(version))
         })
         self.pageToTranslate.slug = self.page.slug
         window.bus.$emit('incrementLoadbar', self.modulesToLoad)
@@ -307,9 +325,40 @@ export default {
         window.bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     },
+    setDefaultAnalytics () {
+      var today = new Date()
+      var oneWeekAgo = new Date()
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
+
+      this.analyticsDateRange.end = this.formatDate(today)
+      this.analyticsDateRange.start = this.formatDate(oneWeekAgo)
+    },
     retrieveAnalytics (version) {
-      this.getAnalytics(version).then(function (response) {
-        version.analytics = response
+      let self = this
+
+
+
+      if (typeof this.analyticsDateRange.start !== 'string' && this.analyticsDateRange.start[0]) {
+        this.analyticsDateRange.start = this.formatDate(new Date(this.analyticsDateRange.start[0]))
+      }
+
+      if (typeof this.analyticsDateRange.end !== 'string' && this.analyticsDateRange.end[0]) {
+        this.analyticsDateRange.end = this.formatDate(new Date(this.analyticsDateRange.end[0]))
+      }
+
+      this.getAnalytics({slug: page.slug, dates: self.analyticsDateRange}).then(function (response) {
+
+        response.data.data.datasets.map(function (dataset, index) {
+          dataset.backgroundColor = [self.colors[index].background]
+          dataset.borderColor = [self.colors[index].border]
+          dataset.pointRadius = 4
+					dataset.pointHoverRadius = 10
+					dataset.fill = false
+
+          return dataset
+        })
+
+        self.$set(self, 'analytics', response.data)
       })
     },
     openVersionSettings (version) {
@@ -330,6 +379,7 @@ export default {
     DatePicker,
     DeviseModal,
     LineChart
-  }
+  },
+  mixins: [Dates]
 }
 </script>

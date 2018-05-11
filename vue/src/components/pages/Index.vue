@@ -34,8 +34,8 @@
           {{ page.slug }}
         </div>
         <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <a class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-mr-2" :href="page.slug">Go</a>
-          <button class="dvs-btn dvs-btn-xs" @click="loadPage(page.id)">Manage</button>
+          <button class="dvs-btn dvs-btn-xs dvs-mr-2" @click="loadPage(page.id)">Manage</button>
+          <a class="dvs-btn dvs-btn-plain dvs-btn-xs" :href="page.slug">Go</a>
         </div>
       </div>
     </div>

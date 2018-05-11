@@ -123,9 +123,7 @@
         'getTemplates',
         'updateTemplate',
         'getSlices',
-        'getSlicesDirectories',
-        'getModels',
-        'getModelSettings'
+        'getSlicesDirectories'
       ]),
       requestSaveTemplate () {
         var self = this
@@ -192,9 +190,7 @@
         'component',
         'slicesList',
         'slicesDirectories',
-        'template',
-        'models',
-        'modelSettings'
+        'template'
       ]),
       anySliceOpen () {
         for (var i = 0; i < this.localValue.slices.length; i++) {

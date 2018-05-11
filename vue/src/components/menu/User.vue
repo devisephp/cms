@@ -1,23 +1,18 @@
 <template>
-  <div class="dvs-bg-grey-lighter dvs-flex dvs-border-b dvs-border-lighter" id="devise-user">
-    <div class="dvs-border-r dvs-border-grey dvs-flex">
-      <div class="dvs-min-w-1/4 dvs-border-r dvs-border-grey dvs-flex dvs-justify-between">
-        <div class="dvs-flex dvs-justify-start dvs-items-center pr-4 dvs-w-3/5 dvs-flex-wrap dvs-p-4 dvs-pl-8">
-          <div class="dvs-py-2 dvs-pr-4">
-            {{user.name}}<br>
-            <span class="dvs-text-grey">{{user.email}}</span>
-          </div>
+  <div class="dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r">
+    <div class="dvs-bg-grey-lighter dvs-rounded-sm dvs-m-8 dvs-mb-0">
+      <div class="dvs-flex dvs-justify-between dvs-p-4 dvs-items-center">
+        <div>
+          <strong>{{user.name}}</strong><br>
+          <span class="dvs-text-grey">{{user.email}}</span>
         </div>
-        <div class="dvs-w-1/5 dvs-flex dvs-justify-center dvs-items-center">
-          <router-link :to="{ name: 'devise-users-edit', params: { userId: user.id }}">
-            <i class="ion-gear-a text-3xl"></i>
-          </router-link>
-        </div>
+        <router-link :to="{ name: 'devise-users-edit', params: { userId: user.id }}" class="dvs-mr-4">
+          <i class="ion-gear-a text-2xl"></i>
+        </router-link>
       </div>
-      <div class="dvs-flex dvs-flex-grow dvs-items-center dvs-border-l dvs-border-white dvs-w-1/5 dvs-text-center">
-
+      <div class="dvs-flex mt-2 dvs-items-center dvs-bg-grey-light dvs-p-4">
         <a href="/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          <i class="ion-power text-2xl p-4"></i>
+          <i class="ion-power text-xl mr-1"></i>Logout
         </a>
 
         <form id="logout-form" action="/logout" method="POST" style="display: none;">

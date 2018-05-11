@@ -7,10 +7,11 @@
       <media-manager v-if="isLoggedIn" />
       <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
-            <user></user>
             <transition name="fade" mode="out-in">
               <router-view name="devise" :page="page"></router-view>
             </transition>
+            
+            <user></user>
         </div>
         <div class="dvs-flex-grow dvs-flex dvs-justify-center dvs-max-w-full">
 

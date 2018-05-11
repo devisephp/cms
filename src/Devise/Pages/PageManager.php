@@ -366,7 +366,7 @@ class PageManager
             $this->message = "There were validation errors.";
         }
 
-        return count($this->errors) == 0;
+        return !$this->errors || count($this->errors) == 0;
     }
 
     /**

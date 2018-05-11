@@ -93,7 +93,7 @@ class Link
 	    if ( ( $this->Input->has( 'dir' ) && $this->Input->get( 'orderBy' ) == $field && $this->Input->get( 'relationship' ) == $relationship ) ) {
 		    $currentDirection = $this->Input->get( 'dir' );
 		    $classes[]        = $currentDirection;
-	    } else if (count($currentlySorted) > 1) {
+	    } else if ($currentlySorted && count($currentlySorted) > 1) {
 		    $currentDirection = $currentlySorted['dir'];
 		    $classes[]        = $currentDirection;
         } else if ($this->defaultOrderBy != [] && $this->defaultOrderBy[0] == $field && !$this->Input->has('orderBy')) {
@@ -186,4 +186,4 @@ class Link
 
 		return null;
 	}
-} 
+}

@@ -1,11 +1,7 @@
 .dvs-collapsable {
   .dvs-switch-sm,
   .dvs-switch {
-    @apply dvs-rounded-sm dvs-bg-grey-light dvs-font-bold dvs-p-4 dvs-cursor-pointer dvs-opacity-75;
-  }
-
-  .dvs-switch-sm {
-    @apply dvs-py-3 dvs-text-sm;
+    @apply dvs-rounded-sm dvs-bg-grey-light dvs-font-bold dvs-py-3 dvs-px-4 dvs-text-sm dvs-cursor-pointer dvs-opacity-75;
   }
 
   > .dvs-collapsed {
@@ -26,7 +22,7 @@
 
 .dvs-template-editor-collapsable {
   .dvs-template-switch-sm {
-    @apply dvs-rounded-sm dvs-bg-grey-light dvs-font-bold dvs-p-4 dvs-cursor-pointer dvs-py-3 dvs-text-sm;
+    @apply dvs-rounded-sm dvs-bg-grey-light dvs-font-bold dvs-p-4 dvs-cursor-pointer dvs-py-3;
   }
 
   .dvs-collapsed {

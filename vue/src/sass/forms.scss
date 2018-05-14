@@ -67,3 +67,13 @@
     }
   }
 }
+
+button {
+  @apply dvs-text-grey-darker dvs-cursor-pointer;
+
+  transition: color 0.5s ease-in;
+
+  &:hover {
+    @apply dvs-text-blue-dark;
+  }
+}

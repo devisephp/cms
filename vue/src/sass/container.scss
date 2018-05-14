@@ -1,5 +1,5 @@
 #devise-container {
-  @apply dvs-font-sans dvs-w-full dvs-flex dvs-flex-row-reverse dvs-overflow-scroll;
+  @apply dvs-font-sans dvs-w-full dvs-flex dvs-flex-row-reverse;
 }
 
 #devise-admin-open {
@@ -18,24 +18,27 @@
 #devise-admin {
   @apply dvs-z-30 dvs-fixed dvs-pin-l dvs-pin-t dvs-pin-b dvs-overflow-scroll dvs--ml-px;
 
+  // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   width:350px;
 
   transition: left 0.5s ease-out;
 }
 
 #devise-admin-shim {
-  @apply dvs-border-r dvs-border-grey-light dvs-bg-white;
+  @apply dvs-bg-white;
 
   min-width:350px;
   width:350px;
 
-  transition: width 0.25s ease-out, min-width 0.25s ease-out;
+  transition: width 0.5s ease-out, min-width 0.5s ease-out;
 }
 
 .devise-content {
-  @apply dvs-z-10;
+  @apply dvs-z-10 dvs-relative ;
 
-  transition: width 0.25s ease-out, height 0.25s ease-out, margin 0.25s ease-out;
+  // Trap any fixed content
+  transform: translate(0, 0);
+  transition: width 0.5s ease-out, height 0.5s ease-out, margin 0.5s ease-out;
 
   width:100%;
 
@@ -58,6 +61,18 @@
 
     width:320px;
     height:600px;
+  }
+}
+
+#dvs-app-content {
+  width: calc(100% - 350px);
+
+  transition: width 0.5s ease-out;
+}
+
+.admin-closed { 
+  #dvs-app-content {
+    width: 100%;
   }
 }
 
@@ -134,7 +149,7 @@
 }
 
 #devise-sidebar {
-  @apply dvs-border-r dvs-border-grey-light dvs-bg-white dvs-p-8 dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-overflow-y-scroll dvs-z-20;
+  @apply dvs-p-8 dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-overflow-y-scroll dvs-z-20;
 
   top:100px;
   min-width:350px;

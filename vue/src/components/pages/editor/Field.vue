@@ -1,15 +1,17 @@
 <template>
   <div class="dvs-relative">
     <div class="dvs-flex dvs-justify-between dvs-items-center">
-      <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4">
+      <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4 dvs-font-bold dvs-w-full">
         <div class="dvs-badge dvs-badge-empty dvs-mr-2" :class="{'dvs-bg-green-dark': localValue.enabled, 'dvs-bg-grey-light': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration"></div>
-        {{ options.label }}
+        <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
+          <span class="dvs-text-blue-dark dvs-cursor-pointer" @click="showEditor = !showEditor">{{ options.label }}</span>
+          <i class="ion-eye dvs-text-xl" @mouseover="showPreview = true" @mouseout="showPreview = false"></i>
+          <div v-show="showPreview" class="dvs-bg-grey-lighter dvs-absolute dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-10">
+            <slot name="preview"></slot>
+            <i class="ion-help-circled dvs-absolute dvs-pin-t dvs-pin-r dvs-text-lg dvs-mr-2 dvs-mt-2" :title="`Notes from the developer: ${localValue.instructions}`" v-tippy="tippyConfiguration" v-if="localValue.instructions"></i>
+          </div>
+        </div>
       </div>
-      <button class="dvs-btn dvs-btn-ghost dvs-btn-xs dvs-min-w-24" @click="showEditor = !showEditor">Edit Field</button>
-    </div>
-    <div class="dvs-bg-grey-lighter dvs-relative dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded-sm">
-      <slot name="preview"></slot>
-      <i class="ion-help-circled dvs-absolute dvs-pin-t dvs-pin-r dvs-text-lg dvs-mr-2 dvs-mt-2" :title="`Notes from the developer: ${localValue.instructions}`" v-tippy="tippyConfiguration" v-if="localValue.instructions"></i>
     </div>
     <div v-show="showEditor" class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-l dvs-mx-8 dvs-mb-8 dvs-z-10 dvs-min-w-3/5">
       <slot name="editor"></slot>
@@ -39,7 +41,8 @@ export default {
   data () {
     return {
       localValue: {},
-      showEditor: false
+      showEditor: false,
+      showPreview: false
     }
   },
   mounted () {

@@ -6,35 +6,42 @@
       <messages v-if="isLoggedIn" />
       <media-manager v-if="isLoggedIn" />
       <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
-        <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]">
+        <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]" data-simplebar>
             <transition name="fade" mode="out-in">
               <router-view name="devise" :page="page"></router-view>
             </transition>
-            
+
             <user></user>
         </div>
         <div class="dvs-flex-grow dvs-flex dvs-justify-center dvs-max-w-full">
 
-          <!-- Desktop mode in editor or just viewing page -->
-          <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
-            <slot name="on-top"></slot>
-            <slot name="static-content"></slot>
+          <!-- Shim -->
+          <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
+          
+          <div id="dvs-app-content">
+            <!-- Desktop mode in editor or just viewing page -->
+            <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
+              <slot name="on-top"></slot>
+              <slot name="static-content"></slot>
 
-            <template v-if="page.slices">
-              <slices :slices="page.slices"></slices>
-            </template>
+              <template v-if="page.slices">
+                <slices :slices="page.slices"></slices>
+              </template>
 
-            <slot name="static-content-bottom"></slot>
-            <slot name="on-bottom"></slot>
+              <slot name="static-content-bottom"></slot>
+              <slot name="on-bottom"></slot>
+            </div>
+
+            <div id="dvs-iframe-wrapper">
+              <!-- Preview mode in editor -->
+              <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
+            </div>
           </div>
-
-          <!-- Preview mode in editor -->
-          <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
 
         </div>
 
         <template v-if="isLoggedIn">
-          <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
+          
           <i id="devise-admin-open" v-if="!isPreviewFrame" class="ion-gear-a" @click="closeAdmin"></i>
         </template>
 
@@ -62,6 +69,7 @@ import TemplateIndex from './components/templates/Index'
 import TemplateEdit from './components/templates/Edit'
 import TemplateEditor from './components/templates/TemplateEditor'
 import User from './components/menu/User'
+import SimpleBar from 'SimpleBar'
 
 import { mapGetters, mapActions } from 'vuex'
 

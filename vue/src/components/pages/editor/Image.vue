@@ -5,7 +5,7 @@
       <span v-if="localValue.url === null || localValue.url === ''" class="dvs-italic">
         Currently No Value
       </span>
-      <div>{{ localValue.url }}</div>
+      <img :src="localValue.url" class="dvs-max-w-xs" :alt="localValue.url"><br>
     </template>
 
     <template slot="editor">

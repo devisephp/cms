@@ -1,54 +1,66 @@
 <template>
-  <div class="dvs-p-8">
-    <h2 class="dvs-font-bold dvs-mb-2">Edit Page</h2>
-    <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-index')">Go to Administration</a>
-
-    <button class="dvs-btn dvs-btn-ghost dvs-w-full dvs-mb-8" @click="requestSavePage()">Save This Page</button>
-
-    <div class="dvs-flex dvs-w-full dvs-justify-center dvs-items-center dvs-mb-8">
-      <i class="ion-android-desktop dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green-dark': previewMode === 'desktop'}" @click="setPreviewMode('desktop')"></i>
-      <i class="ion-ipad dvs-text-3xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green-dark': previewMode === 'tablet'}" @click="setPreviewMode('tablet')"></i>
-      <i class="ion-android-phone-portrait dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green-dark': previewMode === 'mobile-portrait'}" @click="setPreviewMode('mobile-portrait')"></i>
-      <i class="ion-android-phone-landscape dvs-text-2xl dvs-cursor-pointer" :class="{'dvs-text-green-dark': previewMode === 'mobile-landscape'}" @click="setPreviewMode('mobile-landscape')"></i>
+  <div>
+    <div class="dvs-w-full dvs-bg-blue-dark dvs-text-white dvs-py-4 dvs-px-12">
+      <a class="dvs-text-white dvs-text-xs dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')">
+        <i class="ion-arrow-left-c"></i> Full Administration
+      </a>
+      <h4 class="dvs-text-white">      
+        Editing {{ this.page.title }}
+      </h4>
     </div>
 
-    <ul class="dvs-list-reset">
-      <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': pageSettingsOpen}">
-        <div class="dvs-switch" @click="togglePageSettings">
-          Page Settings
-        </div>
+    <div class="dvs-flex dvs-flex-col dvs-items-center dvs-p-12">
 
-        <div class="dvs-collapsed dvs-mt-4">
-          <fieldset class="dvs-fieldset">
-            <label>Page Title</label>
-            <input type="text" placeholder="Title of the Page">
-          </fieldset>
+      <button class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success"  @click.prevent="requestSavePage()">
+        <i class="ion-checkmark-circled dvs-mr-2"></i> Save this page
+      </button>
 
-          <fieldset class="dvs-fieldset">
-            <label>Description</label>
-            <textarea class="dvs-h-24" placeholder="Description of the Page - Try to aim for around 150 - 300 characters."></textarea>
-          </fieldset>
+      <div class="dvs-flex dvs-w-full dvs-justify-center dvs-items-center dvs-mb-8 dvs-w-full">
+        <i class="ion-android-desktop dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'desktop'}" @click="setPreviewMode('desktop')"></i>
+        <i class="ion-ipad dvs-text-3xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'tablet'}" @click="setPreviewMode('tablet')"></i>
+        <i class="ion-android-phone-portrait dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-portrait'}" @click="setPreviewMode('mobile-portrait')"></i>
+        <i class="ion-android-phone-landscape dvs-text-2xl dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-landscape'}" @click="setPreviewMode('mobile-landscape')"></i>
+      </div>
 
-          <fieldset class="dvs-fieldset">
-            <label>Canonical</label>
-            <input type="text" placeholder="Canonical">
-          </fieldset>
-        </div>
-      </li>
-      <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': pageContentOpen}">
-        <div class="dvs-switch" @click="togglePageContent">
-          Page Content
-        </div>
+      <ul class="dvs-list-reset dvs-w-full">
+        <li class="dvs-collapsable dvs-mb-8" :class="{'dvs-open': pageSettingsOpen}">
+          <div class="dvs-switch" @click="togglePageSettings">
+            Page Settings
+          </div>
 
-        <div class="dvs-collapsed dvs-mt-4">
-          <ul class="dvs-list-reset">
-            <template v-for="(slice, key) in pageSlices">
-              <slice-editor :slice="slice" />
-            </template>
-          </ul>
-        </div>
-      </li>
-    </ul>
+          <div class="dvs-collapsed dvs-mt-4">
+            <fieldset class="dvs-fieldset">
+              <label>Page Title</label>
+              <input type="text" placeholder="Title of the Page">
+            </fieldset>
+
+            <fieldset class="dvs-fieldset">
+              <label>Description</label>
+              <textarea class="dvs-h-24" placeholder="Description of the Page - Try to aim for around 150 - 300 characters."></textarea>
+            </fieldset>
+
+            <fieldset class="dvs-fieldset">
+              <label>Canonical</label>
+              <input type="text" placeholder="Canonical">
+            </fieldset>
+          </div>
+        </li>
+        <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': pageContentOpen}">
+          <div class="dvs-switch" @click="togglePageContent">
+            Page Content
+          </div>
+
+          <div class="dvs-collapsed dvs-mt-4">
+            <ul class="dvs-list-reset">
+              <template v-for="(slice, key) in pageSlices">
+                <slice-editor :slice="slice" />
+              </template>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
+    </div>
   </div>
 </template>
 

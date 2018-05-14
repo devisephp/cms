@@ -3,6 +3,14 @@
 
   transition: background-color 0.5s;
 
+  &.dvs-btn-success {
+    @apply dvs-bg-green dvs-text-white;
+
+    &:hover {
+      @apply dvs-text-white;
+    }
+  }
+
   &:focus {
     outline-style: none;
   }
@@ -29,6 +37,13 @@
     &:hover {
       @apply dvs-bg-blue-dark dvs-text-white;
     }
+  }
+
+
+  &.dvs-btn-round {
+    @apply dvs-rounded-full;
+
+    line-height:1em;
   }
 
   &.dvs-btn-sm {

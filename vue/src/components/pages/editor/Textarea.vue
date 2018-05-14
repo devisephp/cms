@@ -5,7 +5,7 @@
       <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
         Currently No Value
       </span>
-      <div>{{ clipString(localValue.text, 200, true) }}</div>
+      <div>{{ clipString(localValue.text, 300, true) }}</div>
     </template>
 
     <template slot="editor">

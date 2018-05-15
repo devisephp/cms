@@ -14,7 +14,7 @@
   }
 
   .dvs-gear-2 {
-    @apply dvs-text-xs dvs-absolute;
+    @apply dvs-text-base dvs-absolute;
 
     top: 20px;
     right: -10px;
@@ -24,19 +24,32 @@
     @apply dvs-opacity-100;
 
     i {
-      animation-name: spin;
+      animation-name: spinClockwise;
       animation-duration: 4000ms;
       animation-iteration-count: infinite;
       animation-timing-function: linear;
     }
+
+    i.dvs-gear-2 {
+      animation-name: spinCounterClockwise;
+    }
   }
 }
 
-@keyframes spin { 
+@keyframes spinClockwise { 
   from { 
     transform: rotate(0deg); 
   } to { 
     transform: rotate(360deg); 
+  }
+}
+
+
+@keyframes spinCounterClockwise { 
+  from { 
+    transform: rotate(0deg); 
+  } to { 
+    transform: rotate(-360deg); 
   }
 }
 

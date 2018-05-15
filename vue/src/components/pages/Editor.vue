@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div class="dvs-w-full dvs-bg-blue-dark dvs-text-white dvs-py-4 dvs-px-12">
+    <div class="dvs-w-full dvs-bg-blue-dark dvs-text-white dvs-py-4 dvs-px-12 admin-component-first-in">
       <a class="dvs-text-white dvs-text-xs dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')">
         <i class="ion-arrow-left-c"></i> Full Administration
       </a>
-      <h4 class="dvs-text-white">      
+      <h4 class="dvs-text-white dvs-font-semibold">      
         Editing {{ this.page.title }}
       </h4>
     </div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-p-12">
 
-      <button class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success"  @click.prevent="requestSavePage()">
+      <button class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success admin-component-third-in"  @click.prevent="requestSavePage()">
         <i class="ion-checkmark-circled dvs-mr-2"></i> Save this page
       </button>
 
-      <div class="dvs-flex dvs-w-full dvs-justify-center dvs-items-center dvs-mb-8 dvs-w-full">
+      <div class="dvs-flex dvs-w-full dvs-justify-center dvs-items-center dvs-mb-8 dvs-w-full admin-component-second-in">
         <i class="ion-android-desktop dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'desktop'}" @click="setPreviewMode('desktop')"></i>
         <i class="ion-ipad dvs-text-3xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'tablet'}" @click="setPreviewMode('tablet')"></i>
         <i class="ion-android-phone-portrait dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-portrait'}" @click="setPreviewMode('mobile-portrait')"></i>
@@ -24,7 +24,7 @@
 
       <ul class="dvs-list-reset dvs-w-full">
         <li class="dvs-collapsable dvs-mb-8" :class="{'dvs-open': pageSettingsOpen}">
-          <div class="dvs-switch" @click="togglePageSettings">
+          <div class="dvs-switch admin-component-first-in" @click="togglePageSettings">
             Page Settings
           </div>
 
@@ -45,15 +45,15 @@
             </fieldset>
           </div>
         </li>
-        <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': pageContentOpen}">
-          <div class="dvs-switch" @click="togglePageContent">
+        <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
+          <div class="dvs-switch admin-component-second-in" @click="togglePageContent">
             Page Content
           </div>
 
           <div class="dvs-collapsed dvs-mt-4">
             <ul class="dvs-list-reset">
               <template v-for="(slice, key) in pageSlices">
-                <slice-editor :slice="slice" />
+                <slice-editor @opened="openSlice(slice)" :slice="slice" />
               </template>
             </ul>
           </div>
@@ -102,9 +102,15 @@ export default {
       this.pageSettingsOpen = false
     },
     toggleSlice (slice) {
-      let sliceOpen = slice.metadata.open
+      if (slice.metadata.open) {
+        this.closeSlice(slice)
+      } else {
+        this.openSlice(slice)
+      }
+    },
+    openSlice (sliceToOpen) {
       this.pageSlices.map(s => this.closeSlice(s))
-      this.$set(slice.metadata, 'open', !sliceOpen)
+      this.$set(sliceToOpen.metadata, 'open', true)
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)

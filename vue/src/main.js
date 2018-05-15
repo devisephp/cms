@@ -4,6 +4,7 @@ import Devise from './Devise'
 import Help from './components/utilities/Help'
 import Slices from './Slices'
 import DeviseStore from './vuex/store'
+import PortalVue from 'portal-vue'
 import { DeviseBus } from './event-bus.js'
 import routes from './router/route.config.js'
 import alertConfirm from './directives/alert-confirm'
@@ -42,6 +43,9 @@ const DevisePlugin = {
 
     // Tooltips
     Vue.use(VueTippy)
+
+    // Portals to render items outside of their component
+    Vue.use(PortalVue)
 
     // VueRouter Register global components
     Vue.component('Devise', Devise)

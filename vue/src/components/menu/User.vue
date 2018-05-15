@@ -1,5 +1,5 @@
 <template>
-  <div class="dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-m-8">
+  <div class="dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-p-8" id="devise-menu-current-user">
     <div class="dvs-flex dvs-justify-between dvs-p-4 dvs-items-center">
       <div>
         <router-link :to="{ name: 'devise-users-edit', params: { userId: user.id }}" class="dvs-mr-4">

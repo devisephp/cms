@@ -7,11 +7,13 @@
       <media-manager v-if="isLoggedIn" />
       <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]" data-simplebar>
-            <transition name="fade" mode="out-in">
-              <router-view name="devise" :page="page"></router-view>
-            </transition>
+            
+          <transition name="fade" mode="out-in">
+            <router-view name="devise" :page="page"></router-view>
+          </transition>
 
-            <user></user>
+          <user></user>
+
         </div>
         <div class="dvs-flex-grow dvs-flex dvs-justify-center dvs-max-w-full">
 
@@ -32,7 +34,7 @@
               <slot name="on-bottom"></slot>
             </div>
 
-            <div id="dvs-iframe-wrapper">
+            <div id="devise-iframe-editor">
               <!-- Preview mode in editor -->
               <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
             </div>
@@ -40,10 +42,14 @@
 
         </div>
 
-        <template v-if="isLoggedIn">
-          
-          <i id="devise-admin-open" v-if="!isPreviewFrame" class="ion-gear-a" @click="closeAdmin"></i>
+        <template v-if="isLoggedIn && !isPreviewFrame">
+          <div id="devise-admin-open" @click="toggleAdmin">
+            <i class="ion-gear-a dvs-gear-1"></i>
+            <i class="ion-gear-a dvs-gear-2"></i>
+          </div>
         </template>
+
+        <portal-target name="devise-field-editor" class="dvs-fieldset"> </portal-target>
 
       </div>
     </template>
@@ -70,6 +76,7 @@ import TemplateEdit from './components/templates/Edit'
 import TemplateEditor from './components/templates/TemplateEditor'
 import User from './components/menu/User'
 import SimpleBar from 'SimpleBar'
+import anime from 'animejs'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -82,6 +89,7 @@ export default {
       templateMode: false,
       editorMode: false,
       adminClosed: true,
+      openAnimation: null,
       wideAdmin: false,
       page: {
         title: null,
@@ -113,6 +121,7 @@ export default {
     this.checkWidthOfInterface(this.$route)
     this.setSizeAndBreakpoint()
     this.addWatchers()
+    this.addAdminAnimations()
   },
   methods: {
     ...mapActions('devise', [
@@ -140,15 +149,68 @@ export default {
         this.wideAdmin = false
       }
     },
-    closeAdmin () {
+    toggleAdmin () {
       this.adminClosed = !this.adminClosed
       if (this.adminClosed) {
         this.goToPage('devise-page-editor')
         this.wideAdmin = false
+        this.openAnimation.reverse()
+        this.openAnimation.play()
+      } else {
+        this.openAnimation.restart()
       }
     },
     addWatchers () {
       window.onresize = this.setSizeAndBreakpoint
+    },
+    addAdminAnimations () {
+      this.$nextTick(() => {
+
+        this.openAnimation = anime.timeline({
+          autoplay: true,
+          loop: false,
+          duration: 200
+        });
+
+        this.openAnimation
+          .add({
+            targets: document.querySelector('#devise-admin-open'),
+            translateX: [0, 350],
+            easing: 'linear',
+            duration:100
+          })
+          .add({
+            targets: document.querySelector('#devise-admin'),
+            translateX: [-350, 0],
+            easing: 'easeOutQuad',
+            duration:300,
+            offset: '+=0',
+          })
+          .add({
+            targets: document.querySelectorAll('.admin-component-first-in'),
+            translateX: [-350, 0],
+            easing: 'easeOutQuad',
+            offset: '-=100',
+            duration:300,
+          })
+          .add({
+            targets: document.querySelectorAll('.admin-component-second-in'),
+            translateX: [-350, 0],
+            easing: 'easeOutQuad',
+            offset: '-=200',
+            duration:300,
+          })
+          .add({
+            targets: document.querySelectorAll('.admin-component-third-in'),
+            translateX: [-350, 0],
+            easing: 'easeOutQuad',
+            offset: '-=200',
+            duration:300,
+          })
+
+        this.openAnimation.reverse()
+      })
+      
     },
     setSizeAndBreakpoint () {
       let width = window.innerWidth

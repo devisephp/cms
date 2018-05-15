@@ -3,15 +3,40 @@
 }
 
 #devise-admin-open {
-  @apply dvs-fixed dvs-pin-b dvs-pin-l dvs-opacity-25 dvs-cursor-pointer dvs-text-3xl  dvs-ml-4 dvs-mb-4 dvs-z-50;
+  @apply dvs-fixed dvs-pin-b dvs-pin-l dvs-opacity-75 dvs-cursor-pointer dvs-text-white dvs-text-3xl dvs-ml-4 dvs-mb-8 dvs-z-50;
 
   transition: all 0.5s;
+  transform: translateX(350px);
+  text-shadow: 0 0 12px rgba(0,0,0,0.5);
+
+  i {
+    display:block;
+  }
+
+  .dvs-gear-2 {
+    @apply dvs-text-xs dvs-absolute;
+
+    top: 20px;
+    right: -10px;
+  }
 
   &:hover {
     @apply dvs-opacity-100;
 
-    margin-left:1.1rem;
-    margin-bottom:1.1rem;
+    i {
+      animation-name: spin;
+      animation-duration: 4000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+}
+
+@keyframes spin { 
+  from { 
+    transform: rotate(0deg); 
+  } to { 
+    transform: rotate(360deg); 
   }
 }
 
@@ -20,8 +45,6 @@
 
   // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   width:350px;
-
-  transition: left 0.5s ease-out;
 }
 
 #devise-admin-shim {
@@ -78,9 +101,6 @@
 
 #devise-container {
   &.admin-closed {
-    #devise-admin {
-      left: -500px;
-    }
 
     #devise-admin-shim {
       @apply dvs-min-w-0;
@@ -160,6 +180,10 @@
   }
 }
 
+#devise-iframe-editor {
+  @apply dvs-flex dvs-justify-center dvs-items-center;
+}
+
 #devise-admin-content {
   @apply dvs-absolute dvs-pin-t dvs-pin-r dvs-pin-b dvs-z-10 dvs-p-8 dvs-overflow-scroll;
 
@@ -175,3 +199,4 @@
 #devise-preview-iframe {
   height: calc(100vh - 100px);
 }
+

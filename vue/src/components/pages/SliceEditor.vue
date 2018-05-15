@@ -6,7 +6,7 @@
     </strong>
 
 
-    <div class="dvs-collapsed">
+    <div class="dvs-collapsed" v-if="slice.metadata.open">
       <div class="dvs-pt-4" v-if="!slice.metadata.placeholder">
         <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-8 dvs-pl-4" :key="key">
           <div>
@@ -32,7 +32,7 @@
             <text-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'text'">
             </text-editor>
 
-            <wysiwyg-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'wysiwyg'">
+            <wysiwyg-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" :show="slice.metadata.show" v-if="fieldConfig({fieldKey: key, slice}).type === 'wysiwyg'">
             </wysiwyg-editor>
           </div>
 
@@ -85,6 +85,7 @@ export default {
       let sliceOpen = slice.metadata.open
       this.pageSlices.map(s => this.closeSlice(s))
       this.$set(slice.metadata, 'open', !sliceOpen)
+      this.$emit('opened')
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)

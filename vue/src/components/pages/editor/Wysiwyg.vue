@@ -31,9 +31,6 @@ export default {
   },
   mounted () {
     this.localValue = this.value
-    this.resolveId()
-    this.resolveEditor()
-    this.hydrate()
   },
   methods: {
     resolveId () {
@@ -61,6 +58,15 @@ export default {
     }
   },
   props: ['value', 'options', 'namekey'],
+  watch: {
+    show (newValue) {
+      if (show) {
+        this.resolveId()
+        this.resolveEditor()
+        this.hydrate()
+      }
+    }
+  },
   mixins: [Strings],
   components: {
     Toggle,

@@ -161,14 +161,14 @@ export default {
     retrieveAllSites (loadbar = true) {
       this.getSites().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }
       })
     },
     retrieveAllLanguages (loadbar = true) {
       this.getLanguages().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }
       })
     },

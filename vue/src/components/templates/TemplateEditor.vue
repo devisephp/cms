@@ -110,7 +110,7 @@
     mounted () {
       let self = this
       self.getTemplates().then(function () {
-        self.localValue = window.template
+        self.localValue = deviseSettings.$template
         self.getSlicesDirectories()
         self.getSlices().then(function () {
           self.prepareSlices()
@@ -134,7 +134,7 @@
       },
 
       updateValue () {
-        window.template = this.localValue
+        deviseSettings.$template = this.localValue
       },
       requestAddSlice (origin, isRoot) {
         this.manageSlice.mode = 'add'

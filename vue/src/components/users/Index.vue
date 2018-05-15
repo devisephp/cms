@@ -95,7 +95,7 @@ export default {
     retrieveAllUsers (loadbar = true) {
       this.getUsers().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }
       })
     },

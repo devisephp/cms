@@ -310,19 +310,19 @@ export default {
           self.$set(version, 'editName', false)
         })
         self.pageToTranslate.slug = self.page.slug
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     },
     retrieveAllTemplates () {
       let self = this
       this.getTemplates().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     },
     retrieveAllLanguages () {
       let self = this
       this.getLanguages().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     },
     setDefaultAnalytics () {

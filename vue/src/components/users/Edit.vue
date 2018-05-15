@@ -91,7 +91,7 @@ export default {
       let self = this
       this.getUsers().then(function () {
         self.localValue = Object.assign({}, self.localValue, self.user)
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     }
   },

@@ -21,8 +21,9 @@ class Devise
 
   public static function data($page)
   {
-    $js = self::user();
-
+    $js = 'function Devise(){}';
+    $js .= self::user();
+  
     if (get_class($page) == DvsPage::class)
     {
       $js .= self::sites();
@@ -30,6 +31,7 @@ class Devise
 
       if (Auth::user()) {
         $js .= self::mothership();
+        $js .= self::interface();
       }
     } else
     {
@@ -37,6 +39,8 @@ class Devise
     }
 
     $js .= self::components();
+
+    $js .= 'var deviseSettings = new Devise()';
 
     return $js;
   }
@@ -57,31 +61,36 @@ class Devise
 
     $resource = SiteResource::collection($sites);
 
-    return "window.sites = " . json_encode($resource->toArray(request())) . ";\n";
+    return 'Devise.prototype.$sites = ' . json_encode($resource->toArray(request())) . ";\n";
   }
 
   public static function components()
   {
-    return "window.deviseComponents = {" . implode(',', self::$components) . "};\n";
+    return 'Devise.prototype.$deviseComponents = {' . implode(',', self::$components) . "};\n";
   }
 
   public static function mothership()
   {
-    return "window.mothership = " . json_encode(config('devise.mothership')) . ";\n";
+    return 'Devise.prototype.$mothership = ' . json_encode(config('devise.mothership')) . ";\n";
+  }
+
+  public static function interface()
+  {
+    return 'Devise.prototype.$interface = ' . json_encode(config('devise.interface')) . ";\n";
   }
 
   public static function pageData($page)
   {
     $resource = new PageResource($page);
 
-    return "window.page = " . json_encode($resource->toArray(request())) . ";\n";
+    return 'Devise.prototype.$page = ' . json_encode($resource->toArray(request())) . ";\n";
   }
 
   public static function template($template)
   {
     $resource = new TemplateResource($template);
 
-    return "window.template = " . json_encode($resource->toArray(request())) . ";\n";
+    return 'Devise.prototype.$template = ' . json_encode($resource->toArray(request())) . ";\n";
   }
 
   public static function addComponent($slice)
@@ -95,6 +104,6 @@ class Devise
 
   public static function user()
   {
-    return "window.user = " . json_encode(Auth::user()) . ";\n";
+    return 'Devise.prototype.$user = ' . json_encode(Auth::user()) . ";\n";
   }
 }

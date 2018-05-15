@@ -95,7 +95,7 @@ export default {
     retrieveAllTemplates (loadbar = true) {
       this.getTemplates().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }
       })
     },

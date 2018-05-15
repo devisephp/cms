@@ -43,7 +43,7 @@ export default {
     // Emit the bus event to notifify that we are done loading
     this.$nextTick(function () {
       // Emit the bus event to notifify that we are done loading
-      window.bus.$emit('devise-loaded')
+      devise.$bus.$emit('devise-loaded')
     })
   }
 }

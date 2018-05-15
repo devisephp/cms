@@ -178,7 +178,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.localValue.data.map(function (meta) {
           self.$set(meta, 'edit', false);
         });
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     }
   }),

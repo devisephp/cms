@@ -121,7 +121,7 @@ export default {
         self.localValue.data.map(meta => {
           self.$set(meta, 'edit', false)
         })
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     }
   },

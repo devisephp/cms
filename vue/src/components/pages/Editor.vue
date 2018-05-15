@@ -117,7 +117,7 @@ export default {
     },
     setPreviewMode (mode) {
       this.previewMode = mode
-      window.page.previewMode = mode
+      deviseSettings.$page.previewMode = mode
     }
   },
   computed: {

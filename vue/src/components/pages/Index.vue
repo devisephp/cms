@@ -146,20 +146,20 @@ export default {
     retrieveAllPages (loadbar = true) {
       this.getPages().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }
       })
     },
     retrieveAllTemplates () {
       let self = this
       this.getTemplates().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     },
     retrieveAllLanguages () {
       let self = this
       this.getLanguages().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     },
     loadPage (id) {
@@ -171,7 +171,7 @@ export default {
         this.searchPages(term).then((data) => {
           self.autosuggest = data
           if (data.data.length < 1) {
-            window.bus.$emit('showMessage', {title: 'No Suggestions Found', message: 'We couldn\'t find any pages with the term: "' + term + '".'})
+            devise.$bus.$emit('showMessage', {title: 'No Suggestions Found', message: 'We couldn\'t find any pages with the term: "' + term + '".'})
           }
         })
       } else {

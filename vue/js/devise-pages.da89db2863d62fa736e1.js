@@ -2582,20 +2582,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getPages().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },
     retrieveAllTemplates: function retrieveAllTemplates() {
       var self = this;
       this.getTemplates().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     retrieveAllLanguages: function retrieveAllLanguages() {
       var self = this;
       this.getLanguages().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     loadPage: function loadPage(id) {
@@ -2607,7 +2607,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.searchPages(term).then(function (data) {
           self.autosuggest = data;
           if (data.data.length < 1) {
-            window.bus.$emit('showMessage', { title: 'No Suggestions Found', message: 'We couldn\'t find any pages with the term: "' + term + '".' });
+            devise.$bus.$emit('showMessage', { title: 'No Suggestions Found', message: 'We couldn\'t find any pages with the term: "' + term + '".' });
           }
         });
       } else {
@@ -3420,19 +3420,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           // self.$set(version, 'analytics', retrieveAnalytics(version))
         });
         self.pageToTranslate.slug = self.page.slug;
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     retrieveAllTemplates: function retrieveAllTemplates() {
       var self = this;
       this.getTemplates().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     retrieveAllLanguages: function retrieveAllLanguages() {
       var self = this;
       this.getLanguages().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     retrieveAnalytics: function retrieveAnalytics(version) {

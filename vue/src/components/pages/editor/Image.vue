@@ -41,7 +41,7 @@ export default {
       this.$emit('change', this.localValue)
     },
     launchMediaManager (event) {
-      window.bus.$emit('devise-launch-media-manager', {
+      devise.$bus.$emit('devise-launch-media-manager', {
         callback: this.mediaSelected
       })
     },

@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     user () {
-      return window.user
+      return deviseSettings.$user
     },
     csrf_field () {
       return window.axios.defaults.headers.common['X-CSRF-TOKEN']

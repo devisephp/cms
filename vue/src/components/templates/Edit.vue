@@ -45,10 +45,10 @@ export default {
           self.goToPage('devise-templates-index')
         }
         if (event.data.type === 'error') {
-          window.bus.$emit('showError', event.data.message)
+          devise.$bus.$emit('showError', event.data.message)
         }
         if (event.data.type === 'saveSuccessful') {
-          window.bus.$emit('showMessage', {title: 'Saving Template', message: 'Template successfully saved'})
+          devise.$bus.$emit('showMessage', {title: 'Saving Template', message: 'Template successfully saved'})
         }
       }, false)
     }

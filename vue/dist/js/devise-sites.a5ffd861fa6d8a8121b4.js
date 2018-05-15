@@ -218,7 +218,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getSites().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },
@@ -227,7 +227,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getLanguages().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },

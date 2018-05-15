@@ -102,7 +102,7 @@ export default {
   mounted () {
     let self = this
 
-    if (typeof window.template !== 'undefined') {
+    if (typeof deviseSettings.$template !== 'undefined') {
       this.templateMode = true
     } else {
       this.initDevise()
@@ -114,7 +114,7 @@ export default {
         self.adminClosed = false
       }
       setTimeout(function () {
-        window.bus.$emit('devise-loaded')
+        devise.$bus.$emit('devise-loaded')
       }, 10)
     })
 
@@ -130,16 +130,17 @@ export default {
     initDevise () {
       try {
         if (!this.isPreviewFrame) {
-          window.page.previewMode = 'desktop'
-          this.page = window.page
+          deviseSettings.$page.previewMode = 'desktop'
+          this.page = deviseSettings.$page
         } else {
-          this.page = window.parent.page
+          this.page = window.parent.deviseSettings.$page
         }
       } catch (e) {
-        console.warn('Devise: window.page or window.parent.page not found. Nothing to render')
+        console.warn('Devise: deviseSettings.$page or window.parent.deviseSettings.$page not found. Nothing to render')
       }
 
       window.devise = this
+      devise.$bus = deviseSettings.$bus
     },
     checkWidthOfInterface (route) {
       // If the route has the wide parameter set it to it's value
@@ -248,7 +249,7 @@ export default {
       }
     },
     isLoggedIn () {
-      return window.user
+      return deviseSettings.$user
     }
   },
   watch: {

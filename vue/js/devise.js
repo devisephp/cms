@@ -34528,7 +34528,7 @@ window.Vue = __webpack_require__(12);
 // so that both apps can share the same store and router. All devise vuex
 // is namespaced under the "devise" namespace.
 
-window.bus = __WEBPACK_IMPORTED_MODULE_1__event_bus_js__["a" /* DeviseBus */];
+devise.$bus = __WEBPACK_IMPORTED_MODULE_1__event_bus_js__["a" /* DeviseBus */];
 
 
 
@@ -34539,14 +34539,14 @@ Object(__WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__["sync"])(__WEBPACK_IMPORTE
 Vue.use(__WEBPACK_IMPORTED_MODULE_0__main_js__["a" /* default */], {
   store: __WEBPACK_IMPORTED_MODULE_3__vuex_store_boilerplate_app__["a" /* default */],
   router: __WEBPACK_IMPORTED_MODULE_2__router_route_boilerplate_app_config__["a" /* default */],
-  bus: window.bus,
+  bus: devise.$bus,
   options: {
     adminClass: ''
   }
 });
 
 // When we want to initialize something after Devise is done loading
-window.bus.$on('devise-loaded', function () {});
+devise.$bus.$on('devise-loaded', function () {});
 
 // Initialize the application's Vue app
 var app = new Vue({
@@ -52835,7 +52835,7 @@ var DevisePlugin = {
 
     // If the bus isn't set we'll use our own bus
     if (typeof bus === 'undefined') {
-      window.bus = __WEBPACK_IMPORTED_MODULE_6__event_bus_js__["a" /* DeviseBus */];
+      devise.$bus = __WEBPACK_IMPORTED_MODULE_6__event_bus_js__["a" /* DeviseBus */];
     }
 
     // Tooltips
@@ -52876,7 +52876,7 @@ var DevisePlugin = {
           this.$router.push({ name: pageName });
         },
         launchMediaManager: function launchMediaManager(callbackObject, callbackProperty) {
-          window.bus.$emit('devise-launch-media-manager', {
+          devise.$bus.$emit('devise-launch-media-manager', {
             callback: function callback(media) {
               callbackObject[callbackProperty] = media.url;
             }
@@ -58151,7 +58151,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.adminClosed = false;
       }
       setTimeout(function () {
-        window.bus.$emit('devise-loaded');
+        devise.$bus.$emit('devise-loaded');
       }, 10);
     });
 
@@ -58201,7 +58201,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     isLoggedIn: function isLoggedIn() {
-      return window.user;
+      return deviseSettings.$user;
     }
   },
   watch: {
@@ -58269,7 +58269,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     addListeners: function addListeners() {
-      window.bus.$on('incrementLoadbar', this.incrementLoadbar);
+      devise.$bus.$on('incrementLoadbar', this.incrementLoadbar);
     },
     incrementLoadbar: function incrementLoadbar(numberOfModulesToLoad) {
       this.modulesLoaded++;
@@ -58630,7 +58630,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     startOpenerListener: function startOpenerListener() {
       var self = this;
 
-      window.bus.$on('devise-launch-media-manager', function (_ref) {
+      devise.$bus.$on('devise-launch-media-manager', function (_ref) {
         var target = _ref.target,
             callback = _ref.callback;
 
@@ -58656,11 +58656,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return file.used_count > 0;
     },
     uploadSuccess: function uploadSuccess() {
-      window.bus.$emit('showMessage', { title: 'Upload Complete', message: 'Your upload has been successfully completed' });
+      devise.$bus.$emit('showMessage', { title: 'Upload Complete', message: 'Your upload has been successfully completed' });
       this.changeDirectories(this.currentDirectory);
     },
     uploadError: function uploadError(file, message) {
-      window.bus.$emit('showError', { title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.' });
+      devise.$bus.$emit('showError', { title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.' });
     },
     getUrlParam: function getUrlParam(paramName) {
       var reParam = new RegExp('(?:[?&]|&)' + paramName + '=([^&]+)', 'i');
@@ -58708,7 +58708,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           self.directoryToCreate = '';
         });
       } else {
-        window.bus.$emit('showError', { title: 'Duplicate Name', message: 'There was already a directory with this name created in the current location.' });
+        devise.$bus.$emit('showError', { title: 'Duplicate Name', message: 'There was already a directory with this name created in the current location.' });
       }
     },
     requestDeleteDirectory: function requestDeleteDirectory() {
@@ -63440,11 +63440,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     var self = this;
-    window.bus.$on('showError', function (error) {
+    devise.$bus.$on('showError', function (error) {
       self.addError(error);
     });
 
-    window.bus.$on('showMessage', function (payload) {
+    devise.$bus.$on('showMessage', function (payload) {
       self.addMessage(payload);
     });
   },
@@ -65846,7 +65846,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$emit('change', this.localValue);
     },
     launchMediaManager: function launchMediaManager(event) {
-      window.bus.$emit('devise-launch-media-manager', {
+      devise.$bus.$emit('devise-launch-media-manager', {
         callback: this.mediaSelected
       });
     },
@@ -67658,9 +67658,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     currentView: function currentView() {
       if (this.devise.config) {
-        return window.deviseComponents[this.devise.name];
+        return deviseSettings.$deviseComponents[this.devise.name];
       }
-      return window.deviseComponents[this.devise.metadata.name];
+      return deviseSettings.$deviseComponents[this.devise.metadata.name];
     }
   }),
   components: {
@@ -67802,7 +67802,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getTemplates().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },
@@ -68218,10 +68218,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           self.goToPage('devise-templates-index');
         }
         if (event.data.type === 'error') {
-          window.bus.$emit('showError', event.data.message);
+          devise.$bus.$emit('showError', event.data.message);
         }
         if (event.data.type === 'saveSuccessful') {
-          window.bus.$emit('showMessage', { title: 'Saving Template', message: 'Template successfully saved' });
+          devise.$bus.$emit('showMessage', { title: 'Saving Template', message: 'Template successfully saved' });
         }
       }, false);
     }
@@ -75294,7 +75294,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     // Emit the bus event to notifify that we are done loading
     this.$nextTick(function () {
       // Emit the bus event to notifify that we are done loading
-      window.bus.$emit('devise-loaded');
+      devise.$bus.$emit('devise-loaded');
     });
   }
 });
@@ -98246,7 +98246,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {
     user: function user() {
-      return window.user;
+      return deviseSettings.$user;
     },
     csrf_field: function csrf_field() {
       return window.axios.defaults.headers.common['X-CSRF-TOKEN'];
@@ -98888,36 +98888,36 @@ var actions = {
         context.commit('setLanguages', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   createLanguage: function createLanguage(context, language) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'languages/', language).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: 'Your new language has been added.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: 'Your new language has been added.' });
         context.commit('createLanguage', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updateLanguage: function updateLanguage(context, language) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'languages/' + language.id, language).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: 'Your new language has been updated.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: 'Your new language has been updated.' });
         context.commit('updateLanguage', { language: language, data: response.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -98931,7 +98931,7 @@ var actions = {
       context.commit('setCurrentDirectory', directory);
       resolve();
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   getCurrentFiles: function getCurrentFiles(context, directory) {
@@ -98940,10 +98940,10 @@ var actions = {
         context.commit('setFiles', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   getCurrentDirectories: function getCurrentDirectories(context, directory) {
@@ -98952,10 +98952,10 @@ var actions = {
         context.commit('setDirectories', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   toggleFile: function toggleFile(context, theFile) {
@@ -98983,37 +98983,37 @@ var actions = {
   deleteFile: function deleteFile(context, file) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'media/' + file.id).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'File Deleted', message: 'The file was successfully deleted from the server.' });
+        devise.$bus.$emit('showMessage', { title: 'File Deleted', message: 'The file was successfully deleted from the server.' });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   createDirectory: function createDirectory(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'media-directories', { directory: payload.directory, name: payload.name }).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Directory Created', message: 'The directory was successfully created.' });
+        devise.$bus.$emit('showMessage', { title: 'Directory Created', message: 'The directory was successfully created.' });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   deleteDirectory: function deleteDirectory(context, directory) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'media-directories', { params: { directory: directory } }).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Directory Deleted', message: 'The directory was successfully deleted from the server.' });
+        devise.$bus.$emit('showMessage', { title: 'Directory Deleted', message: 'The directory was successfully deleted from the server.' });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99027,49 +99027,49 @@ var actions = {
         context.commit('setMeta', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   createMeta: function createMeta(context, meta) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'meta/', meta).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: 'Your new meta has been added.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: 'Your new meta has been added.' });
         context.commit('createMeta', response.data.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updateMeta: function updateMeta(context, meta) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'meta/' + meta.id, meta).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: 'Your new meta has been updated.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: 'Your new meta has been updated.' });
         context.commit('updateMeta', { meta: meta, data: response.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   deleteMeta: function deleteMeta(context, meta) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'meta/' + meta.id).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: 'The meta has been deleted.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: 'The meta has been deleted.' });
         context.commit('deleteMeta', meta);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99083,10 +99083,10 @@ var actions = {
         context.commit('setModels', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   getModelSettings: function getModelSettings(context, modelQuery) {
@@ -99095,10 +99095,10 @@ var actions = {
         context.commit('setModelSettings', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   getModelRecords: function getModelRecords(context, _ref) {
@@ -99109,10 +99109,10 @@ var actions = {
       window.axios.get(context.state.api.baseUrl + 'models/query?' + model + '&' + __WEBPACK_IMPORTED_MODULE_1__utils_common__["a" /* default */].buildFilterParams(filters)).then(function (response) {
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99124,10 +99124,10 @@ var actions = {
         context.commit('setPages', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   searchPages: function searchPages(context, search) {
@@ -99135,75 +99135,75 @@ var actions = {
       window.axios.get(context.state.api.baseUrl + 'pages-suggest/', { params: { term: search } }).then(function (response) {
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   copyPage: function copyPage(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'pages/' + payload.page.id + '/copy', payload.data).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.data.title + ' has been copied from ' + payload.page.title + '.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.data.title + ' has been copied from ' + payload.page.title + '.' });
         context.commit('createPage', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   translatePage: function translatePage(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'pages/' + payload.page.id + '/copy', payload.data).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.data.title + ' has been copied for translation from ' + payload.page.title + '.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.data.title + ' has been copied for translation from ' + payload.page.title + '.' });
         context.commit('createPage', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   createPage: function createPage(context, page) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'pages/', page).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: page.title + ' has been created.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: page.title + ' has been created.' });
         context.commit('createPage', response.data.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updatePage: function updatePage(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'pages/' + payload.page.id, payload.data).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.data.title + ' has been saved.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.data.title + ' has been saved.' });
         context.commit('updatePage', { page: payload.page, data: response.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   deletePage: function deletePage(context, page) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'pages/' + page.id).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: page.title + ' has been deleted.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: page.title + ' has been deleted.' });
         context.commit('deletePage', page);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99212,14 +99212,14 @@ var actions = {
   savePage: function savePage(context, page) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'pages/' + page.id, page).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: page.title + ' has been saved.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: page.title + ' has been saved.' });
         context.commit('updatePage', { page: page, data: response.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99228,40 +99228,40 @@ var actions = {
   copyPageVersion: function copyPageVersion(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'page-versions', { 'page_version_id': payload.version.id, name: payload.version.name + ' Copy' }).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.version.name + ' has been copied.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.version.name + ' has been copied.' });
         context.commit('createPageVersion', { page: payload.page, data: response.data.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   deletePageVersion: function deletePageVersion(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'page-versions/' + payload.version.id).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.version.name + ' has been deleted.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.version.name + ' has been deleted.' });
         context.commit('deletePageVersion', { page: payload.page, version: payload.version });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updatePageVersion: function updatePageVersion(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'page-versions/' + payload.version.id, payload.version).then(function (response) {
         context.commit('updatePageVersion', { page: payload.page, version: payload.version, data: response.data });
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.version.name + ' has been saved.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.version.name + ' has been saved.' });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   getAnalytics: function getAnalytics(context, payload) {
@@ -99270,10 +99270,10 @@ var actions = {
         context.commit('updatePageVersionAnalytics', { page: payload.page, version: payload.version, data: response.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99285,49 +99285,49 @@ var actions = {
         context.commit('setSites', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   createSite: function createSite(context, site) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'sites/', site).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: site.name + ' has been created.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: site.name + ' has been created.' });
         context.commit('createSite', response.data.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updateSite: function updateSite(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'sites/' + payload.site.id, payload.data).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.site.name + ' has been saved.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.site.name + ' has been saved.' });
         context.commit('updateSite', { site: payload.site, data: response.data.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   deleteSite: function deleteSite(context, site) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'sites/' + site.id).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: site.name + ' has been deleted.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: site.name + ' has been deleted.' });
         context.commit('deleteSite', site);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99339,10 +99339,10 @@ var actions = {
         context.commit('setSlices', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   getSlicesDirectories: function getSlicesDirectories(context) {
@@ -99351,51 +99351,51 @@ var actions = {
         context.commit('setSlicesDirectories', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   createSlice: function createSlice(context, slice) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'slices/', slice).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: slice.name + ' has been created.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: slice.name + ' has been created.' });
         context.commit('createSlice', response.data.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updateSlice: function updateSlice(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'slices/' + payload.slice.id, payload.data).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.data.name + ' has been saved.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.data.name + ' has been saved.' });
         context.commit('updateSlice', { slice: payload.slice, data: response.data.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   deleteSlice: function deleteSlice(context, slice) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'slices/' + slice.id).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: slice.name + ' has been deleted.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: slice.name + ' has been deleted.' });
         context.commit('deleteSlice', slice);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99404,16 +99404,16 @@ var actions = {
   createTemplate: function createTemplate(context, template) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'templates/', template).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: template.name + ' has been created.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: template.name + ' has been created.' });
         context.commit('createTemplate', response.data.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updateTemplate: function updateTemplate(context, template) {
@@ -99422,23 +99422,23 @@ var actions = {
         context.commit('updateTemplate', { template: template, data: response.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   deleteTemplate: function deleteTemplate(context, template) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'templates/' + template.id).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: template.name + ' has been deleted.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: template.name + ' has been deleted.' });
         context.commit('deleteTemplate', template);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updateCurrentTemplate: function updateCurrentTemplate(context, templateId) {
@@ -99450,10 +99450,10 @@ var actions = {
         context.commit('setTemplates', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -99465,49 +99465,49 @@ var actions = {
         context.commit('setUsers', response.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   createUser: function createUser(context, user) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.post(context.state.api.baseUrl + 'users/', user).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: user.name + ' has been created.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: user.name + ' has been created.' });
         context.commit('createUser', response.data.data);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   updateUser: function updateUser(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.put(context.state.api.baseUrl + 'users/' + payload.user.id, payload.data).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: payload.data.name + ' has been saved.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: payload.data.name + ' has been saved.' });
         context.commit('updateUser', { user: payload, data: response.data });
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   },
   deleteUser: function deleteUser(context, user) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
       window.axios.delete(context.state.api.baseUrl + 'users/' + user.id).then(function (response) {
-        window.bus.$emit('showMessage', { title: 'Success!', message: user.name + ' has been deleted.' });
+        devise.$bus.$emit('showMessage', { title: 'Success!', message: user.name + ' has been deleted.' });
         context.commit('deleteUser', user);
         resolve(response);
       }).catch(function (error) {
-        window.bus.$emit('showError', error);
+        devise.$bus.$emit('showError', error);
       });
     }).catch(function (error) {
-      window.bus.$emit('showError', error);
+      devise.$bus.$emit('showError', error);
     });
   }
 };
@@ -100116,19 +100116,19 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 "use strict";
 var getters = {
   // This takes a component name and returns the corresponding component from
-  // window.deviseComponents. This contains the name, template, and field
+  // deviseSettings.$deviseComponents. This contains the name, template, and field
   // configuration.
   component: function component(state) {
     return function (name) {
-      return window.deviseComponents[name];
+      return deviseSettings.$deviseComponents[name];
     };
   },
 
   componentFromView: function componentFromView(state) {
     return function (view) {
-      for (var component in window.deviseComponents) {
-        if (window.deviseComponents[component].view === 'slices.' + view) {
-          return window.deviseComponents[component];
+      for (var component in deviseSettings.$deviseComponents) {
+        if (deviseSettings.$deviseComponents[component].view === 'slices.' + view) {
+          return deviseSettings.$deviseComponents[component];
         }
       }
       return false;
@@ -100137,7 +100137,7 @@ var getters = {
 
   sliceConfig: function sliceConfig(state) {
     return function (slice) {
-      return window.deviseComponents[slice.metadata.name] ? window.deviseComponents[slice.metadata.name] : window.deviseComponents[slice.name];
+      return deviseSettings.$deviseComponents[slice.metadata.name] ? deviseSettings.$deviseComponents[slice.metadata.name] : deviseSettings.$deviseComponents[slice.name];
     };
   },
 
@@ -100678,7 +100678,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.localValue.data.map(function (language) {
           self.$set(language, 'editCode', false);
         });
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     }
   }),
@@ -101337,7 +101337,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.localValue.data.map(function (meta) {
           self.$set(meta, 'edit', false);
         });
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     }
   }),
@@ -101970,20 +101970,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getPages().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },
     retrieveAllTemplates: function retrieveAllTemplates() {
       var self = this;
       this.getTemplates().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     retrieveAllLanguages: function retrieveAllLanguages() {
       var self = this;
       this.getLanguages().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     loadPage: function loadPage(id) {
@@ -101995,7 +101995,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.searchPages(term).then(function (data) {
           self.autosuggest = data;
           if (data.data.length < 1) {
-            window.bus.$emit('showMessage', { title: 'No Suggestions Found', message: 'We couldn\'t find any pages with the term: "' + term + '".' });
+            devise.$bus.$emit('showMessage', { title: 'No Suggestions Found', message: 'We couldn\'t find any pages with the term: "' + term + '".' });
           }
         });
       } else {
@@ -102846,19 +102846,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           // self.$set(version, 'analytics', retrieveAnalytics(version))
         });
         self.pageToTranslate.slug = self.page.slug;
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     retrieveAllTemplates: function retrieveAllTemplates() {
       var self = this;
       this.getTemplates().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     retrieveAllLanguages: function retrieveAllLanguages() {
       var self = this;
       this.getLanguages().then(function () {
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     },
     retrieveAnalytics: function retrieveAnalytics(version) {
@@ -117529,7 +117529,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getSites().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },
@@ -117538,7 +117538,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getLanguages().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },
@@ -118230,7 +118230,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getUsers().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },
@@ -118656,7 +118656,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var self = this;
       this.getUsers().then(function () {
         self.localValue = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, self.localValue, self.user);
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     }
   }),

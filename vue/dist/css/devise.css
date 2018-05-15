@@ -1050,8 +1050,8 @@ button,
   cursor: pointer;
   color: #fff;
   font-size: 1.875rem;
-  margin-left: 1rem;
-  margin-bottom: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 3rem;
   z-index: 50;
   -webkit-transition: all .5s;
   transition: all .5s;

@@ -9,7 +9,7 @@ import Devise from './main.js'
 // so that both apps can share the same store and router. All devise vuex
 // is namespaced under the "devise" namespace.
 import { DeviseBus } from './event-bus.js'
-window.bus = DeviseBus
+devise.$bus = DeviseBus
 import router from './router/route-boilerplate-app.config'
 import store from './vuex/store-boilerplate-app'
 import { sync } from 'vuex-router-sync'
@@ -20,14 +20,14 @@ sync(store, router)
 Vue.use(Devise, {
   store: store,
   router: router,
-  bus: window.bus,
+  bus: devise.$bus,
   options: {
     adminClass: ''
   }
 })
 
 // When we want to initialize something after Devise is done loading
-window.bus.$on('devise-loaded', function () {})
+devise.$bus.$on('devise-loaded', function () {})
 
 // Initialize the application's Vue app
 const app = new Vue({

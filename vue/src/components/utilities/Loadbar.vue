@@ -34,7 +34,8 @@ export default {
   },
   methods: {
     addListeners () {
-      window.bus.$on('incrementLoadbar', this.incrementLoadbar)
+      console.log(devise)
+      devise.$bus.$on('incrementLoadbar', this.incrementLoadbar)
     },
     incrementLoadbar (numberOfModulesToLoad) {
       this.modulesLoaded++

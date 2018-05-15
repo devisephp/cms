@@ -144,7 +144,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.localValue.data.map(function (language) {
           self.$set(language, 'editCode', false);
         });
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     }
   }),

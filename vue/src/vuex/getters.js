@@ -8,23 +8,23 @@ const getters = {
   },
 
   // This takes a component name and returns the corresponding component from
-  // window.deviseComponents. This contains the name, template, and field
+  // deviseSettings.$deviseComponents. This contains the name, template, and field
   // configuration.
   component: state => (name) => {
-    return window.deviseComponents[name]
+    return deviseSettings.$deviseComponents[name]
   },
 
   componentFromView: state => (view) => {
-    for (var component in window.deviseComponents) {
-      if (window.deviseComponents[component].view === 'slices.' + view) {
-        return window.deviseComponents[component]
+    for (var component in deviseSettings.$deviseComponents) {
+      if (deviseSettings.$deviseComponents[component].view === 'slices.' + view) {
+        return deviseSettings.$deviseComponents[component]
       }
     }
     return false
   },
 
   sliceConfig: state => (slice) => {
-    return window.deviseComponents[slice.metadata.name] ? window.deviseComponents[slice.metadata.name] : window.deviseComponents[slice.name]
+    return deviseSettings.$deviseComponents[slice.metadata.name] ? deviseSettings.$deviseComponents[slice.metadata.name] : deviseSettings.$deviseComponents[slice.name]
   },
 
   fieldConfig: (state, getters) => ({fieldKey, slice}) => {

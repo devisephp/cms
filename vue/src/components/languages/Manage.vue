@@ -86,7 +86,7 @@ export default {
         self.localValue.data.map(language => {
           self.$set(language, 'editCode', false)
         })
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad)
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
       })
     }
   },

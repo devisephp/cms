@@ -158,7 +158,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.getUsers().then(function () {
         if (loadbar) {
-          window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
       });
     },
@@ -587,7 +587,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var self = this;
       this.getUsers().then(function () {
         self.localValue = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, self.localValue, self.user);
-        window.bus.$emit('incrementLoadbar', self.modulesToLoad);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
       });
     }
   }),

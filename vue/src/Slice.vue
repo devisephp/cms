@@ -76,16 +76,16 @@ export default {
       return this.devise
     },
     pageData () {
-      if (window.page && window.page.data) {
-        return window.page.data
+      if (deviseSettings.$page && deviseSettings.$page.data) {
+        return deviseSettings.$page.data
       }
       return null
     },
     currentView () {
       if (this.devise.config) {
-        return window.deviseComponents[this.devise.name]
+        return deviseSettings.$deviseComponents[this.devise.name]
       }
-      return window.deviseComponents[this.devise.metadata.name]
+      return deviseSettings.$deviseComponents[this.devise.metadata.name]
     }
   },
   components: {

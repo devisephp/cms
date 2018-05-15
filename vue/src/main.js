@@ -38,7 +38,9 @@ const DevisePlugin = {
 
     // If the bus isn't set we'll use our own bus
     if (typeof bus === 'undefined') {
-      window.bus = DeviseBus
+      deviseSettings.__proto__.$bus = DeviseBus
+    } else {
+      deviseSettings.__proto__.$bus = bus
     }
 
     // Tooltips
@@ -90,7 +92,7 @@ const DevisePlugin = {
           this.$router.push({name: pageName})
         },
         launchMediaManager (callbackObject, callbackProperty) {
-          window.bus.$emit('devise-launch-media-manager', {
+          deviseSettings.bus.$emit('devise-launch-media-manager', {
             callback: function (media) {
               callbackObject[callbackProperty] = media.url
             }

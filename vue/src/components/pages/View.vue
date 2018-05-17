@@ -243,7 +243,6 @@ export default {
     this.retrieveAllTemplates()
     this.retrieveAllLanguages()
     this.setDefaultAnalytics()
-    this.retrieveAnalytics()
   },
   methods: {
     ...mapActions('devise', [
@@ -311,6 +310,8 @@ export default {
         })
         self.pageToTranslate.slug = self.page.slug
         devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
+        
+        self.retrieveAnalytics()
       })
     },
     retrieveAllTemplates () {
@@ -336,8 +337,6 @@ export default {
     retrieveAnalytics (version) {
       let self = this
 
-
-
       if (typeof this.analyticsDateRange.start !== 'string' && this.analyticsDateRange.start[0]) {
         this.analyticsDateRange.start = this.formatDate(new Date(this.analyticsDateRange.start[0]))
       }
@@ -346,7 +345,7 @@ export default {
         this.analyticsDateRange.end = this.formatDate(new Date(this.analyticsDateRange.end[0]))
       }
 
-      this.getAnalytics({slug: page.slug, dates: self.analyticsDateRange}).then(function (response) {
+      this.getAnalytics({slug: this.page.slug, dates: self.analyticsDateRange}).then(function (response) {
 
         response.data.data.datasets.map(function (dataset, index) {
           dataset.backgroundColor = [self.colors[index].background]

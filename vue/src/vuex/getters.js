@@ -23,6 +23,17 @@ const getters = {
     return false
   },
 
+  interface: state => {
+    return deviseSettings.$interface
+  },
+
+  accentColor: state => {
+    if (deviseSettings.$interface.accentColor) {
+      return deviseSettings.$interface.accentColor
+    }
+    return '#2b6ed8' // blue-dark
+  },
+
   sliceConfig: state => (slice) => {
     return deviseSettings.$deviseComponents[slice.metadata.name] ? deviseSettings.$deviseComponents[slice.metadata.name] : deviseSettings.$deviseComponents[slice.name]
   },

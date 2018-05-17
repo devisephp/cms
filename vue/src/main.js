@@ -99,6 +99,14 @@ const DevisePlugin = {
           })
         }
       },
+      computed: {
+        accentColor () {
+          if (deviseSettings.$interface.accentColor) {
+            return deviseSettings.$interface.accentColor
+          }
+          return '#2b6ed8' // blue-dark
+        }
+      },
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass
       // down any data to custom child components

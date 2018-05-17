@@ -4910,6 +4910,10 @@ trix-editor {
   color: #f66d9b;
 }
 
+.dvs-text-2xs {
+  font-size: .65rem;
+}
+
 .dvs-text-xs {
   font-size: .75rem;
 }
@@ -7788,6 +7792,10 @@ trix-editor {
 
   .md\:hover\:dvs-text-pink:hover {
     color: #f66d9b;
+  }
+
+  .md\:dvs-text-2xs {
+    font-size: .65rem;
   }
 
   .md\:dvs-text-xs {
@@ -10669,6 +10677,10 @@ trix-editor {
 
   .lg\:hover\:dvs-text-pink:hover {
     color: #f66d9b;
+  }
+
+  .lg\:dvs-text-2xs {
+    font-size: .65rem;
   }
 
   .lg\:dvs-text-xs {

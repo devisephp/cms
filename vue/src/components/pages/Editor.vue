@@ -1,16 +1,18 @@
 <template>
   <div>
-    <div class="dvs-w-full dvs-bg-blue-dark dvs-text-white dvs-py-4 dvs-px-12 admin-component-first-in">
-      <a class="dvs-text-white dvs-text-xs dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')">
+    <div class="dvs-w-full dvs-py-4 dvs-px-12 dvs-flex dvs-flex-col dvs-items-center admin-component-first-in">
+      <devise-logo class="my-4" style="width:180px;" :color="'#561eb1'" v-if="!interface.logo" />
+      <img class="my-4" :src="interface.logo" v-else>
+
+      <a class="dvs-text-2xs dvs-font-normal dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')">
         <i class="ion-arrow-left-c"></i> Full Administration
       </a>
-      <h4 class="dvs-text-white dvs-font-semibold">      
-        Editing {{ this.page.title }}
-      </h4>
+      <h6 class="dvs-font-bold">      
+        Edit Page: {{ this.page.title }}
+      </h6>
     </div>
 
-    <div class="dvs-flex dvs-flex-col dvs-items-center dvs-p-12">
-
+    <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-py-4">
       <button class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success admin-component-third-in"  @click.prevent="requestSavePage()">
         <i class="ion-checkmark-circled dvs-mr-2"></i> Save this page
       </button>
@@ -67,6 +69,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
+import DeviseLogo from './../utilities/DeviseLogo'
 import SliceEditor from './SliceEditor'
 
 export default {
@@ -122,12 +125,14 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
+      'interface',
       'sliceConfig',
       'fieldConfig'
     ])
   },
   props: ['page'],
   components: {
+    DeviseLogo,
     SliceEditor
   }
 }

@@ -3,6 +3,7 @@
 namespace Devise\MotherShip;
 
 use Carbon\Carbon;
+use Devise;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\App;
@@ -18,35 +19,42 @@ trait ReleasesToMotherShip
 
   private $mshDependenciesMap = [];
 
+  public function releases()
+  {
+    return $this->morphMany(DvsRelease::class, 'model');
+  }
   /**
    *
    */
   protected static function boot()
   {
-    parent::boot();
+    if (Devise::mothershipEnabled())
+    {
+      parent::boot();
 
-    $log = App::make(DvsRelease::class);
+      $log = App::make(DvsRelease::class);
 
-    static::created(function (Model $model) use ($log) {
-      if ($model->saveRelease)
-      {
-        $log->saveCreate($model);
-      }
-    });
+      static::created(function (Model $model) use ($log) {
+        if ($model->saveRelease)
+        {
+          $log->saveCreate($model);
+        }
+      });
 
-    static::saved(function (Model $model) use ($log) {
-      if ($model->saveRelease && $model->created_at != $model->updated_at)
-      {
-        $log->saveUpdate($model);
-      }
-    });
+      static::saved(function (Model $model) use ($log) {
+        if ($model->saveRelease && $model->created_at != $model->updated_at)
+        {
+          $log->saveUpdate($model);
+        }
+      });
 
-    static::deleting(function (Model $model) use ($log) {
-      if ($model->saveRelease)
-      {
-        $log->saveDelete($model);
-      }
-    });
+      static::deleting(function (Model $model) use ($log) {
+        if ($model->saveRelease)
+        {
+          $log->saveDelete($model);
+        }
+      });
+    }
   }
 
   /**

@@ -22,10 +22,32 @@ class Releases
   /**
    * Releases constructor.
    */
-  public function __construct(Api $api, Migrations $migrations)
+  public function __construct(Api $api)
   {
     $this->api = $api;
-    $this->migrations = $migrations;
+  }
+
+  public function getForDeviseFlow()
+  {
+    $currentRelease = DvsRelease::where('model_name', 'Release')->orderBy('created_at', 'desc')->first();
+
+    $rows = $this->getNewRows($currentRelease);
+
+    $grouped = $rows->groupBy(function ($item, $key) {
+      return class_basename($item->top_level_model) . '-' . $item->top_level_model->id;
+    });
+
+    $results = [];
+
+    foreach ($grouped as $group){
+      $first = $group->first();
+      $model = $first->top_level_model;
+      $model->name = class_basename($model);
+      $model->releases = $group;
+      $results[] = $model;
+    }
+
+    return collect($results);
   }
 
   public function sendAndSync($toBeReleased)

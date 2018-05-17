@@ -47,6 +47,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   /**
    * Mothership
    */
+  Route::get('pending-changes', 'ReleasesController@all');
   Route::post('releases', 'ReleasesController@send');
 
   /**

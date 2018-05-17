@@ -10,7 +10,7 @@ class DvsSite extends Model
 {
   use SoftDeletes;
 
-  public $fillable = array('name', 'domain');
+  public $fillable = array('name', 'domain', 'settings');
 
   protected $table = 'dvs_sites';
 
@@ -34,5 +34,15 @@ class DvsSite extends Model
     return $this->languages()
       ->wherePivot('default', 1)
       ->first();
+  }
+
+  public function getSettingsAttribute($value)
+  {
+    return json_decode($value);
+  }
+
+  public function setSettingsAttribute($value)
+  {
+    $this->attributes['settings'] = ($value) ? json_encode($value) : '{}';
   }
 }

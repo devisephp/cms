@@ -3,7 +3,7 @@
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar">
       <h2 class="dvs-font-bold dvs-mb-2">Sites</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-developers-index')">Back to Developers</a>
+      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-settings-index')">Back to Settings</a>
       <ul class="dvs-list-reset">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New Site

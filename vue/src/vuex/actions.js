@@ -419,7 +419,8 @@ const actions = {
 
   getAnalytics (context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.get(`http://104.236.153.6/api/v1/analytics?key=${deviseSettings.$mothership['project-key']}&view=${deviseSettings.$mothership['analytics-view']}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${deviseSettings.$mothership['api-key']}`
+      window.axios.get(`http://104.236.153.6/api/v1/analytics/page?slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)

@@ -40,7 +40,7 @@
         <fieldset class="dvs-fieldset dvs-mb-10">
           <label>Admin Styles</label>
           <help class="dvs-mb-8">You can change the styles of the admin to more closely match the brand of the site as well as upload a logo for the admin.</help>
-          <admin-designer :site="site"></admin-designer>
+          <admin-designer v-model="localValue.settings.colors"></admin-designer>
         </fieldset>
 
         <div class="dvs-flex">
@@ -66,7 +66,11 @@ export default {
   name: 'SitesEdit',
   data () {
     return {
-      localValue: {},
+      localValue: {
+        settings: {
+          colors: {}
+        }
+      },
       modulesToLoad: 2,
       editAddLanguage: null
     }

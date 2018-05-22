@@ -96495,7 +96495,8 @@ var actions = {
   },
   getAnalytics: function getAnalytics(context, payload) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
-      window.axios.get('http://104.236.153.6/api/v1/analytics?key=' + deviseSettings.$mothership['project-key'] + '&view=' + deviseSettings.$mothership['analytics-view'] + '&slug=' + payload.slug + '&start_date=' + payload.dates.start + '&end_date=' + payload.dates.end).then(function (response) {
+      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + deviseSettings.$mothership['api-key'];
+      window.axios.get('http://104.236.153.6/api/v1/analytics/page?slug=' + payload.slug + '&start_date=' + payload.dates.start + '&end_date=' + payload.dates.end).then(function (response) {
         resolve(response);
       }).catch(function (error) {
         devise.$bus.$emit('showError', error);
@@ -99849,7 +99850,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Back to Main Menu")]
+          [_vm._v("Back to Administration")]
         ),
         _vm._v(" "),
         _c("ul", { staticClass: "dvs-list-reset" }, [
@@ -115172,7 +115173,7 @@ var render = function() {
             on: {
               click: function($event) {
                 $event.preventDefault()
-                _vm.goToPage("devise-pages-index")
+                _vm.goToPage("devise-index")
               }
             }
           },
@@ -115532,11 +115533,11 @@ var render = function() {
             on: {
               click: function($event) {
                 $event.preventDefault()
-                _vm.goToPage("devise-developers-index")
+                _vm.goToPage("devise-settings-index")
               }
             }
           },
-          [_vm._v("Back to Developers")]
+          [_vm._v("Back to Settings")]
         ),
         _vm._v(" "),
         _c("ul", { staticClass: "dvs-list-reset" }, [
@@ -116123,7 +116124,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   name: 'SitesEdit',
   data: function data() {
     return {
-      localValue: {},
+      localValue: {
+        settings: {
+          colors: {}
+        }
+      },
       modulesToLoad: 2,
       editAddLanguage: null
     };
@@ -116250,12 +116255,26 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_editor_Color__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_editor_Color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__pages_editor_Color__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_editor_Text__ = __webpack_require__(317);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_editor_Text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__pages_editor_Text__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_editor_Color__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_editor_Color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__pages_editor_Color__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_editor_Text__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_editor_Text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__pages_editor_Text__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_DeviseLogo__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_DeviseLogo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utilities_DeviseLogo__);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -116419,7 +116438,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       logo: null,
-      colors: {
+      localValue: {
         sidebarTop: { color: '#343434' },
         sidebarBottom: { color: '#2199be' },
         sidebarText: { color: '#ffffff' },
@@ -116437,16 +116456,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         statsRight: { color: '#a67045' },
         statsShadowColor: { color: '#1baeda' },
         statsShadowSize: { text: '30px' }
+      },
+      presets: {
+        Default: {
+          sidebarTop: { color: '#343434' },
+          sidebarBottom: { color: '#2199be' },
+          sidebarText: { color: '#ffffff' },
+          buttonsActionText: { color: '#ffffff' },
+          buttonsActionLeft: { color: '#4e9bb5' },
+          buttonsActionRight: { color: '#27afd8' },
+          buttonsActionShadowColor: { color: '#1baeda' },
+          buttonsActionShadowSize: { text: '30px' },
+          userBackground: { color: 'rgba(0,0,0,0.4)' },
+          userText: { color: '#ffffff' },
+          userShadowColor: { color: '#1baeda' },
+          userShadowSize: { text: '30px' },
+          statsText: { color: '#ffffff' },
+          statsLeft: { color: '#2da2c4' },
+          statsRight: { color: '#a67045' },
+          statsShadowColor: { color: '#1baeda' },
+          statsShadowSize: { text: '30px' }
+        },
+        'Purple Dinosaur': {
+          sidebarTop: { color: '#855791' },
+          sidebarBottom: { color: '#564278' },
+          sidebarText: { color: '#ffffff' },
+          buttonsActionText: { color: '#ffffff' },
+          buttonsActionLeft: { color: '#7148c1' },
+          buttonsActionRight: { color: '#c57dd5' },
+          buttonsActionShadowColor: { color: '#b92ed7' },
+          buttonsActionShadowSize: { text: '30px' },
+          userBackground: { color: 'rgba(66,41,118,0.6)' },
+          userText: { color: '#ffffff' },
+          userShadowColor: { color: '#69267d' },
+          userShadowSize: { text: '30px' },
+          statsText: { color: '#ffffff' },
+          statsLeft: { color: '#57467a' },
+          statsRight: { color: '#913ea6' },
+          statsShadowColor: { color: '#c67dd4' },
+          statsShadowSize: { text: '30px' }
+        }
       }
     };
   },
-
-  components: {
-    ColorEditor: __WEBPACK_IMPORTED_MODULE_0__pages_editor_Color___default.a,
-    TextEditor: __WEBPACK_IMPORTED_MODULE_1__pages_editor_Text___default.a,
-    DeviseLogo: __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo___default.a
+  mounted: function mounted() {
+    this.localValue = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, this.localValue, this.value);
   },
-  props: ['site']
+
+  methods: {
+    selectPreset: function selectPreset(e) {
+      if (e.target.value !== '') {
+        var preset = e.target.value;
+        this.localValue = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, this.localValue, this.presets[preset]);
+        e.target.value = '';
+      }
+    }
+  },
+  watch: {
+    localValue: {
+      handler: function handler(val) {
+        this.$emit('input', this.localValue);
+      },
+
+      deep: true
+    }
+  },
+  components: {
+    ColorEditor: __WEBPACK_IMPORTED_MODULE_1__pages_editor_Color___default.a,
+    TextEditor: __WEBPACK_IMPORTED_MODULE_2__pages_editor_Text___default.a,
+    DeviseLogo: __WEBPACK_IMPORTED_MODULE_3__utilities_DeviseLogo___default.a
+  },
+  props: ['value', 'domain']
 });
 
 /***/ }),
@@ -116458,6 +116538,32 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { staticClass: "dvs-mb-10" }, [
+      _c("fieldset", { staticClass: "dvs-fieldset" }, [
+        _c("label", [_vm._v("Presets")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            on: {
+              change: function($event) {
+                _vm.selectPreset($event)
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [_vm._v("Select a Preset")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Default" } }, [_vm._v("Default")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Purple Dinosaur" } }, [
+              _vm._v("Purple Dinosaur")
+            ])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "dvs-flex dvs-w-full" }, [
       _c(
         "div",
@@ -116469,11 +116575,11 @@ var render = function() {
               options: { label: "Sidebar Top Color", hidePreview: true }
             },
             model: {
-              value: _vm.colors.sidebarTop,
+              value: _vm.localValue.sidebarTop,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "sidebarTop", $$v)
+                _vm.$set(_vm.localValue, "sidebarTop", $$v)
               },
-              expression: "colors.sidebarTop"
+              expression: "localValue.sidebarTop"
             }
           }),
           _vm._v(" "),
@@ -116483,11 +116589,11 @@ var render = function() {
               options: { label: "Sidebar Bottom Color", hidePreview: true }
             },
             model: {
-              value: _vm.colors.sidebarBottom,
+              value: _vm.localValue.sidebarBottom,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "sidebarBottom", $$v)
+                _vm.$set(_vm.localValue, "sidebarBottom", $$v)
               },
-              expression: "colors.sidebarBottom"
+              expression: "localValue.sidebarBottom"
             }
           }),
           _vm._v(" "),
@@ -116497,11 +116603,11 @@ var render = function() {
               options: { label: "Sidebar Text Color", hidePreview: true }
             },
             model: {
-              value: _vm.colors.sidebarText,
+              value: _vm.localValue.sidebarText,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "sidebarText", $$v)
+                _vm.$set(_vm.localValue, "sidebarText", $$v)
               },
-              expression: "colors.sidebarText"
+              expression: "localValue.sidebarText"
             }
           }),
           _vm._v(" "),
@@ -116511,11 +116617,11 @@ var render = function() {
               options: { label: "Action Button Text", hidePreview: true }
             },
             model: {
-              value: _vm.colors.buttonsActionText,
+              value: _vm.localValue.buttonsActionText,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "buttonsActionText", $$v)
+                _vm.$set(_vm.localValue, "buttonsActionText", $$v)
               },
-              expression: "colors.buttonsActionText"
+              expression: "localValue.buttonsActionText"
             }
           }),
           _vm._v(" "),
@@ -116525,11 +116631,11 @@ var render = function() {
               options: { label: "Action Button Left", hidePreview: true }
             },
             model: {
-              value: _vm.colors.buttonsActionLeft,
+              value: _vm.localValue.buttonsActionLeft,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "buttonsActionLeft", $$v)
+                _vm.$set(_vm.localValue, "buttonsActionLeft", $$v)
               },
-              expression: "colors.buttonsActionLeft"
+              expression: "localValue.buttonsActionLeft"
             }
           }),
           _vm._v(" "),
@@ -116539,11 +116645,11 @@ var render = function() {
               options: { label: "Action Button Right", hidePreview: true }
             },
             model: {
-              value: _vm.colors.buttonsActionRight,
+              value: _vm.localValue.buttonsActionRight,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "buttonsActionRight", $$v)
+                _vm.$set(_vm.localValue, "buttonsActionRight", $$v)
               },
-              expression: "colors.buttonsActionRight"
+              expression: "localValue.buttonsActionRight"
             }
           }),
           _vm._v(" "),
@@ -116556,11 +116662,11 @@ var render = function() {
               }
             },
             model: {
-              value: _vm.colors.buttonsActionShadowColor,
+              value: _vm.localValue.buttonsActionShadowColor,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "buttonsActionShadowColor", $$v)
+                _vm.$set(_vm.localValue, "buttonsActionShadowColor", $$v)
               },
-              expression: "colors.buttonsActionShadowColor"
+              expression: "localValue.buttonsActionShadowColor"
             }
           }),
           _vm._v(" "),
@@ -116570,11 +116676,11 @@ var render = function() {
               options: { label: "Action Button Shadow Size", hidePreview: true }
             },
             model: {
-              value: _vm.colors.buttonsActionShadowSize,
+              value: _vm.localValue.buttonsActionShadowSize,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "buttonsActionShadowSize", $$v)
+                _vm.$set(_vm.localValue, "buttonsActionShadowSize", $$v)
               },
-              expression: "colors.buttonsActionShadowSize"
+              expression: "localValue.buttonsActionShadowSize"
             }
           }),
           _vm._v(" "),
@@ -116584,11 +116690,11 @@ var render = function() {
               options: { label: "User Block Background", hidePreview: true }
             },
             model: {
-              value: _vm.colors.userBackground,
+              value: _vm.localValue.userBackground,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "userBackground", $$v)
+                _vm.$set(_vm.localValue, "userBackground", $$v)
               },
-              expression: "colors.userBackground"
+              expression: "localValue.userBackground"
             }
           }),
           _vm._v(" "),
@@ -116596,11 +116702,11 @@ var render = function() {
             staticClass: "dvs-mb-4",
             attrs: { options: { label: "User Block Text", hidePreview: true } },
             model: {
-              value: _vm.colors.userText,
+              value: _vm.localValue.userText,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "userText", $$v)
+                _vm.$set(_vm.localValue, "userText", $$v)
               },
-              expression: "colors.userText"
+              expression: "localValue.userText"
             }
           }),
           _vm._v(" "),
@@ -116610,11 +116716,11 @@ var render = function() {
               options: { label: "User Block Shadow Color", hidePreview: true }
             },
             model: {
-              value: _vm.colors.userShadowColor,
+              value: _vm.localValue.userShadowColor,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "userShadowColor", $$v)
+                _vm.$set(_vm.localValue, "userShadowColor", $$v)
               },
-              expression: "colors.userShadowColor"
+              expression: "localValue.userShadowColor"
             }
           }),
           _vm._v(" "),
@@ -116624,11 +116730,11 @@ var render = function() {
               options: { label: "User Block Shadow Size", hidePreview: true }
             },
             model: {
-              value: _vm.colors.userShadowSize,
+              value: _vm.localValue.userShadowSize,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "userShadowSize", $$v)
+                _vm.$set(_vm.localValue, "userShadowSize", $$v)
               },
-              expression: "colors.userShadowSize"
+              expression: "localValue.userShadowSize"
             }
           }),
           _vm._v(" "),
@@ -116641,11 +116747,11 @@ var render = function() {
               }
             },
             model: {
-              value: _vm.colors.statsLeft,
+              value: _vm.localValue.statsLeft,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "statsLeft", $$v)
+                _vm.$set(_vm.localValue, "statsLeft", $$v)
               },
-              expression: "colors.statsLeft"
+              expression: "localValue.statsLeft"
             }
           }),
           _vm._v(" "),
@@ -116658,11 +116764,11 @@ var render = function() {
               }
             },
             model: {
-              value: _vm.colors.statsRight,
+              value: _vm.localValue.statsRight,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "statsRight", $$v)
+                _vm.$set(_vm.localValue, "statsRight", $$v)
               },
-              expression: "colors.statsRight"
+              expression: "localValue.statsRight"
             }
           }),
           _vm._v(" "),
@@ -116670,11 +116776,11 @@ var render = function() {
             staticClass: "dvs-mb-4",
             attrs: { options: { label: "Info Block Text", hidePreview: true } },
             model: {
-              value: _vm.colors.statsText,
+              value: _vm.localValue.statsText,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "statsText", $$v)
+                _vm.$set(_vm.localValue, "statsText", $$v)
               },
-              expression: "colors.statsText"
+              expression: "localValue.statsText"
             }
           }),
           _vm._v(" "),
@@ -116684,11 +116790,11 @@ var render = function() {
               options: { label: "Info Block Shadow Color", hidePreview: true }
             },
             model: {
-              value: _vm.colors.statsShadowColor,
+              value: _vm.localValue.statsShadowColor,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "statsShadowColor", $$v)
+                _vm.$set(_vm.localValue, "statsShadowColor", $$v)
               },
-              expression: "colors.statsShadowColor"
+              expression: "localValue.statsShadowColor"
             }
           }),
           _vm._v(" "),
@@ -116698,11 +116804,11 @@ var render = function() {
               options: { label: "Info Block Shadow Size", hidePreview: true }
             },
             model: {
-              value: _vm.colors.statsShadowSize,
+              value: _vm.localValue.statsShadowSize,
               callback: function($$v) {
-                _vm.$set(_vm.colors, "statsShadowSize", $$v)
+                _vm.$set(_vm.localValue, "statsShadowSize", $$v)
               },
-              expression: "colors.statsShadowSize"
+              expression: "localValue.statsShadowSize"
             }
           })
         ],
@@ -116727,7 +116833,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n          http://" + _vm._s(_vm.site.domain) + "\n        "
+                  "\n          http://" + _vm._s(_vm.domain) + "\n        "
                 )
               ]
             ),
@@ -116747,18 +116853,18 @@ var render = function() {
                     staticStyle: { "min-height": "400px" },
                     style:
                       "\n              background-image: linear-gradient(180deg, " +
-                      _vm.colors.sidebarTop.color +
+                      _vm.localValue.sidebarTop.color +
                       " 0%, " +
-                      _vm.colors.sidebarBottom.color +
+                      _vm.localValue.sidebarBottom.color +
                       " 100%);\n              color: " +
-                      _vm.colors.sidebarText.color +
+                      _vm.localValue.sidebarText.color +
                       "  \n            "
                   },
                   [
                     !_vm.logo
                       ? _c("devise-logo", {
                           staticClass: "dvs-my-4 dvs-mt-2",
-                          attrs: { color: _vm.colors.sidebarText.color }
+                          attrs: { color: _vm.localValue.sidebarText.color }
                         })
                       : _vm._e(),
                     _vm._v(" "),
@@ -116781,15 +116887,15 @@ var render = function() {
                         staticClass: "dvs-btn dvs-btn-xs dvs-mb-8",
                         style:
                           "\n                background-image: linear-gradient(90deg, " +
-                          _vm.colors.buttonsActionLeft.color +
+                          _vm.localValue.buttonsActionLeft.color +
                           " 0%, " +
-                          _vm.colors.buttonsActionRight.color +
+                          _vm.localValue.buttonsActionRight.color +
                           " 100%);\n                color: " +
-                          _vm.colors.buttonsActionText.color +
+                          _vm.localValue.buttonsActionText.color +
                           ";\n                box-shadow: -4px -4px " +
-                          _vm.colors.buttonsActionShadowSize.text +
+                          _vm.localValue.buttonsActionShadowSize.text +
                           " " +
-                          _vm.colors.buttonsActionShadowColor.color +
+                          _vm.localValue.buttonsActionShadowColor.color +
                           ";\n              "
                       },
                       [_vm._v("Save Page\n            ")]
@@ -116804,13 +116910,13 @@ var render = function() {
                           "dvs-rounded-sm dvs-flex dvs-items-center dvs-text-xs dvs-p-2 dvs-absolute pin-b pin-l pin-r dvs-m-8",
                         style:
                           "\n                background: " +
-                          _vm.colors.userBackground.color +
+                          _vm.localValue.userBackground.color +
                           ";\n                color: " +
-                          _vm.colors.userText.color +
+                          _vm.localValue.userText.color +
                           ";\n                box-shadow: -4px -4px " +
-                          _vm.colors.userShadowSize.text +
+                          _vm.localValue.userShadowSize.text +
                           " " +
-                          _vm.colors.userShadowColor.color +
+                          _vm.localValue.userShadowColor.color +
                           ";\n              "
                       },
                       [
@@ -116831,13 +116937,15 @@ var render = function() {
                     staticClass: "dvs-bg-white dvs-w-3/4 dvs-p-4 dvs-relative"
                   },
                   [
-                    _vm._m(2),
+                    _c("h3", [_vm._v("Just an example page")]),
                     _vm._v(" "),
                     _c("p", { staticClass: "dvs-text-xs dvs-mt-4" }, [
                       _vm._v(
                         "Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine."
                       )
                     ]),
+                    _vm._v(" "),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c("p", { staticClass: "dvs-text-xs dvs-mt-4" }, [
                       _vm._v(
@@ -116858,15 +116966,15 @@ var render = function() {
                           "dvs-absolute dvs-pin-l dvs-pin-r dvs-pin-b dvs-flex dvs-justify-between dvs-items-end dvs-m-8 dvs-p-8 dvs-rounded",
                         style:
                           "\n                  background-image: linear-gradient(90deg, " +
-                          _vm.colors.statsLeft.color +
+                          _vm.localValue.statsLeft.color +
                           " 0%, " +
-                          _vm.colors.statsRight.color +
+                          _vm.localValue.statsRight.color +
                           " 100%);\n                  color: " +
-                          _vm.colors.statsText.color +
+                          _vm.localValue.statsText.color +
                           ";\n                  box-shadow: -4px -4px " +
-                          _vm.colors.statsShadowSize.text +
+                          _vm.localValue.statsShadowSize.text +
                           " " +
-                          _vm.colors.statsShadowColor.color +
+                          _vm.localValue.statsShadowColor.color +
                           ";\n                "
                       },
                       [
@@ -116882,7 +116990,7 @@ var render = function() {
                             staticStyle: { width: "100px", height: "100px" },
                             style:
                               "\n                  border-color: " +
-                              _vm.colors.statsText.color +
+                              _vm.localValue.statsText.color +
                               ";\n                "
                           },
                           [_vm._v("\n                90M\n              ")]
@@ -116896,7 +117004,7 @@ var render = function() {
                             staticStyle: { width: "100px", height: "100px" },
                             style:
                               "\n                  border-color: " +
-                              _vm.colors.statsText.color +
+                              _vm.localValue.statsText.color +
                               ";\n                "
                           },
                           [_vm._v("\n                90M\n              ")]
@@ -116910,7 +117018,7 @@ var render = function() {
                             staticStyle: { width: "100px", height: "100px" },
                             style:
                               "\n                  border-color: " +
-                              _vm.colors.statsText.color +
+                              _vm.localValue.statsText.color +
                               ";\n                "
                           },
                           [_vm._v("\n                10K\n              ")]
@@ -117221,7 +117329,15 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("admin-designer", { attrs: { site: _vm.site } })
+                        _c("admin-designer", {
+                          model: {
+                            value: _vm.localValue.settings.colors,
+                            callback: function($$v) {
+                              _vm.$set(_vm.localValue.settings, "colors", $$v)
+                            },
+                            expression: "localValue.settings.colors"
+                          }
+                        })
                       ],
                       1
                     ),

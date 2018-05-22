@@ -10,14 +10,14 @@
       </div>
     </template>
     <template slot="editor">
-      <input type="hidden" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()">
-      <photoshop-picker v-model="color" @input="updateColor(color)" @ok="selectColor(color)" @cancel="cancel" />
+      <input type="hidden" v-model="localValue.color" :maxlength="getMaxLength" v-on:input="updateValue()">
+      <sketch-picker v-model="color" @input="updateColor(color)" @ok="selectColor(color)" @cancel="cancel" />
     </template>
   </field-editor>
 </template>
 
 <script>
-import { Photoshop } from 'vue-color'
+import { Photoshop, Sketch } from 'vue-color'
 
 import FieldEditor from './Field'
 
@@ -46,8 +46,8 @@ export default {
       }
     },
     updateColor (color) {
-      this.color = color.hex
-      this.localValue.color = color.hex
+      this.color = color.rgba
+      this.localValue.color = `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`
     },
     cancel () {
       this.$emit('cancel')
@@ -55,7 +55,7 @@ export default {
     },
     selectColor (color) {
       this.color = color.hex
-      this.localValue.color = color.hex
+      this.localValue.color = `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`
       this.updateValue()
 
       this.$refs.field.showEditor = false
@@ -76,7 +76,8 @@ export default {
   props: ['value', 'options'],
   components: {
     FieldEditor,
-    'photoshop-picker': Photoshop
+    'photoshop-picker': Photoshop,
+    'sketch-picker': Sketch
   }
 }
 </script>

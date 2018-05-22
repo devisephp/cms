@@ -137,11 +137,7 @@ export default {
       })
     },
     showEditSite (site) {
-      this.editSite.id = site.id
-      this.editSite.name = site.name
-      this.editSite.domain = site.domain
-      this.editSite.languages = site.languages
-      this.showEdit = true
+      this.$router.push({name: 'devise-sites-edit', params: { siteId: site.id }})
     },
     requestEditSite () {
       let self = this

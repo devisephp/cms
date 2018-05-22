@@ -778,6 +778,10 @@ button,
   transition: background-color .5s;
 }
 
+.dvs-btn:hover {
+  color: #fff;
+}
+
 .dvs-btn.dvs-btn-success {
   background-color: #38c172;
   color: #fff;
@@ -804,7 +808,7 @@ button,
 }
 
 .dvs-btn.dvs-btn-plain:hover {
-  background-color: #2b6ed8;
+  background-color: #3490dc;
 }
 
 .dvs-btn.dvs-btn-ghost {
@@ -1287,13 +1291,8 @@ button,
   top: 0;
   overflow-y: scroll;
   z-index: 20;
-  top: 100px;
   min-width: 350px;
   width: 350px;
-}
-
-#devise-sidebar.devise-iframe-sidebar {
-  top: 0;
 }
 
 #devise-iframe-editor {
@@ -1317,6 +1316,10 @@ button,
   padding: 2rem;
   overflow: scroll;
   width: calc(100% - 350px);
+}
+
+#devise-admin-content.bottom-padding-16 {
+  padding-bottom: 20em;
 }
 
 #devise-preview-content {

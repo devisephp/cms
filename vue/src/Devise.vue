@@ -109,19 +109,22 @@ export default {
       this.editorMode = true
     }
 
+    this.checkWidthOfInterface(this.$route)
+    this.setSizeAndBreakpoint()
+    this.addWatchers()
+    this.addAdminAnimations()
+
     this.$nextTick(function () {
       if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
         self.adminClosed = false
+        this.openAnimation.restart()
+        this.openAnimation.seek(100)
+
       }
       setTimeout(function () {
         devise.$bus.$emit('devise-loaded')
       }, 10)
     })
-
-    this.checkWidthOfInterface(this.$route)
-    this.setSizeAndBreakpoint()
-    this.addWatchers()
-    this.addAdminAnimations()
   },
   methods: {
     ...mapActions('devise', [

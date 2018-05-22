@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="dvs-w-full dvs-py-4 dvs-px-12 dvs-flex dvs-flex-col dvs-items-center admin-component-first-in">
-      <devise-logo class="my-4" style="width:180px;" :color="'#561eb1'" v-if="!interface.logo" />
-      <img class="my-4" :src="interface.logo" v-else>
+      <devise-logo class="dvs-my-4" style="width:180px;" :color="'#561eb1'" v-if="!interface.logo" />
+      <img class="dvs-my-4" :src="interface.logo" v-else>
 
       <a class="dvs-text-2xs dvs-font-normal dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')">
         <i class="ion-arrow-left-c"></i> Full Administration

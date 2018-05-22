@@ -183,14 +183,9 @@
 
 #devise-sidebar {
   @apply dvs-p-8 dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-overflow-y-scroll dvs-z-20;
-
-  top:100px;
+  
   min-width:350px;
   width:350px;
-
-  &.devise-iframe-sidebar {
-    top:0;
-  }
 }
 
 #devise-iframe-editor {
@@ -201,6 +196,10 @@
   @apply dvs-absolute dvs-pin-t dvs-pin-r dvs-pin-b dvs-z-10 dvs-p-8 dvs-overflow-scroll;
 
   width: calc(100% - 350px);
+
+  &.bottom-padding-16 {
+    padding-bottom:20em;
+  }
 }
 
 #devise-preview-content {

@@ -94,6 +94,11 @@ const getters = {
     return state.sites
   },
 
+  site: (state, getters, rootState) => {
+    var id = parseInt(rootState.route.params.siteId)
+    return state.sites.data.find(site => site.id === id)
+  },
+
   // Slices
   slicesList: state => {
     return state.slices

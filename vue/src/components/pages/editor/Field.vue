@@ -5,7 +5,7 @@
         <div class="dvs-badge dvs-badge-empty dvs-mr-2" :class="{'dvs-bg-green-dark': localValue.enabled, 'dvs-bg-grey-light': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration"></div>
         <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
           <span class="dvs-text-blue-dark dvs-cursor-pointer" @click="showEditor = !showEditor">{{ options.label }}</span>
-          <i class="ion-eye dvs-text-xl" @mouseover="showPreview = true" @mouseout="showPreview = false"></i>
+          <i class="ion-eye dvs-text-xl" v-if="!options.hidePreview" @mouseover="showPreview = true" @mouseout="showPreview = false"></i>
           <div v-show="showPreview" class="dvs-bg-grey-lighter dvs-absolute dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20">
             <slot name="preview"></slot>
             {{ localValue.instructions }}
@@ -16,10 +16,10 @@
 
     <template v-if="showEditor">
     <portal to="devise-field-editor">
-      <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-30 dvs-min-w-3/5">
+      <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-30">
         <h6 class="dvs-text-blue-dark dvs-mb-4">
           {{ localValue.label }}<br>
-          <small class="dvs-text-xs">
+          <small class="dvs-text-xs" v-if="localValue.instructions">
             Hint from Developer: 
             <span class="dvs-italic dvs-font-normal">
               {{ localValue.instructions }}

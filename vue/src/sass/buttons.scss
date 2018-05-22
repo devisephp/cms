@@ -3,6 +3,10 @@
 
   transition: background-color 0.5s;
 
+  &:hover {
+    @apply dvs-text-white;
+  }
+
   &.dvs-btn-success {
     @apply dvs-bg-green dvs-text-white;
 
@@ -27,7 +31,7 @@
     @apply dvs-bg-grey;
 
     &:hover {
-      @apply dvs-bg-blue-dark;
+      @apply dvs-bg-blue;
     }
   }
 

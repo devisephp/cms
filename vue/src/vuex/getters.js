@@ -89,6 +89,10 @@ const getters = {
     return state.pages.data.find(page => page.id === id)
   },
 
+  currentPage: (state, getters, rootState) => {
+    return deviseSettings.$page
+  },
+
   // Sites
   sites: state => {
     return state.sites
@@ -96,7 +100,16 @@ const getters = {
 
   site: (state, getters, rootState) => {
     var id = parseInt(rootState.route.params.siteId)
-    return state.sites.data.find(site => site.id === id)
+    return getters.siteById(id)
+  },
+
+  siteById: state => (id) => {
+    return deviseSettings.$sites.find(site => site.id === id)
+  },
+
+  themeBySiteId: (state, getters, rootState) => (id) => {
+    let site = getters.siteById(id)
+    return site.settings.colors
   },
 
   // Slices

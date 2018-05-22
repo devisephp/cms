@@ -1,7 +1,9 @@
 .dvs-collapsable {
+   @apply dvs-opacity-25
+
   .dvs-switch-sm,
   .dvs-switch {
-    @apply dvs-rounded-sm dvs-bg-grey-light dvs-font-bold dvs-py-3 dvs-px-4 dvs-text-sm dvs-cursor-pointer dvs-opacity-75;
+    @apply dvs-cursor-pointer;
   }
 
   > .dvs-collapsed {
@@ -9,33 +11,8 @@
   }
 
   &.dvs-open {
-    > .dvs-switch-sm,
-    > .dvs-switch {
-      @apply dvs-opacity-100 dvs-bg-blue-dark dvs-text-white;
-    }
-
     > .dvs-collapsed {
-      @apply dvs-block dvs-h-auto;
-    }
-  }
-}
-
-.dvs-template-editor-collapsable {
-  .dvs-template-switch-sm {
-    @apply dvs-rounded-sm dvs-bg-grey-light dvs-font-bold dvs-p-4 dvs-cursor-pointer dvs-py-3;
-  }
-
-  .dvs-collapsed {
-    @apply dvs-hidden dvs-h-0;
-  }
-
-  &.dvs-open {
-    > div > .dvs-template-switch-sm {
-      @apply dvs-opacity-100 dvs-bg-blue-dark dvs-text-white;
-    }
-
-    > div > .dvs-collapsed {
-      @apply dvs-block dvs-h-auto;
+      @apply dvs-block dvs-h-auto dvs-opacity-100;
     }
   }
 }

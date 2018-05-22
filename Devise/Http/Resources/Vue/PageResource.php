@@ -17,6 +17,7 @@ class PageResource extends Resource
   {
     $data = [
       'id'                 => $this->id,
+      'site_id'            => $this->site_id,
       'title'              => $this->title,
       'slug'               => $this->slug,
       'canonical'          => $this->canonical,

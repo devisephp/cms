@@ -4,9 +4,16 @@
       <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4 dvs-font-bold dvs-w-full">
         <div class="dvs-badge dvs-badge-empty dvs-mr-2" :class="{'dvs-bg-green-dark': localValue.enabled, 'dvs-bg-grey-light': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration"></div>
         <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
-          <span class="dvs-text-blue-dark dvs-cursor-pointer" @click="showEditor = !showEditor">{{ options.label }}</span>
+          <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal" @click="showEditor = !showEditor">{{ options.label }}</span>
           <i class="ion-eye dvs-text-xl" v-if="!options.hidePreview" @mouseover="showPreview = true" @mouseout="showPreview = false"></i>
-          <div v-show="showPreview" class="dvs-bg-grey-lighter dvs-absolute dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20">
+          <div 
+            v-show="showPreview" 
+            class="dvs-absolute dvs-font-normal dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20"
+            :style="`
+              background-color: ${theme.sidebarTop.color};
+              color:${theme.sidebarText.color};
+            `"
+            >
             <slot name="preview"></slot>
             {{ localValue.instructions }}
           </div>

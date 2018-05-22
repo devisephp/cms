@@ -2,7 +2,7 @@
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Pages</h2>
+      <h2 class="dvs-font-bold dvs-mb-2" :style="{color: theme.sidebarText.color}">Pages</h2>
       <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-index')">Back to Administration</a>
       <ul class="dvs-list-reset">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
@@ -10,8 +10,9 @@
         </li>
       </ul>
     </div>
+
     <div id="devise-admin-content">
-      <h2 class="dvs-mb-10">Current Site Pages</h2>
+      <h2 class="dvs-mb-10" :style="{color: theme.sidebarText.color}">Current Site Pages</h2>
 
       <fieldset class="dvs-fieldset dvs-mb-8">
         <label>Search Pages</label>

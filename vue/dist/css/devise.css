@@ -1289,7 +1289,6 @@ button,
   left: 0;
   bottom: 0;
   top: 0;
-  overflow-y: scroll;
   z-index: 20;
   min-width: 350px;
   width: 350px;
@@ -1308,13 +1307,7 @@ button,
 }
 
 #devise-admin-content {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
   padding: 2rem;
-  overflow: scroll;
   width: calc(100% - 350px);
 }
 
@@ -1333,6 +1326,11 @@ button,
 
 #devise-preview-iframe {
   height: calc(100vh - 100px);
+}
+
+.dvs-no-scroll {
+  overflow: hidden;
+  height: 100vh;
 }
 
 .dz-image,
@@ -1465,22 +1463,13 @@ button:hover {
   color: #fff;
 }
 
-.help p {
-  color: #3490dc;
-}
+@apply dvs-opacity-25
 
-.dvs-collapsable .dvs-switch-sm,
-.dvs-collapsable .dvs-switch {
-  border-radius: .125rem;
-  background-color: #dae1e7;
-  font-weight: 700;
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-size: .875rem;
-  cursor: pointer;
-  opacity: .75;
+  .dvs-switch-sm,
+  .dvs-switch {
+  .dvs-collapsable {
+    cursor: pointer;
+  }
 }
 
 .dvs-collapsable > .dvs-collapsed {
@@ -1488,42 +1477,10 @@ button:hover {
   height: 0;
 }
 
-.dvs-collapsable.dvs-open > .dvs-switch-sm,
-.dvs-collapsable.dvs-open > .dvs-switch {
-  opacity: 1;
-  background-color: #2b6ed8;
-  color: #fff;
-}
-
 .dvs-collapsable.dvs-open > .dvs-collapsed {
   display: block;
   height: auto;
-}
-
-.dvs-template-editor-collapsable .dvs-template-switch-sm {
-  border-radius: .125rem;
-  background-color: #dae1e7;
-  font-weight: 700;
-  padding: 1rem;
-  cursor: pointer;
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-}
-
-.dvs-template-editor-collapsable .dvs-collapsed {
-  display: none;
-  height: 0;
-}
-
-.dvs-template-editor-collapsable.dvs-open > div > .dvs-template-switch-sm {
   opacity: 1;
-  background-color: #2b6ed8;
-  color: #fff;
-}
-
-.dvs-template-editor-collapsable.dvs-open > div > .dvs-collapsed {
-  display: block;
-  height: auto;
 }
 
 .dvs-loadbar {

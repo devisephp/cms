@@ -6,7 +6,16 @@
       <messages v-if="isLoggedIn" />
       <media-manager v-if="isLoggedIn" />
       <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
-        <div id="devise-admin" v-if="!isPreviewFrame && isLoggedIn" class="dvs-text-grey-darker dvs-bg-white" :class="[deviseOptions.adminClass]" data-simplebar>
+        <div 
+          id="devise-admin" 
+          v-if="!isPreviewFrame && isLoggedIn" 
+          class="dvs-text-grey-darker dvs-bg-white"
+          :class="[deviseOptions.adminClass]" 
+          :style="`
+            background-image: linear-gradient(180deg, ${theme.sidebarTop.color} 0%, ${theme.sidebarBottom.color} 100%);
+            color:${theme.sidebarText.color};
+          `"
+          data-simplebar>
             
           <transition name="fade" mode="out-in">
             <router-view name="devise" :page="page"></router-view>
@@ -20,7 +29,7 @@
           <!-- Shim -->
           <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
           
-          <div id="dvs-app-content">
+          <div id="dvs-app-content" :class="{'dvs-no-scroll': wideAdmin}">
             <!-- Desktop mode in editor or just viewing page -->
             <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
               <slot name="on-top"></slot>
@@ -239,7 +248,8 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'breakpoint'
+      'breakpoint',
+      'themeBySiteId'
     ]),
     currentUrl () {
       return window.location.href
@@ -253,6 +263,9 @@ export default {
     },
     isLoggedIn () {
       return deviseSettings.$user
+    },
+    theme () {
+      return this.themeBySiteId(this.page.site_id)
     }
   },
   watch: {

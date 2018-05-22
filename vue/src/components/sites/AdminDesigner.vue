@@ -234,13 +234,25 @@ export default {
     }
   },
   mounted () {
-    this.localValue = Object.assign({}, this.localValue, this.value)
+    // this.localValue.sidebarTop = this.value.sidebarTop
+    this.applyStyles(this.value)
   },
   methods: {
+    applyStyles (styles) {
+      for(var propt in styles){
+        if (typeof this.localValue[propt] !== 'undefined') {
+          for(var att in styles[propt]){
+            if (typeof this.localValue[propt][att] !== 'undefined') {
+              this.localValue[propt][att] = styles[propt][att]
+            }
+          }
+        }
+      }
+    },
     selectPreset (e) {
       if (e.target.value !== '') {
         let preset = e.target.value
-        this.localValue = Object.assign({}, this.localValue, this.presets[preset])
+        this.applyStyles(this.presets[preset])
         e.target.value = ''
       }
     }

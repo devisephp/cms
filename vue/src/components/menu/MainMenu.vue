@@ -1,6 +1,6 @@
 <template>
   <div class="dvs-p-8">
-    <h2 class="dvs-font-bold dvs-mb-8">Administration</h2>
+    <h2 class="dvs-font-bold dvs-mb-8" :style="{color: theme.sidebarText.color}">Administration</h2>
     <ul class="dvs-list-reset">
       <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-page-editor')">
         Edit this page

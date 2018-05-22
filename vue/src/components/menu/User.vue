@@ -1,15 +1,22 @@
 <template>
-  <div class="dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-p-8" id="devise-menu-current-user">
+  <div class="dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-p-4 dvs-m-8 dvs-rounded-lg dvs-z-20" 
+  id="devise-menu-current-user"
+  style="max-width:300px;"
+  :style="`
+    background: ${theme.userBackground.color};
+    color: ${theme.userText.color};
+    box-shadow: -4px -4px ${theme.userShadowSize.text} ${theme.userShadowColor.color};
+  `">
     <div class="dvs-flex dvs-justify-between dvs-p-4 dvs-items-center">
       <div>
         <router-link :to="{ name: 'devise-users-edit', params: { userId: user.id }}" class="dvs-mr-4">
-          <strong>{{user.name}}</strong>
+          <strong :style="`color: ${theme.userText.color};`">{{user.name}}</strong>
         </router-link><br>
-        <span class="dvs-text-grey">{{user.email}}</span>
+        <span :style="`color: ${theme.userText.color};`">{{user.email}}</span>
       </div>
       <div>
         <a href="/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          <i class="ion-power text-xl mr-1"></i>
+          <i class="ion-power text-xl mr-1" :style="`color: ${theme.userText.color};`"></i>
         </a>
 
         <form id="logout-form" action="/logout" method="POST" style="display: none;">
@@ -21,6 +28,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'DeviseUser',
   data () {

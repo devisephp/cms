@@ -30,7 +30,7 @@
 
             <div v-if="localValue.slices" class="dvs-flex dvs-flex-col dvs-items-center">
               <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset dvs-mb-2 dvs-w-full" :options="{handle: '.handle'}">
-                <li v-for="(slice, key) in localValue.slices" class="dvs-mb-2 dvs-template-editor-collapsable dvs-w-full" :class="{'dvs-open': slice.metadata.open}">
+                <li v-for="(slice, key) in localValue.slices" class="dvs-mb-2 dvs-collapsable dvs-w-full" :class="{'dvs-open': slice.metadata.open}">
 
                   <template-slice-editor
                     v-model="localValue.slices[key]"

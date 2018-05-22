@@ -16,9 +16,11 @@ class SiteResource extends Resource
   {
     $scheme =  (request()->serure) ? 'https' : 'http';
     return [
+      'id'   => $this->id,
       'name'   => $this->name,
       'current'   => $this->current,
       'url' => $scheme . '://' . $this->domain,
+      'settings' => $this->settings,
       'languages' => LanguageResource::collection($this->languages)
     ];
   }

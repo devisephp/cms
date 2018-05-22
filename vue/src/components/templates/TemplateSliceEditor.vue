@@ -1,7 +1,7 @@
 <template>
   <div v-if="loaded" class="dvs-ml-2">
     <!-- Label / Button -->
-    <div class="dvs-flex dvs-justify-between dvs-block dvs-mb-2 dvs-template-switch-sm" @click="toggleSlice()">
+    <div class="dvs-flex dvs-justify-between dvs-block dvs-mb-2 dvs-switch" @click="toggleSlice()">
       <div>
         <i class="handle ion-navicon-round mr-2"></i>
         <i class="ion-gear-b" @click="toggleSliceTools"></i>
@@ -64,7 +64,7 @@
         <!-- Child Slices -->
         <div class="dvs-mt-4 dvs-w-full" v-if="localValue.slices">
           <draggable v-model="localValue.slices" element="ul" :options="{handle: '.handle'}" class="dvs-list-reset dvs-ml-4">
-            <li v-for="(slice, key) in localValue.slices" class="item dvs-mb-2 dvs-template-editor-collapsable" :class="{'dvs-open': slice.metadata.open}">
+            <li v-for="(slice, key) in localValue.slices" class="item dvs-mb-2 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
               <template-slice-editor
                 v-model="localValue.slices[key]"
                 :key="key"

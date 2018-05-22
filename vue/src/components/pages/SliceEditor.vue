@@ -1,14 +1,13 @@
 <template>
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
-    <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-ml-2 dvs-flex dvs-justify-between" @click="toggleSlice(slice)">
+    <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-text-sm dvs-ml-2 dvs-flex dvs-justify-between dvs-cursor-pointer" @click="toggleSlice(slice)">
       {{ slice.metadata.label }}
       <i v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'" class="ion-plus" @click.stop="addInstance(slice)"></i>
     </strong>
 
-
-    <div class="dvs-collapsed" v-if="slice.metadata.open">
-      <div class="dvs-pt-4" v-if="!slice.metadata.placeholder">
-        <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-8 dvs-pl-4" :key="key">
+    <div class="dvs-collapsed dvs-mb-8" v-if="slice.metadata.open">
+      <div v-if="!slice.metadata.placeholder">
+        <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-4 dvs-pl-4" :key="key">
           <div>
 
             <color-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'color'">
@@ -41,11 +40,19 @@
 
       <div class="dvs-collapsed dvs-pl-4">
 
-        <help v-if="slice.metadata.type === 'model'" class="mb-4">
+        <help 
+          v-if="slice.metadata.type === 'model'" 
+          class="mb-4"
+          :style="`
+            border-color:${theme.buttonsActionLeft.color};
+            background:${theme.buttonsActionRight.color};
+            color:${theme.buttonsActionText.color};
+          `" 
+          >
           Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
         </help>
 
-        <ul class="dvs-list-reset">
+        <ul class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" >
           <template v-for="(s, key) in slice.slices">
             <slice-editor :key="key" :slice="s" />
           </template>

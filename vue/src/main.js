@@ -8,10 +8,13 @@ import PortalVue from 'portal-vue'
 import { DeviseBus } from './event-bus.js'
 import routes from './router/route.config.js'
 import alertConfirm from './directives/alert-confirm'
+import Vuebar from 'vuebar';
 
 import EditPage from './components/pages/Editor'
 
 Vue.config.productionTip = false
+
+import { mapGetters } from 'vuex'
 
 const DevisePlugin = {
   install (Vue, { store, router, bus, options }) {
@@ -48,6 +51,9 @@ const DevisePlugin = {
 
     // Portals to render items outside of their component
     Vue.use(PortalVue)
+
+    // Scrollbar hiding
+    Vue.use(Vuebar);
 
     // VueRouter Register global components
     Vue.component('Devise', Devise)
@@ -100,11 +106,12 @@ const DevisePlugin = {
         }
       },
       computed: {
-        accentColor () {
-          if (deviseSettings.$interface.accentColor) {
-            return deviseSettings.$interface.accentColor
-          }
-          return '#2b6ed8' // blue-dark
+        ...mapGetters('devise', [
+          'themeBySiteId',
+          'currentPage'
+        ]),
+        theme () {
+          return this.themeBySiteId(this.currentPage.site_id)
         }
       },
       // This sets a prop to be accepted by all components in a custom Vue

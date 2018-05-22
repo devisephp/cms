@@ -1,19 +1,26 @@
 <template>
   <div>
     <div class="dvs-w-full dvs-py-4 dvs-px-12 dvs-flex dvs-flex-col dvs-items-center admin-component-first-in">
-      <devise-logo class="dvs-my-4" style="width:180px;" :color="'#561eb1'" v-if="!interface.logo" />
+      <devise-logo class="dvs-my-4" style="width:180px;" :color="theme.sidebarText.color" v-if="!interface.logo" />
       <img class="dvs-my-4" :src="interface.logo" v-else>
 
-      <a class="dvs-text-2xs dvs-font-normal dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')">
+      <a class="dvs-text-2xs dvs-font-normal dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')" :style="`color:${theme.sidebarText.color}`">
         <i class="ion-arrow-left-c"></i> Full Administration
       </a>
-      <h6 class="dvs-font-bold">      
+      <h6 class="dvs-font-bold" :style="`color:${theme.sidebarText.color}`">      
         Edit Page: {{ this.page.title }}
       </h6>
     </div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-py-4">
-      <button class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success admin-component-third-in"  @click.prevent="requestSavePage()">
+      <button 
+        class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success admin-component-third-in"  
+        :style="`
+                  background-image: linear-gradient(90deg, ${theme.buttonsActionLeft.color} 0%, ${theme.buttonsActionRight.color} 100%);
+                  color: ${theme.buttonsActionText.color};
+                  box-shadow: -4px -4px ${theme.buttonsActionShadowSize.text} ${theme.buttonsActionShadowColor.color};
+                `"
+        @click.prevent="requestSavePage()">
         <i class="ion-checkmark-circled dvs-mr-2"></i> Save this page
       </button>
 
@@ -24,19 +31,33 @@
         <i class="ion-android-phone-landscape dvs-text-2xl dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-landscape'}" @click="setPreviewMode('mobile-landscape')"></i>
       </div>
 
+      <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
+           :style="`border-color:${theme.sidebarText.color}`">
+        <div 
+          class="dvs-p-2 dvs-cursor-pointer" 
+          :class="{'dvs-border-b-2': pageSettingsOpen}" 
+          :style="`border-color:${theme.sidebarText.color}`" 
+          @click="togglePageSettings">
+          Page Settings
+        </div>
+        <div 
+          class="dvs-p-2 dvs-cursor-pointer"
+          :class="{'dvs-border-b-2': pageContentOpen}" 
+          :style="`border-color:${theme.sidebarText.color}`" 
+          @click="togglePageContent">
+          Page Content
+        </div>
+      </div>
+
       <ul class="dvs-list-reset dvs-w-full">
         <li class="dvs-collapsable dvs-mb-8" :class="{'dvs-open': pageSettingsOpen}">
-          <div class="dvs-switch admin-component-first-in" @click="togglePageSettings">
-            Page Settings
-          </div>
-
           <div class="dvs-collapsed dvs-mt-4">
-            <fieldset class="dvs-fieldset">
+            <fieldset class="dvs-fieldset mb-8">
               <label>Page Title</label>
               <input type="text" placeholder="Title of the Page">
             </fieldset>
 
-            <fieldset class="dvs-fieldset">
+            <fieldset class="dvs-fieldset mb-8">
               <label>Description</label>
               <textarea class="dvs-h-24" placeholder="Description of the Page - Try to aim for around 150 - 300 characters."></textarea>
             </fieldset>
@@ -48,12 +69,8 @@
           </div>
         </li>
         <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
-          <div class="dvs-switch admin-component-second-in" @click="togglePageContent">
-            Page Content
-          </div>
-
           <div class="dvs-collapsed dvs-mt-4">
-            <ul class="dvs-list-reset">
+            <ul class="dvs-list-reset" style="padding-bottom:150px;" >
               <template v-for="(slice, key) in pageSlices">
                 <slice-editor @opened="openSlice(slice)" :slice="slice" />
               </template>

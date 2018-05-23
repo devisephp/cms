@@ -1,9 +1,9 @@
 <template>
 
-  <div class="dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="page">
+  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="page">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Pages</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-pages-index')">Back to Pages</a>
+      <h2 class="dvs-font-bold dvs-mb-2" :style="{color: theme.sidebarText.color}">Pages</h2>
+      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" :style="{color: theme.sidebarText.color}" @click.prevent="goToPage('devise-pages-index')">Back to Pages</a>
       <ul class="dvs-list-reset dvs-mb-10">
         <li class="dvs-mb-6 dvs-text-lg">
           <a :href="page.slug" class="dvs-text-grey-darker">Go To Page</a>
@@ -22,9 +22,10 @@
         </li>
       </ul>
     </div>
-    <div id="devise-admin-content">
+
+    <div id="devise-admin-content"  :style="{backgroundColor: theme.statsLeft.color, color: theme.statsText.color}">
       <template v-if="analytics.data">
-        <h3 class="dvs-mb-8">{{ localValue.title }} Analytics</h3>
+        <h3 class="dvs-mb-8" :style="{color: theme.statsText.color}">{{ localValue.title }} Analytics</h3>
         <div class="flex mb-8">
           <fieldset class="dvs-fieldset mr-8">
             <label>Analytics Start Date</label>
@@ -35,17 +36,17 @@
             <date-picker v-model="analyticsDateRange.end" :settings="{date: true, time: false}" placeholder="End Date" @update="retrieveAnalytics()" />
           </fieldset>
         </div>
-        <div>
-          <line-chart class="dvs-mb-8" :chart-data="analytics.data" :options="{width: '8000px'}" :width="800" :height="200" />
+        <div class="dvs-mb-12">
+          <line-chart class="dvs-mb-8" :chart-data="analytics.data" :options="options" :width="800" :height="200" />
         </div>
       </template>
 
-      <h3 class="dvs-mb-8">{{ localValue.title }} Page Versions</h3>
+      <h3 class="dvs-mb-8" :style="{color: theme.sidebarText.color}">{{ localValue.title }} Page Versions</h3>
 
-      <help class="dvs-mb-8">Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
+      <help class="dvs-mb-4">Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
 
       <div class="dvs-mb-12 dvs--m8">
-        <div v-for="(version, key) in localValue.versions" class="dvs-flex-grow dvs-p-8 dvs-rounded-sm dvs-bg-grey-lightest dvs-shadow-sm dvs-mb-8">
+        <div v-for="(version, key) in localValue.versions" class="dvs-flex-grow dvs-p-8 dvs-rounded-sm dvs-shadow-sm dvs-mb-8">
           <div class="dvs-text-xl dvs-font-bold dvs-mb-4 dvs-flex dvs-justify-between">
             <div>
               <template v-if="!version.editName">
@@ -75,23 +76,48 @@
               </fieldset>
             </div>
 
-            <div class="dvs-flex dvs-justify-between">
-              <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-mr-2 dvs-w-1/4"
-                      @click="requestSaveVersion(version)" title="Save Version Settings" v-tippy="tippyConfiguration">
-                <i class="ion-checkmark dvs-text-xl"/>
+            <div class="dvs-flex dvs-justify-start">
+              <button 
+                class="dvs-btn dvs-mr-4 dvs-px-8"
+                @click="requestSaveVersion(version)" 
+                title="Save Version Settings" 
+                v-tippy="tippyConfiguration"
+                :style="`
+                  background-image: linear-gradient(90deg, ${theme.buttonsActionLeft.color} 0%, ${theme.buttonsActionRight.color} 100%);
+                  color: ${theme.buttonsActionText.color};
+                  box-shadow: -4px -4px ${theme.buttonsActionShadowSize.text} ${theme.buttonsActionShadowColor.color};
+                `"
+                >
+                <i class="ion-checkmark dvs-text-3xl"/>
               </button>
-              <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-mr-2 dvs-w-1/4" @click="requestCopyVersion(version)" title="Copy Version" v-tippy="tippyConfiguration">
-                <i class="ion-ios-copy dvs-text-xl" />
+              <button 
+                class="dvs-btn dvs-mr-4 dvs-px-8" 
+                @click="requestCopyVersion(version)" 
+                title="Copy Version" 
+                v-tippy="tippyConfiguration"
+                :style="`
+                  background-image: linear-gradient(90deg, ${theme.buttonsActionLeft.color} 0%, ${theme.buttonsActionRight.color} 100%);
+                  color: ${theme.buttonsActionText.color};
+                `"
+                >
+                <i class="ion-ios-copy dvs-text-3xl" />
               </button>
-              <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-mr-2 dvs-w-1/4" v-tippy="tippyConfiguration" v-devise-alert-confirm="{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}">
-                <i class="ion-trash-b dvs-text-xl" />
+              <button 
+                class="dvs-btn dvs-mr-2 dvs-px-8" 
+                v-tippy="tippyConfiguration" 
+                v-devise-alert-confirm="{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
+                :style="`
+                  background-image: linear-gradient(90deg, ${theme.buttonsInverseLeft.color} 0%, ${theme.buttonsInverseRight.color} 100%);
+                  color: ${theme.buttonsInverseText.color};
+                `">
+                <i class="ion-trash-b dvs-text-3xl" />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <h3 class="dvs-mb-8">Global Page Settings</h3>
+      <h3 class="dvs-mb-8" :style="{color: theme.sidebarText.color}">Global Page Settings</h3>
 
       <help class="dvs-mb-8">These settings effect all of the page versions of this page.</help>
 
@@ -349,6 +375,7 @@ export default {
 
         response.data.data.datasets.map(function (dataset, index) {
           dataset.backgroundColor = [self.colors[index].background]
+          dataset.fontColor = self.theme.statsText.color
           dataset.borderColor = [self.colors[index].border]
           dataset.pointRadius = 4
 					dataset.pointHoverRadius = 10
@@ -372,7 +399,32 @@ export default {
       'templates',
       'page',
       'languages'
-    ])
+    ]),
+    options () {
+      return {
+        width: '8000px',
+        legend: {
+          labels: {
+              fontColor: this.theme.statsText.color,
+              fontSize: 14
+          }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    fontColor: this.theme.statsText.color,
+                    fontSize: 12
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    fontColor: this.theme.statsText.color,
+                    fontSize: 12
+                }
+            }]
+        }
+      }
+    }
   },
   components: {
     DatePicker,

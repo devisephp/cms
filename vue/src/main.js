@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueTippy from 'vue-tippy'
 import Devise from './Devise'
 import Help from './components/utilities/Help'
+import Logo from './components/utilities/Logo'
 import Slices from './Slices'
 import DeviseStore from './vuex/store'
 import PortalVue from 'portal-vue'
@@ -57,6 +58,7 @@ const DevisePlugin = {
 
     // VueRouter Register global components
     Vue.component('Devise', Devise)
+    Vue.component('Logo', Logo)
     Vue.component('Help', Help)
     Vue.component('Slices', Slices)
 
@@ -112,6 +114,31 @@ const DevisePlugin = {
         ]),
         theme () {
           return this.themeBySiteId(this.currentPage.site_id)
+        },
+        sidebarTheme () {
+          return {
+            backgroundImage: `linear-gradient(180deg, ${this.theme.sidebarTop.color} 0%, ${this.theme.sidebarBottom.color} 100%)`,
+            color: this.theme.sidebarText.color
+          }
+        },
+        adminTheme () {
+          return {
+            background: this.theme.adminBackground.color,
+            color: this.theme.adminText.color
+          }
+        },
+        actionButtonTheme () {
+          return {
+            backgroundImage: `linear-gradient(90deg, ${this.theme.buttonsActionLeft.color} 0%, ${this.theme.buttonsActionRight.color} 100%)`,
+            color: this.theme.buttonsActionText.color,
+            boxShadow: `-4px -4px ${this.theme.buttonsActionShadowSize.text} ${this.theme.buttonsActionShadowColor.color}`
+          }
+        },
+        regularButtonTheme () {
+          return {
+            backgroundColor: this.theme.buttonsActionLeft.color,
+            color: this.theme.buttonsActionText.color
+          }
         }
       },
       // This sets a prop to be accepted by all components in a custom Vue

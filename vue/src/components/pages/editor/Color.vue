@@ -17,6 +17,7 @@
 </template>
 
 <script>
+var tinycolor = require('tinycolor2')
 import { Photoshop, Sketch } from 'vue-color'
 
 import FieldEditor from './Field'
@@ -27,7 +28,7 @@ export default {
     return {
       originalColor: null,
       localValue: {},
-      color: '#296BE9'
+      color: null
     }
   },
   mounted () {
@@ -39,11 +40,14 @@ export default {
     setDefault () {
       if (this.localValue.color === null) {
         if (this.options.default) {
-          this.color = this.options.default
+          this.color = this.convertColor(this.options.default)
         }
       } else {
-        this.color = this.localValue.color
+        this.color = this.convertColor(this.localValue.color)
       }
+    },
+    convertColor (color) {
+      return tinycolor(color).toRgb()
     },
     updateColor (color) {
       this.color = color.rgba

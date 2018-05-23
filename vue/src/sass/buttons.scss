@@ -1,11 +1,7 @@
 .dvs-btn {
-  @apply dvs-p-4 dvs-bg-blue-dark dvs-rounded dvs-text-white dvs-uppercase dvs-text-sm;
+  @apply dvs-p-4 dvs-rounded dvs-uppercase dvs-text-sm;
 
   transition: background-color 0.5s;
-
-  &:hover {
-    @apply dvs-text-white;
-  }
 
   &.dvs-btn-success {
     @apply dvs-bg-green dvs-text-white;

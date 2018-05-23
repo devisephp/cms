@@ -52898,19 +52898,22 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Devise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Devise__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_utilities_Help__ = __webpack_require__(519);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_utilities_Help___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_utilities_Help__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Slices__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Slices___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Slices__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__vuex_store__ = __webpack_require__(521);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_portal_vue__ = __webpack_require__(541);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_portal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_portal_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__event_bus_js__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__router_route_config_js__ = __webpack_require__(542);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__directives_alert_confirm__ = __webpack_require__(638);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vuebar__ = __webpack_require__(650);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vuebar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_vuebar__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_Editor__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_Editor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_pages_Editor__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_utilities_Logo__ = __webpack_require__(654);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_utilities_Logo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_utilities_Logo__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Slices__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Slices___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__Slices__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__vuex_store__ = __webpack_require__(521);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_portal_vue__ = __webpack_require__(541);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_portal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_portal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__event_bus_js__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__router_route_config_js__ = __webpack_require__(542);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__directives_alert_confirm__ = __webpack_require__(638);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vuebar__ = __webpack_require__(650);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vuebar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_vuebar__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_pages_Editor__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_pages_Editor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_pages_Editor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_vuex__ = __webpack_require__(3);
+
 
 
 
@@ -52954,14 +52957,14 @@ var DevisePlugin = {
         route.components = {};
       }
       if (!route.components.hasOwnProperty('devise')) {
-        route.components.devise = __WEBPACK_IMPORTED_MODULE_13__components_pages_Editor___default.a;
+        route.components.devise = __WEBPACK_IMPORTED_MODULE_14__components_pages_Editor___default.a;
       }
     });
-    router.addRoutes(__WEBPACK_IMPORTED_MODULE_10__router_route_config_js__["a" /* default */]);
+    router.addRoutes(__WEBPACK_IMPORTED_MODULE_11__router_route_config_js__["a" /* default */]);
 
     // If the bus isn't set we'll use our own bus
     if (typeof bus === 'undefined') {
-      deviseSettings.__proto__.$bus = __WEBPACK_IMPORTED_MODULE_9__event_bus_js__["a" /* DeviseBus */];
+      deviseSettings.__proto__.$bus = __WEBPACK_IMPORTED_MODULE_10__event_bus_js__["a" /* DeviseBus */];
     } else {
       deviseSettings.__proto__.$bus = bus;
     }
@@ -52970,21 +52973,22 @@ var DevisePlugin = {
     Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_tippy___default.a);
 
     // Portals to render items outside of their component
-    Vue.use(__WEBPACK_IMPORTED_MODULE_8_portal_vue___default.a);
+    Vue.use(__WEBPACK_IMPORTED_MODULE_9_portal_vue___default.a);
 
     // Scrollbar hiding
-    Vue.use(__WEBPACK_IMPORTED_MODULE_12_vuebar___default.a);
+    Vue.use(__WEBPACK_IMPORTED_MODULE_13_vuebar___default.a);
 
     // VueRouter Register global components
     Vue.component('Devise', __WEBPACK_IMPORTED_MODULE_4__Devise___default.a);
+    Vue.component('Logo', __WEBPACK_IMPORTED_MODULE_6__components_utilities_Logo___default.a);
     Vue.component('Help', __WEBPACK_IMPORTED_MODULE_5__components_utilities_Help___default.a);
-    Vue.component('Slices', __WEBPACK_IMPORTED_MODULE_6__Slices___default.a);
+    Vue.component('Slices', __WEBPACK_IMPORTED_MODULE_7__Slices___default.a);
 
     // Register devise vuex module and sync it with the store
-    store.registerModule('devise', __WEBPACK_IMPORTED_MODULE_7__vuex_store__["a" /* default */]);
+    store.registerModule('devise', __WEBPACK_IMPORTED_MODULE_8__vuex_store__["a" /* default */]);
 
     // Register alert / confirm directive
-    Vue.directive('devise-alert-confirm', __WEBPACK_IMPORTED_MODULE_11__directives_alert_confirm__["a" /* default */]);
+    Vue.directive('devise-alert-confirm', __WEBPACK_IMPORTED_MODULE_12__directives_alert_confirm__["a" /* default */]);
 
     var deviseOptions = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign___default()({
       breakpoints: {
@@ -53026,9 +53030,34 @@ var DevisePlugin = {
           });
         }
       },
-      computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_14_vuex__["c" /* mapGetters */])('devise', ['themeBySiteId', 'currentPage']), {
+      computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_15_vuex__["c" /* mapGetters */])('devise', ['themeBySiteId', 'currentPage']), {
         theme: function theme() {
           return this.themeBySiteId(this.currentPage.site_id);
+        },
+        sidebarTheme: function sidebarTheme() {
+          return {
+            backgroundImage: 'linear-gradient(180deg, ' + this.theme.sidebarTop.color + ' 0%, ' + this.theme.sidebarBottom.color + ' 100%)',
+            color: this.theme.sidebarText.color
+          };
+        },
+        adminTheme: function adminTheme() {
+          return {
+            background: this.theme.adminBackground.color,
+            color: this.theme.adminText.color
+          };
+        },
+        actionButtonTheme: function actionButtonTheme() {
+          return {
+            backgroundImage: 'linear-gradient(90deg, ' + this.theme.buttonsActionLeft.color + ' 0%, ' + this.theme.buttonsActionRight.color + ' 100%)',
+            color: this.theme.buttonsActionText.color,
+            boxShadow: '-4px -4px ' + this.theme.buttonsActionShadowSize.text + ' ' + this.theme.buttonsActionShadowColor.color
+          };
+        },
+        regularButtonTheme: function regularButtonTheme() {
+          return {
+            backgroundColor: this.theme.buttonsActionLeft.color,
+            color: this.theme.buttonsActionText.color
+          };
         }
       }),
       // This sets a prop to be accepted by all components in a custom Vue
@@ -60954,10 +60983,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SliceEditor__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SliceEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__SliceEditor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SliceEditor__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SliceEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__SliceEditor__);
 
 //
 //
@@ -61042,9 +61069,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-
 
 
 
@@ -61107,11 +61131,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       deviseSettings.$page.previewMode = mode;
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['interface', 'sliceConfig', 'fieldConfig'])),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['sliceConfig', 'fieldConfig'])),
   props: ['page'],
   components: {
-    DeviseLogo: __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo___default.a,
-    SliceEditor: __WEBPACK_IMPORTED_MODULE_3__SliceEditor___default.a
+    SliceEditor: __WEBPACK_IMPORTED_MODULE_2__SliceEditor___default.a
   }
 });
 
@@ -62622,6 +62645,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+var tinycolor = __webpack_require__(651);
 
 
 
@@ -62632,7 +62656,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       originalColor: null,
       localValue: {},
-      color: '#296BE9'
+      color: null
     };
   },
   mounted: function mounted() {
@@ -62645,11 +62669,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     setDefault: function setDefault() {
       if (this.localValue.color === null) {
         if (this.options.default) {
-          this.color = this.options.default;
+          this.color = this.convertColor(this.options.default);
         }
       } else {
-        this.color = this.localValue.color;
+        this.color = this.convertColor(this.localValue.color);
       }
+    },
+    convertColor: function convertColor(color) {
+      return tinycolor(color).toRgb();
     },
     updateColor: function updateColor(color) {
       this.color = color.rgba;
@@ -64494,16 +64521,10 @@ var render = function() {
           "dvs-w-full dvs-py-4 dvs-px-12 dvs-flex dvs-flex-col dvs-items-center admin-component-first-in"
       },
       [
-        !_vm.interface.logo
-          ? _c("devise-logo", {
-              staticClass: "dvs-my-4",
-              staticStyle: { width: "180px" },
-              attrs: { color: _vm.theme.sidebarText.color }
-            })
-          : _c("img", {
-              staticClass: "dvs-my-4",
-              attrs: { src: _vm.interface.logo }
-            }),
+        _c("logo", {
+          staticClass:
+            "dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center"
+        }),
         _vm._v(" "),
         _c(
           "a",
@@ -64525,18 +64546,11 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c(
-          "h6",
-          {
-            staticClass: "dvs-font-bold",
-            style: "color:" + _vm.theme.sidebarText.color
-          },
-          [
-            _vm._v(
-              "      \n      Edit Page: " + _vm._s(this.page.title) + "\n    "
-            )
-          ]
-        )
+        _c("h3", { style: "color:" + _vm.theme.sidebarText.color }, [
+          _vm._v(
+            "      \n      Edit Page: " + _vm._s(this.page.title) + "\n    "
+          )
+        ])
       ],
       1
     ),
@@ -95934,7 +95948,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "help" }, [_c("p", [_vm._t("default")], 2)])
+  return _c(
+    "div",
+    {
+      staticClass: "help",
+      style: {
+        background: _vm.theme.userBackground.color,
+        color: _vm.theme.userText.color,
+        borderColor: _vm.theme.userText.color,
+        boxShadow:
+          "-4px -4px " +
+          _vm.theme.userShadowSize.text +
+          " " +
+          _vm.theme.userShadowColor.color
+      }
+    },
+    [_c("p", [_vm._t("default")], 2)]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -97517,6 +97547,8 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+var tinycolor = __webpack_require__(651);
+
 var getters = {
   breakpoint: function breakpoint(state) {
     return state.breakpoint.breakpoint;
@@ -97548,13 +97580,6 @@ var getters = {
 
   interface: function _interface(state) {
     return deviseSettings.$interface;
-  },
-
-  accentColor: function accentColor(state) {
-    if (deviseSettings.$interface.accentColor) {
-      return deviseSettings.$interface.accentColor;
-    }
-    return '#2b6ed8'; // blue-dark
   },
 
   sliceConfig: function sliceConfig(state) {
@@ -97646,7 +97671,21 @@ var getters = {
   themeBySiteId: function themeBySiteId(state, getters, rootState) {
     return function (id) {
       var site = getters.siteById(id);
-      return site.settings.colors;
+      var colors = site.settings.colors;
+
+      colors.buttonsInverseLeft = {
+        color: tinycolor(colors.buttonsActionLeft.color).spin(90).toString()
+      };
+
+      colors.buttonsInverseRight = {
+        color: tinycolor(colors.buttonsActionRight.color).spin(90).toString()
+      };
+
+      colors.buttonsInverseText = {
+        color: tinycolor(colors.buttonsActionText.color).spin(90).toString()
+      };
+
+      return colors;
     };
   },
 
@@ -99842,6 +99881,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -100026,6 +100074,7 @@ var render = function() {
           {
             staticClass:
               "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
+            style: { color: _vm.theme.sidebarText.color },
             attrs: { href: "#" },
             on: {
               click: function($event) {
@@ -100101,7 +100150,7 @@ var render = function() {
                 "ul",
                 {
                   staticClass:
-                    "dvs-list-reset dvs-bg-white dvs-absolute dvs-shadow-lg"
+                    "dvs-list-reset dvs-bg-white dvs-text-black dvs-absolute dvs-shadow-lg"
                 },
                 _vm._l(_vm.autosuggest.data, function(suggestion, key) {
                   return _c(
@@ -100131,7 +100180,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "dvs-mb-6 dvs-rounded-sm dvs-bg-white dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center"
+                  "dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center"
               },
               [
                 _c(
@@ -100162,6 +100211,18 @@ var render = function() {
                       "button",
                       {
                         staticClass: "dvs-btn dvs-btn-xs dvs-mr-2",
+                        style:
+                          "\n                background-image: linear-gradient(90deg, " +
+                          _vm.theme.buttonsActionLeft.color +
+                          " 0%, " +
+                          _vm.theme.buttonsActionRight.color +
+                          " 100%);\n                color: " +
+                          _vm.theme.buttonsActionText.color +
+                          ";\n                box-shadow: -4px -4px " +
+                          _vm.theme.buttonsActionShadowSize.text +
+                          " " +
+                          _vm.theme.buttonsActionShadowColor.color +
+                          ";\n              ",
                         on: {
                           click: function($event) {
                             _vm.loadPage(page.id)
@@ -100175,6 +100236,12 @@ var render = function() {
                       "a",
                       {
                         staticClass: "dvs-btn dvs-btn-plain dvs-btn-xs",
+                        style:
+                          "\n                background-color: " +
+                          _vm.theme.buttonsActionLeft.color +
+                          ";\n                color: " +
+                          _vm.theme.buttonsActionText.color +
+                          ";\n              ",
                         attrs: { href: page.slug }
                       },
                       [_vm._v("Go")]
@@ -100702,6 +100769,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -100854,6 +100947,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         response.data.data.datasets.map(function (dataset, index) {
           dataset.backgroundColor = [self.colors[index].background];
+          dataset.fontColor = self.theme.statsText.color;
           dataset.borderColor = [self.colors[index].border];
           dataset.pointRadius = 4;
           dataset.pointHoverRadius = 10;
@@ -100872,7 +100966,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$set(version, 'showSettings', false);
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_6_vuex__["c" /* mapGetters */])('devise', ['templates', 'page', 'languages'])),
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_6_vuex__["c" /* mapGetters */])('devise', ['templates', 'page', 'languages']), {
+    options: function options() {
+      return {
+        width: '8000px',
+        legend: {
+          labels: {
+            fontColor: this.theme.statsText.color,
+            fontSize: 14
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              fontColor: this.theme.statsText.color,
+              fontSize: 12
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              fontColor: this.theme.statsText.color,
+              fontSize: 12
+            }
+          }]
+        }
+      };
+    }
+  }),
   components: {
     DatePicker: __WEBPACK_IMPORTED_MODULE_2__utilities_DatePicker___default.a,
     DeviseModal: __WEBPACK_IMPORTED_MODULE_3__utilities_Modal___default.a,
@@ -114248,19 +114368,25 @@ var render = function() {
         "div",
         {
           staticClass:
-            "dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative"
+            "dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative"
         },
         [
           _c("div", { attrs: { id: "devise-sidebar" } }, [
-            _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-              _vm._v("Pages")
-            ]),
+            _c(
+              "h2",
+              {
+                staticClass: "dvs-font-bold dvs-mb-2",
+                style: { color: _vm.theme.sidebarText.color }
+              },
+              [_vm._v("Pages")]
+            ),
             _vm._v(" "),
             _c(
               "a",
               {
                 staticClass:
                   "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
+                style: { color: _vm.theme.sidebarText.color },
                 attrs: { href: "#" },
                 on: {
                   click: function($event) {
@@ -114345,13 +114471,24 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { attrs: { id: "devise-admin-content" } },
+            {
+              style: {
+                backgroundColor: _vm.theme.statsLeft.color,
+                color: _vm.theme.statsText.color
+              },
+              attrs: { id: "devise-admin-content" }
+            },
             [
               _vm.analytics.data
                 ? [
-                    _c("h3", { staticClass: "dvs-mb-8" }, [
-                      _vm._v(_vm._s(_vm.localValue.title) + " Analytics")
-                    ]),
+                    _c(
+                      "h3",
+                      {
+                        staticClass: "dvs-mb-8",
+                        style: { color: _vm.theme.statsText.color }
+                      },
+                      [_vm._v(_vm._s(_vm.localValue.title) + " Analytics")]
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "flex mb-8" }, [
                       _c(
@@ -114413,12 +114550,13 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "div",
+                      { staticClass: "dvs-mb-12" },
                       [
                         _c("line-chart", {
                           staticClass: "dvs-mb-8",
                           attrs: {
                             "chart-data": _vm.analytics.data,
-                            options: { width: "8000px" },
+                            options: _vm.options,
                             width: 800,
                             height: 200
                           }
@@ -114429,11 +114567,16 @@ var render = function() {
                   ]
                 : _vm._e(),
               _vm._v(" "),
-              _c("h3", { staticClass: "dvs-mb-8" }, [
-                _vm._v(_vm._s(_vm.localValue.title) + " Page Versions")
-              ]),
+              _c(
+                "h3",
+                {
+                  staticClass: "dvs-mb-8",
+                  style: { color: _vm.theme.sidebarText.color }
+                },
+                [_vm._v(_vm._s(_vm.localValue.title) + " Page Versions")]
+              ),
               _vm._v(" "),
-              _c("help", { staticClass: "dvs-mb-8" }, [
+              _c("help", { staticClass: "dvs-mb-4" }, [
                 _vm._v(
                   "Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates"
                 )
@@ -114447,7 +114590,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "dvs-flex-grow dvs-p-8 dvs-rounded-sm dvs-bg-grey-lightest dvs-shadow-sm dvs-mb-8"
+                        "dvs-flex-grow dvs-p-8 dvs-rounded-sm dvs-shadow-sm dvs-mb-8"
                     },
                     [
                       _c(
@@ -114659,7 +114802,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "div",
-                          { staticClass: "dvs-flex dvs-justify-between" },
+                          { staticClass: "dvs-flex dvs-justify-start" },
                           [
                             _c(
                               "button",
@@ -114672,8 +114815,19 @@ var render = function() {
                                     expression: "tippyConfiguration"
                                   }
                                 ],
-                                staticClass:
-                                  "dvs-btn dvs-btn-plain dvs-btn-xs dvs-mr-2 dvs-w-1/4",
+                                staticClass: "dvs-btn dvs-mr-4 dvs-px-8",
+                                style:
+                                  "\n                background-image: linear-gradient(90deg, " +
+                                  _vm.theme.buttonsActionLeft.color +
+                                  " 0%, " +
+                                  _vm.theme.buttonsActionRight.color +
+                                  " 100%);\n                color: " +
+                                  _vm.theme.buttonsActionText.color +
+                                  ";\n                box-shadow: -4px -4px " +
+                                  _vm.theme.buttonsActionShadowSize.text +
+                                  " " +
+                                  _vm.theme.buttonsActionShadowColor.color +
+                                  ";\n              ",
                                 attrs: { title: "Save Version Settings" },
                                 on: {
                                   click: function($event) {
@@ -114683,7 +114837,7 @@ var render = function() {
                               },
                               [
                                 _c("i", {
-                                  staticClass: "ion-checkmark dvs-text-xl"
+                                  staticClass: "ion-checkmark dvs-text-3xl"
                                 })
                               ]
                             ),
@@ -114699,8 +114853,15 @@ var render = function() {
                                     expression: "tippyConfiguration"
                                   }
                                 ],
-                                staticClass:
-                                  "dvs-btn dvs-btn-plain dvs-btn-xs dvs-mr-2 dvs-w-1/4",
+                                staticClass: "dvs-btn dvs-mr-4 dvs-px-8",
+                                style:
+                                  "\n                background-image: linear-gradient(90deg, " +
+                                  _vm.theme.buttonsActionLeft.color +
+                                  " 0%, " +
+                                  _vm.theme.buttonsActionRight.color +
+                                  " 100%);\n                color: " +
+                                  _vm.theme.buttonsActionText.color +
+                                  ";\n              ",
                                 attrs: { title: "Copy Version" },
                                 on: {
                                   click: function($event) {
@@ -114710,7 +114871,7 @@ var render = function() {
                               },
                               [
                                 _c("i", {
-                                  staticClass: "ion-ios-copy dvs-text-xl"
+                                  staticClass: "ion-ios-copy dvs-text-3xl"
                                 })
                               ]
                             ),
@@ -114738,12 +114899,19 @@ var render = function() {
                                       "{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
                                   }
                                 ],
-                                staticClass:
-                                  "dvs-btn dvs-btn-plain dvs-btn-xs dvs-mr-2 dvs-w-1/4"
+                                staticClass: "dvs-btn dvs-mr-2 dvs-px-8",
+                                style:
+                                  "\n                background-image: linear-gradient(90deg, " +
+                                  _vm.theme.buttonsInverseLeft.color +
+                                  " 0%, " +
+                                  _vm.theme.buttonsInverseRight.color +
+                                  " 100%);\n                color: " +
+                                  _vm.theme.buttonsInverseText.color +
+                                  ";\n              "
                               },
                               [
                                 _c("i", {
-                                  staticClass: "ion-trash-b dvs-text-xl"
+                                  staticClass: "ion-trash-b dvs-text-3xl"
                                 })
                               ]
                             )
@@ -114755,9 +114923,14 @@ var render = function() {
                 })
               ),
               _vm._v(" "),
-              _c("h3", { staticClass: "dvs-mb-8" }, [
-                _vm._v("Global Page Settings")
-              ]),
+              _c(
+                "h3",
+                {
+                  staticClass: "dvs-mb-8",
+                  style: { color: _vm.theme.sidebarText.color }
+                },
+                [_vm._v("Global Page Settings")]
+              ),
               _vm._v(" "),
               _c("help", { staticClass: "dvs-mb-8" }, [
                 _vm._v(
@@ -115576,6 +115749,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -115711,13 +115887,21 @@ var render = function() {
     },
     [
       _c("div", { attrs: { id: "devise-sidebar" } }, [
-        _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [_vm._v("Sites")]),
+        _c(
+          "h2",
+          {
+            staticClass: "dvs-font-bold dvs-mb-2",
+            style: { color: _vm.theme.sidebarText.color }
+          },
+          [_vm._v("Sites")]
+        ),
         _vm._v(" "),
         _c(
           "a",
           {
             staticClass:
               "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
+            style: { color: _vm.theme.sidebarText.color },
             attrs: { href: "#" },
             on: {
               click: function($event) {
@@ -115726,7 +115910,10 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Back to Settings")]
+          [
+            _c("i", { staticClass: "ion-arrow-left-c" }),
+            _vm._v(" Back to Settings\n    ")
+          ]
         ),
         _vm._v(" "),
         _c("ul", { staticClass: "dvs-list-reset" }, [
@@ -115749,16 +115936,23 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { attrs: { id: "devise-admin-content" } },
+        { style: _vm.adminTheme, attrs: { id: "devise-admin-content" } },
         [
-          _c("h2", { staticClass: "dvs-mb-10" }, [_vm._v("Current Sites")]),
+          _c(
+            "h2",
+            {
+              staticClass: "dvs-mb-10",
+              style: { color: _vm.theme.sidebarText.color }
+            },
+            [_vm._v("Current Sites")]
+          ),
           _vm._v(" "),
           _vm._l(_vm.sites.data, function(site) {
             return _c(
               "div",
               {
                 staticClass:
-                  "dvs-mb-6 dvs-rounded-sm dvs-bg-white dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center"
+                  "dvs-mb-6 dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center"
               },
               [
                 _c(
@@ -115822,6 +116016,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "dvs-btn dvs-btn-xs dvs-mr-2",
+                        style: _vm.actionButtonTheme,
                         on: {
                           click: function($event) {
                             _vm.showEditSite(site)
@@ -115848,7 +116043,8 @@ var render = function() {
                               "{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"
                           }
                         ],
-                        staticClass: "dvs-btn dvs-btn-xs"
+                        staticClass: "dvs-btn dvs-btn-xs",
+                        style: _vm.regularButtonTheme
                       },
                       [_vm._v("Delete")]
                     )
@@ -116303,6 +116499,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -116325,12 +116527,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     this.retrieveAllSites();
     this.retrieveAllLanguages();
+    console.log(this.theme);
   },
 
   methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["b" /* mapActions */])('devise', ['getLanguages', 'getSites', 'updateSite']), {
     requestEditSite: function requestEditSite() {
       var self = this;
       this.updateSite({ site: this.site, data: this.localValue }).then(function () {
+        var site = self.siteById(self.site.id);
+        site.settings.colors = self.localValue.settings.colors;
         self.goToPage('devise-sites-index');
       });
     },
@@ -116371,7 +116576,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["c" /* mapGetters */])('devise', ['languages', 'site']), {
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["c" /* mapGetters */])('devise', ['languages', 'site', 'siteById']), {
     editInvalid: function editInvalid() {
       return this.localValue.name === null || this.localValue.domain === null;
     },
@@ -116450,6 +116655,89 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_editor_Text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__pages_editor_Text__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_analytics_Line__ = __webpack_require__(567);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_analytics_Line___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__pages_analytics_Line__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -116618,6 +116906,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+var lineData = { "data": { "labels": ["May 16", "May 17", "May 18", "May 19", "May 20", "May 21", "May 22", "May 23"], "datasets": [{ "label": "Page Views", "data": [33, 41, 19, 5, 4, 23, 30, 11] }, { "label": "Sessions", "data": [25, 24, 14, 4, 4, 10, 17, 9] }, { "label": "Avg. Time On Page", "data": [64, 38, 155, 10, 7, 26, 145, 6] }, { "label": "Bounce Rate", "data": [48, 45, 57, 50, 25, 10, 47, 22] }] }, "releases": ["Apr 25", "Apr 24", "May 2"] };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AdminDesigner',
@@ -116625,23 +116916,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       logo: null,
       localValue: {
-        sidebarTop: { color: '#343434' },
-        sidebarBottom: { color: '#2199be' },
-        sidebarText: { color: '#ffffff' },
-        buttonsActionText: { color: '#ffffff' },
-        buttonsActionLeft: { color: '#4e9bb5' },
-        buttonsActionRight: { color: '#27afd8' },
-        buttonsActionShadowColor: { color: '#1baeda' },
-        buttonsActionShadowSize: { text: '30px' },
-        userBackground: { color: 'rgba(0,0,0,0.4)' },
-        userText: { color: '#ffffff' },
-        userShadowColor: { color: '#1baeda' },
-        userShadowSize: { text: '30px' },
-        statsText: { color: '#ffffff' },
-        statsLeft: { color: '#2da2c4' },
-        statsRight: { color: '#a67045' },
-        statsShadowColor: { color: '#1baeda' },
-        statsShadowSize: { text: '30px' }
+        sidebarTop: { color: null },
+        sidebarBottom: { color: null },
+        sidebarText: { color: null },
+        buttonsActionText: { color: null },
+        buttonsActionLeft: { color: null },
+        buttonsActionRight: { color: null },
+        buttonsActionShadowColor: { color: null },
+        buttonsActionShadowSize: { text: null },
+        userBackground: { color: null },
+        userText: { color: null },
+        userShadowColor: { color: null },
+        userShadowSize: { text: null },
+        statsText: { color: null },
+        statsLeft: { color: null },
+        statsRight: { color: null },
+        statsShadowColor: { color: null },
+        statsShadowSize: { text: null },
+        adminBackground: { color: null },
+        adminText: { color: null }
       },
       presets: {
         Default: {
@@ -116661,7 +116954,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           statsLeft: { color: '#2da2c4' },
           statsRight: { color: '#a67045' },
           statsShadowColor: { color: '#1baeda' },
-          statsShadowSize: { text: '30px' }
+          statsShadowSize: { text: '30px' },
+          adminBackground: { color: '#2199be' },
+          adminText: { color: '#ffffff' }
         },
         'Purple Dinosaur': {
           sidebarTop: { color: '#855791' },
@@ -116680,13 +116975,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           statsLeft: { color: '#57467a' },
           statsRight: { color: '#913ea6' },
           statsShadowColor: { color: '#c67dd4' },
-          statsShadowSize: { text: '30px' }
+          statsShadowSize: { text: '30px' },
+          adminBackground: { color: '#564278' },
+          adminText: { color: '#ffffff' }
+        },
+        'RedRum': {
+          sidebarTop: { color: 'rgba(194,33,33,1)' },
+          sidebarBottom: { color: 'rgba(83,10,10,1)' },
+          sidebarText: { color: '#ffffff' },
+          buttonsActionText: { color: '#ffffff' },
+          buttonsActionLeft: { color: 'rgba(195,70,70,1)' },
+          buttonsActionRight: { color: 'rgba(226,15,15,1)' },
+          buttonsActionShadowColor: { color: 'rgba(0,0,0,0.19)' },
+          buttonsActionShadowSize: { text: '30px' },
+          userBackground: { color: 'rgba(0,0,0,0.4)' },
+          userText: { color: '#ffffff' },
+          userShadowColor: { color: 'rgba(255,0,0,0.31)' },
+          userShadowSize: { text: '30px' },
+          statsText: { color: '#ffffff' },
+          statsLeft: { color: 'rgba(196,45,45,1)' },
+          statsRight: { color: 'rgba(197,33,85,1)' },
+          statsShadowColor: { color: 'rgba(218,27,27,1)' },
+          statsShadowSize: { text: '30px' },
+          adminBackground: { color: 'rgba(177,42,44,1)' },
+          adminText: { color: '#ffffff' },
+          buttonsInverseLeft: { color: 'rgb(132, 195, 70)' },
+          buttonsInverseRight: { color: 'rgb(120, 226, 15)' },
+          buttonsInverseText: { color: '#ffffff' }
         }
-      }
+      },
+      chartColors: [{
+        background: 'rgba(54, 162, 235, 0.5)',
+        border: 'rgba(54, 162, 235, 1)'
+      }, {
+        background: 'rgba(75, 192, 192, 0.2)',
+        border: 'rgba(75, 192, 192, 1)'
+      }, {
+        background: 'rgba(255, 206, 86, 0.2)',
+        border: 'rgba(255, 206, 86, 1)'
+      }, {
+        background: 'rgba(255, 99, 132, 0.2)',
+        border: 'rgba(255,99,132,1)'
+      }, {
+        background: 'rgba(153, 102, 255, 0.2)',
+        border: 'rgba(153, 102, 255, 1)'
+      }, {
+        background: 'rgba(255, 159, 64, 0.2)',
+        border: 'rgba(255, 159, 64, 1)'
+      }],
+      placeholderLineData: lineData
     };
   },
   mounted: function mounted() {
-    // this.localValue.sidebarTop = this.value.sidebarTop
+    this.setLineGraphStyles();
+    this.applyStyles(this.presets.Default);
     this.applyStyles(this.value);
   },
 
@@ -116708,6 +117050,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.applyStyles(this.presets[preset]);
         e.target.value = '';
       }
+    },
+    setLineGraphStyles: function setLineGraphStyles() {
+      var self = this;
+      this.placeholderLineData.data.datasets.map(function (dataset, index) {
+        dataset.backgroundColor = [self.chartColors[index].background];
+        dataset.fontColor = self.theme.statsText.color;
+        dataset.borderColor = [self.chartColors[index].border];
+        dataset.pointRadius = 4;
+        dataset.pointHoverRadius = 10;
+        dataset.fill = false;
+
+        return dataset;
+      });
+    }
+  },
+  computed: {
+    options: function options() {
+      return {
+        width: '8000px',
+        legend: {
+          labels: {
+            fontColor: this.theme.statsText.color,
+            fontSize: 14
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              fontColor: this.theme.statsText.color,
+              fontSize: 12
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              fontColor: this.theme.statsText.color,
+              fontSize: 12
+            }
+          }]
+        }
+      };
     }
   },
   watch: {
@@ -116721,8 +117103,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   components: {
     ColorEditor: __WEBPACK_IMPORTED_MODULE_0__pages_editor_Color___default.a,
-    TextEditor: __WEBPACK_IMPORTED_MODULE_1__pages_editor_Text___default.a,
-    DeviseLogo: __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo___default.a
+    DeviseLogo: __WEBPACK_IMPORTED_MODULE_2__utilities_DeviseLogo___default.a,
+    LineChart: __WEBPACK_IMPORTED_MODULE_3__pages_analytics_Line___default.a,
+    TextEditor: __WEBPACK_IMPORTED_MODULE_1__pages_editor_Text___default.a
   },
   props: ['value', 'domain']
 });
@@ -116735,505 +117118,789 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "dvs-mb-10" }, [
-      _c("fieldset", { staticClass: "dvs-fieldset" }, [
-        _c("label", [_vm._v("Presets")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            on: {
-              change: function($event) {
-                _vm.selectPreset($event)
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [_vm._v("Select a Preset")]),
+  return _vm.localValue.sidebarTop.color
+    ? _c("div", [
+        _c("div", { staticClass: "dvs-mb-10" }, [
+          _c("fieldset", { staticClass: "dvs-fieldset" }, [
+            _c("label", [_vm._v("Presets")]),
             _vm._v(" "),
-            _c("option", { attrs: { value: "Default" } }, [_vm._v("Default")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Purple Dinosaur" } }, [
-              _vm._v("Purple Dinosaur")
-            ])
-          ]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "dvs-flex dvs-w-full" }, [
-      _c(
-        "div",
-        { staticClass: "dvs-w-1/4" },
-        [
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Sidebar Top Color", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.sidebarTop,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "sidebarTop", $$v)
-              },
-              expression: "localValue.sidebarTop"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Sidebar Bottom Color", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.sidebarBottom,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "sidebarBottom", $$v)
-              },
-              expression: "localValue.sidebarBottom"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Sidebar Text Color", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.sidebarText,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "sidebarText", $$v)
-              },
-              expression: "localValue.sidebarText"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Action Button Text", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.buttonsActionText,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "buttonsActionText", $$v)
-              },
-              expression: "localValue.buttonsActionText"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Action Button Left", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.buttonsActionLeft,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "buttonsActionLeft", $$v)
-              },
-              expression: "localValue.buttonsActionLeft"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Action Button Right", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.buttonsActionRight,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "buttonsActionRight", $$v)
-              },
-              expression: "localValue.buttonsActionRight"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: {
-                label: "Action Button Shadow Color",
-                hidePreview: true
-              }
-            },
-            model: {
-              value: _vm.localValue.buttonsActionShadowColor,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "buttonsActionShadowColor", $$v)
-              },
-              expression: "localValue.buttonsActionShadowColor"
-            }
-          }),
-          _vm._v(" "),
-          _c("text-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Action Button Shadow Size", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.buttonsActionShadowSize,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "buttonsActionShadowSize", $$v)
-              },
-              expression: "localValue.buttonsActionShadowSize"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "User Block Background", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.userBackground,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "userBackground", $$v)
-              },
-              expression: "localValue.userBackground"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: { options: { label: "User Block Text", hidePreview: true } },
-            model: {
-              value: _vm.localValue.userText,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "userText", $$v)
-              },
-              expression: "localValue.userText"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "User Block Shadow Color", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.userShadowColor,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "userShadowColor", $$v)
-              },
-              expression: "localValue.userShadowColor"
-            }
-          }),
-          _vm._v(" "),
-          _c("text-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "User Block Shadow Size", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.userShadowSize,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "userShadowSize", $$v)
-              },
-              expression: "localValue.userShadowSize"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: {
-                label: "Info Block Background Left",
-                hidePreview: true
-              }
-            },
-            model: {
-              value: _vm.localValue.statsLeft,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "statsLeft", $$v)
-              },
-              expression: "localValue.statsLeft"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: {
-                label: "Info Block Background Right",
-                hidePreview: true
-              }
-            },
-            model: {
-              value: _vm.localValue.statsRight,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "statsRight", $$v)
-              },
-              expression: "localValue.statsRight"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: { options: { label: "Info Block Text", hidePreview: true } },
-            model: {
-              value: _vm.localValue.statsText,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "statsText", $$v)
-              },
-              expression: "localValue.statsText"
-            }
-          }),
-          _vm._v(" "),
-          _c("color-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Info Block Shadow Color", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.statsShadowColor,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "statsShadowColor", $$v)
-              },
-              expression: "localValue.statsShadowColor"
-            }
-          }),
-          _vm._v(" "),
-          _c("text-editor", {
-            staticClass: "dvs-mb-4",
-            attrs: {
-              options: { label: "Info Block Shadow Size", hidePreview: true }
-            },
-            model: {
-              value: _vm.localValue.statsShadowSize,
-              callback: function($$v) {
-                _vm.$set(_vm.localValue, "statsShadowSize", $$v)
-              },
-              expression: "localValue.statsShadowSize"
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "dvs-w-3/4 dvs-flex dvs-justify-stretch" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch",
-            staticStyle: { "min-height": "400px" }
-          },
-          [
             _c(
-              "div",
+              "select",
               {
-                staticClass:
-                  "dvs-bg-white dvs-m-4 dvs-rounded dvs-px-4 dvs-py-1 dvs-text-sm",
-                staticStyle: { height: "30px" }
+                on: {
+                  change: function($event) {
+                    _vm.selectPreset($event)
+                  }
+                }
               },
               [
-                _vm._v(
-                  "\n          http://" + _vm._s(_vm.domain) + "\n        "
-                )
-              ]
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("Select a Preset")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.presets, function(preset, key) {
+                  return _c("option", { domProps: { value: key } }, [
+                    _vm._v(_vm._s(key))
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "dvs-flex dvs-w-full" }, [
+          _c(
+            "div",
+            { staticClass: "dvs-w-1/4 dvs-pt-12" },
+            [
+              _c(
+                "h6",
+                {
+                  staticClass: "dvs-mb-2",
+                  style: { color: _vm.theme.adminText.color }
+                },
+                [_vm._v("Sidebar")]
+              ),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Top Color", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.sidebarTop,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "sidebarTop", $$v)
+                  },
+                  expression: "localValue.sidebarTop"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: {
+                  options: { label: "Bottom Color", hidePreview: true }
+                },
+                model: {
+                  value: _vm.localValue.sidebarBottom,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "sidebarBottom", $$v)
+                  },
+                  expression: "localValue.sidebarBottom"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Text Color", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.sidebarText,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "sidebarText", $$v)
+                  },
+                  expression: "localValue.sidebarText"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "h6",
+                {
+                  staticClass: "dvs-mb-2 dvs-mt-8",
+                  style: { color: _vm.theme.adminText.color }
+                },
+                [_vm._v("Action Buttons")]
+              ),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Text Color", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.buttonsActionText,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "buttonsActionText", $$v)
+                  },
+                  expression: "localValue.buttonsActionText"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Left Color", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.buttonsActionLeft,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "buttonsActionLeft", $$v)
+                  },
+                  expression: "localValue.buttonsActionLeft"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Right Color", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.buttonsActionRight,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "buttonsActionRight", $$v)
+                  },
+                  expression: "localValue.buttonsActionRight"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: {
+                  options: { label: "Shadow Color", hidePreview: true }
+                },
+                model: {
+                  value: _vm.localValue.buttonsActionShadowColor,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "buttonsActionShadowColor", $$v)
+                  },
+                  expression: "localValue.buttonsActionShadowColor"
+                }
+              }),
+              _vm._v(" "),
+              _c("text-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Shadow Size", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.buttonsActionShadowSize,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "buttonsActionShadowSize", $$v)
+                  },
+                  expression: "localValue.buttonsActionShadowSize"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "h6",
+                {
+                  staticClass: "dvs-mb-2 dvs-mt-8",
+                  style: { color: _vm.theme.adminText.color }
+                },
+                [_vm._v("User / Help Blocks")]
+              ),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: {
+                  options: { label: "Background Color", hidePreview: true }
+                },
+                model: {
+                  value: _vm.localValue.userBackground,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "userBackground", $$v)
+                  },
+                  expression: "localValue.userBackground"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Text Color", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.userText,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "userText", $$v)
+                  },
+                  expression: "localValue.userText"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: {
+                  options: { label: "Shadow Color", hidePreview: true }
+                },
+                model: {
+                  value: _vm.localValue.userShadowColor,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "userShadowColor", $$v)
+                  },
+                  expression: "localValue.userShadowColor"
+                }
+              }),
+              _vm._v(" "),
+              _c("text-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Shadow Size", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.userShadowSize,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "userShadowSize", $$v)
+                  },
+                  expression: "localValue.userShadowSize"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "h6",
+                {
+                  staticClass: "dvs-mb-2 dvs-mt-8",
+                  style: { color: _vm.theme.adminText.color }
+                },
+                [_vm._v("Info Block")]
+              ),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: {
+                  options: { label: "Background Left Color", hidePreview: true }
+                },
+                model: {
+                  value: _vm.localValue.statsLeft,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "statsLeft", $$v)
+                  },
+                  expression: "localValue.statsLeft"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: {
+                  options: {
+                    label: "Background Right Color",
+                    hidePreview: true
+                  }
+                },
+                model: {
+                  value: _vm.localValue.statsRight,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "statsRight", $$v)
+                  },
+                  expression: "localValue.statsRight"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Text Color", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.statsText,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "statsText", $$v)
+                  },
+                  expression: "localValue.statsText"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: {
+                  options: { label: "Shadow Color", hidePreview: true }
+                },
+                model: {
+                  value: _vm.localValue.statsShadowColor,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "statsShadowColor", $$v)
+                  },
+                  expression: "localValue.statsShadowColor"
+                }
+              }),
+              _vm._v(" "),
+              _c("text-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Shadow Size", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.statsShadowSize,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "statsShadowSize", $$v)
+                  },
+                  expression: "localValue.statsShadowSize"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "h6",
+                {
+                  staticClass: "dvs-mb-2 dvs-mt-8",
+                  style: { color: _vm.theme.adminText.color }
+                },
+                [_vm._v("Admin Wide Windows")]
+              ),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: {
+                  options: { label: "Background Color", hidePreview: true }
+                },
+                model: {
+                  value: _vm.localValue.adminBackground,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "adminBackground", $$v)
+                  },
+                  expression: "localValue.adminBackground"
+                }
+              }),
+              _vm._v(" "),
+              _c("color-editor", {
+                staticClass: "dvs-mb-4",
+                attrs: { options: { label: "Text Color", hidePreview: true } },
+                model: {
+                  value: _vm.localValue.adminText,
+                  callback: function($$v) {
+                    _vm.$set(_vm.localValue, "adminText", $$v)
+                  },
+                  expression: "localValue.adminText"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "dvs-w-3/4 dvs-mb-8" }, [
+            _c(
+              "h3",
+              {
+                staticClass: "dvs-mb-4",
+                style: { color: _vm.theme.adminText.color }
+              },
+              [_vm._v("Mini-Preview of the Editor")]
             ),
             _vm._v(" "),
             _c(
               "div",
               {
                 staticClass:
-                  "dvs-flex dvs-justify-stretch dvs-relative dvs-flex-grow"
+                  "dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch dvs-mb-12",
+                staticStyle: { "min-height": "400px" }
               },
               [
                 _c(
                   "div",
                   {
                     staticClass:
-                      "dvs-w-1/4 dvs-relative dvs-text-center dvs-p-8",
-                    staticStyle: { "min-height": "400px" },
-                    style:
-                      "\n              background-image: linear-gradient(180deg, " +
-                      _vm.localValue.sidebarTop.color +
-                      " 0%, " +
-                      _vm.localValue.sidebarBottom.color +
-                      " 100%);\n              color: " +
-                      _vm.localValue.sidebarText.color +
-                      "  \n            "
+                      "dvs-bg-white dvs-m-4 dvs-rounded dvs-px-4 dvs-py-1 dvs-text-sm",
+                    staticStyle: { height: "30px" }
                   },
                   [
-                    !_vm.logo
-                      ? _c("devise-logo", {
-                          staticClass: "dvs-my-4 dvs-mt-2",
-                          attrs: { color: _vm.localValue.sidebarText.color }
-                        })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold"
-                      },
-                      [
-                        _vm._v(
-                          "\n              Edit Page: Homepage\n            "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "dvs-btn dvs-btn-xs dvs-mb-8",
-                        style:
-                          "\n                background-image: linear-gradient(90deg, " +
-                          _vm.localValue.buttonsActionLeft.color +
-                          " 0%, " +
-                          _vm.localValue.buttonsActionRight.color +
-                          " 100%);\n                color: " +
-                          _vm.localValue.buttonsActionText.color +
-                          ";\n                box-shadow: -4px -4px " +
-                          _vm.localValue.buttonsActionShadowSize.text +
-                          " " +
-                          _vm.localValue.buttonsActionShadowColor.color +
-                          ";\n              "
-                      },
-                      [_vm._v("Save Page\n            ")]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "dvs-rounded-sm dvs-flex dvs-items-center dvs-text-xs dvs-p-2 dvs-absolute pin-b pin-l pin-r dvs-m-8",
-                        style:
-                          "\n                background: " +
-                          _vm.localValue.userBackground.color +
-                          ";\n                color: " +
-                          _vm.localValue.userText.color +
-                          ";\n                box-shadow: -4px -4px " +
-                          _vm.localValue.userShadowSize.text +
-                          " " +
-                          _vm.localValue.userShadowColor.color +
-                          ";\n              "
-                      },
-                      [
-                        _c("div", { staticClass: "dvs-w-3/4" }, [
-                          _vm._v("\n                John Doh\n              ")
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(1)
-                      ]
+                    _vm._v(
+                      "\n          http://" + _vm._s(_vm.domain) + "\n        "
                     )
-                  ],
-                  1
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
                   "div",
                   {
-                    staticClass: "dvs-bg-white dvs-w-3/4 dvs-p-4 dvs-relative"
+                    staticClass:
+                      "dvs-flex dvs-justify-stretch dvs-relative dvs-flex-grow"
                   },
                   [
-                    _c("h3", [_vm._v("Just an example page")]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "dvs-text-xs dvs-mt-4" }, [
-                      _vm._v(
-                        "Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine."
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "dvs-text-xs dvs-mt-4" }, [
-                      _vm._v(
-                        "Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine."
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "dvs-text-xs dvs-mt-4" }, [
-                      _vm._v(
-                        "Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine."
-                      )
-                    ]),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "dvs-w-1/4 dvs-relative dvs-text-center dvs-p-8",
+                        staticStyle: { "min-height": "400px" },
+                        style:
+                          "\n              background-image: linear-gradient(180deg, " +
+                          _vm.localValue.sidebarTop.color +
+                          " 0%, " +
+                          _vm.localValue.sidebarBottom.color +
+                          " 100%);\n              color: " +
+                          _vm.localValue.sidebarText.color +
+                          "  \n            "
+                      },
+                      [
+                        !_vm.logo
+                          ? _c("devise-logo", {
+                              staticClass: "dvs-my-4 dvs-mt-2",
+                              attrs: { color: _vm.localValue.sidebarText.color }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "h2",
+                          {
+                            staticClass: "dvs-mb-2",
+                            style: { color: _vm.localValue.sidebarText.color }
+                          },
+                          [_vm._v("Editor")]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "dvs-btn dvs-btn-xs dvs-mb-8",
+                            style:
+                              "\n                background-image: linear-gradient(90deg, " +
+                              _vm.localValue.buttonsActionLeft.color +
+                              " 0%, " +
+                              _vm.localValue.buttonsActionRight.color +
+                              " 100%);\n                color: " +
+                              _vm.localValue.buttonsActionText.color +
+                              ";\n                box-shadow: -4px -4px " +
+                              _vm.localValue.buttonsActionShadowSize.text +
+                              " " +
+                              _vm.localValue.buttonsActionShadowColor.color +
+                              ";\n              "
+                          },
+                          [_vm._v("Save Page\n            ")]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "dvs-rounded-sm dvs-flex dvs-items-center dvs-text-xs dvs-p-2 dvs-absolute pin-b pin-l pin-r dvs-m-8",
+                            style:
+                              "\n                background: " +
+                              _vm.localValue.userBackground.color +
+                              ";\n                color: " +
+                              _vm.localValue.userText.color +
+                              ";\n                box-shadow: -4px -4px " +
+                              _vm.localValue.userShadowSize.text +
+                              " " +
+                              _vm.localValue.userShadowColor.color +
+                              ";\n              "
+                          },
+                          [
+                            _c("div", { staticClass: "dvs-w-3/4" }, [
+                              _vm._v(
+                                "\n                John Doh\n              "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(2)
+                          ]
+                        )
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
                       {
                         staticClass:
-                          "dvs-absolute dvs-pin-l dvs-pin-r dvs-pin-b dvs-flex dvs-justify-between dvs-items-end dvs-m-8 dvs-p-8 dvs-rounded",
-                        style:
-                          "\n                  background-image: linear-gradient(90deg, " +
-                          _vm.localValue.statsLeft.color +
-                          " 0%, " +
-                          _vm.localValue.statsRight.color +
-                          " 100%);\n                  color: " +
-                          _vm.localValue.statsText.color +
-                          ";\n                  box-shadow: -4px -4px " +
-                          _vm.localValue.statsShadowSize.text +
-                          " " +
-                          _vm.localValue.statsShadowColor.color +
-                          ";\n                "
+                          "dvs-bg-white dvs-w-3/4 dvs-p-4 dvs-relative"
                       },
                       [
-                        _c("div", [
-                          _vm._v("\n                Analytics\n              ")
-                        ]),
+                        _c("h3", [_vm._v("Just an example page")]),
                         _vm._v(" "),
                         _c(
-                          "div",
+                          "p",
                           {
-                            staticClass:
-                              "dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold",
-                            staticStyle: { width: "100px", height: "100px" },
-                            style:
-                              "\n                  border-color: " +
-                              _vm.localValue.statsText.color +
-                              ";\n                "
+                            staticClass: "dvs-text-xs dvs-mt-4 dvs-text-black"
                           },
-                          [_vm._v("\n                90M\n              ")]
+                          [
+                            _vm._v(
+                              "Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine."
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          {
+                            staticClass: "dvs-text-xs dvs-mt-4 dvs-text-black"
+                          },
+                          [
+                            _vm._v(
+                              "Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine."
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          {
+                            staticClass: "dvs-text-xs dvs-mt-4 dvs-text-black"
+                          },
+                          [
+                            _vm._v(
+                              "Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine."
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
                           "div",
                           {
                             staticClass:
-                              "dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold",
-                            staticStyle: { width: "100px", height: "100px" },
+                              "dvs-absolute dvs-pin-l dvs-pin-r dvs-pin-b dvs-flex dvs-justify-between dvs-items-end dvs-m-8 dvs-p-8 dvs-rounded",
                             style:
-                              "\n                  border-color: " +
+                              "\n                  background-image: linear-gradient(90deg, " +
+                              _vm.localValue.statsLeft.color +
+                              " 0%, " +
+                              _vm.localValue.statsRight.color +
+                              " 100%);\n                  color: " +
                               _vm.localValue.statsText.color +
+                              ";\n                  box-shadow: -4px -4px " +
+                              _vm.localValue.statsShadowSize.text +
+                              " " +
+                              _vm.localValue.statsShadowColor.color +
                               ";\n                "
                           },
-                          [_vm._v("\n                90M\n              ")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold",
-                            staticStyle: { width: "100px", height: "100px" },
-                            style:
-                              "\n                  border-color: " +
-                              _vm.localValue.statsText.color +
-                              ";\n                "
-                          },
-                          [_vm._v("\n                10K\n              ")]
+                          [
+                            _c("div", [
+                              _vm._v(
+                                "\n                Analytics\n              "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold",
+                                staticStyle: {
+                                  width: "100px",
+                                  height: "100px"
+                                },
+                                style:
+                                  "\n                  border-color: " +
+                                  _vm.localValue.statsText.color +
+                                  ";\n                "
+                              },
+                              [_vm._v("\n                90M\n              ")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold",
+                                staticStyle: {
+                                  width: "100px",
+                                  height: "100px"
+                                },
+                                style:
+                                  "\n                  border-color: " +
+                                  _vm.localValue.statsText.color +
+                                  ";\n                "
+                              },
+                              [_vm._v("\n                90M\n              ")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold",
+                                staticStyle: {
+                                  width: "100px",
+                                  height: "100px"
+                                },
+                                style:
+                                  "\n                  border-color: " +
+                                  _vm.localValue.statsText.color +
+                                  ";\n                "
+                              },
+                              [_vm._v("\n                10K\n              ")]
+                            )
+                          ]
                         )
                       ]
                     )
                   ]
                 )
               ]
+            ),
+            _vm._v(" "),
+            _c(
+              "h3",
+              {
+                staticClass: "dvs-mb-4",
+                style: { color: _vm.theme.adminText.color }
+              },
+              [_vm._v("Mini-Preview of the Admin")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch",
+                staticStyle: { "min-height": "400px" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "dvs-bg-white dvs-m-4 dvs-rounded dvs-px-4 dvs-py-1 dvs-text-sm",
+                    staticStyle: { height: "30px" }
+                  },
+                  [
+                    _vm._v(
+                      "\n          http://" + _vm._s(_vm.domain) + "\n        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "dvs-flex dvs-justify-stretch dvs-relative dvs-flex-grow"
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "dvs-w-1/4 dvs-relative dvs-text-center dvs-p-8",
+                        staticStyle: { "min-height": "400px" },
+                        style:
+                          "\n              background-image: linear-gradient(180deg, " +
+                          _vm.localValue.sidebarTop.color +
+                          " 0%, " +
+                          _vm.localValue.sidebarBottom.color +
+                          " 100%);\n              color: " +
+                          _vm.localValue.sidebarText.color +
+                          "  \n            "
+                      },
+                      [
+                        !_vm.logo
+                          ? _c("devise-logo", {
+                              staticClass: "dvs-my-4 dvs-mt-2",
+                              attrs: { color: _vm.localValue.sidebarText.color }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "h2",
+                          {
+                            staticClass: "dvs-mb-2",
+                            style: { color: _vm.localValue.sidebarText.color }
+                          },
+                          [_vm._v("Settings")]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "dvs-rounded-sm dvs-flex dvs-items-center dvs-text-xs dvs-p-2 dvs-absolute pin-b pin-l pin-r dvs-m-8",
+                            style:
+                              "\n                background: " +
+                              _vm.localValue.userBackground.color +
+                              ";\n                color: " +
+                              _vm.localValue.userText.color +
+                              ";\n                box-shadow: -4px -4px " +
+                              _vm.localValue.userShadowSize.text +
+                              " " +
+                              _vm.localValue.userShadowColor.color +
+                              ";\n              "
+                          },
+                          [
+                            _c("div", { staticClass: "dvs-w-3/4" }, [
+                              _vm._v(
+                                "\n                John Doh\n              "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(5)
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dvs-w-3/4 dvs-p-4 dvs-relative",
+                        style: {
+                          backgroundColor: _vm.theme.adminBackground.color,
+                          color: _vm.theme.adminText.color
+                        }
+                      },
+                      [
+                        _c(
+                          "h3",
+                          { style: { color: _vm.localValue.adminText.color } },
+                          [_vm._v("Full-width administration page")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "dvs-text-xs dvs-mt-4" }, [
+                          _vm._v(
+                            'Below are a few examples of things you will see in the administration sections of Devise. Note: when building your own administration sections it is up to you (or your developer) to construct pages utilizing the "theme" variable. It is auto-injected as a computed property in every Devise component.'
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("line-chart", {
+                          staticClass: "dvs-mb-8",
+                          attrs: {
+                            "chart-data": _vm.placeholderLineData.data,
+                            options: _vm.options,
+                            width: 800,
+                            height: 200
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "h6",
+                          {
+                            staticClass: "dvs-mb-4",
+                            style: { color: _vm.localValue.adminText.color }
+                          },
+                          [_vm._v(" Buttons")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "dvs-flex" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "dvs-btn dvs-mr-4",
+                              style: _vm.actionButtonTheme
+                            },
+                            [
+                              _vm._v(
+                                "\n                Action Button\n              "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "dvs-btn",
+                              style: _vm.regularButtonTheme
+                            },
+                            [
+                              _vm._v(
+                                "\n                Regular Button\n              "
+                              )
+                            ]
+                          )
+                        ])
+                      ],
+                      1
+                    )
+                  ]
+                )
+              ]
             )
-          ]
-        )
+          ])
+        ])
       ])
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold" },
+      [
+        _c("i", { staticClass: "ion-arrow-left-c" }),
+        _vm._v(" Full Administration\n            ")
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -117288,6 +117955,25 @@ var staticRenderFns = [
         [_c("i", { staticClass: "ion-image dvs-text-3xl" })]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold" },
+      [
+        _c("i", { staticClass: "ion-arrow-left-c" }),
+        _vm._v(" Back to Settings\n            ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("i", { staticClass: "ion-power" })])
   }
 ]
 render._withStripped = true
@@ -117312,41 +117998,62 @@ var render = function() {
         "div",
         {
           staticClass:
-            "dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative"
+            "dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative"
         },
         [
-          _c("div", { attrs: { id: "devise-sidebar" } }, [
-            _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-              _vm._v("Manage Site")
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
+          _c(
+            "div",
+            { style: _vm.sidebarTheme, attrs: { id: "devise-sidebar" } },
+            [
+              _c("logo", {
                 staticClass:
-                  "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.goToPage("devise-sites-index")
+                  "dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center"
+              }),
+              _vm._v(" "),
+              _c(
+                "h2",
+                {
+                  staticClass: "dvs-font-bold dvs-mb-2",
+                  style: { color: _vm.theme.sidebarText.color }
+                },
+                [_vm._v("Manage Site")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
+                  style: { color: _vm.theme.sidebarText.color },
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.goToPage("devise-sites-index")
+                    }
                   }
-                }
-              },
-              [_vm._v("Back to Sites")]
-            )
-          ]),
+                },
+                [
+                  _c("i", { staticClass: "ion-arrow-left-c" }),
+                  _vm._v(" Back to Sites\n    ")
+                ]
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "div",
-            {
-              staticClass: "bottom-padding-16",
-              attrs: { id: "devise-admin-content" }
-            },
+            { style: _vm.adminTheme, attrs: { id: "devise-admin-content" } },
             [
-              _c("h3", { staticClass: "dvs-mb-8" }, [
-                _vm._v(_vm._s(_vm.localValue.name) + " Settings")
-              ]),
+              _c(
+                "h3",
+                {
+                  staticClass: "dvs-mb-8",
+                  style: { color: _vm.theme.sidebarText.color }
+                },
+                [_vm._v(_vm._s(_vm.localValue.name) + " Settings")]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "dvs-mb-12" }, [
                 _c(
@@ -117484,7 +118191,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("help", { staticClass: "dvs-mb-4" }, [
                           _vm._v(
-                            "Green indicates the default language. Click on the language tags below to change."
+                            "Green indicates the default language. Click on the language tags below to set a new default."
                           )
                         ]),
                         _vm._v(" "),
@@ -117493,7 +118200,7 @@ var render = function() {
                             "span",
                             {
                               staticClass:
-                                "dvs-mr-2 dvs-tag dvs-bg-grey-lighter dvs-cursor-pointer",
+                                "dvs-mr-2 dvs-tag dvs-bg-grey-darker dvs-cursor-pointer",
                               class: {
                                 "dvs-bg-green-dark dvs-text-white":
                                   language.default
@@ -117504,7 +118211,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v(_vm._s(language.code))]
+                            [_vm._v(_vm._s(language.name))]
                           )
                         }),
                         _vm._v(" "),
@@ -117545,6 +118252,7 @@ var render = function() {
                         "button",
                         {
                           staticClass: "dvs-btn mr-2",
+                          style: _vm.actionButtonTheme,
                           attrs: { disabled: _vm.editInvalid },
                           on: { click: _vm.requestEditSite }
                         },
@@ -117555,6 +118263,7 @@ var render = function() {
                         "button",
                         {
                           staticClass: "dvs-btn dvs-btn-plain",
+                          style: _vm.regularButtonTheme,
                           on: {
                             click: function($event) {
                               _vm.showEdit = false
@@ -122169,6 +122878,1319 @@ function cloneRoute (to, from) {
 
 })();
 
+
+/***/ }),
+/* 651 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;// TinyColor v1.4.1
+// https://github.com/bgrins/TinyColor
+// Brian Grinstead, MIT License
+
+(function(Math) {
+
+var trimLeft = /^\s+/,
+    trimRight = /\s+$/,
+    tinyCounter = 0,
+    mathRound = Math.round,
+    mathMin = Math.min,
+    mathMax = Math.max,
+    mathRandom = Math.random;
+
+function tinycolor (color, opts) {
+
+    color = (color) ? color : '';
+    opts = opts || { };
+
+    // If input is already a tinycolor, return itself
+    if (color instanceof tinycolor) {
+       return color;
+    }
+    // If we are called as a function, call using new instead
+    if (!(this instanceof tinycolor)) {
+        return new tinycolor(color, opts);
+    }
+
+    var rgb = inputToRGB(color);
+    this._originalInput = color,
+    this._r = rgb.r,
+    this._g = rgb.g,
+    this._b = rgb.b,
+    this._a = rgb.a,
+    this._roundA = mathRound(100*this._a) / 100,
+    this._format = opts.format || rgb.format;
+    this._gradientType = opts.gradientType;
+
+    // Don't let the range of [0,255] come back in [0,1].
+    // Potentially lose a little bit of precision here, but will fix issues where
+    // .5 gets interpreted as half of the total, instead of half of 1
+    // If it was supposed to be 128, this was already taken care of by `inputToRgb`
+    if (this._r < 1) { this._r = mathRound(this._r); }
+    if (this._g < 1) { this._g = mathRound(this._g); }
+    if (this._b < 1) { this._b = mathRound(this._b); }
+
+    this._ok = rgb.ok;
+    this._tc_id = tinyCounter++;
+}
+
+tinycolor.prototype = {
+    isDark: function() {
+        return this.getBrightness() < 128;
+    },
+    isLight: function() {
+        return !this.isDark();
+    },
+    isValid: function() {
+        return this._ok;
+    },
+    getOriginalInput: function() {
+      return this._originalInput;
+    },
+    getFormat: function() {
+        return this._format;
+    },
+    getAlpha: function() {
+        return this._a;
+    },
+    getBrightness: function() {
+        //http://www.w3.org/TR/AERT#color-contrast
+        var rgb = this.toRgb();
+        return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+    },
+    getLuminance: function() {
+        //http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+        var rgb = this.toRgb();
+        var RsRGB, GsRGB, BsRGB, R, G, B;
+        RsRGB = rgb.r/255;
+        GsRGB = rgb.g/255;
+        BsRGB = rgb.b/255;
+
+        if (RsRGB <= 0.03928) {R = RsRGB / 12.92;} else {R = Math.pow(((RsRGB + 0.055) / 1.055), 2.4);}
+        if (GsRGB <= 0.03928) {G = GsRGB / 12.92;} else {G = Math.pow(((GsRGB + 0.055) / 1.055), 2.4);}
+        if (BsRGB <= 0.03928) {B = BsRGB / 12.92;} else {B = Math.pow(((BsRGB + 0.055) / 1.055), 2.4);}
+        return (0.2126 * R) + (0.7152 * G) + (0.0722 * B);
+    },
+    setAlpha: function(value) {
+        this._a = boundAlpha(value);
+        this._roundA = mathRound(100*this._a) / 100;
+        return this;
+    },
+    toHsv: function() {
+        var hsv = rgbToHsv(this._r, this._g, this._b);
+        return { h: hsv.h * 360, s: hsv.s, v: hsv.v, a: this._a };
+    },
+    toHsvString: function() {
+        var hsv = rgbToHsv(this._r, this._g, this._b);
+        var h = mathRound(hsv.h * 360), s = mathRound(hsv.s * 100), v = mathRound(hsv.v * 100);
+        return (this._a == 1) ?
+          "hsv("  + h + ", " + s + "%, " + v + "%)" :
+          "hsva(" + h + ", " + s + "%, " + v + "%, "+ this._roundA + ")";
+    },
+    toHsl: function() {
+        var hsl = rgbToHsl(this._r, this._g, this._b);
+        return { h: hsl.h * 360, s: hsl.s, l: hsl.l, a: this._a };
+    },
+    toHslString: function() {
+        var hsl = rgbToHsl(this._r, this._g, this._b);
+        var h = mathRound(hsl.h * 360), s = mathRound(hsl.s * 100), l = mathRound(hsl.l * 100);
+        return (this._a == 1) ?
+          "hsl("  + h + ", " + s + "%, " + l + "%)" :
+          "hsla(" + h + ", " + s + "%, " + l + "%, "+ this._roundA + ")";
+    },
+    toHex: function(allow3Char) {
+        return rgbToHex(this._r, this._g, this._b, allow3Char);
+    },
+    toHexString: function(allow3Char) {
+        return '#' + this.toHex(allow3Char);
+    },
+    toHex8: function(allow4Char) {
+        return rgbaToHex(this._r, this._g, this._b, this._a, allow4Char);
+    },
+    toHex8String: function(allow4Char) {
+        return '#' + this.toHex8(allow4Char);
+    },
+    toRgb: function() {
+        return { r: mathRound(this._r), g: mathRound(this._g), b: mathRound(this._b), a: this._a };
+    },
+    toRgbString: function() {
+        return (this._a == 1) ?
+          "rgb("  + mathRound(this._r) + ", " + mathRound(this._g) + ", " + mathRound(this._b) + ")" :
+          "rgba(" + mathRound(this._r) + ", " + mathRound(this._g) + ", " + mathRound(this._b) + ", " + this._roundA + ")";
+    },
+    toPercentageRgb: function() {
+        return { r: mathRound(bound01(this._r, 255) * 100) + "%", g: mathRound(bound01(this._g, 255) * 100) + "%", b: mathRound(bound01(this._b, 255) * 100) + "%", a: this._a };
+    },
+    toPercentageRgbString: function() {
+        return (this._a == 1) ?
+          "rgb("  + mathRound(bound01(this._r, 255) * 100) + "%, " + mathRound(bound01(this._g, 255) * 100) + "%, " + mathRound(bound01(this._b, 255) * 100) + "%)" :
+          "rgba(" + mathRound(bound01(this._r, 255) * 100) + "%, " + mathRound(bound01(this._g, 255) * 100) + "%, " + mathRound(bound01(this._b, 255) * 100) + "%, " + this._roundA + ")";
+    },
+    toName: function() {
+        if (this._a === 0) {
+            return "transparent";
+        }
+
+        if (this._a < 1) {
+            return false;
+        }
+
+        return hexNames[rgbToHex(this._r, this._g, this._b, true)] || false;
+    },
+    toFilter: function(secondColor) {
+        var hex8String = '#' + rgbaToArgbHex(this._r, this._g, this._b, this._a);
+        var secondHex8String = hex8String;
+        var gradientType = this._gradientType ? "GradientType = 1, " : "";
+
+        if (secondColor) {
+            var s = tinycolor(secondColor);
+            secondHex8String = '#' + rgbaToArgbHex(s._r, s._g, s._b, s._a);
+        }
+
+        return "progid:DXImageTransform.Microsoft.gradient("+gradientType+"startColorstr="+hex8String+",endColorstr="+secondHex8String+")";
+    },
+    toString: function(format) {
+        var formatSet = !!format;
+        format = format || this._format;
+
+        var formattedString = false;
+        var hasAlpha = this._a < 1 && this._a >= 0;
+        var needsAlphaFormat = !formatSet && hasAlpha && (format === "hex" || format === "hex6" || format === "hex3" || format === "hex4" || format === "hex8" || format === "name");
+
+        if (needsAlphaFormat) {
+            // Special case for "transparent", all other non-alpha formats
+            // will return rgba when there is transparency.
+            if (format === "name" && this._a === 0) {
+                return this.toName();
+            }
+            return this.toRgbString();
+        }
+        if (format === "rgb") {
+            formattedString = this.toRgbString();
+        }
+        if (format === "prgb") {
+            formattedString = this.toPercentageRgbString();
+        }
+        if (format === "hex" || format === "hex6") {
+            formattedString = this.toHexString();
+        }
+        if (format === "hex3") {
+            formattedString = this.toHexString(true);
+        }
+        if (format === "hex4") {
+            formattedString = this.toHex8String(true);
+        }
+        if (format === "hex8") {
+            formattedString = this.toHex8String();
+        }
+        if (format === "name") {
+            formattedString = this.toName();
+        }
+        if (format === "hsl") {
+            formattedString = this.toHslString();
+        }
+        if (format === "hsv") {
+            formattedString = this.toHsvString();
+        }
+
+        return formattedString || this.toHexString();
+    },
+    clone: function() {
+        return tinycolor(this.toString());
+    },
+
+    _applyModification: function(fn, args) {
+        var color = fn.apply(null, [this].concat([].slice.call(args)));
+        this._r = color._r;
+        this._g = color._g;
+        this._b = color._b;
+        this.setAlpha(color._a);
+        return this;
+    },
+    lighten: function() {
+        return this._applyModification(lighten, arguments);
+    },
+    brighten: function() {
+        return this._applyModification(brighten, arguments);
+    },
+    darken: function() {
+        return this._applyModification(darken, arguments);
+    },
+    desaturate: function() {
+        return this._applyModification(desaturate, arguments);
+    },
+    saturate: function() {
+        return this._applyModification(saturate, arguments);
+    },
+    greyscale: function() {
+        return this._applyModification(greyscale, arguments);
+    },
+    spin: function() {
+        return this._applyModification(spin, arguments);
+    },
+
+    _applyCombination: function(fn, args) {
+        return fn.apply(null, [this].concat([].slice.call(args)));
+    },
+    analogous: function() {
+        return this._applyCombination(analogous, arguments);
+    },
+    complement: function() {
+        return this._applyCombination(complement, arguments);
+    },
+    monochromatic: function() {
+        return this._applyCombination(monochromatic, arguments);
+    },
+    splitcomplement: function() {
+        return this._applyCombination(splitcomplement, arguments);
+    },
+    triad: function() {
+        return this._applyCombination(triad, arguments);
+    },
+    tetrad: function() {
+        return this._applyCombination(tetrad, arguments);
+    }
+};
+
+// If input is an object, force 1 into "1.0" to handle ratios properly
+// String input requires "1.0" as input, so 1 will be treated as 1
+tinycolor.fromRatio = function(color, opts) {
+    if (typeof color == "object") {
+        var newColor = {};
+        for (var i in color) {
+            if (color.hasOwnProperty(i)) {
+                if (i === "a") {
+                    newColor[i] = color[i];
+                }
+                else {
+                    newColor[i] = convertToPercentage(color[i]);
+                }
+            }
+        }
+        color = newColor;
+    }
+
+    return tinycolor(color, opts);
+};
+
+// Given a string or object, convert that input to RGB
+// Possible string inputs:
+//
+//     "red"
+//     "#f00" or "f00"
+//     "#ff0000" or "ff0000"
+//     "#ff000000" or "ff000000"
+//     "rgb 255 0 0" or "rgb (255, 0, 0)"
+//     "rgb 1.0 0 0" or "rgb (1, 0, 0)"
+//     "rgba (255, 0, 0, 1)" or "rgba 255, 0, 0, 1"
+//     "rgba (1.0, 0, 0, 1)" or "rgba 1.0, 0, 0, 1"
+//     "hsl(0, 100%, 50%)" or "hsl 0 100% 50%"
+//     "hsla(0, 100%, 50%, 1)" or "hsla 0 100% 50%, 1"
+//     "hsv(0, 100%, 100%)" or "hsv 0 100% 100%"
+//
+function inputToRGB(color) {
+
+    var rgb = { r: 0, g: 0, b: 0 };
+    var a = 1;
+    var s = null;
+    var v = null;
+    var l = null;
+    var ok = false;
+    var format = false;
+
+    if (typeof color == "string") {
+        color = stringInputToObject(color);
+    }
+
+    if (typeof color == "object") {
+        if (isValidCSSUnit(color.r) && isValidCSSUnit(color.g) && isValidCSSUnit(color.b)) {
+            rgb = rgbToRgb(color.r, color.g, color.b);
+            ok = true;
+            format = String(color.r).substr(-1) === "%" ? "prgb" : "rgb";
+        }
+        else if (isValidCSSUnit(color.h) && isValidCSSUnit(color.s) && isValidCSSUnit(color.v)) {
+            s = convertToPercentage(color.s);
+            v = convertToPercentage(color.v);
+            rgb = hsvToRgb(color.h, s, v);
+            ok = true;
+            format = "hsv";
+        }
+        else if (isValidCSSUnit(color.h) && isValidCSSUnit(color.s) && isValidCSSUnit(color.l)) {
+            s = convertToPercentage(color.s);
+            l = convertToPercentage(color.l);
+            rgb = hslToRgb(color.h, s, l);
+            ok = true;
+            format = "hsl";
+        }
+
+        if (color.hasOwnProperty("a")) {
+            a = color.a;
+        }
+    }
+
+    a = boundAlpha(a);
+
+    return {
+        ok: ok,
+        format: color.format || format,
+        r: mathMin(255, mathMax(rgb.r, 0)),
+        g: mathMin(255, mathMax(rgb.g, 0)),
+        b: mathMin(255, mathMax(rgb.b, 0)),
+        a: a
+    };
+}
+
+
+// Conversion Functions
+// --------------------
+
+// `rgbToHsl`, `rgbToHsv`, `hslToRgb`, `hsvToRgb` modified from:
+// <http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript>
+
+// `rgbToRgb`
+// Handle bounds / percentage checking to conform to CSS color spec
+// <http://www.w3.org/TR/css3-color/>
+// *Assumes:* r, g, b in [0, 255] or [0, 1]
+// *Returns:* { r, g, b } in [0, 255]
+function rgbToRgb(r, g, b){
+    return {
+        r: bound01(r, 255) * 255,
+        g: bound01(g, 255) * 255,
+        b: bound01(b, 255) * 255
+    };
+}
+
+// `rgbToHsl`
+// Converts an RGB color value to HSL.
+// *Assumes:* r, g, and b are contained in [0, 255] or [0, 1]
+// *Returns:* { h, s, l } in [0,1]
+function rgbToHsl(r, g, b) {
+
+    r = bound01(r, 255);
+    g = bound01(g, 255);
+    b = bound01(b, 255);
+
+    var max = mathMax(r, g, b), min = mathMin(r, g, b);
+    var h, s, l = (max + min) / 2;
+
+    if(max == min) {
+        h = s = 0; // achromatic
+    }
+    else {
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch(max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+
+        h /= 6;
+    }
+
+    return { h: h, s: s, l: l };
+}
+
+// `hslToRgb`
+// Converts an HSL color value to RGB.
+// *Assumes:* h is contained in [0, 1] or [0, 360] and s and l are contained [0, 1] or [0, 100]
+// *Returns:* { r, g, b } in the set [0, 255]
+function hslToRgb(h, s, l) {
+    var r, g, b;
+
+    h = bound01(h, 360);
+    s = bound01(s, 100);
+    l = bound01(l, 100);
+
+    function hue2rgb(p, q, t) {
+        if(t < 0) t += 1;
+        if(t > 1) t -= 1;
+        if(t < 1/6) return p + (q - p) * 6 * t;
+        if(t < 1/2) return q;
+        if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+    }
+
+    if(s === 0) {
+        r = g = b = l; // achromatic
+    }
+    else {
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+    }
+
+    return { r: r * 255, g: g * 255, b: b * 255 };
+}
+
+// `rgbToHsv`
+// Converts an RGB color value to HSV
+// *Assumes:* r, g, and b are contained in the set [0, 255] or [0, 1]
+// *Returns:* { h, s, v } in [0,1]
+function rgbToHsv(r, g, b) {
+
+    r = bound01(r, 255);
+    g = bound01(g, 255);
+    b = bound01(b, 255);
+
+    var max = mathMax(r, g, b), min = mathMin(r, g, b);
+    var h, s, v = max;
+
+    var d = max - min;
+    s = max === 0 ? 0 : d / max;
+
+    if(max == min) {
+        h = 0; // achromatic
+    }
+    else {
+        switch(max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    return { h: h, s: s, v: v };
+}
+
+// `hsvToRgb`
+// Converts an HSV color value to RGB.
+// *Assumes:* h is contained in [0, 1] or [0, 360] and s and v are contained in [0, 1] or [0, 100]
+// *Returns:* { r, g, b } in the set [0, 255]
+ function hsvToRgb(h, s, v) {
+
+    h = bound01(h, 360) * 6;
+    s = bound01(s, 100);
+    v = bound01(v, 100);
+
+    var i = Math.floor(h),
+        f = h - i,
+        p = v * (1 - s),
+        q = v * (1 - f * s),
+        t = v * (1 - (1 - f) * s),
+        mod = i % 6,
+        r = [v, q, p, p, t, v][mod],
+        g = [t, v, v, q, p, p][mod],
+        b = [p, p, t, v, v, q][mod];
+
+    return { r: r * 255, g: g * 255, b: b * 255 };
+}
+
+// `rgbToHex`
+// Converts an RGB color to hex
+// Assumes r, g, and b are contained in the set [0, 255]
+// Returns a 3 or 6 character hex
+function rgbToHex(r, g, b, allow3Char) {
+
+    var hex = [
+        pad2(mathRound(r).toString(16)),
+        pad2(mathRound(g).toString(16)),
+        pad2(mathRound(b).toString(16))
+    ];
+
+    // Return a 3 character hex if possible
+    if (allow3Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1)) {
+        return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0);
+    }
+
+    return hex.join("");
+}
+
+// `rgbaToHex`
+// Converts an RGBA color plus alpha transparency to hex
+// Assumes r, g, b are contained in the set [0, 255] and
+// a in [0, 1]. Returns a 4 or 8 character rgba hex
+function rgbaToHex(r, g, b, a, allow4Char) {
+
+    var hex = [
+        pad2(mathRound(r).toString(16)),
+        pad2(mathRound(g).toString(16)),
+        pad2(mathRound(b).toString(16)),
+        pad2(convertDecimalToHex(a))
+    ];
+
+    // Return a 4 character hex if possible
+    if (allow4Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1) && hex[3].charAt(0) == hex[3].charAt(1)) {
+        return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0) + hex[3].charAt(0);
+    }
+
+    return hex.join("");
+}
+
+// `rgbaToArgbHex`
+// Converts an RGBA color to an ARGB Hex8 string
+// Rarely used, but required for "toFilter()"
+function rgbaToArgbHex(r, g, b, a) {
+
+    var hex = [
+        pad2(convertDecimalToHex(a)),
+        pad2(mathRound(r).toString(16)),
+        pad2(mathRound(g).toString(16)),
+        pad2(mathRound(b).toString(16))
+    ];
+
+    return hex.join("");
+}
+
+// `equals`
+// Can be called with any tinycolor input
+tinycolor.equals = function (color1, color2) {
+    if (!color1 || !color2) { return false; }
+    return tinycolor(color1).toRgbString() == tinycolor(color2).toRgbString();
+};
+
+tinycolor.random = function() {
+    return tinycolor.fromRatio({
+        r: mathRandom(),
+        g: mathRandom(),
+        b: mathRandom()
+    });
+};
+
+
+// Modification Functions
+// ----------------------
+// Thanks to less.js for some of the basics here
+// <https://github.com/cloudhead/less.js/blob/master/lib/less/functions.js>
+
+function desaturate(color, amount) {
+    amount = (amount === 0) ? 0 : (amount || 10);
+    var hsl = tinycolor(color).toHsl();
+    hsl.s -= amount / 100;
+    hsl.s = clamp01(hsl.s);
+    return tinycolor(hsl);
+}
+
+function saturate(color, amount) {
+    amount = (amount === 0) ? 0 : (amount || 10);
+    var hsl = tinycolor(color).toHsl();
+    hsl.s += amount / 100;
+    hsl.s = clamp01(hsl.s);
+    return tinycolor(hsl);
+}
+
+function greyscale(color) {
+    return tinycolor(color).desaturate(100);
+}
+
+function lighten (color, amount) {
+    amount = (amount === 0) ? 0 : (amount || 10);
+    var hsl = tinycolor(color).toHsl();
+    hsl.l += amount / 100;
+    hsl.l = clamp01(hsl.l);
+    return tinycolor(hsl);
+}
+
+function brighten(color, amount) {
+    amount = (amount === 0) ? 0 : (amount || 10);
+    var rgb = tinycolor(color).toRgb();
+    rgb.r = mathMax(0, mathMin(255, rgb.r - mathRound(255 * - (amount / 100))));
+    rgb.g = mathMax(0, mathMin(255, rgb.g - mathRound(255 * - (amount / 100))));
+    rgb.b = mathMax(0, mathMin(255, rgb.b - mathRound(255 * - (amount / 100))));
+    return tinycolor(rgb);
+}
+
+function darken (color, amount) {
+    amount = (amount === 0) ? 0 : (amount || 10);
+    var hsl = tinycolor(color).toHsl();
+    hsl.l -= amount / 100;
+    hsl.l = clamp01(hsl.l);
+    return tinycolor(hsl);
+}
+
+// Spin takes a positive or negative amount within [-360, 360] indicating the change of hue.
+// Values outside of this range will be wrapped into this range.
+function spin(color, amount) {
+    var hsl = tinycolor(color).toHsl();
+    var hue = (hsl.h + amount) % 360;
+    hsl.h = hue < 0 ? 360 + hue : hue;
+    return tinycolor(hsl);
+}
+
+// Combination Functions
+// ---------------------
+// Thanks to jQuery xColor for some of the ideas behind these
+// <https://github.com/infusion/jQuery-xcolor/blob/master/jquery.xcolor.js>
+
+function complement(color) {
+    var hsl = tinycolor(color).toHsl();
+    hsl.h = (hsl.h + 180) % 360;
+    return tinycolor(hsl);
+}
+
+function triad(color) {
+    var hsl = tinycolor(color).toHsl();
+    var h = hsl.h;
+    return [
+        tinycolor(color),
+        tinycolor({ h: (h + 120) % 360, s: hsl.s, l: hsl.l }),
+        tinycolor({ h: (h + 240) % 360, s: hsl.s, l: hsl.l })
+    ];
+}
+
+function tetrad(color) {
+    var hsl = tinycolor(color).toHsl();
+    var h = hsl.h;
+    return [
+        tinycolor(color),
+        tinycolor({ h: (h + 90) % 360, s: hsl.s, l: hsl.l }),
+        tinycolor({ h: (h + 180) % 360, s: hsl.s, l: hsl.l }),
+        tinycolor({ h: (h + 270) % 360, s: hsl.s, l: hsl.l })
+    ];
+}
+
+function splitcomplement(color) {
+    var hsl = tinycolor(color).toHsl();
+    var h = hsl.h;
+    return [
+        tinycolor(color),
+        tinycolor({ h: (h + 72) % 360, s: hsl.s, l: hsl.l}),
+        tinycolor({ h: (h + 216) % 360, s: hsl.s, l: hsl.l})
+    ];
+}
+
+function analogous(color, results, slices) {
+    results = results || 6;
+    slices = slices || 30;
+
+    var hsl = tinycolor(color).toHsl();
+    var part = 360 / slices;
+    var ret = [tinycolor(color)];
+
+    for (hsl.h = ((hsl.h - (part * results >> 1)) + 720) % 360; --results; ) {
+        hsl.h = (hsl.h + part) % 360;
+        ret.push(tinycolor(hsl));
+    }
+    return ret;
+}
+
+function monochromatic(color, results) {
+    results = results || 6;
+    var hsv = tinycolor(color).toHsv();
+    var h = hsv.h, s = hsv.s, v = hsv.v;
+    var ret = [];
+    var modification = 1 / results;
+
+    while (results--) {
+        ret.push(tinycolor({ h: h, s: s, v: v}));
+        v = (v + modification) % 1;
+    }
+
+    return ret;
+}
+
+// Utility Functions
+// ---------------------
+
+tinycolor.mix = function(color1, color2, amount) {
+    amount = (amount === 0) ? 0 : (amount || 50);
+
+    var rgb1 = tinycolor(color1).toRgb();
+    var rgb2 = tinycolor(color2).toRgb();
+
+    var p = amount / 100;
+
+    var rgba = {
+        r: ((rgb2.r - rgb1.r) * p) + rgb1.r,
+        g: ((rgb2.g - rgb1.g) * p) + rgb1.g,
+        b: ((rgb2.b - rgb1.b) * p) + rgb1.b,
+        a: ((rgb2.a - rgb1.a) * p) + rgb1.a
+    };
+
+    return tinycolor(rgba);
+};
+
+
+// Readability Functions
+// ---------------------
+// <http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef (WCAG Version 2)
+
+// `contrast`
+// Analyze the 2 colors and returns the color contrast defined by (WCAG Version 2)
+tinycolor.readability = function(color1, color2) {
+    var c1 = tinycolor(color1);
+    var c2 = tinycolor(color2);
+    return (Math.max(c1.getLuminance(),c2.getLuminance())+0.05) / (Math.min(c1.getLuminance(),c2.getLuminance())+0.05);
+};
+
+// `isReadable`
+// Ensure that foreground and background color combinations meet WCAG2 guidelines.
+// The third argument is an optional Object.
+//      the 'level' property states 'AA' or 'AAA' - if missing or invalid, it defaults to 'AA';
+//      the 'size' property states 'large' or 'small' - if missing or invalid, it defaults to 'small'.
+// If the entire object is absent, isReadable defaults to {level:"AA",size:"small"}.
+
+// *Example*
+//    tinycolor.isReadable("#000", "#111") => false
+//    tinycolor.isReadable("#000", "#111",{level:"AA",size:"large"}) => false
+tinycolor.isReadable = function(color1, color2, wcag2) {
+    var readability = tinycolor.readability(color1, color2);
+    var wcag2Parms, out;
+
+    out = false;
+
+    wcag2Parms = validateWCAG2Parms(wcag2);
+    switch (wcag2Parms.level + wcag2Parms.size) {
+        case "AAsmall":
+        case "AAAlarge":
+            out = readability >= 4.5;
+            break;
+        case "AAlarge":
+            out = readability >= 3;
+            break;
+        case "AAAsmall":
+            out = readability >= 7;
+            break;
+    }
+    return out;
+
+};
+
+// `mostReadable`
+// Given a base color and a list of possible foreground or background
+// colors for that base, returns the most readable color.
+// Optionally returns Black or White if the most readable color is unreadable.
+// *Example*
+//    tinycolor.mostReadable(tinycolor.mostReadable("#123", ["#124", "#125"],{includeFallbackColors:false}).toHexString(); // "#112255"
+//    tinycolor.mostReadable(tinycolor.mostReadable("#123", ["#124", "#125"],{includeFallbackColors:true}).toHexString();  // "#ffffff"
+//    tinycolor.mostReadable("#a8015a", ["#faf3f3"],{includeFallbackColors:true,level:"AAA",size:"large"}).toHexString(); // "#faf3f3"
+//    tinycolor.mostReadable("#a8015a", ["#faf3f3"],{includeFallbackColors:true,level:"AAA",size:"small"}).toHexString(); // "#ffffff"
+tinycolor.mostReadable = function(baseColor, colorList, args) {
+    var bestColor = null;
+    var bestScore = 0;
+    var readability;
+    var includeFallbackColors, level, size ;
+    args = args || {};
+    includeFallbackColors = args.includeFallbackColors ;
+    level = args.level;
+    size = args.size;
+
+    for (var i= 0; i < colorList.length ; i++) {
+        readability = tinycolor.readability(baseColor, colorList[i]);
+        if (readability > bestScore) {
+            bestScore = readability;
+            bestColor = tinycolor(colorList[i]);
+        }
+    }
+
+    if (tinycolor.isReadable(baseColor, bestColor, {"level":level,"size":size}) || !includeFallbackColors) {
+        return bestColor;
+    }
+    else {
+        args.includeFallbackColors=false;
+        return tinycolor.mostReadable(baseColor,["#fff", "#000"],args);
+    }
+};
+
+
+// Big List of Colors
+// ------------------
+// <http://www.w3.org/TR/css3-color/#svg-color>
+var names = tinycolor.names = {
+    aliceblue: "f0f8ff",
+    antiquewhite: "faebd7",
+    aqua: "0ff",
+    aquamarine: "7fffd4",
+    azure: "f0ffff",
+    beige: "f5f5dc",
+    bisque: "ffe4c4",
+    black: "000",
+    blanchedalmond: "ffebcd",
+    blue: "00f",
+    blueviolet: "8a2be2",
+    brown: "a52a2a",
+    burlywood: "deb887",
+    burntsienna: "ea7e5d",
+    cadetblue: "5f9ea0",
+    chartreuse: "7fff00",
+    chocolate: "d2691e",
+    coral: "ff7f50",
+    cornflowerblue: "6495ed",
+    cornsilk: "fff8dc",
+    crimson: "dc143c",
+    cyan: "0ff",
+    darkblue: "00008b",
+    darkcyan: "008b8b",
+    darkgoldenrod: "b8860b",
+    darkgray: "a9a9a9",
+    darkgreen: "006400",
+    darkgrey: "a9a9a9",
+    darkkhaki: "bdb76b",
+    darkmagenta: "8b008b",
+    darkolivegreen: "556b2f",
+    darkorange: "ff8c00",
+    darkorchid: "9932cc",
+    darkred: "8b0000",
+    darksalmon: "e9967a",
+    darkseagreen: "8fbc8f",
+    darkslateblue: "483d8b",
+    darkslategray: "2f4f4f",
+    darkslategrey: "2f4f4f",
+    darkturquoise: "00ced1",
+    darkviolet: "9400d3",
+    deeppink: "ff1493",
+    deepskyblue: "00bfff",
+    dimgray: "696969",
+    dimgrey: "696969",
+    dodgerblue: "1e90ff",
+    firebrick: "b22222",
+    floralwhite: "fffaf0",
+    forestgreen: "228b22",
+    fuchsia: "f0f",
+    gainsboro: "dcdcdc",
+    ghostwhite: "f8f8ff",
+    gold: "ffd700",
+    goldenrod: "daa520",
+    gray: "808080",
+    green: "008000",
+    greenyellow: "adff2f",
+    grey: "808080",
+    honeydew: "f0fff0",
+    hotpink: "ff69b4",
+    indianred: "cd5c5c",
+    indigo: "4b0082",
+    ivory: "fffff0",
+    khaki: "f0e68c",
+    lavender: "e6e6fa",
+    lavenderblush: "fff0f5",
+    lawngreen: "7cfc00",
+    lemonchiffon: "fffacd",
+    lightblue: "add8e6",
+    lightcoral: "f08080",
+    lightcyan: "e0ffff",
+    lightgoldenrodyellow: "fafad2",
+    lightgray: "d3d3d3",
+    lightgreen: "90ee90",
+    lightgrey: "d3d3d3",
+    lightpink: "ffb6c1",
+    lightsalmon: "ffa07a",
+    lightseagreen: "20b2aa",
+    lightskyblue: "87cefa",
+    lightslategray: "789",
+    lightslategrey: "789",
+    lightsteelblue: "b0c4de",
+    lightyellow: "ffffe0",
+    lime: "0f0",
+    limegreen: "32cd32",
+    linen: "faf0e6",
+    magenta: "f0f",
+    maroon: "800000",
+    mediumaquamarine: "66cdaa",
+    mediumblue: "0000cd",
+    mediumorchid: "ba55d3",
+    mediumpurple: "9370db",
+    mediumseagreen: "3cb371",
+    mediumslateblue: "7b68ee",
+    mediumspringgreen: "00fa9a",
+    mediumturquoise: "48d1cc",
+    mediumvioletred: "c71585",
+    midnightblue: "191970",
+    mintcream: "f5fffa",
+    mistyrose: "ffe4e1",
+    moccasin: "ffe4b5",
+    navajowhite: "ffdead",
+    navy: "000080",
+    oldlace: "fdf5e6",
+    olive: "808000",
+    olivedrab: "6b8e23",
+    orange: "ffa500",
+    orangered: "ff4500",
+    orchid: "da70d6",
+    palegoldenrod: "eee8aa",
+    palegreen: "98fb98",
+    paleturquoise: "afeeee",
+    palevioletred: "db7093",
+    papayawhip: "ffefd5",
+    peachpuff: "ffdab9",
+    peru: "cd853f",
+    pink: "ffc0cb",
+    plum: "dda0dd",
+    powderblue: "b0e0e6",
+    purple: "800080",
+    rebeccapurple: "663399",
+    red: "f00",
+    rosybrown: "bc8f8f",
+    royalblue: "4169e1",
+    saddlebrown: "8b4513",
+    salmon: "fa8072",
+    sandybrown: "f4a460",
+    seagreen: "2e8b57",
+    seashell: "fff5ee",
+    sienna: "a0522d",
+    silver: "c0c0c0",
+    skyblue: "87ceeb",
+    slateblue: "6a5acd",
+    slategray: "708090",
+    slategrey: "708090",
+    snow: "fffafa",
+    springgreen: "00ff7f",
+    steelblue: "4682b4",
+    tan: "d2b48c",
+    teal: "008080",
+    thistle: "d8bfd8",
+    tomato: "ff6347",
+    turquoise: "40e0d0",
+    violet: "ee82ee",
+    wheat: "f5deb3",
+    white: "fff",
+    whitesmoke: "f5f5f5",
+    yellow: "ff0",
+    yellowgreen: "9acd32"
+};
+
+// Make it easy to access colors via `hexNames[hex]`
+var hexNames = tinycolor.hexNames = flip(names);
+
+
+// Utilities
+// ---------
+
+// `{ 'name1': 'val1' }` becomes `{ 'val1': 'name1' }`
+function flip(o) {
+    var flipped = { };
+    for (var i in o) {
+        if (o.hasOwnProperty(i)) {
+            flipped[o[i]] = i;
+        }
+    }
+    return flipped;
+}
+
+// Return a valid alpha value [0,1] with all invalid values being set to 1
+function boundAlpha(a) {
+    a = parseFloat(a);
+
+    if (isNaN(a) || a < 0 || a > 1) {
+        a = 1;
+    }
+
+    return a;
+}
+
+// Take input from [0, n] and return it as [0, 1]
+function bound01(n, max) {
+    if (isOnePointZero(n)) { n = "100%"; }
+
+    var processPercent = isPercentage(n);
+    n = mathMin(max, mathMax(0, parseFloat(n)));
+
+    // Automatically convert percentage into number
+    if (processPercent) {
+        n = parseInt(n * max, 10) / 100;
+    }
+
+    // Handle floating point rounding errors
+    if ((Math.abs(n - max) < 0.000001)) {
+        return 1;
+    }
+
+    // Convert into [0, 1] range if it isn't already
+    return (n % max) / parseFloat(max);
+}
+
+// Force a number between 0 and 1
+function clamp01(val) {
+    return mathMin(1, mathMax(0, val));
+}
+
+// Parse a base-16 hex value into a base-10 integer
+function parseIntFromHex(val) {
+    return parseInt(val, 16);
+}
+
+// Need to handle 1.0 as 100%, since once it is a number, there is no difference between it and 1
+// <http://stackoverflow.com/questions/7422072/javascript-how-to-detect-number-as-a-decimal-including-1-0>
+function isOnePointZero(n) {
+    return typeof n == "string" && n.indexOf('.') != -1 && parseFloat(n) === 1;
+}
+
+// Check to see if string passed in is a percentage
+function isPercentage(n) {
+    return typeof n === "string" && n.indexOf('%') != -1;
+}
+
+// Force a hex value to have 2 characters
+function pad2(c) {
+    return c.length == 1 ? '0' + c : '' + c;
+}
+
+// Replace a decimal with it's percentage value
+function convertToPercentage(n) {
+    if (n <= 1) {
+        n = (n * 100) + "%";
+    }
+
+    return n;
+}
+
+// Converts a decimal to a hex value
+function convertDecimalToHex(d) {
+    return Math.round(parseFloat(d) * 255).toString(16);
+}
+// Converts a hex value to a decimal
+function convertHexToDecimal(h) {
+    return (parseIntFromHex(h) / 255);
+}
+
+var matchers = (function() {
+
+    // <http://www.w3.org/TR/css3-values/#integers>
+    var CSS_INTEGER = "[-\\+]?\\d+%?";
+
+    // <http://www.w3.org/TR/css3-values/#number-value>
+    var CSS_NUMBER = "[-\\+]?\\d*\\.\\d+%?";
+
+    // Allow positive/negative integer/number.  Don't capture the either/or, just the entire outcome.
+    var CSS_UNIT = "(?:" + CSS_NUMBER + ")|(?:" + CSS_INTEGER + ")";
+
+    // Actual matching.
+    // Parentheses and commas are optional, but not required.
+    // Whitespace can take the place of commas or opening paren
+    var PERMISSIVE_MATCH3 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
+    var PERMISSIVE_MATCH4 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
+
+    return {
+        CSS_UNIT: new RegExp(CSS_UNIT),
+        rgb: new RegExp("rgb" + PERMISSIVE_MATCH3),
+        rgba: new RegExp("rgba" + PERMISSIVE_MATCH4),
+        hsl: new RegExp("hsl" + PERMISSIVE_MATCH3),
+        hsla: new RegExp("hsla" + PERMISSIVE_MATCH4),
+        hsv: new RegExp("hsv" + PERMISSIVE_MATCH3),
+        hsva: new RegExp("hsva" + PERMISSIVE_MATCH4),
+        hex3: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
+        hex6: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
+        hex4: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
+        hex8: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
+    };
+})();
+
+// `isValidCSSUnit`
+// Take in a single string / number and check to see if it looks like a CSS unit
+// (see `matchers` above for definition).
+function isValidCSSUnit(color) {
+    return !!matchers.CSS_UNIT.exec(color);
+}
+
+// `stringInputToObject`
+// Permissive string parsing.  Take in a number of formats, and output an object
+// based on detected format.  Returns `{ r, g, b }` or `{ h, s, l }` or `{ h, s, v}`
+function stringInputToObject(color) {
+
+    color = color.replace(trimLeft,'').replace(trimRight, '').toLowerCase();
+    var named = false;
+    if (names[color]) {
+        color = names[color];
+        named = true;
+    }
+    else if (color == 'transparent') {
+        return { r: 0, g: 0, b: 0, a: 0, format: "name" };
+    }
+
+    // Try to match string input using regular expressions.
+    // Keep most of the number bounding out of this function - don't worry about [0,1] or [0,100] or [0,360]
+    // Just return an object and let the conversion functions handle that.
+    // This way the result will be the same whether the tinycolor is initialized with string or object.
+    var match;
+    if ((match = matchers.rgb.exec(color))) {
+        return { r: match[1], g: match[2], b: match[3] };
+    }
+    if ((match = matchers.rgba.exec(color))) {
+        return { r: match[1], g: match[2], b: match[3], a: match[4] };
+    }
+    if ((match = matchers.hsl.exec(color))) {
+        return { h: match[1], s: match[2], l: match[3] };
+    }
+    if ((match = matchers.hsla.exec(color))) {
+        return { h: match[1], s: match[2], l: match[3], a: match[4] };
+    }
+    if ((match = matchers.hsv.exec(color))) {
+        return { h: match[1], s: match[2], v: match[3] };
+    }
+    if ((match = matchers.hsva.exec(color))) {
+        return { h: match[1], s: match[2], v: match[3], a: match[4] };
+    }
+    if ((match = matchers.hex8.exec(color))) {
+        return {
+            r: parseIntFromHex(match[1]),
+            g: parseIntFromHex(match[2]),
+            b: parseIntFromHex(match[3]),
+            a: convertHexToDecimal(match[4]),
+            format: named ? "name" : "hex8"
+        };
+    }
+    if ((match = matchers.hex6.exec(color))) {
+        return {
+            r: parseIntFromHex(match[1]),
+            g: parseIntFromHex(match[2]),
+            b: parseIntFromHex(match[3]),
+            format: named ? "name" : "hex"
+        };
+    }
+    if ((match = matchers.hex4.exec(color))) {
+        return {
+            r: parseIntFromHex(match[1] + '' + match[1]),
+            g: parseIntFromHex(match[2] + '' + match[2]),
+            b: parseIntFromHex(match[3] + '' + match[3]),
+            a: convertHexToDecimal(match[4] + '' + match[4]),
+            format: named ? "name" : "hex8"
+        };
+    }
+    if ((match = matchers.hex3.exec(color))) {
+        return {
+            r: parseIntFromHex(match[1] + '' + match[1]),
+            g: parseIntFromHex(match[2] + '' + match[2]),
+            b: parseIntFromHex(match[3] + '' + match[3]),
+            format: named ? "name" : "hex"
+        };
+    }
+
+    return false;
+}
+
+function validateWCAG2Parms(parms) {
+    // return valid WCAG2 parms for isReadable.
+    // If input parms are invalid, return {"level":"AA", "size":"small"}
+    var level, size;
+    parms = parms || {"level":"AA", "size":"small"};
+    level = (parms.level || "AA").toUpperCase();
+    size = (parms.size || "small").toLowerCase();
+    if (level !== "AA" && level !== "AAA") {
+        level = "AA";
+    }
+    if (size !== "small" && size !== "large") {
+        size = "small";
+    }
+    return {"level":level, "size":size};
+}
+
+// Node: Export function
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = tinycolor;
+}
+// AMD/requirejs: Define the module
+else if (true) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {return tinycolor;}).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+}
+// Browser: Expose to window
+else {
+    window.tinycolor = tinycolor;
+}
+
+})(Math);
+
+
+/***/ }),
+/* 652 */,
+/* 653 */,
+/* 654 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(655)
+/* template */
+var __vue_template__ = __webpack_require__(656)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/Logo.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4417b880", Component.options)
+  } else {
+    hotAPI.reload("data-v-4417b880", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 655 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DeviseLogo__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DeviseLogo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__DeviseLogo__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['interface'])),
+  components: {
+    DeviseLogo: __WEBPACK_IMPORTED_MODULE_1__DeviseLogo___default.a
+  }
+});
+
+/***/ }),
+/* 656 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      !_vm.interface.logo
+        ? _c("devise-logo", {
+            staticStyle: { width: "180px" },
+            attrs: { color: _vm.theme.sidebarText.color }
+          })
+        : _c("img", { attrs: { src: _vm.interface.logo } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4417b880", module.exports)
+  }
+}
 
 /***/ })
 ],[226]);

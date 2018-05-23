@@ -1,12 +1,18 @@
 <template>
 
-  <div class="dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="localValue.languages && languages.data">
-    <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Manage Site</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-sites-index')">Back to Sites</a>
+  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="localValue.languages && languages.data">
+    <div id="devise-sidebar" :style="sidebarTheme">
+      <!-- Logo -->
+      <logo class="dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center" />
+
+      <h2 class="dvs-font-bold dvs-mb-2" :style="{color: theme.sidebarText.color }">Manage Site</h2>
+      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-sites-index')" :style="{color: theme.sidebarText.color }">
+        <i class="ion-arrow-left-c"></i> Back to Sites
+      </a>
     </div>
-    <div id="devise-admin-content" class="bottom-padding-16">
-      <h3 class="dvs-mb-8">{{ localValue.name }} Settings</h3>
+    
+    <div id="devise-admin-content" :style="adminTheme">
+      <h3 class="dvs-mb-8" :style="{color: theme.sidebarText.color }">{{ localValue.name }} Settings</h3>
 
       <div class="dvs-mb-12">
         <form>
@@ -32,8 +38,8 @@
 
         <fieldset class="dvs-fieldset dvs-mb-10">
           <label>Current Languages</label>
-          <help class="dvs-mb-4">Green indicates the default language. Click on the language tags below to change.</help>
-          <span v-for="language in localValue.languages" @click="setDefaultLanguage(language)" class="dvs-mr-2 dvs-tag dvs-bg-grey-lighter dvs-cursor-pointer" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
+          <help class="dvs-mb-4">Green indicates the default language. Click on the language tags below to set a new default.</help>
+          <span v-for="language in localValue.languages" @click="setDefaultLanguage(language)" class="dvs-mr-2 dvs-tag dvs-bg-grey-darker dvs-cursor-pointer" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.name }}</span>
           <span v-if="localValue.languages.length < 1">No Languages</span>
         </fieldset>
 
@@ -44,8 +50,8 @@
         </fieldset>
 
         <div class="dvs-flex">
-            <button class="dvs-btn mr-2" @click="requestEditSite" :disabled="editInvalid">Edit</button>
-            <button class="dvs-btn dvs-btn-plain" @click="showEdit = false">Cancel</button>
+            <button class="dvs-btn mr-2" @click="requestEditSite" :disabled="editInvalid" :style="actionButtonTheme">Edit</button>
+            <button class="dvs-btn dvs-btn-plain" @click="showEdit = false"  :style="regularButtonTheme">Cancel</button>
         </div>
         </form>
       </div>
@@ -78,6 +84,8 @@ export default {
   mounted () {
     this.retrieveAllSites()
     this.retrieveAllLanguages()
+    console.log(this.theme)
+    
   },
   methods: {
     ...mapActions('devise', [
@@ -88,6 +96,8 @@ export default {
     requestEditSite () {
       let self = this
       this.updateSite({site: this.site, data: this.localValue}).then(function () {
+        var site = self.siteById(self.site.id)
+        site.settings.colors = self.localValue.settings.colors
         self.goToPage('devise-sites-index')
       })
     },
@@ -127,7 +137,8 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'languages',
-      'site'
+      'site',
+      'siteById'
     ]),
     editInvalid () {
       return this.localValue.name === null ||

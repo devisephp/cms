@@ -1,4 +1,4 @@
-/*!
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700);/*!
  * 
  *         SimpleBar.js - v2.6.1
  *         Scrollbars, simpler.
@@ -769,17 +769,11 @@ button,
 
 .dvs-btn {
   padding: 1rem;
-  background-color: #2b6ed8;
   border-radius: .25rem;
-  color: #fff;
   text-transform: uppercase;
   font-size: .875rem;
   -webkit-transition: background-color .5s;
   transition: background-color .5s;
-}
-
-.dvs-btn:hover {
-  color: #fff;
 }
 
 .dvs-btn.dvs-btn-success {
@@ -1035,7 +1029,7 @@ button,
 }
 
 #devise-container {
-  font-family: system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Lato, system-ui, BlinkMacSystemFont, -apple-system, Roboto, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1290,6 +1284,7 @@ button,
   bottom: 0;
   top: 0;
   z-index: 20;
+  text-align: center;
   min-width: 350px;
   width: 350px;
 }
@@ -1452,10 +1447,8 @@ button:hover {
 .help {
   border-radius: .25rem;
   padding: 1rem;
-  background-color: #f8fafc;
   font-size: .875rem;
   border-left-width: 4px;
-  border-color: #3490dc;
 }
 
 .help.danger {
@@ -1758,39 +1751,40 @@ table.dvs-table.tight td {
   opacity: 1;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+#devise-admin h1,
+#devise-admin h2,
+#devise-admin h3,
+#devise-admin h4,
+#devise-admin h5,
+#devise-admin h6 {
   font-weight: 300;
-  color: #606f7b;
 }
 
-h1 {
-  font-size: 3rem;
-  font-weight: 200;
-}
-
-h2 {
+#devise-admin h1 {
   font-size: 2.25rem;
+  font-weight: 100;
+}
+
+#devise-admin h2 {
+  font-size: 1.875rem;
+  font-weight: 100;
+}
+
+#devise-admin h3 {
+  font-size: 1.5rem;
   font-weight: 200;
 }
 
-h3 {
-  font-size: 1.875rem;
-}
-
-h4 {
-  font-size: 1.5rem;
-}
-
-h5 {
+#devise-admin h4 {
   font-size: 1.25rem;
+  font-weight: 200;
 }
 
-h6 {
+#devise-admin h5 {
+  font-size: 1.125rem;
+}
+
+#devise-admin h6 {
   text-transform: uppercase;
   letter-spacing: .05em;
   font-weight: 700;
@@ -3233,7 +3227,7 @@ trix-editor {
 }
 
 .dvs-font-sans {
-  font-family: system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Lato, system-ui, BlinkMacSystemFont, -apple-system, Roboto, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 .dvs-font-serif {
@@ -6117,7 +6111,7 @@ trix-editor {
   }
 
   .md\:dvs-font-sans {
-    font-family: system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: Lato, system-ui, BlinkMacSystemFont, -apple-system, Roboto, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
 
   .md\:dvs-font-serif {
@@ -9002,7 +8996,7 @@ trix-editor {
   }
 
   .lg\:dvs-font-sans {
-    font-family: system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: Lato, system-ui, BlinkMacSystemFont, -apple-system, Roboto, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
 
   .lg\:dvs-font-serif {

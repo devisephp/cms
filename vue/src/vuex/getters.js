@@ -1,3 +1,5 @@
+var tinycolor = require('tinycolor2')
+
 const getters = {
   breakpoint: state => {
     return state.breakpoint.breakpoint
@@ -25,13 +27,6 @@ const getters = {
 
   interface: state => {
     return deviseSettings.$interface
-  },
-
-  accentColor: state => {
-    if (deviseSettings.$interface.accentColor) {
-      return deviseSettings.$interface.accentColor
-    }
-    return '#2b6ed8' // blue-dark
   },
 
   sliceConfig: state => (slice) => {
@@ -109,7 +104,21 @@ const getters = {
 
   themeBySiteId: (state, getters, rootState) => (id) => {
     let site = getters.siteById(id)
-    return site.settings.colors
+    var colors = site.settings.colors
+
+    colors.buttonsInverseLeft = {
+      color: tinycolor(colors.buttonsActionLeft.color).spin(90).toString()
+    }
+
+    colors.buttonsInverseRight = {
+      color: tinycolor(colors.buttonsActionRight.color).spin(90).toString()
+    }
+
+    colors.buttonsInverseText = {
+      color: tinycolor(colors.buttonsActionText.color).spin(90).toString()
+    }
+
+    return colors
   },
 
   // Slices

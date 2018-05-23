@@ -1,11 +1,15 @@
-h1,h2,h3,h4,h5,h6 { @apply dvs-font-light dvs-text-grey-darker;}
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
-h1 { @apply dvs-text-5xl dvs-font-thin }
-h2 { @apply dvs-text-4xl dvs-font-thin }
-h3 { @apply dvs-text-3xl; }
-h4 { @apply dvs-text-2xl; }
-h5 { @apply dvs-text-xl; }
-h6 { @apply dvs-uppercase dvs-tracking-wide dvs-font-bold dvs-text-xs dvs-tracking-superwide; }
+#devise-admin {
+  h1,h2,h3,h4,h5,h6 { @apply dvs-font-light}
+
+  h1 { @apply dvs-text-4xl dvs-font-hairline }
+  h2 { @apply dvs-text-3xl dvs-font-hairline }
+  h3 { @apply dvs-text-2xl dvs-font-thin }
+  h4 { @apply dvs-text-xl dvs-font-thin }
+  h5 { @apply dvs-text-lg; }
+  h6 { @apply dvs-uppercase dvs-tracking-wide dvs-font-bold dvs-text-xs dvs-tracking-superwide; }
+}
 
 a {
   @apply dvs-no-underline dvs-text-blue;

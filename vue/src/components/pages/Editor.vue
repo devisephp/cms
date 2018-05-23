@@ -1,15 +1,13 @@
 <template>
   <div>
     <div class="dvs-w-full dvs-py-4 dvs-px-12 dvs-flex dvs-flex-col dvs-items-center admin-component-first-in">
-      <devise-logo class="dvs-my-4" style="width:180px;" :color="theme.sidebarText.color" v-if="!interface.logo" />
-      <img class="dvs-my-4" :src="interface.logo" v-else>
-
+      <logo class="dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center" />
       <a class="dvs-text-2xs dvs-font-normal dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')" :style="`color:${theme.sidebarText.color}`">
         <i class="ion-arrow-left-c"></i> Full Administration
       </a>
-      <h6 class="dvs-font-bold" :style="`color:${theme.sidebarText.color}`">      
+      <h3 :style="`color:${theme.sidebarText.color}`">      
         Edit Page: {{ this.page.title }}
-      </h6>
+      </h3>
     </div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-py-4">
@@ -86,7 +84,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
-import DeviseLogo from './../utilities/DeviseLogo'
 import SliceEditor from './SliceEditor'
 
 export default {
@@ -142,14 +139,12 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'interface',
       'sliceConfig',
       'fieldConfig'
     ])
   },
   props: ['page'],
   components: {
-    DeviseLogo,
     SliceEditor
   }
 }

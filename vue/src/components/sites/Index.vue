@@ -2,18 +2,21 @@
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Sites</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-settings-index')">Back to Settings</a>
+      <h2 class="dvs-font-bold dvs-mb-2" :style="{color: theme.sidebarText.color }">Sites</h2>
+      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-settings-index')" :style="{color: theme.sidebarText.color }">
+        <i class="ion-arrow-left-c"></i> Back to Settings
+      </a>
       <ul class="dvs-list-reset">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New Site
         </li>
       </ul>
     </div>
-    <div id="devise-admin-content">
-      <h2 class="dvs-mb-10">Current Sites</h2>
 
-      <div v-for="site in sites.data" class="dvs-mb-6 dvs-rounded-sm dvs-bg-white dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center">
+    <div id="devise-admin-content" :style="adminTheme">
+      <h2 class="dvs-mb-10" :style="{color: theme.sidebarText.color }">Current Sites</h2>
+
+      <div v-for="site in sites.data" class="dvs-mb-6 dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-2/5 dvs-text-base dvs-font-bold dvs-pr-8">
           {{ site.name }}<br>
           <span class="dvs-font-mono dvs-font-normal">{{ site.domain }}</span>
@@ -25,8 +28,8 @@
           <span v-for="language in site.languages" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
         </div>
         <div class="dvs-w-1/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs dvs-mr-2" @click="showEditSite(site)">Edit</button>
-          <button class="dvs-btn dvs-btn-xs" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}">Delete</button>
+          <button class="dvs-btn dvs-btn-xs dvs-mr-2" @click="showEditSite(site)" :style="actionButtonTheme">Edit</button>
+          <button class="dvs-btn dvs-btn-xs" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="regularButtonTheme">Delete</button>
         </div>
       </div>
     </div>

@@ -112,15 +112,15 @@ export default {
   mounted () {
     if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
       this.pageMode = true
+      this.addAdminAnimations()
     } else if (typeof deviseSettings.$template !== 'undefined') {
       this.templateMode = true
     } else {
-      this.mountGlobalVariables()
-      this.initDevise()
       this.editorMode = true
+      this.mountGlobalVariables()
+      this.addAdminAnimations()
+      this.initDevise()
     }
-
-    this.addAdminAnimations()
   },
   methods: {
     ...mapActions('devise', [
@@ -151,6 +151,7 @@ export default {
       this.$nextTick(function () {
         if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
           self.adminClosed = false
+          self.checkWidthOfInterface(self.$route)
           this.openAnimation.restart()
           this.openAnimation.seek(100)
         }

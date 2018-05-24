@@ -58502,15 +58502,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
       this.pageMode = true;
+      this.addAdminAnimations();
     } else if (typeof deviseSettings.$template !== 'undefined') {
       this.templateMode = true;
     } else {
-      this.mountGlobalVariables();
-      this.initDevise();
       this.editorMode = true;
+      this.mountGlobalVariables();
+      this.addAdminAnimations();
+      this.initDevise();
     }
-
-    this.addAdminAnimations();
   },
 
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_12_vuex__["b" /* mapActions */])('devise', ['setBreakpoint']), Object(__WEBPACK_IMPORTED_MODULE_12_vuex__["d" /* mapMutations */])('devise', ['setPage', 'setSites']), {
@@ -58535,6 +58535,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$nextTick(function () {
         if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
           self.adminClosed = false;
+          self.checkWidthOfInterface(self.$route);
           this.openAnimation.restart();
           this.openAnimation.seek(100);
         }
@@ -58716,7 +58717,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     addListeners: function addListeners() {
-      console.log(devise);
       devise.$bus.$on('incrementLoadbar', this.incrementLoadbar);
     },
     incrementLoadbar: function incrementLoadbar(numberOfModulesToLoad) {
@@ -116540,7 +116540,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     this.retrieveAllSites();
     this.retrieveAllLanguages();
-    console.log(this.theme);
   },
 
   methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["b" /* mapActions */])('devise', ['getLanguages', 'getSites', 'updateSite']), {

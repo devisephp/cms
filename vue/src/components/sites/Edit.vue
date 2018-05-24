@@ -84,8 +84,6 @@ export default {
   mounted () {
     this.retrieveAllSites()
     this.retrieveAllLanguages()
-    console.log(this.theme)
-    
   },
   methods: {
     ...mapActions('devise', [

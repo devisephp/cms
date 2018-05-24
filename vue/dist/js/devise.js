@@ -53059,6 +53059,22 @@ var DevisePlugin = {
             backgroundColor: this.theme.buttonsActionLeft.color,
             color: this.theme.buttonsActionText.color
           };
+        },
+        infoBlockTheme: function infoBlockTheme() {
+          return {
+            borderRadius: '0.3rem',
+            backgroundImage: 'linear-gradient(90deg, ' + this.theme.statsLeft.color + ' 0%, ' + this.theme.statsRight.color + ' 100%)',
+            color: this.theme.statsText.color,
+            boxShadow: '-4px -4px ' + this.theme.statsShadowSize.text + ' ' + this.theme.statsShadowColor.color
+          };
+        },
+        infoBlockFlatTheme: function infoBlockFlatTheme() {
+          return {
+            borderRadius: '0.3rem',
+            background: this.theme.statsLeft.color,
+            color: this.theme.statsText.color,
+            boxShadow: '-4px -4px ' + this.theme.statsShadowSize.text + ' ' + this.theme.statsShadowColor.color
+          };
         }
       }),
       // This sets a prop to be accepted by all components in a custom Vue
@@ -65076,12 +65092,14 @@ var render = function() {
       "div",
       {
         staticClass:
-          "dvs-absolute dvs-absolute-center dvs-z-50 dvs-bg-white dvs-p-8 dvs-rounded dvs-shadow-lg dvs-min-w-2/3"
+          "dvs-absolute dvs-absolute-center dvs-z-50 dvs-p-8 dvs-rounded dvs-min-w-2/3",
+        style: _vm.infoBlockTheme
       },
       [
         _c("i", {
           staticClass:
             "ion-close-round dvs-font-xl dvs-absolute dvs-pin-t dvs-pin-r dvs-m-8 dvs-cursor-pointer",
+          style: { color: _vm.theme.statsText.color },
           on: { click: _vm.close }
         }),
         _vm._v(" "),
@@ -115667,7 +115685,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Modal__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utilities_Modal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 
 //
 //
@@ -115730,41 +115750,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -115795,7 +115781,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.retrieveAllLanguages();
   },
 
-  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])('devise', ['getSites', 'getLanguages', 'createSite', 'updateSite', 'deleteSite']), {
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])('devise', ['getSites', 'getLanguages', 'createSite', 'updateSite', 'deleteSite']), {
     requestCreateSite: function requestCreateSite() {
       var self = this;
       this.createSite(this.newSite).then(function () {
@@ -115862,7 +115848,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['sites', 'languages']), {
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])('devise', ['sites', 'languages']), {
     createInvalid: function createInvalid() {
       return this.newSite.name === null || this.newSite.domain === null;
     },
@@ -115880,7 +115866,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   }),
   components: {
-    DeviseModal: __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default.a
+    DeviseModal: __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default.a,
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default.a
   }
 });
 
@@ -115899,53 +115886,37 @@ var render = function() {
         "dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative"
     },
     [
-      _c("div", { attrs: { id: "devise-sidebar" } }, [
-        _c(
-          "h2",
-          {
-            staticClass: "dvs-font-bold dvs-mb-2",
-            style: { color: _vm.theme.sidebarText.color }
-          },
-          [_vm._v("Sites")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-            style: { color: _vm.theme.sidebarText.color },
-            attrs: { href: "#" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.goToPage("devise-settings-index")
-              }
+      _c(
+        "div",
+        { attrs: { id: "devise-sidebar" } },
+        [
+          _c("sidebar-header", {
+            attrs: {
+              title: "Manage Sites",
+              "back-text": "Back to Settings",
+              "back-page": "devise-settings-index"
             }
-          },
-          [
-            _c("i", { staticClass: "ion-arrow-left-c" }),
-            _vm._v(" Back to Settings\n    ")
-          ]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dvs-list-reset" }, [
-          _c(
-            "li",
-            {
-              staticClass:
-                "dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.showCreate = true
+          }),
+          _vm._v(" "),
+          _c("ul", { staticClass: "dvs-list-reset" }, [
+            _c(
+              "li",
+              {
+                staticClass:
+                  "dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.showCreate = true
+                  }
                 }
-              }
-            },
-            [_vm._v("\n        Create New Site\n      ")]
-          )
-        ])
-      ]),
+              },
+              [_vm._v("\n        Create New Site\n      ")]
+            )
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -115954,11 +115925,17 @@ var render = function() {
           _c(
             "h2",
             {
-              staticClass: "dvs-mb-10",
+              staticClass: "dvs-mb-8",
               style: { color: _vm.theme.sidebarText.color }
             },
             [_vm._v("Current Sites")]
           ),
+          _vm._v(" "),
+          _c("help", { staticClass: "dvs-mb-10" }, [
+            _vm._v(
+              "Here you can add and manage sites under this application. This means that you can add new domains, change themes for those domains, and add languages to those sites to make them more impacting for your users"
+            )
+          ]),
           _vm._v(" "),
           _vm._l(_vm.sites.data, function(site) {
             return _c(
@@ -115971,96 +115948,89 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass:
-                      "dvs-min-w-2/5 dvs-text-base dvs-font-bold dvs-pr-8"
+                    staticClass: "dvs-p-12 dvs-text-center dvs-w-1/3",
+                    style: _vm.infoBlockTheme
                   },
                   [
-                    _vm._v("\n        " + _vm._s(site.name)),
-                    _c("br"),
+                    _c("div", { staticClass: "dvs-text-base" }, [
+                      _c(
+                        "h2",
+                        {
+                          staticClass: "dvs-mb-4",
+                          style: { color: _vm.theme.statsText.color }
+                        },
+                        [_vm._v(_vm._s(site.name))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "dvs-mb-2 dvs-font-mono" }, [
+                        _vm._v(_vm._s(site.domain))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "dvs-mb-2 dvs-font-mono" }, [
+                        _vm._v("SITE_" + _vm._s(site.id) + "_DOMAIN")
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c(
-                      "span",
-                      { staticClass: "dvs-font-mono dvs-font-normal" },
-                      [_vm._v(_vm._s(site.domain))]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "dvs-min-w-1/5 dvs-text-sm dvs-font-mono dvs-pr-8"
-                  },
-                  [
-                    _vm._v(
-                      "\n        SITE_" + _vm._s(site.id) + "_DOMAIN\n      "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "dvs-min-w-1/5 dvs-flex dvs-flex-wrap dvs-pr-8"
-                  },
-                  _vm._l(site.languages, function(language) {
-                    return _c(
-                      "span",
+                      "div",
                       {
                         staticClass:
-                          "dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter",
-                        class: {
-                          "dvs-bg-green-dark dvs-text-white": language.default
-                        }
+                          "dvs-mb-8 dvs-flex dvs-flex-wrap dvs-justify-center"
                       },
-                      [_vm._v(_vm._s(language.code))]
-                    )
-                  })
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "dvs-w-1/5 dvs-px-8 dvs-flex dvs-justify-end"
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "dvs-btn dvs-btn-xs dvs-mr-2",
-                        style: _vm.actionButtonTheme,
-                        on: {
-                          click: function($event) {
-                            _vm.showEditSite(site)
-                          }
-                        }
-                      },
-                      [_vm._v("Edit")]
+                      _vm._l(site.languages, function(language) {
+                        return _c(
+                          "span",
+                          {
+                            staticClass:
+                              "dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter",
+                            class: {
+                              "dvs-bg-green-dark dvs-text-white":
+                                language.default
+                            }
+                          },
+                          [_vm._v(_vm._s(language.code))]
+                        )
+                      })
                     ),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        directives: [
-                          {
-                            name: "devise-alert-confirm",
-                            rawName: "v-devise-alert-confirm",
-                            value: {
-                              callback: _vm.requestDeleteSite,
-                              arguments: site,
-                              message:
-                                "Are you sure you want to delete this site?"
-                            },
-                            expression:
-                              "{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"
+                    _c("div", { staticClass: "dvs-flex dvs-justify-center" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "dvs-btn dvs-mr-2",
+                          style: _vm.actionButtonTheme,
+                          on: {
+                            click: function($event) {
+                              _vm.showEditSite(site)
+                            }
                           }
-                        ],
-                        staticClass: "dvs-btn dvs-btn-xs",
-                        style: _vm.regularButtonTheme
-                      },
-                      [_vm._v("Delete")]
-                    )
+                        },
+                        [_vm._v("Edit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "devise-alert-confirm",
+                              rawName: "v-devise-alert-confirm",
+                              value: {
+                                callback: _vm.requestDeleteSite,
+                                arguments: site,
+                                message:
+                                  "Are you sure you want to delete this site?"
+                              },
+                              expression:
+                                "{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"
+                            }
+                          ],
+                          staticClass: "dvs-btn",
+                          style: _vm.regularButtonTheme
+                        },
+                        [_vm._v("Delete")]
+                      )
+                    ])
                   ]
                 )
               ]
@@ -116086,9 +116056,14 @@ var render = function() {
                   }
                 },
                 [
-                  _c("h4", { staticClass: "dvs-mb-4" }, [
-                    _vm._v("Create new site")
-                  ]),
+                  _c(
+                    "h2",
+                    {
+                      staticClass: "dvs-mb-8",
+                      style: { color: _vm.theme.statsText.color }
+                    },
+                    [_vm._v("Create new site")]
+                  ),
                   _vm._v(" "),
                   _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
                     _c("label", [_vm._v("Name")]),
@@ -116153,6 +116128,7 @@ var render = function() {
                     "button",
                     {
                       staticClass: "dvs-btn",
+                      style: _vm.actionButtonTheme,
                       attrs: { disabled: _vm.createInvalid },
                       on: { click: _vm.requestCreateSite }
                     },
@@ -116163,207 +116139,10 @@ var render = function() {
                     "button",
                     {
                       staticClass: "dvs-btn dvs-btn-plain",
+                      style: _vm.regularButtonTheme,
                       on: {
                         click: function($event) {
                           _vm.showCreate = false
-                        }
-                      }
-                    },
-                    [_vm._v("Cancel")]
-                  )
-                ],
-                1
-              )
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "transition",
-        { attrs: { name: "fade" } },
-        [
-          _vm.showEdit
-            ? _c(
-                "devise-modal",
-                {
-                  staticClass: "dvs-z-50",
-                  on: {
-                    close: function($event) {
-                      _vm.showEdit = false
-                    }
-                  }
-                },
-                [
-                  _c("h4", { staticClass: "dvs-mb-4" }, [_vm._v("Edit site")]),
-                  _vm._v(" "),
-                  _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
-                    _c("label", [_vm._v("Name")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.editSite.name,
-                          expression: "editSite.name"
-                        }
-                      ],
-                      attrs: { type: "text", placeholder: "Name of the Site" },
-                      domProps: { value: _vm.editSite.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.editSite, "name", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("help", { staticClass: "dvs-mb-8" }, [
-                    _vm._v(
-                      'The domain should not include the http or https:// protocol identifier. So your site entry could be "my-super-awesome-site.com" or "sub-domain.my-super-awesome-site.com". To Support development environments you can override these values in your .env file in the root of your project with something like "SITE_1_DOMAIN=my-super-awesome-site.test" for your local development or staging.'
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
-                    _c("label", [_vm._v("Domain")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.editSite.domain,
-                          expression: "editSite.domain"
-                        }
-                      ],
-                      attrs: {
-                        type: "text",
-                        placeholder: "Domain of the Site"
-                      },
-                      domProps: { value: _vm.editSite.domain },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.editSite, "domain", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
-                    _c("label", [_vm._v("Languages")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.editAddLanguage,
-                            expression: "editAddLanguage"
-                          }
-                        ],
-                        on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.editAddLanguage = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            function($event) {
-                              _vm.addEditLanguage()
-                            }
-                          ]
-                        }
-                      },
-                      [
-                        _c("option", { domProps: { value: null } }, [
-                          _vm._v("Add a Language")
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.languagesNotInEditSite, function(language) {
-                          return _c(
-                            "option",
-                            { domProps: { value: language } },
-                            [_vm._v(_vm._s(language.code))]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "fieldset",
-                    { staticClass: "dvs-fieldset mb-8" },
-                    [
-                      _c("help", { staticClass: "dvs-mb-8" }, [
-                        _vm._v(
-                          "Green indicates the default language. Click on the language tags below to change."
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("label", [_vm._v("Current Languages")]),
-                      _vm._v(" "),
-                      _vm._l(_vm.editSite.languages, function(language) {
-                        return _c(
-                          "span",
-                          {
-                            staticClass:
-                              "dvs-mr-2 dvs-tag dvs-bg-grey-lighter dvs-cursor-pointer",
-                            class: {
-                              "dvs-bg-green-dark dvs-text-white":
-                                language.default
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.setDefaultLanguage(language)
-                              }
-                            }
-                          },
-                          [_vm._v(_vm._s(language.code))]
-                        )
-                      }),
-                      _vm._v(" "),
-                      _vm.editSite.languages.length < 1
-                        ? _c("span", [_vm._v("No Languages")])
-                        : _vm._e()
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "dvs-btn",
-                      attrs: { disabled: _vm.editInvalid },
-                      on: { click: _vm.requestEditSite }
-                    },
-                    [_vm._v("Edit")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "dvs-btn dvs-btn-plain",
-                      on: {
-                        click: function($event) {
-                          _vm.showEdit = false
                         }
                       }
                     },
@@ -116451,7 +116230,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_Modal__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AdminDesigner__ = __webpack_require__(628);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AdminDesigner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__AdminDesigner__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__utilities_SidebarHeader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(3);
 
 
 //
@@ -116513,11 +116294,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
+
 
 
 
@@ -116542,7 +116319,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.retrieveAllLanguages();
   },
 
-  methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["b" /* mapActions */])('devise', ['getLanguages', 'getSites', 'updateSite']), {
+  methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["b" /* mapActions */])('devise', ['getLanguages', 'getSites', 'updateSite']), {
     requestEditSite: function requestEditSite() {
       var self = this;
       this.updateSite({ site: this.site, data: this.localValue }).then(function () {
@@ -116587,7 +116364,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["c" /* mapGetters */])('devise', ['languages', 'site', 'siteById']), {
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["c" /* mapGetters */])('devise', ['languages', 'site', 'siteById']), {
     editInvalid: function editInvalid() {
       return this.localValue.name === null || this.localValue.domain === null;
     },
@@ -116603,7 +116380,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   }),
   components: {
     AdminDesigner: __WEBPACK_IMPORTED_MODULE_3__AdminDesigner___default.a,
-    DeviseModal: __WEBPACK_IMPORTED_MODULE_2__utilities_Modal___default.a
+    DeviseModal: __WEBPACK_IMPORTED_MODULE_2__utilities_Modal___default.a,
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_4__utilities_SidebarHeader___default.a
   }
 });
 
@@ -116983,19 +116761,22 @@ var lineData = { "data": { "labels": ["May 16", "May 17", "May 18", "May 19", "M
           buttonsActionText: { color: '#ffffff' },
           buttonsActionLeft: { color: '#7148c1' },
           buttonsActionRight: { color: '#c57dd5' },
-          buttonsActionShadowColor: { color: '#b92ed7' },
-          buttonsActionShadowSize: { text: '30px' },
+          buttonsActionShadowColor: { color: 'rgba(185,46,215,0.3)' },
+          buttonsActionShadowSize: { text: '8px' },
           userBackground: { color: 'rgba(66,41,118,0.6)' },
           userText: { color: '#ffffff' },
           userShadowColor: { color: '#69267d' },
           userShadowSize: { text: '30px' },
           statsText: { color: '#ffffff' },
-          statsLeft: { color: '#57467a' },
-          statsRight: { color: '#913ea6' },
-          statsShadowColor: { color: '#c67dd4' },
+          statsLeft: { color: 'rgba(70,34,112,0.87)' },
+          statsRight: { color: 'rgba(86,26,167,0.66)' },
+          statsShadowColor: { color: 'rgba(47,15,83,1)' },
           statsShadowSize: { text: '30px' },
           adminBackground: { color: '#564278' },
-          adminText: { color: '#ffffff' }
+          adminText: { color: '#ffffff' },
+          buttonsInverseLeft: { color: '#c1485c' },
+          buttonsInverseRight: { color: '#d5997d' },
+          buttonsInverseText: { color: '#ffffff' }
         },
         'RedRum': {
           sidebarTop: { color: 'rgba(194,33,33,1)' },
@@ -118040,39 +117821,13 @@ var render = function() {
             "div",
             { style: _vm.sidebarTheme, attrs: { id: "devise-sidebar" } },
             [
-              _c("logo", {
-                staticClass:
-                  "dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center"
-              }),
-              _vm._v(" "),
-              _c(
-                "h2",
-                {
-                  staticClass: "dvs-font-bold dvs-mb-2",
-                  style: { color: _vm.theme.sidebarText.color }
-                },
-                [_vm._v("Manage Site")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-                  style: { color: _vm.theme.sidebarText.color },
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.goToPage("devise-sites-index")
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "ion-arrow-left-c" }),
-                  _vm._v(" Back to Sites\n    ")
-                ]
-              )
+              _c("sidebar-header", {
+                attrs: {
+                  title: "Manage Site",
+                  "back-text": "Back to Sites",
+                  "back-page": "devise-sites-index"
+                }
+              })
             ],
             1
           ),
@@ -119215,7 +118970,7 @@ function insertBefore(el, referenceNode) {
     el.addEventListener('click', function (e) {
       // create constructor
       var Confirm = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
-        template: '\n        <div v-if="show" class="dvs-fixed dvs-pin dvs-z-50">\n          <div class="dvs-blocker"></div>\n          <div class="dvs-absolute dvs-absolute-center dvs-z-50 dvs-bg-white dvs-rounded dvs-shadow-lg dvs-p-8">\n            <h4 class="dvs-mb-8 dvs-font-bold">Please Confirm</h4>\n            <div class="dvs-mb-8">' + binding.value.message + '</div>\n\n            <button class="dvs-btn" @click="ok">Confirm</button>\n            <button class="dvs-btn dvs-btn-plain" @click="cancel">Cancel</button>\n            </div>\n          </div>\n        </div>\n        ',
+        template: '\n        <div v-if="show" class="dvs-fixed dvs-pin dvs-z-50">\n          <div class="dvs-blocker"></div>\n          <div class="dvs-absolute dvs-absolute-center dvs-z-50 dvs-bg-white dvs-rounded dvs-shadow-lg dvs-p-8">\n            <h3 class="dvs-mb-8 dvs-text-black">Please Confirm</h3>\n            <div class="dvs-mb-8">' + binding.value.message + '</div>\n\n            <button class="dvs-btn dvs-btn-danger" @click="ok" :style="actionButtonTheme">Confirm</button>\n            <button class="dvs-btn dvs-btn-plain" @click="cancel" :style="regularButtonTheme">Cancel</button>\n            </div>\n          </div>\n        </div>\n        ',
         data: function data() {
           return {
             clicks: 0,
@@ -124235,6 +123990,136 @@ if (false) {
 /***/ (function(module, exports) {
 
 module.exports = {"O_RDONLY":0,"O_WRONLY":1,"O_RDWR":2,"S_IFMT":61440,"S_IFREG":32768,"S_IFDIR":16384,"S_IFCHR":8192,"S_IFBLK":24576,"S_IFIFO":4096,"S_IFLNK":40960,"S_IFSOCK":49152,"O_CREAT":512,"O_EXCL":2048,"O_NOCTTY":131072,"O_TRUNC":1024,"O_APPEND":8,"O_DIRECTORY":1048576,"O_NOFOLLOW":256,"O_SYNC":128,"O_SYMLINK":2097152,"O_NONBLOCK":4,"S_IRWXU":448,"S_IRUSR":256,"S_IWUSR":128,"S_IXUSR":64,"S_IRWXG":56,"S_IRGRP":32,"S_IWGRP":16,"S_IXGRP":8,"S_IRWXO":7,"S_IROTH":4,"S_IWOTH":2,"S_IXOTH":1,"E2BIG":7,"EACCES":13,"EADDRINUSE":48,"EADDRNOTAVAIL":49,"EAFNOSUPPORT":47,"EAGAIN":35,"EALREADY":37,"EBADF":9,"EBADMSG":94,"EBUSY":16,"ECANCELED":89,"ECHILD":10,"ECONNABORTED":53,"ECONNREFUSED":61,"ECONNRESET":54,"EDEADLK":11,"EDESTADDRREQ":39,"EDOM":33,"EDQUOT":69,"EEXIST":17,"EFAULT":14,"EFBIG":27,"EHOSTUNREACH":65,"EIDRM":90,"EILSEQ":92,"EINPROGRESS":36,"EINTR":4,"EINVAL":22,"EIO":5,"EISCONN":56,"EISDIR":21,"ELOOP":62,"EMFILE":24,"EMLINK":31,"EMSGSIZE":40,"EMULTIHOP":95,"ENAMETOOLONG":63,"ENETDOWN":50,"ENETRESET":52,"ENETUNREACH":51,"ENFILE":23,"ENOBUFS":55,"ENODATA":96,"ENODEV":19,"ENOENT":2,"ENOEXEC":8,"ENOLCK":77,"ENOLINK":97,"ENOMEM":12,"ENOMSG":91,"ENOPROTOOPT":42,"ENOSPC":28,"ENOSR":98,"ENOSTR":99,"ENOSYS":78,"ENOTCONN":57,"ENOTDIR":20,"ENOTEMPTY":66,"ENOTSOCK":38,"ENOTSUP":45,"ENOTTY":25,"ENXIO":6,"EOPNOTSUPP":102,"EOVERFLOW":84,"EPERM":1,"EPIPE":32,"EPROTO":100,"EPROTONOSUPPORT":43,"EPROTOTYPE":41,"ERANGE":34,"EROFS":30,"ESPIPE":29,"ESRCH":3,"ESTALE":70,"ETIME":101,"ETIMEDOUT":60,"ETXTBSY":26,"EWOULDBLOCK":35,"EXDEV":18,"SIGHUP":1,"SIGINT":2,"SIGQUIT":3,"SIGILL":4,"SIGTRAP":5,"SIGABRT":6,"SIGIOT":6,"SIGBUS":10,"SIGFPE":8,"SIGKILL":9,"SIGUSR1":30,"SIGSEGV":11,"SIGUSR2":31,"SIGPIPE":13,"SIGALRM":14,"SIGTERM":15,"SIGCHLD":20,"SIGCONT":19,"SIGSTOP":17,"SIGTSTP":18,"SIGTTIN":21,"SIGTTOU":22,"SIGURG":16,"SIGXCPU":24,"SIGXFSZ":25,"SIGVTALRM":26,"SIGPROF":27,"SIGWINCH":28,"SIGIO":23,"SIGSYS":12,"SSL_OP_ALL":2147486719,"SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION":262144,"SSL_OP_CIPHER_SERVER_PREFERENCE":4194304,"SSL_OP_CISCO_ANYCONNECT":32768,"SSL_OP_COOKIE_EXCHANGE":8192,"SSL_OP_CRYPTOPRO_TLSEXT_BUG":2147483648,"SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS":2048,"SSL_OP_EPHEMERAL_RSA":0,"SSL_OP_LEGACY_SERVER_CONNECT":4,"SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER":32,"SSL_OP_MICROSOFT_SESS_ID_BUG":1,"SSL_OP_MSIE_SSLV2_RSA_PADDING":0,"SSL_OP_NETSCAPE_CA_DN_BUG":536870912,"SSL_OP_NETSCAPE_CHALLENGE_BUG":2,"SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG":1073741824,"SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG":8,"SSL_OP_NO_COMPRESSION":131072,"SSL_OP_NO_QUERY_MTU":4096,"SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION":65536,"SSL_OP_NO_SSLv2":16777216,"SSL_OP_NO_SSLv3":33554432,"SSL_OP_NO_TICKET":16384,"SSL_OP_NO_TLSv1":67108864,"SSL_OP_NO_TLSv1_1":268435456,"SSL_OP_NO_TLSv1_2":134217728,"SSL_OP_PKCS1_CHECK_1":0,"SSL_OP_PKCS1_CHECK_2":0,"SSL_OP_SINGLE_DH_USE":1048576,"SSL_OP_SINGLE_ECDH_USE":524288,"SSL_OP_SSLEAY_080_CLIENT_DH_BUG":128,"SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG":0,"SSL_OP_TLS_BLOCK_PADDING_BUG":512,"SSL_OP_TLS_D5_BUG":256,"SSL_OP_TLS_ROLLBACK_BUG":8388608,"ENGINE_METHOD_DSA":2,"ENGINE_METHOD_DH":4,"ENGINE_METHOD_RAND":8,"ENGINE_METHOD_ECDH":16,"ENGINE_METHOD_ECDSA":32,"ENGINE_METHOD_CIPHERS":64,"ENGINE_METHOD_DIGESTS":128,"ENGINE_METHOD_STORE":256,"ENGINE_METHOD_PKEY_METHS":512,"ENGINE_METHOD_PKEY_ASN1_METHS":1024,"ENGINE_METHOD_ALL":65535,"ENGINE_METHOD_NONE":0,"DH_CHECK_P_NOT_SAFE_PRIME":2,"DH_CHECK_P_NOT_PRIME":1,"DH_UNABLE_TO_CHECK_GENERATOR":4,"DH_NOT_SUITABLE_GENERATOR":8,"NPN_ENABLED":1,"RSA_PKCS1_PADDING":1,"RSA_SSLV23_PADDING":2,"RSA_NO_PADDING":3,"RSA_PKCS1_OAEP_PADDING":4,"RSA_X931_PADDING":5,"RSA_PKCS1_PSS_PADDING":6,"POINT_CONVERSION_COMPRESSED":2,"POINT_CONVERSION_UNCOMPRESSED":4,"POINT_CONVERSION_HYBRID":6,"F_OK":0,"R_OK":4,"W_OK":2,"X_OK":1,"UV_UDP_REUSEADDR":4}
+
+/***/ }),
+/* 661 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(662)
+/* template */
+var __vue_template__ = __webpack_require__(663)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/SidebarHeader.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7f183ec4", Component.options)
+  } else {
+    hotAPI.reload("data-v-7f183ec4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 662 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title', 'backPage', 'backText']
+});
+
+/***/ }),
+/* 663 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("logo", {
+        staticClass: "dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center"
+      }),
+      _vm._v(" "),
+      _c(
+        "h2",
+        {
+          staticClass: "dvs-font-bold dvs-mb-2",
+          style: { color: _vm.theme.sidebarText.color }
+        },
+        [_vm._v(_vm._s(_vm.title))]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass:
+            "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
+          style: { color: _vm.theme.sidebarText.color },
+          attrs: { href: "#" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.goToPage(_vm.backPage)
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "ion-arrow-left-c" }),
+          _vm._v(" " + _vm._s(_vm.backText) + "\n  ")
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7f183ec4", module.exports)
+  }
+}
 
 /***/ })
 ],[226]);

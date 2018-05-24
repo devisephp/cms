@@ -13,11 +13,11 @@ export default {
         <div v-if="show" class="dvs-fixed dvs-pin dvs-z-50">
           <div class="dvs-blocker"></div>
           <div class="dvs-absolute dvs-absolute-center dvs-z-50 dvs-bg-white dvs-rounded dvs-shadow-lg dvs-p-8">
-            <h4 class="dvs-mb-8 dvs-font-bold">Please Confirm</h4>
+            <h3 class="dvs-mb-8 dvs-text-black">Please Confirm</h3>
             <div class="dvs-mb-8">${binding.value.message}</div>
 
-            <button class="dvs-btn" @click="ok">Confirm</button>
-            <button class="dvs-btn dvs-btn-plain" @click="cancel">Cancel</button>
+            <button class="dvs-btn dvs-btn-danger" @click="ok" :style="actionButtonTheme">Confirm</button>
+            <button class="dvs-btn dvs-btn-plain" @click="cancel" :style="regularButtonTheme">Cancel</button>
             </div>
           </div>
         </div>

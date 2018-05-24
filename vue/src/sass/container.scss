@@ -193,8 +193,7 @@
 }
 
 #devise-admin-content {
-  @apply dvs-p-8;
-
+  padding: 5rem;
   width: calc(100% - 350px);
 
   &.bottom-padding-16 {

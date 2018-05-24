@@ -1,14 +1,9 @@
 <template>
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="localValue.languages && languages.data">
+    
     <div id="devise-sidebar" :style="sidebarTheme">
-      <!-- Logo -->
-      <logo class="dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center" />
-
-      <h2 class="dvs-font-bold dvs-mb-2" :style="{color: theme.sidebarText.color }">Manage Site</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-sites-index')" :style="{color: theme.sidebarText.color }">
-        <i class="ion-arrow-left-c"></i> Back to Sites
-      </a>
+      <sidebar-header title="Manage Site" back-text="Back to Sites" back-page="devise-sites-index" />
     </div>
     
     <div id="devise-admin-content" :style="adminTheme">
@@ -65,6 +60,7 @@
 <script>
 import DeviseModal from './../utilities/Modal'
 import AdminDesigner from './AdminDesigner'
+import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -151,7 +147,8 @@ export default {
   },
   components: {
     AdminDesigner,
-    DeviseModal
+    DeviseModal,
+    SidebarHeader
   }
 }
 </script>

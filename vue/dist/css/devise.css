@@ -799,10 +799,11 @@ button,
 
 .dvs-btn.dvs-btn-plain {
   background-color: #b8c2cc;
+  color: #606f7b;
 }
 
 .dvs-btn.dvs-btn-plain:hover {
-  background-color: #3490dc;
+  background-color: #f1f5f8;
 }
 
 .dvs-btn.dvs-btn-ghost {
@@ -851,6 +852,11 @@ button,
 
 .dvs-btn.dvs-btn-danger {
   background-color: #cc1f1a;
+  color: #fff;
+}
+
+.dvs-btn.dvs-btn-danger:hover {
+  background-color: #e3342f;
   color: #fff;
 }
 
@@ -1302,7 +1308,7 @@ button,
 }
 
 #devise-admin-content {
-  padding: 2rem;
+  padding: 5rem;
   width: calc(100% - 350px);
 }
 

@@ -2,10 +2,9 @@
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2" :style="{color: theme.sidebarText.color }">Sites</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-settings-index')" :style="{color: theme.sidebarText.color }">
-        <i class="ion-arrow-left-c"></i> Back to Settings
-      </a>
+
+      <sidebar-header title="Manage Sites" back-text="Back to Settings" back-page="devise-settings-index" />
+
       <ul class="dvs-list-reset">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New Site
@@ -14,29 +13,30 @@
     </div>
 
     <div id="devise-admin-content" :style="adminTheme">
-      <h2 class="dvs-mb-10" :style="{color: theme.sidebarText.color }">Current Sites</h2>
+      <h2 class="dvs-mb-8" :style="{color: theme.sidebarText.color }">Current Sites</h2>
+      <help class="dvs-mb-10">Here you can add and manage sites under this application. This means that you can add new domains, change themes for those domains, and add languages to those sites to make them more impacting for your users</help>
 
       <div v-for="site in sites.data" class="dvs-mb-6 dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-min-w-2/5 dvs-text-base dvs-font-bold dvs-pr-8">
-          {{ site.name }}<br>
-          <span class="dvs-font-mono dvs-font-normal">{{ site.domain }}</span>
-        </div>
-        <div class="dvs-min-w-1/5 dvs-text-sm dvs-font-mono dvs-pr-8">
-          SITE_{{ site.id }}_DOMAIN
-        </div>
-        <div class="dvs-min-w-1/5 dvs-flex dvs-flex-wrap dvs-pr-8">
-          <span v-for="language in site.languages" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
-        </div>
-        <div class="dvs-w-1/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs dvs-mr-2" @click="showEditSite(site)" :style="actionButtonTheme">Edit</button>
-          <button class="dvs-btn dvs-btn-xs" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="regularButtonTheme">Delete</button>
+        <div class="dvs-p-12 dvs-text-center dvs-w-1/3" :style="infoBlockTheme">
+          <div class="dvs-text-base">
+            <h2 class="dvs-mb-4" :style="{color: theme.statsText.color }">{{ site.name }}</h2>
+            <div class="dvs-mb-2 dvs-font-mono">{{ site.domain }}</div>
+            <div class="dvs-mb-2 dvs-font-mono">SITE_{{ site.id }}_DOMAIN</div>
+          </div>
+          <div class="dvs-mb-8 dvs-flex dvs-flex-wrap dvs-justify-center">
+            <span v-for="language in site.languages" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
+          </div>
+          <div class="dvs-flex dvs-justify-center">
+            <button class="dvs-btn dvs-mr-2" @click="showEditSite(site)" :style="actionButtonTheme">Edit</button>
+            <button class="dvs-btn" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="regularButtonTheme">Delete</button>
+          </div>
         </div>
       </div>
     </div>
 
     <transition name="fade">
       <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
-        <h4 class="dvs-mb-4">Create new site</h4>
+        <h2 class="dvs-mb-8" :style="{color: theme.statsText.color }">Create new site</h2>
 
         <fieldset class="dvs-fieldset mb-4">
           <label>Name</label>
@@ -50,44 +50,9 @@
           <input type="text" v-model="newSite.domain" placeholder="Domain of the Site">
         </fieldset>
 
-        <button class="dvs-btn" @click="requestCreateSite" :disabled="createInvalid">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false">Cancel</button>
-      </devise-modal>
-    </transition>
+        <button class="dvs-btn" @click="requestCreateSite" :disabled="createInvalid" :style="actionButtonTheme">Create</button>
+        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
 
-    <transition name="fade">
-      <devise-modal class="dvs-z-50" v-if="showEdit" @close="showEdit = false">
-        <h4 class="dvs-mb-4">Edit site</h4>
-
-        <fieldset class="dvs-fieldset mb-4">
-          <label>Name</label>
-          <input type="text" v-model="editSite.name" placeholder="Name of the Site">
-        </fieldset>
-
-        <help class="dvs-mb-8">The domain should not include the http or https:// protocol identifier. So your site entry could be "my-super-awesome-site.com" or "sub-domain.my-super-awesome-site.com". To Support development environments you can override these values in your .env file in the root of your project with something like "SITE_1_DOMAIN=my-super-awesome-site.test" for your local development or staging.</help>
-
-        <fieldset class="dvs-fieldset mb-4">
-          <label>Domain</label>
-          <input type="text" v-model="editSite.domain" placeholder="Domain of the Site">
-        </fieldset>
-
-        <fieldset class="dvs-fieldset mb-4">
-          <label>Languages</label>
-          <select v-model="editAddLanguage" @change="addEditLanguage()">
-            <option :value="null">Add a Language</option>
-            <option v-for="language in languagesNotInEditSite" :value="language">{{ language.code }}</option>
-          </select>
-        </fieldset>
-
-        <fieldset class="dvs-fieldset mb-8">
-          <help class="dvs-mb-8">Green indicates the default language. Click on the language tags below to change.</help>
-          <label>Current Languages</label>
-          <span v-for="language in editSite.languages" @click="setDefaultLanguage(language)" class="dvs-mr-2 dvs-tag dvs-bg-grey-lighter dvs-cursor-pointer" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
-          <span v-if="editSite.languages.length < 1">No Languages</span>
-        </fieldset>
-
-        <button class="dvs-btn" @click="requestEditSite" :disabled="editInvalid">Edit</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showEdit = false">Cancel</button>
       </devise-modal>
     </transition>
   </div>
@@ -96,6 +61,7 @@
 
 <script>
 import DeviseModal from './../utilities/Modal'
+import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -213,7 +179,8 @@ export default {
     }
   },
   components: {
-    DeviseModal
+    DeviseModal,
+    SidebarHeader
   }
 }
 </script>

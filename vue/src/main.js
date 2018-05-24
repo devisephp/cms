@@ -140,6 +140,22 @@ const DevisePlugin = {
             backgroundColor: this.theme.buttonsActionLeft.color,
             color: this.theme.buttonsActionText.color
           }
+        },
+        infoBlockTheme () {
+          return {
+            borderRadius: '0.3rem',
+            backgroundImage: `linear-gradient(90deg, ${this.theme.statsLeft.color} 0%, ${this.theme.statsRight.color} 100%)`,
+            color: this.theme.statsText.color,
+            boxShadow: `-4px -4px ${this.theme.statsShadowSize.text} ${this.theme.statsShadowColor.color}`
+          }
+        },
+        infoBlockFlatTheme () {
+          return {
+            borderRadius: '0.3rem',
+            background: this.theme.statsLeft.color,
+            color: this.theme.statsText.color,
+            boxShadow: `-4px -4px ${this.theme.statsShadowSize.text} ${this.theme.statsShadowColor.color}`
+          }
         }
       },
       // This sets a prop to be accepted by all components in a custom Vue

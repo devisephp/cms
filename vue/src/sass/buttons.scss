@@ -24,10 +24,10 @@
   }
 
   &.dvs-btn-plain {
-    @apply dvs-bg-grey;
+    @apply dvs-bg-grey dvs-text-grey-darker;
 
     &:hover {
-      @apply dvs-bg-blue;
+      @apply dvs-bg-grey-lighter;
     }
   }
 
@@ -63,7 +63,11 @@
   }
 
   &.dvs-btn-danger {
-    @apply dvs-bg-red-dark dvs-text-white
+    @apply dvs-bg-red-dark dvs-text-white;
+
+    &:hover {
+      @apply dvs-bg-red dvs-text-white;
+    }
   }
 }
 

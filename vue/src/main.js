@@ -40,6 +40,10 @@ const DevisePlugin = {
     })
     router.addRoutes(routes)
 
+    if (typeof deviseSettings === 'undefined') {
+      window.deviseSettings = function () {};
+    }
+
     // If the bus isn't set we'll use our own bus
     if (typeof bus === 'undefined') {
       deviseSettings.__proto__.$bus = DeviseBus
@@ -109,12 +113,9 @@ const DevisePlugin = {
       },
       computed: {
         ...mapGetters('devise', [
-          'themeBySiteId',
-          'currentPage'
+          'currentPage',
+          'theme'
         ]),
-        theme () {
-          return this.themeBySiteId(this.currentPage.site_id)
-        },
         sidebarTheme () {
           return {
             backgroundImage: `linear-gradient(180deg, ${this.theme.sidebarTop.color} 0%, ${this.theme.sidebarBottom.color} 100%)`,

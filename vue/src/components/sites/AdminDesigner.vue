@@ -168,7 +168,7 @@
           </div>
         </div>
 
-        <h3 class="dvs-mb-4" :style="{color: theme.adminText.color}">Mini-Preview of the Admin</h3>
+        <h3 class="dvs-mb-4" :style="{color: localValue.adminText.color}">Mini-Preview of the Admin</h3>
 
         <div class="dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch" style="min-height:400px">
           
@@ -212,7 +212,7 @@
 
             </div>
 
-            <div class="dvs-w-3/4 dvs-p-4 dvs-relative"  :style="{ backgroundColor: theme.adminBackground.color, color: theme.adminText.color}">
+            <div class="dvs-w-3/4 dvs-p-4 dvs-relative"  :style="{ backgroundColor: localValue.adminBackground.color, color: localValue.adminText.color}">
               <h3 :style="{color: localValue.adminText.color}">Full-width administration page</h3>
               <p class="dvs-text-xs dvs-mt-4">Below are a few examples of things you will see in the administration sections of Devise. Note: when building your own administration sections it is up to you (or your developer) to construct pages utilizing the "theme" variable. It is auto-injected as a computed property in every Devise component.</p>
 
@@ -220,12 +220,19 @@
 
               <h6 class="dvs-mb-4" :style="{color: localValue.adminText.color}"> Buttons</h6>
               <div class="dvs-flex">
-                <button class="dvs-btn dvs-mr-4" :style="actionButtonTheme"
+                <button class="dvs-btn dvs-mr-4" :style="{
+                  backgroundImage: `linear-gradient(90deg, ${localValue.buttonsActionLeft.color} 0%, ${localValue.buttonsActionRight.color} 100%)`,
+                  color: localValue.buttonsActionText.color,
+                  boxShadow: `-4px -4px ${localValue.buttonsActionShadowSize.text} ${localValue.buttonsActionShadowColor.color}`
+                }"
                 >
                   Action Button
                 </button>
 
-                <button class="dvs-btn" :style="regularButtonTheme">
+                <button class="dvs-btn" :style="{
+                  backgroundColor: localValue.buttonsActionLeft.color,
+                  color: localValue.buttonsActionText.color
+                }">
                   Regular Button
                 </button>
               </div>

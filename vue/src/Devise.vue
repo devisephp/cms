@@ -71,6 +71,11 @@
 
     </template>
 
+    <template v-if="pageMode">
+        <slot name="on-top" slot="on-top"></slot>
+        <slot name="on-bottom" slot="on-bottom"></slot>
+    </template>
+
   </div>
 </template>
 
@@ -87,7 +92,7 @@ import User from './components/menu/User'
 import SimpleBar from 'SimpleBar'
 import anime from 'animejs'
 
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'Devise',
@@ -97,6 +102,7 @@ export default {
       loadbarPercentage: 0,
       templateMode: false,
       editorMode: false,
+      pageMode: false,
       adminClosed: true,
       openAnimation: null,
       wideAdmin: false,
@@ -109,37 +115,26 @@ export default {
     }
   },
   mounted () {
-    let self = this
-
-    if (typeof deviseSettings.$template !== 'undefined') {
+    if (typeof deviseSettings !== 'undefined') {
+      this.pageMode = true
+    } else if (typeof deviseSettings.$template !== 'undefined') {
       this.templateMode = true
     } else {
+      this.mountGlobalVariables()
       this.initDevise()
       this.editorMode = true
     }
-
-    this.checkWidthOfInterface(this.$route)
-    this.setSizeAndBreakpoint()
-    this.addWatchers()
-    this.addAdminAnimations()
-
-    this.$nextTick(function () {
-      if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
-        self.adminClosed = false
-        this.openAnimation.restart()
-        this.openAnimation.seek(100)
-
-      }
-      setTimeout(function () {
-        devise.$bus.$emit('devise-loaded')
-      }, 10)
-    })
   },
   methods: {
     ...mapActions('devise', [
       'setBreakpoint'
     ]),
+    ...mapMutations('devise', [
+      'setPage',
+      'setSites'
+    ]),
     initDevise () {
+      let self = this
       try {
         if (!this.isPreviewFrame) {
           deviseSettings.$page.previewMode = 'desktop'
@@ -153,6 +148,27 @@ export default {
 
       window.devise = this
       devise.$bus = deviseSettings.$bus
+
+      this.checkWidthOfInterface(this.$route)
+      this.setSizeAndBreakpoint()
+      this.addWatchers()
+      this.addAdminAnimations()
+
+      this.$nextTick(function () {
+        if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
+          self.adminClosed = false
+          this.openAnimation.restart()
+          this.openAnimation.seek(100)
+        }
+        setTimeout(function () {
+          devise.$bus.$emit('devise-loaded')
+        }, 10)
+      })
+    },
+    mountGlobalVariables () {
+      // page, sites
+      this.setPage(deviseSettings.$page)
+      this.setSites({data: deviseSettings.$sites})
     },
     checkWidthOfInterface (route) {
       // If the route has the wide parameter set it to it's value
@@ -248,8 +264,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'breakpoint',
-      'themeBySiteId'
+      'breakpoint'
     ]),
     currentUrl () {
       return window.location.href
@@ -263,9 +278,6 @@ export default {
     },
     isLoggedIn () {
       return deviseSettings.$user
-    },
-    theme () {
-      return this.themeBySiteId(this.page.site_id)
     }
   },
   watch: {

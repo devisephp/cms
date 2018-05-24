@@ -1,3 +1,5 @@
+import { WSAETIMEDOUT } from 'constants';
+
 var tinycolor = require('tinycolor2')
 
 const getters = {
@@ -99,26 +101,28 @@ const getters = {
   },
 
   siteById: state => (id) => {
-    return deviseSettings.$sites.find(site => site.id === id)
+    return state.sites.data.find(site => site.id === id)
   },
+  
+  theme: (state, getters, rootState) => {
+    if (state.page) {
+      let site = getters.siteById(state.page.site_id)
+      var colors = site.settings.colors
 
-  themeBySiteId: (state, getters, rootState) => (id) => {
-    let site = getters.siteById(id)
-    var colors = site.settings.colors
+      colors.buttonsInverseLeft = {
+        color: tinycolor(colors.buttonsActionLeft.color).spin(90).toString()
+      }
 
-    colors.buttonsInverseLeft = {
-      color: tinycolor(colors.buttonsActionLeft.color).spin(90).toString()
+      colors.buttonsInverseRight = {
+        color: tinycolor(colors.buttonsActionRight.color).spin(90).toString()
+      }
+
+      colors.buttonsInverseText = {
+        color: tinycolor(colors.buttonsActionText.color).spin(90).toString()
+      }
+      return colors
     }
-
-    colors.buttonsInverseRight = {
-      color: tinycolor(colors.buttonsActionRight.color).spin(90).toString()
-    }
-
-    colors.buttonsInverseText = {
-      color: tinycolor(colors.buttonsActionText.color).spin(90).toString()
-    }
-
-    return colors
+    return {}
   },
 
   // Slices

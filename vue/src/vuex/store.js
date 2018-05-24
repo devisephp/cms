@@ -37,6 +37,7 @@ const state = {
   pages: {
     data: []
   },
+  site: {},
   sites: {
     data: []
   },

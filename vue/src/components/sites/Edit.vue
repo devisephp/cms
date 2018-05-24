@@ -97,7 +97,6 @@ export default {
       let self = this
       this.updateSite({site: this.site, data: this.localValue}).then(function () {
         var site = self.siteById(self.site.id)
-        site.settings.colors = self.localValue.settings.colors
         self.goToPage('devise-sites-index')
       })
     },

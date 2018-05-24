@@ -58464,11 +58464,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -58505,7 +58500,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   mounted: function mounted() {
-    if (typeof deviseSettings !== 'undefined') {
+    if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
       this.pageMode = true;
     } else if (typeof deviseSettings.$template !== 'undefined') {
       this.templateMode = true;
@@ -58514,6 +58509,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.initDevise();
       this.editorMode = true;
     }
+
+    this.addAdminAnimations();
   },
 
   methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_12_vuex__["b" /* mapActions */])('devise', ['setBreakpoint']), Object(__WEBPACK_IMPORTED_MODULE_12_vuex__["d" /* mapMutations */])('devise', ['setPage', 'setSites']), {
@@ -58533,10 +58530,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window.devise = this;
       devise.$bus = deviseSettings.$bus;
 
-      this.checkWidthOfInterface(this.$route);
-      this.setSizeAndBreakpoint();
       this.addWatchers();
-      this.addAdminAnimations();
 
       this.$nextTick(function () {
         if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
@@ -95734,7 +95728,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.editorMode
+      _vm.editorMode || _vm.pageMode
         ? [
             _vm.isLoggedIn ? _c("loadbar") : _vm._e(),
             _vm._v(" "),
@@ -95888,14 +95882,6 @@ var render = function() {
               ],
               2
             )
-          ]
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.pageMode
-        ? [
-            _vm._t("on-top", null, { slot: "on-top" }),
-            _vm._v(" "),
-            _vm._t("on-bottom", null, { slot: "on-bottom" })
           ]
         : _vm._e()
     ],

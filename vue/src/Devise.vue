@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="editorMode">
+    <template v-if="editorMode || pageMode">
 
       <loadbar v-if="isLoggedIn" />
       <messages v-if="isLoggedIn" />
@@ -71,11 +71,6 @@
 
     </template>
 
-    <template v-if="pageMode">
-        <slot name="on-top" slot="on-top"></slot>
-        <slot name="on-bottom" slot="on-bottom"></slot>
-    </template>
-
   </div>
 </template>
 
@@ -115,7 +110,7 @@ export default {
     }
   },
   mounted () {
-    if (typeof deviseSettings !== 'undefined') {
+    if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
       this.pageMode = true
     } else if (typeof deviseSettings.$template !== 'undefined') {
       this.templateMode = true
@@ -124,6 +119,8 @@ export default {
       this.initDevise()
       this.editorMode = true
     }
+
+    this.addAdminAnimations()
   },
   methods: {
     ...mapActions('devise', [
@@ -148,11 +145,8 @@ export default {
 
       window.devise = this
       devise.$bus = deviseSettings.$bus
-
-      this.checkWidthOfInterface(this.$route)
-      this.setSizeAndBreakpoint()
+      
       this.addWatchers()
-      this.addAdminAnimations()
 
       this.$nextTick(function () {
         if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {

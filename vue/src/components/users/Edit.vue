@@ -1,17 +1,18 @@
 <template>
 
-  <div class="dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="user">
+  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="user">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Manage User</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-users-index')">Back to Users</a>
+      
+      <sidebar-header title="Manage User" back-text="Back to Users" back-page="devise-users-index" />
+
       <ul class="dvs-list-reset dvs-mb-10">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" v-devise-alert-confirm="{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}">
           Delete This User
         </li>
       </ul>
     </div>
-    <div id="devise-admin-content">
-      <h3 class="dvs-mb-8">{{ localValue.name }} Settings</h3>
+    <div id="devise-admin-content" :style="adminTheme">
+      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">{{ localValue.name }} Settings</h3>
 
       <div class="dvs-mb-12">
         <form>
@@ -44,8 +45,8 @@
         </form>
 
         <div class="dvs-flex">
-          <button @click="requestSaveUser" class="dvs-btn dvs-mr-2">Save</button>
-          <button @click="goToPage('devise-users-index')" class="dvs-btn dvs-btn-plain dvs-mr-4">Cancel</button>
+          <button @click="requestSaveUser" class="dvs-btn dvs-mr-2" :style="actionButtonTheme">Save</button>
+          <button @click="goToPage('devise-users-index')" class="dvs-btn dvs-btn-plain dvs-mr-4" :style="regularButtonTheme">Cancel</button>
         </div>
       </div>
 
@@ -56,7 +57,7 @@
 </template>
 
 <script>
-import DeviseModal from './../utilities/Modal'
+import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -101,7 +102,7 @@ export default {
     ])
   },
   components: {
-    DeviseModal
+    SidebarHeader
   }
 }
 </script>

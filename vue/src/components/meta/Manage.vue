@@ -1,12 +1,11 @@
 <template>
 
-  <div class="dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative">
+  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Manage Global Meta</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-settings-index')">Back to Settings</a>
+      <sidebar-header title="Manage Global Meta" back-text="Back to Settings" back-page="devise-settings-index" />
     </div>
-    <div id="devise-admin-content">
-      <h3 class="dvs-mb-8">Add Meta</h3>
+    <div id="devise-admin-content" :style="adminTheme">
+      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Add Meta</h3>
 
       <help class="dvs-mb-8">Global Meta are the meta tags that will be attached to every page of this site. They can be overridden on a page level but this gives you to the opportunity to set the <span class="dvs-fonts-mono">&lt;meta&gt;</span> across <strong>all</strong> pages.</help>
 
@@ -29,9 +28,9 @@
         &lt;meta {{ newMeta.attribute_name }}="{{ newMeta.attribute_value }}" content="{{ newMeta.content }}"&gt;
       </help>
 
-      <button class="dvs-btn dvs-mb-8" :disabled="isInvalid" @click="requestCreateMeta">Save New Meta</button>
+      <button class="dvs-btn dvs-mb-8" :disabled="isInvalid" :style="actionButtonTheme" @click="requestCreateMeta">Save New Meta</button>
 
-      <h3 class="dvs-mb-8">Existing Global Meta</h3>
+      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Existing Global Meta</h3>
 
       <div class="dvs-mb-12 dvs-flex dvs-flex-col">
         <div v-for="(meta, key) in localValue.data" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
@@ -53,13 +52,15 @@
           </div>
 
           <div class="dvs-flex dvs-justify-between dvs-items-center">
-            <button v-if="!meta.edit" class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" @click="meta.edit = !meta.edit">
-              <i class="ion-edit" />
-            </button>
-            <button v-if="!meta.edit" class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" v-devise-alert-confirm="{callback: requestDeleteMeta, arguments:meta, message: 'Are you sure you want to delete this meta?'}">
-              <i class="ion-trash-b" />
-            </button>
-            <button class="dvs-btn dvs-mr-2" v-if="meta.edit" @click="requestUpdateMeta(localValue.data[key])">Save</button>
+            <div v-if="!meta.edit">
+              <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" :style="regularButtonTheme" @click="meta.edit = !meta.edit">
+                <i class="ion-edit" />
+              </button>
+              <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" :style="regularButtonTheme" v-devise-alert-confirm="{callback: requestDeleteMeta, arguments:meta, message: 'Are you sure you want to delete this meta?'}">
+                <i class="ion-trash-b" />
+              </button>
+            </div>
+            <button class="dvs-btn dvs-mr-2" v-if="meta.edit" @click="requestUpdateMeta(localValue.data[key])" :style="actionButtonTheme">Save</button>
             <button class="dvs-btn dvs-btn-plain" v-if="meta.edit" @click="meta.edit = false">Cancel</button>
           </div>
         </div>
@@ -71,6 +72,8 @@
 </template>
 
 <script>
+import SidebarHeader from './../utilities/SidebarHeader'
+
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -139,6 +142,9 @@ export default {
              this.newMeta.attribute_value !== null ||
              this.newMeta.content !== null
     }
+  },
+  components: {
+    SidebarHeader
   }
 }
 </script>

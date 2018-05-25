@@ -1,12 +1,11 @@
 <template>
 
-  <div class="dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="languages.data.length">
+  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="languages.data.length">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Manage Languages</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-settings-index')">Back to Settings</a>
+      <sidebar-header title="Manage Languages" back-text="Back to Settings" back-page="devise-settings-index" />
     </div>
-    <div id="devise-admin-content">
-      <h3 class="dvs-mb-8">Add Language</h3>
+    <div id="devise-admin-content" :style="adminTheme">
+      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Add Language</h3>
 
       <help class="dvs-mb-8">When you add a language to this site it is immediately enabled. Afterwards you can create translated versions of pages that will be linked to one another allowing you to provide ways to switch languages on your front-end. We <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" class="dvs-font-bold" target="_blank">highly suggest using the ISO 639-1 2 letter codes</a> but you can technically use whatever you want.</help>
 
@@ -15,9 +14,9 @@
         <input type="text" maxlength="2" v-model="newLanguage.code" />
       </fieldset>
 
-      <button class="dvs-btn dvs-mb-8" :disabled="newLanguage.code === null" @click="requestCreateLanguage">Save New Language</button>
+      <button class="dvs-btn dvs-mb-8" :disabled="newLanguage.code === null" @click="requestCreateLanguage" :style="actionButtonTheme">Save New Language</button>
 
-      <h3 class="dvs-mb-8">Existing Languages</h3>
+      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Existing Languages</h3>
 
       <div class="dvs-mb-12 dvs-flex dvs-flex-col">
         <div v-for="(language, key) in localValue.data" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
@@ -32,7 +31,7 @@
 
 
           <div class="dvs-flex dvs-justify-between dvs-items-center">
-            <button v-if="!language.editCode" class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" @click="language.editCode = !language.editCode">
+            <button v-if="!language.editCode" class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" :style="regularButtonTheme" @click="language.editCode = !language.editCode">
               <i class="ion-edit" />
             </button>
             <button class="dvs-btn dvs-mr-2" v-if="language.editCode" @click="requestUpdateLanguage(localValue.data[key])">Save Language Code</button>
@@ -47,6 +46,8 @@
 </template>
 
 <script>
+import SidebarHeader from './../utilities/SidebarHeader'
+
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -94,6 +95,9 @@ export default {
     ...mapGetters('devise', [
       'languages'
     ])
+  },
+  components: {
+    SidebarHeader
   }
 }
 </script>

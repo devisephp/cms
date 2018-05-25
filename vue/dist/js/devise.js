@@ -58479,7 +58479,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -58516,11 +58515,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   mounted: function mounted() {
-    if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
+    if (typeof deviseSettings.$template !== 'undefined') {
+      this.templateMode = true;
+    } else if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
       this.pageMode = true;
       this.addAdminAnimations();
-    } else if (typeof deviseSettings.$template !== 'undefined') {
-      this.templateMode = true;
     } else {
       this.editorMode = true;
       this.mountGlobalVariables();
@@ -58733,7 +58732,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     addListeners: function addListeners() {
-      devise.$bus.$on('incrementLoadbar', this.incrementLoadbar);
+      deviseSettings.$bus.$on('incrementLoadbar', this.incrementLoadbar);
     },
     incrementLoadbar: function incrementLoadbar(numberOfModulesToLoad) {
       this.modulesLoaded++;
@@ -59098,7 +59097,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     startOpenerListener: function startOpenerListener() {
       var self = this;
 
-      devise.$bus.$on('devise-launch-media-manager', function (_ref) {
+      deviseSettings.$bus.$on('devise-launch-media-manager', function (_ref) {
         var target = _ref.target,
             callback = _ref.callback;
 
@@ -59124,11 +59123,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return file.used_count > 0;
     },
     uploadSuccess: function uploadSuccess() {
-      devise.$bus.$emit('showMessage', { title: 'Upload Complete', message: 'Your upload has been successfully completed' });
+      deviseSettings.$bus.$emit('showMessage', { title: 'Upload Complete', message: 'Your upload has been successfully completed' });
       this.changeDirectories(this.currentDirectory);
     },
     uploadError: function uploadError(file, message) {
-      devise.$bus.$emit('showError', { title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.' });
+      deviseSettings.$bus.$emit('showError', { title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.' });
     },
     getUrlParam: function getUrlParam(paramName) {
       var reParam = new RegExp('(?:[?&]|&)' + paramName + '=([^&]+)', 'i');
@@ -59176,7 +59175,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           self.directoryToCreate = '';
         });
       } else {
-        devise.$bus.$emit('showError', { title: 'Duplicate Name', message: 'There was already a directory with this name created in the current location.' });
+        deviseSettings.$bus.$emit('showError', { title: 'Duplicate Name', message: 'There was already a directory with this name created in the current location.' });
       }
     },
     requestDeleteDirectory: function requestDeleteDirectory() {
@@ -60308,11 +60307,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     var self = this;
-    devise.$bus.$on('showError', function (error) {
+    deviseSettings.$bus.$on('showError', function (error) {
       self.addError(error);
     });
 
-    devise.$bus.$on('showMessage', function (payload) {
+    deviseSettings.$bus.$on('showMessage', function (payload) {
       self.addMessage(payload);
     });
   },
@@ -64931,9 +64930,11 @@ if (false) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Modal__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utilities_Modal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utilities_SidebarHeader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_Modal__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_Modal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 
 //
 //
@@ -64988,7 +64989,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
 
 
 
@@ -65010,7 +65011,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.retrieveAllTemplates();
   },
 
-  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])('devise', ['getTemplates', 'createTemplate', 'deleteTemplate']), {
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])('devise', ['getTemplates', 'createTemplate', 'deleteTemplate']), {
     requestCreateTemplate: function requestCreateTemplate() {
       var self = this;
       this.createTemplate(this.newTemplate).then(function () {
@@ -65038,13 +65039,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$router.push({ name: 'devise-templates-edit', params: { templateId: template.id } });
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['templates']), {
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])('devise', ['templates']), {
     createInvalid: function createInvalid() {
       return this.newTemplate.name === null || this.newTemplate.layout === null;
     }
   }),
   components: {
-    DeviseModal: __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default.a
+    DeviseModal: __WEBPACK_IMPORTED_MODULE_2__utilities_Modal___default.a,
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_1__utilities_SidebarHeader___default.a
   }
 });
 
@@ -65134,57 +65136,57 @@ var render = function() {
         "dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative"
     },
     [
-      _c("div", { attrs: { id: "devise-sidebar" } }, [
-        _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-          _vm._v("Templates")
-        ]),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-            attrs: { href: "#" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.goToPage("devise-index")
-              }
+      _c(
+        "div",
+        { attrs: { id: "devise-sidebar" } },
+        [
+          _c("sidebar-header", {
+            attrs: {
+              title: "Templates",
+              "back-text": "Back to Administration",
+              "back-page": "devise-index"
             }
-          },
-          [_vm._v("Back to Administration")]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dvs-list-reset" }, [
-          _c(
-            "li",
-            {
-              staticClass:
-                "dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.showCreate = true
+          }),
+          _vm._v(" "),
+          _c("ul", { staticClass: "dvs-list-reset" }, [
+            _c(
+              "li",
+              {
+                staticClass:
+                  "dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.showCreate = true
+                  }
                 }
-              }
-            },
-            [_vm._v("\n        Create New Template\n      ")]
-          )
-        ])
-      ]),
+              },
+              [_vm._v("\n        Create New Template\n      ")]
+            )
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
-        { attrs: { id: "devise-admin-content" } },
+        { style: _vm.adminTheme, attrs: { id: "devise-admin-content" } },
         [
-          _c("h2", { staticClass: "dvs-mb-10" }, [_vm._v("Current Templates")]),
+          _c(
+            "h3",
+            {
+              staticClass: "dvs-mb-8",
+              style: { color: _vm.theme.adminText.color }
+            },
+            [_vm._v("Current Templates")]
+          ),
           _vm._v(" "),
           _vm._l(_vm.templates.data, function(template) {
             return _c(
               "div",
               {
                 staticClass:
-                  "dvs-mb-6 dvs-rounded-sm dvs-bg-white dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center"
+                  "dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center"
               },
               [
                 _c(
@@ -65224,6 +65226,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "dvs-btn dvs-btn-xs dvs-mr-2",
+                        style: _vm.regularButtonTheme,
                         on: {
                           click: function($event) {
                             _vm.goToTemplate(template)
@@ -65250,7 +65253,8 @@ var render = function() {
                               "{callback: requestDeleteTemplate, arguments: template, message: 'Are you sure you want to delete this template?'}"
                           }
                         ],
-                        staticClass: "dvs-btn dvs-btn-xs"
+                        staticClass: "dvs-btn dvs-btn-xs",
+                        style: _vm.regularButtonTheme
                       },
                       [_vm._v("Delete")]
                     )
@@ -65279,9 +65283,14 @@ var render = function() {
                   }
                 },
                 [
-                  _c("h4", { staticClass: "dvs-mb-4" }, [
-                    _vm._v("Create New Template")
-                  ]),
+                  _c(
+                    "h4",
+                    {
+                      staticClass: "dvs-mb-4",
+                      style: { color: _vm.theme.statsText.color }
+                    },
+                    [_vm._v("Create New Template")]
+                  ),
                   _vm._v(" "),
                   _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
                     _c("label", [_vm._v("Name")]),
@@ -65353,6 +65362,7 @@ var render = function() {
                     "button",
                     {
                       staticClass: "dvs-btn",
+                      style: _vm.actionButtonTheme,
                       attrs: { disabled: _vm.createInvalid },
                       on: { click: _vm.requestCreateTemplate }
                     },
@@ -65363,6 +65373,7 @@ var render = function() {
                     "button",
                     {
                       staticClass: "dvs-btn dvs-btn-plain",
+                      style: _vm.regularButtonTheme,
                       on: {
                         click: function($event) {
                           _vm.showCreate = false
@@ -65448,10 +65459,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           self.goToPage('devise-templates-index');
         }
         if (event.data.type === 'error') {
-          devise.$bus.$emit('showError', event.data.message);
+          deviseSettings.$bus.$emit('showError', event.data.message);
         }
         if (event.data.type === 'saveSuccessful') {
-          devise.$bus.$emit('showMessage', { title: 'Saving Template', message: 'Template successfully saved' });
+          deviseSettings.$bus.$emit('showMessage', { title: 'Saving Template', message: 'Template successfully saved' });
         }
       }, false);
     }
@@ -65477,7 +65488,7 @@ var render = function() {
           _vm.template
             ? [
                 _c("iframe", {
-                  staticClass: "dvs-w-full",
+                  staticClass: "dvs-w-full dvs-relative dvs-z-30",
                   attrs: {
                     src: "/templates/" + _vm.template.id,
                     id: "devise-preview-iframe"
@@ -65564,8 +65575,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Slices___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Slices__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utilities_tables_SuperTable__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utilities_tables_SuperTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__utilities_tables_SuperTable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TemplateSliceEditor__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TemplateSliceEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__TemplateSliceEditor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__utilities_SidebarHeader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TemplateSliceEditor__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TemplateSliceEditor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__TemplateSliceEditor__);
 
 //
 //
@@ -65652,6 +65665,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -65773,8 +65801,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   components: {
     draggable: __WEBPACK_IMPORTED_MODULE_2_vuedraggable___default.a,
     ManageSlices: __WEBPACK_IMPORTED_MODULE_3__ManageSlices___default.a,
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_6__utilities_SidebarHeader___default.a,
     SuperTable: __WEBPACK_IMPORTED_MODULE_5__utilities_tables_SuperTable___default.a,
-    TemplateSliceEditor: __WEBPACK_IMPORTED_MODULE_6__TemplateSliceEditor___default.a
+    TemplateSliceEditor: __WEBPACK_IMPORTED_MODULE_7__TemplateSliceEditor___default.a
   }
 });
 
@@ -67388,6 +67417,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_tables_SuperTable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_Slices__ = __webpack_require__(372);
 
+//
+//
 //
 //
 //
@@ -72187,7 +72218,7 @@ var render = function() {
   return _c("div", [
     _vm.originSlice
       ? _c("div", {
-          staticClass: "dvs-blocker dvs-blocker-light",
+          staticClass: "dvs-blocker dvs-blocker-light dvs-z-50",
           on: {
             click: function($event) {
               _vm.closeManager()
@@ -72201,14 +72232,23 @@ var render = function() {
           "div",
           {
             staticClass:
-              "dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-4 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2"
+              "dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-8 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2"
           },
           [
             _vm.mode === "add" && _vm.step === "type"
               ? _c(
                   "div",
                   [
-                    _c("help", { staticClass: "dvs-mb-8" }, [
+                    _c(
+                      "h3",
+                      {
+                        staticClass: "dvs-font-hairline dvs-mb-8",
+                        style: { color: _vm.theme.statsText.color }
+                      },
+                      [_vm._v("Add Slice to Layout")]
+                    ),
+                    _vm._v(" "),
+                    _c("help", { staticClass: "dvs-mb-8 dvs-max-w-lg" }, [
                       _vm._v(
                         "\n        These controls allow you to add sub-slices to the slice you selected. You can add as many single slices as you wish or you can add a one model or one repeatable slice. Models and repeatables allow you to generate many of the same slice with dynamic data from your database (models) or via the Devise editor (repeatables).\n      "
                       )
@@ -72234,7 +72274,11 @@ var render = function() {
                               staticClass: "ion-android-remove dvs-text-4xl"
                             }),
                             _vm._v(" "),
-                            _c("h6", [_vm._v("Single")])
+                            _c(
+                              "h6",
+                              { style: { color: _vm.theme.statsText.color } },
+                              [_vm._v("Single")]
+                            )
                           ]
                         ),
                         _vm._v(" "),
@@ -72254,7 +72298,11 @@ var render = function() {
                               staticClass: "ion-android-menu dvs-text-4xl"
                             }),
                             _vm._v(" "),
-                            _c("h6", [_vm._v("Repeatable")])
+                            _c(
+                              "h6",
+                              { style: { color: _vm.theme.statsText.color } },
+                              [_vm._v("Repeatable")]
+                            )
                           ]
                         ),
                         _vm._v(" "),
@@ -72272,7 +72320,11 @@ var render = function() {
                           [
                             _c("i", { staticClass: "ion-cube dvs-text-4xl" }),
                             _vm._v(" "),
-                            _c("h6", [_vm._v("Model")])
+                            _c(
+                              "h6",
+                              { style: { color: _vm.theme.statsText.color } },
+                              [_vm._v("Model")]
+                            )
                           ]
                         )
                       ]
@@ -94725,18 +94777,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.loaded
-    ? _c("div", { staticClass: "dvs-ml-2" }, [
+    ? _c("div", { staticClass: "dvs-ml-2 dvs-collapsable" }, [
         _c(
           "div",
-          {
-            staticClass:
-              "dvs-flex dvs-justify-between dvs-block dvs-mb-2 dvs-switch",
-            on: {
-              click: function($event) {
-                _vm.toggleSlice()
-              }
-            }
-          },
+          { staticClass: "dvs-flex dvs-justify-between dvs-block dvs-mb-2" },
           [
             _c("div", [
               _c("i", { staticClass: "handle ion-navicon-round mr-2" }),
@@ -94746,7 +94790,19 @@ var render = function() {
                 on: { click: _vm.toggleSliceTools }
               })
             ]),
-            _vm._v("\n    " + _vm._s(_vm.localValue.label) + "\n  ")
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "dvs-cursor-pointer dvs-switch",
+                on: {
+                  click: function($event) {
+                    _vm.toggleSlice()
+                  }
+                }
+              },
+              [_vm._v(_vm._s(_vm.localValue.label))]
+            )
           ]
         ),
         _vm._v(" "),
@@ -95152,219 +95208,249 @@ var render = function() {
             "div",
             {
               staticClass: "devise-iframe-sidebar",
+              style: _vm.sidebarTheme,
               attrs: { id: "devise-sidebar" }
             },
             [
-              _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-                _vm._v("Edit Template")
-              ]),
-              _vm._v(" "),
               _c(
-                "a",
+                "div",
                 {
-                  staticClass:
-                    "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.goToTemplates($event)
-                    }
-                  }
+                  staticClass: "dvs-h-screen",
+                  attrs: { "data-simplebar": "" }
                 },
-                [_vm._v("Back to Templates")]
-              ),
-              _vm._v(" "),
-              _c("ul", { staticClass: "dvs-list-reset" }, [
-                _c(
-                  "li",
-                  {
-                    staticClass: "dvs-collapsable dvs-mb-2",
-                    class: { "dvs-open": _vm.templateSettingsOpen }
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "dvs-switch",
-                        on: { click: _vm.toggleTemplateSettings }
-                      },
-                      [_vm._v("\n          Template Settings\n        ")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "dvs-collapsed dvs-mt-4" }, [
-                      _c("fieldset", { staticClass: "dvs-fieldset" }, [
-                        _c("label", [_vm._v("Template Name")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.localValue.name,
-                              expression: "localValue.name"
-                            }
-                          ],
-                          attrs: {
-                            type: "text",
-                            placeholder: "Name of the Template"
-                          },
-                          domProps: { value: _vm.localValue.name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.localValue,
-                                "name",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
+                [
+                  _c("sidebar-header", {
+                    attrs: {
+                      title: "Edit Template",
+                      "back-text": "Back to Templates",
+                      "back-callback": _vm.goToTemplates
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b",
+                      style: "border-color:" + _vm.theme.sidebarText.color
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "dvs-p-2 dvs-cursor-pointer",
+                          class: { "dvs-border-b-2": _vm.templateSettingsOpen },
+                          style: "border-color:" + _vm.theme.sidebarText.color,
+                          on: { click: _vm.toggleTemplateSettings }
+                        },
+                        [_vm._v("\n          Template Settings\n        ")]
+                      ),
                       _vm._v(" "),
-                      _c("fieldset", { staticClass: "dvs-fieldset" }, [
-                        _c("label", [_vm._v("Template Layout")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.localValue.layout,
-                              expression: "localValue.layout"
-                            }
-                          ],
-                          attrs: {
-                            type: "text",
-                            disabled: "",
-                            placeholder: "Blade File Name"
-                          },
-                          domProps: { value: _vm.localValue.layout },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.localValue,
-                                "layout",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "dvs-collapsable dvs-mb-2",
-                    class: { "dvs-open": _vm.templateLayoutOpen }
-                  },
-                  [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "dvs-p-2 dvs-cursor-pointer",
+                          class: { "dvs-border-b-2": _vm.templateLayoutOpen },
+                          style: "border-color:" + _vm.theme.sidebarText.color,
+                          on: { click: _vm.toggleTemplateLayout }
+                        },
+                        [_vm._v("\n          Template Layout\n        ")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "dvs-list-reset" }, [
                     _c(
-                      "div",
+                      "li",
                       {
-                        staticClass: "dvs-switch",
-                        on: { click: _vm.toggleTemplateLayout }
+                        staticClass: "dvs-collapsable dvs-mb-2",
+                        class: { "dvs-open": _vm.templateSettingsOpen }
                       },
-                      [_vm._v("\n          Template Layout\n        ")]
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "dvs-collapsed dvs-mt-4 dvs-text-left"
+                          },
+                          [
+                            _c(
+                              "fieldset",
+                              { staticClass: "dvs-fieldset dvs-mb-8" },
+                              [
+                                _c("label", [_vm._v("Template Name")]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.localValue.name,
+                                      expression: "localValue.name"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Name of the Template"
+                                  },
+                                  domProps: { value: _vm.localValue.name },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.localValue,
+                                        "name",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("fieldset", { staticClass: "dvs-fieldset" }, [
+                              _c("label", [_vm._v("Template Layout")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.localValue.layout,
+                                    expression: "localValue.layout"
+                                  }
+                                ],
+                                attrs: {
+                                  type: "text",
+                                  disabled: "",
+                                  placeholder: "Blade File Name"
+                                },
+                                domProps: { value: _vm.localValue.layout },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.localValue,
+                                      "layout",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        )
+                      ]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "dvs-collapsed dvs-mt-4" }, [
-                      _vm.localValue.slices
-                        ? _c(
-                            "div",
-                            {
-                              staticClass:
-                                "dvs-flex dvs-flex-col dvs-items-center"
-                            },
-                            [
-                              _c(
-                                "draggable",
+                    _c(
+                      "li",
+                      {
+                        staticClass: "dvs-collapsable dvs-mb-2",
+                        class: { "dvs-open": _vm.templateLayoutOpen }
+                      },
+                      [
+                        _c("div", { staticClass: "dvs-collapsed dvs-mt-4" }, [
+                          _vm.localValue.slices
+                            ? _c(
+                                "div",
                                 {
                                   staticClass:
-                                    "dvs-list-reset dvs-mb-2 dvs-w-full",
-                                  attrs: {
-                                    element: "ul",
-                                    options: { handle: ".handle" }
-                                  },
-                                  model: {
-                                    value: _vm.localValue.slices,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.localValue, "slices", $$v)
-                                    },
-                                    expression: "localValue.slices"
-                                  }
+                                    "dvs-flex dvs-flex-col dvs-items-center dvs-text-left"
                                 },
-                                _vm._l(_vm.localValue.slices, function(
-                                  slice,
-                                  key
-                                ) {
-                                  return _c(
-                                    "li",
+                                [
+                                  _c(
+                                    "draggable",
                                     {
                                       staticClass:
-                                        "dvs-mb-2 dvs-collapsable dvs-w-full",
-                                      class: { "dvs-open": slice.metadata.open }
-                                    },
-                                    [
-                                      _c("template-slice-editor", {
-                                        on: {
-                                          addSlice: _vm.requestAddSlice,
-                                          removeSlice: _vm.requestRemoveSlice,
-                                          manageSlice: _vm.requestManageSlice
-                                        },
-                                        model: {
-                                          value: _vm.localValue.slices[key],
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.localValue.slices,
-                                              key,
-                                              $$v
-                                            )
-                                          },
-                                          expression: "localValue.slices[key]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                })
-                              ),
-                              _vm._v(" "),
-                              !_vm.anySliceOpen
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "dvs-btn dvs-btn-sm mx-2 dvs-btn-ghost dvs-w-4/5",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.requestAddSlice(
-                                            _vm.localValue.slices,
-                                            true
+                                        "dvs-list-reset dvs-mb-2 dvs-w-full",
+                                      attrs: {
+                                        element: "ul",
+                                        options: { handle: ".handle" }
+                                      },
+                                      model: {
+                                        value: _vm.localValue.slices,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.localValue,
+                                            "slices",
+                                            $$v
                                           )
-                                        }
+                                        },
+                                        expression: "localValue.slices"
                                       }
                                     },
-                                    [_vm._v("Add Slice to Layout")]
-                                  )
-                                : _vm._e()
-                            ],
-                            1
-                          )
-                        : _vm._e()
-                    ])
-                  ]
-                )
-              ])
+                                    _vm._l(_vm.localValue.slices, function(
+                                      slice,
+                                      key
+                                    ) {
+                                      return _c(
+                                        "li",
+                                        { staticClass: "dvs-mb-2 dvs-w-full" },
+                                        [
+                                          _c("template-slice-editor", {
+                                            class: {
+                                              "dvs-open": slice.metadata.open
+                                            },
+                                            on: {
+                                              addSlice: _vm.requestAddSlice,
+                                              removeSlice:
+                                                _vm.requestRemoveSlice,
+                                              manageSlice:
+                                                _vm.requestManageSlice
+                                            },
+                                            model: {
+                                              value: _vm.localValue.slices[key],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.localValue.slices,
+                                                  key,
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "localValue.slices[key]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    })
+                                  ),
+                                  _vm._v(" "),
+                                  !_vm.anySliceOpen
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "dvs-btn dvs-btn-sm dvs-mx-2 dvs-w-4/5 dvs-mt-8",
+                                          style: _vm.actionButtonTheme,
+                                          on: {
+                                            click: function($event) {
+                                              _vm.requestAddSlice(
+                                                _vm.localValue.slices,
+                                                true
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Add Slice to Layout")]
+                                      )
+                                    : _vm._e()
+                                ],
+                                1
+                              )
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  ])
+                ],
+                1
+              )
             ]
           ),
           _vm._v(" "),
@@ -95417,15 +95503,24 @@ var render = function() {
             "div",
             {
               staticClass:
-                "dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-shadow-lg dvs-bg-white dvs-p-4 dvs-z-40"
+                "dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-p-4 dvs-mb-2 dvs-z-40",
+              style: _vm.infoBlockTheme
             },
             [
-              _c("h6", { staticClass: "mb-4" }, [_vm._v("Template Controls")]),
+              _c(
+                "h6",
+                {
+                  staticClass: "mb-4",
+                  style: { color: _vm.theme.statsText.color }
+                },
+                [_vm._v("Template Controls")]
+              ),
               _vm._v(" "),
               _c(
                 "button",
                 {
                   staticClass: "dvs-btn dvs-mr-2",
+                  style: _vm.actionButtonTheme,
                   on: { click: _vm.requestSaveTemplate }
                 },
                 [_vm._v("Save Template")]
@@ -95435,6 +95530,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "dvs-btn dvs-btn-plain",
+                  style: _vm.regularButtonTheme,
                   on: { click: _vm.goToTemplates }
                 },
                 [_vm._v("Cancel")]
@@ -97717,7 +97813,32 @@ var getters = {
       };
       return colors;
     }
-    return {};
+
+    // Default Theme
+    return {
+      sidebarTop: { color: 'rgba(240,240,240,1)' },
+      sidebarBottom: { color: 'rgba(211,211,211,1)' },
+      sidebarText: { color: 'rgba(34,34,34,1)' },
+      buttonsActionText: { color: 'rgba(24,24,24,1)' },
+      buttonsActionLeft: { color: 'rgba(255,255,255,1)' },
+      buttonsActionRight: { color: 'rgba(231,231,241,1)' },
+      buttonsActionShadowColor: { color: 'rgba(3,7,32,0.14)' },
+      buttonsActionShadowSize: { text: '8px' },
+      userBackground: { color: 'rgba(0,0,0,0.6)' },
+      userText: { color: '#ffffff' },
+      userShadowColor: { color: 'rgba(0,0,0,0.43)' },
+      userShadowSize: { text: '30px' },
+      statsText: { color: 'rgba(0,0,0,1)' },
+      statsLeft: { color: 'rgba(255,255,255,0.87)' },
+      statsRight: { color: 'rgba(212,211,211,0.66)' },
+      statsShadowColor: { color: 'rgba(0,0,0,0.51)' },
+      statsShadowSize: { text: '30px' },
+      adminBackground: { color: 'rgba(255,255,255,1)' },
+      adminText: { color: 'rgba(80,80,80,1)' },
+      buttonsInverseLeft: { color: 'rgb(255, 255, 255)' },
+      buttonsInverseRight: { color: 'rgb(241, 231, 236)' },
+      buttonsInverseText: { color: 'rgb(24, 24, 24)' }
+    };
   },
 
   // Slices
@@ -98582,7 +98703,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 
 
 //
@@ -98632,7 +98755,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
+
 
 
 
@@ -98653,7 +98777,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.retrieveAllLanguages();
   },
 
-  methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])('devise', ['getLanguages', 'createLanguage', 'updateLanguage']), {
+  methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])('devise', ['getLanguages', 'createLanguage', 'updateLanguage']), {
     requestCreateLanguage: function requestCreateLanguage() {
       this.createLanguage(this.newLanguage);
     },
@@ -98673,7 +98797,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['languages']))
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])('devise', ['languages'])),
+  components: {
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default.a
+  }
 });
 
 /***/ }),
@@ -98689,36 +98816,36 @@ var render = function() {
         "div",
         {
           staticClass:
-            "dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative"
+            "dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative"
         },
         [
-          _c("div", { attrs: { id: "devise-sidebar" } }, [
-            _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-              _vm._v("Manage Languages")
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.goToPage("devise-settings-index")
-                  }
+          _c(
+            "div",
+            { attrs: { id: "devise-sidebar" } },
+            [
+              _c("sidebar-header", {
+                attrs: {
+                  title: "Manage Languages",
+                  "back-text": "Back to Settings",
+                  "back-page": "devise-settings-index"
                 }
-              },
-              [_vm._v("Back to Settings")]
-            )
-          ]),
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "div",
-            { attrs: { id: "devise-admin-content" } },
+            { style: _vm.adminTheme, attrs: { id: "devise-admin-content" } },
             [
-              _c("h3", { staticClass: "dvs-mb-8" }, [_vm._v("Add Language")]),
+              _c(
+                "h3",
+                {
+                  staticClass: "dvs-mb-8",
+                  style: { color: _vm.theme.adminText.color }
+                },
+                [_vm._v("Add Language")]
+              ),
               _vm._v(" "),
               _c("help", { staticClass: "dvs-mb-8" }, [
                 _vm._v(
@@ -98768,15 +98895,21 @@ var render = function() {
                 "button",
                 {
                   staticClass: "dvs-btn dvs-mb-8",
+                  style: _vm.actionButtonTheme,
                   attrs: { disabled: _vm.newLanguage.code === null },
                   on: { click: _vm.requestCreateLanguage }
                 },
                 [_vm._v("Save New Language")]
               ),
               _vm._v(" "),
-              _c("h3", { staticClass: "dvs-mb-8" }, [
-                _vm._v("Existing Languages")
-              ]),
+              _c(
+                "h3",
+                {
+                  staticClass: "dvs-mb-8",
+                  style: { color: _vm.theme.adminText.color }
+                },
+                [_vm._v("Existing Languages")]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -98854,6 +98987,7 @@ var render = function() {
                                 {
                                   staticClass:
                                     "dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4",
+                                  style: _vm.regularButtonTheme,
                                   on: {
                                     click: function($event) {
                                       language.editCode = !language.editCode
@@ -99212,7 +99346,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 
 
 //
@@ -99287,6 +99423,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
+
 
 
 
@@ -99309,7 +99448,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.retrieveAllMeta();
   },
 
-  methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])('devise', ['getMeta', 'createMeta', 'updateMeta', 'deleteMeta']), {
+  methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])('devise', ['getMeta', 'createMeta', 'updateMeta', 'deleteMeta']), {
     requestCreateMeta: function requestCreateMeta() {
       var self = this;
       this.createMeta(this.newMeta).then(function () {
@@ -99337,14 +99476,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['meta']), {
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])('devise', ['meta']), {
     isInvalid: function isInvalid() {
       return this.newMeta.attribute_name === null || this.newMeta.attribute_value === null || this.newMeta.content === null;
     },
     anyNewMetaPopulated: function anyNewMetaPopulated() {
       return this.newMeta.attribute_name !== null || this.newMeta.attribute_value !== null || this.newMeta.content !== null;
     }
-  })
+  }),
+  components: {
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default.a
+  }
 });
 
 /***/ }),
@@ -99357,35 +99499,38 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative" },
+    {
+      staticClass:
+        "dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative"
+    },
     [
-      _c("div", { attrs: { id: "devise-sidebar" } }, [
-        _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-          _vm._v("Manage Global Meta")
-        ]),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-            attrs: { href: "#" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.goToPage("devise-settings-index")
-              }
+      _c(
+        "div",
+        { attrs: { id: "devise-sidebar" } },
+        [
+          _c("sidebar-header", {
+            attrs: {
+              title: "Manage Global Meta",
+              "back-text": "Back to Settings",
+              "back-page": "devise-settings-index"
             }
-          },
-          [_vm._v("Back to Settings")]
-        )
-      ]),
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
-        { attrs: { id: "devise-admin-content" } },
+        { style: _vm.adminTheme, attrs: { id: "devise-admin-content" } },
         [
-          _c("h3", { staticClass: "dvs-mb-8" }, [_vm._v("Add Meta")]),
+          _c(
+            "h3",
+            {
+              staticClass: "dvs-mb-8",
+              style: { color: _vm.theme.adminText.color }
+            },
+            [_vm._v("Add Meta")]
+          ),
           _vm._v(" "),
           _c("help", { staticClass: "dvs-mb-8" }, [
             _vm._v(
@@ -99490,15 +99635,21 @@ var render = function() {
             "button",
             {
               staticClass: "dvs-btn dvs-mb-8",
+              style: _vm.actionButtonTheme,
               attrs: { disabled: _vm.isInvalid },
               on: { click: _vm.requestCreateMeta }
             },
             [_vm._v("Save New Meta")]
           ),
           _vm._v(" "),
-          _c("h3", { staticClass: "dvs-mb-8" }, [
-            _vm._v("Existing Global Meta")
-          ]),
+          _c(
+            "h3",
+            {
+              staticClass: "dvs-mb-8",
+              style: { color: _vm.theme.adminText.color }
+            },
+            [_vm._v("Existing Global Meta")]
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -99665,44 +99816,46 @@ var render = function() {
                     },
                     [
                       !meta.edit
-                        ? _c(
-                            "button",
-                            {
-                              staticClass:
-                                "dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4",
-                              on: {
-                                click: function($event) {
-                                  meta.edit = !meta.edit
+                        ? _c("div", [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4",
+                                style: _vm.regularButtonTheme,
+                                on: {
+                                  click: function($event) {
+                                    meta.edit = !meta.edit
+                                  }
                                 }
-                              }
-                            },
-                            [_c("i", { staticClass: "ion-edit" })]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      !meta.edit
-                        ? _c(
-                            "button",
-                            {
-                              directives: [
-                                {
-                                  name: "devise-alert-confirm",
-                                  rawName: "v-devise-alert-confirm",
-                                  value: {
-                                    callback: _vm.requestDeleteMeta,
-                                    arguments: meta,
-                                    message:
-                                      "Are you sure you want to delete this meta?"
-                                  },
-                                  expression:
-                                    "{callback: requestDeleteMeta, arguments:meta, message: 'Are you sure you want to delete this meta?'}"
-                                }
-                              ],
-                              staticClass:
-                                "dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4"
-                            },
-                            [_c("i", { staticClass: "ion-trash-b" })]
-                          )
+                              },
+                              [_c("i", { staticClass: "ion-edit" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                directives: [
+                                  {
+                                    name: "devise-alert-confirm",
+                                    rawName: "v-devise-alert-confirm",
+                                    value: {
+                                      callback: _vm.requestDeleteMeta,
+                                      arguments: meta,
+                                      message:
+                                        "Are you sure you want to delete this meta?"
+                                    },
+                                    expression:
+                                      "{callback: requestDeleteMeta, arguments:meta, message: 'Are you sure you want to delete this meta?'}"
+                                  }
+                                ],
+                                staticClass:
+                                  "dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4",
+                                style: _vm.regularButtonTheme
+                              },
+                              [_c("i", { staticClass: "ion-trash-b" })]
+                            )
+                          ])
                         : _vm._e(),
                       _vm._v(" "),
                       meta.edit
@@ -99710,6 +99863,7 @@ var render = function() {
                             "button",
                             {
                               staticClass: "dvs-btn dvs-mr-2",
+                              style: _vm.actionButtonTheme,
                               on: {
                                 click: function($event) {
                                   _vm.requestUpdateMeta(
@@ -115513,6 +115667,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utilities_SidebarHeader__);
+//
 //
 //
 //
@@ -115536,8 +115693,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'SettingsIndex'
+  name: 'SettingsIndex',
+  components: {
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_0__utilities_SidebarHeader___default.a
+  }
 });
 
 /***/ }),
@@ -115552,69 +115714,62 @@ var render = function() {
     "div",
     { staticClass: "dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative" },
     [
-      _c("div", { attrs: { id: "devise-sidebar" } }, [
-        _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-          _vm._v("Settings")
-        ]),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-            attrs: { href: "#" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.goToPage("devise-index")
-              }
+      _c(
+        "div",
+        { attrs: { id: "devise-sidebar" } },
+        [
+          _c("sidebar-header", {
+            attrs: {
+              title: "Settings",
+              "back-text": "Back to Administration",
+              "back-page": "devise-index"
             }
-          },
-          [_vm._v("Back to Administration")]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dvs-list-reset dvs-mb-10" }, [
-          _c(
-            "li",
-            {
-              staticClass: "dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
-              on: {
-                click: function($event) {
-                  _vm.goToPage("devise-meta-manage")
-                }
-              }
-            },
-            [_vm._v("\n        Global Meta\n      ")]
-          ),
+          }),
           _vm._v(" "),
-          _c(
-            "li",
-            {
-              staticClass: "dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
-              on: {
-                click: function($event) {
-                  _vm.goToPage("devise-languages-manage")
+          _c("ul", { staticClass: "dvs-list-reset dvs-mb-10" }, [
+            _c(
+              "li",
+              {
+                staticClass: "dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
+                on: {
+                  click: function($event) {
+                    _vm.goToPage("devise-meta-manage")
+                  }
                 }
-              }
-            },
-            [_vm._v("\n        Languages\n      ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              staticClass: "dvs-cursor-pointer dvs-mb-6 dvs-text-lg",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.goToPage("devise-sites-index")
+              },
+              [_vm._v("\n        Global Meta\n      ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
+                on: {
+                  click: function($event) {
+                    _vm.goToPage("devise-languages-manage")
+                  }
                 }
-              }
-            },
-            [_vm._v("\n        Sites\n      ")]
-          )
-        ])
-      ])
+              },
+              [_vm._v("\n        Languages\n      ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "dvs-cursor-pointer dvs-mb-6 dvs-text-lg",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.goToPage("devise-sites-index")
+                  }
+                }
+              },
+              [_vm._v("\n        Sites\n      ")]
+            )
+          ])
+        ],
+        1
+      )
     ]
   )
 }
@@ -115888,7 +116043,7 @@ var render = function() {
     [
       _c(
         "div",
-        { attrs: { id: "devise-sidebar" } },
+        { style: _vm.sidebarTheme, attrs: { id: "devise-sidebar" } },
         [
           _c("sidebar-header", {
             attrs: {
@@ -116734,6 +116889,30 @@ var lineData = { "data": { "labels": ["May 16", "May 17", "May 18", "May 19", "M
       },
       presets: {
         Default: {
+          sidebarTop: { color: 'rgba(240,240,240,1)' },
+          sidebarBottom: { color: 'rgba(211,211,211,1)' },
+          sidebarText: { color: 'rgba(34,34,34,1)' },
+          buttonsActionText: { color: 'rgba(24,24,24,1)' },
+          buttonsActionLeft: { color: 'rgba(255,255,255,1)' },
+          buttonsActionRight: { color: 'rgba(231,231,241,1)' },
+          buttonsActionShadowColor: { color: 'rgba(3,7,32,0.14)' },
+          buttonsActionShadowSize: { text: '8px' },
+          userBackground: { color: 'rgba(0,0,0,0.6)' },
+          userText: { color: '#ffffff' },
+          userShadowColor: { color: 'rgba(0,0,0,0.43)' },
+          userShadowSize: { text: '30px' },
+          statsText: { color: 'rgba(0,0,0,1)' },
+          statsLeft: { color: 'rgba(255,255,255,0.87)' },
+          statsRight: { color: 'rgba(212,211,211,0.66)' },
+          statsShadowColor: { color: 'rgba(0,0,0,0.51)' },
+          statsShadowSize: { text: '30px' },
+          adminBackground: { color: 'rgba(255,255,255,1)' },
+          adminText: { color: 'rgba(80,80,80,1)' },
+          buttonsInverseLeft: { color: 'rgb(255, 255, 255)' },
+          buttonsInverseRight: { color: 'rgb(241, 231, 236)' },
+          buttonsInverseText: { color: 'rgb(24, 24, 24)' }
+        },
+        'Blue Sunrise': {
           sidebarTop: { color: '#343434' },
           sidebarBottom: { color: '#2199be' },
           sidebarText: { color: '#ffffff' },
@@ -118140,7 +118319,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Modal__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utilities_Modal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 
 //
 //
@@ -118199,6 +118380,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 
@@ -118222,7 +118405,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.retrieveAllUsers();
   },
 
-  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])('devise', ['getUsers', 'createUser']), {
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])('devise', ['getUsers', 'createUser']), {
     requestCreateUser: function requestCreateUser() {
       var self = this;
       this.createUser(this.newUser).then(function () {
@@ -118246,13 +118429,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$router.push({ name: 'devise-users-edit', params: { userId: id } });
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['users']), {
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])('devise', ['users']), {
     createInvalid: function createInvalid() {
       return this.newUser.name === null || this.newUser.email === null || this.newUser.password === null || this.newUser.password_confirmation === null || this.newUser.password !== this.newUser.password_confirmation;
     }
   }),
   components: {
-    DeviseModal: __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default.a
+    DeviseModal: __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default.a,
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default.a
   }
 });
 
@@ -118271,63 +118455,62 @@ var render = function() {
         "dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative"
     },
     [
-      _c("div", { attrs: { id: "devise-sidebar" } }, [
-        _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [_vm._v("Users")]),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-            attrs: { href: "#" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.goToPage("devise-index")
-              }
+      _c(
+        "div",
+        { style: _vm.sidebarTheme, attrs: { id: "devise-sidebar" } },
+        [
+          _c("sidebar-header", {
+            attrs: {
+              title: "Manage Users",
+              "back-text": "Back to Administration",
+              "back-page": "devise-index"
             }
-          },
-          [_vm._v("Back to Main Menu")]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dvs-list-reset" }, [
-          _c(
-            "li",
-            {
-              staticClass:
-                "dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.showCreate = true
+          }),
+          _vm._v(" "),
+          _c("ul", { staticClass: "dvs-list-reset" }, [
+            _c(
+              "li",
+              {
+                staticClass:
+                  "dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.showCreate = true
+                  }
                 }
-              }
-            },
-            [_vm._v("\n        Create New User\n      ")]
-          )
-        ])
-      ]),
+              },
+              [_vm._v("\n        Create New User\n      ")]
+            )
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
-        { attrs: { id: "devise-admin-content" } },
+        { style: _vm.adminTheme, attrs: { id: "devise-admin-content" } },
         [
-          _c("h2", { staticClass: "dvs-mb-10" }, [_vm._v("Current Users")]),
+          _c(
+            "h2",
+            {
+              staticClass: "dvs-mb-10",
+              style: { color: _vm.theme.adminText.color }
+            },
+            [_vm._v("Current Users")]
+          ),
           _vm._v(" "),
           _vm._l(_vm.users.data, function(user) {
             return _c(
               "div",
               {
                 staticClass:
-                  "dvs-mb-6 dvs-rounded-sm dvs-bg-white dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center"
+                  "dvs-mb-6  dvs-flex dvs-justify-between dvs-items-center"
               },
               [
                 _c(
                   "div",
-                  {
-                    staticClass:
-                      "dvs-min-w-2/5 dvs-text-xl dvs-font-bold dvs-pr-8"
-                  },
+                  { staticClass: "dvs-min-w-2/5 dvs-font-bold dvs-pr-8" },
                   [_vm._v("\n        " + _vm._s(user.name) + "\n      ")]
                 ),
                 _vm._v(" "),
@@ -118341,6 +118524,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "dvs-btn dvs-btn-xs",
+                        style: _vm.regularButtonTheme,
                         on: {
                           click: function($event) {
                             _vm.loadUser(user.id)
@@ -118364,9 +118548,14 @@ var render = function() {
         [
           _vm.showCreate
             ? _c("devise-modal", { staticClass: "dvs-z-50" }, [
-                _c("h4", { staticClass: "dvs-mb-4" }, [
-                  _vm._v("Create new user")
-                ]),
+                _c(
+                  "h4",
+                  {
+                    staticClass: "dvs-mb-4",
+                    style: { color: _vm.theme.statsText.color }
+                  },
+                  [_vm._v("Create new user")]
+                ),
                 _vm._v(" "),
                 _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
                   _c("label", [_vm._v("Name")]),
@@ -118476,6 +118665,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "dvs-btn",
+                    style: _vm.actionButtonTheme,
                     attrs: { disabled: _vm.createInvalid },
                     on: { click: _vm.requestCreateUser }
                   },
@@ -118486,6 +118676,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "dvs-btn dvs-btn-plain",
+                    style: _vm.regularButtonTheme,
                     on: {
                       click: function($event) {
                         _vm.showCreate = false
@@ -118570,11 +118761,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_Modal__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_Modal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__ = __webpack_require__(661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 
 
+//
 //
 //
 //
@@ -118670,7 +118862,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   }),
   computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])('devise', ['user'])),
   components: {
-    DeviseModal: __WEBPACK_IMPORTED_MODULE_2__utilities_Modal___default.a
+    SidebarHeader: __WEBPACK_IMPORTED_MODULE_2__utilities_SidebarHeader___default.a
   }
 });
 
@@ -118687,257 +118879,269 @@ var render = function() {
         "div",
         {
           staticClass:
-            "dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative"
+            "dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative"
         },
         [
-          _c("div", { attrs: { id: "devise-sidebar" } }, [
-            _c("h2", { staticClass: "dvs-font-bold dvs-mb-2" }, [
-              _vm._v("Manage User")
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.goToPage("devise-users-index")
-                  }
+          _c(
+            "div",
+            { attrs: { id: "devise-sidebar" } },
+            [
+              _c("sidebar-header", {
+                attrs: {
+                  title: "Manage User",
+                  "back-text": "Back to Users",
+                  "back-page": "devise-users-index"
                 }
-              },
-              [_vm._v("Back to Users")]
-            ),
-            _vm._v(" "),
-            _c("ul", { staticClass: "dvs-list-reset dvs-mb-10" }, [
-              _c(
-                "li",
-                {
-                  directives: [
-                    {
-                      name: "devise-alert-confirm",
-                      rawName: "v-devise-alert-confirm",
-                      value: {
-                        callback: _vm.requestDeleteUser,
-                        message: "Are you sure you want to delete this user?"
-                      },
-                      expression:
-                        "{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}"
-                    }
-                  ],
-                  staticClass: "dvs-cursor-pointer dvs-mb-6 dvs-text-lg"
-                },
-                [_vm._v("\n        Delete This User\n      ")]
-              )
-            ])
-          ]),
+              }),
+              _vm._v(" "),
+              _c("ul", { staticClass: "dvs-list-reset dvs-mb-10" }, [
+                _c(
+                  "li",
+                  {
+                    directives: [
+                      {
+                        name: "devise-alert-confirm",
+                        rawName: "v-devise-alert-confirm",
+                        value: {
+                          callback: _vm.requestDeleteUser,
+                          message: "Are you sure you want to delete this user?"
+                        },
+                        expression:
+                          "{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}"
+                      }
+                    ],
+                    staticClass: "dvs-cursor-pointer dvs-mb-6 dvs-text-lg"
+                  },
+                  [_vm._v("\n        Delete This User\n      ")]
+                )
+              ])
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("div", { attrs: { id: "devise-admin-content" } }, [
-            _c("h3", { staticClass: "dvs-mb-8" }, [
-              _vm._v(_vm._s(_vm.localValue.name) + " Settings")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "dvs-mb-12" }, [
+          _c(
+            "div",
+            { style: _vm.adminTheme, attrs: { id: "devise-admin-content" } },
+            [
               _c(
-                "form",
-                [
-                  _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
-                    _c("label", [_vm._v("Name of User")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.localValue.name,
-                          expression: "localValue.name"
-                        }
-                      ],
-                      attrs: {
-                        type: "text",
-                        autocomplete: "off",
-                        placeholder: "Name of the User"
-                      },
-                      domProps: { value: _vm.localValue.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                "h3",
+                {
+                  staticClass: "dvs-mb-8",
+                  style: { color: _vm.theme.adminText.color }
+                },
+                [_vm._v(_vm._s(_vm.localValue.name) + " Settings")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dvs-mb-12" }, [
+                _c(
+                  "form",
+                  [
+                    _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
+                      _c("label", [_vm._v("Name of User")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.localValue.name,
+                            expression: "localValue.name"
                           }
-                          _vm.$set(_vm.localValue, "name", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
-                    _c("label", [_vm._v("Email")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.localValue.email,
-                          expression: "localValue.email"
-                        }
-                      ],
-                      attrs: {
-                        type: "text",
-                        autocomplete: "off",
-                        placeholder: "Email of the User"
-                      },
-                      domProps: { value: _vm.localValue.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.localValue, "email", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  !_vm.showPassword
-                    ? _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
-                        _c("label", [_vm._v("Edit Password?")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.showPassword,
-                              expression: "showPassword"
+                        ],
+                        attrs: {
+                          type: "text",
+                          autocomplete: "off",
+                          placeholder: "Name of the User"
+                        },
+                        domProps: { value: _vm.localValue.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          ],
-                          attrs: { type: "checkbox" },
-                          domProps: {
-                            checked: Array.isArray(_vm.showPassword)
-                              ? _vm._i(_vm.showPassword, null) > -1
-                              : _vm.showPassword
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$a = _vm.showPassword,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    (_vm.showPassword = $$a.concat([$$v]))
-                                } else {
-                                  $$i > -1 &&
-                                    (_vm.showPassword = $$a
-                                      .slice(0, $$i)
-                                      .concat($$a.slice($$i + 1)))
-                                }
-                              } else {
-                                _vm.showPassword = $$c
-                              }
-                            }
+                            _vm.$set(
+                              _vm.localValue,
+                              "name",
+                              $event.target.value
+                            )
                           }
-                        })
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.showPassword
-                    ? [
-                        _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
-                          _c("label", [_vm._v("Password")]),
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
+                      _c("label", [_vm._v("Email")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.localValue.email,
+                            expression: "localValue.email"
+                          }
+                        ],
+                        attrs: {
+                          type: "text",
+                          autocomplete: "off",
+                          placeholder: "Email of the User"
+                        },
+                        domProps: { value: _vm.localValue.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.localValue,
+                              "email",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    !_vm.showPassword
+                      ? _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
+                          _c("label", [_vm._v("Edit Password?")]),
                           _vm._v(" "),
                           _c("input", {
                             directives: [
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.localValue.password,
-                                expression: "localValue.password"
+                                value: _vm.showPassword,
+                                expression: "showPassword"
                               }
                             ],
-                            attrs: { type: "password", autocomplete: "off" },
-                            domProps: { value: _vm.localValue.password },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.localValue,
-                                  "password",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
-                          _c("label", [_vm._v("Password Confirm")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.localValue.password_confirmation,
-                                expression: "localValue.password_confirmation"
-                              }
-                            ],
-                            attrs: { type: "password", autocomplete: "off" },
+                            attrs: { type: "checkbox" },
                             domProps: {
-                              value: _vm.localValue.password_confirmation
+                              checked: Array.isArray(_vm.showPassword)
+                                ? _vm._i(_vm.showPassword, null) > -1
+                                : _vm.showPassword
                             },
                             on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              change: function($event) {
+                                var $$a = _vm.showPassword,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = null,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.showPassword = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.showPassword = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
+                                } else {
+                                  _vm.showPassword = $$c
                                 }
-                                _vm.$set(
-                                  _vm.localValue,
-                                  "password_confirmation",
-                                  $event.target.value
-                                )
                               }
                             }
                           })
                         ])
-                      ]
-                    : _vm._e()
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "dvs-flex" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "dvs-btn dvs-mr-2",
-                    on: { click: _vm.requestSaveUser }
-                  },
-                  [_vm._v("Save")]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.showPassword
+                      ? [
+                          _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
+                            _c("label", [_vm._v("Password")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.localValue.password,
+                                  expression: "localValue.password"
+                                }
+                              ],
+                              attrs: { type: "password", autocomplete: "off" },
+                              domProps: { value: _vm.localValue.password },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.localValue,
+                                    "password",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("fieldset", { staticClass: "dvs-fieldset mb-4" }, [
+                            _c("label", [_vm._v("Password Confirm")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.localValue.password_confirmation,
+                                  expression: "localValue.password_confirmation"
+                                }
+                              ],
+                              attrs: { type: "password", autocomplete: "off" },
+                              domProps: {
+                                value: _vm.localValue.password_confirmation
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.localValue,
+                                    "password_confirmation",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]
+                      : _vm._e()
+                  ],
+                  2
                 ),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "dvs-btn dvs-btn-plain dvs-mr-4",
-                    on: {
-                      click: function($event) {
-                        _vm.goToPage("devise-users-index")
+                _c("div", { staticClass: "dvs-flex" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dvs-btn dvs-mr-2",
+                      style: _vm.actionButtonTheme,
+                      on: { click: _vm.requestSaveUser }
+                    },
+                    [_vm._v("Save")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dvs-btn dvs-btn-plain dvs-mr-4",
+                      style: _vm.regularButtonTheme,
+                      on: {
+                        click: function($event) {
+                          _vm.goToPage("devise-users-index")
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("Cancel")]
-                )
+                    },
+                    [_vm._v("Cancel")]
+                  )
+                ])
               ])
-            ])
-          ])
+            ]
+          )
         ]
       )
     : _vm._e()
@@ -118967,10 +119171,10 @@ function insertBefore(el, referenceNode) {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   bind: function bind(el, binding, vnode) {
-    el.addEventListener('click', function (e) {
+    var clickHandler = function clickHandler(e) {
       // create constructor
       var Confirm = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
-        template: '\n        <div v-if="show" class="dvs-fixed dvs-pin dvs-z-50">\n          <div class="dvs-blocker"></div>\n          <div class="dvs-absolute dvs-absolute-center dvs-z-50 dvs-bg-white dvs-rounded dvs-shadow-lg dvs-p-8">\n            <h3 class="dvs-mb-8 dvs-text-black">Please Confirm</h3>\n            <div class="dvs-mb-8">' + binding.value.message + '</div>\n\n            <button class="dvs-btn dvs-btn-danger" @click="ok" :style="actionButtonTheme">Confirm</button>\n            <button class="dvs-btn dvs-btn-plain" @click="cancel" :style="regularButtonTheme">Cancel</button>\n            </div>\n          </div>\n        </div>\n        ',
+        template: '\n        <div v-if="show" class="dvs-fixed dvs-pin dvs-z-50">\n          <div class="dvs-blocker"></div>\n          <div class="dvs-absolute dvs-absolute-center dvs-z-50 dvs-bg-white dvs-rounded dvs-shadow-lg dvs-p-8">\n            <h3 class="dvs-mb-8 dvs-text-black">Please Confirm</h3>\n            <div class="dvs-mb-8">' + binding.value.message + '</div>\n\n            <button class="dvs-btn dvs-btn-danger" @click="ok">Confirm</button>\n            <button class="dvs-btn dvs-btn-plain" @click="cancel">Cancel</button>\n            </div>\n          </div>\n        </div>\n        ',
         data: function data() {
           return {
             clicks: 0,
@@ -118987,6 +119191,8 @@ function insertBefore(el, referenceNode) {
           },
           close: function close() {
             this.show = false;
+            el.removeEventListener('click', clickHandler, true);
+            insertedElement.remove();
           }
         }
       });
@@ -118995,7 +119201,9 @@ function insertBefore(el, referenceNode) {
       var insertedElement = insertBefore(newEl, document.querySelector('#devise-admin'));
 
       new Confirm().$mount(insertedElement);
-    });
+    };
+
+    el.addEventListener('click', clickHandler);
   }
 });
 
@@ -123962,7 +124170,7 @@ var render = function() {
   return _c(
     "div",
     [
-      !_vm.interface.logo
+      !_vm.interface || !_vm.interface.logo
         ? _c("devise-logo", {
             staticStyle: { width: "180px" },
             attrs: { color: _vm.theme.sidebarText.color }
@@ -124059,9 +124267,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title', 'backPage', 'backText']
+  props: ['title', 'backPage', 'backText', 'backCallback']
 });
 
 /***/ }),
@@ -124074,6 +124297,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "dvs-mt-8" },
     [
       _c("logo", {
         staticClass: "dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center"
@@ -124082,31 +124306,55 @@ var render = function() {
       _c(
         "h2",
         {
-          staticClass: "dvs-font-bold dvs-mb-2",
+          staticClass: "dvs-mb-2 dvs-font-hairline",
           style: { color: _vm.theme.sidebarText.color }
         },
         [_vm._v(_vm._s(_vm.title))]
       ),
       _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass:
-            "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
-          style: { color: _vm.theme.sidebarText.color },
-          attrs: { href: "#" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.goToPage(_vm.backPage)
-            }
-          }
-        },
-        [
-          _c("i", { staticClass: "ion-arrow-left-c" }),
-          _vm._v(" " + _vm._s(_vm.backText) + "\n  ")
-        ]
-      )
+      _vm.backPage
+        ? _c(
+            "a",
+            {
+              staticClass:
+                "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
+              style: { color: _vm.theme.sidebarText.color },
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.goToPage(_vm.backPage)
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "ion-arrow-left-c" }),
+              _vm._v(" " + _vm._s(_vm.backText) + "\n  ")
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.backCallback
+        ? _c(
+            "a",
+            {
+              staticClass:
+                "dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs",
+              style: { color: _vm.theme.sidebarText.color },
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.backCallback()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "ion-arrow-left-c" }),
+              _vm._v(" " + _vm._s(_vm.backText) + "\n  ")
+            ]
+          )
+        : _vm._e()
     ],
     1
   )

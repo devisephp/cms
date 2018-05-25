@@ -1,12 +1,12 @@
 <template>
-  <div v-if="loaded" class="dvs-ml-2">
+  <div v-if="loaded" class="dvs-ml-2 dvs-collapsable">
     <!-- Label / Button -->
-    <div class="dvs-flex dvs-justify-between dvs-block dvs-mb-2 dvs-switch" @click="toggleSlice()">
+    <div class="dvs-flex dvs-justify-between dvs-block dvs-mb-2">
       <div>
         <i class="handle ion-navicon-round mr-2"></i>
         <i class="ion-gear-b" @click="toggleSliceTools"></i>
       </div>
-      {{ localValue.label }}
+      <span class="dvs-cursor-pointer dvs-switch" @click="toggleSlice()">{{ localValue.label }}</span>
     </div>
 
     <!-- Menu for manipulating this slice -->

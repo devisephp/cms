@@ -1,31 +1,32 @@
 <template>
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Users</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-index')">Back to Main Menu</a>
+    <div id="devise-sidebar" :style="sidebarTheme">
+
+      <sidebar-header title="Manage Users" back-text="Back to Administration" back-page="devise-index" />
+
       <ul class="dvs-list-reset">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New User
         </li>
       </ul>
     </div>
-    <div id="devise-admin-content">
-      <h2 class="dvs-mb-10">Current Users</h2>
+    <div id="devise-admin-content" :style="adminTheme">
+      <h2 class="dvs-mb-10" :style="{color: theme.adminText.color}">Current Users</h2>
 
-      <div v-for="user in users.data" class="dvs-mb-6 dvs-rounded-sm dvs-bg-white dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-min-w-2/5 dvs-text-xl dvs-font-bold dvs-pr-8">
+      <div v-for="user in users.data" class="dvs-mb-6  dvs-flex dvs-justify-between dvs-items-center">
+        <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
           {{ user.name }}
         </div>
         <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs" @click="loadUser(user.id)">Manage</button>
+          <button class="dvs-btn dvs-btn-xs" @click="loadUser(user.id)" :style="regularButtonTheme">Manage</button>
         </div>
       </div>
     </div>
 
     <transition name="fade">
       <devise-modal class="dvs-z-50" v-if="showCreate">
-        <h4 class="dvs-mb-4">Create new user</h4>
+        <h4 class="dvs-mb-4" :style="{color: theme.statsText.color}">Create new user</h4>
 
         <fieldset class="dvs-fieldset mb-4">
           <label>Name</label>
@@ -47,8 +48,8 @@
           <input type="password" v-model="newUser.password_confirmation">
         </fieldset>
 
-        <button class="dvs-btn" @click="requestCreateUser" :disabled="createInvalid">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false">Cancel</button>
+        <button class="dvs-btn" @click="requestCreateUser" :disabled="createInvalid" :style="actionButtonTheme">Create</button>
+        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
       </devise-modal>
     </transition>
   </div>
@@ -57,6 +58,7 @@
 
 <script>
 import DeviseModal from './../utilities/Modal'
+import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -116,7 +118,8 @@ export default {
     }
   },
   components: {
-    DeviseModal
+    DeviseModal,
+    SidebarHeader
   }
 }
 </script>

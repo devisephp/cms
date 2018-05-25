@@ -3,11 +3,12 @@
 }
 
 #devise-admin-open {
-  @apply dvs-fixed dvs-pin-b dvs-pin-l dvs-opacity-75 dvs-cursor-pointer dvs-text-white dvs-text-3xl dvs-ml-8 dvs-mb-10 dvs-z-50;
+  @apply dvs-fixed dvs-pin-t dvs-pin-l dvs-opacity-75 dvs-cursor-pointer dvs-text-white dvs-text-3xl dvs-ml-8 dvs-my-4;
 
   transition: all 0.5s;
   transform: translateX(350px);
   text-shadow: 0 0 12px rgba(0,0,0,0.5);
+  z-index:99999;
 
   i {
     display:block;
@@ -208,7 +209,7 @@
 }
 
 #devise-preview-iframe {
-  height: calc(100vh - 100px);
+  height: 100vh;
 }
 
 .dvs-no-scroll {

@@ -63,7 +63,6 @@
       </div>
     </template>
     <template v-if="templateMode">
-
       <template-editor>
         <slot name="on-top" slot="on-top"></slot>
         <slot name="on-bottom" slot="on-bottom"></slot>
@@ -110,11 +109,11 @@ export default {
     }
   },
   mounted () {
-    if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
+    if (typeof deviseSettings.$template !== 'undefined') {
+      this.templateMode = true
+    } else if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
       this.pageMode = true
       this.addAdminAnimations()
-    } else if (typeof deviseSettings.$template !== 'undefined') {
-      this.templateMode = true
     } else {
       this.editorMode = true
       this.mountGlobalVariables()

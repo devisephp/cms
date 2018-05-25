@@ -1,7 +1,7 @@
 <template>
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar">
+    <div id="devise-sidebar" :style="sidebarTheme">
 
       <sidebar-header title="Manage Sites" back-text="Back to Settings" back-page="devise-settings-index" />
 

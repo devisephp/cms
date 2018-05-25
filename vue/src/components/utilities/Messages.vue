@@ -44,11 +44,11 @@ export default {
   },
   mounted () {
     let self = this
-    devise.$bus.$on('showError', function (error) {
+    deviseSettings.$bus.$on('showError', function (error) {
       self.addError(error)
     })
 
-    devise.$bus.$on('showMessage', function (payload) {
+    deviseSettings.$bus.$on('showMessage', function (payload) {
       self.addMessage(payload)
     })
   },

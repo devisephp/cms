@@ -2,26 +2,28 @@
   <div>
 
     <!-- Create Slice -->
-    <div class="dvs-blocker dvs-blocker-light" @click="closeManager()" v-if="originSlice"></div>
-    <div class="dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-4 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2" v-if="originSlice">
+    <div class="dvs-blocker dvs-blocker-light dvs-z-50" @click="closeManager()" v-if="originSlice"></div>
+    <div class="dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-8 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2" v-if="originSlice">
 
       <div v-if="mode === 'add' && step === 'type'">
-        <help class="dvs-mb-8">
+        <h3 class="dvs-font-hairline dvs-mb-8" :style="{ color: theme.statsText.color }">Add Slice to Layout</h3>
+
+        <help class="dvs-mb-8 dvs-max-w-lg">
           These controls allow you to add sub-slices to the slice you selected. You can add as many single slices as you wish or you can add a one model or one repeatable slice. Models and repeatables allow you to generate many of the same slice with dynamic data from your database (models) or via the Devise editor (repeatables).
         </help>
 
         <div class="dvs-flex dvs-justify-center dvs-mb-4">
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('single')">
             <i class="ion-android-remove dvs-text-4xl"></i>
-            <h6>Single</h6>
+            <h6 :style="{ color: theme.statsText.color }">Single</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('repeats')">
             <i class="ion-android-menu dvs-text-4xl"></i>
-            <h6>Repeatable</h6>
+            <h6 :style="{ color: theme.statsText.color }">Repeatable</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('model')">
             <i class="ion-cube dvs-text-4xl"></i>
-            <h6>Model</h6>
+            <h6 :style="{ color: theme.statsText.color }">Model</h6>
           </div>
         </div>
       </div>

@@ -214,7 +214,7 @@
       startOpenerListener () {
         var self = this
 
-        devise.$bus.$on('devise-launch-media-manager', function ({target, callback}) {
+        deviseSettings.$bus.$on('devise-launch-media-manager', function ({target, callback}) {
           self.callback = callback
           self.target = target
           self.changeDirectories('')
@@ -237,11 +237,11 @@
         return file.used_count > 0
       },
       uploadSuccess () {
-        devise.$bus.$emit('showMessage', {title: 'Upload Complete', message: 'Your upload has been successfully completed'})
+        deviseSettings.$bus.$emit('showMessage', {title: 'Upload Complete', message: 'Your upload has been successfully completed'})
         this.changeDirectories(this.currentDirectory)
       },
       uploadError (file, message) {
-        devise.$bus.$emit('showError', {title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.'})
+        deviseSettings.$bus.$emit('showError', {title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.'})
       },
       getUrlParam (paramName) {
         var reParam = new RegExp('(?:[?&]|&)' + paramName + '=([^&]+)', 'i')
@@ -289,7 +289,7 @@
             self.directoryToCreate = ''
           })
         } else {
-          devise.$bus.$emit('showError', {title: 'Duplicate Name', message: 'There was already a directory with this name created in the current location.'})
+          deviseSettings.$bus.$emit('showError', {title: 'Duplicate Name', message: 'There was already a directory with this name created in the current location.'})
         }
       },
       requestDeleteDirectory () {

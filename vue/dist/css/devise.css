@@ -1048,20 +1048,21 @@ button,
 
 #devise-admin-open {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   opacity: .75;
   cursor: pointer;
   color: #fff;
   font-size: 1.875rem;
   margin-left: 2rem;
-  margin-bottom: 3rem;
-  z-index: 50;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   -webkit-transition: all .5s;
   transition: all .5s;
   -webkit-transform: translateX(350px);
           transform: translateX(350px);
   text-shadow: 0 0 12px rgba(0, 0, 0, .5);
+  z-index: 99999;
 }
 
 #devise-admin-open i {
@@ -1326,7 +1327,7 @@ button,
 }
 
 #devise-preview-iframe {
-  height: calc(100vh - 100px);
+  height: 100vh;
 }
 
 .dvs-no-scroll {
@@ -1366,6 +1367,7 @@ button,
 .dvs-fieldset textarea,
 .dvs-fieldset select,
 .dvs-fieldset input[type="text"],
+.dvs-fieldset input[type="search"],
 .dvs-fieldset input[type="password"],
 .dvs-fieldset input[type="date"],
 .dvs-fieldset input[type="datetime-local"],
@@ -1375,6 +1377,7 @@ button,
   padding: 1rem;
   width: 100%;
   background-color: #f1f5f8;
+  color: #3d4852;
   border-radius: .125rem;
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -1384,6 +1387,7 @@ button,
 .dvs-fieldset textarea.dvs-w-auto,
 .dvs-fieldset select.dvs-w-auto,
 .dvs-fieldset input[type="text"].dvs-w-auto,
+.dvs-fieldset input[type="search"].dvs-w-auto,
 .dvs-fieldset input[type="password"].dvs-w-auto,
 .dvs-fieldset input[type="date"].dvs-w-auto,
 .dvs-fieldset input[type="datetime-local"].dvs-w-auto,
@@ -1391,6 +1395,12 @@ button,
 .dvs-fieldset input[type="email"].dvs-w-auto,
 .dvs-fieldset input[type="phone"].dvs-w-auto {
   width: auto;
+}
+
+.v-select-wrapper {
+  background-color: #f1f5f8;
+  color: #3d4852;
+  border-radius: .125rem;
 }
 
 .dvs-toggle {
@@ -2313,11 +2323,12 @@ trix-toolbar .trix-button-group button::before {
 }
 
 trix-editor {
+  background-color: #f1f5f8;
   border-radius: 0;
   border-bottom-right-radius: .25rem;
   border-bottom-left-radius: .25rem;
   border-color: #8795a1;
-  color: #8795a1;
+  color: #3d4852;
   padding: 1rem;
 }
 

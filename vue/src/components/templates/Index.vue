@@ -2,18 +2,17 @@
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Templates</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-index')">Back to Administration</a>
+      <sidebar-header title="Templates" back-text="Back to Administration" back-page="devise-index" />
       <ul class="dvs-list-reset">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New Template
         </li>
       </ul>
     </div>
-    <div id="devise-admin-content">
-      <h2 class="dvs-mb-10">Current Templates</h2>
+    <div id="devise-admin-content" :style="adminTheme">
+      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Current Templates</h3>
 
-      <div v-for="template in templates.data" class="dvs-mb-6 dvs-rounded-sm dvs-bg-white dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center">
+      <div v-for="template in templates.data" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-2/5 dvs-text-base dvs-font-bold dvs-pr-8">
           {{ template.name }}<br>
           <span class="dvs-font-mono dvs-font-normal">{{ template.domain }}</span>
@@ -22,15 +21,15 @@
           {{ template.layout }}
         </div>
         <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs dvs-mr-2" @click="goToTemplate(template)">Edit</button>
-          <button class="dvs-btn dvs-btn-xs" v-devise-alert-confirm="{callback: requestDeleteTemplate, arguments: template, message: 'Are you sure you want to delete this template?'}">Delete</button>
+          <button class="dvs-btn dvs-btn-xs dvs-mr-2" @click="goToTemplate(template)" :style="regularButtonTheme">Edit</button>
+          <button class="dvs-btn dvs-btn-xs" v-devise-alert-confirm="{callback: requestDeleteTemplate, arguments: template, message: 'Are you sure you want to delete this template?'}"  :style="regularButtonTheme">Delete</button>
         </div>
       </div>
     </div>
 
     <transition name="fade">
       <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
-        <h4 class="dvs-mb-4">Create New Template</h4>
+        <h4 class="dvs-mb-4" :style="{color: theme.statsText.color}">Create New Template</h4>
 
         <fieldset class="dvs-fieldset mb-4">
           <label>Name</label>
@@ -44,8 +43,8 @@
           <input type="text" v-model="newTemplate.layout" placeholder="Layout of the Template">
         </fieldset>
 
-        <button class="dvs-btn" @click="requestCreateTemplate" :disabled="createInvalid">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false">Cancel</button>
+        <button class="dvs-btn" @click="requestCreateTemplate" :disabled="createInvalid" :style="actionButtonTheme">Create</button>
+        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
       </devise-modal>
     </transition>
   </div>
@@ -53,6 +52,7 @@
 </template>
 
 <script>
+import SidebarHeader from './../utilities/SidebarHeader'
 import DeviseModal from './../utilities/Modal'
 
 import { mapActions, mapGetters } from 'vuex'
@@ -113,7 +113,8 @@ export default {
     }
   },
   components: {
-    DeviseModal
+    DeviseModal,
+    SidebarHeader
   }
 }
 </script>

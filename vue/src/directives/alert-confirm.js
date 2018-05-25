@@ -6,7 +6,7 @@ function insertBefore (el, referenceNode) {
 
 export default {
   bind: function (el, binding, vnode) {
-    el.addEventListener('click', function (e) {
+    var clickHandler = function (e) {
       // create constructor
       var Confirm = Vue.extend({
         template: `
@@ -16,8 +16,8 @@ export default {
             <h3 class="dvs-mb-8 dvs-text-black">Please Confirm</h3>
             <div class="dvs-mb-8">${binding.value.message}</div>
 
-            <button class="dvs-btn dvs-btn-danger" @click="ok" :style="actionButtonTheme">Confirm</button>
-            <button class="dvs-btn dvs-btn-plain" @click="cancel" :style="regularButtonTheme">Cancel</button>
+            <button class="dvs-btn dvs-btn-danger" @click="ok">Confirm</button>
+            <button class="dvs-btn dvs-btn-plain" @click="cancel">Cancel</button>
             </div>
           </div>
         </div>
@@ -38,6 +38,8 @@ export default {
           },
           close () {
             this.show = false
+            el.removeEventListener('click', clickHandler, true)
+            insertedElement.remove()
           }
         }
       })
@@ -46,6 +48,8 @@ export default {
       var insertedElement = insertBefore(newEl, document.querySelector('#devise-admin'))
 
       new Confirm().$mount(insertedElement)
-    })
+    }
+    
+    el.addEventListener('click', clickHandler)
   }
 }

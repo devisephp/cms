@@ -1,7 +1,7 @@
 <template>
   <div v-if="dataLoaded">
     <template v-if="template">
-      <iframe :src="`/templates/${template.id}`" class="dvs-w-full" id="devise-preview-iframe"></iframe>
+      <iframe :src="`/templates/${template.id}`" class="dvs-w-full dvs-relative dvs-z-30" id="devise-preview-iframe"></iframe>
     </template>
   </div>
 </template>
@@ -45,10 +45,10 @@ export default {
           self.goToPage('devise-templates-index')
         }
         if (event.data.type === 'error') {
-          devise.$bus.$emit('showError', event.data.message)
+          deviseSettings.$bus.$emit('showError', event.data.message)
         }
         if (event.data.type === 'saveSuccessful') {
-          devise.$bus.$emit('showMessage', {title: 'Saving Template', message: 'Template successfully saved'})
+          deviseSettings.$bus.$emit('showMessage', {title: 'Saving Template', message: 'Template successfully saved'})
         }
       }, false)
     }

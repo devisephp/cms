@@ -1,52 +1,66 @@
 <template>
   <div v-if="dataLoaded">
+    
+    <div id="devise-sidebar" class="devise-iframe-sidebar"  :style="sidebarTheme">
+      <div class="dvs-h-screen" data-simplebar>
+        <sidebar-header title="Edit Template" back-text="Back to Templates" :back-callback="goToTemplates" />
 
-    <div id="devise-sidebar" class="devise-iframe-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Edit Template</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToTemplates">Back to Templates</a>
-      <ul class="dvs-list-reset">
-        <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateSettingsOpen}">
-          <div class="dvs-switch" @click="toggleTemplateSettings">
+          <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
+            :style="`border-color:${theme.sidebarText.color}`">
+          <div 
+            class="dvs-p-2 dvs-cursor-pointer" 
+            :class="{'dvs-border-b-2': templateSettingsOpen}" 
+            :style="`border-color:${theme.sidebarText.color}`" 
+            @click="toggleTemplateSettings">
             Template Settings
           </div>
-
-          <div class="dvs-collapsed dvs-mt-4">
-            <fieldset class="dvs-fieldset">
-              <label>Template Name</label>
-              <input type="text" v-model="localValue.name" placeholder="Name of the Template">
-            </fieldset>
-
-            <fieldset class="dvs-fieldset">
-              <label>Template Layout</label>
-              <input type="text" v-model="localValue.layout" disabled placeholder="Blade File Name">
-            </fieldset>
-          </div>
-        </li>
-        <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateLayoutOpen}">
-          <div class="dvs-switch" @click="toggleTemplateLayout">
+          <div 
+            class="dvs-p-2 dvs-cursor-pointer"
+            :class="{'dvs-border-b-2': templateLayoutOpen}" 
+            :style="`border-color:${theme.sidebarText.color}`" 
+            @click="toggleTemplateLayout">
             Template Layout
           </div>
-          <div class="dvs-collapsed dvs-mt-4">
+        </div>
 
-            <div v-if="localValue.slices" class="dvs-flex dvs-flex-col dvs-items-center">
-              <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset dvs-mb-2 dvs-w-full" :options="{handle: '.handle'}">
-                <li v-for="(slice, key) in localValue.slices" class="dvs-mb-2 dvs-collapsable dvs-w-full" :class="{'dvs-open': slice.metadata.open}">
+        <ul class="dvs-list-reset">
+          <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateSettingsOpen}">
+            <div class="dvs-collapsed dvs-mt-4 dvs-text-left">
+              <fieldset class="dvs-fieldset dvs-mb-8">
+                <label>Template Name</label>
+                <input type="text" v-model="localValue.name" placeholder="Name of the Template">
+              </fieldset>
 
-                  <template-slice-editor
-                    v-model="localValue.slices[key]"
-                    @addSlice="requestAddSlice"
-                    @removeSlice="requestRemoveSlice"
-                    @manageSlice="requestManageSlice">
-                  </template-slice-editor>
-
-                </li>
-              </draggable>
-              <button class="dvs-btn dvs-btn-sm mx-2 dvs-btn-ghost dvs-w-4/5" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)">Add Slice to Layout</button>
+              <fieldset class="dvs-fieldset">
+                <label>Template Layout</label>
+                <input type="text" v-model="localValue.layout" disabled placeholder="Blade File Name">
+              </fieldset>
             </div>
+          </li>
+          <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateLayoutOpen}">
+            <div class="dvs-collapsed dvs-mt-4">
 
-          </div>
-        </li>
-      </ul>
+              <div v-if="localValue.slices" class="dvs-flex dvs-flex-col dvs-items-center dvs-text-left">
+                <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset dvs-mb-2 dvs-w-full" :options="{handle: '.handle'}">
+                  <li v-for="(slice, key) in localValue.slices" class="dvs-mb-2 dvs-w-full">
+
+                    <template-slice-editor
+                      v-model="localValue.slices[key]"
+                      @addSlice="requestAddSlice"
+                      @removeSlice="requestRemoveSlice"
+                      @manageSlice="requestManageSlice"
+                      :class="{'dvs-open': slice.metadata.open}">
+                    </template-slice-editor>
+
+                  </li>
+                </draggable>
+                <button class="dvs-btn dvs-btn-sm dvs-mx-2 dvs-w-4/5 dvs-mt-8" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)"  :style="actionButtonTheme">Add Slice to Layout</button>
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- Preview Pane - Duplicates what is happening at Devise.vue -->
@@ -74,10 +88,10 @@
       />
 
     <!-- Save Controls -->
-    <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-shadow-lg dvs-bg-white dvs-p-4 dvs-z-40">
-      <h6 class="mb-4">Template Controls</h6>
-      <button class="dvs-btn dvs-mr-2" @click="requestSaveTemplate">Save Template</button>
-      <button class="dvs-btn dvs-btn-plain" @click="goToTemplates">Cancel</button>
+    <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-p-4 dvs-mb-2 dvs-z-40" :style="infoBlockTheme">
+      <h6 class="mb-4" :style="{color: theme.statsText.color}">Template Controls</h6>
+      <button class="dvs-btn dvs-mr-2" @click="requestSaveTemplate" :style="actionButtonTheme">Save Template</button>
+      <button class="dvs-btn dvs-btn-plain" @click="goToTemplates" :style="regularButtonTheme">Cancel</button>
     </div>
 
   </div>
@@ -90,6 +104,7 @@
   import ManageSlices from './ManageSlices'
   import Slices from '../../Slices'
   import SuperTable from '../utilities/tables/SuperTable'
+  import SidebarHeader from '../utilities/SidebarHeader'
   import TemplateSliceEditor from './TemplateSliceEditor'
 
   export default {
@@ -213,6 +228,7 @@
     components: {
       draggable,
       ManageSlices,
+      SidebarHeader,
       SuperTable,
       TemplateSliceEditor
     }

@@ -14,18 +14,23 @@
   textarea,
   select,
   input[type="text"],
+  input[type="search"],
   input[type="password"],
   input[type="date"],
   input[type="datetime-local"],
   input[type="number"],
   input[type="email"],
   input[type="phone"] {
-    @apply dvs-p-4 dvs-w-full dvs-bg-grey-lighter dvs-rounded-sm dvs-appearance-none;
+    @apply dvs-p-4 dvs-w-full dvs-bg-grey-lighter dvs-text-grey-darkest dvs-rounded-sm dvs-appearance-none;
 
     &.dvs-w-auto {
       @apply dvs-w-auto;
     }
   }
+}
+
+.v-select-wrapper {
+  @apply dvs-bg-grey-lighter dvs-text-grey-darkest dvs-rounded-sm 
 }
 
 .dvs-toggle {

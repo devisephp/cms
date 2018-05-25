@@ -2,8 +2,9 @@
 
   <div class="dvs-flex dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2">Settings</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" @click.prevent="goToPage('devise-index')">Back to Administration</a>
+      
+      <sidebar-header title="Settings" back-text="Back to Administration" back-page="devise-index" />
+
       <ul class="dvs-list-reset dvs-mb-10">
         <li class="dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click="goToPage('devise-meta-manage')">
           Global Meta
@@ -21,7 +22,12 @@
 </template>
 
 <script>
+import SidebarHeader from './../utilities/SidebarHeader'
+
 export default {
-  name: 'SettingsIndex'
+  name: 'SettingsIndex',
+  components: {
+    SidebarHeader
+  }
 }
 </script>

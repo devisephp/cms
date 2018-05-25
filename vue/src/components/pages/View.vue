@@ -2,14 +2,14 @@
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="page">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2" :style="{color: theme.sidebarText.color}">Pages</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" href="#" :style="{color: theme.sidebarText.color}" @click.prevent="goToPage('devise-pages-index')">Back to Pages</a>
+      <sidebar-header title="Manage Page" back-text="Back to Pages" back-page="devise-pages-index" />
+
       <ul class="dvs-list-reset dvs-mb-10">
         <li class="dvs-mb-6 dvs-text-lg">
-          <a :href="page.slug" class="dvs-text-grey-darker">Go To Page</a>
+          <a :href="page.slug" :style="{color: theme.sidebarText.color}">Go To Page</a>
         </li>
         <li class="dvs-mb-6 dvs-text-lg">
-          <a :href="page.slug + '/#/devise/edit-page'" class="dvs-text-grey-darker">Edit Page Content</a>
+          <a :href="page.slug + '/#/devise/edit-page'" :style="{color: theme.sidebarText.color}">Edit Page Content</a>
         </li>
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="showCopy = true">
           Copy This Page
@@ -23,7 +23,7 @@
       </ul>
     </div>
 
-    <div id="devise-admin-content"  :style="{backgroundColor: theme.statsLeft.color, color: theme.statsText.color}">
+    <div id="devise-admin-content"  :style="adminTheme">
       <template v-if="analytics.data">
         <h3 class="dvs-mb-8" :style="{color: theme.statsText.color}">{{ localValue.title }} Analytics</h3>
         <div class="flex mb-8">
@@ -82,11 +82,7 @@
                 @click="requestSaveVersion(version)" 
                 title="Save Version Settings" 
                 v-tippy="tippyConfiguration"
-                :style="`
-                  background-image: linear-gradient(90deg, ${theme.buttonsActionLeft.color} 0%, ${theme.buttonsActionRight.color} 100%);
-                  color: ${theme.buttonsActionText.color};
-                  box-shadow: -4px -4px ${theme.buttonsActionShadowSize.text} ${theme.buttonsActionShadowColor.color};
-                `"
+                :style="actionButtonTheme"
                 >
                 <i class="ion-checkmark dvs-text-3xl"/>
               </button>
@@ -95,10 +91,7 @@
                 @click="requestCopyVersion(version)" 
                 title="Copy Version" 
                 v-tippy="tippyConfiguration"
-                :style="`
-                  background-image: linear-gradient(90deg, ${theme.buttonsActionLeft.color} 0%, ${theme.buttonsActionRight.color} 100%);
-                  color: ${theme.buttonsActionText.color};
-                `"
+                :style="regularButtonTheme"
                 >
                 <i class="ion-ios-copy dvs-text-3xl" />
               </button>
@@ -106,10 +99,7 @@
                 class="dvs-btn dvs-mr-2 dvs-px-8" 
                 v-tippy="tippyConfiguration" 
                 v-devise-alert-confirm="{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
-                :style="`
-                  background-image: linear-gradient(90deg, ${theme.buttonsInverseLeft.color} 0%, ${theme.buttonsInverseRight.color} 100%);
-                  color: ${theme.buttonsInverseText.color};
-                `">
+                :style="regularButtonTheme">
                 <i class="ion-trash-b dvs-text-3xl" />
               </button>
             </div>
@@ -143,8 +133,8 @@
         </fieldset>
 
         <div class="dvs-flex">
-          <button @click="requestSavePage" class="dvs-btn dvs-mr-2">Save</button>
-          <button @click="goToPage" class="dvs-btn dvs-btn-plain dvs-mr-4">Cancel</button>
+          <button @click="requestSavePage" class="dvs-btn dvs-mr-2" :style="actionButtonTheme">Save</button>
+          <button @click="goToPage" class="dvs-btn dvs-btn-plain dvs-mr-4" :style="regularButtonTheme">Cancel</button>
         </div>
       </div>
 
@@ -207,6 +197,7 @@
 <script>
 import DatePicker from './../utilities/DatePicker'
 import DeviseModal from './../utilities/Modal'
+import SidebarHeader from './../utilities/SidebarHeader'
 import LineChart from './analytics/Line'
 
 import Dates from './../../mixins/Dates'
@@ -429,6 +420,7 @@ export default {
   components: {
     DatePicker,
     DeviseModal,
+    SidebarHeader,
     LineChart
   },
   mixins: [Dates]

@@ -2,8 +2,9 @@
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar">
-      <h2 class="dvs-font-bold dvs-mb-2" :style="{color: theme.sidebarText.color}">Pages</h2>
-      <a class="dvs-mb-8 dvs-block dvs-uppercase dvs-font-bold dvs-text-xs"  :style="{color: theme.sidebarText.color}" href="#" @click.prevent="goToPage('devise-index')">Back to Administration</a>
+
+      <sidebar-header title="Manage Pages" back-text="Back to Administration" back-page="devise-index" />
+
       <ul class="dvs-list-reset">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New Page
@@ -11,7 +12,7 @@
       </ul>
     </div>
 
-    <div id="devise-admin-content">
+    <div id="devise-admin-content" :style="adminTheme">
       <h2 class="dvs-mb-10" :style="{color: theme.sidebarText.color}">Current Site Pages</h2>
 
       <fieldset class="dvs-fieldset dvs-mb-8">
@@ -28,24 +29,21 @@
       </fieldset>
 
       <div v-for="page in pages.data" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-min-w-2/5 dvs-text-xl dvs-font-bold dvs-pr-8">
+        <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
           {{ page.title }}
         </div>
-        <div class="dvs-min-w-1/5 dvs-text-normal dvs-px-8 dvs-font-mono">
+        <div class="dvs-min-w-1/5 dvs-text-sm dvs-px-8 dvs-font-mono">
           {{ page.slug }}
         </div>
         <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs dvs-mr-2"
-            :style="`
-                  background-image: linear-gradient(90deg, ${theme.buttonsActionLeft.color} 0%, ${theme.buttonsActionRight.color} 100%);
-                  color: ${theme.buttonsActionText.color};
-                  box-shadow: -4px -4px ${theme.buttonsActionShadowSize.text} ${theme.buttonsActionShadowColor.color};
-                `"
-           @click="loadPage(page.id)">Manage</button>
-          <a class="dvs-btn dvs-btn-plain dvs-btn-xs" :style="`
-                  background-color: ${theme.buttonsActionLeft.color};
-                  color: ${theme.buttonsActionText.color};
-                `" :href="page.slug">Go</a>
+          <button 
+            class="dvs-btn dvs-btn-xs dvs-mr-2"
+            :style="regularButtonTheme"
+            @click="loadPage(page.id)">Manage</button>
+          <a 
+            class="dvs-btn dvs-btn-plain dvs-btn-xs" 
+            :style="regularButtonTheme" 
+            :href="page.slug">Go</a>
         </div>
       </div>
     </div>
@@ -101,6 +99,7 @@
 import debounce from 'v-debounce'
 
 import DeviseModal from './../utilities/Modal'
+import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -209,7 +208,8 @@ export default {
     }
   },
   components: {
-    DeviseModal
+    DeviseModal,
+    SidebarHeader
   },
   directives: {
     debounce

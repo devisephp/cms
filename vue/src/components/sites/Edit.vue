@@ -113,7 +113,7 @@ export default {
     retrieveAllSites (loadbar = true) {
       let self = this
       this.getSites().then(function () {
-        self.localValue = Object.assign({}, self.localValue, self.site)
+        self.localValue = Object.assign({}, self.localValue, self.site, {settings: {colors: {}}})
         if (loadbar) {
           devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }

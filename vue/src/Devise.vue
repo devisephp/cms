@@ -130,7 +130,6 @@ export default {
       'setSites'
     ]),
     initDevise () {
-      let self = this
       try {
         if (!this.isPreviewFrame) {
           deviseSettings.$page.previewMode = 'desktop'
@@ -147,12 +146,13 @@ export default {
       
       this.addWatchers()
 
+      let self = this
       this.$nextTick(function () {
         if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
           self.adminClosed = false
           self.checkWidthOfInterface(self.$route)
-          this.openAnimation.restart()
-          this.openAnimation.seek(100)
+          self.openAnimation.restart()
+          self.openAnimation.seek(100)
         }
         setTimeout(function () {
           devise.$bus.$emit('devise-loaded')
@@ -175,11 +175,11 @@ export default {
     toggleAdmin () {
       this.adminClosed = !this.adminClosed
       if (this.adminClosed) {
-        this.goToPage('devise-page-editor')
         this.wideAdmin = false
         this.openAnimation.reverse()
         this.openAnimation.play()
       } else {
+        this.goToPage('devise-page-editor')
         this.openAnimation.restart()
       }
     },

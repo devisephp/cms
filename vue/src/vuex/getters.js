@@ -105,26 +105,7 @@ const getters = {
   },
   
   theme: (state, getters, rootState) => {
-    if (state.page) {
-      let site = getters.siteById(state.page.site_id)
-      var colors = site.settings.colors
-
-      colors.buttonsInverseLeft = {
-        color: tinycolor(colors.buttonsActionLeft.color).spin(90).toString()
-      }
-
-      colors.buttonsInverseRight = {
-        color: tinycolor(colors.buttonsActionRight.color).spin(90).toString()
-      }
-
-      colors.buttonsInverseText = {
-        color: tinycolor(colors.buttonsActionText.color).spin(90).toString()
-      }
-      return colors
-    }
-
-    // Default Theme
-    return {
+    var defaultColors = {
       sidebarTop: { color:'rgba(240,240,240,1)' },
       sidebarBottom: { color:'rgba(211,211,211,1)' },
       sidebarText: { color:'rgba(34,34,34,1)' },
@@ -148,6 +129,30 @@ const getters = {
       buttonsInverseRight: { color:'rgb(241, 231, 236)' },
       buttonsInverseText: { color:'rgb(24, 24, 24)' } 
     }
+
+    if (state.page) {
+      let site = getters.siteById(state.page.site_id)
+
+      if (site && site.settings) {
+        var colors = site.settings.colors      
+      }
+    }
+
+    colors = Object.assign({}, defaultColors, colors)
+
+    colors.buttonsInverseLeft = {
+      color: tinycolor(colors.buttonsActionLeft.color).spin(90).toString()
+    }
+
+    colors.buttonsInverseRight = {
+      color: tinycolor(colors.buttonsActionRight.color).spin(90).toString()
+    }
+
+    colors.buttonsInverseText = {
+      color: tinycolor(colors.buttonsActionText.color).spin(90).toString()
+    }
+
+    return colors
   },
 
   // Slices

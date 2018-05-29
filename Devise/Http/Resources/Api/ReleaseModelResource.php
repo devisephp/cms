@@ -26,15 +26,11 @@ class ReleaseModelResource extends Resource
       $data['changes'][] = [
         'id' => $release->id,
         'description' => $release->change_description,
+        'details' => ReleaseChange::collection($release->changes),
         'updated_at' => $release->updated_at->format('Y-m-d H:i:s')
       ];
     }
 
     return $data;
-  }
-
-  private function getDescription($model_name)
-  {
-
   }
 }

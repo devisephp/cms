@@ -101,7 +101,6 @@ class Devise
 
   public static function mothershipEnabled()
   {
-    return false;
-//    return Schema::hasTable('dvs_releases');
+    return Schema::hasTable('dvs_releases');
   }
 }

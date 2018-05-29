@@ -2,10 +2,11 @@
 
 namespace Devise\MotherShip;
 
+use Devise\Models\DvsChange;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class DvsRelease extends Model
 {
@@ -20,6 +21,11 @@ class DvsRelease extends Model
   public function modelRecord()
   {
     return $this->morphTo('model', 'model_name', 'model_id');
+  }
+
+  public function changes()
+  {
+    return $this->hasMany(DvsChange::class, 'release_id');
   }
 
   public function getTopLevelModelAttribute()
@@ -62,11 +68,13 @@ class DvsRelease extends Model
 
   public function saveCreate($record)
   {
-    $this->create([
+    $new = $this->create([
       'model_id'   => $record->id,
       'model_name' => get_class($record),
       'msh_id'     => 0
     ]);
+
+    $this->saveChange($new->id, $record->toArray());
   }
 
   public function saveUpdate($record)
@@ -80,6 +88,8 @@ class DvsRelease extends Model
       if ($existing)
       {
         $existing->touch();
+
+        $this->saveChange($existing->id, $record->getDirty());
       } else
       {
         $this->saveCreate($record);
@@ -120,5 +130,14 @@ class DvsRelease extends Model
       ->select('msh_id')
       ->first()
       ->msh_id;
+  }
+
+  private function saveChange($releaseId, $data)
+  {
+    $change = new DvsChange();
+    $change->release_id = $releaseId;
+    $change->user_id = (Auth::check()) ? Auth::id() : 0;
+    $change->change = $data;
+    $change->save();
   }
 }

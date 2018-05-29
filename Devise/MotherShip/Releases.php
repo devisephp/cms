@@ -39,7 +39,8 @@ class Releases
 
     $results = [];
 
-    foreach ($grouped as $group){
+    foreach ($grouped as $group)
+    {
       $first = $group->first();
       $model = $first->top_level_model;
       $model->name = class_basename($model);
@@ -152,7 +153,12 @@ class Releases
     $currentReleaseDate = $currentRelease ? $currentRelease->created_at : '00-00-00 00:00:00';
 
     return DvsRelease
-      ::where(function ($query) use ($currentReleaseDate) {
+      ::with([
+        'changes' => function ($query) use ($currentReleaseDate) {
+          $query->where('created_at', '>', $currentReleaseDate);
+        }
+      ])
+      ->where(function ($query) use ($currentReleaseDate) {
         $query->where('msh_id', 0)
           ->orWhere('updated_at', '>', $currentReleaseDate)
           ->orWhere('deleted_at', '>', $currentReleaseDate);

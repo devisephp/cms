@@ -3,6 +3,7 @@
 //us ing web & auth so the user's web session will persist through the api. may need our own middware if we ever switch between web and oauth
 Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'], function () {
 
+
   /**
    * Fields
    */

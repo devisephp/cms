@@ -4,6 +4,7 @@ namespace Devise\Console\Commands;
 
 use Devise\Models\DvsSite;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
@@ -47,9 +48,12 @@ class Install extends Command
     {
       $this->handleMigrations();
       $this->handlePublishing();
+
       $this->handleSiteEntry();
-//      $this->handleEnvironmentalSiteOverwrites();
-      $this->handleWelcome();
+
+      $overwrite = $this->handleEnvironmentalSiteOverwrites();
+
+      $this->handleWelcome($overwrite);
     }
   }
 
@@ -76,29 +80,14 @@ class Install extends Command
 
   private function handleMigrations()
   {
-    $yesNo = $this->choice('Run Migrations?', ['No', 'Yes'], 0);
-
-    if ($yesNo == 'Yes')
-    {
-      $this->call('migrate');
-    }
+    $this->call('migrate');
   }
 
   private function handlePublishing()
   {
-    $yesNo = $this->choice('Copy public files?', ['No', 'Yes'], 0);
+    $this->call('vendor:publish', ['--tag' => 'dvs-dist']);
 
-    if ($yesNo == 'Yes')
-    {
-      $this->call('vendor:publish', ['--tag' => 'devise-public']);
-    }
-
-    $yesNo = $this->choice('Copy assets?', ['No', 'Yes'], 0);
-
-    if ($yesNo == 'Yes')
-    {
-      $this->call('vendor:publish', ['--tag' => 'devise-assets']);
-    }
+    $this->call('vendor:publish', ['--tag' => 'dvs-config']);
   }
 
   private function handleSiteEntry()
@@ -107,15 +96,16 @@ class Install extends Command
 
     if ($siteCount)
     {
-      $this->info('Production sites found. No configuration necessary.');
+      $this->info('Site entries found. No configuration necessary.');
     } else
     {
       $siteName = $this->ask('Please input the name of your production site.');
       $siteDomain = $this->ask('Please input the domain of your production site.');
 
       DvsSite::create([
-        'name'   => $siteName,
-        'domain' => $siteDomain
+        'name'     => $siteName,
+        'domain'   => $siteDomain,
+        'settings' => '{}'
       ]);
 
       $this->info("$siteName [$siteDomain] has been created.");
@@ -124,25 +114,27 @@ class Install extends Command
 
   private function handleEnvironmentalSiteOverwrites()
   {
-    $appEnv = env('APP_ENV');
+    $appEnv = App::environment();
+
     if ($appEnv !== 'production')
     {
       $localDomain = $this->ask('Not in production? Enter a domain for your ' . $appEnv . ' site.');
 
-      $this->setEnvironmentValue('SITE_1_DOMAIN', $localDomain);
+      if ($localDomain)
+      {
+        $this->setEnvironmentValue('SITE_1_DOMAIN', $localDomain);
 
-      $this->call('config:clear');
+        return $localDomain;
+      }
     }
   }
 
-  private function handleWelcome()
+  private function handleWelcome($overwrite)
   {
     $this->info('Welcome to Devise!');
 
     $site = DvsSite::orderBy('id', 'asc')->first();
 
-    $overwrite = env('SITE_' . $site->id . '_DOMAIN');
-    dd('SITE_' . $site->id . '_DOMAIN', $overwrite, env('SITE_1_DOMAIN'));
     $domain = $overwrite ?: $site->domain;
 
     $url = 'http://' . $domain . '/devise';
@@ -157,10 +149,11 @@ class Install extends Command
 
     $oldValue = env($envKey);
 
-    if($oldValue)
+    if ($oldValue)
     {
       $str = str_replace("{$envKey}={$oldValue}", "{$envKey}={$envValue}\n", $str);
-    } else {
+    } else
+    {
       $str .= "\n{$envKey}={$envValue}";
     }
 

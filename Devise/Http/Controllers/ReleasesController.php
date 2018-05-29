@@ -7,6 +7,7 @@ use Devise\Http\Requests\ApiRequest;
 use Devise\Http\Resources\Api\ReleaseModelResource;
 use Devise\MotherShip\Releases;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\ValidationException;
 
 class ReleasesController extends Controller
 {
@@ -34,6 +35,21 @@ class ReleasesController extends Controller
 
   public function send(ApiRequest $request)
   {
+    $this->checkIfUpToDate($request);
+
     $this->Releases->sendAndSync($request->all());
+  }
+
+  private function checkIfUpToDate(ApiRequest $request)
+  {
+    $status = trim(shell_exec('git status'));
+    if (strpos($status, 'nothing to commit') === false && !$request->get('force'))
+    {
+      $error = ValidationException::withMessages([
+        'force' => ['Uncommited changes found. "force" flag is required.']
+      ]);
+
+      throw $error;
+    }
   }
 }

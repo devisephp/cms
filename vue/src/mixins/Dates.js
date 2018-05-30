@@ -1,5 +1,3 @@
-
-
 export default {
   methods: {
     formatDate (dateObj) {

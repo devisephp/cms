@@ -107,6 +107,12 @@
   transition: width 0.5s ease-out;
 }
 
+#devise-in-page-analytics {
+  width: calc(100% - 550px);
+
+  transition: opacity 0.5s ease-out;
+}
+
 .admin-closed { 
   #dvs-app-content {
     width: 100%;
@@ -144,6 +150,10 @@
         width:320px;
         height:600px;
       }
+    }
+
+    #devise-in-page-analytics {
+      opacity:0;
     }
   }
 

@@ -62,6 +62,11 @@ export default {
     state.modelSettings = payload
   },
 
+  // Mothership
+  setMothership (state, payload) {
+    state.mothership = payload
+  },
+
   // Pages
   createPage (state, page) {
     state.pages.data.push(page)

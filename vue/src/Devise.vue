@@ -24,6 +24,8 @@
           <user></user>
 
         </div>
+
+        
         <div class="dvs-flex-grow dvs-flex dvs-justify-center dvs-max-w-full">
 
           <!-- Shim -->
@@ -60,6 +62,7 @@
 
         <portal-target name="devise-field-editor" class="dvs-fieldset"> </portal-target>
 
+        <analytic-totals v-if="isLoggedIn && !isPreviewFrame" />
       </div>
     </template>
     <template v-if="templateMode">
@@ -67,13 +70,13 @@
         <slot name="on-top" slot="on-top"></slot>
         <slot name="on-bottom" slot="on-bottom"></slot>
       </template-editor>
-
     </template>
 
   </div>
 </template>
 
 <script>
+import AnalyticTotals from './components/pages/AnalyticTotals'
 import Loadbar from './components/utilities/Loadbar'
 import MediaManager from './components/media-manager/MediaManager'
 import Messages from './components/utilities/Messages'
@@ -284,6 +287,7 @@ export default {
     }
   },
   components: {
+    AnalyticTotals,
     Loadbar,
     Messages,
     MediaManager,

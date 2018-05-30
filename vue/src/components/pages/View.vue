@@ -36,7 +36,7 @@
             <date-picker v-model="analyticsDateRange.end" :settings="{date: true, time: false}" placeholder="End Date" @update="retrieveAnalytics()" />
           </fieldset>
         </div>
-        <div class="dvs-mb-12">
+        <div class="dvs-mb-12" v-if="mothership">
           <line-chart class="dvs-mb-8" :chart-data="analytics.data" :options="options" :width="800" :height="200" />
         </div>
       </template>
@@ -267,7 +267,7 @@ export default {
       'copyPageVersion',
       'deletePage',
       'deletePageVersion',
-      'getAnalytics',
+      'getPageAnalytics',
       'getPages',
       'getLanguages',
       'getTemplates',
@@ -354,29 +354,31 @@ export default {
     retrieveAnalytics (version) {
       let self = this
 
-      if (typeof this.analyticsDateRange.start !== 'string' && this.analyticsDateRange.start[0]) {
-        this.analyticsDateRange.start = this.formatDate(new Date(this.analyticsDateRange.start[0]))
-      }
+      if (this.mothership) {
+        if (typeof this.analyticsDateRange.start !== 'string' && this.analyticsDateRange.start[0]) {
+          this.analyticsDateRange.start = this.formatDate(new Date(this.analyticsDateRange.start[0]))
+        }
 
-      if (typeof this.analyticsDateRange.end !== 'string' && this.analyticsDateRange.end[0]) {
-        this.analyticsDateRange.end = this.formatDate(new Date(this.analyticsDateRange.end[0]))
-      }
+        if (typeof this.analyticsDateRange.end !== 'string' && this.analyticsDateRange.end[0]) {
+          this.analyticsDateRange.end = this.formatDate(new Date(this.analyticsDateRange.end[0]))
+        }
 
-      this.getAnalytics({slug: this.page.slug, dates: self.analyticsDateRange}).then(function (response) {
+        this.getPageAnalytics({slug: this.page.slug, dates: self.analyticsDateRange}).then(function (response) {
 
-        response.data.data.datasets.map(function (dataset, index) {
-          dataset.backgroundColor = [self.colors[index].background]
-          dataset.fontColor = self.theme.statsText.color
-          dataset.borderColor = [self.colors[index].border]
-          dataset.pointRadius = 4
-					dataset.pointHoverRadius = 10
-					dataset.fill = false
+          response.data.data.datasets.map(function (dataset, index) {
+            dataset.backgroundColor = [self.colors[index].background]
+            dataset.fontColor = self.theme.statsText.color
+            dataset.borderColor = [self.colors[index].border]
+            dataset.pointRadius = 4
+            dataset.pointHoverRadius = 10
+            dataset.fill = false
 
-          return dataset
+            return dataset
+          })
+
+          self.$set(self, 'analytics', response.data)
         })
-
-        self.$set(self, 'analytics', response.data)
-      })
+      }
     },
     openVersionSettings (version) {
       this.$set(version, 'showSettings', true)
@@ -389,7 +391,8 @@ export default {
     ...mapGetters('devise', [
       'templates',
       'page',
-      'languages'
+      'languages',
+      'mothership'
     ]),
     options () {
       return {

@@ -22,8 +22,8 @@ const state = {
   },
   // Media Manager
   currentDirectory: '.',
-  files: [],
   directories: [],
+  files: [],
   languages: {
     data: []
   },
@@ -34,6 +34,7 @@ const state = {
     data: []
   },
   modelSettings: {},
+  mothership: null,
   pages: {
     data: []
   },

@@ -76,6 +76,11 @@ const getters = {
     return state.modelSettings
   },
 
+  // Mothership API
+  mothership: state => {
+    return state.mothership
+  },
+
   // Pages
   pages: state => {
     return state.pages

@@ -417,10 +417,26 @@ const actions = {
     })
   },
 
+  // Mothership
+
+  syncSites (context, payload) {
+    return new Promise((resolve, reject) => {
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
+      window.axios.post(`https://mothership.app/api/v1/sites/sync`, {sites: payload}).then(function (response) {
+        devise.$bus.$emit('showMessage', {title: 'Sync Complete!', message: 'All sites are registred with Mothership!'})
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
   getPageAnalytics (context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
-      window.axios.get(`https://mothership.app/api/v1/analytics/page?slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
+      window.axios.get(`https://mothership.app/api/v1/analytics/page?site_id=${context.state.page.site_id}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)
@@ -433,7 +449,7 @@ const actions = {
   getPageAnalyticsTotals (context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
-      window.axios.get(`https://mothership.app/api/v1/analytics/page/totals?slug=${payload.slug}&date=${payload.date}`).then(function (response) {
+      window.axios.get(`https://mothership.app/api/v1/analytics/page/totals?site_id=${context.state.page.site_id}&slug=${payload.slug}&date=${payload.date}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)

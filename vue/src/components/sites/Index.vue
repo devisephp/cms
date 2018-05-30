@@ -9,6 +9,9 @@
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New Site
         </li>
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" v-if="mothership" @click.prevent="requestSyncSites">
+          Sync Sites with Mothership
+        </li>
       </ul>
     </div>
 
@@ -16,18 +19,18 @@
       <h2 class="dvs-mb-8" :style="{color: theme.sidebarText.color }">Current Sites</h2>
       <help class="dvs-mb-10">Here you can add and manage sites under this application. This means that you can add new domains, change themes for those domains, and add languages to those sites to make them more impacting for your users</help>
 
-      <div v-for="site in sites.data" class="dvs-mb-6 dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-p-12 dvs-text-center dvs-w-1/3" :style="infoBlockTheme">
+      <div v-for="site in sites.data" :key="site.id" class="dvs-mb-6 dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center">
+        <div class="dvs-p-12 dvs-text-center" :style="infoBlockFlatTheme">
           <div class="dvs-text-base">
             <h2 class="dvs-mb-4" :style="{color: theme.statsText.color }">{{ site.name }}</h2>
             <div class="dvs-mb-2 dvs-font-mono">{{ site.domain }}</div>
             <div class="dvs-mb-2 dvs-font-mono">SITE_{{ site.id }}_DOMAIN</div>
           </div>
           <div class="dvs-mb-8 dvs-flex dvs-flex-wrap dvs-justify-center">
-            <span v-for="language in site.languages" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
+            <span v-for="language in site.languages" :key="language.id" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
           </div>
           <div class="dvs-flex dvs-justify-center">
-            <button class="dvs-btn dvs-mr-2" @click="showEditSite(site)" :style="actionButtonTheme">Edit</button>
+            <button class="dvs-btn dvs-mr-2" @click="showEditSite(site)" :style="regularButtonTheme">Edit</button>
             <button class="dvs-btn" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="regularButtonTheme">Delete</button>
           </div>
         </div>
@@ -91,18 +94,26 @@ export default {
   },
   methods: {
     ...mapActions('devise', [
+      'syncSites',
       'getSites',
       'getLanguages',
       'createSite',
       'updateSite',
       'deleteSite'
     ]),
+    requestSyncSites () {
+      if (this.mothership !== null) {
+        let self = this
+        this.syncSites(this.sites.data)
+      }
+    },
     requestCreateSite () {
       let self = this
       this.createSite(this.newSite).then(function () {
         self.newSite.name = null
         self.newSite.domain = null
         self.showCreate = false
+        self.requestSyncSites()
       })
     },
     showEditSite (site) {
@@ -160,7 +171,8 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'sites',
-      'languages'
+      'languages',
+      'mothership'
     ]),
     createInvalid () {
       return this.newSite.name === null ||

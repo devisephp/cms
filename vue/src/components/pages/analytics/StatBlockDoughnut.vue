@@ -13,8 +13,8 @@
         :options="doughnutOptions"></doughnut>
       <div class="dvs-absolute dvs-absolute-center" :class="{'dvs-text-4xl': !minimized, 'dvs-text-lg': minimized}">{{ yesterday }}</div>
     </div>
-    <div class="dvs-mt-4 dvs-text-center">
-      {{ stat }} {{ Math.abs(change) }}% <i :class="changeIcon"></i> 
+    <div class="dvs-mt-4 dvs-text-center" :class="{'dvs-text-xs dvs-uppercase': minimized}">
+      <strong>{{ stat }}</strong>: {{ Math.abs(change) }}% <i :class="changeIcon"></i> 
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
   computed: {
     doughnutOptions () {
       return {
-        cutoutPercentage: !this.minimized ? 97 : 90,
+        cutoutPercentage: !this.minimized ? 97 : 88,
         legend: false
       }
     },

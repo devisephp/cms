@@ -78,12 +78,17 @@
       </ul>
 
     </div>
+
+    <portal to="devise-field-editor">
+      <analytic-totals />
+    </portal>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
+import AnalyticTotals from './AnalyticTotals'
 import SliceEditor from './SliceEditor'
 
 export default {
@@ -145,6 +150,7 @@ export default {
   },
   props: ['page'],
   components: {
+    AnalyticTotals,
     SliceEditor
   }
 }

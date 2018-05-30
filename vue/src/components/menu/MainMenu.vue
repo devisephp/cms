@@ -17,8 +17,8 @@
       <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-users-index')">
         Users
       </li>
-      <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('Analytics')">
-        Analytics
+      <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-mothership-index')" v-if="mothership !== null">
+        Mothership
       </li>
       <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-templates-index')">
         Templates
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'MainMenu',
@@ -43,6 +43,10 @@ export default {
     return {
     }
   },
-  methods: {}
+  computed: {
+    ...mapGetters('devise', [
+      'mothership'
+    ])
+  }
 }
 </script>

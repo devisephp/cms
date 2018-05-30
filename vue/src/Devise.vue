@@ -61,8 +61,6 @@
         </template>
 
         <portal-target name="devise-field-editor" class="dvs-fieldset"> </portal-target>
-
-        <analytic-totals v-if="isLoggedIn && !isPreviewFrame" />
       </div>
     </template>
     <template v-if="templateMode">
@@ -76,7 +74,6 @@
 </template>
 
 <script>
-import AnalyticTotals from './components/pages/AnalyticTotals'
 import Loadbar from './components/utilities/Loadbar'
 import MediaManager from './components/media-manager/MediaManager'
 import Messages from './components/utilities/Messages'
@@ -287,7 +284,6 @@ export default {
     }
   },
   components: {
-    AnalyticTotals,
     Loadbar,
     Messages,
     MediaManager,

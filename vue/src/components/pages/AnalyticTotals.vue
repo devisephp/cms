@@ -1,12 +1,17 @@
 <template>
-  <div id="devise-in-page-analytics" class="dvs-fixed dvs-pin-b dvs-pin-r dvs-z-30 dvs-p-8 dvs-mr-8 dvs-mb-8" :style="infoBlockTheme" v-if="analytics !== null">
+  <div 
+    id="devise-in-page-analytics" 
+    class="dvs-fixed dvs-pin-b dvs-pin-r dvs-z-30 dvs-mr-8 dvs-mb-8 dvs-pb-0" 
+    :style="infoBlockTheme" 
+    :class="{'dvs-p-8': !minimized, 'dvs-p-4': minimized}"
+    v-if="analytics !== null">
+    <div class="dvs-mb-8 dvs-mx-8 dvs-max-w-xs" v-show="!minimized">
+      <strong>{{ currentPage.title }} Analytics</strong><br>
+      <p class="dvs-mb-0">
+        Analytics for yesterday as compared with analytics from the same time a week ago.
+      </p>
+    </div>
     <div class="dvs-flex">
-      <div class="dvs-mr-8 dvs-max-w-xs" v-show="!minimized">
-        <strong>{{ currentPage.title }} Analytics</strong><br>
-        <p>
-          Analytics for yesterday as compared with analytics from the same time a week ago.
-        </p>
-      </div>
       <div class="dvs-flex dvs-flex-wrap dvs-justify-around dvs-w-full">
         <stat-block-doughnut class="dvs-mr-4 dvs-mb-4" :analytics="this.analytics" stat="Sessions" :minimized="minimized" />
         <stat-block-doughnut class="dvs-mr-4 dvs-mb-4" :analytics="this.analytics" stat="Page Views" :minimized="minimized" />
@@ -35,7 +40,7 @@ export default {
   data () {
     return {
       analytics: null,
-      minimized: true
+      minimized: false
     }
   },
   mounted () {

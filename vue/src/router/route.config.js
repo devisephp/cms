@@ -1,3 +1,8 @@
+import MothershipIndex from '../components/mothership/Index'
+import MothershipAnalytics from '../components/mothership/Analytics'
+import MothershipBackups from '../components/mothership/Backups'
+import MothershipReleases from '../components/mothership/Releases'
+import MothershipHealthReports from '../components/mothership/HealthReports'
 import LanguagesManage from '../components/languages/Manage'
 import MainMenu from '../components/menu/MainMenu'
 import MetaManage from '../components/meta/Manage'
@@ -45,6 +50,53 @@ var routes = [
     name: 'devise-page-editor',
     components: {
       'devise': PageEditor
+    }
+  },
+  {
+    path: '/devise/mothership',
+    name: 'devise-mothership-index',
+    components: {
+      'devise': MothershipIndex
+    }
+  },
+  {
+    path: '/devise/mothership/analytics',
+    name: 'devise-ms-analytics-index',
+    components: {
+      'devise': MothershipAnalytics
+    },
+    meta: {
+      wide: true
+    }
+  },
+  {
+    path: '/devise/mothership/releases',
+    name: 'devise-ms-releases-index',
+    components: {
+      'devise': MothershipReleases
+    },
+    meta: {
+      wide: true
+    }
+  },
+  {
+    path: '/devise/mothership/analytics',
+    name: 'devise-ms-backups-index',
+    components: {
+      'devise': MothershipBackups
+    },
+    meta: {
+      wide: true
+    }
+  },
+  {
+    path: '/devise/mothership/health-reports',
+    name: 'devise-ms-healthreports-index',
+    components: {
+      'devise': MothershipHealthReports
+    },
+    meta: {
+      wide: true
     }
   },
   {

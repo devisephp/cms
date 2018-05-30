@@ -2,7 +2,7 @@
 
 use Devise\Http\Requests\Redirects\ExecuteRedirect;
 use Devise\Support\Framework;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class RoutesGenerator
 {
@@ -27,17 +27,24 @@ class RoutesGenerator
    */
   public function loadRoutes()
   {
-    $routes = $this->findDvsPageRoutes();
+    if (Schema::hasTable('dvs_pages'))
+    {
+      $routes = $this->findDvsPageRoutes();
 
-    $routesBySite = $routes->groupBy('site_id');
-    $domains = $this->DB->table('dvs_sites')->pluck('domain', 'id');
+      if($routes->count()){
+        $routesBySite = $routes->groupBy('site_id');
+        $domains = $this->DB->table('dvs_sites')->pluck('domain', 'id');
 
-    $this->setPageRoutes($routesBySite, $domains);
+        $this->setPageRoutes($routesBySite, $domains);
 
-    $redirects = $this->findDvsRedirects();
-    $redirectsBySite = $redirects->groupBy('site_id');
+        $redirects = $this->findDvsRedirects();
+        $redirectsBySite = $redirects->groupBy('site_id');
 
-    $this->setRedirects($redirectsBySite, $domains);
+        $this->setRedirects($redirectsBySite, $domains);
+      } else {
+        $this->Route->get('/devise', 'Devise\Http\Controllers\AdminController@show');
+      }
+    }
   }
 
   private function setPageRoutes($routesBySite, $domains)
@@ -57,7 +64,8 @@ class RoutesGenerator
             if ($route->middleware)
             {
               $uses['middleware'] = explode('|', $route->middleware);
-            } else {
+            } else
+            {
               $uses['middleware'] = 'web';
             }
 
@@ -75,7 +83,8 @@ class RoutesGenerator
           if ($route->middleware)
           {
             $uses['middleware'] = explode('|', $route->middleware);
-          } else {
+          } else
+          {
             $uses['middleware'] = 'web';
           }
 

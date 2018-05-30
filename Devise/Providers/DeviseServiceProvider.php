@@ -53,17 +53,13 @@ class DeviseServiceProvider extends ServiceProvider
 
   private function setPublishables()
   {
-    // $this->publishes([
-    //   __DIR__ . '/../../vue/dist' => public_path('devise'),
-    // ], 'devise-public');
-    //
-    // $this->publishes([
-    //   __DIR__ . '/../../vue/src' => resource_path('assets/devise-dev'),
-    // ], 'devise-assets');
+    $this->publishes([
+      __DIR__ . '/../../vue/dist' => public_path('devise/dist'),
+    ], 'dvs-dist');
 
     $this->publishes([
-        __DIR__.'/../../config/devise.php' => config_path('devise.php'),
-    ]);
+      __DIR__ . '/../../config/devise.php' => config_path('devise.php'),
+    ], 'dvs-config');
   }
 
   private function setRoutes()
@@ -82,9 +78,10 @@ class DeviseServiceProvider extends ServiceProvider
     $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');
   }
 
-  private function setCustomDirectives() {
+  private function setCustomDirectives()
+  {
     Blade::directive('slices', function ($expression) {
-        return "<?php echo '<slices :slices=\"slices\"/>' ?>";
+      return "<?php echo '<slices :slices=\"slices\"/>' ?>";
     });
   }
 }

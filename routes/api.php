@@ -3,6 +3,7 @@
 //us ing web & auth so the user's web session will persist through the api. may need our own middware if we ever switch between web and oauth
 Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'], function () {
 
+
   /**
    * Fields
    */
@@ -43,6 +44,12 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::get('models', 'ModelsController@all');
   Route::get('models/settings', 'ModelsController@settings');
   Route::get('models/query', 'ModelsController@query');
+
+  /**
+   * Mothership
+   */
+  Route::get('pending-changes', 'ReleasesController@all');
+  Route::post('releases', 'ReleasesController@send');
 
   /**
    * Pages

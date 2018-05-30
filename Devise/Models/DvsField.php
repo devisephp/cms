@@ -2,13 +2,16 @@
 
 namespace Devise\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class DvsField extends Model
 {
   protected $table = 'dvs_fields';
 
   protected $fillable = ['slice_instance_id', 'key', 'json_value', 'content_requested'];
+
+  public function sliceInstance()
+  {
+    return $this->belongsTo(DvsSliceInstance::class, 'slice_instance_id');
+  }
 
   /**
    * Accessor on this model to get value

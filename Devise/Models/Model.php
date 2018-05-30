@@ -4,10 +4,13 @@ namespace Devise\Models;
 
 use Devise\Http\Requests\ApiRequest;
 
+use Devise\MotherShip\ReleasesToMotherShip;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
 class Model extends BaseModel
 {
+  use ReleasesToMotherShip;
+
   public function createFromRequest(ApiRequest $request)
   {
     return $this->create($this->getFillableData($request));

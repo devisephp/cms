@@ -2,10 +2,6 @@
 
 namespace Devise\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
-
 class DvsSliceInstance extends Model
 {
   protected $fillable = ['page_version_id','parent_instance_id','template_slice_id','enabled'];
@@ -17,6 +13,11 @@ class DvsSliceInstance extends Model
   public function templateSlice()
   {
     return $this->belongsTo(DvsTemplateSlice::class, 'template_slice_id');
+  }
+
+  public function pageVersion()
+  {
+    return $this->belongsTo(DvsPageVersion::class, 'page_version_id');
   }
 
   public function slices()

@@ -17,9 +17,11 @@ class DvsTemplateSlice extends Model
     'config' => ''
   ];
 
-  /**
-   *
-   */
+  public function template()
+  {
+    return $this->belongsTo(DvsTemplate::class, 'template_id');
+  }
+
   public function slices()
   {
     return $this->hasMany(DvsTemplateSlice::class, 'parent_id')

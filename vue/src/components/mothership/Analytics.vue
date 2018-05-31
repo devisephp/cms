@@ -51,10 +51,10 @@
         </div>
 
         <!-- Main Column Divide -->
-        <div class="dvs-flex">
+        <div class="dvs-flex dvs-flex-col lg:dvs-flex-row dvs-mb-8">
           
           <!-- Left Column -->
-          <div class="dvs-w-1/2">
+          <div class="lg:dvs-w-1/2 lg:dvs-pr-4">
 
             <div class="dvs-mb-8">
               <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">How are site sessions trending?</h4>
@@ -78,18 +78,82 @@
           </div>
 
           <!-- Right Column -->
-          <div class="dvs-w-1/2">
-            <super-table
-              v-model="analytics.countries"
+          <div class="lg:dvs-w-1/2 lg:dvs-pl-4">
+            
+            <div class="dvs-mb-8">
+              <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">What are the top countries by sessions?</h4>
+              <simple-table
+              class="dvs-w-full"
+              :data="analytics.countries"
               :columns="[
-                'Country',
-                'Sessions'
+                {name: 'Country'},
+                {name: 'Sessions', property: 'Sessions'}
               ]"
-              :showLinks="false"
               />
+            </div>
+
+            <div class="dvs-mb-8">
+              <simple-table
+              class="dvs-w-full"
+              :data="analytics.regions"
+              :columns="[
+                {name: 'Region'},
+                {name: 'Sessions', property: 'Sessions'}
+              ]"
+              />
+            </div>
+            
           </div>
 
+        </div>
 
+        <div class="dvs-mb-8">
+          <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Acquisition Sources</h4>
+          <simple-table
+          class="dvs-w-full"
+          :data="analytics['sources-sessions-pageviews']"
+          :columns="[
+            {name: 'Acquisition Source'},
+            {name: 'Sessions', property: 'Sessions'},
+            {name: 'Pages / Sessions', property: 'Pages Per Session'}
+          ]"
+          />
+        </div>
+
+         <div class="dvs-mb-8">
+          <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Date Searched</h4>
+          <simple-table
+          class="dvs-w-full"
+          :data="analytics['date-searched']"
+          :columns="[
+            {name: 'Date Searched'},
+            {name: 'Sessions', property: 'Sessions'}
+          ]"
+          />
+        </div>
+
+        <div class="dvs-mb-8">
+          <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Landing Page</h4>
+          <simple-table
+          class="dvs-w-full"
+          :data="analytics['landing-page']"
+          :columns="[
+            {name: 'Page'},
+            {name: 'Sessions', property: 'Sessions'}
+          ]"
+          />
+        </div>
+
+        <div class="dvs-mb-8">
+          <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Devices</h4>
+          <simple-table
+          class="dvs-w-full"
+          :data="analytics['devices']"
+          :columns="[
+            {name: 'Date Searched'},
+            {name: 'Sessions', property: 'Sessions'}
+          ]"
+          />
         </div>
 
         </template>
@@ -121,7 +185,7 @@ import DoughnutChart from './../pages/analytics/Doughnut'
 import PieChart from './../pages/analytics/Pie'
 import SidebarHeader from './../utilities/SidebarHeader'
 import LineChart from './../pages/analytics/Line'
-import SuperTable from './../utilities/tables/SuperTable'
+import SimpleTable from './../utilities/tables/SimpleTable'
 
 export default {
   name: 'MothershipAnalytics',
@@ -312,7 +376,7 @@ export default {
     PieChart,
     SidebarHeader,
     LineChart,
-    SuperTable
+    SimpleTable
   },
   mixins: [Dates]
 }

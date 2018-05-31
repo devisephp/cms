@@ -7,7 +7,9 @@ use Devise\Http\Requests\ApiRequest;
 use Devise\Http\Resources\Api\ReleaseModelResource;
 use Devise\MotherShip\Releases;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Mockery\Exception;
 
 class ReleasesController extends Controller
 {
@@ -40,6 +42,15 @@ class ReleasesController extends Controller
     $this->Releases->sendAndSync($request->all());
   }
 
+  public function init(ApiRequest $request)
+  {
+    $this->checkIfUpToDate($request);
+
+    $this->checkIfOkToInit();
+
+    $this->Releases->initWithMotherShip();
+  }
+
   private function checkIfUpToDate(ApiRequest $request)
   {
     $status = trim(shell_exec('git status'));
@@ -50,6 +61,16 @@ class ReleasesController extends Controller
       ]);
 
       throw $error;
+    }
+  }
+
+  private function checkIfOkToInit()
+  {
+    $current = $this->Releases->getCurrentRelease();
+
+    if ($current)
+    {
+      abort(400, 'Project has already been initiated');
     }
   }
 }

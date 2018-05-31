@@ -50,6 +50,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
    */
   Route::get('pending-changes', 'ReleasesController@all');
   Route::post('releases', 'ReleasesController@send');
+  Route::post('releases/init', 'ReleasesController@init');
 
   /**
    * Pages

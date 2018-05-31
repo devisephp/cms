@@ -11,6 +11,7 @@ use Devise\Models\DvsSite;
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * @todo refactor to a facade pattern
@@ -105,5 +106,10 @@ class Devise
   public static function user()
   {
     return 'Devise.prototype.$user = ' . json_encode(Auth::user()) . ";\n";
+  }
+
+  public static function mothershipEnabled()
+  {
+    return Schema::hasTable('dvs_releases');
   }
 }

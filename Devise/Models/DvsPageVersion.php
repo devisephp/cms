@@ -4,7 +4,6 @@ namespace Devise\Models;
 
 use Devise\Devise;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\View;
 
 class DvsPageVersion extends Model
 {

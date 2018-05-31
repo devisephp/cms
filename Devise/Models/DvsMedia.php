@@ -3,7 +3,6 @@
 namespace Devise\Models;
 
 use Devise\Sites\SiteDetector;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
 class DvsMedia extends Model

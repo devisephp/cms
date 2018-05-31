@@ -46,7 +46,7 @@ class ReleasesController extends Controller
     if (strpos($status, 'nothing to commit') === false && !$request->get('force'))
     {
       $error = ValidationException::withMessages([
-        'force' => ['Uncommited changes found. "force" flag is required.']
+        'force' => ['Uncommitted changes found. "force" flag is required.']
       ]);
 
       throw $error;

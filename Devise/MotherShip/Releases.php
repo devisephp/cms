@@ -7,6 +7,7 @@ namespace Devise\MotherShip;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class Releases
 {
@@ -27,9 +28,34 @@ class Releases
     $this->api = $api;
   }
 
+  public function initWithMotherShip()
+  {
+    $congif = config('database.connections.' . config('database.default'));
+
+    $dump = shell_exec('mysqldump -u ' . $congif['username'] . ' -p' . $congif['password'] . ' ' . $congif['database']);
+
+    $file = time() . '.sql';
+
+    File::put(storage_path() . '/' . $file, $dump);
+
+    $response = $this->api->init($this->getCurrentCommitHash(), storage_path() . '/' . $file);
+
+    $newRelease = new DvsRelease();
+    $newRelease->model_id = $response->id;
+    $newRelease->model_name = 'Release';
+    $newRelease->msh_id = $response->id;
+    $newRelease->created_at = $response->created_at;
+    $newRelease->updated_at = $response->updated_at;
+    $newRelease->save();
+
+    unlink(storage_path() . '/' . $file);
+
+    return $newRelease;
+  }
+
   public function getForDeviseFlow()
   {
-    $currentRelease = DvsRelease::where('model_name', 'Release')->orderBy('created_at', 'desc')->first();
+    $currentRelease = $this->getCurrentRelease();
 
     $rows = $this->getNewRows($currentRelease);
 
@@ -53,7 +79,7 @@ class Releases
 
   public function sendAndSync($toBeReleased)
   {
-    $currentRelease = DvsRelease::where('model_name', 'Release')->orderBy('created_at', 'desc')->first();
+    $currentRelease = $this->getCurrentRelease();
 
     $rows = $this->getNewRows($currentRelease);
 
@@ -148,6 +174,13 @@ class Releases
     }
   }
 
+  public function getCurrentRelease()
+  {
+    return DvsRelease::where('model_name', 'Release')
+      ->orderBy('created_at', 'desc')
+      ->first();
+  }
+
   private function getNewRows($currentRelease)
   {
     $currentReleaseDate = $currentRelease ? $currentRelease->created_at : '00-00-00 00:00:00';
@@ -185,5 +218,10 @@ class Releases
       ->first();
 
     return $newestOld ? $newestOld->created_at : date('Y-m-d H:i:s', strtotime('now -1 year'));
+  }
+
+  private function getCurrentCommitHash()
+  {
+    return trim(shell_exec('git rev-parse --verify HEAD'));
   }
 }

@@ -8,6 +8,7 @@ use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsPage;
 use Devise\Models\DvsSite;
 
+use Devise\MotherShip\DvsRelease;
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -110,6 +111,9 @@ class Devise
 
   public static function mothershipEnabled()
   {
-    return Schema::hasTable('dvs_releases');
+    $releasesCount = DvsRelease::where('model_name', 'Release')
+      ->count();
+
+    return (Schema::hasTable('dvs_releases') && $releasesCount > 0);
   }
 }

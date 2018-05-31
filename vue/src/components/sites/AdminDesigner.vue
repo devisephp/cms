@@ -40,6 +40,14 @@
         <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.adminText.color }">Admin Wide Windows</h6>
         <color-editor v-model="localValue.adminBackground" :options="{label: 'Background Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.adminText" :options="{label: 'Text Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
+
+        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.adminText.color }">Chart Colors</h6>
+        <color-editor v-model="localValue.chartColor1" :options="{label: 'Chart Color 1', hidePreview: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor2" :options="{label: 'Chart Color 2', hidePreview: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor3" :options="{label: 'Chart Color 3', hidePreview: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor4" :options="{label: 'Chart Color 4', hidePreview: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor5" :options="{label: 'Chart Color 5', hidePreview: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor6" :options="{label: 'Chart Color 6', hidePreview: true}" class="dvs-mb-4"></color-editor>
       </div>
 
       <div class="dvs-w-3/4 dvs-mb-8">
@@ -282,7 +290,13 @@ export default {
         statsShadowColor: {color: null},
         statsShadowSize: {text: null},
         adminBackground: {color: null},
-        adminText: {color: null}
+        adminText: {color: null},
+        chartColor1: {color: null},
+        chartColor2: {color: null},
+        chartColor3: {color: null},
+        chartColor4: {color: null},
+        chartColor5: {color: null},
+        chartColor6: {color: null}
       },
       presets: {
         Default: {
@@ -307,7 +321,13 @@ export default {
           adminText: { color:'rgba(80,80,80,1)' },
           buttonsInverseLeft: { color:'rgb(255, 255, 255)' },
           buttonsInverseRight: { color:'rgb(241, 231, 236)' },
-          buttonsInverseText: { color:'rgb(24, 24, 24)' } 
+          buttonsInverseText: { color:'rgb(24, 24, 24)' },
+          chartColor1: {color: 'rgba(54, 162, 235, 1)'},
+          chartColor2: {color: 'rgba(75, 192, 192, 1)'},
+          chartColor3: {color: 'rgba(255, 206, 86, 1)'},
+          chartColor4: {color: 'rgba(255, 99, 132, 1)'},
+          chartColor5: {color: 'rgba(153, 102, 255, 1)'},
+          chartColor6: {color: 'rgba(255, 159, 64, 1)'}
         },
         'Blue Sunrise': {
           sidebarTop: {color: '#343434'},
@@ -328,7 +348,13 @@ export default {
           statsShadowColor: {color: '#1baeda'},
           statsShadowSize: {text: '30px'},
           adminBackground: {color: '#2199be'},
-          adminText: {color: '#ffffff'}
+          adminText: {color: '#ffffff'},
+          chartColor1: {color: 'rgba(54, 162, 235, 1)'},
+          chartColor2: {color: 'rgba(75, 192, 192, 1)'},
+          chartColor3: {color: 'rgba(255, 206, 86, 1)'},
+          chartColor4: {color: 'rgba(255, 99, 132, 1)'},
+          chartColor5: {color: 'rgba(153, 102, 255, 1)'},
+          chartColor6: {color: 'rgba(255, 159, 64, 1)'}
         },
         'Purple Dinosaur': {
           sidebarTop: { color: '#855791' },
@@ -352,7 +378,13 @@ export default {
           adminText: { color: '#ffffff' },
           buttonsInverseLeft: { color: '#c1485c' },
           buttonsInverseRight: { color: '#d5997d' },
-          buttonsInverseText: { color: '#ffffff' }
+          buttonsInverseText: { color: '#ffffff' },
+          chartColor1: {color: 'rgba(54, 162, 235, 1)'},
+          chartColor2: {color: 'rgba(75, 192, 192, 1)'},
+          chartColor3: {color: 'rgba(255, 206, 86, 1)'},
+          chartColor4: {color: 'rgba(255, 99, 132, 1)'},
+          chartColor5: {color: 'rgba(153, 102, 255, 1)'},
+          chartColor6: {color: 'rgba(255, 159, 64, 1)'}
         },
         'RedRum': {
           sidebarTop: { color: 'rgba(194,33,33,1)' },
@@ -376,7 +408,13 @@ export default {
           adminText: { color: '#ffffff' },
           buttonsInverseLeft: { color: 'rgb(132, 195, 70)' },
           buttonsInverseRight: { color: 'rgb(120, 226, 15)' },
-          buttonsInverseText: { color: '#ffffff' }
+          buttonsInverseText: { color: '#ffffff' },
+          chartColor1: {color: 'rgba(54, 162, 235, 1)'},
+          chartColor2: {color: 'rgba(75, 192, 192, 1)'},
+          chartColor3: {color: 'rgba(255, 206, 86, 1)'},
+          chartColor4: {color: 'rgba(255, 99, 132, 1)'},
+          chartColor5: {color: 'rgba(153, 102, 255, 1)'},
+          chartColor6: {color: 'rgba(255, 159, 64, 1)'}
         }
       },
       chartColors: [

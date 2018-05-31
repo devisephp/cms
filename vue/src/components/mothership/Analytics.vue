@@ -56,16 +56,37 @@
           <!-- Left Column -->
           <div class="dvs-w-1/2">
 
-            <div>
-              <h4 :style="{color: theme.sidebarText.color}">How are site sessions trending?</h4>
+            <div class="dvs-mb-8">
+              <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">How are site sessions trending?</h4>
               <line-chart class="dvs-mb-8" :chart-data="analytics.sessions" :options="options" />
+            </div>
+
+            <div class="dvs-mb-8">
+              <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Channels</h4>
+              <div>
+                <bar-chart class="dvs-mb-8" :chart-data="analytics.channels" :options="barOptions" />
+              </div>
+            </div>
+
+            <div class="dvs-mb-8">
+              <h4 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Channels</h4>
+              <div>
+                <pie-chart class="dvs-mb-8" :chart-data="analytics.browser" :options="pieOptions" />
+              </div>
             </div>
 
           </div>
 
           <!-- Right Column -->
           <div class="dvs-w-1/2">
-            zsdfasdf
+            <super-table
+              v-model="analytics.countries"
+              :columns="[
+                'Country',
+                'Sessions'
+              ]"
+              :showLinks="false"
+              />
           </div>
 
 
@@ -93,11 +114,14 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex'
+import BarChart from './../pages/analytics/Bar'
 import DatePicker from './../utilities/DatePicker'
 import Dates from './../../mixins/Dates'
+import DoughnutChart from './../pages/analytics/Doughnut'
+import PieChart from './../pages/analytics/Pie'
 import SidebarHeader from './../utilities/SidebarHeader'
 import LineChart from './../pages/analytics/Line'
-// import StatBlockDoughnut from './analytics/StatBlockDoughnut'
+import SuperTable from './../utilities/tables/SuperTable'
 
 export default {
   name: 'MothershipAnalytics',
@@ -126,6 +150,61 @@ export default {
       this.analyticsDateRange.start = this.formatDate(oneWeekAgo)
       this.analyticsDateRange.end = this.formatDate(today)
     },
+    formatColors (dataset, index) {
+      dataset.fontColor = this.theme.statsText.color
+
+      if (typeof this.theme[`chartColor1`] !== 'undefined') {
+        dataset.borderColor = []
+        dataset.backgroundColor = []
+        dataset.pointBackgroundColor = this.theme[`chartColor1`].color
+        dataset.pointBorderColor = this.theme[`chartColor1`].color
+        for (let i = 1; i < 7; i++) {
+          if (typeof this.theme[`chartColor${i}`] !== 'undefined') {
+            dataset.borderColor[i] = this.theme[`chartColor${i}`].color
+            dataset.backgroundColor[i] = this.theme[`chartColor${i}`].color
+          }
+        }
+      } else {
+        dataset.borderColor = this.theme.statsText.color
+        dataset.backgroundColor = this.theme.statsLeft.color
+        dataset.pointBackgroundColor = this.theme.statsRight.color
+        dataset.pointBorderColor = this.theme.statsRight.color
+      }
+
+      dataset.pointRadius = 4
+      dataset.pointHoverRadius = 4
+      dataset.fill = false
+
+      return dataset
+    },
+    formatColors (dataset, index) {
+      dataset.fontColor = this.theme.statsText.color
+
+      if (typeof this.theme[`chartColor1`] !== 'undefined') {
+        dataset.borderColor = []
+        dataset.backgroundColor = []
+
+        dataset.pointBackgroundColor = this.theme[`chartColor1`].color
+        dataset.pointBorderColor = this.theme[`chartColor1`].color
+        for (let i = 1; i < 7; i++) {
+          if (typeof this.theme[`chartColor${i}`] !== 'undefined') {
+            dataset.borderColor[i - 1] = this.theme[`chartColor${i}`].color
+            dataset.backgroundColor[i - 1] = this.theme[`chartColor${i}`].color
+          }
+        }
+      } else {
+        dataset.borderColor = this.theme.statsText.color
+        dataset.backgroundColor = this.theme.statsLeft.color
+        dataset.pointBackgroundColor = this.theme.statsRight.color
+        dataset.pointBorderColor = this.theme.statsRight.color
+      }
+
+      dataset.pointRadius = 4
+      dataset.pointHoverRadius = 4
+      dataset.fill = false
+
+      return dataset
+    },
     retrieveAnalytics () {
       let self = this
       if (this.mothership) {
@@ -139,13 +218,15 @@ export default {
         this.getSiteAnalytics({site: this.site.id, dates: this.analyticsDateRange}).then(function (response) {
 
           response.data.sessions.datasets.map(function (dataset, index) {
-            dataset.fontColor = self.theme.statsText.color
-            dataset.borderColor = self.theme.statsText.color
-            dataset.pointRadius = 4
-            dataset.pointHoverRadius = 4
-            dataset.fill = false
+            return self.formatColors(dataset, index)
+          })
 
-            return dataset
+          response.data.channels.datasets.map(function (dataset, index) {
+            return self.formatColors(dataset, index)
+          })
+
+          response.data.browser.datasets.map(function (dataset, index) {
+            return self.formatColors(dataset, index)
           })
 
           self.$set(self, 'analytics', response.data)
@@ -162,7 +243,7 @@ export default {
     options () {
       return {
         responsive: true,
-    maintainAspectRatio: false,
+        maintainAspectRatio: false,
         legend: {
           labels: {
               fontColor: this.theme.statsText.color,
@@ -184,12 +265,54 @@ export default {
             }]
         }
       }
+    },
+    barOptions () {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          labels: {
+              fontColor: this.theme.statsText.color,
+              fontSize: 14
+          }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    fontColor: this.theme.statsText.color,
+                    fontSize: 12
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    fontColor: this.theme.statsText.color,
+                    fontSize: 12
+                }
+            }]
+        }
+      }
+    },
+    pieOptions () {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          labels: {
+              fontColor: this.theme.statsText.color,
+              fontSize: 14
+          }
+        }
+      }
     }
   },
   components: {
+    BarChart,
     DatePicker,
+    DoughnutChart,
+    PieChart,
     SidebarHeader,
-    LineChart
+    LineChart,
+    SuperTable
   },
   mixins: [Dates]
 }

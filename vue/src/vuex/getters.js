@@ -132,7 +132,13 @@ const getters = {
       adminText: { color:'rgba(80,80,80,1)' },
       buttonsInverseLeft: { color:'rgb(255, 255, 255)' },
       buttonsInverseRight: { color:'rgb(241, 231, 236)' },
-      buttonsInverseText: { color:'rgb(24, 24, 24)' } 
+      buttonsInverseText: { color:'rgb(24, 24, 24)' },
+      chartColor1: { color: 'rgba(54, 162, 235, 1)' },
+      chartColor2: { color: 'rgba(75, 192, 192, 1)' },
+      chartColor3: { color: 'rgba(255, 206, 86, 1)' },
+      chartColor4: { color: 'rgba(255, 99, 132, 1)' },
+      chartColor5: { color: 'rgba(153, 102, 255, 1)' },
+      chartColor6: { color: 'rgba(255, 159, 64, 1) '}
     }
 
     if (state.page) {

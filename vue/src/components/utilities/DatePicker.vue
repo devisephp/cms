@@ -17,6 +17,9 @@ export default {
       }
     }
   },
+  mounted () {
+    this.localDateTime = this.value
+  },
   components: {
     'date-picker': flatPickr
   },
@@ -24,6 +27,11 @@ export default {
     updateValue: function (value) {
       this.$emit('input', value)
       this.$emit('update', value)
+    }
+  },
+  watch: {
+    value: function (newValue) {
+      this.localDateTime = newValue
     }
   },
   props: ['value', 'settings', 'placeholder']

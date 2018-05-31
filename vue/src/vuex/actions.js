@@ -433,6 +433,19 @@ const actions = {
     })
   },
 
+  getSiteAnalytics (context, payload) {
+    return new Promise((resolve, reject) => {
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
+      window.axios.get(`https://mothership.app/api/v1/analytics/site?site_id=${payload.site}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
   getPageAnalytics (context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`

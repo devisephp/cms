@@ -47,6 +47,10 @@ class Releases
     $newRelease->created_at = $response->created_at;
     $newRelease->updated_at = $response->updated_at;
     $newRelease->save();
+
+    unlink(storage_path() . '/' . $file);
+
+    return $newRelease;
   }
 
   public function getForDeviseFlow()

@@ -5,6 +5,7 @@ namespace Devise\MotherShip;
 
 
 use Carbon\Carbon;
+use Devise\Models\DvsMigration;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -16,16 +17,19 @@ class Releases
    */
   private $api;
   /**
-   * @var Migrations
+   * @var DvsMigration
    */
-  private $migrations;
+  private $dvsMigration;
 
   /**
    * Releases constructor.
+   * @param Api $api
+   * @param DvsMigration $dvsMigration
    */
-  public function __construct(Api $api)
+  public function __construct(Api $api, DvsMigration $dvsMigration)
   {
     $this->api = $api;
+    $this->dvsMigration = $dvsMigration;
   }
 
   public function initWithMotherShip()
@@ -77,15 +81,18 @@ class Releases
     return collect($results);
   }
 
-  public function sendAndSync($toBeReleased)
+  public function send($toBeReleased)
   {
+    $migrationDate = $this->getCurrentMigrationDate();
+    dd($migrationDate);
     $currentRelease = $this->getCurrentRelease();
 
     $rows = $this->getNewRows($currentRelease);
 
     if ($rows->count())
     {
-      $migrations = $this->getPendingMigrations($rows);
+      $migrationDate = $this->getCurrentMigrationDate();
+      dd($migrationDate);
 
       DependenciesMap::newRelease();
       $rows->each(function ($item, $key) {
@@ -200,13 +207,13 @@ class Releases
       ->get();
   }
 
-  private function getPendingMigrations($newRows)
+  private function getCurrentMigrationDate()
   {
-    $start = $this->getNewestReleasedDate();
-    $endAtRelease = $newRows->sortByDesc('created_at')->first();
+    $newest = $this->dvsMigration
+      ->orderBy('migration', 'desc')
+      ->first();
 
-    return $this->migrations
-      ->getQueriesBetweenDates($start, $endAtRelease->created_at->format('Y-m-d H:i:s'));
+    return $newest->date;
   }
 
   private function getNewestReleasedDate()

@@ -106,7 +106,20 @@ class FieldManager
   /**
    * @param $slices
    */
-  public function saveSliceInstanceFields($pageVersionId, $slices, $parentId = 0, &$index = 0)
+  public function saveSliceInstanceFields($pageVersionId, $slices)
+  {
+    $instanceIds = [];
+    $index = 0;
+
+    $this->iterateSliceInstances($pageVersionId, $slices, 0, $index, $instanceIds);
+
+    $this->DvsSliceInstance
+      ->whereNotIn('id', $instanceIds)
+      ->where('page_version_id', $pageVersionId)
+      ->delete();
+  }
+
+  private function iterateSliceInstances($pageVersionId, $slices, $parentId = 0, &$index = 0, &$instanceIds = [])
   {
     foreach ($slices as $slice)
     {
@@ -123,6 +136,7 @@ class FieldManager
         $sliceInstance->save();
 
         $sliceInstanceId = $sliceInstance->id;
+        $instanceIds[] = $sliceInstanceId;
 
         foreach ($slice as $fieldKey => $fieldValue)
         {
@@ -143,7 +157,7 @@ class FieldManager
 
       if (isset($slice['slices']) && $slice['slices'])
       {
-        $this->saveSliceInstanceFields($pageVersionId, $slice['slices'], $sliceInstanceId, $index);
+        $this->iterateSliceInstances($pageVersionId, $slice['slices'], $sliceInstanceId, $index, $instanceIds);
       }
     }
   }
@@ -309,7 +323,8 @@ class FieldManager
   {
     $sliceInstance = $this->DvsSliceInstance->findOrFail($parentId);
 
-    if($sliceInstance != 'single'){
+    if ($sliceInstance != 'single')
+    {
       return $sliceInstance->template_slice_id;
     }
 

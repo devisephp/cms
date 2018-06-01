@@ -23,6 +23,7 @@ trait ReleasesToMotherShip
   {
     return $this->morphMany(DvsRelease::class, 'model');
   }
+
   /**
    *
    */
@@ -30,30 +31,37 @@ trait ReleasesToMotherShip
   {
     if (Devise::mothershipEnabled())
     {
-      parent::boot();
 
-      $log = App::make(DvsRelease::class);
+      $releasesCount = DvsRelease::where('model_name', 'Release')
+        ->count();
 
-      static::created(function (Model $model) use ($log) {
-        if ($model->saveRelease)
-        {
-          $log->saveCreate($model);
-        }
-      });
+      if ($releasesCount > 0)
+      {
+        parent::boot();
 
-      static::saved(function (Model $model) use ($log) {
-        if ($model->saveRelease && $model->created_at != $model->updated_at)
-        {
-          $log->saveUpdate($model);
-        }
-      });
+        $log = App::make(DvsRelease::class);
 
-      static::deleting(function (Model $model) use ($log) {
-        if ($model->saveRelease)
-        {
-          $log->saveDelete($model);
-        }
-      });
+        static::created(function (Model $model) use ($log) {
+          if ($model->saveRelease)
+          {
+            $log->saveCreate($model);
+          }
+        });
+
+        static::saved(function (Model $model) use ($log) {
+          if ($model->saveRelease && $model->created_at != $model->updated_at)
+          {
+            $log->saveUpdate($model);
+          }
+        });
+
+        static::deleting(function (Model $model) use ($log) {
+          if ($model->saveRelease)
+          {
+            $log->saveDelete($model);
+          }
+        });
+      }
     }
   }
 

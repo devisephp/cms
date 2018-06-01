@@ -6,7 +6,6 @@ use Devise\Http\Resources\Vue\PageResource;
 use Devise\Http\Resources\Vue\SiteResource;
 use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsPage;
-use Devise\Models\DvsSite;
 
 use Devise\MotherShip\DvsRelease;
 use Devise\Sites\SiteDetector;
@@ -111,9 +110,8 @@ class Devise
 
   public static function mothershipEnabled()
   {
-    $releasesCount = DvsRelease::where('model_name', 'Release')
-      ->count();
+    if(Schema::hasTable('dvs_releases') && config('devise.mothership.api-key')) return true;
 
-    return (Schema::hasTable('dvs_releases') && $releasesCount > 0);
+    return false;
   }
 }

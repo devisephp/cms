@@ -39,7 +39,7 @@ class ReleasesController extends Controller
   {
     $this->checkIfUpToDate($request);
 
-    $this->Releases->sendAndSync($request->all());
+    $this->Releases->send($request->all());
   }
 
   public function init(ApiRequest $request)

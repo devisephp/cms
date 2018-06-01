@@ -24,7 +24,7 @@
       </tr>
       <tr v-for="(record, rkey) in records" v-bind:key="record.id">
         <template v-for="(column, index) in columns" v-if="showColumn(column)">
-          <td :class="{'dvs-hidden lg:dvs-table-cell': !column.showMobile}">
+          <td :key="index" :class="{'dvs-hidden lg:dvs-table-cell': !column.showMobile}">
             <cell v-if="column.template" :record="record" :contents="getRecordColumn(record, column.key)"></cell>
             <span v-else>{{ getRecordColumn(record, column.key) }}</span>
           </td>

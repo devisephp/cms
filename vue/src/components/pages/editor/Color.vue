@@ -1,5 +1,5 @@
 <template>
-  <field-editor :options="options" v-model="localValue" ref="field">
+  <field-editor :options="options" v-model="localValue" ref="field" :showEditor="showEditor" @toggleShowEditor="toggleEditor">
     <template slot="preview">
       <span v-if="color === null || color === ''" class="dvs-italic">
         Currently No Value
@@ -28,7 +28,8 @@ export default {
     return {
       originalColor: null,
       localValue: {},
-      color: null
+      color: null,
+      showEditor: false
     }
   },
   mounted () {
@@ -37,6 +38,9 @@ export default {
     this.setDefault()
   },
   methods: {
+    toggleEditor () {
+      this.showEditor = !this.showEditor
+    },
     setDefault () {
       if (this.localValue.color === null) {
         if (this.options.default) {

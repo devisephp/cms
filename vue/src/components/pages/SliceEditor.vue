@@ -1,8 +1,23 @@
 <template>
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
-    <strong class="dvs-block dvs-mb-2 dvs-switch-sm dvs-text-sm dvs-ml-2 dvs-flex dvs-justify-between dvs-cursor-pointer" @click="toggleSlice(slice)">
-      {{ slice.metadata.label }}
-      <i v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'" class="ion-plus" @click.stop="addInstance(slice)"></i>
+    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-ml-2 dvs-flex dvs-justify-between dvs-cursor-pointer" @click="toggleSlice(slice)">
+      <template v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
+        <div>
+          {{ slice.metadata.label }} 
+        </div>
+        <div @click.stop="addInstance(slice)">
+          <i class="ion-plus"></i> Add New
+        </div>
+      </template>
+      <template v-else>
+        {{ slice.metadata.label }}
+        <template v-if="repeatableChild">
+          <div @click.stop="requestRemoveInstance(slice)">
+            Remove
+          </div>
+        </template>
+      </template>
+      
     </strong>
 
     <div class="dvs-collapsed dvs-mb-8" v-if="slice.metadata.open">
@@ -54,7 +69,7 @@
 
         <ul class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" >
           <template v-for="(s, key) in slice.slices">
-            <slice-editor :key="key" :slice="s" />
+            <slice-editor :key="key" :slice="s" :repeatable-child="true" @removeInstance="removeInstance" />
           </template>
         </ul>
       </div>
@@ -101,6 +116,8 @@ export default {
       this.slice.metadata.tools = !this.slice.metadata.tools
     },
     addInstance () {
+      this.$set(this.slice.metadata, 'open', true)
+
       // Setup the slice data
       var data = {
         metadata: Object.assign({}, this.slice.metadata)
@@ -118,6 +135,12 @@ export default {
 
       // Push the slice into the slices array
       this.slice.slices.push(data)
+    },
+    requestRemoveInstance (slice) {
+      this.$emit('removeInstance', slice)
+    },
+    removeInstance(slice) {
+      this.slice.slices.splice(this.slice.slices.indexOf(slice), 1)
     },
     hydrateMissingProperties (data) {
       let config = this.component(this.slice.metadata.name).config
@@ -183,7 +206,7 @@ export default {
       return fields
     }
   },
-  props: ['slice'],
+  props: ['slice', 'repeatableChild'],
   components: {
     SliceEditor,
     CheckboxEditor,

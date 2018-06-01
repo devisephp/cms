@@ -1,5 +1,5 @@
 <template>
-  <field-editor :options="options" v-model="localValue">
+  <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor">
     <template slot="preview">
       <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
         Currently No Value
@@ -26,13 +26,23 @@ export default {
     return {
       theId: '',
       theEditor: null,
-      localValue: {}
+      localValue: {},
+      showEditor: false
     }
   },
   mounted () {
     this.localValue = this.value
   },
   methods: {
+    toggleEditor () {
+      this.showEditor = !this.showEditor
+
+      if (this.showEditor) {
+        this.resolveId()
+        this.resolveEditor()
+        this.hydrate()
+      }
+    },
     resolveId () {
       this.theId = this.id
       if (this.id === '') {
@@ -58,15 +68,6 @@ export default {
     }
   },
   props: ['value', 'options', 'namekey'],
-  watch: {
-    show (newValue) {
-      if (show) {
-        this.resolveId()
-        this.resolveEditor()
-        this.hydrate()
-      }
-    }
-  },
   mixins: [Strings],
   components: {
     Toggle,

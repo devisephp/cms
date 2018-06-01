@@ -13,11 +13,7 @@
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-py-4">
       <button 
         class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success admin-component-third-in"  
-        :style="`
-                  background-image: linear-gradient(90deg, ${theme.buttonsActionLeft.color} 0%, ${theme.buttonsActionRight.color} 100%);
-                  color: ${theme.buttonsActionText.color};
-                  box-shadow: -4px -4px ${theme.buttonsActionShadowSize.text} ${theme.buttonsActionShadowColor.color};
-                `"
+        :style="actionButtonTheme"
         @click.prevent="requestSavePage()">
         <i class="ion-checkmark-circled dvs-mr-2"></i> Save this page
       </button>

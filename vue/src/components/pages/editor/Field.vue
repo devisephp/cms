@@ -4,7 +4,7 @@
       <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4 dvs-font-bold dvs-w-full">
         <div class="dvs-badge dvs-badge-empty dvs-mr-2" :class="{'dvs-bg-green-dark': localValue.enabled, 'dvs-bg-grey-light': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration"></div>
         <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
-          <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal" @click="showEditor = !showEditor">{{ options.label }}</span>
+          <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal" @click="toggleShowEditor">{{ options.label }}</span>
           <i class="ion-eye dvs-text-xl" v-if="!options.hidePreview" @mouseover="showPreview = true" @mouseout="showPreview = false"></i>
           <div 
             v-show="showPreview" 
@@ -22,32 +22,32 @@
     </div>
 
     <template v-if="showEditor">
-    <portal to="devise-field-editor">
-      <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-30">
-        <h6 class="dvs-text-blue-dark dvs-mb-4">
-          {{ localValue.label }}<br>
-          <small class="dvs-text-xs" v-if="localValue.instructions">
-            Hint from Developer: 
-            <span class="dvs-italic dvs-font-normal">
-              {{ localValue.instructions }}
-            </span>
-          </small>
-        </h6>
-        
-        <slot name="editor"></slot>
+      <portal to="devise-field-editor">
+        <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="toggleShowEditor"></div>
+        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40" :style="infoBlockTheme">
+          <h6 class="dvs-mb-4">
+            <span :style="{color: theme.adminText.color}">{{ localValue.label }}</span><br>
+            <small class="dvs-text-xs" v-if="localValue.instructions">
+              Hint from Developer: 
+              <span class="dvs-italic dvs-font-normal">
+                {{ localValue.instructions }}
+              </span>
+            </small>
+          </h6>
+          
+          <slot name="editor"></slot>
 
-        <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between">
-          <div>
-            <button class="dvs-btn dvs-mr-2" @click="showEditor = false">Done</button>
-            <button class="dvs-btn" @click="cancel">Cancel</button>
-          </div>
-          <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabled">
-            <label class="dvs-mr-2">Field Enabled</label>
-            <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
+          <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between">
+            <div>
+              <button class="dvs-btn dvs-mr-2" @click="toggleShowEditor" :style="regularButtonTheme">Done</button>
+            </div>
+            <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabled">
+              <label class="dvs-mr-2">Field Enabled</label>
+              <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
+            </div>
           </div>
         </div>
-      </div>
-    </portal>
+      </portal>
     </template>
 
   </div>
@@ -64,7 +64,6 @@ export default {
   data () {
     return {
       localValue: {},
-      showEditor: false,
       showPreview: false
     }
   },
@@ -75,13 +74,8 @@ export default {
     })
   },
   methods: {
-    update (event) {
-      this.$emit('input', this.localValue)
-      this.$emit('change', this.localValue)
-    },
-    cancel () {
-      this.$emit('cancel')
-      this.showEditor = false
+    toggleShowEditor () {
+      this.$emit('toggleShowEditor')
     },
     enabledTip (enabled) {
       if (enabled) {
@@ -95,7 +89,7 @@ export default {
       'fieldConfig'
     ])
   },
-  props: ['value', 'options'],
+  props: ['value', 'options', 'showEditor'],
   mixins: [Strings],
   components: {
     Toggle

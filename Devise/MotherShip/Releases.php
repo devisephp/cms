@@ -7,6 +7,7 @@ namespace Devise\MotherShip;
 use Carbon\Carbon;
 use Devise\Models\DvsMigration;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -42,7 +43,9 @@ class Releases
 
     File::put(storage_path() . '/' . $file, $dump);
 
-    $response = $this->api->init($this->getCurrentCommitHash(), storage_path() . '/' . $file);
+    $migrationDate = $this->getCurrentMigrationDate();
+
+    $response = $this->api->init($this->getCurrentCommitHash(), Auth::id() ?: 0, $migrationDate, storage_path() . '/' . $file);
 
     $newRelease = new DvsRelease();
     $newRelease->model_id = $response->id;
@@ -81,60 +84,34 @@ class Releases
     return collect($results);
   }
 
-  public function send($toBeReleased)
+  public function send($toBeReleased, $message)
   {
-    $migrationDate = $this->getCurrentMigrationDate();
-    dd($migrationDate);
-    $currentRelease = $this->getCurrentRelease();
-
-    $rows = $this->getNewRows($currentRelease);
+    $rows = $this->getAllById($toBeReleased);
 
     if ($rows->count())
     {
       $migrationDate = $this->getCurrentMigrationDate();
-      dd($migrationDate);
 
       DependenciesMap::newRelease();
+
       $rows->each(function ($item, $key) {
         $item->type = ($item->msh_id) ? 'update' : 'create';
-        $item->model->prepRelease();
+        $item->modelRecord->prepRelease();
       });
 
       $data = [
-        'commit'      => trim(shell_exec('git rev-parse --verify HEAD')),
-        'environment' => App::environment(),
-        'rows'        => $rows,
-        'release_ids' => $toBeReleased,
-        'release'     => $currentRelease ? $currentRelease->msh_id : 0,
-        'migrations'  => $migrations
+        'commit'              => trim(shell_exec('git rev-parse --verify HEAD')),
+        'environment'         => App::environment(),
+        'rows'                => $rows,
+        'last_migration_date' => $migrationDate,
+        'message'             => $message,
+        'user_id'             => Auth::id() ?: 0
       ];
 
       $responseData = $this->api->store($data);
 
-      $releases = collect($responseData->releases);
+      $lastRelease = $responseData->release;
       $rows = collect($responseData->rows);
-
-      $releaseIds = $releases->pluck('id')->toArray();
-      array_pop($releaseIds);
-
-      dd($responseData);
-
-      /**
-       * !!!!!
-       * !!!!!
-       * !!!!!
-       * We should no longer be going back to the api. the sql for each release should come in the server response
-       * we need to step through each release run migrations and run through each query
-       * !!!!!
-       * !!!!!
-       * !!!!!
-       */
-      if ($releaseIds)
-      {
-        $query = $this->api->store($releaseIds);
-      }
-
-      $lastRelease = $releases->last();
 
       $newRelease = new DvsRelease();
       $newRelease->model_id = $lastRelease->id;
@@ -143,16 +120,9 @@ class Releases
       $newRelease->created_at = $lastRelease->created_at;
       $newRelease->updated_at = $lastRelease->updated_at;
       $newRelease->save();
-
-      shell_exec('git pull');
-      shell_exec('git checkout ' . $lastRelease->commit_hash);
-
-      DB::unprepared('UPDATE dvs_releases LEFT JOIN shirts on shirts.id = dvs_releases.model_id SET dvs_releases.model_id = dvs_releases.model_id + 100, shirts.id = shirts.id + 100 WHERE msh_id = 0 and dvs_releases.id NOT IN (' . $rows->pluck('id')->implode(',') . ');');
-
       foreach ($rows as $row)
       {
-        $record = DvsRelease::with('model')
-          ->find($row->id);
+        $record = DvsRelease::find($row->id);
 
         $record->modelRecord->saveRelease = false;
         $record->modelRecord->id = $row->msh_id;
@@ -164,20 +134,6 @@ class Releases
         $record->save();
 
       }
-
-      if ($query)
-      {
-        $queries = explode("\n", $query);
-        foreach ($queries as $query)
-        {
-          if ($query)
-          {
-            DB::unprepared($query);
-          }
-        }
-      }
-
-      echo $query;
     }
   }
 
@@ -204,6 +160,21 @@ class Releases
           ->orWhere('deleted_at', '>', $currentReleaseDate);
       })
       ->orderBy('created_at')
+      ->get();
+  }
+
+  private function getAllById($ids)
+  {
+    $currentRelease = $this->getCurrentRelease();
+    $currentReleaseDate = $currentRelease ? $currentRelease->created_at : '00-00-00 00:00:00';
+dd($currentReleaseDate);
+    return DvsRelease::whereIn('id', $ids)
+      ->where(function ($query) use ($currentReleaseDate) {
+        $query->where('msh_id', 0)
+          ->orWhere('updated_at', '>', $currentReleaseDate)
+          ->orWhere('deleted_at', '>', $currentReleaseDate);
+      })
+      ->orderBy('updated_at')
       ->get();
   }
 

@@ -6,13 +6,13 @@ use Devise\Http\Requests\ApiRequest;
 
 use Devise\Http\Resources\Api\ReleaseModelResource;
 use Devise\MotherShip\Releases;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use Mockery\Exception;
 
 class ReleasesController extends Controller
 {
+  use ValidatesRequests;
   /**
    * @var Releases
    */
@@ -37,9 +37,11 @@ class ReleasesController extends Controller
 
   public function send(ApiRequest $request)
   {
+    $this->validate($request, ['message' => 'required']);
+
     $this->checkIfUpToDate($request);
 
-    $this->Releases->send($request->all());
+    $this->Releases->send($request->get('ids'), $request->get('message'));
   }
 
   public function init(ApiRequest $request)
@@ -49,6 +51,11 @@ class ReleasesController extends Controller
     $this->checkIfOkToInit();
 
     $this->Releases->initWithMotherShip();
+  }
+
+  public function commitHash(ApiRequest $request)
+  {
+    return $this->Releases->getCurrentRelease();
   }
 
   private function checkIfUpToDate(ApiRequest $request)

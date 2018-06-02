@@ -60,7 +60,7 @@ class Api
     try
     {
       $client = new Client();
-      $response = $client->request('POST', $this->mshUrl . 'api/v1/projects/4/releases', [
+      $response = $client->request('POST', $this->mshUrl . 'api/v1/releases', [
         'headers' => [
           'Authorization' => 'Bearer ' . config('devise.mothership.api-key')
         ],
@@ -85,12 +85,13 @@ class Api
     try
     {
       $client = new Client();
-      $response = $client->request('GET', $this->mshUrl . 'api/v1/projects/4/releases/' . $releaseIds, [
+      $response = $client->request('GET', $this->mshUrl . 'api/v1/releases?ids=' . $releaseIds, [
         'headers' => [
           'Authorization' => 'Bearer ' . config('devise.mothership.api-key')
         ]
       ]);
-      $query = $response->getBody();
+
+      $responseData = json_decode($response->getBody());
     } catch (ClientException $e)
     {
       $response = $e->getResponse();
@@ -98,6 +99,6 @@ class Api
       exit;
     }
 
-    return $query;
+    return $responseData;
   }
 }

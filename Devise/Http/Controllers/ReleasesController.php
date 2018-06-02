@@ -35,6 +35,13 @@ class ReleasesController extends Controller
     return ReleaseModelResource::collection($all);
   }
 
+  public function pull(ApiRequest $request, $releaseId)
+  {
+    $this->checkThatReleaseHasNotAlreadyBeenPulled($releaseId);
+
+    $this->Releases->pull($releaseId);
+  }
+
   public function send(ApiRequest $request)
   {
     $this->validate($request, ['message' => 'required']);
@@ -65,6 +72,20 @@ class ReleasesController extends Controller
     {
       $error = ValidationException::withMessages([
         'force' => ['Uncommitted changes found. "force" flag is required.']
+      ]);
+
+      throw $error;
+    }
+  }
+
+  private function checkThatReleaseHasNotAlreadyBeenPulled($releaseId)
+  {
+    $exists = $this->Releases->getByMotherShipId($releaseId);
+
+    if ($exists)
+    {
+      $error = ValidationException::withMessages([
+        'release_id' => ['Release has already been pulled from MotherShip.']
       ]);
 
       throw $error;

@@ -47,13 +47,7 @@ class Releases
 
     $response = $this->api->init($this->getCurrentCommitHash(), Auth::id() ?: 0, $migrationDate, storage_path() . '/' . $file);
 
-    $newRelease = new DvsRelease();
-    $newRelease->model_id = $response->id;
-    $newRelease->model_name = 'Release';
-    $newRelease->msh_id = $response->id;
-    $newRelease->created_at = $response->created_at;
-    $newRelease->updated_at = $response->updated_at;
-    $newRelease->save();
+    $newRelease = $this->saveRelease($response);
 
     unlink(storage_path() . '/' . $file);
 
@@ -110,16 +104,11 @@ class Releases
 
       $responseData = $this->api->store($data);
 
-      $lastRelease = $responseData->release;
+      $release = $responseData->release;
       $rows = collect($responseData->rows);
 
-      $newRelease = new DvsRelease();
-      $newRelease->model_id = $lastRelease->id;
-      $newRelease->model_name = 'Release';
-      $newRelease->msh_id = $lastRelease->id;
-      $newRelease->created_at = $lastRelease->created_at;
-      $newRelease->updated_at = $lastRelease->updated_at;
-      $newRelease->save();
+      $this->saveRelease($release);
+
       foreach ($rows as $row)
       {
         $record = DvsRelease::find($row->id);
@@ -137,11 +126,40 @@ class Releases
     }
   }
 
+  public function pull($releaseId)
+  {
+    $releases = $this->api->get([$releaseId]);
+    foreach ($releases as $release)
+    {
+      $this->saveRelease($release);
+
+      DB::unprepared($release->query);
+    }
+  }
+
   public function getCurrentRelease()
   {
     return DvsRelease::where('model_name', 'Release')
       ->orderBy('created_at', 'desc')
       ->first();
+  }
+
+  public function getByMotherShipId($id)
+  {
+    return DvsRelease::where('msh_id', $id)->first();
+  }
+
+  private function saveRelease($release)
+  {
+    $r = new DvsRelease();
+    $r->model_id = $release->id;
+    $r->model_name = 'Release';
+    $r->msh_id = $release->id;
+    $r->created_at = $release->created_at;
+    $r->updated_at = $release->updated_at;
+    $r->save();
+
+    return $r;
   }
 
   private function getNewRows($currentRelease)
@@ -167,7 +185,7 @@ class Releases
   {
     $currentRelease = $this->getCurrentRelease();
     $currentReleaseDate = $currentRelease ? $currentRelease->created_at : '00-00-00 00:00:00';
-dd($currentReleaseDate);
+
     return DvsRelease::whereIn('id', $ids)
       ->where(function ($query) use ($currentReleaseDate) {
         $query->where('msh_id', 0)

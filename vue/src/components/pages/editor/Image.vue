@@ -25,7 +25,7 @@
 import FieldEditor from './Field'
 
 export default {
-  name: 'TextEditor',
+  name: 'ImageEditor',
   data () {
     return {
       localValue: {},

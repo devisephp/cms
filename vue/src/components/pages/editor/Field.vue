@@ -41,7 +41,7 @@
             <div>
               <button class="dvs-btn dvs-mr-2" @click="toggleShowEditor" :style="regularButtonTheme">Done</button>
             </div>
-            <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabled">
+            <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="typeof options.default !== 'undefined' && typeof options.default.enabled !== 'undefined'">
               <label class="dvs-mr-2">Field Enabled</label>
               <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
             </div>

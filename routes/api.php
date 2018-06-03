@@ -48,9 +48,13 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   /**
    * Mothership
    */
-  Route::get('pending-changes', 'ReleasesController@all');
-  Route::post('releases', 'ReleasesController@send');
-  Route::post('releases/init', 'ReleasesController@init');
+  Route::post('mothership/init', 'ReleasesController@init');
+
+  Route::get('mothership/commit-hash', 'ReleasesController@commitHash');
+  Route::get('mothership/pending-changes', 'ReleasesController@all');
+
+  Route::get('mothership/releases/{release_id}', 'ReleasesController@pull');
+  Route::post('mothership/releases', 'ReleasesController@send');
 
   /**
    * Pages

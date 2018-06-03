@@ -5,11 +5,13 @@ namespace Devise\MotherShip;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
+use Illuminate\Support\Facades\App;
+
 class Api
 {
   private $mshUrl = 'http://mothership.test/';
 
-  public function init($commitHash, $filePath)
+  public function init($commitHash, $userId, $lastMigrationDate, $filePath)
   {
     try
     {
@@ -22,6 +24,18 @@ class Api
           [
             'name'     => 'commit_hash',
             'contents' => $commitHash
+          ],
+          [
+            'name'     => 'user_id',
+            'contents' => $userId
+          ],
+          [
+            'name'     => 'last_migration_date',
+            'contents' => $lastMigrationDate
+          ],
+          [
+            'name'     => 'environment',
+            'contents' => App::environment()
           ],
           [
             'name'     => 'dump',
@@ -46,7 +60,10 @@ class Api
     try
     {
       $client = new Client();
-      $response = $client->request('POST', $this->mshUrl . 'api/v1/projects/4/releases', [
+      $response = $client->request('POST', $this->mshUrl . 'api/v1/releases', [
+        'headers' => [
+          'Authorization' => 'Bearer ' . config('devise.mothership.api-key')
+        ],
         'json' => $data,
       ]);
 
@@ -68,8 +85,13 @@ class Api
     try
     {
       $client = new Client();
-      $response = $client->request('GET', $this->mshUrl . 'api/v1/projects/4/releases/' . $releaseIds);
-      $query = $response->getBody();
+      $response = $client->request('GET', $this->mshUrl . 'api/v1/releases?ids=' . $releaseIds, [
+        'headers' => [
+          'Authorization' => 'Bearer ' . config('devise.mothership.api-key')
+        ]
+      ]);
+
+      $responseData = json_decode($response->getBody());
     } catch (ClientException $e)
     {
       $response = $e->getResponse();
@@ -77,6 +99,6 @@ class Api
       exit;
     }
 
-    return $query;
+    return $responseData;
   }
 }

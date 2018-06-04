@@ -1,5 +1,5 @@
 <template>
-  <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor">
+  <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
     <template slot="preview">
       <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
         Currently No Value
@@ -8,7 +8,7 @@
     </template>
     <template slot="editor">
       <input type="hidden" :id="theId" v-model="localValue.text" :name="namekey" />
-      <trix-editor :input="theId" @trix-change="update" ref="trixeditor"></trix-editor>
+      <trix-editor :input="theId" @trix-change="update" @trix-initialize="editorInitialized" ref="trixeditor"></trix-editor>
     </template>
   </field-editor>
 </template>
@@ -27,10 +27,12 @@ export default {
       theId: '',
       theEditor: null,
       localValue: {},
+      originalValue: null,
       showEditor: false
     }
   },
   mounted () {
+    this.originalValue = Object.assign({}, this.value)
     this.localValue = this.value
   },
   methods: {
@@ -39,9 +41,14 @@ export default {
 
       if (this.showEditor) {
         this.resolveId()
-        this.resolveEditor()
-        this.hydrate()
       }
+    },
+    cancel () {
+      this.theEditor.loadHTML(this.originalValue.text)
+      this.$emit('input', this.originalValue)
+      this.$emit('change', this.originalValue)
+
+      this.toggleEditor()
     },
     resolveId () {
       this.theId = this.id
@@ -49,17 +56,19 @@ export default {
         this.theId = this.randomString(8)
       }
     },
-    resolveEditor () {
+    editorInitialized () {
       let self = this
+
       this.$nextTick(function () {
-        self.theEditor = self.$refs.trixeditor.editor
+        self.resolveEditor()
+        self.hydrate()
       })
     },
+    resolveEditor () {
+      this.theEditor = this.$refs.trixeditor.editor
+    },
     hydrate () {
-      let self = this
-      this.$nextTick(function () {
-        self.theEditor.insertHTML(self.value.text)
-      })
+      this.theEditor.insertHTML(this.value.text)
     },
     update (event) {
       this.localValue.text = event.target.value

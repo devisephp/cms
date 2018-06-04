@@ -1595,7 +1595,7 @@ button:hover {
   -webkit-transform: translateX(-50%) translateY(-50%);
           transform: translateX(-50%) translateY(-50%);
   background-color: #fff;
-  z-index: 50;
+  z-index: 60;
   border-radius: .25rem;
 }
 
@@ -5221,6 +5221,10 @@ trix-editor {
   z-index: 50;
 }
 
+.dvs-z-60 {
+  z-index: 60;
+}
+
 .dvs-z-auto {
   z-index: auto;
 }
@@ -8103,6 +8107,10 @@ trix-editor {
 
   .md\:dvs-z-50 {
     z-index: 50;
+  }
+
+  .md\:dvs-z-60 {
+    z-index: 60;
   }
 
   .md\:dvs-z-auto {
@@ -10988,6 +10996,10 @@ trix-editor {
 
   .lg\:dvs-z-50 {
     z-index: 50;
+  }
+
+  .lg\:dvs-z-60 {
+    z-index: 60;
   }
 
   .lg\:dvs-z-auto {

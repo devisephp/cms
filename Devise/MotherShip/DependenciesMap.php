@@ -19,8 +19,8 @@ class DependenciesMap
 
     self::addToMap(
       $relation->getParent()->getTable(),
-      $relation->getTable(),
-      $relation->getForeignPivotKeyName()
+      $relation->getRelated()->getTable(),
+      $relation->getForeignKey()
     );
 
     switch ($className)

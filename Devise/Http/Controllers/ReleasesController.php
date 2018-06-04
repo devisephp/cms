@@ -6,13 +6,13 @@ use Devise\Http\Requests\ApiRequest;
 
 use Devise\Http\Resources\Api\ReleaseModelResource;
 use Devise\MotherShip\Releases;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use Mockery\Exception;
 
 class ReleasesController extends Controller
 {
+  use ValidatesRequests;
   /**
    * @var Releases
    */
@@ -35,11 +35,20 @@ class ReleasesController extends Controller
     return ReleaseModelResource::collection($all);
   }
 
+  public function pull(ApiRequest $request, $releaseId)
+  {
+    $this->checkThatReleaseHasNotAlreadyBeenPulled($releaseId);
+
+    $this->Releases->pull($releaseId);
+  }
+
   public function send(ApiRequest $request)
   {
+    $this->validate($request, ['message' => 'required']);
+
     $this->checkIfUpToDate($request);
 
-    $this->Releases->send($request->all());
+    $this->Releases->send($request->get('ids'), $request->get('message'));
   }
 
   public function init(ApiRequest $request)
@@ -51,6 +60,11 @@ class ReleasesController extends Controller
     $this->Releases->initWithMotherShip();
   }
 
+  public function commitHash(ApiRequest $request)
+  {
+    return $this->Releases->getCurrentRelease();
+  }
+
   private function checkIfUpToDate(ApiRequest $request)
   {
     $status = trim(shell_exec('git status'));
@@ -58,6 +72,20 @@ class ReleasesController extends Controller
     {
       $error = ValidationException::withMessages([
         'force' => ['Uncommitted changes found. "force" flag is required.']
+      ]);
+
+      throw $error;
+    }
+  }
+
+  private function checkThatReleaseHasNotAlreadyBeenPulled($releaseId)
+  {
+    $exists = $this->Releases->getByMotherShipId($releaseId);
+
+    if ($exists)
+    {
+      $error = ValidationException::withMessages([
+        'release_id' => ['Release has already been pulled from MotherShip.']
       ]);
 
       throw $error;

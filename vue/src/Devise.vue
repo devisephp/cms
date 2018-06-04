@@ -8,7 +8,7 @@
       <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         <div 
           id="devise-admin" 
-          v-if="!isPreviewFrame && isLoggedIn" 
+          v-if="!isPreviewFrame && isLoggedIn && !adminClosed" 
           class="dvs-text-grey-darker dvs-bg-white"
           :class="[deviseOptions.adminClass]" 
           :style="`

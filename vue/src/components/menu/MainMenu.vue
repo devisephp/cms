@@ -11,12 +11,6 @@
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-pages-index')">
           Pages
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-industries-index')">
-          Industries
-        </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-products-index')">
-          Products
-        </li>
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-users-index')">
           Users
         </li>

@@ -2,7 +2,11 @@
   <div class="dvs-relative">
     <div class="dvs-flex dvs-justify-between dvs-items-center">
       <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4 dvs-font-bold dvs-w-full">
-        <div class="dvs-badge dvs-badge-empty dvs-mr-2" :class="{'dvs-bg-green-dark': localValue.enabled, 'dvs-bg-grey-light': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration"></div>
+        <div 
+          class="dvs-rounded-full dvs-mr-2 dvs-w-2 dvs-h-2 dvs-mr-2" 
+          :class="{'dvs-bg-green': localValue.enabled, 'dvs-bg-white': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" 
+          :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration">
+        </div>
         <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
           <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal" @click="toggleShowEditor">{{ options.label }}</span>
           <i class="ion-eye dvs-text-xl" v-if="!options.hidePreview" @mouseover="showPreview = true" @mouseout="showPreview = false"></i>
@@ -42,7 +46,7 @@
               <button class="dvs-btn dvs-mr-2" @click="toggleShowEditor" :style="regularButtonTheme">Done</button>
               <button class="dvs-btn dvs-mr-2" @click="cancel" :style="regularButtonTheme">Cancel</button>
             </div>
-            <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="typeof localValue.default !== 'undefined' && typeof localValue.default.enabled !== 'undefined'">
+            <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabler">
               <label class="dvs-mr-2">Field Enabled</label>
               <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
             </div>

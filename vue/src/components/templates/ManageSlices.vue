@@ -33,8 +33,8 @@
           <label>Select a Slice</label>
           <select v-model="sliceToAdd.slice">
             <option :value="null">Select a Slice</option>
-            <optgroup v-for="(group, name) in sliceDirectoriesOptions" :label="name">
-              <option v-for="option in group" :value="option">
+            <optgroup v-for="(group, name) in sliceDirectoriesOptions" :key="name" :label="name">
+              <option v-for="option in group" :key="option.id" :value="option">
                 {{ option.name }}
               </option>
             </optgroup>
@@ -52,7 +52,7 @@
           <label>Select a Model</label>
           <select v-model="sliceToAdd.model">
             <option :value="null">Select a Model</option>
-            <option :value="model" v-for="model in storeModels">{{ model.name }}</option>
+            <option :value="model" v-for="model in storeModels" :key="model.id">{{ model.name }}</option>
           </select>
         </fieldset>
         <button class="dvs-btn" :disabled="!sliceToAdd.model" @click="selectModelToAdd()">Select</button>

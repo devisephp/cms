@@ -145,6 +145,7 @@ export default {
       devise.$bus = deviseSettings.$bus
       
       this.addWatchers()
+      this.setSizeAndBreakpoint()
 
       let self = this
       this.$nextTick(function () {

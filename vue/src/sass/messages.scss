@@ -1,9 +1,10 @@
-.alert-message {
-  @apply dvs-fixed dvs-pin-b dvs-pin-l dvs-mx-8 dvs-z-50 dvs-rounded dvs-bg-blue-dark dvs-text-white dvs-shadow-lg dvs-p-4;
+.dvs-alert-message {
+  @apply dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-8 dvs-mx-8 dvs-z-60 dvs-p-8 dvs-rounded;
 
   h5 {
     @apply dvs-flex dvs-justify-between dvs-mb-4
   }
+
 
   h6 {
     @apply dvs-mb-1
@@ -25,7 +26,7 @@
     }
   }
 
-  &.error {
+  &.dvs-error {
     @apply dvs-bg-red-dark;
 
     li {

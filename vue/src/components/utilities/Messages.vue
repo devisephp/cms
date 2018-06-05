@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fade">
-      <div class="alert-message error" v-show="errors.length > 0">
+      <div class="dvs-alert-message dvs-error" :style="infoBlockTheme" v-show="errors.length > 0">
         <h5>{{mainTitle}} <i @click="closeErrors()" class="cursor-pointer ion-icon ion-android-close"></i></h5>
         <ul>
           <transition-group name="list" tag="div">
@@ -15,7 +15,7 @@
       </div>
     </transition>
     <transition name="fade">
-      <div class="alert-message" v-show="messages.length > 0">
+      <div class="dvs-alert-message" :style="infoBlockTheme" v-show="messages.length > 0">
         <h5>Hey There! <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i></h5>
         <ul>
           <transition-group name="list" tag="div">

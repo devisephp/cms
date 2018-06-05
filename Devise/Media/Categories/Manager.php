@@ -1,7 +1,5 @@
 <?php namespace Devise\Media\Categories;
 
-use Devise\Media\Files\Filesystem;
-use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 
 /**
@@ -12,37 +10,19 @@ use Devise\Support\Framework;
  */
 class Manager
 {
-  /**
-   * @var Filesystem
-   */
-  protected $Filesystem;
-
-  /**
-   * @var CategoryPaths
-   */
   protected $CategoryPaths;
 
   /**
-   * Create a new category manager
    *
-   * @param Filesystem $Filesystem
-   * @param CategoryPaths $CategoryPaths
    */
-  public function __construct(Filesystem $Filesystem, CategoryPaths $CategoryPaths, SiteDetector $SiteDetector, Framework $Framework)
+  public function __construct(CategoryPaths $CategoryPaths, Framework $Framework)
   {
-    $this->Filesystem = $Filesystem;
     $this->CategoryPaths = $CategoryPaths;
-
-    $site = $SiteDetector->current();
-    $this->basepath = public_path() . '/' . $Framework->Config->get('devise.media.root-directory') . '/' . $site->domain;
+    $this->Storage = $Framework->storage;
   }
 
   /**
-   * Stores the category in the filesystem
    *
-   * @param $input
-   * @return bool
-   * @throws CategoryAlreadyExistsException
    */
   public function storeNewCategory($input)
   {
@@ -53,22 +33,19 @@ class Manager
       $localPath = $this->CategoryPaths->fromDot($category);
       $serverPath = $this->CategoryPaths->serverPath($localPath);
 
-      if ($this->Filesystem->isDirectory($serverPath . $input['name']))
+      if ($this->Storage->exists($serverPath . $input['name']))
       {
-        throw new CategoryAlreadyExistsException('This category already exists, cannot create ' . $input['name']);
+        throw new \Exception('This category already exists, cannot create ' . $input['name']);
       }
 
-      return $this->Filesystem->makeDirectory($serverPath . $input['name'], 0775);
+      return $this->Storage->makeDirectory($serverPath . $input['name']);
     }
 
     return false;
   }
 
   /**
-   * Removes the category path
    *
-   * @param $input
-   * @return bool
    */
   public function destroyCategory($input)
   {
@@ -77,21 +54,9 @@ class Manager
       $localPath = $this->CategoryPaths->fromDot($input['directory']);
       $serverPath = $this->CategoryPaths->serverPath($localPath);
 
-      return $this->Filesystem->deleteDirectory($serverPath);
+      return $this->Storage->deleteDirectory($serverPath);
     }
 
     return false;
-  }
-
-  /**
-   * Renames a category path
-   *
-   * @param $path
-   * @param $newName
-   */
-  public function renameCategory($path, $newName)
-  {
-    $base = $this->basepath . $path;
-    $this->Filesystem->move($base, dirname($base) . '/' . $newName);
   }
 }

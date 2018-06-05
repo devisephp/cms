@@ -3,6 +3,7 @@
 
 namespace Devise\Media\Files;
 
+use Devise\Sites\SiteDetector;
 use DvsMediaManager;
 use Illuminate\Support\Facades\Log;
 
@@ -12,48 +13,45 @@ class MediaFieldObserver
    * @var Repository
    */
   private $repository;
+  /**
+   * @var SiteDetector
+   */
+  private $SiteDetector;
 
   /**
    * MediaFieldObserver constructor.
    */
-  public function __construct(Repository $repository)
+  public function __construct(Repository $repository, SiteDetector $SiteDetector)
   {
     $this->repository = $repository;
+    $this->SiteDetector = $SiteDetector;
   }
 
   public function saved($model)
   {
-    $this->updateMediaManager($model);
+    $this->updateMediaManager($model, 1);
   }
 
   public function deleted($model)
   {
-    $this->updateMediaManager($model);
+    $this->updateMediaManager($model, -1);
   }
 
-  private function updateMediaManager($model)
+  private function updateMediaManager($model, $direction = 1)
   {
     if ($model->type == 'image' || $model->type == 'file')
     {
       list($path, $fileName) = $this->getNameAndPath($model);
 
-      $record = DvsMediaManager::where('directory', $path)
+      $site = $this->SiteDetector->current();
+
+      $record = $site->media()->where('directory', $path)
         ->where('name', $fileName)
         ->first();
-      if(!$record){
 
-        Log::info($model->id . '    ' . $path . '    ' . $fileName);
-      }
       if ($record && $record->getDirty())
       {
-        if ($this->isGlobal($model))
-        {
-          $record->global_fields = json_encode($this->repository->getGlobalDataForFile($fileName));
-        } else
-        {
-          $record->fields = json_encode($this->repository->getFieldDataForFile($fileName));
-        }
-
+        $record += $direction;
         $record->save();
       }
     }

@@ -37,7 +37,7 @@ class MediaDirectoriesController
   {
     $input = $request->all();
     $input['category'] = $folderPath;
-    $results = $this->Repository->compileIndexData($input, ['categories']);
+    $results = $this->Repository->getIndex($input, ['categories']);
 
     return $results['categories'];
   }

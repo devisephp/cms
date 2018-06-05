@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\App;
 
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
 /**
@@ -132,6 +133,10 @@ class Framework
 
       case 'view':                    // Illuminate\View\Factory
         return \View::getFacadeRoot();
+        break;
+
+      case 'storage':                 // Illuminate\Support\Facades\Storage
+        return Storage::getFacadeRoot();
         break;
 
       case 'mimetypeguesser':

@@ -1,10 +1,10 @@
 <?php namespace Devise\Media\Files;
 
 use Devise\Media\Categories\CategoryPaths;
-use Devise\Media\Images\Images;
-use Devise\Media\Paths;
-use Devise\Media\Helpers\Caption;
 use Devise\Models\DvsMedia;
+use Devise\Sites\SiteDetector;
+use Devise\Support\Framework;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Class Manager
@@ -12,163 +12,60 @@ use Devise\Models\DvsMedia;
  */
 class Manager
 {
+  private $DvsMedia;
+  private $CategoryPaths;
+  private $Storage;
   /**
-   * @var Filesystem
+   * @var SiteDetector
    */
-  protected $Filesystem;
+  private $SiteDetector;
 
   /**
-   * @var CategoryPaths
-   */
-  protected $CategoryPaths;
-
-  /**
-   * @var Image
-   */
-  protected $Image;
-
-  protected $DvsMedia;
-
-  /**
-   * Construct a new File manager
    *
-   * @param Filesystem $Filesystem
-   * @param CategoryPaths $CategoryPaths
-   * @param Image $Image
-   * @param Caption $Caption
    */
-  public function __construct(DvsMedia $DvsMedia, Filesystem $Filesystem, CategoryPaths $CategoryPaths, Paths $Paths, Images $Image, Caption $Caption, $Config = null)
+  public function __construct(DvsMedia $DvsMedia, CategoryPaths $CategoryPaths, SiteDetector $SiteDetector, Framework $Framework)
   {
     $this->DvsMedia = $DvsMedia;
-    $this->Filesystem = $Filesystem;
     $this->CategoryPaths = $CategoryPaths;
-    $this->Paths = $Paths;
-    $this->Image = $Image;
-    $this->Caption = $Caption;
-    $this->basepath = public_path();
-    $this->Config = $Config ?: \Config::getFacadeRoot();
+    $this->Storage = $Framework->storage;
+    $this->SiteDetector = $SiteDetector;
   }
 
   /**
-   * Saves the uploaded file to the media directory
    *
-   * @param $input
-   * @return DvsMedia
    */
-  public function saveUploadedFile($input)
+  public function saveUploadedFile(UploadedFile $file)
   {
-    $file = array_get($input, 'file', null);
-
-    if (is_null($file))
-    {
-      return false;
-    }
-
-    $originalName = $file->getClientOriginalName();
-    $localPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
-    $serverPath = $this->CategoryPaths->serverPath($localPath);
-
-    $newName = $this->createFile($file, $serverPath, $originalName);
-
-    if ($this->Image->canMakeThumbnailFromFile($file))
-    {
-      $thumbnailPath = $this->getThumbnailPath($localPath . '/' . $newName);
-      if (!is_dir(dirname($thumbnailPath))) mkdir(dirname($thumbnailPath), 0755, true);
-      $this->Image->makeThumbnailImage($serverPath . $newName, $thumbnailPath, $file->getClientMimeType());
-    }
+    $categoryPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
+    $serverPath = $this->CategoryPaths->serverPath($categoryPath);
 
     $mm = new DvsMedia();
-    $mm->directory = $localPath;
+    $mm->directory = $categoryPath;
     $mm->name = $file->getClientOriginalName();
     $mm->size = $file->getClientSize();
     $mm->used_count = 0;
-    $mm->save();
+
+    $site = $this->SiteDetector->current();
+    $site->media()->save($mm, ['default' => 0]);
+
+    $mm->saveUploadTo($file, $serverPath);
 
     return $mm;
   }
 
   /**
-   * Renames an uploaded file
-   * @todo should be looking up by id
    *
-   * @param  string $filepath
-   * @param  string $newpath
-   * @return void
-   */
-  public function renameUploadedFile($filepath, $newpath)
-  {
-    if ($this->Caption->exists($this->basepath . $filepath))
-    {
-      $oldCptPath = $this->Paths->imageCaptionPath($this->basepath . $filepath);
-      $newCptPath = $this->Paths->imageCaptionPath($this->basepath . $newpath);
-
-      $this->Filesystem->rename($oldCptPath, $newCptPath);
-    }
-
-    $this->Filesystem->rename($this->basepath . $filepath, $this->basepath . $newpath);
-
-    explode('/', $filepath);
-  }
-
-  /**
-   * Remove uploaded files from the /media directory
-   * @todo should be looking up by id
-   *
-   * @param  string $filepath
-   * @return void
    */
   public function removeUploadedFile($id)
   {
+    $site = $this->SiteDetector->current();
+
     $file = $this->DvsMedia
       ->findOrFail($id);
 
-    $this->Filesystem
-      ->delete($this->basepath . $file->media_path);
+    $site->media()->detach($id);
 
     $file->delete();
   }
 
-  /**
-   * Change this
-   * @param $currentName
-   * @return string
-   */
-  private function getThumbnailPath($currentName)
-  {
-    if(strpos($currentName, '/') > 0){
-      $currentName = '/' . $currentName;
-    }
-    return $this->Paths->fileVersionInfo($this->CategoryPaths->basePath() . $currentName)->thumbnail;
-  }
-
-  /**
-   * Checks for file existence and then creates file.. if the file
-   * already exists we create a new file (clone)
-   *
-   * @param  File $file
-   * @param  string $serverPath
-   * @param  string $originalName
-   * @return string
-   * @throws \Exception
-   */
-  private function createFile($file, $serverPath, $originalName)
-  {
-    $newName = $originalName;
-
-    $info = pathinfo($newName);
-
-    $sanity = 0;
-
-    while (file_exists($serverPath . '/' . $newName))
-    {
-      $dir = $info['dirname'] === '.' ? '' : $info['dirname'];
-      $newName = $dir . $info['filename'] . '.copy.' . $info['extension'];
-
-      if ($sanity++ > 5) throw new \Exception("You've got a lot of copies of this file... I'm going to stop trying to make copies...");
-    }
-
-    $file->move($serverPath, $newName);
-
-    return $newName;
-  }
 }

@@ -8,10 +8,12 @@ return [
   |--------------------------------------------------------------------------
   |
   | Configuration for the media manager
+  | See config/filesystems.php for media.driver options
   |
   */
 
   'media' => [
+    'driver' => env('DVS_FILESYSTEM_DRIVER', 'public'),
     'root-directory' => 'media',
   ],
 

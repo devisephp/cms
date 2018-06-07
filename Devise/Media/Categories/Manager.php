@@ -18,7 +18,8 @@ class Manager
   public function __construct(CategoryPaths $CategoryPaths, Framework $Framework)
   {
     $this->CategoryPaths = $CategoryPaths;
-    $this->Storage = $Framework->storage;
+
+    $this->Storage = $Framework->storage->disk(config('devise.media.driver'));
   }
 
   /**

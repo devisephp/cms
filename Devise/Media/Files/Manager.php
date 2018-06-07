@@ -13,11 +13,9 @@ use Illuminate\Http\UploadedFile;
 class Manager
 {
   private $DvsMedia;
+
   private $CategoryPaths;
-  private $Storage;
-  /**
-   * @var SiteDetector
-   */
+
   private $SiteDetector;
 
   /**
@@ -27,7 +25,6 @@ class Manager
   {
     $this->DvsMedia = $DvsMedia;
     $this->CategoryPaths = $CategoryPaths;
-    $this->Storage = $Framework->storage;
     $this->SiteDetector = $SiteDetector;
   }
 

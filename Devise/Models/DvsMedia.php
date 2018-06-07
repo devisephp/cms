@@ -12,26 +12,28 @@ class DvsMedia extends Model
 {
   public $table = 'dvs_media';
 
+  private $frameworkStorage = null;
+
   /**
    *
    */
   public function getUrlAttribute()
   {
-    return Storage::url($this->media_path);
+    return $this->storage()->url($this->media_path);
   }
 
   /**
    *
    */
-  public function getThumbnailUrlAttribute($currentName)
+  public function getThumbnailUrlAttribute()
   {
-    return Storage::exists($this->thumbnail_path) ? Storage::url($this->thumbnail_path) : null;
+    return $this->storage()->exists($this->thumbnail_path) ? $this->storage()->url($this->thumbnail_path) : null;
   }
 
   /**
    *
    */
-  public function getMediaPathAttribute($value)
+  public function getMediaPathAttribute()
   {
     return $this->media_directory . $this->name;
   }
@@ -97,7 +99,7 @@ class DvsMedia extends Model
    */
   public function saveUploadTo($file, $serverPath)
   {
-    Storage::putFileAs($serverPath, $file, $file->getClientOriginalName(), 'public');
+    $this->storage()->putFileAs($serverPath, $file, $file->getClientOriginalName(), 'public');
 
     if ($this->canMakeThumbnailFromFile($file))
       $this->makeThumbnailImage($serverPath, $file);
@@ -105,12 +107,12 @@ class DvsMedia extends Model
 
   public function delete()
   {
-    if(Storage::exists($this->thumbnail_path)){
-      Storage::delete($this->thumbnail_path);
+    if($this->storage()->exists($this->thumbnail_path)){
+      $this->storage()->delete($this->thumbnail_path);
     }
 
-    if(Storage::exists($this->media_path)){
-      Storage::delete($this->media_path);
+    if($this->storage()->exists($this->media_path)){
+      $this->storage()->delete($this->media_path);
     }
 
     return parent::delete();
@@ -133,7 +135,7 @@ class DvsMedia extends Model
   {
     $tempThumbPath = storage_path() . '/' . time();
 
-    $file = Storage::get($serverPath . $file->getClientOriginalName());
+    $file = $this->storage()->get($serverPath . $file->getClientOriginalName());
 
     $image = new Imagick();
     $image->readImageBlob($file);
@@ -145,7 +147,7 @@ class DvsMedia extends Model
     $thumbnail = new File($tempThumbPath);
 
     if ($thumbnail)
-      Storage::putFileAs($serverPath, $thumbnail, $this->thumbnail_filename, 'public');
+      $this->storage()->putFileAs($serverPath, $thumbnail, $this->thumbnail_filename, 'public');
 
     unlink($tempThumbPath);
   }
@@ -166,5 +168,13 @@ class DvsMedia extends Model
     }
 
     return $path;
+  }
+
+  /**
+   *
+   */
+  private function storage()
+  {
+    return Storage::disk(config('devise.media.driver'));
   }
 }

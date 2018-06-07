@@ -31,7 +31,7 @@ class Repository
     $this->SiteDetector = $SiteDetector;
     $this->CategoryPaths = $CategoryPaths;
 
-    $this->Storage = $Framework->Storage;
+    $this->Storage = $Framework->storage->disk(config('devise.media.driver'));
   }
 
   /**

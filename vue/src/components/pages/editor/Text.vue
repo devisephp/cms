@@ -1,5 +1,5 @@
 <template>
-  <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor">
+  <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
     <template slot="preview">
       <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
         Currently No Value
@@ -21,15 +21,22 @@ export default {
   data () {
     return {
       localValue: {},
+      originalValue: null,
       showEditor: false
     }
   },
   mounted () {
+    this.originalValue = Object.assign({}, this.value)
     this.localValue = this.value
   },
   methods: {
     toggleEditor () {
       this.showEditor = !this.showEditor
+    },
+    cancel () {
+      this.localValue.text = this.originalValue.text
+      this.updateValue()
+      this.toggleEditor()
     },
     updateValue: function () {
       // Emit the number value through the input event

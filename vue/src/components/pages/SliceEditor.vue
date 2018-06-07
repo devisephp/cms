@@ -10,7 +10,9 @@
         </div>
       </template>
       <template v-else>
-        {{ slice.metadata.label }}
+        <div class="dvs-flex dvs-items-center">
+          {{ slice.metadata.label }}
+        </div>
         <template v-if="repeatableChild">
           <div @click.stop="requestRemoveInstance(slice)">
             Remove

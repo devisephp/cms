@@ -11,10 +11,10 @@
           labels: [``, ``]
         }" 
         :options="doughnutOptions"></doughnut>
-      <div class="dvs-absolute dvs-absolute-center" :class="{'dvs-text-4xl': !minimized, 'dvs-text-lg': minimized}">{{ yesterday }}</div>
+      <div class="dvs-absolute dvs-absolute-center dvs-text-lg">{{ yesterday }}</div>
     </div>
-    <div class="dvs-mt-4 dvs-text-center" :class="{'dvs-text-xs dvs-uppercase': minimized}">
-      <strong>{{ stat }}</strong>: {{ Math.abs(change) }}% <i :class="changeIcon"></i> 
+    <div class="dvs-mt-4 dvs-text-center dvs-text-xs dvs-uppercase">
+      <strong>{{ stat }}</strong>: {{ change }}% <i :class="changeIcon"></i> 
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
   computed: {
     doughnutOptions () {
       return {
-        cutoutPercentage: !this.minimized ? 97 : 88,
+        cutoutPercentage: 88,
         legend: false
       }
     },
@@ -57,15 +57,12 @@ export default {
       return 'ion-arrow-up-b'
     },
     currentWidth () {
-      if (this.minimized) {
         return '50px'
-      }
-      return '100px'
     }
   },
   components: {
     Doughnut
   },
-  props: ['analytics', 'stat', 'minimized']
+  props: ['analytics', 'stat']
 }
 </script>

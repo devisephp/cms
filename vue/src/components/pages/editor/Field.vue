@@ -2,7 +2,11 @@
   <div class="dvs-relative">
     <div class="dvs-flex dvs-justify-between dvs-items-center">
       <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4 dvs-font-bold dvs-w-full">
-        <div class="dvs-badge dvs-badge-empty dvs-mr-2" :class="{'dvs-bg-green-dark': localValue.enabled, 'dvs-bg-grey-light': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration"></div>
+        <div 
+          class="dvs-rounded-full dvs-mr-2 dvs-w-2 dvs-h-2 dvs-mr-2" 
+          :class="{'dvs-bg-green': localValue.enabled, 'dvs-bg-white': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" 
+          :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration">
+        </div>
         <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
           <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal" @click="toggleShowEditor">{{ options.label }}</span>
           <i class="ion-eye dvs-text-xl" v-if="!options.hidePreview" @mouseover="showPreview = true" @mouseout="showPreview = false"></i>
@@ -24,9 +28,9 @@
     <template v-if="showEditor">
       <portal to="devise-field-editor">
         <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="toggleShowEditor"></div>
-        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40" :style="infoBlockTheme">
-          <h6 class="dvs-mb-4">
-            <span :style="{color: theme.adminText.color}">{{ localValue.label }}</span><br>
+        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2" :style="infoBlockTheme">
+          <h6 class="dvs-mb-4" :style="{color: theme.statsText.color}">
+            <span>{{ localValue.label }}</span><br>
             <small class="dvs-text-xs" v-if="localValue.instructions">
               Hint from Developer: 
               <span class="dvs-italic dvs-font-normal">
@@ -40,8 +44,9 @@
           <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between">
             <div>
               <button class="dvs-btn dvs-mr-2" @click="toggleShowEditor" :style="regularButtonTheme">Done</button>
+              <button class="dvs-btn dvs-mr-2" @click="cancel" :style="regularButtonTheme">Cancel</button>
             </div>
-            <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabled">
+            <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabler">
               <label class="dvs-mr-2">Field Enabled</label>
               <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
             </div>
@@ -76,6 +81,9 @@ export default {
   methods: {
     toggleShowEditor () {
       this.$emit('toggleShowEditor')
+    },
+    cancel () {
+      this.$emit('cancel')
     },
     enabledTip (enabled) {
       if (enabled) {

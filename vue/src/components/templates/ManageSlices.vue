@@ -3,7 +3,7 @@
 
     <!-- Create Slice -->
     <div class="dvs-blocker dvs-blocker-light dvs-z-50" @click="closeManager()" v-if="originSlice"></div>
-    <div class="dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-8 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2" v-if="originSlice">
+    <div class="dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-8 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2" :style="infoBlockTheme" v-if="originSlice">
 
       <div v-if="mode === 'add' && step === 'type'">
         <h3 class="dvs-font-hairline dvs-mb-8" :style="{ color: theme.statsText.color }">Add Slice to Layout</h3>
@@ -33,8 +33,8 @@
           <label>Select a Slice</label>
           <select v-model="sliceToAdd.slice">
             <option :value="null">Select a Slice</option>
-            <optgroup v-for="(group, name) in sliceDirectoriesOptions" :label="name">
-              <option v-for="option in group" :value="option">
+            <optgroup v-for="(group, name) in sliceDirectoriesOptions" :key="name" :label="name">
+              <option v-for="option in group" :key="option.id" :value="option">
                 {{ option.name }}
               </option>
             </optgroup>
@@ -52,7 +52,7 @@
           <label>Select a Model</label>
           <select v-model="sliceToAdd.model">
             <option :value="null">Select a Model</option>
-            <option :value="model" v-for="model in storeModels">{{ model.name }}</option>
+            <option :value="model" v-for="model in storeModels" :key="model.id">{{ model.name }}</option>
           </select>
         </fieldset>
         <button class="dvs-btn" :disabled="!sliceToAdd.model" @click="selectModelToAdd()">Select</button>
@@ -75,13 +75,11 @@
       </div>
 
       <div class="dvs-mb-4" v-if="mode === 'remove'">
-        <fieldset class="dvs-fieldset mb-4">
-          <label>Are you sure you want to delete this slice?</label>
-        </fieldset>
-        <help>
+        <h6 :style="{color: theme.statsText.color}" class="mb-6">Are you sure you want to delete this slice?</h6>
+        <help class="dvs-mb-8">
           If you delete this slice it will effect all pages that implement this template.
         </help>
-        <button class="dvs-btn" @click="closeManager()">Cancel</button>
+        <button class="dvs-btn dvs-mr-2" @click="closeManager()" :style="actionButtonTheme">Cancel</button>
         <button class="dvs-btn dvs-btn-danger" @click="removeSlice()">Confirm</button>
       </div>
     </div>

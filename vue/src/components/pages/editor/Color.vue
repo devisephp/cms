@@ -1,5 +1,5 @@
 <template>
-  <field-editor :options="options" v-model="localValue" ref="field" :showEditor="showEditor" @toggleShowEditor="toggleEditor">
+  <field-editor :options="options" v-model="localValue" ref="field" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
     <template slot="preview">
       <span v-if="color === null || color === ''" class="dvs-italic">
         Currently No Value
@@ -26,20 +26,25 @@ export default {
   name: 'ColorEditor',
   data () {
     return {
-      originalColor: null,
       localValue: {},
+      originalValue: null,
       color: null,
       showEditor: false
     }
   },
   mounted () {
-    this.originalColor = Object.assign({}, this.value)
+    this.originalValue = Object.assign({}, this.value)
     this.localValue = this.value
     this.setDefault()
   },
   methods: {
     toggleEditor () {
       this.showEditor = !this.showEditor
+    },
+    cancel () {
+      this.localValue.color = this.originalValue.color
+      this.updateValue()
+      this.toggleEditor()
     },
     setDefault () {
       if (this.localValue.color === null) {
@@ -56,10 +61,6 @@ export default {
     updateColor (color) {
       this.color = color.rgba
       this.localValue.color = `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`
-    },
-    cancel () {
-      this.$emit('cancel')
-      this.$refs.field.showEditor = false
     },
     selectColor (color) {
       this.color = color.hex

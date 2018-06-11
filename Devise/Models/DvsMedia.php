@@ -3,6 +3,7 @@
 namespace Devise\Models;
 
 use Devise\Sites\SiteDetector;
+use Devise\Support\Framework;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
@@ -175,6 +176,6 @@ class DvsMedia extends Model
    */
   private function storage()
   {
-    return Storage::disk(config('devise.media.driver'));
+    return Framework::storage();
   }
 }

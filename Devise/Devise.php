@@ -7,7 +7,6 @@ use Devise\Http\Resources\Vue\SiteResource;
 use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsPage;
 
-use Devise\MotherShip\DvsRelease;
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;

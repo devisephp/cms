@@ -60,7 +60,7 @@ class MediaController extends Controller
   {
     $this->validate($request, ['file' => 'required|file']);
 
-    $file = $this->FileManager->saveUploadedFile($request->file('file'));
+    $file = $this->FileManager->saveUploadedFile($request->all());
 
     return $this->Repository->getFileData($file);
   }

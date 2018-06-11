@@ -13,7 +13,7 @@ return [
   */
 
   'media' => [
-    'driver' => env('DVS_FILESYSTEM_DRIVER', 'public'),
+    'disk' => env('DVS_FILESYSTEM_DISK', 'public'),
     'root-directory' => 'media',
   ],
 

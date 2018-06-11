@@ -2,6 +2,7 @@
 
 namespace Devise\Http\Resources\Vue;
 
+use Devise\Support\Framework;
 use Illuminate\Http\Resources\Json\Resource;
 
 class FieldResource extends Resource
@@ -14,6 +15,30 @@ class FieldResource extends Resource
    */
   public function toArray($request)
   {
-    return $this->value;
+    $value = $this->value;
+
+    if (isset($value->type) && isset($value->url) && ($value->type == 'image' || $value->type == 'file'))
+    {
+      $storage = Framework::storage();
+
+      if ($this->isMediaRelativePath($value->url))
+      {
+        $url = $storage->url(trim($value->url, '/'));
+        if ($url)
+        {
+          $value->url = $url;
+        }
+      }
+    }
+
+
+    return $value;
+  }
+
+  public function isMediaRelativePath($path)
+  {
+    $folder = config('devise.media.root-directory');
+
+    return (strpos($path, $folder) === 0 || strpos($path, $folder) === 1);
   }
 }

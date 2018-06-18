@@ -7,6 +7,9 @@
         <li class="dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click="goToPage('devise-ms-analytics-index')">
           Analytics
         </li>
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click.prevent="goToPage('devise-ms-changes-index')">
+          Changes
+        </li>
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click.prevent="goToPage('devise-ms-releases-index')">
           Releases
         </li>

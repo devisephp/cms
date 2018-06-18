@@ -54,10 +54,10 @@
           <div class="dvs-flex dvs-justify-between dvs-items-center">
             <div v-if="!meta.edit">
               <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" :style="regularButtonTheme" @click="meta.edit = !meta.edit">
-                <i class="ion-edit" />
+                <edit-icon w="20" h="20" />
               </button>
               <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" :style="regularButtonTheme" v-devise-alert-confirm="{callback: requestDeleteMeta, arguments:meta, message: 'Are you sure you want to delete this meta?'}">
-                <i class="ion-trash-b" />
+                <trash-icon w="20" h="20" />
               </button>
             </div>
             <button class="dvs-btn dvs-mr-2" v-if="meta.edit" @click="requestUpdateMeta(localValue.data[key])" :style="actionButtonTheme">Save</button>
@@ -75,6 +75,9 @@
 import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
+
+import TrashIcon from 'vue-ionicons/dist/md-trash.vue'
+import EditIcon from 'vue-ionicons/dist/md-create.vue'
 
 export default {
   name: 'MetaManage',
@@ -144,7 +147,9 @@ export default {
     }
   },
   components: {
-    SidebarHeader
+    SidebarHeader,
+    TrashIcon,
+    EditIcon
   }
 }
 </script>

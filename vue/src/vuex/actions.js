@@ -473,6 +473,19 @@ const actions = {
     })
   },
 
+  getPendingChanges (context) {
+    return new Promise((resolve, reject) => {
+      window.axios.get(context.state.api.baseUrl + 'mothership/pending-changes').then(function (response) {
+        context.commit('setChanges', response.data)
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
   // Sites
   getSites (context) {
     return new Promise((resolve, reject) => {

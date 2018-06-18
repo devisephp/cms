@@ -12,7 +12,9 @@
       <label class="dvs-mt-4 dvs-large-label">Image</label>
       <div class="dvs-flex dvs-items-center">
         <input type="text" v-model="localValue.url" :maxlength="getMaxLength" v-on:input="updateValue()">
-        <i class="ion-images dvs-text-3xl dvs-ml-4 dvs-cursor-pointer" @click="launchMediaManager($event)"></i>
+        <div  @click="launchMediaManager($event)">
+          <images-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px" />
+        </div>
       </div>
       <label class="dvs-mt-4 dvs-large-label">Alt Tag</label>
       <input type="text" v-model="localValue.alt" v-on:input="updateValue()">
@@ -23,6 +25,7 @@
 
 <script>
 import FieldEditor from './Field'
+import ImagesIcon from 'vue-ionicons/dist/ios-images.vue'
 
 export default {
   name: 'ImageEditor',
@@ -72,7 +75,8 @@ export default {
   },
   props: ['value', 'options'],
   components: {
-    FieldEditor
+    FieldEditor,
+    ImagesIcon
   }
 }
 </script>

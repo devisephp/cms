@@ -67,6 +67,10 @@ export default {
     state.mothership = payload
   },
 
+  setChanges (state, payload) {
+    state.changes = payload
+  },
+
   // Pages
   createPage (state, page) {
     state.pages.data.push(page)

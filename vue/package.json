@@ -28,6 +28,7 @@
     "vue-chartjs": "^3.2.1",
     "vue-color": "^2.4.4",
     "vue-flatpickr-component": "^6.2.0",
+    "vue-ionicons": "^2.2.1",
     "vue-router": "^3.0.1",
     "vue-tippy": "^2.0.8",
     "vue2-dropzone": "^3.0.4",

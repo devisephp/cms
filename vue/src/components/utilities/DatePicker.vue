@@ -1,5 +1,5 @@
 <template>
-  <date-picker v-model="localDateTime" :config="config" class="w-full" :placeholder="placeholder" />
+  <flat-pickr v-model="localDateTime" :config="config" class="w-full" ref="picker" :placeholder="placeholder" />
 </template>
 
 <script>
@@ -21,17 +21,13 @@ export default {
     this.localDateTime = this.value
   },
   components: {
-    'date-picker': flatPickr
+    flatPickr
   },
   methods: {
     updateValue: function (value) {
       this.$emit('input', value)
       this.$emit('update', value)
-    }
-  },
-  watch: {
-    value: function (newValue) {
-      this.localDateTime = newValue
+      this.$refs.picker.fp.close()
     }
   },
   props: ['value', 'settings', 'placeholder']

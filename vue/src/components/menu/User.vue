@@ -16,7 +16,7 @@
       </div>
       <div>
         <a href="/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          <i class="ion-power text-xl mr-1" :style="`color: ${theme.userText.color};`"></i>
+          <power-icon class="mr-1" w="30" h="30" :style="`color: ${theme.userText.color};`" />
         </a>
 
         <form id="logout-form" action="/logout" method="POST" style="display: none;">
@@ -29,6 +29,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+import PowerIcon from 'vue-ionicons/dist/ios-power.vue'
 
 export default {
   name: 'DeviseUser',
@@ -43,6 +45,9 @@ export default {
     csrf_field () {
       return window.axios.defaults.headers.common['X-CSRF-TOKEN']
     }
+  },
+  components: {
+    PowerIcon
   }
 }
 </script>

@@ -20,6 +20,8 @@ const state = {
       height: null
     }
   },
+  // Mothership
+  changes: [],
   // Media Manager
   currentDirectory: '.',
   directories: [],

@@ -81,6 +81,10 @@ const getters = {
     return state.mothership
   },
 
+  changes: state => {
+    return state.changes
+  },
+
   // Pages
   pages: state => {
     return state.pages

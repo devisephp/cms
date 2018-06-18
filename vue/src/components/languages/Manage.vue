@@ -19,7 +19,7 @@
       <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Existing Languages</h3>
 
       <div class="dvs-mb-12 dvs-flex dvs-flex-col">
-        <div v-for="(language, key) in localValue.data" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
+        <div v-for="(language, key) in localValue.data" :key="key" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
           <div class="dvs-text-xl dvs-font-bold dvs-mb-4">
             <template v-if="!language.editCode">
               {{ language.code }}

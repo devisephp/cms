@@ -31,9 +31,11 @@ class Manager
   /**
    *
    */
-  public function saveUploadedFile(UploadedFile $file)
+  public function saveUploadedFile($input)
   {
     $categoryPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
+    $file = array_get($input, 'file', null);
+
     $serverPath = $this->CategoryPaths->serverPath($categoryPath);
 
     $mm = new DvsMedia();

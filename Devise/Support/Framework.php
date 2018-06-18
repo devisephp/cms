@@ -146,4 +146,9 @@ class Framework
 
     return null;
   }
+
+  public static function storage()
+  {
+    return Storage::disk(config('devise.media.disk'));
+  }
 }

@@ -7,7 +7,6 @@ use Devise\Http\Resources\Vue\SiteResource;
 use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsPage;
 
-use Devise\MotherShip\DvsRelease;
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -110,7 +109,7 @@ class Devise
 
   public static function mothershipEnabled()
   {
-    if(Schema::hasTable('dvs_releases') && config('devise.mothership.api-key')) return true;
+//    if(Schema::hasTable('dvs_releases') && config('devise.mothership.api-key')) return true;
 
     return false;
   }

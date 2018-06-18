@@ -4,7 +4,7 @@ namespace Devise\Models;
 
 class DvsSliceInstance extends Model
 {
-  protected $fillable = ['page_version_id','parent_instance_id','template_slice_id','enabled'];
+  protected $fillable = ['page_version_id','parent_instance_id','template_slice_id','enabled','position'];
 
   protected $table = 'dvs_slice_instances';
 

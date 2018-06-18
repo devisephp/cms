@@ -155,8 +155,9 @@ class SlicesManager
     $newSlice = $this->DvsSliceInstance->create([
       'page_version_id'    => $pageVersionId,
       'parent_instance_id' => $parentSliceId,
-      'view'               => $instance->view,
-      'label'              => $instance->label
+      'template_slice_id'  => $instance->template_slice_id,
+      'enabled'            => $instance->enabled,
+      'position'           => $instance->position,
     ]);
 
     foreach ($instance->fields as $field)

@@ -7977,6 +7977,10 @@ vue-hot-reload-api@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.0.tgz#97976142405d13d8efae154749e88c4e358cf926"
 
+vue-ionicons@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/vue-ionicons/-/vue-ionicons-2.2.1.tgz#2837b1af7bce53154e1e951cc677fec1e9dbbc47"
+
 vue-loader@^13.7.1:
   version "13.7.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-13.7.1.tgz#d9009d0abd392b4efe8b8fb1f542f6723b02dd3a"

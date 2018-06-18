@@ -46,7 +46,7 @@
       <help class="dvs-mb-4">Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
 
       <div class="dvs-mb-12 dvs--m8">
-        <div v-for="(version, key) in localValue.versions" class="dvs-flex-grow dvs-p-8 dvs-rounded-sm dvs-shadow-sm dvs-mb-8">
+        <div v-for="(version, key) in localValue.versions" :key="key" class="dvs-flex-grow dvs-p-8 dvs-rounded-sm dvs-shadow-sm dvs-mb-8">
           <div class="dvs-text-xl dvs-font-bold dvs-mb-4 dvs-flex dvs-justify-between">
             <div>
               <template v-if="!version.editName">
@@ -62,12 +62,12 @@
             <div class="dvs-mb-4">
               <fieldset class="dvs-fieldset mb-8">
                 <label>Start Date</label>
-                <date-picker v-model="localValue.versions[key].start_date" :settings="{date: true, time: true}" placeholder="Start Date" title="The date in which this version will begin appearing." v-tippy="tippyConfiguration" />
+                <date-picker v-model="localValue.versions[key].starts_at" :settings="{date: true, time: true}" placeholder="Start Date" title="The date in which this version will begin appearing." v-tippy="tippyConfiguration" />
               </fieldset>
 
               <fieldset class="dvs-fieldset mb-8">
                 <label>End Date</label>
-                <date-picker v-model="localValue.versions[key].end_date" :settings="{date: true, time: true}" placeholder="End Date" title="The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it." v-tippy="tippyConfiguration" />
+                <date-picker v-model="localValue.versions[key].ends_at" :settings="{date: true, time: true}" placeholder="End Date" title="The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it." v-tippy="tippyConfiguration" />
               </fieldset>
 
               <fieldset class="dvs-fieldset mb-8" v-if="localValue.ab_testing_enabled">

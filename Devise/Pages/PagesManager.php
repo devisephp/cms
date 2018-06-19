@@ -270,7 +270,7 @@ class PagesManager
       $modifiedRoute = $language->code . '-' . $suggestedRoute;
     }
 
-    while ($this->Page->where('route_name', '=', $modifiedRoute)->count() > 0 && $sanity++ < 100)
+    while ($this->Page->withTrashed()->where('route_name', '=', $modifiedRoute)->count() > 0 && $sanity++ < 100)
     {
       $modifiedRoute .= '-' . $sanity;
     }

@@ -10,7 +10,7 @@
       <div class="dvs-px-4">
         <div class="dvs-flex dvs-px-4 dvs-py-8 dvs-flex dvs-flex-col dvs-max-h-200 dvs-overflow-y-scroll">
           <div>
-            <fieldset class="dvs-mr-4 dvs-flex dvs-mb-2" v-for="(column, index) in columns" :key="column.key" v-if="!column.toggleColumns">
+            <fieldset class="dvs-mr-4 dvs-flex dvs-mb-2" v-for="(column) in columns" :key="column.key" v-if="!column.toggleColumns">
               <div class="dvs-flex dvs-items-center">
                 <input type="checkbox" v-model="column.show" @change="update">
                 <label class="dvs-pl-2">{{ column.label }}</label>

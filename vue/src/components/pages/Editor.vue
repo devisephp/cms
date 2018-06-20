@@ -14,16 +14,16 @@
 
       <div class="dvs-flex dvs-w-full dvs-justify-center dvs-items-center dvs-mb-8 dvs-w-full admin-component-second-in">
         <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'desktop'}"  @click="setPreviewMode('desktop')">
-          <desktop-icon />
+          <desktop-icon w="25" h="25" />
         </div>
         <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'tablet'}"  @click="setPreviewMode('tablet')">
-          <tablet-icon />
+          <tablet-icon w="25" h="25" />
         </div>
         <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-portrait'}"  @click="setPreviewMode('mobile-portrait')">
-          <phone-portrait-icon />
+          <phone-portrait-icon w="25" h="25" />
         </div>
         <div class="dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-landscape'}"  @click="setPreviewMode('mobile-landscape')">
-          <phone-landscape-icon />
+          <phone-landscape-icon w="25" h="25" />
         </div>
       </div>
 

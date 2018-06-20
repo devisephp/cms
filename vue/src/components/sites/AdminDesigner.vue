@@ -74,7 +74,7 @@
               <!-- Titley-ish thing -->
               <h2 :style="{color: localValue.sidebarText.color}" class="dvs-mb-2">Editor</h2>
               <div class="dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold">
-                <i class="ion-arrow-left-c"></i> Full Administration
+                <arrow-round-back-icon /> Full Administration
               </div>
 
               <!-- Action Button -->
@@ -112,7 +112,7 @@
                   John Doh
                 </div>
                 <div>
-                  <i class="ion-power"></i>
+                  <power-icon />
                 </div>
               </div>
 
@@ -123,10 +123,10 @@
               <p class="dvs-text-xs dvs-mt-4 dvs-text-black">Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine.</p>
               <div class="dvs-flex dvs-justify-between">
                 <div class="dvs-bg-grey dvs-rounded dvs-flex dvs-justify-center dvs-items-center dvs-w-1/3 dvs-mr-4" style="height:150px;">
-                  <i class="ion-image dvs-text-3xl"></i>
-                </div>
+                  <images-icon w="40" h="40" />
+                </div> 
                 <div class="dvs-bg-grey dvs-rounded dvs-flex dvs-justify-center dvs-items-center dvs-w-2/3" style=" height:150px">
-                  <i class="ion-image dvs-text-3xl"></i>
+                  <images-icon w="40" h="40" />
                 </div>
               </div>
               <p class="dvs-text-xs dvs-mt-4 dvs-text-black">Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine.</p>
@@ -172,11 +172,10 @@
               </div>
             </div>
 
-
           </div>
         </div>
 
-        <h3 class="dvs-mb-4" :style="{color: localValue.adminText.color}">Mini-Preview of the Admin</h3>
+        <h3 class="dvs-mb-4" :style="{color: theme.adminText.color}">Mini-Preview of the Admin</h3>
 
         <div class="dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch" style="min-height:400px">
           
@@ -199,7 +198,7 @@
               <!-- Titley-ish thing -->
               <h2 :style="{color: localValue.sidebarText.color}" class="dvs-mb-2">Settings</h2>
               <div class="dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold">
-                <i class="ion-arrow-left-c"></i> Back to Settings
+                <arrow-round-back-icon /> Back to Settings
               </div>
 
               <!-- User Block -->
@@ -214,7 +213,7 @@
                   John Doh
                 </div>
                 <div>
-                  <i class="ion-power"></i>
+                  <power-icon />
                 </div>
               </div>
 
@@ -263,6 +262,11 @@ import ColorEditor from './../pages/editor/Color'
 import TextEditor from './../pages/editor/Text'
 import DeviseLogo from './../utilities/DeviseLogo'
 import LineChart from './../pages/analytics/Line'
+
+import ArrowRoundBackIcon from 'vue-ionicons/dist/ios-arrow-round-back.vue'
+import PowerIcon from 'vue-ionicons/dist/ios-power.vue'
+import ImagesIcon from 'vue-ionicons/dist/ios-images.vue'
+
 
 var lineData = {"data":{"labels":["May 16","May 17","May 18","May 19","May 20","May 21","May 22","May 23"],"datasets":[{"label":"Page Views","data":[33,41,19,5,4,23,30,11]},{"label":"Sessions","data":[25,24,14,4,4,10,17,9]},{"label":"Avg. Time On Page","data":[64,38,155,10,7,26,145,6]},{"label":"Bounce Rate","data":[48,45,57,50,25,10,47,22]}]},"releases":["Apr 25","Apr 24","May 2"]}
 
@@ -520,9 +524,12 @@ export default {
     }
   },
   components: {
+    ArrowRoundBackIcon,
     ColorEditor,
     DeviseLogo,
+    ImagesIcon,
     LineChart,
+    PowerIcon,
     TextEditor
   },
   props: ['value', 'domain']

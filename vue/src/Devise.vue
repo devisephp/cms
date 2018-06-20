@@ -55,8 +55,8 @@
 
         <template v-if="isLoggedIn && !isPreviewFrame">
           <div id="devise-admin-open" @click="toggleAdmin">
-            <CogIcon class="dvs-gear-1" w="30px" h="30px" />
-            <CogIcon class="dvs-gear-2" w="20px" h="20px" />
+            <settings-icon class="dvs-gear-1" w="30px" h="30px" />
+            <settings-icon class="dvs-gear-2" w="20px" h="20px" />
           </div>
         </template>
 
@@ -86,7 +86,7 @@ import User from './components/menu/User'
 import SimpleBar from 'SimpleBar'
 import anime from 'animejs'
 
-import CogIcon from 'vue-ionicons/dist/ios-cog.vue'
+import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
 
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
@@ -291,12 +291,12 @@ export default {
     Messages,
     MediaManager,
     PageEditor,
+    SettingsIcon,
     Slice,
     TemplateIndex,
     TemplateEdit,
     TemplateEditor,
-    User,
-    CogIcon
+    User
   }
 }
 </script>

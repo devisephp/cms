@@ -1,11 +1,11 @@
 <template>
-  <div class="flex px-4 py-8">
-    <fieldset class="w-full">
-      <label class="pb-2">Date Range</label>
+  <div class="dvs-flex dvs-px-4 dvs-py-8">
+    <fieldset class="dvs-w-full">
+      <label class="dvs-pb-2">Date Range</label>
       <flat-pickr
         v-model="after"
         :config="afterConfig"
-        class="fancy w-full mb-4"
+        class="dvs-w-full dvs-mb-4"
         @on-change="onAfterChange"
         placeholder="After"></flat-pickr>
       <flat-pickr

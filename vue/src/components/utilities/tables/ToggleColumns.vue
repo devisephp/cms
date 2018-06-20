@@ -1,17 +1,19 @@
 <template>
-  <div class="mr-4 relative">
-    <i class="ion-ios-toggle-outline cursor-pointer" @click="show = true"></i>
-    <div v-show="show" class="absolute pin-t pin-r mt-1 bg-background-lighter min-w-250 z-40 shadow-lg border-t-2 border-background-lighter">
-      <div class="bg-background-darker pt-4 pb-2 px-4 ">
-        Toggle Columns <i class="ion-close-round cursor-pointer float-right" @click="show = false"></i>
+  <div class="dvs-mr-4 dvs-relative">
+    <div @click="show = true">
+      <switch-icon class="dvs-cursor-pointer dvs-float-right" />
+    </div>
+    <div v-show="show" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-1 dvs-z-40 dvs-shadow-lg dvs-border-t-2">
+      <div class="dvs-pt-4 dvs-pb-2 dvs-px-4 ">
+        Toggle Columns <span @click="show = false"><switch-icon class="dvs-cursor-pointer dvs-float-right" />
       </div>
-      <div class="px-4">
-        <div class="flex px-4 py-8 flex flex-col max-h-200 overflow-y-scroll">
+      <div class="dvs-px-4">
+        <div class="dvs-flex dvs-px-4 dvs-py-8 dvs-flex dvs-flex-col dvs-max-h-200 dvs-overflow-y-scroll">
           <div>
-            <fieldset class="mr-4 flex mb-2" v-for="(column, index) in columns" :key="column.key" v-if="!column.toggleColumns">
-              <div class="flex items-center">
-                <input type="checkbox" v-model="column.show" class="fancy" @change="update">
-                <label class="pl-2">{{ column.label }}</label>
+            <fieldset class="dvs-mr-4 dvs-flex dvs-mb-2" v-for="(column, index) in columns" :key="column.key" v-if="!column.toggleColumns">
+              <div class="dvs-flex dvs-items-center">
+                <input type="checkbox" v-model="column.show" @change="update">
+                <label class="dvs-pl-2">{{ column.label }}</label>
               </div>
             </fieldset>
           </div>
@@ -24,6 +26,8 @@
 <script>
 
 import {mapGetters} from 'vuex'
+
+import SwitchIcon from 'vue-ionicons/dist/md-switch.vue'
 
 export default {
   name: 'ToggleColumns',
@@ -64,6 +68,9 @@ export default {
       type: String,
       required: true
     }
+  },
+  components: {
+    SwitchIcon
   }
 }
 </script>

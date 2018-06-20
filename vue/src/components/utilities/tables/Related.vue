@@ -1,15 +1,15 @@
 <template>
-  <div class="flex px-4 py-8 flex flex-col max-h-200  overflow-y-scroll">
+  <div class="dvs-flex dvs-px-4 dvs-py-8 dvs-flex dvs-flex-col dvs-max-h-200  dvs-overflow-y-scroll">
     <div>
       <fieldset>
-        <input type="text" v-model="relatedFilter" placeholder="Filter" class="fancy w-full mb-4">
+        <input type="text" v-model="relatedFilter" placeholder="Filter" class="dvs-w-full dvs-mb-4">
       </fieldset>
     </div>
     <div v-for="(option, key) in filteredOptions">
-      <fieldset class="mr-4 flex mb-2">
-        <div class="flex items-center">
-          <input type="checkbox" v-model="selected" class="fancy" :value="option[options.key]" @change="update">
-          <label class="pl-2">{{ option[options.label] }}</label>
+      <fieldset class="dvs-mr-4 dvs-flex mb-2">
+        <div class="dvs-flex dvs-items-center">
+          <input type="checkbox" v-model="selected" :value="option[options.key]" @change="update">
+          <label class="dvs-pl-2">{{ option[options.label] }}</label>
         </div>
       </fieldset>
     </div>

@@ -2,9 +2,13 @@
   <div v-if="loaded" class="dvs-ml-2 dvs-collapsable">
     <!-- Label / Button -->
     <div class="dvs-flex dvs-justify-between dvs-block dvs-mb-2">
-      <div>
-        <i class="handle ion-navicon-round mr-2"></i>
-        <i class="ion-gear-b" @click="toggleSliceTools"></i>
+      <div class="dvs-flex">
+        <div class="handle">
+          <menu-icon class="dvs-mr-2" />
+        </div>
+        <div @click="toggleSliceTools">
+          <settings-icon />
+        </div>
       </div>
       <span class="dvs-cursor-pointer dvs-switch" @click="toggleSlice()">{{ localValue.label }}</span>
     </div>
@@ -13,19 +17,20 @@
     <div class="dvs-blocker dvs-blocker-light" @click="localValue.metadata.tools = false" v-if="localValue.metadata.tools"></div>
     <div class="dvs-cn-wrapper" :class="{'dvs-opened-nav': localValue.metadata.tools}">
       <button class="cn-close-button" @click="localValue.metadata.tools = false">
-        <i class="ion-close-round"></i>
+        <close-circle-icon />
       </button>
       <ul class="dvs-list-reset">
         <li><a class="disabled">&nbsp;</a></li>
         <li><a class="disabled">&nbsp;</a></li>
         <li><a @click.prevent="addSlice(localValue.slices)" class="dvs-cursor-pointer" :title="`Create new child slice under ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-          <i class="ion-plus"></i>
+          <add-icon w="40" h="40" />
         </a></li>
-        <li><a @click.prevent="modifySlice(localValue)" class="dvs-cursor-pointer" :title="`Modify the data that drives ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-          <i class="ion-cube"></i>
+        <li><a @click.prevent="modifySlice(localValue)" class="dvs-cursor-pointer" :title="`Modify the data that drives ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true"> 
+          <cube-icon w="40" h="40" />
         </a></li>
         <li><a @click.prevent="removeSlice(localValue)" class="dvs-cursor-pointer" :title="`Remove ${localValue.label}`" v-tippy="tippyConfiguration" data-tippy-followcursor="true">
-          <i class="ion-trash-a"></i>
+          <trash-icon w="40" h="40" /> 
+
         </a></li>
         <li><a class="disabled">&nbsp;</a></li>
         <li><a class="disabled">&nbsp;</a></li>
@@ -50,8 +55,8 @@
         <!-- Controls -->
         <template v-if="componentConfiguration">
           <template v-for="(field, fieldKey) in componentConfiguration" v-if="field.type">
-            <div class="dvs-w-full">
-              <div class="dvs-mb-4" :key="fieldKey">
+            <div class="dvs-w-full" :key="field.id">
+              <div class="dvs-mb-4">
                 <fieldset class="dvs-fieldset">
                   <label class="dvs-font-bold dvs-mb-1 dvs-block dvs-uppercase">{{ field.label }}</label>
                 </fieldset>
@@ -64,7 +69,7 @@
         <!-- Child Slices -->
         <div class="dvs-mt-4 dvs-w-full" v-if="localValue.slices">
           <draggable v-model="localValue.slices" element="ul" :options="{handle: '.handle'}" class="dvs-list-reset dvs-ml-4">
-            <li v-for="(slice, key) in localValue.slices" class="item dvs-mb-2 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
+            <li v-for="(slice, key) in localValue.slices" :key="key" class="item dvs-mb-2 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
               <template-slice-editor
                 v-model="localValue.slices[key]"
                 :key="key"
@@ -93,6 +98,13 @@ import NumberControls from './controls/Number'
 import TextareaControls from './controls/Textarea'
 import TextControls from './controls/Text'
 import WysiwygControls from './controls/Wysiwyg'
+
+import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
+import CloseCircleIcon from 'vue-ionicons/dist/md-close-circle.vue'
+import AddIcon from 'vue-ionicons/dist/ios-add.vue'
+import CubeIcon from 'vue-ionicons/dist/ios-cube.vue'
+import TrashIcon from 'vue-ionicons/dist/md-trash.vue'
+import MenuIcon from 'vue-ionicons/dist/md-menu.vue'
 
 export default {
   data () {
@@ -222,14 +234,20 @@ export default {
     }
   },
   components: {
-    draggable,
+    AddIcon,
     CheckboxControls,
     ColorControls,
+    CloseCircleIcon,
+    CubeIcon,
+    draggable,
     ImageControls,
     LinkControls,
+    MenuIcon,
     NumberControls,
+    SettingsIcon,
     TextareaControls,
     TextControls,
+    TrashIcon,
     WysiwygControls
   }
 }

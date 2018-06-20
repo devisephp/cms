@@ -51,7 +51,9 @@
             <div>
               <template v-if="!version.editName">
                 {{ version.name }}
-                <i v-if="version.showSettings" @click="version.editName = !version.editName" class="ion-edit" />
+                <div class="dvs-cursor-pointer" v-if="version.showSettings" @click="version.editName = !version.editName">
+                  <edit-icon />
+                </div>
               </template>
               <fieldset class="dvs-fieldset">
                 <input v-show="version.editName" type="text" v-model="localValue.versions[key].name" />
@@ -92,7 +94,7 @@
                 v-tippy="tippyConfiguration"
                 :style="actionButtonTheme"
                 >
-                <i class="ion-checkmark dvs-text-3xl"/>
+                <checkmark-icon w="30" h="30" />
               </button>
               <button 
                 class="dvs-btn dvs-mr-4 dvs-px-8" 
@@ -101,14 +103,14 @@
                 v-tippy="tippyConfiguration"
                 :style="regularButtonTheme"
                 >
-                <i class="ion-ios-copy dvs-text-3xl" />
+                <copy-icon w="30" h="30" />
               </button>
               <button 
                 class="dvs-btn dvs-mr-2 dvs-px-8" 
                 v-tippy="tippyConfiguration" 
                 v-devise-alert-confirm="{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
                 :style="regularButtonTheme">
-                <i class="ion-trash-b dvs-text-3xl" />
+                <trash-icon w="30" h="30" />
               </button>
             </div>
           </div>
@@ -215,6 +217,11 @@ import LineChart from './analytics/Line'
 import MetaForm from './../meta/MetaForm'
 
 import Dates from './../../mixins/Dates'
+
+import EditIcon from 'vue-ionicons/dist/md-create.vue'
+import CheckmarkIcon from 'vue-ionicons/dist/md-checkmark.vue'
+import CopyIcon from 'vue-ionicons/dist/ios-copy.vue'
+import TrashIcon from 'vue-ionicons/dist/md-trash.vue'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -447,9 +454,13 @@ export default {
     }
   },
   components: {
+    CopyIcon,
+    CheckmarkIcon,
     DatePicker,
     DeviseModal,
+    EditIcon,
     SidebarHeader,
+    TrashIcon,
     LineChart,
     MetaForm
   },

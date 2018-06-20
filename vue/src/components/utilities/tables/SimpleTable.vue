@@ -7,8 +7,8 @@
         @click="sortByColumn(column)">
           {{ column.name }}
           <template v-if="column === sortBy">
-            <i class="ion-arrow-down-b" v-if="sortDir === 'desc'"></i>
-            <i class="ion-arrow-up-b" v-else></i>
+            <arrow-down v-if="sortDir === 'desc'" />
+            <arrow-up v-else>
           </template>
       </div>
       <div v-for="(record, dataKey) in sortedData" :key="dataKey" class="dvs-overflow-hidden dvs-px-2 ">
@@ -26,6 +26,10 @@
 </template>
 
 <script>
+
+import ArrowDown from 'vue-ionicons/dist/ios-arrow-down.vue'
+import ArrowUp from 'vue-ionicons/dist/ios-arrow-up.vue'
+
 export default {
   name: 'SimpleTable',
   data () {
@@ -107,6 +111,10 @@ export default {
       required: true,
       type: Object | Array
     }
+  },
+  components: {
+    ArrowDown,
+    ArrowUp
   }
 }
 </script>

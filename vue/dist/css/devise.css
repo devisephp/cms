@@ -960,7 +960,7 @@ button,
   background: radial-gradient(transparent 35%, rgba(0, 0, 0, .1) 37%);
 }
 
-.dvs-cn-wrapper li a i {
+.dvs-cn-wrapper li a .ion {
   position: relative;
   top: .4em;
   display: block;

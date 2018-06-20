@@ -27,14 +27,14 @@
           <label>Languages</label>
           <select v-model="editAddLanguage" @change="addEditLanguage()">
             <option :value="null">Add a Language</option>
-            <option v-for="language in languagesNotInEditSite" :value="language">{{ language.code }}</option>
+            <option v-for="language in languagesNotInEditSite" :key="language.id" :value="language">{{ language.code }}</option>
           </select>
         </fieldset>
 
         <fieldset class="dvs-fieldset dvs-mb-10">
           <label>Current Languages</label>
           <help class="dvs-mb-4">Green indicates the default language. Click on the language tags below to set a new default.</help>
-          <span v-for="language in localValue.languages" @click="setDefaultLanguage(language)" class="dvs-mr-2 dvs-tag dvs-bg-grey-darker dvs-cursor-pointer" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.name }}</span>
+          <span v-for="language in localValue.languages" :key="language.id" @click="setDefaultLanguage(language)" class="dvs-mr-2 dvs-tag dvs-bg-grey-darker dvs-cursor-pointer" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.name }}</span>
           <span v-if="localValue.languages.length < 1">No Languages</span>
         </fieldset>
 
@@ -113,7 +113,11 @@ export default {
     retrieveAllSites (loadbar = true) {
       let self = this
       this.getSites().then(function () {
-        self.localValue = Object.assign({}, self.localValue, self.site, {settings: {colors: {}}})
+        var colors = {}
+        if (typeof self.site.settings !== 'undefined' && typeof self.site.settings.colors !== 'undefined') {
+          colors = self.site.settings.colors
+        }
+        self.localValue = Object.assign({}, self.localValue, self.site, {settings: {colors: colors}})
         if (loadbar) {
           devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }

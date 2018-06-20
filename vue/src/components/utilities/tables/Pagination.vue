@@ -1,7 +1,7 @@
 <template>
   <ul class="pagination" v-if="meta.pagination && meta.pagination.total_pages > 1">
     <li v-for="n in meta.pagination.total_pages" @click="update(n)"
-    class="ghost"
+    :key="n"
     :class="{ 'bg-action': isCurrentPage(n) }">
       {{ n }}
     </li>

@@ -13,7 +13,7 @@
       @click.prevent="goToPage(backPage)" 
       :style="{color: theme.sidebarText.color }"
       v-if="backPage">
-      <i class="ion-arrow-left-c"></i> {{ backText }}
+      <arrow-round-back-icon /> {{ backText }}
     </a>
 
     <a 
@@ -22,14 +22,20 @@
       @click.prevent="backCallback()" 
       :style="{color: theme.sidebarText.color }"
       v-if="backCallback">
-      <i class="ion-arrow-left-c"></i> {{ backText }}
+      <arrow-round-back-icon /> {{ backText }}
     </a>
 
   </div>
 </template>
 
 <script>
+
+import ArrowRoundBackIcon from 'vue-ionicons/dist/ios-arrow-round-back.vue'
+
 export default {
+  components: {
+    ArrowRoundBackIcon
+  },
   props: ['title', 'backPage', 'backText', 'backCallback']
 }
 </script>

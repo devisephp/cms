@@ -6,7 +6,7 @@
           {{ slice.metadata.label }} 
         </div>
         <div @click.stop="addInstance(slice)">
-          <i class="ion-plus"></i> Add New
+          <add-icon /> Add New
         </div>
       </template>
       <template v-else>
@@ -91,6 +91,8 @@ import NumberEditor from './editor/Number'
 import TextareaEditor from './editor/Textarea'
 import TextEditor from './editor/Text'
 import WysiwygEditor from './editor/Wysiwyg'
+
+import AddIcon from 'vue-ionicons/dist/ios-add.vue'
 
 export default {
   name: 'SliceEditor',
@@ -210,6 +212,7 @@ export default {
   },
   props: ['slice', 'repeatableChild'],
   components: {
+    AddIcon,
     SliceEditor,
     CheckboxEditor,
     ColorEditor,

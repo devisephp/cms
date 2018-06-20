@@ -26,7 +26,7 @@
     <div id="devise-admin-content"  :style="adminTheme">
       <template v-if="analytics.data">
         <h3 class="dvs-mb-8" :style="{color: theme.statsText.color}">{{ localValue.title }} Analytics</h3>
-        <div class="flex mb-8">
+        <div class="flex dvs-mb-8">
           <fieldset class="dvs-fieldset mr-8">
             <label>Analytics Start Date</label>
             <date-picker v-model="analyticsDateRange.start" :settings="{date: true, time: false}" placeholder="Start Date" @update="retrieveAnalytics()" />
@@ -60,17 +60,25 @@
           </div>
           <div>
             <div class="dvs-mb-4">
-              <fieldset class="dvs-fieldset mb-8">
+              <fieldset class="dvs-fieldset dvs-mb-8">
+                <label>Template</label>
+                <select v-model="localValue.versions[key].template_id">
+                  <option :value="null">Please select a template</option>
+                  <option v-for="template in templates.data" :key="template.id" :value="template.id">{{ template.name }}</option>
+                </select>
+              </fieldset>
+
+              <fieldset class="dvs-fieldset dvs-mb-8">
                 <label>Start Date</label>
                 <date-picker v-model="localValue.versions[key].starts_at" :settings="{date: true, time: true}" placeholder="Start Date" title="The date in which this version will begin appearing." v-tippy="tippyConfiguration" />
               </fieldset>
 
-              <fieldset class="dvs-fieldset mb-8">
+              <fieldset class="dvs-fieldset dvs-mb-8">
                 <label>End Date</label>
                 <date-picker v-model="localValue.versions[key].ends_at" :settings="{date: true, time: true}" placeholder="End Date" title="The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it." v-tippy="tippyConfiguration" />
               </fieldset>
 
-              <fieldset class="dvs-fieldset mb-8" v-if="localValue.ab_testing_enabled">
+              <fieldset class="dvs-fieldset dvs-mb-8" v-if="localValue.ab_testing_enabled">
                 <label>A/B Testing Amount</label>
                 <input type="number" v-model.number="localValue.versions[key].ab_testing_amount" title="This is the weight in which a page will show up. The number can be any number you want and is divided by the total weights of all other page versions." v-tippy="tippyConfiguration">
               </fieldset>
@@ -112,24 +120,29 @@
       <help class="dvs-mb-8">These settings effect all of the page versions of this page.</help>
 
       <div class="dvs-mb-12">
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page Title</label>
           <input type="text" v-model="localValue.title" placeholder="Title of the Page">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Slug</label>
           <input type="text" v-model="localValue.slug" placeholder="Url of the Page">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-8">
+        <fieldset class="dvs-fieldset dvs-mb-8">
           <label>Canonical</label>
           <input type="text" v-model="localValue.canonical" placeholder="Canonical">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-8">
+        <fieldset class="dvs-fieldset dvs-mb-8">
           <label>A/B Testing Enabled</label>
           <input type="checkbox" v-model="localValue.ab_testing_enabled">
+        </fieldset>
+
+        <fieldset class="dvs-fieldset dvs-mb-8">
+          <h4 :style="{color: theme.sidebarText.color}" class="dvs-mb-4">Page Specific Meta Tags</h4>
+          <meta-form v-model="localValue.meta" @request-create-meta="requestCreateMeta" @request-update-meta="requestUpdateMeta" @request-delete-meta="requestDeleteMeta" />
         </fieldset>
 
         <div class="dvs-flex">
@@ -144,12 +157,12 @@
       <devise-modal @close="showCopy = false" class="dvs-z-50" v-if="showCopy">
         <h4 class="dvs-mb-4">Copy this page</h4>
         <help class="dvs-mb-4">This will create a whole new page based on this page copying all settings and values associated with it.</help>
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page Title</label>
           <input type="text" v-model="pageToCopy.title" placeholder="Title of the Page">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Slug</label>
           <input type="text" v-model="pageToCopy.slug" placeholder="Url of the Page">
         </fieldset>
@@ -164,20 +177,20 @@
         <h4 class="dvs-mb-4">Translate this page</h4>
         <help class="dvs-mb-4">This will create a translated page associated with this page. While the pages are connected to allow users to switch between translations they do have their own settings and versions.</help>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page Title</label>
           <input type="text" v-model="pageToTranslate.title" placeholder="Title of the Page">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Languages</label>
           <select v-model="translateLanguage">
             <option :value="null">Please select a language</option>
-            <option v-for="language in languages.data" :value="language">{{ language.code }}</option>
+            <option v-for="language in languages.data" :key="language.id" :value="language">{{ language.code }}</option>
           </select>
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Slug</label>
           <div class="dvs-flex">
             <input type="text" disabled="disabled" v-model="translateLanguage.code" class="dvs-max-w-3xs">
@@ -199,6 +212,7 @@ import DatePicker from './../utilities/DatePicker'
 import DeviseModal from './../utilities/Modal'
 import SidebarHeader from './../utilities/SidebarHeader'
 import LineChart from './analytics/Line'
+import MetaForm from './../meta/MetaForm'
 
 import Dates from './../../mixins/Dates'
 
@@ -310,6 +324,18 @@ export default {
     },
     requestDeleteVersion (version) {
       this.deletePageVersion({page: this.page, version: version})
+    },
+    requestCreateMeta (newMeta) {
+      this.localValue.meta.push(newMeta)
+    },
+    requestUpdateMeta (meta) {
+      let theMeta = this.localValue.meta.indexOf(meta)
+      theMeta = meta
+      meta.edit = false
+    },
+    requestDeleteMeta (meta) {
+      console.log(this.localValue.meta.indexOf(meta))
+      this.localValue.meta.splice(this.localValue.meta.indexOf(meta), 1)
     },
     requestDeletePage () {
       let self = this
@@ -424,7 +450,8 @@ export default {
     DatePicker,
     DeviseModal,
     SidebarHeader,
-    LineChart
+    LineChart,
+    MetaForm
   },
   mixins: [Dates]
 }

@@ -61,7 +61,7 @@
           <label>Template</label>
           <select v-model="newPage.template_id">
             <option :value="null">Please select a template</option>
-            <option v-for="template in templates.data" :value="template.id">{{ template.name }}</option>
+            <option v-for="template in templates.data" :key="template.id" :value="template.id">{{ template.name }}</option>
           </select>
         </fieldset>
 

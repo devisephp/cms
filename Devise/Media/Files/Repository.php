@@ -115,7 +115,6 @@ class Repository
     $files = $site->media()
       ->where('directory', $dir)
       ->get();
-    dd($files);
 
     return $this->buildMediaItemsFromFiles($files);
   }

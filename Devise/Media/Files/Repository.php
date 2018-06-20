@@ -111,11 +111,11 @@ class Repository
   {
     $root = $this->CategoryPaths->basePath();
     $dir = trim(str_replace($root, '', $dir), '/');
-
     $site = $this->SiteDetector->current();
     $files = $site->media()
       ->where('directory', $dir)
       ->get();
+    dd($files);
 
     return $this->buildMediaItemsFromFiles($files);
   }

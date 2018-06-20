@@ -69,7 +69,7 @@
           <label>Language</label>
           <select v-model="newPage.language_id">
             <option :value="null">Please select a language</option>
-            <option v-for="language in languages.data" :value="language.id">{{ language.code }}</option>
+            <option v-for="language in languages.data" :key="language.id" :value="language.id">{{ language.code }}</option>
           </select>
         </fieldset>
 

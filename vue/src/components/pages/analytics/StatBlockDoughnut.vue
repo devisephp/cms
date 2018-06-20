@@ -34,8 +34,16 @@ export default {
       let weekAgoKey = Object.keys(this.analytics)[0]
       let yesterdayKey = Object.keys(this.analytics)[1]
       let sumOfSample = this.analytics[yesterdayKey][this.stat] + this.analytics[weekAgoKey][this.stat]
-      let yesterday = this.analytics[yesterdayKey][this.stat] / sumOfSample
-      let weekAgo = this.analytics[weekAgoKey][this.stat] / sumOfSample
+      var yesterday = this.analytics[yesterdayKey][this.stat] / sumOfSample
+      var weekAgo = this.analytics[weekAgoKey][this.stat] / sumOfSample
+
+      if (isNaN(yesterday)) {
+        yesterday = 0
+      }
+
+      if (isNaN(weekAgo)) {
+        weekAgo = 1
+      }
 
       return [yesterday, weekAgo]
     },
@@ -47,7 +55,13 @@ export default {
       let weekAgoKey = Object.keys(this.analytics)[0]
       let yesterdayKey = Object.keys(this.analytics)[1]
 
-      return Math.round(((this.analytics[yesterdayKey][this.stat] / this.analytics[weekAgoKey][this.stat]) * 100) - 100)
+      var change = Math.round(((this.analytics[yesterdayKey][this.stat] / this.analytics[weekAgoKey][this.stat]) * 100) - 100)
+      
+      if (isNaN(change)) {
+        change = 0
+      }
+
+      return change
     },
     changeIcon () {
       if (this.change < 0) {

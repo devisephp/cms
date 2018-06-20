@@ -8,7 +8,7 @@
           {{ column.name }}
           <template v-if="column === sortBy">
             <arrow-down v-if="sortDir === 'desc'" />
-            <arrow-up v-else>
+            <arrow-up v-else />
           </template>
       </div>
       <div v-for="(record, dataKey) in sortedData" :key="dataKey" class="dvs-overflow-hidden dvs-px-2 ">

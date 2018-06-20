@@ -5,7 +5,7 @@
     </div>
     <div v-show="show" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-1 dvs-z-40 dvs-shadow-lg dvs-border-t-2">
       <div class="dvs-pt-4 dvs-pb-2 dvs-px-4 ">
-        Toggle Columns <span @click="show = false"><switch-icon class="dvs-cursor-pointer dvs-float-right" />
+        Toggle Columns <span @click="show = false"><switch-icon class="dvs-cursor-pointer dvs-float-right" /></span>
       </div>
       <div class="dvs-px-4">
         <div class="dvs-flex dvs-px-4 dvs-py-8 dvs-flex dvs-flex-col dvs-max-h-200 dvs-overflow-y-scroll">

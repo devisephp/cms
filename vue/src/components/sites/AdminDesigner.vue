@@ -453,9 +453,13 @@ export default {
   mounted () {
     let self = this
     this.setLineGraphStyles()
-    this.applyStyles(this.presets.Default)
     this.$nextTick(function () {
-      self.applyStyles(self.value)
+      console.log(self.value)
+      if (typeof self.value.sidebarTop !== 'undefined') {
+        self.applyStyles(self.value)
+      } else {
+        self.applyStyles(this.presets.Default)
+      }
     })
   },
   methods: {

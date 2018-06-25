@@ -122,6 +122,10 @@ export default {
         var colors = {}
         var googleAnalytics = ''
 
+        if (self.site.settings === null) {
+          self.$set(self.site, 'settings', {})
+        }
+
         if (typeof self.site.settings.colors !== 'undefined') {
           colors = self.site.settings.colors
         }

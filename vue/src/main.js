@@ -104,7 +104,7 @@ const DevisePlugin = {
           this.$router.push({name: pageName})
         },
         launchMediaManager (callbackObject, callbackProperty) {
-          deviseSettings.bus.$emit('devise-launch-media-manager', {
+          deviseSettings.$bus.$emit('devise-launch-media-manager', {
             callback: function (media) {
               callbackObject[callbackProperty] = media.url
             }

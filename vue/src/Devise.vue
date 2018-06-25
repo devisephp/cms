@@ -121,6 +121,7 @@ export default {
       this.mountGlobalVariables()
       this.addAdminAnimations()
       this.initDevise()
+      this.removeDeviseBlocker()
     }
   },
   methods: {
@@ -161,6 +162,10 @@ export default {
           devise.$bus.$emit('devise-loaded')
         }, 10)
       })
+    },
+    removeDeviseBlocker () {
+      let blocker = document.getElementById('devise-blocker')
+      blocker.classList.add('fade')
     },
     mountGlobalVariables () {
       // page, sites

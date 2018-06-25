@@ -67,7 +67,7 @@
         <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
           <div class="dvs-collapsed dvs-mt-4">
             <ul class="dvs-list-reset" style="padding-bottom:150px;" >
-              <template v-for="(slice, key) in pageSlices">
+              <template v-for="slice in pageSlices">
                 <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" />
               </template>
             </ul>

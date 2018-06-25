@@ -253,7 +253,7 @@ const actions = {
 
   getModelRecords (context, {model, filters}) {
     return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'models/query?' + model + '&' + commonUtils.buildFilterParams(filters)).then(function (response) {
+      window.axios.get(context.state.api.baseUrl + 'models/query?class=' + model + '&' + commonUtils.buildFilterParams(filters)).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)

@@ -55,8 +55,8 @@
 
         <template v-if="isLoggedIn && !isPreviewFrame">
           <div id="devise-admin-open" @click="toggleAdmin">
-            <i class="ion-gear-a dvs-gear-1"></i>
-            <i class="ion-gear-a dvs-gear-2"></i>
+            <settings-icon class="dvs-gear-1" w="30px" h="30px" />
+            <settings-icon class="dvs-gear-2" w="20px" h="20px" />
           </div>
         </template>
 
@@ -85,6 +85,8 @@ import TemplateEditor from './components/templates/TemplateEditor'
 import User from './components/menu/User'
 import SimpleBar from 'SimpleBar'
 import anime from 'animejs'
+
+import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
 
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
@@ -119,6 +121,7 @@ export default {
       this.mountGlobalVariables()
       this.addAdminAnimations()
       this.initDevise()
+      this.removeDeviseBlocker()
     }
   },
   methods: {
@@ -159,6 +162,10 @@ export default {
           devise.$bus.$emit('devise-loaded')
         }, 10)
       })
+    },
+    removeDeviseBlocker () {
+      let blocker = document.getElementById('devise-blocker')
+      blocker.classList.add('fade')
     },
     mountGlobalVariables () {
       // page, sites
@@ -289,6 +296,7 @@ export default {
     Messages,
     MediaManager,
     PageEditor,
+    SettingsIcon,
     Slice,
     TemplateIndex,
     TemplateEdit,

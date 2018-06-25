@@ -5,7 +5,11 @@
         <label>Presets</label>
         <select @change="selectPreset($event)">
           <option value="">Select a Preset</option>
+<<<<<<< HEAD
           <option :value="key" :key="key" v-for="(preset, key) in presets">{{ key }}</option>
+=======
+          <option :value="key" v-for="(preset, key) in presets" :key="key">{{ key }}</option>
+>>>>>>> ea4354df95fe5958d7f5516d1950d1042c04fb84
         </select>
       </fieldset>
     </div>

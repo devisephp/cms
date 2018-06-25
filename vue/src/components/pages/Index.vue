@@ -21,14 +21,14 @@
 
         <div class="dvs-relative">
           <ul class="dvs-list-reset dvs-bg-white dvs-text-black dvs-absolute dvs-shadow-lg">
-            <li v-for="(suggestion, key) in autosuggest.data" class="dvs-border-b dvs-border-grey-lighter dvs-p-4 dvs-cursor-pointer" @click="loadPage(key)">
+            <li v-for="(suggestion, key) in autosuggest.data" :key="key" class="dvs-border-b dvs-border-grey-lighter dvs-p-4 dvs-cursor-pointer" @click="loadPage(key)">
               {{ suggestion }}
             </li>
           </ul>
         </div>
       </fieldset>
 
-      <div v-for="page in pages.data" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
+      <div v-for="page in pages.data" :key="page.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
           {{ page.title }}
         </div>
@@ -50,7 +50,7 @@
 
     <transition name="fade">
       <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showCreate">
-        <h4 class="dvs-mb-4">Create new page</h4>
+        <h3 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Create new page</h3>
 
         <fieldset class="dvs-fieldset mb-4">
           <label>Page Title</label>
@@ -61,7 +61,7 @@
           <label>Template</label>
           <select v-model="newPage.template_id">
             <option :value="null">Please select a template</option>
-            <option v-for="template in templates.data" :value="template.id">{{ template.name }}</option>
+            <option v-for="template in templates.data" :key="template.id" :value="template.id">{{ template.name }}</option>
           </select>
         </fieldset>
 
@@ -69,7 +69,7 @@
           <label>Language</label>
           <select v-model="newPage.language_id">
             <option :value="null">Please select a language</option>
-            <option v-for="language in languages.data" :value="language.id">{{ language.code }}</option>
+            <option v-for="language in languages.data" :key="language.id" :value="language.id">{{ language.code }}</option>
           </select>
         </fieldset>
 
@@ -87,8 +87,8 @@
           </div>
         </fieldset>
 
-        <button class="dvs-btn" @click="requestCreatePage" :disabled="createInvalid">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false">Cancel</button>
+        <button class="dvs-btn" :style="actionButtonTheme" @click="requestCreatePage" :disabled="createInvalid">Create</button>
+        <button class="dvs-btn" :style="regularButtonTheme" @click="showCreate = false">Cancel</button>
       </devise-modal>
     </transition>
   </div>

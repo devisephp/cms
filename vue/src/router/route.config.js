@@ -2,6 +2,7 @@ import MothershipIndex from '../components/mothership/Index'
 import MothershipAnalytics from '../components/mothership/Analytics'
 import MothershipBackups from '../components/mothership/Backups'
 import MothershipReleases from '../components/mothership/Releases'
+import MothershipChanges from '../components/mothership/Changes'
 import MothershipHealthReports from '../components/mothership/HealthReports'
 import LanguagesManage from '../components/languages/Manage'
 import MainMenu from '../components/menu/MainMenu'
@@ -74,6 +75,16 @@ var routes = [
     name: 'devise-ms-releases-index',
     components: {
       'devise': MothershipReleases
+    },
+    meta: {
+      wide: true
+    }
+  },
+  {
+    path: '/devise/mothership/changes',
+    name: 'devise-ms-changes-index',
+    components: {
+      'devise': MothershipChanges
     },
     meta: {
       wide: true

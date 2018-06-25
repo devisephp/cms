@@ -58,23 +58,10 @@ class CategoryPaths
     return $this->basePath() . '/' . $path;
   }
 
-  /**
-   * Browser path is the url path to this root media directory
-   *
-   * @param $path
-   * @return string
-   */
-  public function browserPath($path)
-  {
-    $path = ($path != '') ? $path . '/' : '';
-
-    return $this->basePath() . '/' . $path;
-  }
-
   public function basePath()
   {
     $site = $this->SiteDetector->current();
 
-    return public_path() . '/' . $this->Config->get('devise.media.root-directory') . '/' . $site->domain;
+    return $this->Config->get('devise.media.root-directory') . '/' . $site->domain;
   }
 }

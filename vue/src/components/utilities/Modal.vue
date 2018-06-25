@@ -2,7 +2,9 @@
   <div class="dvs-fixed dvs-pin">
     <div class="dvs-blocker dvs-fixed dvs-pin" @click="close"></div>
     <div class="dvs-absolute dvs-absolute-center dvs-z-50 dvs-p-8 dvs-rounded dvs-min-w-2/3" :style="infoBlockTheme">
-      <i class="ion-close-round dvs-font-xl dvs-absolute dvs-pin-t dvs-pin-r dvs-m-8 dvs-cursor-pointer"  :style="{color: theme.statsText.color }" @click="close" />
+      <div @click="close">
+        <close-circle-icon w="20" h="20" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-m-8 dvs-cursor-pointer"  :style="{color: theme.statsText.color }" />
+      </div>
       <slot></slot>
     </div>
   </div>
@@ -10,11 +12,16 @@
 
 <script>
 
+import CloseCircleIcon from 'vue-ionicons/dist/md-close-circle.vue'
+
 export default {
   methods: {
     close () {
       this.$emit('close')
     }
+  },
+  components: {
+    CloseCircleIcon
   }
 }
 </script>

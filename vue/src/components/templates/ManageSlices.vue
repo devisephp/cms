@@ -14,15 +14,15 @@
 
         <div class="dvs-flex dvs-justify-center dvs-mb-4">
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('single')">
-            <i class="ion-android-remove dvs-text-4xl"></i>
+            <remove-icon w="40" h="40" />
             <h6 :style="{ color: theme.statsText.color }">Single</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('repeats')">
-            <i class="ion-android-menu dvs-text-4xl"></i>
+            <menu-icon w="40" h="40" />
             <h6 :style="{ color: theme.statsText.color }">Repeatable</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('model')">
-            <i class="ion-cube dvs-text-4xl"></i>
+            <cube-icon w="40" h="40" />
             <h6 :style="{ color: theme.statsText.color }">Model</h6>
           </div>
         </div>
@@ -94,6 +94,10 @@
 
   import SuperTable from '../utilities/tables/SuperTable'
   import SlicesMixin from '../../mixins/Slices'
+
+  import RemoveIcon from 'vue-ionicons/dist/ios-remove.vue'
+  import MenuIcon from 'vue-ionicons/dist/ios-menu.vue'
+  import CubeIcon from 'vue-ionicons/dist/ios-cube.vue'
 
   /*
   Manage Slices
@@ -250,6 +254,9 @@
       ])
     },
     components: {
+      CubeIcon,
+      MenuIcon,
+      RemoveIcon,
       SuperTable
     },
     props: ['originSlice', 'value', 'mode', 'root'],

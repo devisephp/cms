@@ -5,12 +5,17 @@ namespace Devise\Providers;
 use Devise\Console\Commands\Install;
 use Devise\Devise;
 
+use Devise\Media\Files\MediaFieldObserver;
+use Devise\Models\DvsField;
+use Devise\Sites\SiteDetector;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Compilers\BladeCompiler;
 
 class DeviseServiceProvider extends ServiceProvider
 {
+
   /**
    * Perform post-registration booting of services.
    *
@@ -18,6 +23,8 @@ class DeviseServiceProvider extends ServiceProvider
    */
   public function boot(BladeCompiler $blade)
   {
+    $this->setSiteConfig();
+
     $this->setCommands();
 
     $this->setPublishables();
@@ -27,6 +34,8 @@ class DeviseServiceProvider extends ServiceProvider
     $this->loadLaravelResources();
 
     $this->setCustomDirectives();
+
+    $this->registerObservers();
   }
 
   public function register()
@@ -38,6 +47,18 @@ class DeviseServiceProvider extends ServiceProvider
     if (!class_exists('Devise'))
     {
       class_alias(Devise::class, 'Devise');
+    }
+  }
+
+  private function setSiteconfig()
+  {
+    $siteDetector = App::make(SiteDetector::class);
+    $site = $siteDetector->current();
+
+    if ($site)
+    {
+      $protocol = request()->secure ? 'http://' : 'https://';
+      config()->set('app.url', $protocol . $site->domain);
     }
   }
 
@@ -83,5 +104,10 @@ class DeviseServiceProvider extends ServiceProvider
     Blade::directive('slices', function ($expression) {
       return "<?php echo '<slices :slices=\"slices\"/>' ?>";
     });
+  }
+
+  private function registerObservers()
+  {
+    DvsField::observe(MediaFieldObserver::class);
   }
 }

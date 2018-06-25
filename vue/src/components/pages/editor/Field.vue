@@ -9,7 +9,9 @@
         </div>
         <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
           <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal" @click="toggleShowEditor">{{ options.label }}</span>
-          <i class="ion-eye dvs-text-xl" v-if="!options.hidePreview" @mouseover="showPreview = true" @mouseout="showPreview = false"></i>
+          <div @mouseover="showPreview = true" @mouseout="showPreview = false">
+            <eye-icon />
+          </div>
           <div 
             v-show="showPreview" 
             class="dvs-absolute dvs-font-normal dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20"
@@ -63,6 +65,7 @@ import { mapGetters } from 'vuex'
 
 import Strings from './../../../mixins/Strings'
 import Toggle from './../../utilities/Toggle'
+import EyeIcon from 'vue-ionicons/dist/ios-eye.vue'
 
 export default {
   name: 'FieldEditor',
@@ -100,6 +103,7 @@ export default {
   props: ['value', 'options', 'showEditor'],
   mixins: [Strings],
   components: {
+    EyeIcon,
     Toggle
   }
 }

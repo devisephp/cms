@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\App;
 
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
 /**
@@ -134,11 +135,20 @@ class Framework
         return \View::getFacadeRoot();
         break;
 
+      case 'storage':                 // Illuminate\Support\Facades\Storage
+        return Storage::getFacadeRoot();
+        break;
+
       case 'mimetypeguesser':
         return MimeTypeGuesser::getInstance();
         break;
     }
 
     return null;
+  }
+
+  public static function storage()
+  {
+    return Storage::disk(config('devise.media.disk'));
   }
 }

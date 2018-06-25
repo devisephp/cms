@@ -34,7 +34,8 @@ class StorePage extends ApiRequest
       'slug'  => [
         'required',
         Rule::unique('dvs_pages')->where(function ($query) use ($site) {
-          return $query->where('site_id', $site->id);
+          return $query->where('site_id', $site->id)
+            ->whereNull('deleted_at');
         })
       ]
     ];

@@ -20,6 +20,11 @@ class DvsSite extends Model
       ->withPivot('default');
   }
 
+  public function media()
+  {
+    return $this->morphedByMany(DvsMedia::class, 'element', 'dvs_site_element', 'site_id');
+  }
+
   public function getCurrentAttribute()
   {
     $detector = App::make(SiteDetector::class);

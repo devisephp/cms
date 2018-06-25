@@ -7,7 +7,6 @@ use Devise\Http\Resources\Vue\SiteResource;
 use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsPage;
 
-use Devise\MotherShip\DvsRelease;
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +18,40 @@ use Illuminate\Support\Facades\Schema;
 class Devise
 {
   private static $components = [];
+
+  public static function head($page = null) {
+    $head = '';
+
+    if($page) {
+      $head .= self::meta($page);
+      $head .= '<script>';
+      $head .= self::data($page);
+      $head .= '</script>';
+    }    
+
+    if (Auth::user()) {
+      $head .= '<link rel="stylesheet" href="'. mix('/dist/css/devise.css', './devise/') .'">';
+    }
+
+    $head .= '<style>';
+    $head .= '#devise-blocker { position:fixed; z-index:999999; top:0; left:0; right:0; bottom:0; background-color:white; 	pointer-events: none; transition:1s opacity; } #devise-blocker.fade { opacity:0; }';
+    $head .= '</style>';
+
+    return $head;
+  }
+
+  public static function meta($page = null) {
+    $meta = '';
+    if ($page && $page->canonical != null) {
+      $meta .= '<link rel="canonical" href="' . $page->canonical .'">';
+    }
+
+    foreach($page->metas as $m) {
+      $meta .= '<meta '. $m->attribute_name .'="'. $m->attribute_value .'" content="'. $m->content .'">';
+    }
+
+    return $meta;
+  }
 
   public static function data($page)
   {
@@ -110,7 +143,7 @@ class Devise
 
   public static function mothershipEnabled()
   {
-    if(Schema::hasTable('dvs_releases') && config('devise.mothership.api-key')) return true;
+//    if(Schema::hasTable('dvs_releases') && config('devise.mothership.api-key')) return true;
 
     return false;
   }

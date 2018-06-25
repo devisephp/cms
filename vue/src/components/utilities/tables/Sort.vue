@@ -1,16 +1,16 @@
 <template>
-  <div class="flex px-4 py-8">
-    <fieldset class="mr-4 flex">
-      <div class="flex items-center">
-        <label class="pr-2">Ascending</label>
-        <input type="radio" v-model="direction" class="fancy" value="asc" @change="update"
+  <div class="dvs-flex dvs-px-4 dvs-py-8">
+    <fieldset class="dvs-mr-4 dvs-flex">
+      <div class="dvs-flex dvs-items-center">
+        <label class="dvs-pr-2">Ascending</label>
+        <input type="radio" v-model="direction" value="asc" @change="update"
                @click="checkRemove($event.target.value)">
       </div>
     </fieldset>
-    <fieldset class="ml-4">
-      <div class="flex items-center">
-        <label class="pr-2">Descending</label>
-        <input type="radio" v-model="direction" class="fancy" value="desc" @change="update"
+    <fieldset class="dvs-ml-4">
+      <div class="dvs-flex dvs-items-center">
+        <label class="dvs-pr-2">Descending</label>
+        <input type="radio" v-model="direction" value="desc" @change="update"
                @click="checkRemove($event.target.value)">
       </div>
     </fieldset>

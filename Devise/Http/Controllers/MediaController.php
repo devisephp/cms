@@ -3,6 +3,7 @@
 use Devise\Media\Files\Manager;
 use Devise\Media\Files\Repository;
 
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -14,6 +15,7 @@ use Illuminate\Routing\Controller;
  */
 class MediaController extends Controller
 {
+  use ValidatesRequests;
   /**
    * @var Manager
    */
@@ -43,7 +45,7 @@ class MediaController extends Controller
   {
     $input = $request->all();
     $input['category'] = $folderPath;
-    $results = $this->Repository->compileIndexData($input, ['media-items']);
+    $results = $this->Repository->getIndex($input, ['media-items']);
 
     return $results['media-items'];
   }
@@ -56,6 +58,8 @@ class MediaController extends Controller
    */
   public function store(Request $request)
   {
+    $this->validate($request, ['file' => 'required|file']);
+
     $file = $this->FileManager->saveUploadedFile($request->all());
 
     return $this->Repository->getFileData($file);

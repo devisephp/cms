@@ -33,12 +33,13 @@ class UpdatePage extends ApiRequest
     $pageId = $this->route('page_id');
 
     return [
-      'title' => 'filled',
-      'slug'  => [
+      'title'              => 'filled',
+      'slug'               => [
         'filled',
         Rule::unique('dvs_pages')->where(function ($query) use ($site, $pageId) {
           return $query->where('site_id', $site->id)
-            ->where('id', '!=', $pageId);
+            ->where('id', '!=', $pageId)
+            ->whereNull('deleted_at');
         })
       ],
       'ab_testing_enabled' => 'filled|boolean'

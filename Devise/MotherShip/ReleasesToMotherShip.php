@@ -31,13 +31,11 @@ trait ReleasesToMotherShip
   {
     if (Devise::mothershipEnabled())
     {
-
       $releasesCount = DvsRelease::where('model_name', 'Release')
         ->count();
 
       if ($releasesCount > 0)
       {
-        parent::boot();
 
         $log = App::make(DvsRelease::class);
 
@@ -63,6 +61,8 @@ trait ReleasesToMotherShip
         });
       }
     }
+
+    parent::boot();
   }
 
   /**

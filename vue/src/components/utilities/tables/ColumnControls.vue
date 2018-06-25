@@ -1,6 +1,8 @@
 <template>
   <div class="dvs-ml-4" v-if="shouldDisplayControls">
-    <i class="ion-ios-settings-strong dvs-cursor-pointer" @click="show = true"></i>
+    <div @click="show = true" class="dvs-cursor-pointer">
+      <settings-icon />
+    </div>
     <div v-show="show">
       <div class="dvs-blocker dvs-z-20" @click="hide"></div>
       <div v-show="show" class="dvs-absolute dvs-pin-b dvs-pin-l dvs-mb-1 dvs-bg-white dvs-min-w-250 dvs-z-40 dvs-shadow-lg dvs-border-t-2 dvs-border-grey-lighter">
@@ -8,7 +10,9 @@
           {{ this.column.label }}
           <div>
             <button class="dvs-pr-4 dvs-uppercase dvs-text-xs dvs-outline-none" @click="clearAll()">Clear</button>|
-            <i class="ion-close-round dvs-pl-4 dvs-cursor-pointer dvs-float-right" @click="hide"></i>
+            <div @click="hide">
+              <arrow-round-back-icon class="dvs-pl-4 dvs-cursor-pointer dvs-float-right" />
+            </div>
           </div>
         </div>
         <div class="dvs-px-4 dvs-column-control-modules">
@@ -28,6 +32,9 @@ import Search from './Search'
 import Sort from './Sort'
 import Related from './Related'
 import Dates from './Dates'
+
+import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
+import ArrowRoundBackIcon from 'vue-ionicons/dist/ios-arrow-round-back.vue'
 
 export default {
   name: 'ColumnControls',
@@ -79,10 +86,12 @@ export default {
     value: {}
   },
   components: {
-    search: Search,
-    sort: Sort,
-    dates: Dates,
-    related: Related
+    ArrowRoundBackIcon,
+    Dates,
+    SettingsIcon,
+    Related,
+    Search,
+    Sort
   }
 }
 </script>

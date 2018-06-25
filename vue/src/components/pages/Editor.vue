@@ -1,13 +1,7 @@
 <template>
   <div>
-    <div class="dvs-w-full dvs-py-4 dvs-px-12 dvs-flex dvs-flex-col dvs-items-center admin-component-first-in">
-      <logo class="dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center" />
-      <a class="dvs-text-2xs dvs-font-normal dvs-uppercase dvs-tracking-wide" href="#" @click.prevent="goToPage('devise-index')" :style="`color:${theme.sidebarText.color}`">
-        <i class="ion-arrow-left-c"></i> Full Administration
-      </a>
-      <h3 :style="`color:${theme.sidebarText.color}`">      
-        Edit Page: {{ this.page.title }}
-      </h3>
+    <div class="dvs-items-center dvs-text-center dvs-py-4">
+      <sidebar-header :title="`Editing Page: ${page.title}`" back-text="Back to Administration" back-page="devise-index" />
     </div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-py-4">
@@ -15,14 +9,22 @@
         class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success admin-component-third-in"  
         :style="actionButtonTheme"
         @click.prevent="requestSavePage()">
-        <i class="ion-checkmark-circled dvs-mr-2"></i> Save this page
+        <checkmark-circle-icon class="dvs-mr-2" />Save this page
       </button>
 
       <div class="dvs-flex dvs-w-full dvs-justify-center dvs-items-center dvs-mb-8 dvs-w-full admin-component-second-in">
-        <i class="ion-android-desktop dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'desktop'}" @click="setPreviewMode('desktop')"></i>
-        <i class="ion-ipad dvs-text-3xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'tablet'}" @click="setPreviewMode('tablet')"></i>
-        <i class="ion-android-phone-portrait dvs-text-2xl dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-portrait'}" @click="setPreviewMode('mobile-portrait')"></i>
-        <i class="ion-android-phone-landscape dvs-text-2xl dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-landscape'}" @click="setPreviewMode('mobile-landscape')"></i>
+        <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'desktop'}"  @click="setPreviewMode('desktop')">
+          <desktop-icon w="25" h="25" />
+        </div>
+        <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'tablet'}"  @click="setPreviewMode('tablet')">
+          <tablet-icon w="25" h="25" />
+        </div>
+        <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-portrait'}"  @click="setPreviewMode('mobile-portrait')">
+          <phone-portrait-icon w="25" h="25" />
+        </div>
+        <div class="dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-landscape'}"  @click="setPreviewMode('mobile-landscape')">
+          <phone-landscape-icon w="25" h="25" />
+        </div>
       </div>
 
       <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
@@ -65,8 +67,8 @@
         <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
           <div class="dvs-collapsed dvs-mt-4">
             <ul class="dvs-list-reset" style="padding-bottom:150px;" >
-              <template v-for="(slice, key) in pageSlices">
-                <slice-editor @opened="openSlice(slice)" :slice="slice" />
+              <template v-for="slice in pageSlices">
+                <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" />
               </template>
             </ul>
           </div>
@@ -86,6 +88,13 @@ import { mapGetters, mapActions } from 'vuex'
 
 import AnalyticTotals from './AnalyticTotals'
 import SliceEditor from './SliceEditor'
+import SidebarHeader from './../utilities/SidebarHeader'
+
+import CheckmarkCircleIcon from 'vue-ionicons/dist/ios-checkmark-circle-outline.vue'
+import DesktopIcon from 'vue-ionicons/dist/md-desktop.vue'
+import TabletIcon from 'vue-ionicons/dist/md-tablet-portrait.vue'
+import PhonePortraitIcon from 'vue-ionicons/dist/md-phone-portrait.vue'
+import PhoneLandscapeIcon from 'vue-ionicons/dist/md-phone-landscape.vue'
 
 export default {
   name: 'PageEditor',
@@ -147,6 +156,12 @@ export default {
   props: ['page'],
   components: {
     AnalyticTotals,
+    CheckmarkCircleIcon,
+    DesktopIcon,
+    PhonePortraitIcon,
+    PhoneLandscapeIcon,
+    TabletIcon,
+    SidebarHeader,
     SliceEditor
   }
 }

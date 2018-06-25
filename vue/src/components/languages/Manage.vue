@@ -19,7 +19,7 @@
       <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Existing Languages</h3>
 
       <div class="dvs-mb-12 dvs-flex dvs-flex-col">
-        <div v-for="(language, key) in localValue.data" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
+        <div v-for="(language, key) in localValue.data" :key="key" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
           <div class="dvs-text-xl dvs-font-bold dvs-mb-4">
             <template v-if="!language.editCode">
               {{ language.code }}
@@ -32,7 +32,7 @@
 
           <div class="dvs-flex dvs-justify-between dvs-items-center">
             <button v-if="!language.editCode" class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" :style="regularButtonTheme" @click="language.editCode = !language.editCode">
-              <i class="ion-edit" />
+              <CreateIcon />
             </button>
             <button class="dvs-btn dvs-mr-2" v-if="language.editCode" @click="requestUpdateLanguage(localValue.data[key])">Save Language Code</button>
             <button class="dvs-btn dvs-btn-plain" v-if="language.editCode" @click="language.editCode = false">Cancel</button>
@@ -47,6 +47,7 @@
 
 <script>
 import SidebarHeader from './../utilities/SidebarHeader'
+import CreateIcon from 'vue-ionicons/dist/md-create.vue'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -97,6 +98,7 @@ export default {
     ])
   },
   components: {
+    CreateIcon,
     SidebarHeader
   }
 }

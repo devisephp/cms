@@ -6,12 +6,12 @@
 
       <input type="text" class="dvs-w-full" v-model="localFilters.search[column]" @keyup="updateValue" v-if="uiType === 'field'">
 
-      <select v-model="localFilters.search[column]" class="fancy w-full" @change="updateValue" v-if="uiType === 'array-select'">
+      <select v-model="localFilters.search[column]" class="w-full" @change="updateValue" v-if="uiType === 'array-select'">
         <option value="">Any</option>
         <option v-for="option in options">{{ option }}</option>
       </select>
 
-      <select v-model="localFilters.search[column]" class="fancy w-full" @change="updateValue" v-if="uiType === 'object-select'">
+      <select v-model="localFilters.search[column]" class="w-full" @change="updateValue" v-if="uiType === 'object-select'">
         <option value="">Any</option>
         <option v-for="(option, value) in options" :value="value">{{ option }}</option>
       </select>

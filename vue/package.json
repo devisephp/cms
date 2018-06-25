@@ -1,6 +1,6 @@
 {
   "name": "Devise",
-  "version": "0.2.0",
+  "version": "2.0.0",
   "description": "Content Management System",
   "author": "Gary Williams <gary@lbm.co>",
   "private": true,
@@ -28,6 +28,7 @@
     "vue-chartjs": "^3.2.1",
     "vue-color": "^2.4.4",
     "vue-flatpickr-component": "^6.2.0",
+    "vue-ionicons": "^2.2.1",
     "vue-router": "^3.0.1",
     "vue-tippy": "^2.0.8",
     "vue2-dropzone": "^3.0.4",
@@ -41,6 +42,7 @@
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-vue-jsx": "^3.7.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "browser-sync": "^2.23.6",

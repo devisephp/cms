@@ -81,6 +81,9 @@ const DevisePlugin = {
       }
     }, options)
 
+    let blocker = document.getElementById('devise-blocker')
+    blocker.classList.add('fade')
+
     // We call Vue.mixin() here to inject functionality into all components.
     Vue.mixin({
       data () {

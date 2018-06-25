@@ -62,6 +62,10 @@
               <label>Canonical</label>
               <input type="text" placeholder="Canonical">
             </fieldset>
+
+            <router-link :to="{ name: 'devise-pages-view', params: { pageId: page.id }}" class="dvs-btn dvs-block dvs-font-bold dvs-text-center dvs-mt-8" :style="actionButtonTheme">
+              All Settings
+            </router-link>
           </div>
         </li>
         <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">

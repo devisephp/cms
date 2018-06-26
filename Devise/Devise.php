@@ -6,6 +6,7 @@ use Devise\Http\Resources\Vue\PageResource;
 use Devise\Http\Resources\Vue\SiteResource;
 use Devise\Http\Resources\Vue\TemplateResource;
 use Devise\Models\DvsPage;
+use Devise\Models\DvsPageMeta;
 
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
@@ -23,6 +24,7 @@ class Devise
     $head = '';
 
     if($page) {
+      $head .= self::analytics();
       $head .= self::meta($page);
       $head .= '<script>';
       $head .= self::data($page);
@@ -40,11 +42,37 @@ class Devise
     return $head;
   }
 
+  public static function analytics() {
+    $analytics = '';
+    $detector = App::make(SiteDetector::class);
+    $currentSite = $detector->current();
+    $settings = $currentSite->settings;
+
+
+    if (isset($settings->googleAnalytics) && $settings->googleAnalytics !== '') {
+      $analytics = '
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-72597741-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag(\'js\', new Date());
+
+        gtag(\'config\', \''.$settings->googleAnalytics.'\');
+      </script>
+      ';
+    }
+
+    return $analytics;
+  }
+
   public static function meta($page = null) {
     $meta = '';
     if ($page && $page->canonical != null) {
       $meta .= '<link rel="canonical" href="' . $page->canonical .'">';
     }
+
+    $globalMeta = DvsPageMeta::where('page_id', 0)->get();
+    $page->metas = $page->metas->merge($globalMeta);
 
     foreach($page->metas as $m) {
       $meta .= '<meta '. $m->attribute_name .'="'. $m->attribute_value .'" content="'. $m->content .'">';

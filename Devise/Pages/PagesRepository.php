@@ -59,15 +59,16 @@ class PagesRepository
   public function findByRouteName($name)
   {
     return $this->Page
-      ->with(
-        'currentVersion.slices.templateSlice',
-        'currentVersion.template.slices.slices.slices.slices',
-        'currentVersion.slices.slices.slices.slices',
-        'currentVersion.slices.fields',
-        'versions.page.currentVersion',
-        'translatedFromPage',
-        'localizedPages',
-        'metas'
+      ->with([
+          'currentVersion.slices.templateSlice',
+          'currentVersion.template.slices.slices.slices.slices',
+          'currentVersion.slices.slices.slices.slices',
+          'currentVersion.slices.fields',
+          'versions.page.currentVersion',
+          'translatedFromPage',
+          'localizedPages',
+          'metas'
+        ]
       )
       ->whereRouteName($name)
       ->firstOrFail();
@@ -82,15 +83,16 @@ class PagesRepository
   public function findById($id)
   {
     return $this->Page
-      ->with(
-        'currentVersion.slices.templateSlice',
-        'currentVersion.template.slices.slices.slices.slices',
-        'currentVersion.slices.slices.slices.slices',
-        'currentVersion.slices.fields',
-        'versions.page.currentVersion',
-        'translatedFromPage',
-        'localizedPages',
-        'metas'
+      ->with([
+          'currentVersion.slices.templateSlice',
+          'currentVersion.template.slices.slices.slices.slices',
+          'currentVersion.slices.slices.slices.slices',
+          'currentVersion.slices.fields',
+          'versions.page.currentVersion',
+          'translatedFromPage',
+          'localizedPages',
+          'metas'
+        ]
       )
       ->findOrFail($id);
   }

@@ -5,7 +5,7 @@
         <label>Presets</label>
         <select @change="selectPreset($event)">
           <option value="">Select a Preset</option>
-          <option :value="key" v-for="(preset, key) in presets" :key="key">{{ key }}</option>
+          <option :value="key" :key="key" v-for="(preset, key) in presets">{{ key }}</option>
         </select>
       </fieldset>
     </div>
@@ -451,9 +451,16 @@ export default {
     }
   },
   mounted () {
+    let self = this
     this.setLineGraphStyles()
-    this.applyStyles(this.presets.Default)
-    this.applyStyles(this.value)
+    this.$nextTick(function () {
+      console.log(self.value)
+      if (typeof self.value.sidebarTop !== 'undefined') {
+        self.applyStyles(self.value)
+      } else {
+        self.applyStyles(this.presets.Default)
+      }
+    })
   },
   methods: {
     applyStyles (styles) {

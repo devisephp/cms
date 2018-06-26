@@ -39,6 +39,11 @@
         </fieldset>
 
         <fieldset class="dvs-fieldset dvs-mb-10">
+          <label>Google Analytics UA ID. Include the "UA-" in your entry</label>
+          <input type="text" v-model="localValue.settings.googleAnalytics" placeholder="UA-XXXXXXX">
+        </fieldset>
+
+        <fieldset class="dvs-fieldset dvs-mb-10">
           <label>Admin Styles</label>
           <help class="dvs-mb-8">You can change the styles of the admin to more closely match the brand of the site as well as upload a logo for the admin.</help>
           <admin-designer v-model="localValue.settings.colors"></admin-designer>
@@ -70,7 +75,8 @@ export default {
     return {
       localValue: {
         settings: {
-          colors: {}
+          colors: {},
+          googleAnalytics: ''
         }
       },
       modulesToLoad: 2,
@@ -114,10 +120,29 @@ export default {
       let self = this
       this.getSites().then(function () {
         var colors = {}
-        if (typeof self.site.settings !== 'undefined' && typeof self.site.settings.colors !== 'undefined') {
+        var googleAnalytics = ''
+
+        if (self.site.settings === null) {
+          self.$set(self.site, 'settings', {})
+        }
+
+        if (typeof self.site.settings.colors !== 'undefined') {
           colors = self.site.settings.colors
         }
-        self.localValue = Object.assign({}, self.localValue, self.site, {settings: {colors: colors}})
+        if (typeof self.site.settings.googleAnalytics !== 'undefined') {
+          googleAnalytics = self.site.settings.googleAnalytics
+        }
+        self.localValue = Object.assign(
+          {}, 
+          self.localValue, 
+          self.site, 
+          {
+            settings: {
+              colors: colors, 
+              googleAnalytics: googleAnalytics
+            }
+          })
+          
         if (loadbar) {
           devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }

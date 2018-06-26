@@ -165,7 +165,9 @@ export default {
     },
     removeDeviseBlocker () {
       let blocker = document.getElementById('devise-blocker')
-      blocker.classList.add('fade')
+      if (blocker !== null) {
+        blocker.classList.add('fade')
+      }
     },
     mountGlobalVariables () {
       // page, sites

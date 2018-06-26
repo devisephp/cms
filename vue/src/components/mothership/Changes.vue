@@ -12,7 +12,6 @@
 
 <script>
 
-
 import { mapGetters, mapActions } from 'vuex'
 import SidebarHeader from './../utilities/SidebarHeader'
 
@@ -26,7 +25,7 @@ export default {
       }
     },
     mounted () {
-
+      this.retrieveChanges()
     },
     methods: {
       ...mapActions('devise', [
@@ -34,14 +33,9 @@ export default {
       ]),
       retrieveChanges () {
         let self = this
-        if (this.mothership) {
-
-          var yesterday = new Date()
-          yesterday.setDate(yesterday.getDate() - 1)
-          this.getPendingChanges().then(function (response) {
-            self.$set(self, 'localValue', response.data)
-          })
-        }
+        this.getPendingChanges().then(function (response) {
+          self.$set(self, 'localValue', response.data)
+        })
       },
     },
     computed: {

@@ -52,13 +52,16 @@ class DeviseServiceProvider extends ServiceProvider
 
   private function setSiteconfig()
   {
-    $siteDetector = App::make(SiteDetector::class);
-    $site = $siteDetector->current();
-
-    if ($site)
+    if (!$this->app->runningInConsole())
     {
-      $protocol = request()->secure ? 'http://' : 'https://';
-      config()->set('app.url', $protocol . $site->domain);
+      $siteDetector = App::make(SiteDetector::class);
+      $site = $siteDetector->current();
+
+      if ($site)
+      {
+        $protocol = request()->secure ? 'http://' : 'https://';
+        config()->set('app.url', $protocol . $site->domain);
+      }
     }
   }
 
@@ -75,7 +78,7 @@ class DeviseServiceProvider extends ServiceProvider
   private function setPublishables()
   {
     $this->publishes([
-      __DIR__ . '/../../vue/dist' => public_path('devise/dist'),
+      __DIR__ . '/../../vue/dist' => public_path('devise'),
     ], 'dvs-dist');
 
     $this->publishes([

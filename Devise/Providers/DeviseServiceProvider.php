@@ -78,7 +78,7 @@ class DeviseServiceProvider extends ServiceProvider
   private function setPublishables()
   {
     $this->publishes([
-      __DIR__ . '/../../vue/devise' => public_path('devise'),
+      __DIR__ . '/../../vue/build' => public_path('devise'),
     ], 'dvs-assets');
 
     $this->publishes([

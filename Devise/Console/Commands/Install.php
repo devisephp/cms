@@ -3,6 +3,7 @@
 namespace Devise\Console\Commands;
 
 use App\User;
+use Devise\Models\DvsLanguage;
 use Devise\Models\DvsSite;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
@@ -50,7 +51,7 @@ class Install extends Command
     {
       $this->handleMigrations();
       $this->handlePublishing();
-
+      $this->handleDefaultLanguage();
       $this->handleSiteEntry();
 
       $this->handleUser();
@@ -93,6 +94,23 @@ class Install extends Command
     $this->call('vendor:publish', ['--tag' => 'dvs-config']);
   }
 
+  private function handleDefaultLanguage()
+  {
+    $languageCount = DvsLanguage::count();
+
+    if ($languageCount) 
+    {
+      $this->info('Language entries found. No configuration necessary.');
+    } else 
+    {
+      DvsLanguage::create([
+        'code'     => 'en',
+        'created_at'    => Date('Y-m-d H:i:s'),
+        'updated_at'    => Date('Y-m-d H:i:s') 
+      ]);
+    }
+  }
+
   private function handleSiteEntry()
   {
     $siteCount = DvsSite::count();
@@ -105,10 +123,21 @@ class Install extends Command
       $siteName = $this->ask('Please input the name of your production site.');
       $siteDomain = $this->ask('Please input the domain of your production site.');
 
-      DvsSite::create([
+      $site = DvsSite::create([
         'name'     => $siteName,
         'domain'   => $siteDomain,
-        'settings' => '{}'
+        'settings' => '{}',
+        'created_at'    => Date('Y-m-d H:i:s'),
+        'updated_at'    => Date('Y-m-d H:i:s') 
+      ]);
+
+      DB::table('dvs_site_element')->insert([
+        'site_id'       => $site->id,
+        'element_type'  => 'Devise\Models\DvsLanguage',
+        'element_id'    => 1,
+        'default'       => 1,
+        'created_at'    => Date('Y-m-d H:i:s'),
+        'updated_at'    => Date('Y-m-d H:i:s') 
       ]);
 
       $this->info("$siteName [$siteDomain] has been created.");
@@ -118,16 +147,21 @@ class Install extends Command
   private function handleEnvironmentalSiteOverwrites()
   {
     $appEnv = App::environment();
+    $currentLocalDomain = env("SITE_1_DOMAIN", false);
 
     if ($appEnv !== 'production')
     {
-      $localDomain = $this->ask('Not in production? Enter a domain for your ' . $appEnv . ' site.');
+      if (!$currentLocalDomain) {
+        $localDomain = $this->ask('Not in production? Enter a domain for your ' . $appEnv . ' site.');
 
-      if ($localDomain)
-      {
-        $this->setEnvironmentValue('SITE_1_DOMAIN', $localDomain);
+        if ($localDomain)
+        {
+          $this->setEnvironmentValue('SITE_1_DOMAIN', $localDomain);
 
-        return $localDomain;
+          return $localDomain;
+        }
+      } else {
+        return $currentLocalDomain;
       }
     }
   }
@@ -148,7 +182,9 @@ class Install extends Command
       User::create([
         'name'     => $name,
         'email'    => $email,
-        'password' => Hash::make($password)
+        'password' => Hash::make($password),
+        'created_at'    => Date('Y-m-d H:i:s'),
+        'updated_at'    => Date('Y-m-d H:i:s') 
       ]);
 
       $this->info("The account for $name [$email] has been created.");

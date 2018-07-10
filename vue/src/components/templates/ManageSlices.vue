@@ -29,7 +29,7 @@
       </div>
 
       <div class="dvs-mb-4" v-if="mode === 'add' && step === 'view'">
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Select a Slice</label>
           <select v-model="sliceToAdd.slice">
             <option :value="null">Select a Slice</option>
@@ -48,7 +48,7 @@
         <help class="dvs-mb-8">
           The models below are loaded by Devise by scanning your Laravel application directory for anything that extends the Model class. Ensure it does this for it to appear below.
         </help>
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Select a Model</label>
           <select v-model="sliceToAdd.model">
             <option :value="null">Select a Model</option>

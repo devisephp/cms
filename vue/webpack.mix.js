@@ -16,13 +16,13 @@ require('./mix/DeviseMix');
  mix.webpackConfig({
    output: {
      publicPath: '/',
-     chunkFilename: 'devise/js/[name].[chunkhash].js',
+     chunkFilename: 'build/js/[name].[chunkhash].js',
    },
  });
 
 mix
   .deviseMix()
-  .setPublicPath(path.normalize('devise'))
+  .setPublicPath(path.normalize('build'))
   .js('src/devise-app.js', 'js/devise.js')
   .sass('src/sass/devise.scss', 'css/devise.css')
   .options({

@@ -12,20 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="stylesheet" href="{{ mix('css/devise.css', './devise') }}">
-
     <title>Welcome to Devise</title>
-
-    <script>
-      <?php
-      if(isset($page)) {
-        echo Devise::data($page);
-      } ?>
-    </script>
   </head>
-  <body>
+  <body class="dvs-bg-grey-lightest dvs-text-grey-darker">
 
-    <div id="plumcases-app">
     <div id="app">
       <devise>
 
@@ -42,7 +32,6 @@
         </div>
 
       </devise>
-    </div>
     </div>
 
     <script src="{{mix('/manifest.js', './devise')}}"></script>

@@ -42,7 +42,7 @@ class RoutesGenerator
 
         $this->setRedirects($redirectsBySite, $domains);
       } else {
-        $this->Route->get('/devise', 'Devise\Http\Controllers\AdminController@show');
+        $this->Route->get('/devise', 'Devise\Http\Controllers\AdminController@show')->middleware(['web']);
       }
     }
   }

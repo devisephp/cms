@@ -31,14 +31,14 @@
       <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
         <h4 class="dvs-mb-4" :style="{color: theme.statsText.color}">Create New Template</h4>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Name</label>
           <input type="text" v-model="newTemplate.name" placeholder="Name of the Template">
         </fieldset>
 
         <help class="dvs-mb-8">The view file that you are referencing will be located in the resources/views directory of your project and needs to be referenced through dot notation. For example, if you're referencing "/resources/views/layouts/layout.blade.php" you will need to put "layouts.layout" in this field.</help>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Layout</label>
           <input type="text" v-model="newTemplate.layout" placeholder="Layout of the Template">
         </fieldset>

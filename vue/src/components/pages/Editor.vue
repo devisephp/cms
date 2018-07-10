@@ -48,12 +48,12 @@
       <ul class="dvs-list-reset dvs-w-full">
         <li class="dvs-collapsable dvs-mb-8" :class="{'dvs-open': pageSettingsOpen}">
           <div class="dvs-collapsed dvs-mt-4">
-            <fieldset class="dvs-fieldset mb-8">
+            <fieldset class="dvs-fieldset dvs-mb-8">
               <label>Page Title</label>
               <input type="text" placeholder="Title of the Page">
             </fieldset>
 
-            <fieldset class="dvs-fieldset mb-8">
+            <fieldset class="dvs-fieldset dvs-mb-8">
               <label>Description</label>
               <textarea class="dvs-h-24" placeholder="Description of the Page - Try to aim for around 150 - 300 characters."></textarea>
             </fieldset>

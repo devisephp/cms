@@ -41,14 +41,14 @@
       <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
         <h2 class="dvs-mb-8" :style="{color: theme.statsText.color }">Create new site</h2>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Name</label>
           <input type="text" v-model="newSite.name" placeholder="Name of the Site">
         </fieldset>
 
         <help class="dvs-mb-8">The domain should not include the http or https:// protocol identifier. So your site entry could be "my-super-awesome-site.com" or "sub-domain.my-super-awesome-site.com". To Support development environments you can override these values in your .env file in the root of your project with something like "SITE_1_DOMAIN=my-super-awesome-site.test" for your local development or staging.</help>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Domain</label>
           <input type="text" v-model="newSite.domain" placeholder="Domain of the Site">
         </fieldset>

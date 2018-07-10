@@ -70,7 +70,7 @@ class Devise
 
     $globalMeta = DvsPageMeta::where('page_id', 0)->get();
 
-    if ($page) {
+    if ($page && $page->metas) {
       $page->metas = $page->metas->merge($globalMeta);
 
       foreach($page->metas as $m) {

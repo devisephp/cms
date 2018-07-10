@@ -21,7 +21,7 @@ class AdminController extends Controller
 
   public function show(ApiRequest $request)
   {
-    return $this->View->make('devise::admin.temporary-admin');
+    return $this->View->make('devise::introduction');
   }
 
 }

@@ -43,7 +43,7 @@ export default {
       'mothership'
     ]),
     editablePage () {
-      return typeof deviseSettings !== 'undefined'
+      return typeof deviseSettings !== 'undefined' && typeof deviseSettings.$page !== 'undefined'
     }
   },
   components: {

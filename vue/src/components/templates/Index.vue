@@ -12,7 +12,7 @@
     <div id="devise-admin-content" :style="adminTheme">
       <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Current Templates</h3>
 
-      <div v-for="template in templates.data" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
+      <div v-for="template in templates.data" :key="template.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-2/5 dvs-text-base dvs-font-bold dvs-pr-8">
           {{ template.name }}<br>
           <span class="dvs-font-mono dvs-font-normal">{{ template.domain }}</span>
@@ -36,7 +36,18 @@
           <input type="text" v-model="newTemplate.name" placeholder="Name of the Template">
         </fieldset>
 
-        <help class="dvs-mb-8">The view file that you are referencing will be located in the resources/views directory of your project and needs to be referenced through dot notation. For example, if you're referencing "/resources/views/layouts/layout.blade.php" you will need to put "layouts.layout" in this field.</help>
+        <help class="dvs-mb-8">
+          The view file that you are referencing will be located in the resources/views directory 
+          of your project and needs to be referenced through dot notation. For example, if you're 
+          referencing "/resources/views/layouts/layout.blade.php" you will need to put "layouts.layout" 
+          in this field.<br><br>
+          When getting started on a greenfield project the Devise team typically copies the file from 
+          vendor/devisephp/cms/resources/views/introduction.blade.php and copy it to 
+          /resources/views/master.blade.php and modify it as our primary template by putting "master" in 
+          the field below.
+
+          
+        </help>
 
         <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Layout</label>

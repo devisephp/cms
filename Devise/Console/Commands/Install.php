@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use Mockery\Exception;
 
 class Install extends Command
@@ -53,6 +54,7 @@ class Install extends Command
       $this->handlePublishing();
       $this->handleDefaultLanguage();
       $this->handleSiteEntry();
+      $this->handleSlicesDirectory();
 
       $this->handleUser();
 
@@ -188,6 +190,17 @@ class Install extends Command
       ]);
 
       $this->info("The account for $name [$email] has been created.");
+    }
+  }
+
+  private function handleSlicesDirectory()
+  {
+    $slicesDirectory = resource_path('views/slices');
+    if(!is_dir($slicesDirectory))
+    {
+      File::makeDirectory($slicesDirectory);
+
+      $this->info("The /resources/views/slices directory has been created.");
     }
   }
 

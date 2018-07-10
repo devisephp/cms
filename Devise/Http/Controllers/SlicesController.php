@@ -18,12 +18,14 @@ class SlicesController extends Controller
   }
 
   function flattenSlice ($slices, $directories) {
-    $slices = array_merge($slices, $directories['files']);
-    foreach($directories['directories'] as $directory) {
-      $slices = array_merge($slices, $this->flattenSlice($slices, $directory));
+    if (isset($directories['files'])) {
+      $slices = array_merge($slices, $directories['files']);
+      foreach($directories['directories'] as $directory) {
+        $slices = array_merge($slices, $this->flattenSlice($slices, $directory));
+      }
+      return $slices;
     }
-
-    return $slices;
+    return [];
   }
 
   public function allDirectories(ApiRequest $request)
@@ -33,36 +35,39 @@ class SlicesController extends Controller
 
   function scanSlicesDir($dir)
   {
-    $found = scandir($dir);
+    if (is_dir($dir)) {
+      $found = scandir($dir);
 
-    $directories = [];
-    $files = [];
+      $directories = [];
+      $files = [];
 
-    foreach ($found as $key => $value)
-    {
-      $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
-
-      if ($value != "." && $value != ".." && $value != ".DS_Store")
+      foreach ($found as $key => $value)
       {
-        if (!is_dir($path))
+        $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+
+        if ($value != "." && $value != ".." && $value != ".DS_Store")
         {
-          $files[] = [
-            'name'  => $this->getFileName($path),
-            'value' => $this->getViewName($path)
-          ];
-        } else
-        {
-          $results = $this->scanSlicesDir($path);
-          $directories[] = $results;
+          if (!is_dir($path))
+          {
+            $files[] = [
+              'name'  => $this->getFileName($path),
+              'value' => $this->getViewName($path)
+            ];
+          } else
+          {
+            $results = $this->scanSlicesDir($path);
+            $directories[] = $results;
+          }
         }
       }
-    }
 
-    return [
-      'name'        => $this->getDirName($dir),
-      'directories' => $directories,
-      'files'       => $files
-    ];
+      return [
+        'name'        => $this->getDirName($dir),
+        'directories' => $directories,
+        'files'       => $files
+      ];
+    } 
+    return [];
   }
 
   private function getFileName($path)

@@ -4,6 +4,7 @@
   * [Installation](getting-started/installation/README.md)
     * [Full Installation](getting-started/installation/full-installation-instructions.md)
     * ["I Know Laravel" Installation](getting-started/installation/devise-installation-instructions.md)
+    * [Creating our first page from scratch](getting-started/installation/creating-our-first-page-from-scratch.md)
 * [Introduction: How Devise Works](how-devise-works/README.md)
   * [Slices](how-devise-works/slices/README.md)
     * [Devise Fields](how-devise-works/slices/fields.md)

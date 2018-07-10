@@ -15,15 +15,15 @@
         <div class="dvs-flex dvs-justify-center dvs-mb-4">
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('single')">
             <remove-icon w="40" h="40" />
-            <h6 :style="{ color: theme.statsText.color }">Single</h6>
+            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Single</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('repeats')">
             <menu-icon w="40" h="40" />
-            <h6 :style="{ color: theme.statsText.color }">Repeatable</h6>
+            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Repeatable</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('model')">
             <cube-icon w="40" h="40" />
-            <h6 :style="{ color: theme.statsText.color }">Model</h6>
+            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Model</h6>
           </div>
         </div>
       </div>

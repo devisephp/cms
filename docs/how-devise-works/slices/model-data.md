@@ -17,7 +17,7 @@ Now, in your slice's template section we haven't defined any variables. What Dev
 ```
 @section('template')
   <div class="p-8 bg-white rounded-sm">
-    <img :src="devise.headshot" :alt="`${devise.name} Headshot`" class="mb-4">
+    <img :src="devise.headshot" :alt="`${devise.name} Headshot`" class="dvs-mb-4">
     <h5 class="mb-1 uppercase">@{{ devise.name }}</h5>
     <h6>@{{ devise.title }}</h6>
   </div>
@@ -42,7 +42,7 @@ To add a variable to the template you would click 'Add Variable' at the bottom o
     <img :src="models.productVariableName.image">
 
     <div">
-      <h1 class="mb-4">@{{ models.productVariableName.title }}</h1>
+      <h1 class="dvs-mb-4">@{{ models.productVariableName.title }}</h1>
       <p v-html="models.productVariableName.description"></p>
     </div>
   </div>

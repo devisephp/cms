@@ -42,7 +42,7 @@
 
               <div v-if="localValue.slices" class="dvs-flex dvs-flex-col dvs-items-center dvs-text-left">
                 <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset dvs-mb-2 dvs-w-full" :options="{handle: '.handle'}">
-                  <li v-for="(slice, key) in localValue.slices" class="dvs-mb-2 dvs-w-full">
+                  <li v-for="(slice, key) in localValue.slices" :key="key" class="dvs-mb-2 dvs-w-full">
 
                     <template-slice-editor
                       v-model="localValue.slices[key]"
@@ -89,7 +89,7 @@
 
     <!-- Save Controls -->
     <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-p-4 dvs-mb-2 dvs-z-40" :style="infoBlockTheme">
-      <h6 class="mb-4" :style="{color: theme.statsText.color}">Template Controls</h6>
+      <h6 class="dvs-mb-4 dvs-text-base" :style="{color: theme.statsText.color}">Template Controls</h6>
       <button class="dvs-btn dvs-mr-2" @click="requestSaveTemplate" :style="actionButtonTheme">Save Template</button>
       <button class="dvs-btn dvs-btn-plain" @click="goToTemplates" :style="regularButtonTheme">Cancel</button>
     </div>

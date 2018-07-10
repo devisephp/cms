@@ -2,11 +2,13 @@
 
 namespace Devise\Console\Commands;
 
+use App\User;
 use Devise\Models\DvsSite;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Mockery\Exception;
 
 class Install extends Command
@@ -51,6 +53,8 @@ class Install extends Command
 
       $this->handleSiteEntry();
 
+      $this->handleUser();
+
       $overwrite = $this->handleEnvironmentalSiteOverwrites();
 
       $this->handleWelcome($overwrite);
@@ -85,8 +89,7 @@ class Install extends Command
 
   private function handlePublishing()
   {
-    $this->call('vendor:publish', ['--tag' => 'dvs-dist']);
-
+    $this->call('vendor:publish', ['--tag' => 'dvs-assets']);
     $this->call('vendor:publish', ['--tag' => 'dvs-config']);
   }
 
@@ -126,6 +129,29 @@ class Install extends Command
 
         return $localDomain;
       }
+    }
+  }
+
+  private function handleUser()
+  {
+    $userCount = User::count();
+
+    if ($userCount)
+    {
+      $this->info('Users found. No configuration necessary.');
+    } else
+    {
+      $name = $this->ask('What is the name of your administrator?');
+      $email = $this->ask('What is the email of your administrator?');
+      $password = $this->ask('What is the password of your administrator?');
+
+      User::create([
+        'name'     => $name,
+        'email'    => $email,
+        'password' => Hash::make($password)
+      ]);
+
+      $this->info("The account for $name [$email] has been created.");
     }
   }
 

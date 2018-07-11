@@ -31,7 +31,7 @@ To get started you really only need to have some basic web development skills. Y
 * CSS (or other preproccessor)
 * *Some* Javascript
 
-### More advanced applications will may require
+### More advanced applications may require
 
 * PHP
 * JavaScript

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\App;
 
 class Api
 {
-  private $mshUrl = 'http://mothership.test/';
+  private $mshUrl = 'https://mothership.app/';
 
   public function init($commitHash, $userId, $lastMigrationDate, $filePath)
   {

@@ -12,59 +12,59 @@ use Illuminate\Http\UploadedFile;
  */
 class Manager
 {
-  private $DvsMedia;
+    private $DvsMedia;
 
-  private $CategoryPaths;
+    private $CategoryPaths;
 
-  private $SiteDetector;
+    private $SiteDetector;
 
-  /**
-   *
-   */
-  public function __construct(DvsMedia $DvsMedia, CategoryPaths $CategoryPaths, SiteDetector $SiteDetector, Framework $Framework)
-  {
-    $this->DvsMedia = $DvsMedia;
-    $this->CategoryPaths = $CategoryPaths;
-    $this->SiteDetector = $SiteDetector;
-  }
+    /**
+     *
+     */
+    public function __construct(DvsMedia $DvsMedia, CategoryPaths $CategoryPaths, SiteDetector $SiteDetector, Framework $Framework)
+    {
+        $this->DvsMedia = $DvsMedia;
+        $this->CategoryPaths = $CategoryPaths;
+        $this->SiteDetector = $SiteDetector;
+    }
 
-  /**
-   *
-   */
-  public function saveUploadedFile($input)
-  {
-    $categoryPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
-    $file = array_get($input, 'file', null);
+    /**
+     *
+     */
+    public function saveUploadedFile($input)
+    {
+        $categoryPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
+        $file = array_get($input, 'file', null);
 
-    $serverPath = $this->CategoryPaths->serverPath($categoryPath);
+        $serverPath = $this->CategoryPaths->serverPath($categoryPath);
 
-    $mm = new DvsMedia();
-    $mm->directory = $categoryPath;
-    $mm->name = $file->getClientOriginalName();
-    $mm->size = $file->getClientSize();
-    $mm->used_count = 0;
+        $mm = new DvsMedia();
+        $mm->directory = $categoryPath;
+        $mm->name = $file->getClientOriginalName();
+        $mm->size = $file->getClientSize();
+        $mm->used_count = 0;
 
-    $site = $this->SiteDetector->current();
-    $site->media()->save($mm, ['default' => 0]);
+        $site = $this->SiteDetector->current();
+        $site->media()->save($mm, ['default' => 0]);
 
-    $mm->saveUploadTo($file, $serverPath);
+        $mm->saveUploadTo($file, $serverPath);
 
-    return $mm;
-  }
+        return $mm;
+    }
 
-  /**
-   *
-   */
-  public function removeUploadedFile($id)
-  {
-    $site = $this->SiteDetector->current();
+    /**
+     *
+     */
+    public function removeUploadedFile($id)
+    {
+        $site = $this->SiteDetector->current();
 
-    $file = $this->DvsMedia
-      ->findOrFail($id);
+        $file = $this->DvsMedia
+            ->findOrFail($id);
 
-    $site->media()->detach($id);
+        $site->media()->detach($id);
 
-    $file->delete();
-  }
+        $file->delete();
+    }
 
 }

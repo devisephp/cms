@@ -5,6 +5,7 @@
       <loadbar v-if="isLoggedIn" />
       <messages v-if="isLoggedIn" />
       <media-manager v-if="isLoggedIn" />
+
       <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         <div 
           id="devise-admin" 
@@ -113,9 +114,6 @@ export default {
   mounted () {
     if (typeof deviseSettings.$template !== 'undefined') {
       this.templateMode = true
-    } else if (typeof deviseSettings === 'undefined' || typeof deviseSettings.$page === 'undefined') {
-      this.pageMode = true
-      this.addAdminAnimations()
     } else {
       this.editorMode = true
       this.mountGlobalVariables()
@@ -182,7 +180,11 @@ export default {
         this.openAnimation.reverse()
         this.openAnimation.play()
       } else {
-        this.goToPage('devise-page-editor')
+        if (deviseSettings.$page) {
+          this.goToPage('devise-page-editor')
+        } else {
+          this.goToPage('devise-index')
+        }
         this.openAnimation.restart()
       }
     },

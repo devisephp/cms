@@ -95,7 +95,7 @@ let colors = {
   // 'teal': '#4dc0b5',
   // 'teal-light': '#64d5ca',
   // 'teal-lighter': '#a0f0ed',
-  // 'teal-lightest': '#e8fffe',
+  'teal-lightest': '#e8fffe',
 
   // 'blue-greyer': '#6b7c93',
   // 'blue-darkest': '#12283a',

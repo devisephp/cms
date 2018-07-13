@@ -1,10 +1,10 @@
 <template>
   <div>
-    <fieldset class="dvs-fieldset mb-4">
+    <fieldset class="dvs-fieldset dvs-mb-4">
       <label class="dvs-small-label dvs-text-grey-darker dvs-italic">Text</label>
       <input type="text" class="dvs-mr-4 dvs-w-full" v-model="localValue.text" @keyup="updateValue">
     </fieldset>
-    <fieldset class="dvs-fieldset mb-4">
+    <fieldset class="dvs-fieldset dvs-mb-4">
       <label class="dvs-small-label dvs-text-grey-darker dvs-italic">URL</label>
       <input type="text" class="dvs-mr-4 dvs-w-full" v-model="localValue.URL" @keyup="updateValue">
     </fieldset>

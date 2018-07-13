@@ -4,8 +4,8 @@
 
       <sidebar-header title="Administration" />
 
-      <ul class="dvs-list-reset">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-page-editor')">
+      <ul class="dvs-list-reset dvs-mt-8">
+        <li v-if="editablePage" class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-page-editor')">
           Edit this page
         </li>
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-pages-index')">
@@ -41,7 +41,10 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'mothership'
-    ])
+    ]),
+    editablePage () {
+      return typeof deviseSettings !== 'undefined' && typeof deviseSettings.$page !== 'undefined'
+    }
   },
   components: {
     SidebarHeader

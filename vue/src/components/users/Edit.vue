@@ -16,28 +16,28 @@
 
       <div class="dvs-mb-12">
         <form>
-          <fieldset class="dvs-fieldset mb-4">
+          <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Name of User</label>
             <input type="text" autocomplete="off" v-model="localValue.name" placeholder="Name of the User">
           </fieldset>
 
-          <fieldset class="dvs-fieldset mb-4">
+          <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Email</label>
             <input type="text" autocomplete="off" v-model="localValue.email" placeholder="Email of the User">
           </fieldset>
 
-          <fieldset class="dvs-fieldset mb-4" v-if="!showPassword">
+          <fieldset class="dvs-fieldset dvs-mb-4" v-if="!showPassword">
             <label>Edit Password?</label>
             <input type="checkbox" v-model="showPassword">
           </fieldset>
 
           <template v-if="showPassword">
-            <fieldset class="dvs-fieldset mb-4">
+            <fieldset class="dvs-fieldset dvs-mb-4">
               <label>Password</label>
               <input type="password" autocomplete="off" v-model="localValue.password">
             </fieldset>
 
-            <fieldset class="dvs-fieldset mb-4">
+            <fieldset class="dvs-fieldset dvs-mb-4">
               <label>Password Confirm</label>
               <input type="password" autocomplete="off" v-model="localValue.password_confirmation">
             </fieldset>

@@ -52,12 +52,12 @@
       <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showCreate">
         <h3 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Create new page</h3>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page Title</label>
           <input type="text" v-model="newPage.title" placeholder="Title of the Page">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Template</label>
           <select v-model="newPage.template_id">
             <option :value="null">Please select a template</option>
@@ -65,7 +65,7 @@
           </select>
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Language</label>
           <select v-model="newPage.language_id">
             <option :value="null">Please select a language</option>
@@ -73,14 +73,14 @@
           </select>
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Slug</label>
           <div class="dvs-flex">
             <input type="text" v-model="newPage.slug" placeholder="Url of the Page">
           </div>
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Published?</label>
           <div class="dvs-flex">
             <input type="checkbox" v-model="newPage.published">

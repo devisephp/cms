@@ -15,21 +15,21 @@
         <div class="dvs-flex dvs-justify-center dvs-mb-4">
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('single')">
             <remove-icon w="40" h="40" />
-            <h6 :style="{ color: theme.statsText.color }">Single</h6>
+            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Single</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('repeats')">
             <menu-icon w="40" h="40" />
-            <h6 :style="{ color: theme.statsText.color }">Repeatable</h6>
+            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Repeatable</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('model')">
             <cube-icon w="40" h="40" />
-            <h6 :style="{ color: theme.statsText.color }">Model</h6>
+            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Model</h6>
           </div>
         </div>
       </div>
 
       <div class="dvs-mb-4" v-if="mode === 'add' && step === 'view'">
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Select a Slice</label>
           <select v-model="sliceToAdd.slice">
             <option :value="null">Select a Slice</option>
@@ -48,7 +48,7 @@
         <help class="dvs-mb-8">
           The models below are loaded by Devise by scanning your Laravel application directory for anything that extends the Model class. Ensure it does this for it to appear below.
         </help>
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Select a Model</label>
           <select v-model="sliceToAdd.model">
             <option :value="null">Select a Model</option>

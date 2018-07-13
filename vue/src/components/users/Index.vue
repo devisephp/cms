@@ -28,22 +28,22 @@
       <devise-modal class="dvs-z-50" v-if="showCreate">
         <h4 class="dvs-mb-4" :style="{color: theme.statsText.color}">Create new user</h4>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Name</label>
           <input type="text" v-model="newUser.name" placeholder="Name of the User">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Email</label>
           <input type="text" v-model="newUser.email" placeholder="Email of the User">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Password</label>
           <input type="password" v-model="newUser.password">
         </fieldset>
 
-        <fieldset class="dvs-fieldset mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Confirm Password</label>
           <input type="password" v-model="newUser.password_confirmation">
         </fieldset>

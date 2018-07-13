@@ -2,13 +2,13 @@
   <div>
     <transition name="fade">
       <div class="dvs-alert-message dvs-error" :style="infoBlockTheme" v-show="errors.length > 0">
-        <h5>{{mainTitle}} <i @click="closeErrors()" class="cursor-pointer ion-icon ion-android-close"></i></h5>
+        <h5 :style="`color:${infoBlockTheme.color}`">{{mainTitle}} <i @click="closeErrors()" class="cursor-pointer ion-icon ion-android-close"></i></h5>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="error in errors" :key="randomString(5)">
-              <h6>{{ error.title }}</h6>
-              <p>{{ error.message }}</p>
-              <p class="text-xs" v-if="error.code">{{ error.code }}</p>
+            <li v-for="(error, key) in errors" :key="key">
+              <h6 :style="`color:${infoBlockTheme.color}`">{{ error.title }}</h6>
+              <p :style="`color:${infoBlockTheme.color}`">{{ error.message }}</p>
+              <p :style="`color:${infoBlockTheme.color}`" class="text-xs" v-if="error.code">{{ error.code }}</p>
             </li>
           </transition-group>
         </ul>
@@ -16,12 +16,12 @@
     </transition>
     <transition name="fade">
       <div class="dvs-alert-message" :style="infoBlockTheme" v-show="messages.length > 0">
-        <h5>Hey There! <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i></h5>
+        <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i>
         <ul>
-          <transition-group name="list" tag="div">
-            <li v-for="message in messages" :key="randomString(5)">
-              <h6>{{ message.title }}</h6>
-              <p>{{ message.message }}</p>
+          <transition-group name="fade" tag="div">
+            <li v-for="(message, key) in messages" :key="key" :style="`border-bottom-color:${infoBlockTheme.color}`">
+              <h6 class="dvs-text-base" :style="`color:${infoBlockTheme.color}`">{{ message.title }}</h6>
+              <p :style="`color:${infoBlockTheme.color}`">{{ message.message }}</p>
             </li>
           </transition-group>
         </ul>

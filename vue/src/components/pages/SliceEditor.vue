@@ -59,7 +59,7 @@
 
         <help 
           v-if="slice.metadata.type === 'model'" 
-          class="mb-4"
+          class="dvs-mb-4"
           :style="`
             border-color:${theme.buttonsActionLeft.color};
             background:${theme.buttonsActionRight.color};

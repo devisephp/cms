@@ -22,17 +22,14 @@ class Devise
 
   public static function head($page = null) {
     $head = '';
-
-    if($page) {
-      $head .= self::analytics();
-      $head .= self::meta($page);
-      $head .= '<script>';
-      $head .= self::data($page);
-      $head .= '</script>';
-    }    
+    $head .= self::analytics();
+    $head .= self::meta($page);
+    $head .= '<script>';
+    $head .= self::data($page);
+    $head .= '</script>';
 
     if (Auth::user()) {
-      $head .= '<link rel="stylesheet" href="'. mix('/dist/css/devise.css', './devise/') .'">';
+      $head .= '<link rel="stylesheet" href="'. mix('/css/devise.css', './devise/') .'">';
     }
 
     $head .= '<style>';
@@ -72,10 +69,13 @@ class Devise
     }
 
     $globalMeta = DvsPageMeta::where('page_id', 0)->get();
-    $page->metas = $page->metas->merge($globalMeta);
 
-    foreach($page->metas as $m) {
-      $meta .= '<meta '. $m->attribute_name .'="'. $m->attribute_value .'" content="'. $m->content .'">';
+    if ($page && $page->metas) {
+      $page->metas = $page->metas->merge($globalMeta);
+
+      foreach($page->metas as $m) {
+        $meta .= '<meta '. $m->attribute_name .'="'. $m->attribute_value .'" content="'. $m->content .'">';
+      }
     }
 
     return $meta;
@@ -85,19 +85,21 @@ class Devise
   {
     $js = 'function Devise(){}';
     $js .= self::user();
-  
-    if (get_class($page) == DvsPage::class)
-    {
-      $js .= self::sites();
-      $js .= self::pageData($page);
-
-      if (Auth::user()) {
+    $js .= self::sites();
+    
+    if (Auth::user()) {
         $js .= self::mothership();
         $js .= self::interface();
+    }
+
+    if ($page) {
+      if (get_class($page) == DvsPage::class)
+      {
+        $js .= self::pageData($page);
+      } else
+      {
+        $js .= self::template($page);
       }
-    } else
-    {
-      $js .= self::template($page);
     }
 
     $js .= self::components();

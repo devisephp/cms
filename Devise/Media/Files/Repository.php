@@ -16,142 +16,142 @@ use Devise\Support\Framework;
  */
 class Repository
 {
-  protected $DvsMedia;
+    protected $DvsMedia;
 
-  protected $Storage;
+    protected $Storage;
 
-  private $CategoryPaths;
+    private $CategoryPaths;
 
-  /**
-   *
-   */
-  public function __construct(DvsMedia $DvsMedia, SiteDetector $SiteDetector, CategoryPaths $CategoryPaths, Framework $Framework)
-  {
-    $this->DvsMedia = $DvsMedia;
-    $this->SiteDetector = $SiteDetector;
-    $this->CategoryPaths = $CategoryPaths;
-
-    $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
-  }
-
-  /**
-   *
-   */
-  public function getIndex($input, $include)
-  {
-    $data = [];
-    $this->input = $input;
-
-    $categoryPath = (isset($input['category'])) ? $this->CategoryPaths->fromDot($input['category']) : '';
-    $currentDirectory = $this->CategoryPaths->serverPath($categoryPath);
-
-    if (in_array('categories', $include))
+    /**
+     *
+     */
+    public function __construct(DvsMedia $DvsMedia, SiteDetector $SiteDetector, CategoryPaths $CategoryPaths, Framework $Framework)
     {
-      $data['categories'] = $this->buildCategories($currentDirectory);
+        $this->DvsMedia = $DvsMedia;
+        $this->SiteDetector = $SiteDetector;
+        $this->CategoryPaths = $CategoryPaths;
+
+        $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
     }
 
-    if (in_array('media-items', $include))
+    /**
+     *
+     */
+    public function getIndex($input, $include)
     {
-      $data['media-items'] = $this->buildMediaItems($currentDirectory);
+        $data = [];
+        $this->input = $input;
+
+        $categoryPath = (isset($input['category'])) ? $this->CategoryPaths->fromDot($input['category']) : '';
+        $currentDirectory = $this->CategoryPaths->serverPath($categoryPath);
+
+        if (in_array('categories', $include))
+        {
+            $data['categories'] = $this->buildCategories($currentDirectory);
+        }
+
+        if (in_array('media-items', $include))
+        {
+            $data['media-items'] = $this->buildMediaItems($currentDirectory);
+        }
+
+        if (in_array('searched-items', $include))
+        {
+            $data['searched-items'] = $this->buildSearchedItems($currentDirectory, array_get($input, 'search'));
+        }
+
+        return $data;
     }
 
-    if (in_array('searched-items', $include))
+    public function getFileData($file)
     {
-      $data['searched-items'] = $this->buildSearchedItems($currentDirectory, array_get($input, 'search'));
+        $fileData = array();
+        $fileData['id'] = $file->id;
+        $fileData['thumb'] = $file->thumbnail_url;
+        $fileData['name'] = $file->name;
+        $fileData['url'] = $file->url;
+        $fileData['size'] = $file->size;
+        $fileData['used_count'] = $file->used_count;
+
+        return $fileData;
     }
 
-    return $data;
-  }
-
-  public function getFileData($file)
-  {
-    $fileData = array();
-    $fileData['id'] = $file->id;
-    $fileData['thumb'] = $file->thumbnail_url;
-    $fileData['name'] = $file->name;
-    $fileData['url'] = $file->url;
-    $fileData['size'] = $file->size;
-    $fileData['used_count'] = $file->used_count;
-
-    return $fileData;
-  }
-
-  /**
-   *
-   */
-  private function buildCategories($dir)
-  {
-    $dirs = $this->Storage->directories($dir);
-
-    $categories = array();
-    foreach ($dirs as $dir)
+    /**
+     *
+     */
+    private function buildCategories($dir)
     {
-      $dirArr = explode('/', $dir);
-      $dirName = end($dirArr);
+        $dirs = $this->Storage->directories($dir);
 
-      $path = str_replace($this->CategoryPaths->basePath() . '/', '', $dir);
+        $categories = array();
+        foreach ($dirs as $dir)
+        {
+            $dirArr = explode('/', $dir);
+            $dirName = end($dirArr);
 
-      $path = implode('.', explode('/', $path));
-      $categories[] = array(
-        'name' => $dirName,
-        'path' => $path
-      );
+            $path = str_replace($this->CategoryPaths->basePath() . '/', '', $dir);
+
+            $path = implode('.', explode('/', $path));
+            $categories[] = array(
+                'name' => $dirName,
+                'path' => $path
+            );
+        }
+
+        // sort categories alphabetically...
+        usort($categories, array($this, 'sortByCategoryName'));
+
+        return $categories;
     }
 
-    // sort categories alphabetically...
-    usort($categories, array($this, 'sortByCategoryName'));
-
-    return $categories;
-  }
-
-  /**
-   *
-   */
-  private function buildMediaItems($dir)
-  {
-    $root = $this->CategoryPaths->basePath();
-    $dir = trim(str_replace($root, '', $dir), '/');
-    $site = $this->SiteDetector->current();
-    $files = $site->media()
-      ->where('directory', $dir)
-      ->get();
-
-    return $this->buildMediaItemsFromFiles($files);
-  }
-
-  /**
-   *
-   */
-  private function buildMediaItemsFromFiles($files)
-  {
-    $newFilesArray = array();
-    foreach ($files as $file)
+    /**
+     *
+     */
+    private function buildMediaItems($dir)
     {
-      $newFilesArray[] = $this->getFileData($file);
+        $root = $this->CategoryPaths->basePath();
+        $dir = trim(str_replace($root, '', $dir), '/');
+        $site = $this->SiteDetector->current();
+        $files = $site->media()
+            ->where('directory', $dir)
+            ->get();
+
+        return $this->buildMediaItemsFromFiles($files);
     }
 
-    return $newFilesArray;
-  }
+    /**
+     *
+     */
+    private function buildMediaItemsFromFiles($files)
+    {
+        $newFilesArray = array();
+        foreach ($files as $file)
+        {
+            $newFilesArray[] = $this->getFileData($file);
+        }
 
-  /**
-   *
-   */
-  private function buildSearchedItems($currentDirectory, $searchFor)
-  {
-    if (!$searchFor) return array();
+        return $newFilesArray;
+    }
 
-    $files = $this->Storage->search($currentDirectory, $searchFor);
+    /**
+     *
+     */
+    private function buildSearchedItems($currentDirectory, $searchFor)
+    {
+        if (!$searchFor) return array();
 
-    return $this->buildMediaItemsFromFiles($files);
-  }
+        $files = $this->Storage->search($currentDirectory, $searchFor);
 
-  /**
-   *
-   */
-  private function sortByCategoryName($category1, $category2)
-  {
-    if ($category1['name'] == $category2['name']) return 0;
+        return $this->buildMediaItemsFromFiles($files);
+    }
 
-    return $category1['name'] > $category2['name'] ? 1 : -1;
-  }
+    /**
+     *
+     */
+    private function sortByCategoryName($category1, $category2)
+    {
+        if ($category1['name'] == $category2['name']) return 0;
+
+        return $category1['name'] > $category2['name'] ? 1 : -1;
+    }
 }

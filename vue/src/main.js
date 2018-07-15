@@ -38,7 +38,26 @@ const DevisePlugin = {
         route.components.devise = EditPage
       }
     })
-    router.addRoutes(routes)
+
+    for (const route in routes) {
+      if (routes.hasOwnProperty(route)) {
+        const routeToCheck = routes[route];
+        var canAdd = true
+        
+        for (const customRoute in router.options.routes) {
+          if (router.options.routes.hasOwnProperty(customRoute)) {
+            const routeToCheckAgainst = router.options.routes[customRoute];
+            if (routeToCheckAgainst.name === routeToCheck.name) {
+              canAdd = false
+            }
+          }
+        }
+
+        if (canAdd) {
+          router.addRoutes([routeToCheck])
+        }
+      }
+    }
 
     if (typeof deviseSettings === 'undefined') {
       window.deviseSettings = function () {};

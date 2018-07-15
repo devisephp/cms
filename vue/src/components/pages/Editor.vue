@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dvs-items-center dvs-text-center dvs-py-4">
-      <sidebar-header :title="`Editing Page: ${page.title}`" back-text="Back to Administration" back-page="devise-index" />
+      <sidebar-header :title="`Editing: ${page.title}`" back-text="Back to Administration" back-page="devise-index" />
     </div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-py-4">

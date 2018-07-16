@@ -118,7 +118,7 @@ export default {
       'savePage'
     ]),
     requestSavePage () {
-      let self = this
+      console.log(this.page)
       this.savePage(this.page)
     },
     togglePageSettings () {

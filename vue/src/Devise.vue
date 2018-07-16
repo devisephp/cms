@@ -120,6 +120,12 @@ export default {
       this.addAdminAnimations()
       this.initDevise()
     }
+
+    let blocker = document.getElementById('devise-blocker')
+    if (blocker) {
+      blocker.classList.add('fade')
+    }
+
   },
   methods: {
     ...mapActions('devise', [

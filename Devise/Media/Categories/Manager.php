@@ -10,54 +10,54 @@ use Devise\Support\Framework;
  */
 class Manager
 {
-  protected $CategoryPaths;
+    protected $CategoryPaths;
 
-  /**
-   *
-   */
-  public function __construct(CategoryPaths $CategoryPaths, Framework $Framework)
-  {
-    $this->CategoryPaths = $CategoryPaths;
-
-    $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
-  }
-
-  /**
-   *
-   */
-  public function storeNewCategory($input)
-  {
-    $category = isset($input['directory']) ? $input['directory'] : null;
-
-    if (isset($input['name']))
+    /**
+     *
+     */
+    public function __construct(CategoryPaths $CategoryPaths, Framework $Framework)
     {
-      $localPath = $this->CategoryPaths->fromDot($category);
-      $serverPath = $this->CategoryPaths->serverPath($localPath);
+        $this->CategoryPaths = $CategoryPaths;
 
-      if ($this->Storage->exists($serverPath . $input['name']))
-      {
-        throw new \Exception('This category already exists, cannot create ' . $input['name']);
-      }
-
-      return $this->Storage->makeDirectory($serverPath . $input['name']);
+        $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
     }
 
-    return false;
-  }
-
-  /**
-   *
-   */
-  public function destroyCategory($input)
-  {
-    if (isset($input['directory']))
+    /**
+     *
+     */
+    public function storeNewCategory($input)
     {
-      $localPath = $this->CategoryPaths->fromDot($input['directory']);
-      $serverPath = $this->CategoryPaths->serverPath($localPath);
+        $category = isset($input['directory']) ? $input['directory'] : null;
 
-      return $this->Storage->deleteDirectory($serverPath);
+        if (isset($input['name']))
+        {
+            $localPath = $this->CategoryPaths->fromDot($category);
+            $serverPath = $this->CategoryPaths->serverPath($localPath);
+
+            if ($this->Storage->exists($serverPath . $input['name']))
+            {
+                throw new \Exception('This category already exists, cannot create ' . $input['name']);
+            }
+
+            return $this->Storage->makeDirectory($serverPath . $input['name']);
+        }
+
+        return false;
     }
 
-    return false;
-  }
+    /**
+     *
+     */
+    public function destroyCategory($input)
+    {
+        if (isset($input['directory']))
+        {
+            $localPath = $this->CategoryPaths->fromDot($input['directory']);
+            $serverPath = $this->CategoryPaths->serverPath($localPath);
+
+            return $this->Storage->deleteDirectory($serverPath);
+        }
+
+        return false;
+    }
 }

@@ -12,56 +12,56 @@ use Devise\Support\Framework;
  */
 class CategoryPaths
 {
-  /**
-   * Create a new category path
-   *
-   * @param Framework $Framework
-   */
-  public function __construct(SiteDetector $SiteDetector, Framework $Framework)
-  {
-    $this->SiteDetector = $SiteDetector;
-    $this->Config = $Framework->Config;
-  }
+    /**
+     * Create a new category path
+     *
+     * @param Framework $Framework
+     */
+    public function __construct(SiteDetector $SiteDetector, Framework $Framework)
+    {
+        $this->SiteDetector = $SiteDetector;
+        $this->Config = $Framework->Config;
+    }
 
-  /**
-   * Convert dots to slashes in the path
-   *
-   * @param string $path
-   * @return string
-   */
-  public function fromDot($path)
-  {
-    return implode('/', explode('.', $path));
-  }
+    /**
+     * Convert dots to slashes in the path
+     *
+     * @param string $path
+     * @return string
+     */
+    public function fromDot($path)
+    {
+        return implode('/', explode('.', $path));
+    }
 
-  /**
-   * Convert slashes into dots in the path
-   *
-   * @param string $path
-   * @return string
-   */
-  public function toDot($path)
-  {
-    return implode('.', explode('/', $path));
-  }
+    /**
+     * Convert slashes into dots in the path
+     *
+     * @param string $path
+     * @return string
+     */
+    public function toDot($path)
+    {
+        return implode('.', explode('/', $path));
+    }
 
-  /**
-   * Server path is the real path to the root media directory
-   *
-   * @param $path
-   * @return string
-   */
-  public function serverPath($path)
-  {
-    $path = ($path != '') ? $path . '/' : '';
+    /**
+     * Server path is the real path to the root media directory
+     *
+     * @param $path
+     * @return string
+     */
+    public function serverPath($path)
+    {
+        $path = ($path != '') ? $path . '/' : '';
 
-    return $this->basePath() . '/' . $path;
-  }
+        return $this->basePath() . '/' . $path;
+    }
 
-  public function basePath()
-  {
-    $site = $this->SiteDetector->current();
+    public function basePath()
+    {
+        $site = $this->SiteDetector->current();
 
-    return $this->Config->get('devise.media.root-directory') . '/' . $site->domain;
-  }
+        return $this->Config->get('devise.media.root-directory') . '/' . $site->domain;
+    }
 }

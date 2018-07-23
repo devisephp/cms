@@ -73,7 +73,7 @@
 }
 
 .devise-content {
-  @apply dvs-z-10 dvs-relative ;
+  @apply dvs-z-10 dvs-relative dvs-min-h-screen;
 
   // Trap any fixed content
   transform: translate(0, 0);

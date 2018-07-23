@@ -1,7 +1,6 @@
 let mix = require('laravel-mix');
 var tailwindcss = require('tailwindcss');
-
-require('./mix/DeviseMix');
+// require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -21,7 +20,6 @@ require('./mix/DeviseMix');
  });
 
 mix
-  .deviseMix()
   .setPublicPath(path.normalize('build'))
   .js('src/devise-app.js', 'js/devise.js')
   .sass('src/sass/devise.scss', 'css/devise.css')
@@ -29,3 +27,7 @@ mix
     processCssUrls: false,
     postCss: [ tailwindcss('./tailwind.js') ],
   })
+  // .purgeCss({
+  //   enabled: true,
+  //   whitelistPatterns: [/mobile/, /tablet/, /desktop/, /largeDesktop/, /ultraWideDesktop/]
+  // });

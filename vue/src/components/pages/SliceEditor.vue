@@ -24,32 +24,31 @@
 
     <div class="dvs-collapsed dvs-mb-8" v-if="slice.metadata.open">
       <div v-if="!slice.metadata.placeholder">
-        {{ sliceConfig(slice).config }}
-        <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-4 dvs-pl-4" :key="key" v-if="fieldConfig({fieldKey: key, slice})">
+        <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-pl-4" :key="key" v-if="fields[key]">
           <div>
 
-            <color-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'color'">
+            <color-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'color'">
             </color-editor>
 
-            <checkbox-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'checkbox'">
+            <checkbox-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'checkbox'">
             </checkbox-editor>
 
-            <image-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'image'">
+            <image-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'image'">
             </image-editor>
 
-            <link-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'link'">
+            <link-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'link'">
             </link-editor>
 
-            <number-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'number'">
+            <number-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'number'">
             </number-editor>
 
-            <textarea-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'textarea'">
+            <textarea-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'textarea'">
             </textarea-editor>
 
-            <text-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'text'">
+            <text-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'text'">
             </text-editor>
 
-            <wysiwyg-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" :show="slice.metadata.show" v-if="fieldConfig({fieldKey: key, slice}).type === 'wysiwyg'">
+            <wysiwyg-editor v-model="fields[key]" :options="field" :namekey="key" :show="slice.metadata.show" v-if="field.type === 'wysiwyg'">
             </wysiwyg-editor>
           </div>
 
@@ -148,21 +147,21 @@ export default {
       this.slice.slices.splice(this.slice.slices.indexOf(slice), 1)
     },
     hydrateMissingProperties (data) {
-      let config = this.component(this.slice.metadata.name).config
+      let fields = this.component(this.slice.metadata.name).fields
 
-      if (config) {
-        // Loop through the config for this slice and check to see that all the
+      if (fields) {
+        // Loop through the fields for this slice and check to see that all the
         // fields are present. If they aren't it's just because they haven't been
         // hydrated via the editor yet.
-        for (var prop in config) {
+        for (var prop in fields) {
           // Ok, so the property is missing from the slice.fields object so we're
           // going to add in a stub for the render.
           if (!data.hasOwnProperty(prop)) {
             this.addMissingProperty(data, prop)
 
             // If defaults are set then set them on top of the placeholder missing properties
-            if (config[prop].default) {
-              this.setDefaults(data, prop, config[prop].default)
+            if (fields[prop].default) {
+              this.setDefaults(data, prop, fields[prop].default)
             }
           }
         }

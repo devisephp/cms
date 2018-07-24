@@ -15,33 +15,33 @@ export default {
   },
   methods: {
     hydrateMissingProperties () {
-      let config = this.sliceConfig(this.devise).config
+      let fields = this.sliceConfig(this.devise).fields
 
-      if (config) {
-        // Loop through the config for this slice and check to see that all the
+      if (fields) {
+        // Loop through the fields for this slice and check to see that all the
         // fields are present. If they aren't it's just because they haven't been
         // hydrated via the editor yet.
-        for (var prop in config) {
+        for (var field in fields) {
           // Ok, so the property is missing from the slice.fields object so we're
           // going to add in a stub for the render.
-          if (!this.devise.hasOwnProperty(prop)) {
-            this.addMissingProperty(prop)
-            this.addPropertyConfigurations(config, prop)
+          if (!this.devise.hasOwnProperty(field)) {
+            this.addMissingProperty(field)
+            this.addFieldConfigurations(fields, field)
 
             // If defaults are set then set them on top of the placeholder missing properties
-            if (config[prop].default) {
-              this.setDefaults(prop, config[prop].default)
+            if (fields[field].default) {
+              this.setDefaults(field, fields[field].default)
             }
           } else {
             // The property is present but we need to make sure all the custom set properties are moved over
-            this.addPropertyConfigurations(config, prop)
+            this.addFieldConfigurations(fields, field)
           }
         }
       }
     },
-    addMissingProperty (property) {
+    addMissingProperty (field) {
       // We just add all the properties because.... why not?
-      this.$set(this.devise, property, {
+      this.$set(this.devise, field, {
         text: null,
         url: null,
         target: null,
@@ -50,10 +50,10 @@ export default {
         enabled: true
       })
     },
-    addPropertyConfigurations (config, prop) {
-      for (var pp in config[prop]) {
-        if (!this.devise[prop].hasOwnProperty(pp)) {
-          this.$set(this.devise[prop], pp, config[prop][pp])
+    addFieldConfigurations (fields, field) {
+      for (var pp in fields[field]) {
+        if (!this.devise[field].hasOwnProperty(pp)) {
+          this.$set(this.devise[field], pp, fields[field][pp])
         }
       }
     },

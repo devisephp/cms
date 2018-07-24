@@ -5,8 +5,8 @@
       <div class="dvs-h-screen" data-simplebar>
         <sidebar-header title="Edit Template" back-text="Back to Templates" :back-callback="goToTemplates" />
 
-          <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
-            :style="`border-color:${theme.sidebarText.color}`">
+        <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
+          :style="`border-color:${theme.sidebarText.color}`">
           <div 
             class="dvs-p-2 dvs-cursor-pointer" 
             :class="{'dvs-border-b-2': templateSettingsOpen}" 
@@ -42,7 +42,7 @@
 
               <div v-if="localValue.slices" class="dvs-flex dvs-flex-col dvs-items-center dvs-text-left">
                 <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset dvs-mb-2 dvs-w-full" :options="{handle: '.handle'}">
-                  <li v-for="(slice, key) in localValue.slices" :key="key" class="dvs-mb-2 dvs-w-full">
+                  <li v-for="(slice, key) in localValue.slices" :key="key" class="dvs-mb-4 dvs-w-full">
 
                     <template-slice-editor
                       v-model="localValue.slices[key]"

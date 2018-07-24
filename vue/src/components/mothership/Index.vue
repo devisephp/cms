@@ -7,16 +7,16 @@
         <li class="dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click="goToPage('devise-ms-analytics-index')">
           Analytics
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click.prevent="goToPage('devise-ms-changes-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click.prevent="goToPage('devise-ms-changes-index')">
           Changes
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click.prevent="goToPage('devise-ms-releases-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click.prevent="goToPage('devise-ms-releases-index')">
           Releases
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click.prevent="goToPage('devise-ms-healthreports-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click.prevent="goToPage('devise-ms-healthreports-index')">
           Health Report
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click.prevent="goToPage('devise-ms-backups-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click.prevent="goToPage('devise-ms-backups-index')">
           Backups
         </li>
       </ul>

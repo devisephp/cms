@@ -5,22 +5,22 @@
       <sidebar-header title="Administration" />
 
       <ul class="dvs-list-reset dvs-mt-8">
-        <li v-if="editablePage" class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-page-editor')">
+        <li v-if="editablePage" class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="goToPage('devise-page-editor')">
           Edit this page
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-pages-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="goToPage('devise-pages-index')">
           Pages
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-users-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="goToPage('devise-users-index')">
           Users
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-mothership-index')" v-if="mothership !== null">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="goToPage('devise-mothership-index')" v-if="mothership !== null">
           Mothership
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-templates-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="goToPage('devise-templates-index')">
           Templates
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="goToPage('devise-settings-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="goToPage('devise-settings-index')">
           Settings
         </li>
       </ul>

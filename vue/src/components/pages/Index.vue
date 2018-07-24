@@ -6,7 +6,7 @@
       <sidebar-header title="Manage Pages" back-text="Back to Administration" back-page="devise-index" />
 
       <ul class="dvs-list-reset">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New Page
         </li>
       </ul>

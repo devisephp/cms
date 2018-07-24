@@ -1,10 +1,10 @@
 :<template>
   <div class="dvs-mt-8">
     <!-- Logo -->
-    <logo class="dvs-my-4 dvs-mt-2 dvs-w-full dvs-flex dvs-justify-center" />
+    <logo class="dvs-my-4 dvs-mt-2 dvs-mb-10 dvs-w-full dvs-flex dvs-justify-center" />
 
     <!-- Title -->
-    <h2 class="dvs-mb-2 dvs-font-hairline" :style="{color: theme.sidebarText.color }">{{ title }}</h2>
+    <h3 class="dvs-mb-2 dvs-font-thin" :style="{color: theme.sidebarText.color }">{{ title }}</h3>
 
     <!-- Back -->
     <a 

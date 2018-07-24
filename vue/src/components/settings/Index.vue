@@ -12,7 +12,7 @@
         <li class="dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click="goToPage('devise-languages-manage')">
           Languages
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click.prevent="goToPage('devise-sites-index')">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click.prevent="goToPage('devise-sites-index')">
           Sites
         </li>
       </ul>

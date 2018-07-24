@@ -19,12 +19,26 @@ export default {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email.toLowerCase());
     },
-    clipString (string, length, html) {
+    escapeHtml (text) {
+      var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }
+
+      return text.replace(/[&<>"']/g, function(m) { return map[m]; })
+    },
+    clipString (text, length, html) {
       if (typeof html === 'undefined') {
         html = false
       }
+      if (typeof text !== 'undefined' && text !== null && html) {
+        text = this.escapeHtml(text)
+      }
 
-      return clip(string, length, {html: html})
+      return clip(text, length, {html: html})
     }
   }
 }

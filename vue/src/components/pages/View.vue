@@ -11,13 +11,13 @@
         <li class="dvs-mb-6 dvs-text-lg">
           <a :href="page.slug + '/#/devise/edit-page'" :style="{color: theme.sidebarText.color}">Edit Page Content</a>
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="showCopy = true">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="showCopy = true">
           Copy This Page
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" @click="showTranslate = true">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="showTranslate = true">
           Translate This Page
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}">
           Delete This Page
         </li>
       </ul>

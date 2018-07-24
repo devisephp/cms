@@ -6,10 +6,10 @@
       <sidebar-header title="Manage Sites" back-text="Back to Settings" back-page="devise-settings-index" />
 
       <ul class="dvs-list-reset">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" @click.prevent="showCreate = true">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" @click.prevent="showCreate = true">
           Create New Site
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg dvs-cursor-pointer" v-if="mothership" @click.prevent="requestSyncSites">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" v-if="mothership" @click.prevent="requestSyncSites">
           Sync Sites with Mothership
         </li>
       </ul>

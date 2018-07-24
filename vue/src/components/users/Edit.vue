@@ -6,7 +6,7 @@
       <sidebar-header title="Manage User" back-text="Back to Users" back-page="devise-users-index" />
 
       <ul class="dvs-list-reset dvs-mb-10">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-lg" v-devise-alert-confirm="{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}">
+        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" v-devise-alert-confirm="{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}">
           Delete This User
         </li>
       </ul>

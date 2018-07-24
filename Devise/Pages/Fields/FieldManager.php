@@ -131,7 +131,7 @@ class FieldManager
                 $sliceInstance->page_version_id = $pageVersionId;
                 $sliceInstance->parent_instance_id = $parentId;
                 $sliceInstance->template_slice_id = ($sliceInstance->id) ? $sliceInstance->template_slice_id : $this->getTemplateSliceId($parentId);
-                $sliceInstance->enabled = $slice['metadata']['enabled'];
+                $sliceInstance->settings = $slice['settings'];
                 $sliceInstance->position = $index;
                 $sliceInstance->save();
 

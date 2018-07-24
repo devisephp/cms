@@ -24,7 +24,8 @@
 
     <div class="dvs-collapsed dvs-mb-8" v-if="slice.metadata.open">
       <div v-if="!slice.metadata.placeholder">
-        <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-4 dvs-pl-4" :key="key">
+        {{ sliceConfig(slice).config }}
+        <fieldset v-for="(field, key) in fields" class="dvs-fieldset dvs-mb-4 dvs-pl-4" :key="key" v-if="fieldConfig({fieldKey: key, slice})">
           <div>
 
             <color-editor v-model="fields[key]" :options="fieldConfig({fieldKey: key, slice})" :namekey="key" v-if="fieldConfig({fieldKey: key, slice}).type === 'color'">
@@ -190,7 +191,8 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'component',
-      'fieldConfig'
+      'fieldConfig',
+      'sliceConfig'
     ]),
     fields () {
       var fields = {}

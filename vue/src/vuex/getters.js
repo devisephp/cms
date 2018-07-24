@@ -37,10 +37,9 @@ const getters = {
 
   fieldConfig: (state, getters) => ({fieldKey, slice}) => {
     let sliceConfig = getters.sliceConfig(slice)
-    if (typeof sliceConfig.config[fieldKey] === 'undefined') {
-      throw new ReferenceError(`Could not find the configuration for the ${fieldKey} fieldkey from this slice: ${sliceConfig.name}`)
-    }
-    return sliceConfig.config[fieldKey]
+    if (typeof sliceConfig.config[fieldKey] !== 'undefined') {
+      return sliceConfig.config[fieldKey]
+    } 
   },
 
   // Languages

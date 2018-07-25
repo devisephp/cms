@@ -361,7 +361,6 @@ const actions = {
 
   // This is the save used from the page editor
   savePage (context, page) {
-    console.log('here', page)
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'pages/' + page.id, page).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: page.title + ' has been saved.'})

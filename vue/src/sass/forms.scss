@@ -21,7 +21,7 @@
   input[type="number"],
   input[type="email"],
   input[type="phone"] {
-    @apply dvs-p-4 dvs-w-full dvs-bg-grey-lighter dvs-text-grey-darkest dvs-rounded-sm dvs-appearance-none;
+    @apply dvs-px-4 dvs-py-3 dvs-leading-tight dvs-text-sm dvs-w-full dvs-bg-grey-lighter dvs-text-grey-darkest dvs-rounded dvs-appearance-none;
 
     &.dvs-w-auto {
       @apply dvs-w-auto;

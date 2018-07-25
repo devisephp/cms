@@ -39,7 +39,7 @@
               <slot name="static-content"></slot>
 
               <template v-if="page.slices">
-                <slices :slices="page.slices"></slices>
+                <slices :slices="page.slices" :editorMode="!adminClosed && editorMode"></slices>
               </template>
 
               <slot name="static-content-bottom"></slot>

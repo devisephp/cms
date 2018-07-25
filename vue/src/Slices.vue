@@ -25,13 +25,18 @@ export default {
           // one level and use the placeholder's slices.
           if (s.metadata.placeholder) {
             if (s.slices) {
-              let slices = s.slices.map(s => h(Slice, { props: { devise: s } }))
+              let slices = s.slices.map(s => h(Slice, { 
+                props: { 
+                  devise: s
+                } 
+              }))
               return slices
             }
           } else {
             return h(Slice, {
               props: {
-                devise: s
+                devise: s,
+                editorMode: ctx.props.editorMode
               }
             })
           }
@@ -45,6 +50,9 @@ export default {
       // Emit the bus event to notifify that we are done loading
       devise.$bus.$emit('devise-loaded')
     })
-  }
+  },
+  props: [
+    'editorMode'
+  ]
 }
 </script>

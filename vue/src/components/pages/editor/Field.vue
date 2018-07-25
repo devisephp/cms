@@ -8,7 +8,7 @@
           :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration">
         </div>
         <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
-          <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal" @click="toggleShowEditor">{{ options.label }}</span>
+          <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal hover:underline" @click="toggleShowEditor">{{ options.label }}</span>
           <div @mouseover="showPreview = true" @mouseout="showPreview = false">
             <eye-icon />
           </div>

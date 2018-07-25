@@ -1,30 +1,31 @@
 <template>
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
-    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-ml-2 dvs-flex dvs-justify-between dvs-cursor-pointer" @click="toggleSlice(slice)">
+    <strong class="dvs-block dvs-uppercase dvs-mb-4 dvs-switch-sm dvs-text-xs dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer" @click="toggleSlice(slice)">
       <template v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
-        <div>
+        <div class="dvs-cursor-pointer dvs-text-sm dvs-font-normal dvs-capitalize hover:underline dvs-ml-4">
           {{ slice.metadata.label }} 
         </div>
-        <div @click.stop="addInstance(slice)">
-          <add-icon /> Add New
+        <div class="opacity-75" @click.stop="addInstance(slice)">
+          Add New
         </div>
       </template>
       <template v-else>
-        <div class="dvs-flex dvs-items-center">
+        <div v-if="!repeatableChild" class="dvs-flex dvs-items-center">
           {{ slice.metadata.label }}
         </div>
-        <template v-if="repeatableChild">
-          <div @click.stop="requestRemoveInstance(slice)">
+        <div v-else class="dvs-flex dvs-items-center dvs-w-full dvs-pl-8 dvs-justify-between">
+          <div>Instance</div>
+          <div class="dvs-pl-4" @click.stop="requestRemoveInstance(slice)">
             Remove
           </div>
-        </template>
+        </div>
       </template>
       
     </strong>
 
     <div class="dvs-collapsed dvs-mb-8" v-if="slice.metadata.open">
       <div v-if="!slice.metadata.placeholder">
-        <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-pl-4" :key="key" v-if="fields[key]">
+        <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-ml-4" :key="key" v-if="fields[key]">
           <div>
 
             <color-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'color'">
@@ -55,7 +56,7 @@
         </fieldset>
       </div>
 
-      <div class="dvs-collapsed dvs-pl-4">
+      <div class="dvs-collapsed">
 
         <help 
           v-if="slice.metadata.type === 'model'" 

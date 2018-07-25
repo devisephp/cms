@@ -678,6 +678,7 @@ module.exports = {
     '8': '2rem',
     '12': '3rem',
     '16': '4rem',
+    '20': '6rem',
   },
 
 

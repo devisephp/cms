@@ -43,7 +43,6 @@ export default {
       'deleteMeta'
     ]),
     requestCreateMeta (newMeta) {
-      console.log(newMeta)
       this.createMeta(newMeta)
     },
     requestUpdateMeta (meta) {

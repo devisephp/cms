@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="dvs-items-center dvs-text-center dvs-py-4">
+    <div class="dvs-p-8 dvs-text-center">
       <sidebar-header :title="`Editing: ${page.title}`" back-text="Back to Administration" back-page="devise-index" />
     </div>
 
-    <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-py-4">
+    <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-pb-4">
       <button 
         class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success admin-component-third-in"  
         :style="actionButtonTheme"
@@ -27,27 +27,27 @@
         </div>
       </div>
 
-      <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
+      <div class="dvs-flex dvs-mb-8 dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
            :style="`border-color:${theme.sidebarText.color}`">
         <div 
-          class="dvs-p-2 dvs-cursor-pointer" 
-          :class="{'dvs-border-b-2': pageSettingsOpen}" 
+          class="dvs-p-2 dvs-cursor-pointer dvs-uppercase dvs-text-xs dvs-opacity-50" 
+          :class="{'dvs-border-b-2 dvs-opacity-75': pageSettingsOpen}" 
           :style="`border-color:${theme.sidebarText.color}`" 
           @click="togglePageSettings">
           Page Settings
         </div>
         <div 
-          class="dvs-p-2 dvs-cursor-pointer"
-          :class="{'dvs-border-b-2': pageContentOpen}" 
+          class="dvs-p-2 dvs-cursor-pointer dvs-uppercase dvs-text-xs dvs-opacity-50"
+          :class="{'dvs-border-b-2 dvs-opacity-75': pageContentOpen}" 
           :style="`border-color:${theme.sidebarText.color}`" 
           @click="togglePageContent">
           Page Content
         </div>
       </div>
 
-      <ul class="dvs-list-reset dvs-w-full">
-        <li class="dvs-collapsable dvs-mb-8" :class="{'dvs-open': pageSettingsOpen}">
-          <div class="dvs-collapsed dvs-mt-4">
+      <ul class="dvs-list-reset dvs-w-full dvs-pb-20">
+        <li class="dvs-collapsable dvs-mb-8" v-if="pageSettingsOpen" :class="{'dvs-open': pageSettingsOpen}">
+          <div class="dvs-collapsed">
             <fieldset class="dvs-fieldset dvs-mb-8">
               <label>Page Title</label>
               <input type="text" placeholder="Title of the Page">
@@ -69,7 +69,7 @@
           </div>
         </li>
         <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
-          <div class="dvs-collapsed dvs-mt-4">
+          <div class="dvs-collapsed">
             <ul class="dvs-list-reset" style="padding-bottom:150px;" >
               <template v-for="slice in pageSlices">
                 <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" />
@@ -118,7 +118,6 @@ export default {
       'savePage'
     ]),
     requestSavePage () {
-      console.log(this.page)
       this.savePage(this.page)
     },
     togglePageSettings () {

@@ -341,7 +341,6 @@ export default {
       meta.edit = false
     },
     requestDeleteMeta (meta) {
-      console.log(this.localValue.meta.indexOf(meta))
       this.localValue.meta.splice(this.localValue.meta.indexOf(meta), 1)
     },
     requestDeletePage () {

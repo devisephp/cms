@@ -198,7 +198,7 @@ export default {
     resetStyles () {
       this.$set(this.devise, 'settings', {})
       this.backgroundColor = tinycolor('#fff').toRgb()
-      this.toggleEditor()
+      this.showEditor = false
     },
     setMargin (position, event) {
       let value = event.target.value

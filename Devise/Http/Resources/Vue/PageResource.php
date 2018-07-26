@@ -25,6 +25,7 @@ class PageResource extends Resource
       'data'               => $this->data,
       'versions'           => PageVersionResource::collection($this->versions),
       'meta'               => MetaResource::collection($this->metas),
+      'site'               => new SiteResource($this->site),
       'slices'             => [],
       'languages'          => []
     ];

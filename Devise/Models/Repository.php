@@ -6,38 +6,53 @@ use Illuminate\Support\Facades\App;
 
 class Repository
 {
-  public function runQuery($input)
-  {
-    $classPath = array_get($input, 'class');
-
-    if ($classPath)
+    public function runQuery($input)
     {
-      $filters = array_get($input, 'filters');
-      $paginated = array_get($input, 'paginated', false);
-      $single = array_get($input, 'single', false);
-      $sort = array_get($input, 'sort');
-      $limit = array_get($input, 'limit', 25);
+        $classPath = array_get($input, 'class');
 
-      $model = App::make($classPath);
-
-      $model = $model->filter($filters)
-        ->sort($sort);
-
-      if (!$single)
-      {
-        if ($paginated)
+        if ($classPath)
         {
-          return $model->paginate($limit);
-        } else
-        {
-          return $model->get();
+            $scopes = array_get($input, 'scopes', []);
+            $filters = array_get($input, 'filters');
+            $paginated = array_get($input, 'paginated', false);
+            $single = array_get($input, 'single', false);
+            $sort = array_get($input, 'sort');
+            $limit = array_get($input, 'limit', 25);
+
+            $model = App::make($classPath);
+
+            foreach ($scopes as $scopeNames)
+            {
+                foreach ($scopeNames as $function => $params)
+                {
+                    if ($params)
+                    {
+                        $model = $model->$function($params);
+                    } else
+                    {
+                        $model = $model->$function($params);
+                    }
+                }
+            }
+
+            $model = $model->filter($filters)
+                ->sort($sort);
+
+            if (!$single)
+            {
+                if ($paginated)
+                {
+                    return $model->paginate($limit);
+                } else
+                {
+                    return $model->get();
+                }
+            } else
+            {
+                return $model->first();
+            }
         }
-      } else
-      {
-        return $model->first();
-      }
-    }
 
-    abort(401, 'Class parameter not found in query.');
-  }
+        abort(401, 'Class parameter not found in query.');
+    }
 }

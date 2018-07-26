@@ -5,8 +5,6 @@
 #devise-admin-open {
   @apply dvs-fixed dvs-pin-t dvs-pin-l dvs-opacity-75 dvs-cursor-pointer dvs-ml-8 dvs-my-4;
 
-  transition: all 0.5s;
-  transform: translateX(350px);
   text-shadow: 0 0 12px rgba(0,0,0,0.5);
   z-index:99999;
 
@@ -60,14 +58,14 @@
   @apply dvs-z-30 dvs-fixed dvs-pin-l dvs-pin-t dvs-pin-b dvs-overflow-scroll dvs--ml-px;
 
   // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  width:350px;
+  
+  width:25%;
 }
 
 #devise-admin-shim {
   @apply dvs-bg-white;
 
-  min-width:350px;
-  width:350px;
+  width:25%;
 
   transition: width 0.5s ease-out, min-width 0.5s ease-out;
 }
@@ -77,9 +75,14 @@
 
   // Trap any fixed content
   transform: translate(0, 0);
-  transition: width 0.5s ease-out, height 0.5s ease-out, margin 0.5s ease-out;
 
   width:100%;
+}
+
+#devise-responsive-preview {
+  
+  transform: translate(0, 0);
+  transition: width 0.2s ease-out, height 0.2s ease-out, margin 0.2s ease-out;
 
   &.tablet {
     @apply dvs-shadow-lg dvs-my-8 dvs-rounded;
@@ -104,9 +107,9 @@
 }
 
 #dvs-app-content {
-  width: calc(100% - 350px);
+  width: 75%;
 
-  transition: width 0.5s ease-out;
+  transition: width 0.1s ease-out;
 }
 
 #devise-in-page-analytics {
@@ -129,31 +132,6 @@
       width: 0px;
     }
 
-    #devise-content {
-      width:100%;
-
-      &.tablet {
-        @apply dvs-shadow-lg dvs-my-8 dvs-rounded;
-
-        width:768px;
-        height:1024px;
-      }
-
-      &.mobile-landscape {
-        @apply dvs-shadow-lg dvs-my-12 dvs-rounded;
-
-        width:600px;
-        height:320px;
-      }
-
-      &.mobile-portrait {
-        @apply dvs-shadow-lg dvs-my-10 dvs-rounded;
-
-        width:320px;
-        height:600px;
-      }
-    }
-
     #devise-in-page-analytics {
       opacity:0;
     }
@@ -161,7 +139,7 @@
 
   #devise-user {
     > div {
-      width: 350px;
+      width: 100%;
       height:99px;
 
       :first-child {
@@ -176,6 +154,7 @@
   &.preview-frame {
     .devise-content {
       width:100vw;
+      min-height:auto
     }
   }
 
@@ -197,8 +176,13 @@
 #devise-sidebar {
   @apply dvs-p-8 dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-z-20 dvs-text-center;
   
-  min-width:350px;
-  width:350px;
+  width:25%;
+}
+
+#devise-menu-current-user {
+  bottom:0;
+  left:0;
+  right:0;
 }
 
 #devise-iframe-editor {
@@ -207,7 +191,7 @@
 
 #devise-admin-content {
   padding: 5rem;
-  width: calc(100% - 350px);
+  width: 75%;
 
   &.bottom-padding-16 {
     padding-bottom:20em;
@@ -217,7 +201,7 @@
 #devise-preview-content {
   @apply dvs-z-10 dvs-absolute dvs-pin-t dvs-pin-r dvs-pin-b;
 
-  width: calc(100% - 350px);
+  width: 75%;
 }
 
 #devise-preview-iframe {

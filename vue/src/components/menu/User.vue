@@ -1,11 +1,9 @@
 <template>
-  <div class="dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-p-4 dvs-m-8 dvs-rounded-lg dvs-z-20" 
+  <div class="dvs-absolute dvs-p-4 dvs-z-20" 
   id="devise-menu-current-user"
-  style="max-width:300px;"
   :style="`
     background: ${theme.userBackground.color};
     color: ${theme.userText.color};
-    box-shadow: -4px -4px ${theme.userShadowSize.text} ${theme.userShadowColor.color};
   `">
     <div class="dvs-flex dvs-justify-between dvs-p-4 dvs-items-center">
       <div>

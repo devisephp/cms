@@ -9,7 +9,6 @@
       <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         <div 
           id="devise-admin" 
-          v-if="!isPreviewFrame && isLoggedIn && !adminClosed" 
           class="dvs-text-grey-darker dvs-bg-white"
           :class="[deviseOptions.adminClass]" 
           :style="`
@@ -48,7 +47,7 @@
 
             <div id="devise-iframe-editor">
               <!-- Preview mode in editor -->
-              <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" class="devise-content" :class="[page.previewMode]"/>
+              <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[page.previewMode]"/>
             </div>
           </div>
 
@@ -202,43 +201,43 @@ export default {
 
         this.openAnimation = anime.timeline({
           autoplay: true,
-          loop: false,
-          duration: 200
+          loop: false
         });
 
         this.openAnimation
           .add({
             targets: document.querySelector('#devise-admin-open'),
-            translateX: [0, 350],
+            left: [0, '25%'],
             easing: 'linear',
+            offset: '+=0',
             duration:100
           })
           .add({
             targets: document.querySelector('#devise-admin'),
-            translateX: [-350, 0],
+            left: ['-25%', 0],
             easing: 'easeOutQuad',
-            duration:300,
+            duration:100,
             offset: '+=0',
           })
           .add({
             targets: document.querySelectorAll('.admin-component-first-in'),
-            translateX: [-350, 0],
+            translateX: [-500, 0],
             easing: 'easeOutQuad',
-            offset: '-=100',
-            duration:300,
+            offset: '+=0',
+            duration:100,
           })
           .add({
             targets: document.querySelectorAll('.admin-component-second-in'),
-            translateX: [-350, 0],
+            translateX: [-500, 0],
             easing: 'easeOutQuad',
-            offset: '-=200',
-            duration:300,
+            offset: '+=100',
+            duration:100,
           })
           .add({
             targets: document.querySelectorAll('.admin-component-third-in'),
-            translateX: [-350, 0],
+            translateX: [-500, 0],
             easing: 'easeOutQuad',
-            offset: '-=200',
+            offset: '+=100',
             duration:300,
           })
 

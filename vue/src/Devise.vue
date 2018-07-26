@@ -237,7 +237,14 @@ export default {
             targets: document.querySelectorAll('.admin-component-third-in'),
             translateX: [-500, 0],
             easing: 'easeOutQuad',
-            offset: '+=100',
+            offset: '-=100',
+            duration:300,
+          })
+          .add({
+            targets: document.querySelectorAll('#devise-menu-current-user'),
+            translateX: [-500, 0],
+            easing: 'easeOutQuad',
+            offset: '-=100',
             duration:300,
           })
 

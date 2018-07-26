@@ -838,6 +838,14 @@ button,
   font-size: .75rem;
 }
 
+.dvs-btn.dvs-btn-2xs {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  font-size: .65rem;
+}
+
 .dvs-btn.dvs-btn-lg {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;

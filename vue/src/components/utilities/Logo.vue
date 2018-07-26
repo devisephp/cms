@@ -1,7 +1,7 @@
 <template>
   <div>
-    <devise-logo style="width:120px;" :color="theme.sidebarText.color" v-if="!interface || !interface.logo" />
-    <img :src="interface.logo" v-else>
+    <devise-logo style="width:120px;" :color="theme.sidebarText.color" v-if="!deviseInterface || !deviseInterface.logo" />
+    <img :src="deviseInterface.logo" v-else>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters('devise', [
-      'interface'
+      'deviseInterface'
     ])
   },
   components: {

@@ -151,7 +151,7 @@ const DevisePlugin = {
           return {
             backgroundImage: `linear-gradient(90deg, ${this.theme.buttonsActionLeft.color} 0%, ${this.theme.buttonsActionRight.color} 100%)`,
             color: this.theme.buttonsActionText.color,
-            boxShadow: `-4px -4px ${this.theme.buttonsActionShadowSize.text} ${this.theme.buttonsActionShadowColor.color}`
+            boxShadow: `2px 2px ${this.theme.buttonsActionShadowSize.text} ${this.theme.buttonsActionShadowColor.color}`
           }
         },
         regularButtonTheme () {
@@ -165,7 +165,7 @@ const DevisePlugin = {
             borderRadius: '0.3rem',
             backgroundImage: `linear-gradient(90deg, ${this.theme.statsLeft.color} 0%, ${this.theme.statsRight.color} 100%)`,
             color: this.theme.statsText.color,
-            boxShadow: `-4px -4px ${this.theme.statsShadowSize.text} ${this.theme.statsShadowColor.color}`
+            boxShadow: `2px 2px ${this.theme.statsShadowSize.text} ${this.theme.statsShadowColor.color}`
           }
         },
         infoBlockFlatTheme () {
@@ -173,7 +173,6 @@ const DevisePlugin = {
             borderRadius: '0.3rem',
             background: this.theme.statsLeft.color,
             color: this.theme.statsText.color,
-            boxShadow: `-4px -4px ${this.theme.statsShadowSize.text} ${this.theme.statsShadowColor.color}`
           }
         }
       },

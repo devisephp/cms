@@ -16,20 +16,20 @@
     </div>
 
     <div id="devise-admin-content" :style="adminTheme">
-      <h2 class="dvs-mb-8" :style="{color: theme.sidebarText.color }">Current Sites</h2>
+      <h2 class="dvs-mb-8">Current Sites</h2>
       <help class="dvs-mb-10">Here you can add and manage sites under this application. This means that you can add new domains, change themes for those domains, and add languages to those sites to make them more impacting for your users</help>
 
-      <div v-for="site in sites.data" :key="site.id" class="dvs-mb-6 dvs-shadow-sm dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-p-12 dvs-text-center" :style="infoBlockFlatTheme">
+      <div v-for="site in sites.data" :key="site.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
+        <div class="dvs-p-12 dvs-text-center dvs-rounded" :style="{backgroundColor: theme.adminText.color }">
           <div class="dvs-text-base">
-            <h2 class="dvs-mb-4" :style="{color: theme.statsText.color }">{{ site.name }}</h2>
-            <div class="dvs-mb-2 dvs-font-mono">{{ site.domain }}</div>
-            <div class="dvs-mb-2 dvs-font-mono">SITE_{{ site.id }}_DOMAIN</div>
+            <div class="dvs-mb-4 dvs-text-xl dvs-uppercase" :style="{color: theme.adminBackground.color }">{{ site.name }}</div>
+            <div class="dvs-mb-2" :style="{color: theme.adminBackground.color }">{{ site.domain }}</div>
           </div>
           <div class="dvs-mb-8 dvs-flex dvs-flex-wrap dvs-justify-center">
             <span v-for="language in site.languages" :key="language.id" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
           </div>
           <div class="dvs-flex dvs-justify-center">
+            <a class="dvs-btn dvs-mr-2" :href="site.domain" :style="regularButtonTheme">Go</a>
             <button class="dvs-btn dvs-mr-2" @click="showEditSite(site)" :style="regularButtonTheme">Edit</button>
             <button class="dvs-btn" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="regularButtonTheme">Delete</button>
           </div>

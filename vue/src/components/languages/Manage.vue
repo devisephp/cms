@@ -1,7 +1,7 @@
 <template>
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="languages.data.length">
-    <div id="devise-sidebar">
+    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
       <sidebar-header title="Manage Languages" back-text="Back to Settings" back-page="devise-settings-index" />
     </div>
     <div id="devise-admin-content" :style="adminTheme">

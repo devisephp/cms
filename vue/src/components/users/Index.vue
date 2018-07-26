@@ -1,7 +1,7 @@
 <template>
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" :style="sidebarTheme">
+    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
 
       <sidebar-header title="Manage Users" back-text="Back to Administration" back-page="devise-index" />
 

@@ -2,7 +2,7 @@
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="localValue.languages && languages.data">
     
-    <div id="devise-sidebar" :style="sidebarTheme">
+    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
       <sidebar-header title="Manage Site" back-text="Back to Sites" back-page="devise-sites-index" />
     </div>
     

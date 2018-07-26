@@ -1,6 +1,6 @@
 <template>
 <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar">
+    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
       <sidebar-header title="Network Analytics" back-text="Back to Mothership" back-page="devise-mothership-index" />
     </div>
 

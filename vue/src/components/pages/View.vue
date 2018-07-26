@@ -1,7 +1,7 @@
 <template>
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="page">
-    <div id="devise-sidebar">
+    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
       <sidebar-header title="Manage Page" back-text="Back to Pages" back-page="devise-pages-index" />
 
       <ul class="dvs-list-reset dvs-mb-10">

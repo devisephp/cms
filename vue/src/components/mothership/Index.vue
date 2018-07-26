@@ -1,6 +1,6 @@
 <template>
 <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar">
+    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
       <sidebar-header title="Mothership" back-text="Back to Administration" back-page="devise-index" />
 
       <ul class="dvs-list-reset dvs-mb-10">

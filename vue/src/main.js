@@ -119,8 +119,8 @@ const DevisePlugin = {
       },
       methods: {
         // Convienience method to push things into the router from templates
-        goToPage (pageName) {
-          this.$router.push({name: pageName})
+        goToPage (pageName, params) {
+          this.$router.push({name: pageName, params: params})
         },
         launchMediaManager (callbackObject, callbackProperty) {
           deviseSettings.$bus.$emit('devise-launch-media-manager', {

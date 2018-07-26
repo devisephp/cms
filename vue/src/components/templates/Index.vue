@@ -1,7 +1,7 @@
 <template>
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar">
+    <div id="devise-sidebar" data-simplebar>
       <sidebar-header title="Templates" back-text="Back to Administration" back-page="devise-index" />
       <ul class="dvs-list-reset">
         <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" @click.prevent="showCreate = true">

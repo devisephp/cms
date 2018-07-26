@@ -193,6 +193,10 @@ const getters = {
   user: (state, getters, rootState) => {
     var id = parseInt(rootState.route.params.userId)
     return state.users.data.find(user => user.id === id)
+  },
+  
+  currentUser: state => {
+    return deviseSettings.$user
   }
 }
 

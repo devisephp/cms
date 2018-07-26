@@ -1,7 +1,7 @@
 <template>
 
   <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="dataLoaded">
-    <div id="devise-sidebar" :style="sidebarTheme">
+    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
       <sidebar-header title="Edit Template" back-text="Back to Templates" :back-callback="goToTemplates" />
 
       <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
@@ -34,6 +34,11 @@
               <label>Template Layout</label>
               <input type="text" v-model="localValue.layout" disabled placeholder="Blade File Name">
             </fieldset>
+
+            <fieldset class="dvs-fieldset">
+              <label>Add Data</label>
+              <button>Add Data</button>
+            </fieldset>
           </div>
         </li>
         <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateLayoutOpen}">
@@ -53,7 +58,7 @@
 
                 </li>
               </draggable>
-              <button class="dvs-btn dvs-btn-xs dvs-mx-2 dvs-w-4/5 dvs-mt-8" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)"  :style="actionButtonTheme">Add Slice to Layout</button>
+              <button class="dvs-btn dvs-btn-sm dvs-mx-2 dvs-w-4/5 dvs-mt-8" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)"  :style="actionButtonTheme">Add Slice to Layout</button>
             </div>
 
           </div>
@@ -117,6 +122,13 @@
           origin: null,
           mode: 'add',
           root: true
+        },
+        dataToAdd: {
+          show: false,
+          type: 'single',
+          slice: null,
+          model: null,
+          modelQuery: null
         }
       }
     },

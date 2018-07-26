@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dvs-p-8 dvs-text-center">
+    <div class="dvs-text-center">
       <sidebar-header :title="`Editing: ${page.title}`" back-text="Back to Administration" back-page="devise-index" />
     </div>
 

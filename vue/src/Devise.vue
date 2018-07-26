@@ -15,6 +15,7 @@
             background-image: linear-gradient(180deg, ${theme.sidebarTop.color} 0%, ${theme.sidebarBottom.color} 100%);
             color:${theme.sidebarText.color};
           `"
+          v-if="isLoggedIn" 
           data-simplebar>
             
           <transition name="fade" mode="out-in">
@@ -29,7 +30,7 @@
         <div class="dvs-flex-grow dvs-flex dvs-justify-center dvs-max-w-full">
 
           <!-- Shim -->
-          <div id="devise-admin-shim" v-if="!isPreviewFrame"></div>
+          <div id="devise-admin-shim" v-if="!isPreviewFrame && isLoggedIn"></div>
           
           <div id="dvs-app-content" :class="{'dvs-no-scroll': wideAdmin}">
             <!-- Desktop mode in editor or just viewing page -->
@@ -60,10 +61,10 @@
           </div>
         </template>
 
-        <portal-target name="devise-field-editor" class="dvs-fieldset"> </portal-target>
+        <portal-target name="devise-field-editor" class="dvs-fieldset" v-if="isLoggedIn" > </portal-target>
       </div>
     </template>
-    <template v-if="templateMode">
+    <template v-if="templateMode && isLoggedIn">
       <template-editor>
         <slot name="on-top" slot="on-top"></slot>
         <slot name="on-bottom" slot="on-bottom"></slot>
@@ -275,7 +276,8 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'breakpoint'
+      'breakpoint',
+      'currentUser'
     ]),
     currentUrl () {
       return window.location.href
@@ -288,7 +290,7 @@ export default {
       }
     },
     isLoggedIn () {
-      return deviseSettings.$user
+      return this.currentUser
     }
   },
   watch: {

@@ -4,7 +4,7 @@
 
     <!-- Back -->
     <div 
-      class="dvs--mt-8 dvs--mx-8 dvs-mb-8 dvs-p-4 dvs-text-left" 
+      class="dvs-p-4 dvs-text-left" 
       :style="{backgroundColor: theme.adminBackground.color}"
       v-if="backPage || backCallback">
       <a 
@@ -27,7 +27,7 @@
     </div>
 
     <!-- Logo -->
-    <div>
+    <div class="dvs-mt-8">
       <logo class="dvs-w-full mb-2 dvs-flex dvs-justify-center" />
     </div>
 

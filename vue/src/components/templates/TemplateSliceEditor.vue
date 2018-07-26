@@ -1,7 +1,7 @@
 <template>
   <div v-if="loaded" class="dvs-ml-2 dvs-collapsable">
     <!-- Label / Button -->
-    <div class="dvs-flex dvs-justify-between dvs-block dvs-mb-2">
+    <div class="dvs-flex dvs-justify-between dvs-items-center dvs-block dvs-mb-2">
       <div class="dvs-flex">
         <div class="handle">
           <menu-icon class="dvs-mr-2" />
@@ -10,7 +10,7 @@
           <settings-icon />
         </div>
       </div>
-      <span class="dvs-cursor-pointer dvs-switch" @click="toggleSlice()">{{ localValue.label }}</span>
+      <span class="dvs-cursor-pointer dvs-switch dvs-text-xs dvs-text-right dvs-font-bold dvs-uppercase" @click="toggleSlice()">{{ localValue.label }}</span>
     </div>
 
     <!-- Menu for manipulating this slice -->
@@ -55,7 +55,7 @@
         <!-- Controls -->
         <template v-if="componentConfiguration">
           <template v-for="(field, fieldKey) in componentConfiguration" v-if="field.type">
-            <div class="dvs-w-full" :key="field.id">
+            <div class="dvs-w-full dvs-bg-white dvs-rounded dvs-shadow dvs-p-4 dvs-mb-2" :key="field.id">
               <div class="dvs-mb-4">
                 <fieldset class="dvs-fieldset">
                   <label class="dvs-font-bold dvs-mb-1 dvs-block dvs-uppercase">{{ field.label }}</label>
@@ -141,8 +141,10 @@ export default {
       this.$emit('removeSlice', slice)
     },
     toggleSlice () {
-      this.localValue.metadata.open = !this.localValue.metadata.open
-      this.updateValue()
+      if (this.localValue.slices.length > 0 || this.componentConfiguration !== null) {
+        this.localValue.metadata.open = !this.localValue.metadata.open
+        this.updateValue()
+      }
     },
     toggleSliceTools() {
       this.localValue.metadata.tools = !this.localValue.metadata.tools
@@ -172,33 +174,35 @@ export default {
       }
 
       // Hydrate those fields if they don't exist
-      Object.keys(self.componentConfiguration).forEach(function (key, index) {
-        if (
-          typeof self.localValue.config[key] === 'undefined'
-        ) {
-          if (self.componentConfiguration[key].type === 'text') {
-            self.$set(self.localValue.config, key, {enabled: true, text: faker.lorem.words(5)})
+      if (self.componentConfiguration !== null) {
+        Object.keys(self.componentConfiguration).forEach(function (key, index) {
+          if (
+            typeof self.localValue.config[key] === 'undefined'
+          ) {
+            if (self.componentConfiguration[key].type === 'text') {
+              self.$set(self.localValue.config, key, {enabled: true, text: faker.lorem.words(5)})
+            }
+            if (self.componentConfiguration[key].type === 'wysiwyg') {
+              self.$set(self.localValue.config, key, {enabled: true, text: '<div>' + faker.lorem.words(15) + '</div>'})
+            }
+            if (self.componentConfiguration[key].type === 'color') {
+              self.$set(self.localValue.config, key, {enabled: true, color: '#f66d9b'})
+            }
+            if (self.componentConfiguration[key].type === 'number') {
+              self.$set(self.localValue.config, key, {enabled: true, text: '1000'})
+            }
+            if (self.componentConfiguration[key].type === 'textarea') {
+              self.$set(self.localValue.config, key, {enabled: true, text: faker.lorem.words(15)})
+            }
+            if (self.componentConfiguration[key].type === 'link') {
+              self.$set(self.localValue.config, key, {enabled: true, text: 'A Link', url: faker.internet.url(), target: '_self'})
+            }
+            if (self.componentConfiguration[key].type === 'image') {
+              self.$set(self.localValue.config, key, {enabled: true, url: faker.image.cats()})
+            }
           }
-          if (self.componentConfiguration[key].type === 'wysiwyg') {
-            self.$set(self.localValue.config, key, {enabled: true, text: '<div>' + faker.lorem.words(15) + '</div>'})
-          }
-          if (self.componentConfiguration[key].type === 'color') {
-            self.$set(self.localValue.config, key, {enabled: true, color: '#f66d9b'})
-          }
-          if (self.componentConfiguration[key].type === 'number') {
-            self.$set(self.localValue.config, key, {enabled: true, text: '1000'})
-          }
-          if (self.componentConfiguration[key].type === 'textarea') {
-            self.$set(self.localValue.config, key, {enabled: true, text: faker.lorem.words(15)})
-          }
-          if (self.componentConfiguration[key].type === 'link') {
-            self.$set(self.localValue.config, key, {enabled: true, text: 'A Link', url: faker.internet.url(), target: '_self'})
-          }
-          if (self.componentConfiguration[key].type === 'image') {
-            self.$set(self.localValue.config, key, {enabled: true, url: faker.image.cats()})
-          }
-        }
-      })
+        })
+      }
     }
   },
   computed: {
@@ -207,7 +211,10 @@ export default {
     ]),
     componentConfiguration () {
       if (this.component(this.localValue.name)) {
-        return this.component(this.localValue.name).config
+        if (typeof this.component(this.localValue.name).fields !== 'undefined') {
+          return this.component(this.localValue.name).fields
+        }
+        return null
       }
       return null
     },

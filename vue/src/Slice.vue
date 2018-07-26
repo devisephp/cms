@@ -66,7 +66,6 @@
       </div>
 
     </div>
-    <!-- We pass in the config to simplify what the template needs to traverse -->
     <component 
       :style="styles"
       v-bind:is="currentView" 
@@ -153,7 +152,7 @@ export default {
         for (var field in fields) {
           // Ok, so the property is missing from the slice.fields object so we're
           // going to add in a stub for the render.
-          if (!this.devise.hasOwnProperty(field)) {
+          if (!this.deviseForSlice.hasOwnProperty(field)) {
             this.addMissingProperty(field)
             this.addFieldConfigurations(fields, field)
 
@@ -169,67 +168,70 @@ export default {
       }
     },
     addMissingProperty (field) {
-      // We just add all the properties because.... why not?
-      this.$set(this.devise, field, {
+      // We just add all the properties to ensure there are not undefined props down the line
+
+      let defaultProperties = {
         text: null,
         url: null,
         target: null,
         color: null,
         checked: null,
         enabled: true
-      })
+      }
+
+      this.$set(this.deviseForSlice, field, defaultProperties)      
     },
     addFieldConfigurations (fields, field) {
       for (var pp in fields[field]) {
-        if (!this.devise[field].hasOwnProperty(pp)) {
-          this.$set(this.devise[field], pp, fields[field][pp])
+        if (!this.deviseForSlice[field].hasOwnProperty(pp)) {
+          this.$set(this.deviseForSlice[field], pp, fields[field][pp])
         }
       }
     },
     setDefaults (property, defaults) {
       // loop through the defaults and apply them to the field
       for (var d in defaults) {
-        this.$set(this.devise[property], d, defaults[d])
+        this.$set(this.deviseForSlice[property], d, defaults[d])
       }
     },
     toggleEditor () {
       this.showEditor = !this.showEditor
     },
     resetStyles () {
-      this.$set(this.devise, 'settings', {})
+      this.$set(this.deviseForSlice, 'settings', {})
       this.backgroundColor = tinycolor('#fff').toRgb()
       this.showEditor = false
     },
     setMargin (position, event) {
       let value = event.target.value
 
-      if (typeof this.devise.settings.margin === 'undefined') {
-        this.$set(this.devise.settings, 'margin', {})
+      if (typeof this.deviseForSlice.settings.margin === 'undefined') {
+        this.$set(this.deviseForSlice.settings, 'margin', {})
       }
 
-      this.$set(this.devise.settings.margin, position, value)
+      this.$set(this.deviseForSlice.settings.margin, position, value)
     },
     setPadding (position, event) {
       let value = event.target.value
 
-      if (typeof this.devise.settings.padding === 'undefined') {
-        this.$set(this.devise.settings, 'padding', {})
+      if (typeof this.deviseForSlice.settings.padding === 'undefined') {
+        this.$set(this.deviseForSlice.settings, 'padding', {})
       }
 
-      this.$set(this.devise.settings.padding, position, value)
+      this.$set(this.deviseForSlice.settings.padding, position, value)
     },
     getStyle (type, position) {
       if (type === 'margin' || type === 'padding') {
-        if (typeof this.devise.settings[type] !== 'undefined') {
-          if (typeof this.devise.settings[type][position] !== 'undefined') {
-            return this.devise.settings[type][position]
+        if (typeof this.deviseForSlice.settings[type] !== 'undefined') {
+          if (typeof this.deviseForSlice.settings[type][position] !== 'undefined') {
+            return this.deviseForSlice.settings[type][position]
           }
         }
         return 0
       }
     },
     setBackground(color) {
-      this.$set(this.devise.settings, 'backgroundColor', `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`)
+      this.$set(this.deviseForSlice.settings, 'backgroundColor', `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`)
     }
   },
   computed: {
@@ -251,6 +253,11 @@ export default {
     },
     styles () {
       var styles = {}
+
+      if (typeof this.deviseForSlice.settings === 'undefined') {
+        this.$set(this.deviseForSlice, 'settings', {})
+      }
+
       let backgroundColor = this.deviseForSlice.settings.backgroundColor
       let margin = this.deviseForSlice.settings.margin
       let padding = this.deviseForSlice.settings.padding

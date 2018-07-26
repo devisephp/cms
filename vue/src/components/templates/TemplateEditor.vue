@@ -1,66 +1,64 @@
 <template>
-  <div v-if="dataLoaded">
-    
-    <div id="devise-sidebar" class="devise-iframe-sidebar"  :style="sidebarTheme">
-      <div class="dvs-h-screen" data-simplebar>
-        <sidebar-header title="Edit Template" back-text="Back to Templates" :back-callback="goToTemplates" />
 
-        <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
-          :style="`border-color:${theme.sidebarText.color}`">
-          <div 
-            class="dvs-p-2 dvs-cursor-pointer" 
-            :class="{'dvs-border-b-2': templateSettingsOpen}" 
-            :style="`border-color:${theme.sidebarText.color}`" 
-            @click="toggleTemplateSettings">
-            Template Settings
-          </div>
-          <div 
-            class="dvs-p-2 dvs-cursor-pointer"
-            :class="{'dvs-border-b-2': templateLayoutOpen}" 
-            :style="`border-color:${theme.sidebarText.color}`" 
-            @click="toggleTemplateLayout">
-            Template Layout
-          </div>
+  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="dataLoaded">
+    <div id="devise-sidebar" :style="sidebarTheme">
+      <sidebar-header title="Edit Template" back-text="Back to Templates" :back-callback="goToTemplates" />
+
+      <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
+        :style="`border-color:${theme.sidebarText.color}`">
+        <div 
+          class="dvs-p-2 dvs-cursor-pointer" 
+          :class="{'dvs-border-b-2': templateSettingsOpen}" 
+          :style="`border-color:${theme.sidebarText.color}`" 
+          @click="toggleTemplateSettings">
+          Template Settings
         </div>
-
-        <ul class="dvs-list-reset">
-          <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateSettingsOpen}">
-            <div class="dvs-collapsed dvs-mt-4 dvs-text-left">
-              <fieldset class="dvs-fieldset dvs-mb-8">
-                <label>Template Name</label>
-                <input type="text" v-model="localValue.name" placeholder="Name of the Template">
-              </fieldset>
-
-              <fieldset class="dvs-fieldset">
-                <label>Template Layout</label>
-                <input type="text" v-model="localValue.layout" disabled placeholder="Blade File Name">
-              </fieldset>
-            </div>
-          </li>
-          <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateLayoutOpen}">
-            <div class="dvs-collapsed dvs-mt-4">
-
-              <div v-if="localValue.slices" class="dvs-flex dvs-flex-col dvs-items-center dvs-text-left">
-                <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset dvs-mb-2 dvs-w-full" :options="{handle: '.handle'}">
-                  <li v-for="(slice, key) in localValue.slices" :key="key" class="dvs-mb-4 dvs-w-full">
-
-                    <template-slice-editor
-                      v-model="localValue.slices[key]"
-                      @addSlice="requestAddSlice"
-                      @removeSlice="requestRemoveSlice"
-                      @manageSlice="requestManageSlice"
-                      :class="{'dvs-open': slice.metadata.open}">
-                    </template-slice-editor>
-
-                  </li>
-                </draggable>
-                <button class="dvs-btn dvs-btn-sm dvs-mx-2 dvs-w-4/5 dvs-mt-8" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)"  :style="actionButtonTheme">Add Slice to Layout</button>
-              </div>
-
-            </div>
-          </li>
-        </ul>
+        <div 
+          class="dvs-p-2 dvs-cursor-pointer"
+          :class="{'dvs-border-b-2': templateLayoutOpen}" 
+          :style="`border-color:${theme.sidebarText.color}`" 
+          @click="toggleTemplateLayout">
+          Template Layout
+        </div>
       </div>
+
+      <ul class="dvs-list-reset">
+        <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateSettingsOpen}">
+          <div class="dvs-collapsed dvs-mt-4 dvs-text-left">
+            <fieldset class="dvs-fieldset dvs-mb-8">
+              <label>Template Name</label>
+              <input type="text" v-model="localValue.name" placeholder="Name of the Template">
+            </fieldset>
+
+            <fieldset class="dvs-fieldset">
+              <label>Template Layout</label>
+              <input type="text" v-model="localValue.layout" disabled placeholder="Blade File Name">
+            </fieldset>
+          </div>
+        </li>
+        <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateLayoutOpen}">
+          <div class="dvs-collapsed dvs-mt-4">
+
+            <div v-if="localValue.slices" class="dvs-flex dvs-flex-col dvs-items-center dvs-text-left">
+              <draggable v-model="localValue.slices" element="ul" class="dvs-list-reset dvs-mb-2 dvs-w-full" :options="{handle: '.handle'}">
+                <li v-for="(slice, key) in localValue.slices" :key="key" class="dvs-mb-4 dvs-w-full">
+
+                  <template-slice-editor
+                    v-model="localValue.slices[key]"
+                    @addSlice="requestAddSlice"
+                    @removeSlice="requestRemoveSlice"
+                    @manageSlice="requestManageSlice"
+                    :class="{'dvs-open': slice.metadata.open}">
+                  </template-slice-editor>
+
+                </li>
+              </draggable>
+              <button class="dvs-btn dvs-btn-xs dvs-mx-2 dvs-w-4/5 dvs-mt-8" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)"  :style="actionButtonTheme">Add Slice to Layout</button>
+            </div>
+
+          </div>
+        </li>
+      </ul>
     </div>
 
     <!-- Preview Pane - Duplicates what is happening at Devise.vue -->
@@ -177,6 +175,8 @@
           self.$set(slice, 'metadata', {
             open: false
           })
+
+          self.$set(slice, 'settings', {})
 
           if (slice.slices !== undefined && slice.slices.length > 0) {
             self.prepareSlices(slice.slices)

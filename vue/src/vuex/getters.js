@@ -114,12 +114,12 @@ const getters = {
   
   theme: (state, getters, rootState) => {
     var defaultColors = {
-      sidebarTop: { color: 'rgba(243,242,242,1)' },
-      sidebarBottom: { color: 'rba(230,230,230,1)' },
+      sidebarTop: { color: 'rgba(242,242,242,1)' },
+      sidebarBottom: { color: 'rgba(230,230,230,1)' },
       sidebarText: { color: 'rgba(107,107,107,1)' },
-      buttonsActionText: { color: 'rgba(55,255,255,1)' },
-      buttonsActionLeft: { color: 'rgba(09,107,107,1)' },
-      buttonsActionRight: { color: 'rgba(14,114,114,1)' },
+      buttonsActionText: { color: 'rgba(255,255,255,1)' },
+      buttonsActionLeft: { color: 'rgba(109,107,107,1)' },
+      buttonsActionRight: { color: 'rgba(114,114,114,1)' },
       buttonsActionShadowColor: { color: 'rgba(126,126,126,0.14)' },
       buttonsActionShadowSize: { text: '2px' },
       userBackground: { color: 'rgba(0,0,0,0.6)' },

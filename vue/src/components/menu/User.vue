@@ -1,5 +1,5 @@
 <template>
-  <div class="dvs-fixed dvs-p-4 dvs-z-20" 
+  <div class="dvs-fixed dvs-p-4 dvs-z-40" 
   id="devise-menu-current-user"
   :style="`
     background: ${theme.userBackground.color};

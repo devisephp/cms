@@ -174,7 +174,7 @@
 }
 
 #devise-sidebar {
-  @apply dvs-p-8 dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-z-20 dvs-text-center;
+  @apply dvs-p-8 dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-min-h-screen dvs-overflow-scroll dvs-z-20 dvs-text-center;
   
   width:25%;
 }
@@ -201,10 +201,14 @@
 #devise-preview-content {
   @apply dvs-z-10 dvs-absolute dvs-pin-t dvs-pin-r dvs-pin-b;
 
+  // Trap any fixed content
+  transform: translate(0, 0);
+  
   width: 75%;
 }
 
 #devise-preview-iframe {
+  width:100%;
   height: 100vh;
 }
 

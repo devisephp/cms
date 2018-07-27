@@ -5,22 +5,19 @@
     </div>
     <div v-show="show">
       <div class="dvs-blocker dvs-z-20" @click="hide"></div>
-      <div v-show="show" class="dvs-absolute dvs-pin-b dvs-pin-l dvs-mb-1 dvs-bg-white dvs-min-w-250 dvs-z-40 dvs-shadow-lg dvs-border-t-2 dvs-border-grey-lighter">
+      <div v-show="show" class="dvs-absolute dvs-pin-b dvs-pin-l dvs-mb-1 dvs-bg-grey-lighter dvs-min-w-250 dvs-z-40 dvs-shadow-lg dvs-border-t-2 dvs-border-grey-lighter">
         <div class="bg-background-darker pt-4 pb-2 px-4 flex justify-between">
           {{ this.column.label }}
-          <div>
-            <button class="dvs-pr-4 dvs-uppercase dvs-text-xs dvs-outline-none" @click="clearAll()">Clear</button>|
+          <div class="dvs-flex dvs-text-black">
+            <button class="dvs-pr-2 dvs-uppercase dvs-text-xs dvs-outline-none dvs-font-bold" @click="clearAll()">Clear</button>
             <div @click="hide">
-              <arrow-round-back-icon class="dvs-pl-4 dvs-cursor-pointer dvs-float-right" />
+              <close-icon class="dvs-pl-2 dvs-cursor-pointer" w="20" h="20" />
             </div>
           </div>
         </div>
-        <div class="dvs-px-4 dvs-column-control-modules">
+        <div class="dvs-px-4 dvs-column-control-modules dvs-bg-white">
           <search ref="search" v-model="localFilters" @change="updateValue" v-if="typeof column.search !== 'undefined'" :column="column.search" :options="column.options"></search>
-          <!-- <related ref="related" v-if="typeof column.related !== 'undefined'" :options="column.related"></related>
-          <dates ref="dates" v-if="typeof column.dates !== 'undefined'" :column="column.dates"></dates>
-
-          <sort ref="sort" v-if="typeof column.sort !== 'undefined'" :column="column.sort"></sort> -->
+          <!-- <sort ref="sort" v-if="typeof column.sort !== 'undefined'" :column="column.sort"></sort> -->
         </div>
       </div>
     </div>
@@ -34,7 +31,8 @@ import Related from './Related'
 import Dates from './Dates'
 
 import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
-import ArrowRoundBackIcon from 'vue-ionicons/dist/ios-arrow-round-back.vue'
+import CloseIcon from 'vue-ionicons/dist/ios-close.vue'
+
 
 export default {
   name: 'ColumnControls',
@@ -73,9 +71,7 @@ export default {
   computed: {
     shouldDisplayControls () {
       return typeof this.column.sort !== 'undefined' ||
-      typeof this.column.search !== 'undefined' ||
-      typeof this.column.related !== 'undefined' ||
-      typeof this.column.dates !== 'undefined'
+      typeof this.column.search !== 'undefined'
     }
   },
   props: {
@@ -86,7 +82,7 @@ export default {
     value: {}
   },
   components: {
-    ArrowRoundBackIcon,
+    CloseIcon,
     Dates,
     SettingsIcon,
     Related,

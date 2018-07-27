@@ -6,19 +6,19 @@
       </help>
       <fieldset class="dvs-fieldset dvs-mb-4" v-if="storeModels.length > 0">
         <label>Select a Model</label>
-        <select v-model="model">
+        <select v-model="model" @change="updateModelQueryModel()">
           <option :value="null">Select a Model</option>
           <option :value="model" v-for="model in storeModels" :key="model.id">{{ model.name }}</option>
         </select>
       </fieldset>
     </div>
-    <div v-if="model">
+    <div v-if="model" class="dvs-relative">
       <super-table
           v-model="modelQuery"
           :columns="model.columns"
           :showLinks="false"
           @cancel="cancel"
-          @done="update"
+          @done="save"
           />
     </div>
   </div>
@@ -33,11 +33,13 @@ export default {
   data () {
     return {
       model: null,
-      modelQuery: null
+      modelQuery: null,
+      name: null
     }
   },
   mounted () {
     this.model = this.value.model
+    this.name = this.value.name
     this.modelQuery = this.value.modelQuery
 
     this.getModels()
@@ -47,15 +49,29 @@ export default {
       'getModels',
       'getModelSettings'
     ]),
+    save () {
+      this.update()
+      this.$emit('save')
+    },
     update () {
       this.$emit('input', {
         model: this.model, 
+        name: this.name, 
         modelQuery: this.modelQuery
       })
     },
     cancel () {
       this.model = null
       this.modelQuery = null
+      this.$emit('close')
+    },
+    updateModelQueryModel () {
+      if (this.model !== null) {
+        this.modelQuery = this.model.class
+      }
+      if (this.model === null) {
+        this.modelQuery = null
+      }
     }
   },
   computed: {

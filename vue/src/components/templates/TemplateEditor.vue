@@ -39,7 +39,7 @@
               <label>Manage Data</label>
               <help v-if="localValue.model_queries.length < 1">Currently you don't have any data assigned to this template. Data you add will be available whenever this template is applied to a page</help>
               <div 
-                class="dvs-flex dvs-justify-between dvs-items-center dvs-text-sm dvs-uppercase dvs-font-bold dvs-p-4 dvs-rounded dvs-relative" 
+                class="dvs-flex dvs-justify-between dvs-items-center dvs-text-sm dvs-mb-2 dvs-font-bold dvs-p-4 dvs-rounded dvs-relative" 
                 :style="regularButtonTheme" 
                 v-for="(query, key) in localValue.model_queries" 
                 :key="key"  
@@ -119,7 +119,7 @@
 
     <portal to="devise-root">
       <devise-modal @close="showAddData = false" v-if="showAddData" class="dvs-z-50">
-        <query-builder v-model="newData"></query-builder>
+        <query-builder v-model="newData" @save="addNewData" @close="showAddData = false"></query-builder>
       </devise-modal>
     </portal>
 
@@ -147,8 +147,8 @@
     name: 'TemplateEditor',
     data () {
       return {
-        templateSettingsOpen: true,
-        templateLayoutOpen: false,
+        templateSettingsOpen: false,
+        templateLayoutOpen: true,
         dataLoaded: false,
         localValue: {},
         manageSlice: {
@@ -157,7 +157,7 @@
           mode: 'add',
           root: true
         },
-        showAddData: true,
+        showAddData: false,
         newData: {
           name: null,
           model: null,
@@ -246,7 +246,7 @@
       },
 
       removeData (key) {
-        this.localValue.model_queries.splice(key, 1)
+        this.$delete(this.localValue.model_queries, key)
       },
 
       addData () {
@@ -254,6 +254,17 @@
           this.addDataOpen = true
           this.newData.model = null
           this.newData.modelQuery = null
+        }
+      },
+
+      addNewData () {
+        this.localValue.model_queries[this.newData.name] = this.newData.modelQuery
+        this.showAddData = false
+
+        this.newData = {
+          name: null,
+          model: null,
+          modelQuery: null
         }
       }
     },

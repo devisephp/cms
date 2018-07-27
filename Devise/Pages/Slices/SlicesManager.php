@@ -87,7 +87,6 @@ class SlicesManager
       $instance->page_version_id = $pageVersionId;
       $instance->parent_instance_id = ($slice->parent_id) ? $this->getParentInstanceId($pageVersionId, $slice->parent_id) : 0;
       $instance->template_slice_id = $slice->id;
-      $instance->enabled = true;
       $instance->position = $index;
       $instance->save();
 
@@ -131,7 +130,6 @@ class SlicesManager
         $instance->page_version_id = $pageVersionId;
         $instance->parent_instance_id = ($templateSlice->parent_id) ? $this->getParentInstanceId($pageVersionId, $templateSlice->parent_id) : 0;
         $instance->template_slice_id = $templateSlice->id;
-        $instance->enabled = array_get($slice, 'enabled', true);
         $instance->position = $index;
         $instance->save();
       }

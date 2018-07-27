@@ -1,30 +1,27 @@
 <template>
   <div>
-    <table class="dvs-table">
+    <table class="dvs-table dvs-mb-8" :style="{backgroundColor:infoBlockFlatTheme.background}">
       <tr>
-        <th v-for="(column, key) in columns" v-bind:key="column.key" v-if="showColumn(column)" :class="{'dvs-hidden lg:dvs-table-cell': !column.showMobile}" @click="showControls(column.key)">
+        <th v-for="(column, key) in columns" :key="key" v-if="showColumn(column)" :class="{'dvs-hidden md:dvs-table-cell': column.hideMobile}" @click="showControls(column.key)">
           <div class="dvs-flex" v-if="!column.toggleColumns">
             <div> {{ column.label }} </div>
-
             <column-controls
               v-model="filters"
               :ref="column.key"
-              :column="column"
-               class="dvs-hidden lg:dvs-block">
+              :column="column">
             </column-controls>
           </div>
           <div class="flex" v-else>
             <toggle-columns
-              v-model="columns"
-               class="dvs-hidden lg:dvs-block">
+              v-model="columns">
             </toggle-columns>
             {{ column.label }}
           </div>
         </th>
       </tr>
-      <tr v-for="(record, rkey) in records" v-bind:key="record.id">
+      <tr v-for="(record, rkey) in records" :key="rkey">
         <template v-for="(column, index) in columns" v-if="showColumn(column)">
-          <td :key="index" :class="{'dvs-hidden lg:dvs-table-cell': !column.showMobile}">
+          <td :key="index" :class="{'dvs-hidden lg:dvs-table-cell': column.hideMobile}">
             <cell v-if="column.template" :record="record" :contents="getRecordColumn(record, column.key)"></cell>
             <span v-else>{{ getRecordColumn(record, column.key) }}</span>
           </td>
@@ -35,11 +32,11 @@
       </tr>
     </table>
 
-    <pagination v-if="meta" :meta="meta"></pagination>
+    <pagination class="dvs-mb-8" v-if="meta" :meta="meta"></pagination>
 
     <div>
-      <button class="dvs-btn" @click="updateValue">Done</button>
-      <button class="dvs-btn" @click="cancel">Cancel</button>
+      <button class="dvs-btn" :style="actionButtonTheme" @click="updateValue">Done</button>
+      <button class="dvs-btn" :style="regularButtonTheme" @click="cancel">Cancel</button>
     </div>
   </div>
 </template>
@@ -157,6 +154,9 @@
       }
     },
     watch: {
+      value () {
+        this.requestRefreshRecords()
+      },
       filters () {
         this.requestRefreshRecords()
       }

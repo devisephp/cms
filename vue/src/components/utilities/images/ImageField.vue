@@ -1,43 +1,29 @@
 <template>
 
-  <div class="dvs-mb-8">
-    <div class="dvs-flex dvs-items-center dvs-mb-4">
-      <h3 :style="{color: theme.adminText.color}">{{ labelText }}</h3>
-      <div @click="showMediaManager">
+  <div>
+
+    <div class="dvs-flex dvs-items-center">
+      <input type="text" v-model="value" :maxlength="getMaxLength" disabled>
+      <div @click="showMediaManager($)">
         <images-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px"/>
       </div>
-    </div>
-
-
-    <div class="dvs-flex dvs-flex-wrap">
-      <div class="dvs-w-1/5 dvs-max-w-1/4 dvs-pr-4 dvs-pb-4" v-for="image in value">
-        <div class="dvs-p-4 dvs-bg-grey-lighter dvs-text-xs">
-          <div @click="loadPreview(image)">
-          <search-icon class="dvs-cursor-pointer" w="30px" h="30px"/>
-        </div>
-          <p class="dvs-mt-2">
-            {{ getName(image) }}<br>
-            <a href="#" @click.prevent="removeImage(index)">Remove</a>
-          </p>
-        </div>
+      <div @click="loadPreview" v-bind:class="{ ' dvs-opacity-25': !previewEnabled }">
+        <search-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px"/>
       </div>
     </div>
-
-    <help v-if="value.length === 0">
-      <p>No images found. Add images using the button above.</p>
-    </help>
 
     <div v-if="showPreview">
       <portal to="devise-root">
         <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="showPreview = false"></div>
-        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2" :style="infoBlockTheme">
-          <img :src="previewImagePath"/>
+        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2"
+             :style="infoBlockTheme">
+          <img :src="value"/>
           <h6 class="dvs-text-base dvs-mb-4 dvs-mt-4" :style="{color: theme.statsText.color}">
-            <span>{{ previewImageName }}</span><br>
+            <span>{{ fileName }}</span><br>
             <small class="dvs-text-xs">
               Location:
               <span class="dvs-italic dvs-font-normal">
-                {{ previewImagePath }}
+                {{ value }}
               </span>
             </small>
           </h6>
@@ -64,9 +50,7 @@
     name: 'ImagesField',
     data() {
       return {
-        showPreview: false,
-        previewImageName: '',
-        previewImagePath: ''
+        showPreview: false
       }
     },
     methods: {
@@ -81,25 +65,21 @@
         })
       },
       mediaSelected(media) {
-        this.value.push(media.url)
+        this.value = media.url
         this.updateValue()
       },
-      removeImage(index) {
-        this.value.splice(index, 1)
-      },
-      getName(path){
-        let parts = path.split('/')
-        return parts[ parts.length - 1 ]
-      },
-      loadPreview(imagePath){
-        this.showPreview = true
-        this.previewImageName = this.getName(imagePath)
-        this.previewImagePath = imagePath
+      loadPreview() {
+        if (this.previewEnabled)
+          this.showPreview = true
       }
     },
     computed: {
-      labelText() {
-        return this.label ? this.label : 'Images'
+      fileName() {
+        let parts = this.value.split('/')
+        return parts[parts.length - 1]
+      },
+      previewEnabled() {
+        return (this.value !== '' && this.value !== null)
       }
     },
     watch: {
@@ -107,7 +87,7 @@
         this.updateValue()
       }
     },
-    props: ['value','label'],
+    props: ['value'],
     components: {
       ImagesIcon,
       SearchIcon

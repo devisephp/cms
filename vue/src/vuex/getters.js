@@ -27,7 +27,7 @@ const getters = {
     return false
   },
 
-  interface: state => {
+  deviseInterface: state => {
     return deviseSettings.$interface
   },
 

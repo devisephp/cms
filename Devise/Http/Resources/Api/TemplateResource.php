@@ -20,6 +20,7 @@ class TemplateResource extends Resource
       'name'       => $this->name,
       'layout'     => $this->layout,
       'slices'     => TemplateSliceResource::collection($this->slices),
+      'model_queries' => $this->model_queries,
       'created_at' => $this->created_at->format('Y-m-d H:i:s'),
       'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
     ];

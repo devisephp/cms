@@ -1,5 +1,8 @@
 <template>
   <div>
+    <portal-target name="devise-root" v-if="isLoggedIn"></portal-target>
+    <portal-target name="app-root"></portal-target>
+
     <template v-if="editorMode || pageMode">
 
       <loadbar v-if="isLoggedIn" />
@@ -61,7 +64,6 @@
           </div>
         </template>
 
-        <portal-target name="devise-field-editor" class="dvs-fieldset" v-if="isLoggedIn" > </portal-target>
       </div>
     </template>
     <template v-if="templateMode && isLoggedIn">

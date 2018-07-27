@@ -6,6 +6,11 @@ export default {
     uppercase (string) {
       return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
     },
+    slugify (string) {
+      return string.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+          .replace(/\-/g, '')         // Replace multiple - with single -
+          .trim()
+    },
     randomString (length) {
       var text = "";
       var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

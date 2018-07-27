@@ -4,7 +4,7 @@
     <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
       <sidebar-header title="Edit Template" back-text="Back to Templates" :back-callback="goToTemplates" />
 
-      <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
+      <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b px-8"
         :style="`border-color:${theme.sidebarText.color}`">
         <div 
           class="dvs-p-2 dvs-cursor-pointer" 
@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <ul class="dvs-list-reset">
+      <ul class="dvs-list-reset m-8">
         <li class="dvs-collapsable dvs-mb-2" :class="{'dvs-open': templateSettingsOpen}">
           <div class="dvs-collapsed dvs-mt-4 dvs-text-left">
             <fieldset class="dvs-fieldset dvs-mb-8">
@@ -30,14 +30,34 @@
               <input type="text" v-model="localValue.name" placeholder="Name of the Template">
             </fieldset>
 
-            <fieldset class="dvs-fieldset">
+            <fieldset class="dvs-fieldset dvs-mb-8">
               <label>Template Layout</label>
               <input type="text" v-model="localValue.layout" disabled placeholder="Blade File Name">
             </fieldset>
 
             <fieldset class="dvs-fieldset">
-              <label>Add Data</label>
-              <button>Add Data</button>
+              <label>Manage Data</label>
+              <help v-if="localValue.model_queries.length < 1">Currently you don't have any data assigned to this template. Data you add will be available whenever this template is applied to a page</help>
+              <div 
+                class="dvs-flex dvs-justify-between dvs-items-center dvs-text-sm dvs-uppercase dvs-font-bold dvs-p-4 dvs-rounded dvs-relative" 
+                :style="regularButtonTheme" 
+                v-for="(query, key) in localValue.model_queries" 
+                :key="key"  
+                v-else>
+                {{ key }}
+                <div @click="removeData(key)" class="dvs-absolute dvs-mt-3 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4">
+                  <trash-icon class="dvs-cursor-pointer" w="25" h="25" />
+                </div>
+              </div>
+              <fieldset class="dvs-fieldset dvs-mt-8">
+                <label>Add New Data</label>
+                <div class="relative">
+                  <input type="text" placeholder="Variable Name" :value="newData.name" @input="newData.name = slugify($event.target.value)">
+                  <div class="dvs-absolute dvs-mt-2 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4" @click="showAddData = true">
+                    <add-icon class="dvs-cursor-pointer" w="25" h="25" />
+                  </div>
+                </div>
+              </fieldset>
             </fieldset>
           </div>
         </li>
@@ -97,6 +117,12 @@
       <button class="dvs-btn dvs-btn-plain" @click="goToTemplates" :style="regularButtonTheme">Cancel</button>
     </div>
 
+    <portal to="devise-root">
+      <devise-modal @close="showAddData = false" v-if="showAddData" class="dvs-z-50">
+        <query-builder v-model="newData"></query-builder>
+      </devise-modal>
+    </portal>
+
   </div>
 </template>
 
@@ -104,17 +130,25 @@
   import { mapGetters, mapActions } from 'vuex'
   import draggable from 'vuedraggable'
 
+  import Strings from './../../mixins/Strings'
+
+  import DeviseModal from './../utilities/Modal'
   import ManageSlices from './ManageSlices'
-  import Slices from '../../Slices'
-  import SuperTable from '../utilities/tables/SuperTable'
-  import SidebarHeader from '../utilities/SidebarHeader'
+  import QueryBuilder from './../utilities/QueryBuilder'
+  import Slices from './../../Slices'
+  import SuperTable from './../utilities/tables/SuperTable'
+  import SidebarHeader from './../utilities/SidebarHeader'
   import TemplateSliceEditor from './TemplateSliceEditor'
 
+  import TrashIcon from 'vue-ionicons/dist/md-trash.vue'
+  import AddIcon from 'vue-ionicons/dist/ios-add-circle.vue'
+
   export default {
+    name: 'TemplateEditor',
     data () {
       return {
-        templateSettingsOpen: false,
-        templateLayoutOpen: true,
+        templateSettingsOpen: true,
+        templateLayoutOpen: false,
         dataLoaded: false,
         localValue: {},
         manageSlice: {
@@ -123,10 +157,9 @@
           mode: 'add',
           root: true
         },
-        dataToAdd: {
-          show: false,
-          type: 'single',
-          slice: null,
+        showAddData: true,
+        newData: {
+          name: null,
           model: null,
           modelQuery: null
         }
@@ -210,6 +243,18 @@
 
       goToTemplates () {
         window.parent.postMessage({type: 'goBack'}, '*')
+      },
+
+      removeData (key) {
+        this.localValue.model_queries.splice(key, 1)
+      },
+
+      addData () {
+        if (this.newData.name !== null && this.newData.name !== '') {
+          this.addDataOpen = true
+          this.newData.model = null
+          this.newData.modelQuery = null
+        }
       }
     },
     computed: {
@@ -237,12 +282,17 @@
         deep: true
       }
     },
+    mixins: [Strings],
     components: {
+      DeviseModal,
       draggable,
       ManageSlices,
+      QueryBuilder,
       SidebarHeader,
       SuperTable,
-      TemplateSliceEditor
+      TemplateSliceEditor,
+      AddIcon,
+      TrashIcon
     }
   }
 </script>

@@ -81,7 +81,7 @@
 
     </div>
 
-    <portal to="devise-field-editor">
+    <portal to="devise-root">
       <analytic-totals />
     </portal>
   </div>

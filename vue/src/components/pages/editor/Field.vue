@@ -28,7 +28,7 @@
     </div>
 
     <template v-if="showEditor">
-      <portal to="devise-field-editor">
+      <portal to="devise-root">
         <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="toggleShowEditor"></div>
         <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2" :style="infoBlockTheme">
           <h6 class="dvs-text-base dvs-mb-4" :style="{color: theme.statsText.color}">

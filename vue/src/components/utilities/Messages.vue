@@ -1,20 +1,22 @@
 <template>
   <div>
-    <transition name="fade">
+    <transition name="fade-delayed">
       <div class="dvs-alert-message dvs-error" :style="infoBlockTheme" v-show="errors.length > 0">
-        <h5 :style="`color:${infoBlockTheme.color}`">{{mainTitle}} <i @click="closeErrors()" class="cursor-pointer ion-icon ion-android-close"></i></h5>
+        <div @click="closeErrors()" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mr-4 dvs-mt-4">
+          <close-icon class="dvs-cursor-pointer" w="20" h="20" />
+        </div>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="(error, key) in errors" :key="key">
+            <li v-for="(error, key) in errors" :key="key" :style="`border-bottom-color:${infoBlockTheme.color}`">
               <h6 :style="`color:${infoBlockTheme.color}`">{{ error.title }}</h6>
               <p :style="`color:${infoBlockTheme.color}`">{{ error.message }}</p>
-              <p :style="`color:${infoBlockTheme.color}`" class="text-xs" v-if="error.code">{{ error.code }}</p>
+              <p :style="`color:${infoBlockTheme.color}`" class="dvs-text-sm" v-if="error.code">Error Code: {{ error.code }}</p>
             </li>
           </transition-group>
         </ul>
       </div>
     </transition>
-    <transition name="fade">
+    <transition name="fade-delayed">
       <div class="dvs-alert-message" :style="infoBlockTheme" v-show="messages.length > 0">
         <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i>
         <ul>
@@ -32,6 +34,7 @@
 
 
 <script>
+import CloseIcon from 'vue-ionicons/dist/ios-close.vue'
 import Strings from '../../mixins/Strings'
 
 export default {
@@ -55,6 +58,7 @@ export default {
   methods: {
     addError (error) {
       let self = this
+
       // Error came from axios most likely
       if (
         typeof error.response !== 'undefined' &&
@@ -72,6 +76,17 @@ export default {
             })
           }
         }
+      } else if (
+        typeof error.response !== 'undefined' &&
+        typeof error.response.data !== 'undefined' &&
+        error.response.data !== null &&
+        error.response.data.message !== null
+      ) {
+        self.appendError({
+          code: error.response.status,
+          title: error.response.data.exception,
+          message: error.response.data.message
+        })
       } else if (
         typeof error.data !== 'undefined' &&
         error.data !== null
@@ -144,6 +159,9 @@ export default {
       }
     }
   },
-  mixins: [Strings]
+  mixins: [Strings],
+  components: {
+    CloseIcon
+  }
 }
 </script>

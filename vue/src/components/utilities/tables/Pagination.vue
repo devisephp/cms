@@ -1,11 +1,24 @@
 <template>
-  <ul class="pagination" v-if="meta.pagination && meta.pagination.total_pages > 1">
-    <li v-for="n in meta.pagination.total_pages" @click="update(n)"
+  <ul v-if="listMode" class="dvs-list-reset dvs-flex">
+    <li v-for="n in meta.last_page" @click="update(n)"
     :key="n"
-    :class="{ 'bg-action': isCurrentPage(n) }">
+    :class="{ 'dvs-current-page': isCurrentPage(n) }"
+    class="dvs-btn dvs-btn-xs dvs-mr-1 dvs-cursor-pointer"
+    :style="decideStyle(n)">
       {{ n }}
     </li>
   </ul>
+  <div class="dvs-flex" v-else>
+    <button @click="changePage(1)" class="dvs-btn dvs-btn-xs dvs-mr-1" :style="this.regularButtonTheme">First</button>
+    <button @click="changePage(meta.current_page - 1)"  class="dvs-btn dvs-btn-xs dvs-mr-1" :style="this.regularButtonTheme">Prev</button>
+    <select :value="meta.current_page" @change="changePage($event.target.value)" class="dvs-p-2 dvs-mr-1 dvs-text-xs dvs-appearance-none">
+      <option v-for="n in meta.last_page" :key="n" :value="n">
+        {{ n }}
+      </option>
+    </select>
+    <button @click="changePage(meta.current_page + 1)" class="dvs-btn dvs-btn-xs dvs-mr-1" :style="this.regularButtonTheme">Next</button>
+    <button @click="changePage(meta.last_page)" class="dvs-btn dvs-btn-xs dvs-mr-1" :style="this.regularButtonTheme">Last</button>
+  </div>
 </template>
 
 <script>
@@ -17,16 +30,20 @@ export default {
     ...mapActions([
       'updateFilters'
     ]),
-    update (page) {
-      let filterPayload = {}
-
-      filterPayload[this.type] = this.filters[this.type]
-      filterPayload[this.type].page = page
-
-      this.updateFilters(filterPayload)
+    changePage (page) {
+      if (page > 0 && page <= this.meta.last_page) {
+        this.$emit('changePage', page)
+      }
     },
     isCurrentPage (page) {
-      return page === this.meta.pagination.current_page
+      return page === this.meta.current_page
+    },
+    decideStyle (page) {
+      if (this.isCurrentPage(page)) {
+        console.log(this.actionButtonTheme)
+        return this.actionButtonTheme
+      } 
+      return this.regularButtonTheme
     }
   },
   computed: {
@@ -34,6 +51,6 @@ export default {
       'filters'
     ])
   },
-  props: ['meta', 'type']
+  props: ['meta', 'listMode']
 }
 </script>

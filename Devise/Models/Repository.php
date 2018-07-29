@@ -30,7 +30,7 @@ class Repository
                         $model = $model->$function($params);
                     } else
                     {
-                        $model = $model->$function($params);
+                        $model = $model->$function();
                     }
                 }
             }

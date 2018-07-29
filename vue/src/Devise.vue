@@ -3,11 +3,11 @@
     <portal-target name="devise-root" v-if="isLoggedIn"></portal-target>
     <portal-target name="app-root"></portal-target>
 
-    <template v-if="editorMode || pageMode">
+    <messages v-if="isLoggedIn" />
+    <loadbar v-if="isLoggedIn" />
+    <media-manager v-if="isLoggedIn" />
 
-      <loadbar v-if="isLoggedIn" />
-      <messages v-if="isLoggedIn" />
-      <media-manager v-if="isLoggedIn" />
+    <template v-if="editorMode || pageMode">
 
       <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         <div 
@@ -114,6 +114,9 @@ export default {
     }
   },
   mounted () {
+    window.devise = this
+    devise.$bus = deviseSettings.$bus
+
     if (typeof deviseSettings.$template !== 'undefined') {
       this.templateMode = true
     } else {
@@ -148,9 +151,6 @@ export default {
       } catch (e) {
         console.warn('Devise: deviseSettings.$page or window.parent.deviseSettings.$page not found. Nothing to render')
       }
-
-      window.devise = this
-      devise.$bus = deviseSettings.$bus
       
       this.addWatchers()
       this.setSizeAndBreakpoint()

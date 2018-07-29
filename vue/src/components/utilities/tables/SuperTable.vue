@@ -19,7 +19,7 @@
           </div>
         </th>
       </tr>
-      <tr v-for="(record, rkey) in records" :key="rkey">
+      <tr v-for="(record, rkey) in theRecords" :key="rkey">
         <template v-for="(column, index) in columns" v-if="showColumn(column)">
           <td :key="index" :class="{'dvs-hidden lg:dvs-table-cell': column.hideMobile}">
             <cell v-if="column.template" :record="record" :contents="getRecordColumn(record, column.key)"></cell>
@@ -27,12 +27,49 @@
           </td>
         </template>
       </tr>
-      <tr v-if="!records.length">
+      <tr v-if="!theRecords.length">
         <td class="dvs-text-center" :colspan="columns.length">No Results Found</td>
       </tr>
     </table>
 
-    <pagination class="dvs-mb-8" v-if="meta" :meta="meta"></pagination>
+    <pagination class="dvs-mb-8" v-if="records.data && records.data.length" :meta="records" @changePage="changePage"></pagination>
+
+    <fieldset class="dvs-fieldset dvs-mb-4" v-if="!filters.single">
+      <label>Do you want the data paginated?</label>
+      <toggle @change="requestRefreshRecords" v-model="filters.paginated" :id="randomString(8)"></toggle>
+    </fieldset>
+
+    <fieldset class="dvs-fieldset dvs-mb-4" v-if="!filters.single && filters.paginated">
+      <label>What is the number of records per page?</label>
+      <input @keyup="requestRefreshRecords" type="number" v-model="filters.limit">
+    </fieldset>
+
+    <fieldset class="dvs-fieldset dvs-mb-4">
+      <label>Do you only want the first record?</label>
+      <toggle @change="requestRefreshRecords" v-model="filters.single" :id="randomString(8)"></toggle>
+    </fieldset>
+
+    <fieldset class="dvs-fieldset dvs-mb-8">
+      <label class="dvs-mb-8">Scopes</label>
+      <ul class="dvs-list-reset dvs-mb-4" v-if="filters.scopes !== {}">
+        <li 
+          class="dvs-mb-2 dvs-px-4 py-3 dvs-flex dvs-items-center dvs-justify-between"
+          v-for="(scope, key) in filters.scopes"
+          :key="key"
+          :style="regularButtonTheme">
+            {{ key }}
+            <div @click="removeScope(key)">
+              <close-icon class="dvs-pl-2 dvs-cursor-pointer" w="20" h="20" />
+            </div>
+          </li>
+      </ul>
+
+      <div class="dvs-flex">
+        <input class="dvs-mb-4 dvs-mr-4" v-model="newScope" placeholder="New Scope Name" type="text">
+        <input class="dvs-mb-4" v-model="newScopeProperties" placeholder="New Scope Properties" type="text">
+      </div>
+      <button class="dvs-btn dvs-btn-xs" :style="regularButtonTheme" @click="addScope">Add Scope</button>
+    </fieldset>
 
     <div>
       <button class="dvs-btn" :style="actionButtonTheme" @click="updateValue">Done</button>
@@ -44,10 +81,14 @@
 <script>
   import commonUtils from './../../../vuex/utils/common'
 
-  import ColumnControls from './ColumnControls'
-  import ToggleColumns from './ToggleColumns'
-  import Pagination from './Pagination'
   import Cell from './Cell'
+  import ColumnControls from './ColumnControls'
+  import Pagination from './Pagination'
+  import Strings from './../../../mixins/Strings'
+  import Toggle from './../Toggle'
+  import ToggleColumns from './ToggleColumns'
+
+  import CloseIcon from 'vue-ionicons/dist/ios-close.vue'
 
   import {mapActions} from 'vuex'
 
@@ -63,11 +104,17 @@
           search: {},
           sort: {},
           dates: {},
-          page: '1'
+          paginated: true,
+          page: '1',
+          limit: 5,
+          single: false,
+          scopes: {}
         },
         refreshRecords: null,
         records: [],
-        meta: {}
+        meta: {},
+        newScope: '',
+        newScopeProperties: ''
       }
     },
     mounted: function () {
@@ -103,6 +150,10 @@
             self.records = response.data
           })
         }, 500)
+      },
+      changePage (page) {
+        this.filters.page = page
+        this.requestRefreshRecords()
       },
       showControls (key) {
         if (this.$refs.hasOwnProperty(key) && this.$refs[key][0].show === false) {
@@ -151,6 +202,33 @@
       },
       showColumn (column) {
         return column.show === true || typeof column.show === 'undefined'
+      },
+      addScope () {
+        if (this.newScope !== '') {
+          this.filters.scopes[this.newScope] = this.newScopeProperties
+          this.newScope = ''
+          this.newScopeProperties = ''
+          this.requestRefreshRecords()
+        }
+      },
+      removeScope (key) {
+        this.$delete(this.filters.scopes, key)
+        this.requestRefreshRecords()
+      }
+    },
+    computed: {
+      theRecords () {
+        if (typeof this.records.data !== 'undefined') {
+          return this.records.data
+        }
+        else if (!this.filters.single) {
+          return this.records
+        }
+        else {
+          return [
+            this.records
+          ]
+        }
       }
     },
     watch: {
@@ -173,11 +251,14 @@
         type: Boolean
       }
     },
+    mixins: [Strings],
     components: {
-      'column-controls': ColumnControls,
-      'toggle-columns': ToggleColumns,
-      'pagination': Pagination,
-      'cell': Cell
+      CloseIcon,
+      ColumnControls,
+      ToggleColumns,
+      Pagination,
+      Cell,
+      Toggle
     }
   }
 </script>

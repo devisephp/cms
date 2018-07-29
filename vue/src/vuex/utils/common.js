@@ -1,4 +1,5 @@
 import Vue from 'vue'
+const qs = require('qs');
 
 const funcs = {
   // Build the parameters for the GET based on the filters.repertoire
@@ -7,8 +8,24 @@ const funcs = {
     let params = {}
     let sortParams = funcs.buildSortParams(filters.sort)
     let relatedParams = funcs.buildRelatedParams(filters.related)
+    let scopeParams = funcs.buildScopeParams(filters.scopes)
     let searchParams = filters.search
     let pageParams = filters.page
+    let paginated = filters.paginated
+    let limit = filters.limit
+    let single = filters.single
+
+    if (single) {
+      params['single'] = single
+    }
+
+    if (limit) {
+      params['limit'] = limit
+    }
+
+    if (paginated) {
+      params['paginated'] = true
+    }
 
     if (pageParams !== '') {
       params['page'] = pageParams
@@ -16,6 +33,10 @@ const funcs = {
 
     if (sortParams !== '') {
       params['sort'] = sortParams
+    }
+
+    if (scopeParams !== '') {
+      params['scopes'] = scopeParams
     }
 
     if (Object.keys(filters.dates).length > 0) {
@@ -62,6 +83,9 @@ const funcs = {
 
       Vue.set(params['filters'], 'search', searchParams)
     }
+    
+    console.log(params)
+    console.log(qs.stringify(params))
 
     params = funcs.serialize(params)
 
@@ -102,6 +126,19 @@ const funcs = {
     }
 
     return searchParams
+  },
+
+  // Build the scope parameters
+  buildScopeParams (scopes) {
+    var scopeParams = []
+
+    for (const prop in scopes) {
+      var obj = {}
+      obj[prop] = scopes[prop]
+      scopeParams.push(obj)
+    }
+
+    return scopeParams
   },
 
   serialize (obj, prefix) {

@@ -53,7 +53,7 @@
                 <label>Add New Data</label>
                 <div class="relative">
                   <input type="text" placeholder="Variable Name" :value="newData.name" @input="newData.name = slugify($event.target.value)">
-                  <div class="dvs-absolute dvs-mt-2 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4" @click="showAddData = true">
+                  <div class="dvs-absolute dvs-mt-2 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4" @click="addData">
                     <add-icon class="dvs-cursor-pointer" w="25" h="25" />
                   </div>
                 </div>
@@ -113,8 +113,8 @@
     <!-- Save Controls -->
     <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-p-4 dvs-mb-2 dvs-z-40" :style="infoBlockTheme">
       <h6 class="dvs-mb-4 dvs-text-base" :style="{color: theme.statsText.color}">Template Controls</h6>
-      <button class="dvs-btn dvs-mr-2" @click="requestSaveTemplate" :style="actionButtonTheme">Save Template</button>
-      <button class="dvs-btn dvs-btn-plain" @click="goToTemplates" :style="regularButtonTheme">Cancel</button>
+      <button class="dvs-btn dvs-btn-sm dvs-mr-2" @click="requestSaveTemplate" :style="actionButtonTheme">Save Template</button>
+      <button class="dvs-btn dvs-btn-sm dvs-btn-plain" @click="goToTemplates" :style="regularButtonTheme">Cancel</button>
     </div>
 
     <portal to="devise-root">
@@ -251,14 +251,16 @@
 
       addData () {
         if (this.newData.name !== null && this.newData.name !== '') {
-          this.addDataOpen = true
+          this.showAddData = true
           this.newData.model = null
           this.newData.modelQuery = null
+        } else {
+          devise.$bus.$emit('showError', 'Test')
         }
       },
 
       addNewData () {
-        this.localValue.model_queries[this.newData.name] = this.newData.modelQuery
+        this.localValue.model_queries[this.newData.name] = `class=${this.newData.modelQuery}`
         this.showAddData = false
 
         this.newData = {

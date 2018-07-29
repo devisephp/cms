@@ -156,8 +156,8 @@ const DevisePlugin = {
         },
         regularButtonTheme () {
           return {
-            backgroundColor: this.theme.buttonsActionLeft.color,
-            color: this.theme.buttonsActionText.color
+            backgroundColor: this.theme.buttonsInverseLeft.color,
+            color: this.theme.buttonsInverseText.color
           }
         },
         infoBlockTheme () {

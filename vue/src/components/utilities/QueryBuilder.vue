@@ -12,7 +12,7 @@
         </select>
       </fieldset>
     </div>
-    <div v-if="model" class="dvs-relative">
+    <div v-if="model" class="dvs-relative dvs-mb-8">
       <super-table
           v-model="modelQuery"
           :columns="model.columns"
@@ -21,17 +21,26 @@
           @done="save"
           />
     </div>
+
+    Is this paginated?
+      What is the limit per page
+    Is it the first record?
+    What is the name of the scopes?
+
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
-import SuperTable from '../utilities/tables/SuperTable'
+import SuperTable from './../utilities/tables/SuperTable'
 
 export default {
   data () {
     return {
+      firstRecord: false,
+      limit: 20,
+      paginated: false,
       model: null,
       modelQuery: null,
       name: null

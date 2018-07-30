@@ -12,7 +12,7 @@ export default {
     clickedLink() {
       if (typeof this.item.routeName !== 'undefined' && this.item.routeName !== null) {
         if (typeof this.item.parameters !== 'undefined' && this.item.parameters !== null) {
-          this.goToPage(this.item.routeName, this.item.paremeters)
+          this.goToPage(this.item.routeName, this.item.parameters)
         } else {
           this.goToPage(this.item.routeName)
         }

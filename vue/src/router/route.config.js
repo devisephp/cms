@@ -17,6 +17,8 @@ import TemplatesIndex from '../components/templates/Index'
 import TemplatesEdit from '../components/templates/Edit'
 import UsersIndex from '../components/users/Index'
 import UsersEdit from '../components/users/Edit'
+import RedirectsIndex from '../components/redirects/Index'
+import RedirectsEdit from '../components/redirects/Edit'
 
 var routes = [
   {
@@ -193,6 +195,27 @@ var routes = [
     name: 'devise-users-edit',
     components: {
       'devise': UsersEdit
+    },
+    props: true,
+    meta: {
+      wide: true
+    }
+  },
+  {
+    path: '/devise/redirects',
+    name: 'devise-redirects-index',
+    components: {
+      'devise': RedirectsIndex
+    },
+    meta: {
+      wide: true
+    }
+  },
+  {
+    path: '/devise/redirects/:redirectId/edit',
+    name: 'devise-redirects-edit',
+    components: {
+      'devise': RedirectsEdit
     },
     props: true,
     meta: {

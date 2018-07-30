@@ -49,6 +49,9 @@ const state = {
   templates: {
     data: []
   },
+  redirects: {
+    data: []
+  },
   users: {
     data: []
   }

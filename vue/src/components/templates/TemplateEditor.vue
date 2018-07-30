@@ -255,7 +255,7 @@
           this.newData.model = null
           this.newData.modelQuery = null
         } else {
-          devise.$bus.$emit('showError', 'Test')
+          devise.$bus.$emit('showError', 'You must provide a variable name')
         }
       },
 

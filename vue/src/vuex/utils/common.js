@@ -83,9 +83,6 @@ const funcs = {
 
       Vue.set(params['filters'], 'search', searchParams)
     }
-    
-    console.log(params)
-    console.log(qs.stringify(params))
 
     params = funcs.serialize(params)
 

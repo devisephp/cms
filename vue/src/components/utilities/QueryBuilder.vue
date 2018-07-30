@@ -22,11 +22,6 @@
           />
     </div>
 
-    Is this paginated?
-      What is the limit per page
-    Is it the first record?
-    What is the name of the scopes?
-
   </div>
 </template>
 

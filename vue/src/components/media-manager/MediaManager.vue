@@ -22,10 +22,10 @@
                 includeStyling: false
                 :options="dropzoneOptions" />
             </div>
-            <fieldset>
+            <fieldset class="dvs-fieldset">
               <div class="dvs-flex dvs-items-center">
-                <label class="dvs-mr-2 dvs-mb-0">List Mode</label>
-                <input type="checkbox" v-model="listMode">
+                <label class="dvs-mr-2 dvs-my-2">List Mode</label>
+                <input class="dvs-my-2" type="checkbox" v-model="listMode">
               </div>
             </fieldset>
           </div>

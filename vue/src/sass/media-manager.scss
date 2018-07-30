@@ -10,6 +10,7 @@
 
   .dropzone {
     @apply dvs-flex;
+    min-height:0;
 
     .dz-error,
     .dz-complete {

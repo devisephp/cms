@@ -20,7 +20,7 @@
           <input type="text" v-model="localValue.domain" placeholder="Domain of the Site">
         </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-10">
+        <fieldset class="dvs-fieldset dvs-mb-10" v-if="languages.data && languages.data.length > 0 && localValue.languages">
           <label>Languages</label>
           <select v-model="editAddLanguage" @change="addEditLanguage()">
             <option :value="null">Add a Language</option>
@@ -28,7 +28,7 @@
           </select>
         </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-10">
+        <fieldset class="dvs-fieldset dvs-mb-10" v-if="localValue.languages">
           <label>Current Languages</label>
           <help class="dvs-mb-4">Green indicates the default language. Click on the language tags below to set a new default.</help>
           <span v-for="language in localValue.languages" :key="language.id" @click="setDefaultLanguage(language)" class="dvs-mr-2 dvs-tag dvs-bg-grey-darker dvs-cursor-pointer" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.name }}</span>
@@ -38,6 +38,31 @@
         <fieldset class="dvs-fieldset dvs-mb-10">
           <label>Google Analytics UA ID. Include the "UA-" in your entry</label>
           <input type="text" v-model="localValue.settings.googleAnalytics" placeholder="UA-XXXXXXX">
+        </fieldset>
+
+        <fieldset class="dvs-fieldset dvs-mb-10">
+          <label>Manage Data</label>
+          <help v-if="localValue.model_queries === null || localValue.model_queries.length < 1">Currently you don't have any data assigned to this template. Data you add will be available whenever this template is applied to a page</help>
+          <div 
+            class="dvs-flex dvs-justify-between dvs-items-center dvs-text-sm dvs-mb-2 dvs-font-bold dvs-p-4 dvs-rounded dvs-relative" 
+            :style="regularButtonTheme" 
+            v-for="(query, key) in localValue.model_queries" 
+            :key="key"  
+            v-else>
+            {{ key }}
+            <div @click="removeData(key)" class="dvs-absolute dvs-mt-3 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4">
+              <trash-icon class="dvs-cursor-pointer" w="25" h="25" />
+            </div>
+          </div>
+          <fieldset class="dvs-fieldset dvs-mt-8">
+            <label>Add New Data</label>
+            <div class="relative">
+              <input type="text" placeholder="Variable Name" :value="newData.name" @input="newData.name = slugify($event.target.value)">
+              <div class="dvs-absolute dvs-mt-2 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4" @click="addData">
+                <add-icon class="dvs-cursor-pointer" w="25" h="25" />
+              </div> 
+            </div>
+          </fieldset>
         </fieldset>
 
         <fieldset class="dvs-fieldset dvs-mb-10">
@@ -55,6 +80,12 @@
 
     </div>
 
+    <portal to="devise-root">
+      <devise-modal @close="showAddData = false" v-if="showAddData" class="dvs-z-50">
+        <query-builder v-model="newData" @save="addNewData" @close="showAddData = false"></query-builder>
+      </devise-modal>
+    </portal>
+
   </administration>
 
 </template>
@@ -62,6 +93,12 @@
 <script>
 import DeviseModal from './../utilities/Modal'
 import AdminDesigner from './AdminDesigner'
+import QueryBuilder from './../utilities/QueryBuilder'
+
+import TrashIcon from 'vue-ionicons/dist/md-trash.vue'
+import AddIcon from 'vue-ionicons/dist/ios-add-circle.vue'
+
+import Strings from './../../mixins/Strings'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -70,13 +107,21 @@ export default {
   data () {
     return {
       localValue: {
+        languages: [],
+        model_queries: null,
         settings: {
           colors: {},
           googleAnalytics: ''
         }
       },
       modulesToLoad: 2,
-      editAddLanguage: null
+      editAddLanguage: null,
+      showAddData: false,
+      newData: {
+        name: null,
+        model: null,
+        modelQuery: null
+      }
     }
   },
   mounted () {
@@ -144,6 +189,32 @@ export default {
         }
       })
     },
+    addData () {
+      if (this.newData.name !== null && this.newData.name !== '') {
+        this.showAddData = true
+        this.newData.model = null
+        this.newData.modelQuery = null
+      } else {
+        devise.$bus.$emit('showError', 'You must provide a variable name')
+      }
+    },
+    addNewData () {
+      if (this.localValue.model_queries === null) {
+        this.$set(this.localValue, 'model_queries', {})
+      }
+
+      this.$set(this.localValue.model_queries, this.newData.name, `class=${this.newData.modelQuery}`)
+      this.showAddData = false
+
+      this.newData = {
+        name: null,
+        model: null,
+        modelQuery: null
+      }
+    },
+    removeData (key) {
+      this.$delete(this.localValue.model_queries, key)
+    },
     retrieveAllLanguages (loadbar = true) {
       this.getLanguages().then(function () {
         if (loadbar) {
@@ -171,9 +242,13 @@ export default {
       })
     }
   },
+  mixins: [Strings],
   components: {
+    AddIcon,
     AdminDesigner,
-    DeviseModal
+    DeviseModal,
+    QueryBuilder,
+    TrashIcon
   }
 }
 </script>

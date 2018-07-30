@@ -12,7 +12,7 @@ class DvsSite extends Model
 {
     use SoftDeletes;
 
-    public $fillable = array('name', 'domain', 'settings');
+    public $fillable = array('name', 'domain', 'model_queries', 'settings');
 
     protected $table = 'dvs_sites';
 

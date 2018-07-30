@@ -12,11 +12,11 @@ export default {
           var placeholderSlices = []
           for (var i = 0; i < s.config.numberOfInstances; i++) {
             placeholderSlices.push(
-              h(Slice, {
+              h(Slice, Object.assign({}, ctx.data, {
                 props: {
                   devise: s
                 }
-              })
+              }))
             )
           }
           return placeholderSlices
@@ -25,20 +25,23 @@ export default {
           // one level and use the placeholder's slices.
           if (s.metadata.placeholder) {
             if (s.slices) {
-              let slices = s.slices.map(s => h(Slice, { 
-                props: { 
-                  devise: s
-                } 
-              }))
+              let slices = s.slices.map(s => h(
+                Slice, 
+                Object.assign({}, ctx.data, { 
+                  props: { 
+                    devise: s
+                  }
+                })
+              ))
               return slices
             }
           } else {
-            return h(Slice, {
+            return h(Slice, Object.assign({}, ctx.data, {
               props: {
                 devise: s,
                 editorMode: ctx.props.editorMode
               }
-            })
+            }))
           }
         }
       })

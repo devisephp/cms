@@ -1232,6 +1232,15 @@ button,
   width: 100%;
 }
 
+.admin-closed #devise-sidebar {
+  left: -50%;
+}
+
+.admin-closed #devise-admin-content {
+  opacity: 0;
+  width: 75%;
+}
+
 #devise-container.admin-closed #devise-admin-shim {
   min-width: 0;
   width: 0;
@@ -1283,6 +1292,8 @@ button,
   overflow: scroll;
   z-index: 20;
   text-align: center;
+  -webkit-transition: left .3s;
+  transition: left .3s;
   width: 25%;
 }
 
@@ -1307,6 +1318,9 @@ button,
 #devise-admin-content {
   padding: 5rem;
   width: 75%;
+  opacity: 1;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
 }
 
 #devise-admin-content.bottom-padding-16 {

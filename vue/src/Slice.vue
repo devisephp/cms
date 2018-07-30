@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="here">
     <div class="dvs-absolute dvs-z-50" :style="controlStyles" v-if="editorMode">
       <div @click="toggleEditor()">
         <settings-icon class="dvs-gear-1 dvs-cursor-pointer" w="30px" h="30px" />

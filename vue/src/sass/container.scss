@@ -122,6 +122,15 @@
   #dvs-app-content {
     width: 100%;
   }
+
+  #devise-sidebar {
+    left: -50%;
+  }
+
+  #devise-admin-content {
+    opacity:0;
+    width:75%;
+  }
 }
 
 #devise-container {
@@ -160,7 +169,7 @@
 
   &.wide-admin {
     #devise-admin {
-      @apply dvs-w-full
+      @apply dvs-w-full;
     }
 
     #devise-admin-shim {
@@ -176,6 +185,8 @@
 #devise-sidebar {
   @apply dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-min-h-screen dvs-overflow-scroll dvs-z-20 dvs-text-center;
   
+  transition: left 0.3s;
+
   width:25%;
 }
 
@@ -192,6 +203,9 @@
 #devise-admin-content {
   padding: 5rem;
   width: 75%;
+  opacity:1;
+
+  transition: opacity 0.3s;
 
   &.bottom-padding-16 {
     padding-bottom:20em;

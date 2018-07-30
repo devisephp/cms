@@ -13,6 +13,44 @@ const state = {
   api: {
     baseUrl: '/api/devise/'
   },
+  // Admin Menu can be overridden in your own store
+  // Note: routeName property take precidence over url property
+  // Possible Configuration Example
+  // adminMenu: [
+  //   {
+  //     label: 'Link Label',
+  //     routeName: 'devise-page-editor',
+  //     parameters: {type: 'blog'},
+  //     url: 'http://google.com',
+  //     target: '_blank'
+  //   }  
+  // ],
+  adminMenu: [
+    {
+      label: 'Edit this page',
+      routeName: 'devise-page-editor',
+    },
+    {
+      label: 'Pages',
+      routeName: 'devise-pages-index',
+    },
+    {
+      label: 'Users',
+      routeName: 'devise-users-index',
+    },
+    {
+      label: 'Mothership',
+      routeName: 'devise-mothership-index',
+    },
+    {
+      label: 'Templates',
+      routeName: 'devise-templates-index',
+    },
+    {
+      label: 'Settings',
+      routeName: 'devise-settings-index',
+    }  
+  ],
   breakpoint: {
     breakpoint: null,
     diminsions: {
@@ -40,6 +78,20 @@ const state = {
   pages: {
     data: []
   },
+  settingsMenu: [
+    {
+      label: 'Global Meta',
+      routeName: 'devise-meta-manage',
+    },
+    {
+      label: 'Languages',
+      routeName: 'devise-languages-manage',
+    },
+    {
+      label: 'Sites',
+      routeName: 'devise-sites-index',
+    }
+  ],
   site: {},
   sites: {
     data: []

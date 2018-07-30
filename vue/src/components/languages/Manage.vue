@@ -1,9 +1,8 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="languages.data.length">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-      <sidebar-header title="Manage Languages" back-text="Back to Settings" back-page="devise-settings-index" />
-    </div>
+  <administration v-if="languages.data.length">
+    <sidebar title="Manage Languages" :menu-items="settingsMenu" />
+
     <div id="devise-admin-content" :style="adminTheme">
       <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Add Language</h3>
 
@@ -41,12 +40,13 @@
       </div>
 
     </div>
-  </div>
+  </administration>
 
 </template>
 
 <script>
-import SidebarHeader from './../utilities/SidebarHeader'
+import Administration from './../admin/Administration'
+import Sidebar from './../utilities/Sidebar'
 import CreateIcon from 'vue-ionicons/dist/md-create.vue'
 
 import { mapActions, mapGetters } from 'vuex'
@@ -94,12 +94,14 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'languages'
+      'languages',
+      'settingsMenu'
     ])
   },
   components: {
+    Administration,
     CreateIcon,
-    SidebarHeader
+    Sidebar
   }
 }
 </script>

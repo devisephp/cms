@@ -1,9 +1,7 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-      <sidebar-header title="Manage Global Meta" back-text="Back to Settings" back-page="devise-settings-index" />
-    </div>
+  <administration>
+    <sidebar title="Manage Languages" :menu-items="settingsMenu" />
     <div id="devise-admin-content" :style="adminTheme">
       <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Add Meta</h3>
 
@@ -11,13 +9,11 @@
 
       <meta-form v-model="localValue.data" @request-create-meta="requestCreateMeta" @request-update-meta="requestUpdateMeta" @request-delete-meta="requestDeleteMeta" />
     </div>
-  </div>
+  </administration>
 
 </template>
 
 <script>
-import SidebarHeader from './../utilities/SidebarHeader'
-
 import { mapActions, mapGetters } from 'vuex'
 
 import MetaForm from './MetaForm'
@@ -66,12 +62,12 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'meta'
+      'meta',
+      'settingsMenu'
     ])
   },
   components: {
-    MetaForm,
-    SidebarHeader
+    MetaForm
   }
 }
 </script>

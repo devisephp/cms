@@ -1,21 +1,18 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-
-      <sidebar-header title="Manage Sites" back-text="Back to Settings" back-page="devise-settings-index" />
-
-      <ul class="dvs-list-reset">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" @click.prevent="showCreate = true">
-          Create New Site
-        </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" v-if="mothership" @click.prevent="requestSyncSites">
-          Sync Sites with Mothership
-        </li>
-      </ul>
-    </div>
+  <administration>
+    <sidebar title="Manage Languages" :menu-items="settingsMenu" />
 
     <div id="devise-admin-content" :style="adminTheme">
+      <div class="devise-admin-action-bar">
+        <button class="dvs-btn dvs-btn-sm dvs-mx-1" :style="actionButtonTheme" @click.prevent="showCreate = true">
+          Create New Site
+        </button>
+        <button class="dvs-btn dvs-btn-sm dvs-mx-1" :style="actionButtonTheme" @click.prevent="requestSyncSites">
+          Sync Sites with Mothership
+        </button>
+      </div>
+
       <h2 class="dvs-mb-8">Current Sites</h2>
       <help class="dvs-mb-10">Here you can add and manage sites under this application. This means that you can add new domains, change themes for those domains, and add languages to those sites to make them more impacting for your users</help>
 
@@ -58,13 +55,12 @@
 
       </devise-modal>
     </transition>
-  </div>
+  </administration>
 
 </template>
 
 <script>
 import DeviseModal from './../utilities/Modal'
-import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -172,7 +168,8 @@ export default {
     ...mapGetters('devise', [
       'sites',
       'languages',
-      'mothership'
+      'mothership',
+      'settingsMenu'
     ]),
     createInvalid () {
       return this.newSite.name === null ||
@@ -191,8 +188,7 @@ export default {
     }
   },
   components: {
-    DeviseModal,
-    SidebarHeader
+    DeviseModal
   }
 }
 </script>

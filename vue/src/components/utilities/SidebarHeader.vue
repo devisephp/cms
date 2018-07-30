@@ -6,14 +6,14 @@
     <div 
       class="dvs-p-4 dvs-text-left" 
       :style="{backgroundColor: theme.adminBackground.color}"
-      v-if="backPage || backCallback">
+      v-if="theBackPage || backCallback">
       <a 
         class="dvs-block dvs-uppercase  dvs-text-xs" 
         href="#" 
-        @click.prevent="goToPage(backPage)" 
+        @click.prevent="goToPage(theBackPage)" 
         :style="{color: theme.sidebarText.color }"
-        v-if="backPage">
-        <arrow-round-back-icon /> {{ backText }}
+        v-if="theBackPage">
+        <arrow-round-back-icon /> {{ theBackText }}
       </a>
 
       <a 
@@ -22,7 +22,7 @@
         @click.prevent="backCallback()" 
         :style="{color: theme.sidebarText.color }"
         v-if="backCallback">
-        <arrow-round-back-icon /> {{ backText }}
+        <arrow-round-back-icon /> {{ theBackText }}
       </a>
     </div>
 
@@ -44,6 +44,26 @@ import ArrowRoundBackIcon from 'vue-ionicons/dist/ios-arrow-round-back.vue'
 export default {
   components: {
     ArrowRoundBackIcon
+  },
+  computed: {
+    theBackPage () {
+      if (typeof this.backPage === 'undefined') {
+        return 'devise-index'
+      } else {
+        if (this.backPage !== null) {
+          return this.backPage
+        }
+      }
+    },
+    theBackText () {
+      if (typeof this.backText === 'undefined') {
+        return 'Back to Administration'
+      } else {
+        if (this.backText !== null) {
+          return this.backText
+        }
+      }
+    }
   },
   props: ['title', 'backPage', 'backText', 'backCallback']
 }

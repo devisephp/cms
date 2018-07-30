@@ -5,7 +5,7 @@ import MothershipReleases from '../components/mothership/Releases'
 import MothershipChanges from '../components/mothership/Changes'
 import MothershipHealthReports from '../components/mothership/HealthReports'
 import LanguagesManage from '../components/languages/Manage'
-import MainMenu from '../components/menu/MainMenu'
+import AdministrationIndex from '../components/admin/Index'
 import MetaManage from '../components/meta/Manage'
 import PageEditor from '../components/pages/Editor'
 import PagesIndex from '../components/pages/Index'
@@ -23,7 +23,7 @@ var routes = [
     path: '/devise',
     name: 'devise-index',
     components: {
-      'devise': MainMenu
+      'devise': AdministrationIndex
     }
   },
   {

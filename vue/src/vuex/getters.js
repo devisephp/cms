@@ -3,6 +3,16 @@ import { WSAETIMEDOUT } from 'constants';
 var tinycolor = require('tinycolor2')
 
 const getters = {
+
+  // Admin Menu
+  adminMenu: state => {
+    return state.adminMenu
+  },
+
+  settingsMenu: state => {
+    return state.settingsMenu
+  },
+
   breakpoint: state => {
     return state.breakpoint.breakpoint
   },

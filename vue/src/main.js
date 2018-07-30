@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueTippy from 'vue-tippy'
 import Devise from './Devise'
+import Administration from './components/admin/Administration'
+import ActionBar from './components/utilities/ActionBar'
+import Sidebar from './components/utilities/Sidebar'
 import Help from './components/utilities/Help'
 import Logo from './components/utilities/Logo'
 import Slices from './Slices'
@@ -84,6 +87,13 @@ const DevisePlugin = {
     Vue.component('Logo', Logo)
     Vue.component('Help', Help)
     Vue.component('Slices', Slices)
+    Vue.component('Administration', Administration)
+    Vue.component('ActionBar', ActionBar)
+    Vue.component('Sidebar', Sidebar)
+    
+    if (typeof store.state.adminMenu !== 'undefined') {
+      DeviseStore.state.adminMenu = Object.assign({}, store.state.adminMenu)
+    }
 
     // Register devise vuex module and sync it with the store
     store.registerModule('devise', DeviseStore)
@@ -121,6 +131,9 @@ const DevisePlugin = {
         // Convienience method to push things into the router from templates
         goToPage (pageName, params) {
           this.$router.push({name: pageName, params: params})
+        },
+        href (url) {
+          window.open(url, '_self')
         },
         launchMediaManager (callbackObject, callbackProperty) {
           deviseSettings.$bus.$emit('devise-launch-media-manager', {

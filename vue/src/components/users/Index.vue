@@ -1,20 +1,18 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
+  <administration>
+    <sidebar title="Manage Users" />
 
-      <sidebar-header title="Manage Users" back-text="Back to Administration" back-page="devise-index" />
-
-      <ul class="dvs-list-reset">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" @click.prevent="showCreate = true">
+    <div id="devise-admin-content" :style="adminTheme">
+      <action-bar>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click.prevent="showCreate = true">
           Create New User
         </li>
-      </ul>
-    </div>
-    <div id="devise-admin-content" :style="adminTheme">
-      <h2 class="dvs-mb-10" :style="{color: theme.adminText.color}">Current Users</h2>
+      </action-bar>
 
-      <div v-for="user in users.data" class="dvs-mb-6  dvs-flex dvs-justify-between dvs-items-center">
+      <h3 class="dvs-mb-10" :style="{color: theme.adminText.color}">Current Users</h3>
+
+      <div v-for="user in users.data" :key="user.id" class="dvs-mb-6  dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
           {{ user.name }}
         </div>
@@ -52,13 +50,12 @@
         <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
       </devise-modal>
     </transition>
-  </div>
+  </administration>
 
 </template>
 
 <script>
 import DeviseModal from './../utilities/Modal'
-import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -118,8 +115,7 @@ export default {
     }
   },
   components: {
-    DeviseModal,
-    SidebarHeader
+    DeviseModal
   }
 }
 </script>

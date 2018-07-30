@@ -1,10 +1,7 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="localValue.languages && languages.data">
-    
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-      <sidebar-header title="Manage Site" back-text="Back to Sites" back-page="devise-sites-index" />
-    </div>
+  <administration>
+    <sidebar title="Manage Languages" :menu-items="settingsMenu" />
     
     <div id="devise-admin-content" :style="adminTheme">
       <h3 class="dvs-mb-8" :style="{color: theme.sidebarText.color }">{{ localValue.name }} Settings</h3>
@@ -58,14 +55,13 @@
 
     </div>
 
-  </div>
+  </administration>
 
 </template>
 
 <script>
 import DeviseModal from './../utilities/Modal'
 import AdminDesigner from './AdminDesigner'
-import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -160,7 +156,8 @@ export default {
     ...mapGetters('devise', [
       'languages',
       'site',
-      'siteById'
+      'siteById',
+      'settingsMenu'
     ]),
     editInvalid () {
       return this.localValue.name === null ||
@@ -176,8 +173,7 @@ export default {
   },
   components: {
     AdminDesigner,
-    DeviseModal,
-    SidebarHeader
+    DeviseModal
   }
 }
 </script>

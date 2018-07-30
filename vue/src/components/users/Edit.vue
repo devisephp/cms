@@ -1,17 +1,15 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="user">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-      
-      <sidebar-header title="Manage User" back-text="Back to Users" back-page="devise-users-index" />
+  <administration>
+    <sidebar title="Manage Users" />
 
-      <ul class="dvs-list-reset dvs-mb-10">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" v-devise-alert-confirm="{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}">
+    <div id="devise-admin-content" :style="adminTheme">
+      <action-bar>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" v-devise-alert-confirm="{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}">
           Delete This User
         </li>
-      </ul>
-    </div>
-    <div id="devise-admin-content" :style="adminTheme">
+      </action-bar>
+
       <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">{{ localValue.name }} Settings</h3>
 
       <div class="dvs-mb-12">
@@ -52,13 +50,11 @@
 
     </div>
 
-  </div>
+  </administration>
 
 </template>
 
 <script>
-import SidebarHeader from './../utilities/SidebarHeader'
-
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -100,9 +96,6 @@ export default {
     ...mapGetters('devise', [
       'user'
     ])
-  },
-  components: {
-    SidebarHeader
   }
 }
 </script>

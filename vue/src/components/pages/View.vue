@@ -1,29 +1,27 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="page">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-      <sidebar-header title="Manage Page" back-text="Back to Pages" back-page="devise-pages-index" />
+  <administration>
+    <sidebar title="Manage Page" />
 
-      <ul class="dvs-list-reset dvs-mb-10">
-        <li class="dvs-mb-6 dvs-text-lg">
-          <a :href="page.slug" :style="{color: theme.sidebarText.color}">Go To Page</a>
+    <div id="devise-admin-content" :style="adminTheme" v-if="page">
+      <action-bar>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click="href(page.slug)">
+          Go To Page
         </li>
-        <li class="dvs-mb-6 dvs-text-lg">
-          <a :href="page.slug + '/#/devise/edit-page'" :style="{color: theme.sidebarText.color}">Edit Page Content</a>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click="href(page.slug + '/#/devise/edit-page')">
+          Edit Page Content
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="showCopy = true">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click="showCopy = true">
           Copy This Page
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" @click="showTranslate = true">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click="showTranslate = true">
           Translate This Page
         </li>
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}">
           Delete This Page
         </li>
-      </ul>
-    </div>
+      </action-bar>
 
-    <div id="devise-admin-content"  :style="adminTheme">
       <template v-if="analytics.data">
         <h3 class="dvs-mb-8" :style="{color: theme.statsText.color}">{{ localValue.title }} Analytics</h3>
         <div class="flex dvs-mb-8">
@@ -205,14 +203,13 @@
       </devise-modal>
     </transition>
 
-  </div>
+  </administration>
 
 </template>
 
 <script>
 import DatePicker from './../utilities/DatePicker'
 import DeviseModal from './../utilities/Modal'
-import SidebarHeader from './../utilities/SidebarHeader'
 import LineChart from './analytics/Line'
 import MetaForm from './../meta/MetaForm'
 
@@ -458,7 +455,6 @@ export default {
     DatePicker,
     DeviseModal,
     EditIcon,
-    SidebarHeader,
     TrashIcon,
     LineChart,
     MetaForm

@@ -1,18 +1,15 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-
-      <sidebar-header title="Manage Pages" back-text="Back to Administration" back-page="devise-index" />
-
-      <ul class="dvs-list-reset">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" @click.prevent="showCreate = true">
-          Create New Page
-        </li>
-      </ul>
-    </div>
+  <administration>
+    <sidebar title="Manage Pages" />
 
     <div id="devise-admin-content" :style="adminTheme">
+      <action-bar>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click.prevent="showCreate = true">
+          Create New Page
+        </li>
+      </action-bar>
+
       <h2 class="dvs-mb-10" :style="{color: theme.sidebarText.color}">Current Site Pages</h2>
 
       <fieldset class="dvs-fieldset dvs-mb-8">
@@ -49,7 +46,7 @@
     </div>
 
     <transition name="fade">
-      <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showCreate">
+      <devise-modal @close="showCreate = false" class="dvs-z-50" v-if="showCreate">
         <h3 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Create new page</h3>
 
         <fieldset class="dvs-fieldset dvs-mb-4">
@@ -91,7 +88,7 @@
         <button class="dvs-btn" :style="regularButtonTheme" @click="showCreate = false">Cancel</button>
       </devise-modal>
     </transition>
-  </div>
+  </administration>
 
 </template>
 
@@ -99,7 +96,6 @@
 import debounce from 'v-debounce'
 
 import DeviseModal from './../utilities/Modal'
-import SidebarHeader from './../utilities/SidebarHeader'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -208,8 +204,7 @@ export default {
     }
   },
   components: {
-    DeviseModal,
-    SidebarHeader
+    DeviseModal
   },
   directives: {
     debounce

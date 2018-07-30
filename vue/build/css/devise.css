@@ -767,11 +767,16 @@ button,
   opacity: .25;
 }
 
+.dvs-outline-none:focus {
+  outline: 0;
+}
+
 .dvs-btn {
   padding: 1rem;
   border-radius: .25rem;
   text-transform: uppercase;
   font-size: .875rem;
+  cursor: pointer;
   -webkit-transition: background-color .5s;
   transition: background-color .5s;
 }
@@ -867,10 +872,6 @@ button,
 .dvs-btn.dvs-btn-danger:hover {
   background-color: #e3342f;
   color: #fff;
-}
-
-.dvs-outline-none:focus {
-  outline: 0;
 }
 
 .dvs-card {
@@ -1310,6 +1311,19 @@ button,
 
 #devise-admin-content.bottom-padding-16 {
   padding-bottom: 20em;
+}
+
+.devise-admin-action-bar {
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 #devise-preview-content {

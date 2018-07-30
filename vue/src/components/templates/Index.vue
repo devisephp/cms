@@ -1,15 +1,15 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" data-simplebar>
-      <sidebar-header title="Templates" back-text="Back to Administration" back-page="devise-index" />
-      <ul class="dvs-list-reset">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" @click.prevent="showCreate = true">
+  <administration>
+    <sidebar title="Manage Users" />
+
+    <div id="devise-admin-content" :style="adminTheme">
+      <action-bar>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click.prevent="showCreate = true">
           Create New Template
         </li>
-      </ul>
-    </div>
-    <div id="devise-admin-content" :style="adminTheme">
+      </action-bar>
+
       <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Current Templates</h3>
 
       <div v-for="template in templates.data" :key="template.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
@@ -58,12 +58,11 @@
         <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
       </devise-modal>
     </transition>
-  </div>
+  </administration>
 
 </template>
 
 <script>
-import SidebarHeader from './../utilities/SidebarHeader'
 import DeviseModal from './../utilities/Modal'
 
 import { mapActions, mapGetters } from 'vuex'
@@ -124,8 +123,7 @@ export default {
     }
   },
   components: {
-    DeviseModal,
-    SidebarHeader
+    DeviseModal
   }
 }
 </script>

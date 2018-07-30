@@ -10,7 +10,7 @@
 
 
     <div class="dvs-flex dvs-flex-wrap">
-      <div class="dvs-w-1/5 dvs-max-w-1/4 dvs-pr-4 dvs-pb-4" v-for="image in value">
+      <div class="dvs-w-1/5 dvs-max-w-1/4 dvs-pr-4 dvs-pb-4" v-for="(image, key) in value" :key="key">
         <div class="dvs-p-4 dvs-bg-grey-lighter dvs-text-xs">
           <div @click="loadPreview(image)">
           <search-icon class="dvs-cursor-pointer" w="30px" h="30px"/>

@@ -1,5 +1,11 @@
+.dvs-outline-none {
+  &:focus {
+    outline:0;
+  }
+}
+
 .dvs-btn {
-  @apply dvs-p-4 dvs-rounded dvs-uppercase dvs-text-sm;
+  @apply dvs-p-4 dvs-rounded dvs-uppercase dvs-text-sm dvs-cursor-pointer;
 
   transition: background-color 0.5s;
 
@@ -72,11 +78,5 @@
     &:hover {
       @apply dvs-bg-red dvs-text-white;
     }
-  }
-}
-
-.dvs-outline-none {
-  &:focus {
-    outline:0;
   }
 }

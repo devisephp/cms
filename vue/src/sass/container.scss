@@ -198,6 +198,10 @@
   }
 }
 
+.devise-admin-action-bar {
+  @apply dvs-p-4 dvs-flex dvs-fixed dvs-pin-t dvs-pin-r dvs-justify-end;
+}
+
 #devise-preview-content {
   @apply dvs-z-10 dvs-absolute dvs-pin-t dvs-pin-r dvs-pin-b;
 

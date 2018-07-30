@@ -23,37 +23,39 @@ const state = {
   //     parameters: {type: 'blog'},
   //     url: 'http://google.com',
   //     target: '_blank'
-  //   }  
+  //   }
   // ],
   adminMenu: [
     {
       label: 'Edit this page',
       routeName: 'devise-page-editor',
+      permissions: 'manage pages',
     },
     {
       label: 'Pages',
       routeName: 'devise-pages-index',
-    },
-    {
-      label: 'Redirects',
-      routeName: 'devise-redirects-index',
+      permissions: 'manage pages',
     },
     {
       label: 'Users',
       routeName: 'devise-users-index',
+      permissions: 'manage users',
     },
     {
       label: 'Mothership',
       routeName: 'devise-mothership-index',
+      permissions: 'manage mothership',
     },
     {
       label: 'Templates',
       routeName: 'devise-templates-index',
+      permissions: 'manage templates',
     },
     {
       label: 'Settings',
       routeName: 'devise-settings-index',
-    }  
+      permissions: 'manage settings',
+    }
   ],
   breakpoint: {
     breakpoint: null,
@@ -86,14 +88,22 @@ const state = {
     {
       label: 'Global Meta',
       routeName: 'devise-meta-manage',
-    },
-    {
-      label: 'Languages',
-      routeName: 'devise-languages-manage',
+      permissions: 'manage meta',
     },
     {
       label: 'Sites',
       routeName: 'devise-sites-index',
+      permissions: 'manage sites',
+    },
+    {
+      label: 'Languages',
+      routeName: 'devise-languages-manage',
+      permissions: 'manage languages',
+    },
+    {
+      label: 'Redirects',
+      routeName: 'devise-redirects-index',
+      permissions: 'manage redirects',
     }
   ],
   site: {},

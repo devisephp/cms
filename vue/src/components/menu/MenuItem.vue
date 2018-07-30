@@ -46,6 +46,11 @@ export default {
         }
       }
 
+      // Check Permissions
+      if(this.item.permissions){
+        return this.can(this.item.permissions)
+      }
+
       return true
     },
     editablePage () {

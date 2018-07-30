@@ -46,7 +46,7 @@ const DevisePlugin = {
       if (routes.hasOwnProperty(route)) {
         const routeToCheck = routes[route];
         var canAdd = true
-        
+
         for (const customRoute in router.options.routes) {
           if (router.options.routes.hasOwnProperty(customRoute)) {
             const routeToCheckAgainst = router.options.routes[customRoute];
@@ -90,7 +90,7 @@ const DevisePlugin = {
     Vue.component('Administration', Administration)
     Vue.component('ActionBar', ActionBar)
     Vue.component('Sidebar', Sidebar)
-    
+
     if (typeof store.state.adminMenu !== 'undefined') {
       DeviseStore.state.adminMenu = Object.assign({}, store.state.adminMenu)
     }
@@ -142,7 +142,18 @@ const DevisePlugin = {
               callbackObject[callbackProperty] = media.url
             }
           })
-        }
+        },
+        can(permission) {
+          let toCheck = (!Array.isArray(permission)) ? [permission] : permission;
+          let allowed = deviseSettings.$user.permissions_list ? deviseSettings.$user.permissions_list : []
+          for (let i = 0; i < toCheck.length; i++) {
+            let found = allowed.find(function(perm) {
+              return perm === toCheck[i];
+            });
+
+            if(found) return true;
+          }
+        },
       },
       computed: {
         ...mapGetters('devise', [

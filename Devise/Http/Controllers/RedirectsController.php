@@ -8,72 +8,84 @@ use Devise\Http\Requests\Redirects\DeleteRedirect;
 use Devise\Http\Resources\Api\RedirectResource;
 use Devise\Models\DvsRedirect;
 
+use Devise\Sites\SiteDetector;
 use Illuminate\Routing\Controller;
 
 class RedirectsController extends Controller
 {
-  /**
-   * @var DvsRedirect
-   */
-  private $DvsRedirect;
+    /**
+     * @var DvsRedirect
+     */
+    private $DvsRedirect;
+    /**
+     * @var SiteDetector
+     */
+    private $SiteDetector;
 
-  /**
-   * RedirectsController constructor.
-   * @param DvsRedirect $DvsRedirect
-   */
-  public function __construct(DvsRedirect $DvsRedirect)
-  {
-    $this->DvsRedirect = $DvsRedirect;
-  }
+    /**
+     * RedirectsController constructor.
+     * @param DvsRedirect $DvsRedirect
+     */
+    public function __construct(DvsRedirect $DvsRedirect, SiteDetector $SiteDetector)
+    {
+        $this->DvsRedirect = $DvsRedirect;
+        $this->SiteDetector = $SiteDetector;
+    }
 
-  /**
-   * @param ApiRequest $request
-   * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-   */
-  public function all(ApiRequest $request)
-  {
-    $all = $this->DvsRedirect
-      ->get();
+    /**
+     * @param ApiRequest $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function all(ApiRequest $request)
+    {
+        $all = $this->DvsRedirect
+            ->get();
 
-    return RedirectResource::collection($all);
-  }
+        return RedirectResource::collection($all);
+    }
 
-  /**
-   * @param SaveRedirect $request
-   * @return RedirectResource
-   */
-  public function store(SaveRedirect $request)
-  {
-    $new = $this->DvsRedirect
-      ->createFromRequest($request);
+    /**
+     * @param SaveRedirect $request
+     * @return RedirectResource
+     */
+    public function store(SaveRedirect $request)
+    {
+        $site = $this->SiteDetector
+            ->current();
 
-    return new RedirectResource($new);
-  }
+        $redirect = new DvsRedirect();
+        $redirect->fill($request->only($redirect->fillable));
+        $redirect->site_id = $site->id;
+        $redirect->save();
 
-  /**
-   * @param SaveRedirect $request
-   * @param $id
-   * @return RedirectResource
-   */
-  public function update(SaveRedirect $request, $id)
-  {
-    $slice = $this->DvsRedirect
-      ->findOrFail($id);
+        return new RedirectResource($redirect);
+    }
 
-    $slice->updateFromRequest($request);
+    /**
+     * @param SaveRedirect $request
+     * @param $id
+     * @return RedirectResource
+     */
+    public function update(SaveRedirect $request, $id)
+    {
+        $redirect = $this->DvsRedirect
+            ->findOrFail($id);
 
-    return new RedirectResource($slice);
-  }
+        $redirect->fill($request->only($redirect->fillable));
+        $redirect->save();
 
-  /**
-   * @param DeleteRedirect $request
-   * @param $id
-   */
-  public function delete(DeleteRedirect $request, $id)
-  {
-    $slice = $this->DvsRedirect
-      ->findOrFail($id);
+        return new RedirectResource($redirect);
+    }
 
-    $slice->delete();
-  }
+    /**
+     * @param DeleteRedirect $request
+     * @param $id
+     */
+    public function delete(DeleteRedirect $request, $id)
+    {
+        $redirect = $this->DvsRedirect
+            ->findOrFail($id);
+
+        $redirect->delete();
+    }
 }

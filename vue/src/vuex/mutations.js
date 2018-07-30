@@ -181,6 +181,23 @@ export default {
     state.templates = payload
   },
 
+  // Redirect
+  createRedirect (state, redirect) {
+    state.redirects.data.push(redirect)
+  },
+
+  setRedirects (state, payload) {
+    state.redirects = payload
+  },
+
+  updateRedirect (state, {redirect, data}) {
+    redirect = data
+  },
+
+  deleteRedirect (state, redirect) {
+    state.redirects.data.splice(state.redirects.data.indexOf(redirect), 1)
+  },
+
   // User
   createUser (state, user) {
     state.users.data.push(user)

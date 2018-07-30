@@ -673,6 +673,62 @@ const actions = {
     })
   },
 
+  // Redirects
+  getRedirects (context) {
+    return new Promise((resolve, reject) => {
+      window.axios.get(context.state.api.baseUrl + 'redirects/').then(function (response) {
+      context.commit('setRedirects', response.data)
+      resolve(response)
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
+  createRedirect (context, redirect) {
+    return new Promise((resolve, reject) => {
+      window.axios.post(context.state.api.baseUrl + 'redirects/', redirect).then(function (response) {
+      devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been created.'})
+      context.commit('createRedirect', response.data.data)
+      resolve(response)
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
+  updateRedirect (context, payload) {
+    return new Promise((resolve, reject) => {
+      window.axios.put(context.state.api.baseUrl + 'redirects/' + payload.redirect.id, payload.data).then(function (response) {
+      devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been saved.'})
+      context.commit('updateRedirect', {redirect: payload, data: response.data})
+      resolve(response)
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
+  deleteRedirect (context, redirect) {
+    return new Promise((resolve, reject) => {
+      window.axios.delete(context.state.api.baseUrl + 'redirects/' + redirect.id).then(function (response) {
+      devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been deleted.'})
+      context.commit('deleteRedirect', redirect)
+      resolve(response)
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
   // Users
   getUsers (context) {
     return new Promise((resolve, reject) => {

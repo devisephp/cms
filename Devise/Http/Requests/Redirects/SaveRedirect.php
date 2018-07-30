@@ -16,7 +16,6 @@ class SaveRedirect extends ApiRequest
   public function rules()
   {
     return [
-      'site_id' => 'required|exists:dvs_sites,id',
       'from_url' => 'required',
       'to_url' => 'required'
     ];

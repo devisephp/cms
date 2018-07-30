@@ -49,7 +49,7 @@ const getters = {
     let sliceConfig = getters.sliceConfig(slice)
     if (typeof sliceConfig.config[fieldKey] !== 'undefined') {
       return sliceConfig.config[fieldKey]
-    } 
+    }
   },
 
   // Languages
@@ -121,7 +121,7 @@ const getters = {
   siteById: state => (id) => {
     return state.sites.data.find(site => site.id === id)
   },
-  
+
   theme: (state, getters, rootState) => {
     var defaultColors = {
       sidebarTop: { color: 'rgba(242,242,242,1)' },
@@ -155,7 +155,7 @@ const getters = {
       let site = getters.siteById(state.page.site_id)
 
       if (site && site.settings) {
-        var colors = site.settings.colors      
+        var colors = site.settings.colors
       }
     }
 
@@ -195,6 +195,20 @@ const getters = {
     return state.templates.data.find(template => template.id === id)
   },
 
+  // Redirects
+  redirects: state => {
+    return state.redirects
+  },
+
+  redirect: (state, getters, rootState) => {
+    var id = parseInt(rootState.route.params.redirectId)
+    return state.redirects.data.find(redirect => redirect.id === id)
+  },
+
+  currentRedirect: state => {
+    return deviseSettings.$redirect
+  },
+
   // Users
   users: state => {
     return state.users
@@ -204,7 +218,7 @@ const getters = {
     var id = parseInt(rootState.route.params.userId)
     return state.users.data.find(user => user.id === id)
   },
-  
+
   currentUser: state => {
     return deviseSettings.$user
   }

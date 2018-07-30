@@ -1,17 +1,14 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
+  <administration>
+    <sidebar title="Manage Redirects" />
 
-      <sidebar-header title="Manage Redirects" back-text="Back to Administration" back-page="devise-index" />
-
-      <ul class="dvs-list-reset">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold dvs-cursor-pointer" @click.prevent="showCreate = true">
-          Create New Redirect
-        </li>
-      </ul>
-    </div>
     <div id="devise-admin-content" :style="adminTheme">
+      <action-bar>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click.prevent="showCreate = true">
+          Create Redirect
+        </li>
+      </action-bar>
       <h2 class="dvs-mb-10" :style="{color: theme.adminText.color}">Current Redirects</h2>
       <div v-for="redirect in redirects.data" class="dvs-mb-6  dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-1/6 dvs-font-bold dvs-pr-8">
@@ -47,7 +44,7 @@
         <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
       </devise-modal>
     </transition>
-  </div>
+  </administration>
 
 </template>
 

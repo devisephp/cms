@@ -35,6 +35,10 @@ const state = {
       routeName: 'devise-pages-index',
     },
     {
+      label: 'Redirects',
+      routeName: 'devise-redirects-index',
+    },
+    {
       label: 'Users',
       routeName: 'devise-users-index',
     },

@@ -1,17 +1,15 @@
 <template>
 
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative" v-if="redirect">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-      
-      <sidebar-header title="Manage Redirect" back-text="Back to Redirects" back-page="devise-redirects-index" />
+  <administration>
+    <sidebar title="Manage Redirects" />
 
-      <ul class="dvs-list-reset dvs-mb-10">
-        <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold" v-devise-alert-confirm="{callback: requestDeleteRedirect, message: 'Are you sure you want to delete this redirect?'}">
+    <div id="devise-admin-content" :style="adminTheme">
+      <action-bar>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" v-devise-alert-confirm="{callback: requestDeleteRedirect, message: 'Are you sure you want to delete this redirect?'}">
           Delete This Redirect
         </li>
-      </ul>
-    </div>
-    <div id="devise-admin-content" :style="adminTheme">
+      </action-bar>
+
       <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Redirect Settings</h3>
 
       <div class="dvs-mb-12">
@@ -35,7 +33,7 @@
 
     </div>
 
-  </div>
+  </administration>
 
 </template>
 

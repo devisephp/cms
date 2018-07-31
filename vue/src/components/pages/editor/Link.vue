@@ -9,8 +9,10 @@
     </template>
 
     <template slot="editor">
-      <label>Label</label>
-      <input type="text" class="dvs-mb-4" v-model="localValue.text" v-on:input="updateValue()">
+      <fieldset class="dvs-fieldset">
+        <label>Label</label>
+        <input type="text" class="dvs-mb-4" v-model="localValue.text" v-on:input="updateValue()">
+      </fieldset>
 
       <label>Link Mode</label>
       <div class="dvs-flex">
@@ -23,12 +25,16 @@
       </div>
 
       <template v-if="localValue.mode === 'url'">
-        <label>URL</label>
-        <input type="text" v-model="localValue.href" v-on:input="updateValue()">
+        <fieldset class="dvs-fieldset">
+          <label>URL</label>
+          <input type="text" v-model="localValue.href" v-on:input="updateValue()">
+        </fieldset>
       </template>
       <template v-if="localValue.mode === 'page'">
-        <label>Page</label>
-        <input type="text" v-model="localValue.pageId" v-on:input="updateValue()">
+        <fieldset class="dvs-fieldset">
+          <label>Page</label>
+          <input type="text" v-model="localValue.pageId" v-on:input="updateValue()">
+        </fieldset>
       </template>
     </template>
 

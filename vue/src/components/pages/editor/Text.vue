@@ -7,7 +7,9 @@
       <div>{{ clipString(localValue.text, 200, true) }}</div>
     </template>
     <template slot="editor">
-      <input type="text" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()">
+      <fieldset class="dvs-fieldset">
+        <input type="text" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()">
+      </fieldset>
     </template>
   </field-editor>
 </template>

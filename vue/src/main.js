@@ -95,6 +95,10 @@ const DevisePlugin = {
       DeviseStore.state.adminMenu = Object.assign({}, store.state.adminMenu)
     }
 
+    if (typeof store.state.settingsMenu !== 'undefined') {
+      DeviseStore.state.settingsMenu = Object.assign({}, store.state.settingsMenu)
+    }
+
     // Register devise vuex module and sync it with the store
     store.registerModule('devise', DeviseStore)
 

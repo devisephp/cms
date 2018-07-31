@@ -131,7 +131,7 @@ class FieldManager
                 $sliceInstance->page_version_id = $pageVersionId;
                 $sliceInstance->parent_instance_id = $parentId;
                 $sliceInstance->template_slice_id = ($sliceInstance->id) ? $sliceInstance->template_slice_id : $this->getTemplateSliceId($parentId);
-                $sliceInstance->settings = $slice['settings'];
+                $sliceInstance->settings = (isset($slice['settings'])) ? $slice['settings'] : null;
                 $sliceInstance->position = $index;
                 $sliceInstance->save();
 

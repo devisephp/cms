@@ -120,7 +120,26 @@
     mounted: function () {
       // Merge options
       this.theOptions.showLinks = this.showLinks
-      this.requestRefreshRecords()
+      
+      if (typeof this.editData !== 'undefined') {
+        console.log(this.editData.filters)
+        
+        for (const scope in this.editData.filters.scopes) {
+          if (this.editData.filters.scopes.hasOwnProperty(scope)) {
+            let s = this.editData.filters.scopes[scope]
+            for (const scopeProp in s) {
+              if (s.hasOwnProperty(scopeProp)) {
+                this.filters.scopes[scopeProp] = s[scopeProp]
+              }
+            }
+          }
+        }
+
+        this.$set(this.filters, 'limit', this.editData.filters.limit)
+        this.$set(this.filters, 'single', this.editData.filters.single)
+        this.$set(this.filters, 'page', this.editData.filters.page)
+        this.$set(this.filters, 'paginated', this.editData.filters.paginated)
+      }
     },
     methods: {
       ...mapActions('devise', [
@@ -249,6 +268,9 @@
       },
       showLinks: {
         type: Boolean
+      },
+      editData: {
+        type: Object
       }
     },
     mixins: [Strings],

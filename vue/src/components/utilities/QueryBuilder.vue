@@ -15,6 +15,7 @@
     <div v-if="model" class="dvs-relative dvs-mb-8">
       <super-table
           v-model="modelQuery"
+          :editData="editData"
           :columns="model.columns"
           :showLinks="false"
           @cancel="cancel"
@@ -38,15 +39,27 @@ export default {
       paginated: false,
       model: null,
       modelQuery: null,
-      name: null
+      name: null,
+      filters: {}
     }
   },
   mounted () {
-    this.model = this.value.model
-    this.name = this.value.name
-    this.modelQuery = this.value.modelQuery
+    let self = this
 
-    this.getModels()
+    if (typeof this.editData === 'undefined') { 
+      this.model = this.value.model
+      this.name = this.value.name
+      this.modelQuery = this.value.modelQuery
+    }
+
+    this.getModels().then(function () {
+      if (typeof self.editData !== 'undefined') {
+        self.model = self.storeModels.find(model => model.class === self.editData.filters.class)
+        self.name = self.editData.key
+        self.modelQuery = self.editData.filters.class
+        self.filters = self.editData.filters
+      }
+    })
   },
   methods: {
     ...mapActions('devise', [
@@ -87,6 +100,6 @@ export default {
   components: {
     SuperTable
   },
-  props: ['value']
+  props: ['value', 'editData']
 }
 </script>

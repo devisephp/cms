@@ -50,6 +50,9 @@
             :key="key"  
             v-else>
             {{ key }}
+            <div @click="requestEditData(key)" class="dvs-absolute dvs-mt-3 dvs-mr-10 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4">
+              <edit-icon class="dvs-cursor-pointer" w="25" h="25" />
+            </div>
             <div @click="removeData(key)" class="dvs-absolute dvs-mt-3 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4">
               <trash-icon class="dvs-cursor-pointer" w="25" h="25" />
             </div>
@@ -86,17 +89,26 @@
       </devise-modal>
     </portal>
 
+    <portal to="devise-root">
+      <devise-modal @close="showEditData = false" v-if="showEditData" class="dvs-z-50">
+        <query-builder v-model="newData" :editData="editData" @save="saveEditData" @close="showEditData = false"></query-builder>
+      </devise-modal>
+    </portal>
+
   </administration>
 
 </template>
 
 <script>
+var qs = require('qs');
+
 import DeviseModal from './../utilities/Modal'
 import AdminDesigner from './AdminDesigner'
 import QueryBuilder from './../utilities/QueryBuilder'
 
 import TrashIcon from 'vue-ionicons/dist/md-trash.vue'
 import AddIcon from 'vue-ionicons/dist/ios-add-circle.vue'
+import EditIcon from 'vue-ionicons/dist/md-create.vue'
 
 import Strings from './../../mixins/Strings'
 
@@ -117,6 +129,12 @@ export default {
       modulesToLoad: 2,
       editAddLanguage: null,
       showAddData: false,
+      showEditData: false,
+      editData: {
+        key: null,
+        model: null,
+        filters: {}
+      },
       newData: {
         name: null,
         model: null,
@@ -199,12 +217,37 @@ export default {
       }
     },
     addNewData () {
-      if (this.localValue.model_queries === null) {
+       if (this.localValue.model_queries === null) {
         this.$set(this.localValue, 'model_queries', {})
       }
 
       this.$set(this.localValue.model_queries, this.newData.name, `class=${this.newData.modelQuery}`)
       this.showAddData = false
+
+      this.newData = {
+        name: null,
+        model: null,
+        modelQuery: null
+      }
+    },
+    requestEditData (key) {
+      let modelQuery = qs.parse(this.localValue.model_queries[key])
+      this.editData = {
+        key: key,
+        model: modelQuery.class,
+        filters: modelQuery
+      }
+      this.showEditData = true
+    },
+    saveEditData () {
+      this.showEditData = false
+      this.$set(this.localValue.model_queries, this.newData.name, `class=${this.newData.modelQuery}`)
+
+      this.editData = {
+        key: null,
+        model: null,
+        filters: {}
+      }
 
       this.newData = {
         name: null,
@@ -247,6 +290,7 @@ export default {
     AddIcon,
     AdminDesigner,
     DeviseModal,
+    EditIcon,
     QueryBuilder,
     TrashIcon
   }

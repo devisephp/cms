@@ -12,12 +12,12 @@
         href="#" 
         @click.prevent="goToPage(theBackPage)" 
         :style="{color: theme.sidebarText.color }"
-        v-if="theBackPage">
+        v-if="theBackPage && !backCallback">
         <arrow-round-back-icon /> {{ theBackText }}
       </a>
 
       <a 
-        class="dvs-block dvs-uppercase dvs-font-bold dvs-text-xs" 
+        class="dvs-block dvs-uppercase dvs-text-xs" 
         href="#" 
         @click.prevent="backCallback()" 
         :style="{color: theme.sidebarText.color }"

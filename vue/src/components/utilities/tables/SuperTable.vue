@@ -121,9 +121,7 @@
       // Merge options
       this.theOptions.showLinks = this.showLinks
       
-      if (typeof this.editData !== 'undefined') {
-        console.log(this.editData.filters)
-        
+      if (typeof this.editData !== 'undefined') {  
         for (const scope in this.editData.filters.scopes) {
           if (this.editData.filters.scopes.hasOwnProperty(scope)) {
             let s = this.editData.filters.scopes[scope]
@@ -140,6 +138,8 @@
         this.$set(this.filters, 'page', this.editData.filters.page)
         this.$set(this.filters, 'paginated', this.editData.filters.paginated)
       }
+
+      this.requestRefreshRecords()
     },
     methods: {
       ...mapActions('devise', [
@@ -252,6 +252,7 @@
     },
     watch: {
       value () {
+        console.log('here')
         this.requestRefreshRecords()
       },
       filters () {

@@ -6,7 +6,7 @@
     <div class="dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-8 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2" :style="infoBlockTheme" v-if="originSlice">
 
       <div v-if="mode === 'add' && step === 'type'">
-        <h3 class="dvs-font-hairline dvs-mb-8" :style="{ color: theme.statsText.color }">Add Slice to Layout</h3>
+        <h3 class="dvs-font-hairline dvs-mb-8">Add Slice to Layout</h3>
 
         <help class="dvs-mb-8 dvs-max-w-lg">
           These controls allow you to add sub-slices to the slice you selected. You can add as many single slices as you wish or you can add a one model or one repeatable slice. Models and repeatables allow you to generate many of the same slice with dynamic data from your database (models) or via the Devise editor (repeatables).
@@ -15,15 +15,15 @@
         <div class="dvs-flex dvs-justify-center dvs-mb-4">
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('single')">
             <remove-icon w="40" h="40" />
-            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Single</h6>
+            <h6 class="dvs-text-sm dvs-uppercase">Single</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('repeats')">
             <menu-icon w="40" h="40" />
-            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Repeatable</h6>
+            <h6 class="dvs-text-sm dvs-uppercase">Repeatable</h6>
           </div>
           <div class="dvs-card dvs-text-center dvs-cursor-pointer dvs-mx-4 dvs-w-48 dvs-bg-grey-lighter hover:dvs-bg-blue-dark hover:dvs-text-white" @click="chooseTypeToAdd('model')">
             <cube-icon w="40" h="40" />
-            <h6 class="dvs-text-sm dvs-uppercase" :style="{ color: theme.statsText.color }">Model</h6>
+            <h6 class="dvs-text-sm dvs-uppercase hover:dvs-text-white">Model</h6>
           </div>
         </div>
       </div>
@@ -40,38 +40,12 @@
             </optgroup>
           </select>
         </fieldset>
-        <button class="dvs-btn" :disabled="!sliceToAdd" @click="selectSliceToAdd()">Select</button>
+        <button class="dvs-btn" :style="actionButtonTheme" :disabled="!sliceToAdd" @click="selectSliceToAdd()">Select</button>
       </div>
 
 
       <div class="dvs-mb-4" v-if="mode === 'add' && step === 'model'">
-        <help class="dvs-mb-8">
-          The models below are loaded by Devise by scanning your Laravel application directory for anything that extends the Model class. Ensure it does this for it to appear below.
-        </help>
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Select a Model</label>
-          <select v-model="sliceToAdd.model">
-            <option :value="null">Select a Model</option>
-            <option :value="model" v-for="model in storeModels" :key="model.id">{{ model.name }}</option>
-          </select>
-        </fieldset>
-        <button class="dvs-btn" :disabled="!sliceToAdd.model" @click="selectModelToAdd()">Select</button>
-      </div>
-
-      <div v-if="mode === 'add' && step === 'data'">
-        <help>
-          This is a model slice and allows you to set the query that will be performed every time it is loaded. Provide the filters and sorting that gives you the data you need, save, and that query will be loaded every time. Need to lean on variables such as URL parameters? No problem. Click here to see variables available to you.
-
-          <!-- TODO: ACCORDIAN VARIABLES LIST / DESCRIPTIONS.  -->
-        </help>
-
-        <super-table
-          v-model="sliceToAdd.modelQuery"
-          :columns="sliceToAdd.model.columns"
-          :showLinks="false"
-          @cancel="closeManager"
-          @done="selectDataToAdd"
-          />
+        <query-builder v-model="sliceToAdd.data" @save="selectDataToAdd" @close="closeManager"></query-builder>
       </div>
 
       <div class="dvs-mb-4" v-if="mode === 'remove'">
@@ -92,8 +66,9 @@
 <script>
   import { mapGetters, mapActions } from 'vuex'
 
-  import SuperTable from '../utilities/tables/SuperTable'
-  import SlicesMixin from '../../mixins/Slices'
+  import SuperTable from './../utilities/tables/SuperTable'
+  import QueryBuilder from './../utilities/QueryBuilder'
+  import SlicesMixin from './../../mixins/Slices'
 
   import RemoveIcon from 'vue-ionicons/dist/ios-remove.vue'
   import MenuIcon from 'vue-ionicons/dist/ios-menu.vue'
@@ -124,8 +99,11 @@
           show: false,
           type: 'single',
           slice: null,
-          model: null,
-          modelQuery: null
+          data: {
+            name: 'modelData',
+            model: null,
+            modelQuery: null
+          }
         }
       }
     },
@@ -138,7 +116,6 @@
       ...mapActions('devise', [
         'getSlicesDirectories',
         'getSlices',
-        'getModels',
         'getModelSettings'
       ]),
       updateValue () {
@@ -196,17 +173,8 @@
         this.step = 'type'
       },
       chooseTypeToAdd (type) {
-        if (type !== 'single' && this.root) {
-          window.parent.postMessage({type: 'error', message: 'You cannot add a model or repeatable to the root of a template. You can add these as a child to any component and render them with <slices :slices="slices"/> in the container\'s blade file'}, '*')
-          return
-        }
-
         this.sliceToAdd.type = type
         this.step = 'view'
-
-        if (type === 'model') {
-          this.getModels()
-        }
       },
       selectSliceToAdd (type) {
         if (this.sliceToAdd.type === 'model') {
@@ -216,12 +184,10 @@
           this.addSlice(slice)
         }
       },
-      selectModelToAdd () {
-        this.sliceToAdd.modelQuery = this.sliceToAdd.model.class
-        this.step = 'data'
-      },
       selectDataToAdd () {
+        console.log('here')
         let slice = this.buildSlice()
+        console.log('andhere')
 
         if (this.mode === 'add') {
           this.addSlice(slice)
@@ -236,7 +202,7 @@
             open: false,
             tools: false
           },
-          model_query: 'class=' + this.sliceToAdd.modelQuery,
+          model_query: this.sliceToAdd.data.modelQuery,
           name: this.componentFromView(this.sliceToAdd.slice.value).name,
           slices: [],
           type: this.sliceToAdd.type,
@@ -256,6 +222,7 @@
     components: {
       CubeIcon,
       MenuIcon,
+      QueryBuilder,
       RemoveIcon,
       SuperTable
     },

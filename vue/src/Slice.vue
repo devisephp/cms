@@ -114,6 +114,7 @@ export default {
     this.mounted = true
     this.sliceComponent = this.$refs.component.$el
 
+    console.log(this.devise)
     if (this.devise.settings.length < 1) {
       this.resetStyles()
     }

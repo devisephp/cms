@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Compilers\BladeCompiler;
+use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization;
 
 class DeviseServiceProvider extends ServiceProvider
 {

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
+use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization;
+
 /**
  * @todo refactor to a facade pattern
  */
@@ -86,6 +88,7 @@ class Devise
     $js = 'function Devise(){}';
     $js .= self::user();
     $js .= self::sites();
+    $js .= self::lang();
     
     if (Auth::user()) {
         $js .= self::mothership();
@@ -128,6 +131,15 @@ class Devise
     return 'Devise.prototype.$sites = ' . json_encode($resource->toArray(request())) . ";\n";
   }
 
+  public static function lang()
+  {
+    $locale = App::getLocale();
+    $langs = LaravelLocalization::export()->toArray();
+    $langs['locale'] = $locale;
+
+    return 'Devise.prototype.$lang = ' . json_encode($langs[$locale]) . ";\n";
+  }
+
   public static function components()
   {
     return 'Devise.prototype.$deviseComponents = {' . implode(',', self::$components) . "};\n";
@@ -146,7 +158,7 @@ class Devise
   public static function pageData($page)
   {
     $resource = new PageResource($page);
-
+    
     return 'Devise.prototype.$page = ' . json_encode($resource->toArray(request())) . ";\n";
   }
 

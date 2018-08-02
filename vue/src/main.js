@@ -162,6 +162,7 @@ const DevisePlugin = {
       computed: {
         ...mapGetters('devise', [
           'currentPage',
+          'lang',
           'theme'
         ]),
         sidebarTheme () {

@@ -57,6 +57,10 @@ const getters = {
     return state.languages
   },
 
+  lang: state => {
+    return deviseSettings.$lang
+  },
+
   // Media manager
 
   files: state => {

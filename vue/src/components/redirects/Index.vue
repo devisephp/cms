@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <transition name="fade">
+    <transition name="dvs-fade">
       <devise-modal class="dvs-z-50" v-if="showCreate">
         <h4 class="dvs-mb-4" :style="{color: theme.statsText.color}">New Redirect</h4>
 

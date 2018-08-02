@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition name="fade-delayed">
+    <transition name="dvs-fade-delayed">
       <div class="dvs-alert-message dvs-error" :style="infoBlockTheme" v-show="errors.length > 0">
         <div @click="closeErrors()" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mr-4 dvs-mt-4">
           <close-icon class="dvs-cursor-pointer" w="20" h="20" />
@@ -16,11 +16,11 @@
         </ul>
       </div>
     </transition>
-    <transition name="fade-delayed">
+    <transition name="dvs-fade-delayed">
       <div class="dvs-alert-message" :style="infoBlockTheme" v-show="messages.length > 0">
         <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i>
         <ul>
-          <transition-group name="fade" tag="div">
+          <transition-group name="list" tag="div">
             <li v-for="(message, key) in messages" :key="key" :style="`border-bottom-color:${infoBlockTheme.color}`">
               <h6 class="dvs-text-base" :style="`color:${infoBlockTheme.color}`">{{ message.title }}</h6>
               <p :style="`color:${infoBlockTheme.color}`">{{ message.message }}</p>

@@ -4,7 +4,7 @@
       <flash-icon w="30" h="30" />
     </button>
 
-    <transition name="fade">
+    <transition name="dvs-fade">
       <ul v-if="show" class="dvs-min-w-full dvs-list-reset dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-8" style="margin-right:100px">
         <slot></slot>
       </ul>

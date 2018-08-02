@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <transition name="fade">
+    <transition name="dvs-fade">
       <devise-modal @close="showCreate = false" class="dvs-z-50" v-if="showCreate">
         <h3 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Create new page</h3>
 

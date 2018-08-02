@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition name="fade">
+    <transition name="dvs-fade">
       <div class="dvs-fixed dvs-pin dvs-z-50" v-show="loadbarPercentage > 0 && loadbarPercentage < 1">
         <div class="dvs-blocker"></div>
           <div class="dvs-text-center dvs-w-1/4 dvs-px-4 dvs-py-8 dvs-bg-white dvs-rounded dvs-flex dvs-flex-col dvs-items-center dvs-absolute dvs-absolute-center dvs-z-50">

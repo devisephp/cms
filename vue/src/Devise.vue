@@ -21,7 +21,7 @@
           v-if="isLoggedIn" 
           data-simplebar>
             
-          <transition name="fade" mode="out-in">
+          <transition name="dvs-fade" mode="out-in">
             <router-view name="devise" :page="page"></router-view>
           </transition>
 

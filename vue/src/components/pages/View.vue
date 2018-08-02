@@ -153,7 +153,7 @@
 
     </div>
 
-    <transition name="fade">
+    <transition name="dvs-fade">
       <devise-modal @close="showCopy = false" class="dvs-z-50" v-if="showCopy">
         <h4 class="dvs-mb-4">Copy this page</h4>
         <help class="dvs-mb-4">This will create a whole new page based on this page copying all settings and values associated with it.</help>
@@ -172,7 +172,7 @@
       </devise-modal>
     </transition>
 
-    <transition name="fade">
+    <transition name="dvs-fade">
       <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showTranslate">
         <h4 class="dvs-mb-4">Translate this page</h4>
         <help class="dvs-mb-4">This will create a translated page associated with this page. While the pages are connected to allow users to switch between translations they do have their own settings and versions.</help>

@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <transition name="fade">
+    <transition name="dvs-fade">
       <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
         <h2 class="dvs-mb-8" :style="{color: theme.statsText.color }">Create new site</h2>
 

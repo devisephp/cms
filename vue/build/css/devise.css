@@ -1774,43 +1774,43 @@ table.dvs-table.tight td {
           transform: rotate(90deg);
 }
 
-.fade-enter-active {
+.dvs-fade-enter-active {
   -webkit-transition: opacity .5s;
   transition: opacity .5s;
 }
 
-.fade-leave-active {
+.dvs-fade-leave-active {
   -webkit-transition: opacity .5s;
   transition: opacity .5s;
 }
 
-.fade-enter,
-.fade-leave-to {
+.dvs-fade-enter,
+.dvs-fade-leave-to {
   opacity: 0;
 }
 
-.fade-enter-to {
+.dvs-fade-enter-to {
   opacity: 1;
 }
 
-.fade-delayed-enter-active {
+.dvs-fade-delayed-enter-active {
   -webkit-transition: opacity .5s;
   transition: opacity .5s;
 }
 
-.fade-delayed-leave-active {
+.dvs-fade-delayed-leave-active {
   -webkit-transition: opacity .5s;
   transition: opacity .5s;
   -webkit-transition-delay: 1s;
           transition-delay: 1s;
 }
 
-.fade-delayed-enter,
-.fade-leave-to {
+.dvs-fade-delayed-enter,
+.dvs-fade-delayed-leave-to {
   opacity: 0;
 }
 
-.fade-delayed-enter-to {
+.dvs-fade-delayed-enter-to {
   opacity: 1;
 }
 

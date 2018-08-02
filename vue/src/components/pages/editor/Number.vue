@@ -1,6 +1,6 @@
 <template>
   <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
-
+asdfasdf
     <template slot="preview">
       <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
         Currently No Value

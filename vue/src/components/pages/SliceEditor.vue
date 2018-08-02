@@ -25,31 +25,31 @@
 
     <div class="dvs-collapsed dvs-mb-8" v-if="slice.metadata.open">
       <div v-if="!slice.metadata.placeholder">
-        <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-ml-4" :key="key" v-if="fields[key]">
+        <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-ml-4" :key="key" v-if="theFields[key]">
           <div>
 
-            <color-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'color'">
+            <color-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'color'">
             </color-editor>
 
-            <checkbox-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'checkbox'">
+            <checkbox-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'checkbox'">
             </checkbox-editor>
 
-            <image-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'image'">
+            <image-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'image'">
             </image-editor>
 
-            <link-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'link'">
+            <link-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'link'">
             </link-editor>
 
-            <number-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'number'">
+            <number-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'number'">
             </number-editor>
 
-            <textarea-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'textarea'">
+            <textarea-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'textarea'">
             </textarea-editor>
 
-            <text-editor v-model="fields[key]" :options="field" :namekey="key" v-if="field.type === 'text'">
+            <text-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'text'">
             </text-editor>
 
-            <wysiwyg-editor v-model="fields[key]" :options="field" :namekey="key" :show="slice.metadata.show" v-if="field.type === 'wysiwyg'">
+            <wysiwyg-editor v-model="theFields[key]" :options="field" :namekey="key" :show="slice.metadata.show" v-if="field.type === 'wysiwyg'">
             </wysiwyg-editor>
           </div>
 
@@ -194,7 +194,7 @@ export default {
       'fieldConfig',
       'sliceConfig'
     ]),
-    fields () {
+    theFields () {
       var fields = {}
       for (var potentialField in this.slice) {
         if (

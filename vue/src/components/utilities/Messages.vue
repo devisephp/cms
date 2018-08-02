@@ -41,7 +41,6 @@ export default {
   data () {
     return {
       title: null,
-      errors: [],
       messages: []
     }
   },

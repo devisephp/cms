@@ -62,6 +62,13 @@ class DvsSite extends Model
         return json_decode($value);
     }
 
+    public function getUrlAttribute()
+    {
+        $scheme = (request()->serure) ? 'https' : 'http';
+
+        return $scheme . '://' . $this->domain;
+    }
+
     public function setSettingsAttribute($value)
     {
         $this->attributes['settings'] = ($value) ? json_encode($value) : '{}';

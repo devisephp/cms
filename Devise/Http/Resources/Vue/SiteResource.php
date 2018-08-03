@@ -20,7 +20,7 @@ class SiteResource extends Resource
             'id'        => $this->id,
             'name'      => $this->name,
             'current'   => $this->current,
-            'url'       => $scheme . '://' . $this->domain,
+            'url'       => $this->url,
             'data'      => $this->data,
             'domain'    => $this->domain,
             'settings'  => $this->settings,

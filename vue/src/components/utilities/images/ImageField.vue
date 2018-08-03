@@ -4,7 +4,7 @@
 
     <div class="dvs-flex dvs-items-center">
       <input type="text" v-model="value" :maxlength="getMaxLength" disabled>
-      <div @click="showMediaManager($)">
+      <div @click="showMediaManager()">
         <images-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px"/>
       </div>
       <div @click="loadPreview" v-bind:class="{ ' dvs-opacity-25': !previewEnabled }">
@@ -47,26 +47,20 @@
   import {mapActions, mapGetters} from 'vuex'
 
   export default {
-    name: 'ImagesField',
+    name: 'ImageField',
     data() {
       return {
         showPreview: false
       }
     },
     methods: {
-      updateValue: function () {
-        // Emit the number value through the input event
-        this.$emit('input', this.value)
-        this.$emit('change', this.value)
-      },
       showMediaManager(event) {
         devise.$bus.$emit('devise-launch-media-manager', {
           callback: this.mediaSelected
         })
       },
       mediaSelected(media) {
-        this.value = media.url
-        this.updateValue()
+        this.image = media.url
       },
       loadPreview() {
         if (this.previewEnabled)
@@ -74,17 +68,27 @@
       }
     },
     computed: {
+      image: {
+        get () {
+          return this.value
+        },
+        set (newValue) {
+          this.$emit('input', newValue)
+          this.$emit('change', newValue)
+        }
+      },
       fileName() {
         let parts = this.value.split('/')
         return parts[parts.length - 1]
       },
       previewEnabled() {
         return (this.value !== '' && this.value !== null)
-      }
-    },
-    watch: {
-      value() {
-        this.updateValue()
+      },
+      getMaxLength: function () {
+        if (typeof this.settings !== 'undefined' && typeof this.settings.maxlength !== 'undefined') {
+          return this.settings.maxlength
+        }
+        return ''
       }
     },
     props: ['value'],

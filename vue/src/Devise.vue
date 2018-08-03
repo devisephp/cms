@@ -187,6 +187,7 @@ export default {
         this.wideAdmin = false
         this.openAnimation.reverse()
         this.openAnimation.play()
+        window.location.hash = '#'
       } else {
         if (deviseSettings.$page) {
           this.goToPage('devise-page-editor')

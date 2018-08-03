@@ -74,14 +74,6 @@ export default {
       this.$emit('change', this.localValue)
     }
   },
-  computed: {
-    getMaxLength: function () {
-      if (typeof this.settings !== 'undefined' && typeof this.settings.maxlength !== 'undefined') {
-        return this.settings.maxlength
-      }
-      return ''
-    }
-  },
   props: ['value', 'options'],
   components: {
     FieldEditor

@@ -63,8 +63,8 @@
 
             <!-- Delete Directory -->
             <div v-if="files.length < 1 && directories.length < 1 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
-              <div class="dvs-bg-white dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow dvs-cursor-pointer" @click="requestDeleteDirectory()">
-                <trash-icon :h="40" :w="40" :style="{color: theme.adminBackground.color}" />
+              <div class="dvs-bg-white dvs-text-grey-dark dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow dvs-cursor-pointer" @click="requestDeleteDirectory()">
+                <trash-icon :h="40" :w="40" :style="{color: theme.adminText.color}" />
                 <h6 class="dvs-mt-2 dvs-text-sm">
                   Delete this directory
                 </h6>
@@ -74,7 +74,7 @@
             <!-- Directories but no files -->
             <div v-if="files.length < 1 && directories.length > 0 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
               <div class="dvs-bg-white dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow">
-                <folder-icon :h="40" :w="40" :style="{color: theme.adminBackground.color}" />
+                <folder-icon :h="40" :w="40" :style="{color: theme.adminText.color}" />
                 <h6 class="dvs-mt-2 dvs-text-sm"><span>No files in this directory</span></h6>
               </div>
             </div>
@@ -82,19 +82,20 @@
             <!-- Files -->
             <ul class="dvs-list-reset"
               :class="{
-                'dvs-flex dvs-flex-wrap': !listMode
+                'dvs-flex dvs-justify-center dvs-flex-wrap': !listMode
               }"
              v-else>
-              <li v-for="file in files" :key="file.id" class="dvs-relative dvs-bg-white dvs-card dvs-mt-2 dvs-p-4 dvs-px-8"
+              <li v-for="file in files" :key="file.id" class="dvs-relative dvs-bg-white dvs-card dvs-mt-2"
                 :class="{
                   'dvs-cursor-pointer': !file.on,
-                  'dvs-border-b dvs-border-lighter': listMode
+                  'dvs-border-b dvs-border-lighter dvs-p-4 dvs-px-8': listMode,
+                  'dvs-m-4 dvs-p-0': !listMode
                 }"
                 @click="openFile(file)">
 
                 <!-- Close File if On -->
                 <div v-if="file.on" @click.stop.prevent="closeFile(file)">
-                  <close-icon class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-4 dvs-mr-4 dvs-cursor-pointer" :w="30" :h="30" />
+                  <close-icon class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-4 dvs-mr-4 dvs-cursor-pointer" w="30" h="30" />
                 </div>
                 <!-- Closed File -->
                 <div v-if="!file.on">
@@ -110,7 +111,7 @@
                   </div>
 
                   <!-- Grid Mode -->
-                  <div class="dvs-grid-preview" :style="`background-size:cover;background-image:url('${file.url}')`" v-else>
+                  <div class="dvs-grid-preview dvs-relative" :style="`background-size:cover;background-image:url('${file.url}')`" v-else>
                     <h6 class="dvs-text-xs dvs-w-full dvs-py-2 dvs-bg-black-50 dvs-text-white dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-text-center dvs-rounded-sm">{{ file.name }}</h6>
                   </div>
                 </div>
@@ -121,24 +122,24 @@
                     <img :src="file.url" class="dvs-cursor-pointer dvs-mb-4" @click="selectFile(file)">
                     <div class="dvs-flex">
                       <div class="dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: requestDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
-                        <trash-icon :h="30" :w="30" :style="{color: theme.adminBackground.color}" />
+                        <trash-icon h="20" w="20" :style="{color: theme.adminText.color}" />
                       </div>
-                      <a :href="file.url" target="_blank" :style="{color: theme.adminBackground.color}">
-                        <link-icon :h="30" :w="30" />
+                      <a :href="file.url" target="_blank" :style="{color: theme.adminText.color}">
+                        <link-icon h="20" w="20" />
                       </a>
                     </div>
                   </div>
                   <div class="dvs-w-1/2">
-                    <h6 class="dvs-text-sm">Filename</h6>
-                    <p class="dvs-text-base">{{ file.name }}</p>
+                    <h6 class="dvs-text-xs dvs-uppercase dvs-mb-1">Filename</h6>
+                    <p class="dvs-text-sm">{{ file.name }}</p>
 
-                    <fieldset class="dvs-fieldset">
-                      <h6 class="dvs-text-sm">URL</h6>
+                    <h6 class="dvs-text-xs dvs-uppercase dvs-mb-1">Size</h6>
+                    <p class="dvs-text-sm dvs-uppercase dvs-font-bold">{{ file.size }}</p>
+
+                    <fieldset class="dvs-fieldset dvs-mb-4">
+                      <label class="dvs-text-xs dvs-uppercase dvs-mb-1">URL</label>
                       <input type="text" :value="file.url">
                     </fieldset>
-
-                    <h6 class="dvs-mt-4 dvs-text-sm">Size</h6>
-                    <p>{{ file.size }}</p>
 
                     <p><button @click="selectFile(file)" class="dvs-btn" :style="actionButtonTheme">Select</button></p>
 

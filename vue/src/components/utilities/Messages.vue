@@ -1,13 +1,13 @@
 <template>
   <div>
     <transition name="dvs-fade-delayed">
-      <div class="dvs-alert-message dvs-error" :style="infoBlockTheme" v-show="errors.length > 0">
+      <div class="dvs-alert-message dvs-error" :style="infoBlockTheme" v-show="messageErrors.length > 0">
         <div @click="closeErrors()" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mr-4 dvs-mt-4">
           <close-icon class="dvs-cursor-pointer" w="20" h="20" />
         </div>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="(error, key) in errors" :key="key" :style="`border-bottom-color:${infoBlockTheme.color}`">
+            <li v-for="(error, key) in messageErrors" :key="key" :style="`border-bottom-color:${infoBlockTheme.color}`">
               <h6 :style="`color:${infoBlockTheme.color}`">{{ error.title }}</h6>
               <p :style="`color:${infoBlockTheme.color}`">{{ error.message }}</p>
               <p :style="`color:${infoBlockTheme.color}`" class="dvs-text-sm" v-if="error.code">Error Code: {{ error.code }}</p>
@@ -41,7 +41,8 @@ export default {
   data () {
     return {
       title: null,
-      messages: []
+      messages: [],
+      messageErrors: []
     }
   },
   mounted () {
@@ -111,7 +112,7 @@ export default {
     },
     appendError (payload) {
       let self = this
-      let existingError = this.errors.find(error => error.message === payload.message)
+      let existingError = this.messageErrors.find(error => error.message === payload.message)
 
       if (!existingError) {
         let error = {
@@ -119,15 +120,15 @@ export default {
           title: payload.title,
           message: payload.message
         }
-        this.errors.unshift(error)
+        this.messageErrors.unshift(error)
 
         window._.debounce(function () {
-          self.errors.pop()
+          self.messageErrors.pop()
         }, 5000)()
       }
     },
     closeErrors () {
-      this.errors.splice(0)
+      this.messageErrors.splice(0)
     },
     addMessage (payload) {
       let self = this

@@ -10,10 +10,10 @@
         </div>
       </template>
       <template v-else>
-        <div v-if="!repeatableChild" class="dvs-flex dvs-items-center">
+        <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center" :class="{'pl-4': child}">
           {{ slice.metadata.label }}
         </div>
-        <div v-else class="dvs-flex dvs-items-center dvs-w-full dvs-pl-8 dvs-justify-between">
+        <div v-else class="dvs-flex dvs-items-center dvs-w-full dvs-pl-4 dvs-justify-between">
           <div>Instance</div>
           <div class="dvs-pl-4" @click.stop="requestRemoveInstance(slice)">
             Remove
@@ -72,7 +72,7 @@
 
         <ul class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" >
           <template v-for="(s, key) in slice.slices">
-            <slice-editor :key="key" :slice="s" :repeatable-child="true" @removeInstance="removeInstance" />
+            <slice-editor :key="key" :slice="s" :child="true" @removeInstance="removeInstance" />
           </template>
         </ul>
       </div>
@@ -212,7 +212,12 @@ export default {
       return fields
     }
   },
-  props: ['slice', 'repeatableChild'],
+  props: {
+    'slice': {}, 
+    'child': {
+      default: false
+    }
+  },
   components: {
     AddIcon,
     SliceEditor,

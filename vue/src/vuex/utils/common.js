@@ -39,7 +39,9 @@ const funcs = {
       params['scopes'] = scopeParams
     }
 
-    if (Object.keys(filters.dates).length > 0) {
+    
+
+    if (filters.dates && Object.keys(filters.dates).length > 0) {
       let datesParams = {}
       for (let param in filters.dates) {
         if (filters.dates[param].after || filters.dates[param].before) {
@@ -54,7 +56,7 @@ const funcs = {
       Vue.set(params['filters'], 'dates', datesParams)
     }
 
-    if (Object.keys(relatedParams).length > 0) {
+    if (relatedParams && Object.keys(relatedParams).length > 0) {
       for (let param in relatedParams) {
         if (relatedParams.hasOwnProperty(param)) {
           if (relatedParams[param] === '') {
@@ -69,7 +71,7 @@ const funcs = {
       Vue.set(params['filters'], 'related', relatedParams)
     }
 
-    if (Object.keys(searchParams).length > 0) {
+    if (searchParams && Object.keys(searchParams).length > 0) {
       for (let param in searchParams) {
         if (searchParams.hasOwnProperty(param)) {
           if (searchParams[param] === '') {
@@ -83,6 +85,8 @@ const funcs = {
 
       Vue.set(params['filters'], 'search', searchParams)
     }
+
+    
 
     params = funcs.serialize(params)
 

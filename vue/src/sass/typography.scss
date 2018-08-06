@@ -9,6 +9,10 @@
   h4 { @apply dvs-text-xl dvs-font-thin }
   h5 { @apply dvs-text-lg; }
   h6 { @apply dvs-uppercase dvs-tracking-wide dvs-font-bold dvs-text-xs dvs-tracking-superwide; }
+
+  p, ol, ul, blockquote, pre, code {
+    line-height: 1.4em;
+  }
 }
 
 a {

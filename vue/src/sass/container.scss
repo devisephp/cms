@@ -37,6 +37,12 @@
   }
 }
 
+@media (max-width: 767px) { 
+  #devise-admin-open {
+    @apply dvs-hidden;
+  }
+}
+
 @keyframes spinClockwise { 
   from { 
     transform: rotate(0deg); 
@@ -60,6 +66,12 @@
   // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   
   width:25%;
+}
+
+@media (max-width: 767px) { 
+  #devise-admin {
+    @apply dvs-hidden;
+  }
 }
 
 #devise-admin-shim {

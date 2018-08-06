@@ -1104,6 +1104,12 @@ button,
           animation-name: spinCounterClockwise;
 }
 
+@media (max-width: 767px) {
+  #devise-admin-open {
+    display: none;
+  }
+}
+
 @-webkit-keyframes spinClockwise {
   from {
     -webkit-transform: rotate(0deg);
@@ -1161,6 +1167,12 @@ button,
   overflow: scroll;
   margin-left: -1px;
   width: 25%;
+}
+
+@media (max-width: 767px) {
+  #devise-admin {
+    display: none;
+  }
 }
 
 #devise-admin-shim {
@@ -1853,6 +1865,15 @@ table.dvs-table.tight td {
   font-weight: 700;
   font-size: .75rem;
   letter-spacing: .075em;
+}
+
+#devise-admin p,
+#devise-admin ol,
+#devise-admin ul,
+#devise-admin blockquote,
+#devise-admin pre,
+#devise-admin code {
+  line-height: 1.4em;
 }
 
 a {

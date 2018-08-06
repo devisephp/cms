@@ -1534,6 +1534,12 @@ button:hover {
   opacity: 1;
 }
 
+.dvs-open > .dvs-collapsable > .dvs-collapsed {
+  display: block;
+  height: auto;
+  opacity: 1;
+}
+
 .dvs-loadbar {
   height: 8px;
   background-color: #f1f5f8;

@@ -67,12 +67,13 @@
         </template>
 
         <!-- Child Slices -->
-        <div class="dvs-mt-4 dvs-w-full" v-if="localValue.slices">
-          <draggable v-model="localValue.slices" element="ul" :options="{handle: '.handle'}" class="dvs-list-reset dvs-ml-4">
-            <li v-for="(slice, key) in localValue.slices" :key="key" class="item dvs-mb-2 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
+        <div class="dvs-mt-1 dvs-w-full" v-if="localValue.slices">
+          <draggable v-model="localValue.slices" element="ul" :options="{handle: '.handle'}" class="dvs-list-reset dvs-ml-2">
+            <li v-for="(slice, key) in localValue.slices" :key="key" class="item dvs-mb-2" :class="{'dvs-open': slice.metadata.open}">
               <template-slice-editor
                 v-model="localValue.slices[key]"
                 :key="key"
+                :name="`${slice.id}-${key}-slice`"
                 @addSlice="addSlice"
                 @removeSlice="removeSlice"
                 @modifySlice="modifySlice">
@@ -121,6 +122,7 @@ export default {
     this.localValue = this.value
     this.prepareSliceForTemplatePreview()
     this.loaded = true
+    console.log('here')
   },
   methods: {
     updateValue () {

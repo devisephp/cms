@@ -16,3 +16,11 @@
     }
   }
 }
+
+.dvs-open {
+  > .dvs-collapsable {
+    > .dvs-collapsed {
+      @apply dvs-block dvs-h-auto dvs-opacity-100;
+    }
+  }
+}

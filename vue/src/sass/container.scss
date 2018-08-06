@@ -10,12 +10,14 @@
 
   svg {
     @apply dvs-cursor-pointer;
+    
     fill:white;
     filter: drop-shadow(0 0 12px rgba(0,0,0,0.5));  
   }
 
   .dvs-gear-2 {
     @apply dvs-text-base dvs-absolute;
+
     top: 20px;
     right: -10px;
   }

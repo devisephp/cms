@@ -6,6 +6,8 @@ use Devise\Models\Repository as ModelRepository;
 use DateTime;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 class DvsPage extends Model
 {
@@ -204,6 +206,16 @@ class DvsPage extends Model
     public function getResponseParamsArrayAttribute()
     {
         return explode(',', $this->attributes['response_params']);
+    }
+
+    public function getPermalinkAttribute()
+    {
+        if (Route::getRoutes()->hasNamedRoute($this->route_name))
+        {
+            return URL::route($this->route_name);
+        }
+
+        return '#';
     }
 
     public function hasAttribute($key)

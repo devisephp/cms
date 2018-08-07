@@ -83,7 +83,6 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import SliceEditor from './SliceEditor'
 import CheckboxEditor from './editor/Checkbox'
 import ColorEditor from './editor/Color'
 import ImageEditor from './editor/Image'
@@ -220,7 +219,6 @@ export default {
   },
   components: {
     AddIcon,
-    SliceEditor,
     CheckboxEditor,
     ColorEditor,
     ImageEditor,

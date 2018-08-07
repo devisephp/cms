@@ -91,7 +91,6 @@
 import { mapGetters, mapActions } from 'vuex'
 
 import AnalyticTotals from './AnalyticTotals'
-import SliceEditor from './SliceEditor'
 import SidebarHeader from './../utilities/SidebarHeader'
 
 import CheckmarkCircleIcon from 'vue-ionicons/dist/ios-checkmark-circle-outline.vue'
@@ -164,8 +163,7 @@ export default {
     PhonePortraitIcon,
     PhoneLandscapeIcon,
     TabletIcon,
-    SidebarHeader,
-    SliceEditor
+    SidebarHeader
   }
 }
 </script>

@@ -122,7 +122,6 @@ export default {
     this.localValue = this.value
     this.prepareSliceForTemplatePreview()
     this.loaded = true
-    console.log('here')
   },
   methods: {
     updateValue () {

@@ -185,9 +185,7 @@
         }
       },
       selectDataToAdd () {
-        console.log('here')
         let slice = this.buildSlice()
-        console.log('andhere')
 
         if (this.mode === 'add') {
           this.addSlice(slice)

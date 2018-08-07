@@ -252,7 +252,6 @@
     },
     watch: {
       value () {
-        console.log('here')
         this.requestRefreshRecords()
       },
       filters () {

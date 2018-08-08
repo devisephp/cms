@@ -169,7 +169,7 @@ class Link
 	        $i++;
         }
 
-        return false;
+        return [];
     }
 
     /**

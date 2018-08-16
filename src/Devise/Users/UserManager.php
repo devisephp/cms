@@ -30,7 +30,7 @@ class UserManager
      *
      * @var array
      */
-    public $errors;
+    public $errors = [];
 
     /**
      * Messages which we can store why validation failed

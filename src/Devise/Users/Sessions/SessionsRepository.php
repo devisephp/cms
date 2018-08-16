@@ -46,7 +46,7 @@ class SessionsRepository
      *
      * @var array
      */
-    public $errors;
+    public $errors = [];
 
     /**
      * This is a message that we can store why validation failed

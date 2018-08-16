@@ -16,7 +16,7 @@ class MetaManager
      *
      * @var \errors
      */
-    public $errors;
+    public $errors = [];
 
     /**
      * Generic message for success or failure of method execution

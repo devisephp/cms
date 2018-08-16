@@ -84,7 +84,7 @@ class PageManager
      *
      * @var array
      */
-    public $errors;
+    public $errors = [];
 
     /**
      * [$warnings description]

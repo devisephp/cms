@@ -27,7 +27,7 @@ class GroupManager
      *
      * @var array
      */
-    public $errors;
+    public $errors = [];
 
     /**
      * Validation messages

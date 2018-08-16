@@ -7,7 +7,7 @@
 class ScaffoldingManager
 {
 
-    public $errors;
+    public $errors = [];
 
     public $message;
 

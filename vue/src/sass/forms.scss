@@ -26,6 +26,14 @@
     &.dvs-w-auto {
       @apply dvs-w-auto;
     }
+
+    &.dvs-small {
+      @apply dvs-px-3 dvs-py-2 dvs-rounded-sm;
+    }
+
+    &.dvs-dark {
+      @apply dvs-bg-grey-darker dvs-text-white;
+    }
   }
 }
 
@@ -70,15 +78,5 @@
       border-radius: 50%;
       transition: .4s;
     }
-  }
-}
-
-button {
-  @apply dvs-text-grey-darker dvs-cursor-pointer;
-
-  transition: color 0.5s ease-in;
-
-  &:hover {
-    @apply dvs-text-blue-dark;
   }
 }

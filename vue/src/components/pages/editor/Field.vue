@@ -7,18 +7,15 @@
           :class="{'dvs-bg-green': localValue.enabled, 'dvs-bg-white': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" 
           :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration">
         </div>
-        <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full">
-          <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal hover:underline" @click="toggleShowEditor">{{ options.label }}</span>
+        <div class="dvs-flex dvs-items-center dvs-justify-start dvs-w-full">
           <div @mouseover="showPreview = true" @mouseout="showPreview = false">
-            <eye-icon />
+            <eye-icon class="dvs-mr-2" />
           </div>
+          <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal hover:underline" @click="toggleShowEditor">{{ options.label }}</span>
           <div 
             v-show="showPreview" 
             class="dvs-absolute dvs-font-normal dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20"
-            :style="`
-              background-color: ${theme.sidebarTop.color};
-              color:${theme.sidebarText.color};
-            `"
+            :style="adminTheme"
             >
             <slot name="preview"></slot>
             {{ localValue.instructions }}
@@ -30,8 +27,8 @@
     <template v-if="showEditor">
       <portal to="devise-root">
         <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="toggleShowEditor"></div>
-        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2" :style="infoBlockTheme">
-          <h6 class="dvs-text-base dvs-mb-4" :style="{color: theme.statsText.color}">
+        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2" :style="adminTheme">
+          <h6 class="dvs-text-base dvs-mb-4">
             <span>{{ localValue.label }}</span><br>
             <small class="dvs-text-xs" v-if="localValue.instructions">
               Hint from Developer: 

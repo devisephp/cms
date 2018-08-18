@@ -4,7 +4,7 @@
     <sidebar title="Manage Languages" :menu-items="settingsMenu" />
     
     <div id="devise-admin-content" :style="adminTheme">
-      <h3 class="dvs-mb-8" :style="{color: theme.sidebarText.color }">{{ localValue.name }} Settings</h3>
+      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color }">{{ localValue.name }} Settings</h3>
 
       <div class="dvs-mb-12">
         <form>

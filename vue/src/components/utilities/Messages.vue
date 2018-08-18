@@ -1,29 +1,29 @@
 <template>
   <div>
     <transition name="dvs-fade-delayed">
-      <div class="dvs-alert-message dvs-error" :style="infoBlockTheme" v-show="messageErrors.length > 0">
+      <div class="dvs-alert-message dvs-error" :style="adminTheme" v-show="messageErrors.length > 0">
         <div @click="closeErrors()" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mr-4 dvs-mt-4">
           <close-icon class="dvs-cursor-pointer" w="20" h="20" />
         </div>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="(error, key) in messageErrors" :key="key" :style="`border-bottom-color:${infoBlockTheme.color}`">
-              <h6 :style="`color:${infoBlockTheme.color}`">{{ error.title }}</h6>
-              <p :style="`color:${infoBlockTheme.color}`">{{ error.message }}</p>
-              <p :style="`color:${infoBlockTheme.color}`" class="dvs-text-sm" v-if="error.code">Error Code: {{ error.code }}</p>
+            <li v-for="(error, key) in messageErrors" :key="key" :style="`border-bottom-color:${adminTheme.color}`">
+              <h6 :style="`color:${adminTheme.color}`">{{ error.title }}</h6>
+              <p :style="`color:${adminTheme.color}`">{{ error.message }}</p>
+              <p :style="`color:${adminTheme.color}`" class="dvs-text-sm" v-if="error.code">Error Code: {{ error.code }}</p>
             </li>
           </transition-group>
         </ul>
       </div>
     </transition>
     <transition name="dvs-fade-delayed">
-      <div class="dvs-alert-message" :style="infoBlockTheme" v-show="messages.length > 0">
+      <div class="dvs-alert-message" :style="adminTheme" v-show="messages.length > 0">
         <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="(message, key) in messages" :key="key" :style="`border-bottom-color:${infoBlockTheme.color}`">
-              <h6 class="dvs-text-base" :style="`color:${infoBlockTheme.color}`">{{ message.title }}</h6>
-              <p :style="`color:${infoBlockTheme.color}`">{{ message.message }}</p>
+            <li v-for="(message, key) in messages" :key="key" :style="`border-bottom-color:${adminTheme.color}`">
+              <h6 class="dvs-text-base" :style="`color:${adminTheme.color}`">{{ message.title }}</h6>
+              <p :style="`color:${adminTheme.color}`">{{ message.message }}</p>
             </li>
           </transition-group>
         </ul>

@@ -1166,20 +1166,13 @@ button,
   bottom: 0;
   overflow: scroll;
   margin-left: -1px;
-  width: 25%;
+  width: 100%;
 }
 
 @media (max-width: 767px) {
   #devise-admin {
     display: none;
   }
-}
-
-#devise-admin-shim {
-  background-color: #fff;
-  width: 25%;
-  -webkit-transition: width .5s ease-out, min-width .5s ease-out;
-  transition: width .5s ease-out, min-width .5s ease-out;
 }
 
 .devise-content {
@@ -1228,34 +1221,20 @@ button,
   height: 600px;
 }
 
-#dvs-app-content {
-  width: 75%;
-  -webkit-transition: width .1s ease-out;
-  transition: width .1s ease-out;
-}
-
 #devise-in-page-analytics {
   width: calc(100% - 550px);
   -webkit-transition: opacity .5s ease-out;
   transition: opacity .5s ease-out;
 }
 
-.admin-closed #dvs-app-content {
-  width: 100%;
-}
-
 .admin-closed #devise-sidebar {
   left: -50%;
+  opacity: 0;
 }
 
 .admin-closed #devise-admin-content {
   opacity: 0;
   width: 75%;
-}
-
-#devise-container.admin-closed #devise-admin-shim {
-  min-width: 0;
-  width: 0;
 }
 
 #devise-container.admin-closed #devise-in-page-analytics {
@@ -1287,10 +1266,6 @@ button,
   width: 100%;
 }
 
-#devise-container.wide-admin #devise-admin-shim {
-  width: 100%;
-}
-
 #devise-container.wide-admin #devise-content {
   display: none;
 }
@@ -1304,15 +1279,14 @@ button,
   overflow: scroll;
   z-index: 20;
   text-align: center;
-  -webkit-transition: left .3s;
-  transition: left .3s;
-  width: 25%;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
 }
 
 #devise-menu-current-user {
+  width: 300px;
   bottom: 0;
   left: 0;
-  width: 25%;
 }
 
 #devise-iframe-editor {
@@ -1350,6 +1324,28 @@ button,
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+}
+
+#dvs-preview-mode-controls {
+  padding: 1.5rem;
+  color: #fff;
+  border-radius: .25rem;
+  -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+          box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 2rem;
+  width: 300px;
+  top: 0;
+  right: 0;
+  position: fixed;
 }
 
 #devise-preview-content {
@@ -1440,6 +1436,37 @@ button,
   width: auto;
 }
 
+.dvs-fieldset textarea.dvs-small,
+.dvs-fieldset select.dvs-small,
+.dvs-fieldset input[type="text"].dvs-small,
+.dvs-fieldset input[type="search"].dvs-small,
+.dvs-fieldset input[type="password"].dvs-small,
+.dvs-fieldset input[type="date"].dvs-small,
+.dvs-fieldset input[type="datetime-local"].dvs-small,
+.dvs-fieldset input[type="number"].dvs-small,
+.dvs-fieldset input[type="email"].dvs-small,
+.dvs-fieldset input[type="phone"].dvs-small {
+  padding-left: .75rem;
+  padding-right: .75rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  border-radius: .125rem;
+}
+
+.dvs-fieldset textarea.dvs-dark,
+.dvs-fieldset select.dvs-dark,
+.dvs-fieldset input[type="text"].dvs-dark,
+.dvs-fieldset input[type="search"].dvs-dark,
+.dvs-fieldset input[type="password"].dvs-dark,
+.dvs-fieldset input[type="date"].dvs-dark,
+.dvs-fieldset input[type="datetime-local"].dvs-dark,
+.dvs-fieldset input[type="number"].dvs-dark,
+.dvs-fieldset input[type="email"].dvs-dark,
+.dvs-fieldset input[type="phone"].dvs-dark {
+  background-color: #606f7b;
+  color: #fff;
+}
+
 .v-select-wrapper {
   background-color: #f1f5f8;
   color: #3d4852;
@@ -1490,17 +1517,6 @@ button,
   border-radius: 50%;
   -webkit-transition: .4s;
   transition: .4s;
-}
-
-button {
-  color: #606f7b;
-  cursor: pointer;
-  -webkit-transition: color .5s ease-in;
-  transition: color .5s ease-in;
-}
-
-button:hover {
-  color: #2b6ed8;
 }
 
 .help {
@@ -1689,6 +1705,63 @@ button:hover {
   background-color: #fff;
 }
 
+.dvs-panel {
+  position: relative;
+  float: left;
+  background-color: rgba(255, 255, 255, 0);
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+.dvs-panel:hover .dvs-panel-contents {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.dvs-panel:hover .dvs-panel-contents:after {
+  opacity: 1;
+}
+
+.dvs-panel-shine {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  background: radial-gradient(rgba(255, 255, 255, .6), rgba(255, 255, 255, 0));
+}
+
+.dvs-panel-contents {
+  position: relative;
+  margin: 2rem;
+  border-radius: .25rem;
+  color: #fff;
+  border-width: 2px;
+  border-color: #fff;
+  opacity: 1;
+  background: linear-gradient(135deg, #00dbde, #fc00ff);
+  will-change: transform;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+  -webkit-transition: background-color .5s;
+  transition: background-color .5s;
+}
+
+.dvs-panel-contents:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: '';
+  opacity: 1;
+  -webkit-box-shadow: 0 20px 70px -10px rgba(51, 51, 51, .7), 0 50px 100px 0 rgba(51, 51, 51, .2);
+          box-shadow: 0 20px 70px -10px rgba(51, 51, 51, .7), 0 50px 100px 0 rgba(51, 51, 51, .2);
+  -webkit-transition: opacity 1000s;
+  transition: opacity 1000s;
+}
+
 .dvs-absolute-center {
   top: 50%;
   left: 50%;
@@ -1830,6 +1903,11 @@ table.dvs-table.tight td {
 
 .dvs-fade-delayed-enter-to {
   opacity: 1;
+}
+
+.dvs-transitions-hover-slow {
+  -webkit-transition: all .8s;
+  transition: all .8s;
 }
 
 #devise-admin h1,

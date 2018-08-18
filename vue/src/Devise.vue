@@ -6,55 +6,47 @@
     <messages v-if="isLoggedIn" />
     <loadbar v-if="isLoggedIn" />
     <media-manager v-if="isLoggedIn" />
+    <media-editor v-if="isLoggedIn" />
 
     <template v-if="editorMode || pageMode">
 
-      <div id="devise-container" :class="[breakpoint, adminClosed ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
-        <div 
-          id="devise-admin" 
-          class="dvs-text-grey-darker dvs-bg-white"
-          :class="[deviseOptions.adminClass]" 
-          :style="`
-            background-image: linear-gradient(180deg, ${theme.sidebarTop.color} 0%, ${theme.sidebarBottom.color} 100%);
-            color:${theme.sidebarText.color};
-          `"
-          v-if="isLoggedIn" 
-          data-simplebar>
-            
-          <transition name="dvs-fade" mode="out-in">
-            <router-view name="devise" :page="page"></router-view>
-          </transition>
-
-          <user></user>
-
-        </div>
-
+      <div id="devise-container" :class="[breakpoint, !adminOpen ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         
-        <div class="dvs-flex-grow dvs-flex dvs-justify-center dvs-max-w-full">
+        <transition name="dvs-fade">
+          <div 
+            id="devise-admin"
+            :class="[deviseOptions.adminClass]" 
+            v-if="isLoggedIn && adminOpen" 
+            data-simplebar>
+              
+            <transition name="dvs-fade" mode="out-in">
+              <router-view name="devise" :page="page"></router-view>
+            </transition>
 
-          <!-- Shim -->
-          <div id="devise-admin-shim" v-if="!isPreviewFrame && isLoggedIn"></div>
-          
-          <div id="dvs-app-content" :class="{'dvs-no-scroll': wideAdmin}">
-            <!-- Desktop mode in editor or just viewing page -->
-            <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
-              <slot name="on-top"></slot>
-              <slot name="static-content"></slot>
+            <user></user>
+            <preview-mode></preview-mode>
 
-              <template v-if="page.slices">
-                <slices :slices="page.slices" :editorMode="!adminClosed && editorMode"></slices>
-              </template>
+          </div>
+        </transition>
 
-              <slot name="static-content-bottom"></slot>
-              <slot name="on-bottom"></slot>
-            </div>
+        <div id="dvs-app-content" :class="{'dvs-no-scroll': wideAdmin}">
+          <!-- Desktop mode in editor or just viewing page -->
+          <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
+            <slot name="on-top"></slot>
+            <slot name="static-content"></slot>
 
-            <div id="devise-iframe-editor">
-              <!-- Preview mode in editor -->
-              <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[page.previewMode]"/>
-            </div>
+            <template v-if="page.slices">
+              <slices :slices="page.slices" :editorMode="adminOpen && editorMode"></slices>
+            </template>
+
+            <slot name="static-content-bottom"></slot>
+            <slot name="on-bottom"></slot>
           </div>
 
+          <div id="devise-iframe-editor">
+            <!-- Preview mode in editor -->
+            <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[page.previewMode]"/>
+          </div>
         </div>
 
         <template v-if="isLoggedIn && !isPreviewFrame">
@@ -78,9 +70,10 @@
 
 <script>
 import Loadbar from './components/utilities/Loadbar'
+import MediaEditor from './components/media-manager/MediaEditor'
 import MediaManager from './components/media-manager/MediaManager'
 import Messages from './components/utilities/Messages'
-import PageEditor from './components/pages/Editor'
+import PreviewMode from './components/pages/PreviewMode'
 import Slice from './Slice'
 import TemplateIndex from './components/templates/Index'
 import TemplateEdit from './components/templates/Edit'
@@ -102,7 +95,7 @@ export default {
       templateMode: false,
       editorMode: false,
       pageMode: false,
-      adminClosed: true,
+      adminOpen: true,
       openAnimation: null,
       wideAdmin: false,
       page: {
@@ -122,7 +115,6 @@ export default {
     } else {
       this.editorMode = true
       this.mountGlobalVariables()
-      this.addAdminAnimations()
       this.initDevise()
     }
 
@@ -158,7 +150,7 @@ export default {
       let self = this
       this.$nextTick(function () {
         if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
-          self.adminClosed = false
+          self.adminOpen = true
           self.checkWidthOfInterface(self.$route)
           self.openAnimation.restart()
           self.openAnimation.seek(100)
@@ -182,8 +174,8 @@ export default {
       }
     },
     toggleAdmin () {
-      this.adminClosed = !this.adminClosed
-      if (this.adminClosed) {
+      this.adminOpen = !this.adminOpen
+      if (!this.adminOpen) {
         this.wideAdmin = false
         this.openAnimation.reverse()
         this.openAnimation.play()
@@ -199,62 +191,6 @@ export default {
     },
     addWatchers () {
       window.onresize = this.setSizeAndBreakpoint
-    },
-    addAdminAnimations () {
-      this.$nextTick(() => {
-
-        this.openAnimation = anime.timeline({
-          autoplay: true,
-          loop: false
-        });
-
-        this.openAnimation
-          .add({
-            targets: document.querySelector('#devise-admin-open'),
-            left: [0, '25%'],
-            easing: 'linear',
-            offset: '+=0',
-            duration:100
-          })
-          .add({
-            targets: document.querySelector('#devise-admin'),
-            left: ['-25%', 0],
-            easing: 'easeOutQuad',
-            duration:100,
-            offset: '+=0',
-          })
-          .add({
-            targets: document.querySelectorAll('.admin-component-first-in'),
-            translateX: [-500, 0],
-            easing: 'easeOutQuad',
-            offset: '+=0',
-            duration:100,
-          })
-          .add({
-            targets: document.querySelectorAll('.admin-component-second-in'),
-            translateX: [-500, 0],
-            easing: 'easeOutQuad',
-            offset: '+=100',
-            duration:100,
-          })
-          .add({
-            targets: document.querySelectorAll('.admin-component-third-in'),
-            translateX: [-500, 0],
-            easing: 'easeOutQuad',
-            offset: '-=100',
-            duration:300,
-          })
-          .add({
-            targets: document.querySelectorAll('#devise-menu-current-user'),
-            translateX: [-500, 0],
-            easing: 'easeOutQuad',
-            offset: '-=100',
-            duration:300,
-          })
-
-        this.openAnimation.reverse()
-      })
-      
     },
     setSizeAndBreakpoint () {
       let width = window.innerWidth
@@ -301,15 +237,17 @@ export default {
       this.checkWidthOfInterface(newRoute)
 
       if (newRoute.name !== null) {
-        this.adminClosed = false
+        this.adminOpen = true
       }
     }
   },
+
   components: {
     Loadbar,
     Messages,
+    MediaEditor,
     MediaManager,
-    PageEditor,
+    PreviewMode,
     SettingsIcon,
     Slice,
     TemplateIndex,

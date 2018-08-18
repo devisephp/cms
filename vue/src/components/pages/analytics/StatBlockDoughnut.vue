@@ -5,7 +5,7 @@
         :chart-data="{
           datasets: [{
             data: chartData,
-            backgroundColor: [infoBlockTheme.color, 'rgba(255,255,255,0.4)'], 
+            backgroundColor: [adminTheme.color, 'rgba(255,255,255,0.4)'], 
             borderWidth: 0
           }],
           labels: [``, ``]

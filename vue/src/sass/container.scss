@@ -65,23 +65,13 @@
 #devise-admin {
   @apply dvs-z-30 dvs-fixed dvs-pin-l dvs-pin-t dvs-pin-b dvs-overflow-scroll dvs--ml-px;
 
-  // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  
-  width:25%;
+  width:100%;
 }
 
 @media (max-width: 767px) { 
   #devise-admin {
     @apply dvs-hidden;
   }
-}
-
-#devise-admin-shim {
-  @apply dvs-bg-white;
-
-  width:25%;
-
-  transition: width 0.5s ease-out, min-width 0.5s ease-out;
 }
 
 .devise-content {
@@ -120,12 +110,6 @@
   }
 }
 
-#dvs-app-content {
-  width: 75%;
-
-  transition: width 0.1s ease-out;
-}
-
 #devise-in-page-analytics {
   width: calc(100% - 550px);
 
@@ -133,12 +117,9 @@
 }
 
 .admin-closed { 
-  #dvs-app-content {
-    width: 100%;
-  }
-
   #devise-sidebar {
     left: -50%;
+    opacity: 0;
   }
 
   #devise-admin-content {
@@ -149,12 +130,6 @@
 
 #devise-container {
   &.admin-closed {
-
-    #devise-admin-shim {
-      @apply dvs-min-w-0;
-      width: 0px;
-    }
-
     #devise-in-page-analytics {
       opacity:0;
     }
@@ -186,10 +161,6 @@
       @apply dvs-w-full;
     }
 
-    #devise-admin-shim {
-      @apply dvs-w-full;
-    }
-
     #devise-content {
       display:none;
     }
@@ -199,15 +170,13 @@
 #devise-sidebar {
   @apply dvs-fixed dvs-pin-l dvs-pin-b dvs-pin-t dvs-min-h-screen dvs-overflow-scroll dvs-z-20 dvs-text-center;
   
-  transition: left 0.3s;
-
-  width:25%;
+  transition: opacity 0.3s;
 }
 
 #devise-menu-current-user {
+  width:300px;
   bottom:0;
   left:0;
-  width:25%;
 }
 
 #devise-iframe-editor {
@@ -228,6 +197,14 @@
 
 .devise-admin-action-bar {
   @apply dvs-p-4 dvs-flex dvs-fixed dvs-pin-t dvs-pin-r dvs-justify-end;
+}
+
+#dvs-preview-mode-controls {
+  @apply dvs-p-6 dvs-text-white dvs-rounded dvs-shadow-lg dvs-flex dvs-justify-center dvs-items-center dvs-m-8 ;
+  width: 300px;
+  top: 0;
+  right: 0;
+  position: fixed;
 }
 
 #devise-preview-content {

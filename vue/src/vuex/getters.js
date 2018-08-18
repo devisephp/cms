@@ -128,25 +128,12 @@ const getters = {
 
   theme: (state, getters, rootState) => {
     var defaultColors = {
-      sidebarTop: { color: 'rgba(242,242,242,1)' },
-      sidebarBottom: { color: 'rgba(230,230,230,1)' },
-      sidebarText: { color: 'rgba(107,107,107,1)' },
-      buttonsActionText: { color: 'rgba(0,0,0,1)' },
-      buttonsActionLeft: { color: '#fafafa' },
-      buttonsActionRight: { color: '#e8e8e8' },
-      buttonsActionShadowColor: { color: 'rgba(126,126,126,0.14)' },
-      buttonsActionShadowSize: { text: '2px' },
-      userBackground: { color: 'rgba(0,0,0,0.6)' },
-      userText: { color: '#ffffff' },
-      userShadowColor: { color: 'rgba(0,0,0,0.43)' },
-      userShadowSize: { text: '30px' },
-      statsText: { color: 'rgba(107,107,107,1)' },
-      statsLeft: { color: '#eaeaea' },
-      statsRight: { color: '#d6d6d6' },
-      statsShadowColor: { color: 'rgba(0,0,0,0.51)' },
-      statsShadowSize: { text: '30px' },
-      adminBackground: { color: 'rgba(255,255,255,1)' },
-      adminText: { color: 'rgba(80,80,80,1)' },
+      adminBackground: { color: 'rgba(0,0,0,0.8)' },
+      adminText: { color: '#b8c2cc' },
+      actionButtonBackground: { color: 'white' },
+      actionButtonText: { color: 'black' },
+      regularButtonBackground: { color: '#3d4852' },
+      regularButtonText: { color: 'white' },
       chartColor1: { color: 'rgba(54, 162, 235, 1)' },
       chartColor2: { color: 'rgba(75, 192, 192, 1)' },
       chartColor3: { color: 'rgba(255, 206, 86, 1)' },
@@ -154,6 +141,8 @@ const getters = {
       chartColor5: { color: 'rgba(153, 102, 255, 1)' },
       chartColor6: { color: 'rgba(255, 159, 64, 1)' }
     }
+
+    return defaultColors
 
     if (state.page) {
       let site = getters.siteById(state.page.site_id)

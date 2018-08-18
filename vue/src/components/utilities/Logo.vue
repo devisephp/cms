@@ -1,6 +1,6 @@
 <template>
   <div>
-    <devise-logo style="width:120px;" :color="theme.sidebarText.color" v-if="!deviseInterface || !deviseInterface.logo" />
+    <devise-logo style="width:120px;" v-if="!deviseInterface || !deviseInterface.logo" />
     <img :src="deviseInterface.logo" v-else>
   </div>
 </template>

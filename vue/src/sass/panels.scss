@@ -1,0 +1,44 @@
+.dvs-panel {
+  @apply dvs-relative;
+
+  float:left;
+  background-color: rgba(255,255,255,0);
+  perspective: 1000px;
+  
+  &:hover {
+    .dvs-panel-contents {
+      backface-visibility: hidden;
+
+      &:after {
+        opacity:1;
+      }
+    }
+  }
+}
+
+.dvs-panel-shine {
+  @apply dvs-absolute dvs-pin dvs-z-50;
+
+  background: radial-gradient( rgba(255,255,255,0.6), rgba(255,255,255,0));
+}
+
+.dvs-panel-contents {
+  @apply dvs-relative dvs-m-8 dvs-rounded dvs-text-white dvs-border-2 dvs-border-white;
+
+  opacity:1;
+  background: linear-gradient(135deg, #00dbde , #fc00ff);
+  will-change: transform;
+  perspective: 1000px;
+  transition: background-color 0.5s;
+
+  &:after {
+    @apply dvs-absolute dvs-pin;
+
+    content: '';
+    opacity:1;
+    box-shadow: 
+      0 20px 70px -10px rgba(51, 51, 51, 0.7), 
+      0 50px 100px 0 rgba(51, 51, 51, 0.2);
+    transition: opacity 1000s;
+  }
+}

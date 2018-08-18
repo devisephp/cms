@@ -5,18 +5,18 @@
       <sidebar-header title="Edit Template" back-text="Back to Templates" :back-callback="goToTemplates" />
 
       <div class="dvs-flex dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b px-8"
-        :style="`border-color:${theme.sidebarText.color}`">
+        :style="`border-color:${theme.adminText.color}`">
         <div 
           class="dvs-p-2 dvs-cursor-pointer" 
           :class="{'dvs-border-b-2': templateSettingsOpen}" 
-          :style="`border-color:${theme.sidebarText.color}`" 
+          :style="`border-color:${theme.adminText.color}`" 
           @click="toggleTemplateSettings">
           Template Settings
         </div>
         <div 
           class="dvs-p-2 dvs-cursor-pointer"
           :class="{'dvs-border-b-2': templateLayoutOpen}" 
-          :style="`border-color:${theme.sidebarText.color}`" 
+          :style="`border-color:${theme.adminText.color}`" 
           @click="toggleTemplateLayout">
           Template Layout
         </div>
@@ -111,8 +111,8 @@
       />
 
     <!-- Save Controls -->
-    <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-p-4 dvs-mb-2 dvs-z-40" :style="infoBlockTheme">
-      <h6 class="dvs-mb-4 dvs-text-base" :style="{color: theme.statsText.color}">Template Controls</h6>
+    <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-p-4 dvs-mb-2 dvs-z-40" :style="adminTheme">
+      <h6 class="dvs-mb-4 dvs-text-base" :style="{color: theme.adminText.color}">Template Controls</h6>
       <button class="dvs-btn dvs-btn-sm dvs-mr-2" @click="requestSaveTemplate" :style="actionButtonTheme">Save Template</button>
       <button class="dvs-btn dvs-btn-sm dvs-btn-plain" @click="goToTemplates" :style="regularButtonTheme">Cancel</button>
     </div>

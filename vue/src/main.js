@@ -13,7 +13,9 @@ import PortalVue from 'portal-vue'
 import { DeviseBus } from './event-bus.js'
 import routes from './router/route.config.js'
 import alertConfirm from './directives/alert-confirm'
-import Vuebar from 'vuebar';
+import Tilt from './directives/tilt'
+import Vuebar from 'vuebar'
+
 
 import EditPage from './components/pages/Editor'
 
@@ -107,6 +109,9 @@ const DevisePlugin = {
     // Register alert / confirm directive
     Vue.directive('devise-alert-confirm', alertConfirm)
 
+    // Register tilt directive
+    Vue.directive('tilt', Tilt)
+
     let deviseOptions = Object.assign({
       breakpoints: {
         mobile: 575,
@@ -167,12 +172,6 @@ const DevisePlugin = {
           'lang',
           'theme'
         ]),
-        sidebarTheme () {
-          return {
-            backgroundImage: `linear-gradient(180deg, ${this.theme.sidebarTop.color} 0%, ${this.theme.sidebarBottom.color} 100%)`,
-            color: this.theme.sidebarText.color
-          }
-        },
         adminTheme () {
           return {
             background: this.theme.adminBackground.color,
@@ -181,32 +180,17 @@ const DevisePlugin = {
         },
         actionButtonTheme () {
           return {
-            backgroundImage: `linear-gradient(90deg, ${this.theme.buttonsActionLeft.color} 0%, ${this.theme.buttonsActionRight.color} 100%)`,
-            color: this.theme.buttonsActionText.color,
+            background: this.theme.actionButtonBackground.color,
+            color: this.theme.actionButtonText.color,
             boxShadow: `2px 2px ${this.theme.buttonsActionShadowSize.text} ${this.theme.buttonsActionShadowColor.color}`
           }
         },
         regularButtonTheme () {
           return {
-            backgroundColor: this.theme.buttonsInverseLeft.color,
-            color: this.theme.buttonsInverseText.color
+            backgroundColor: this.theme.regularButtonBackground.color,
+            color: this.theme.regularButtonText.color
           }
         },
-        infoBlockTheme () {
-          return {
-            borderRadius: '0.3rem',
-            backgroundImage: `linear-gradient(90deg, ${this.theme.statsLeft.color} 0%, ${this.theme.statsRight.color} 100%)`,
-            color: this.theme.statsText.color,
-            boxShadow: `2px 2px ${this.theme.statsShadowSize.text} ${this.theme.statsShadowColor.color}`
-          }
-        },
-        infoBlockFlatTheme () {
-          return {
-            borderRadius: '0.3rem',
-            background: this.theme.statsLeft.color,
-            color: this.theme.statsText.color,
-          }
-        }
       },
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass

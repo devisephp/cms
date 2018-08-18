@@ -1,38 +1,39 @@
 :<template>
 
-  <div class="dvs-mb-10">
-
+  <div>
     <!-- Back -->
     <div 
-      class="dvs-p-4 dvs-text-left" 
-      :style="{backgroundColor: theme.adminBackground.color}"
+      class="dvs-p-4 dvs-text-left dvs-bg-black dvs-opacity-75 hover:dvs-opacity-100" 
       v-if="theBackPage || backCallback">
       <a 
-        class="dvs-block dvs-uppercase  dvs-text-xs" 
+        class="dvs-block dvs-uppercase dvs-text-grey dvs-text-xs" 
         href="#" 
         @click.prevent="goToPage(theBackPage)" 
-        :style="{color: theme.sidebarText.color }"
         v-if="theBackPage && !backCallback">
         <arrow-round-back-icon /> {{ theBackText }}
       </a>
 
       <a 
-        class="dvs-block dvs-uppercase dvs-text-xs" 
+        class="dvs-block dvs-uppercase dvs-text-grey dvs-text-xs" 
         href="#" 
         @click.prevent="backCallback()" 
-        :style="{color: theme.sidebarText.color }"
         v-if="backCallback">
         <arrow-round-back-icon /> {{ theBackText }}
       </a>
     </div>
 
     <!-- Logo -->
-    <div class="dvs-mt-8">
-      <logo class="dvs-w-full mb-2 dvs-flex dvs-justify-center" />
+    <div class="dvs-mt-8" v-if="showLogo">
+      <logo class="dvs-w-full mb-2 dvs-flex dvs-justify-center fill-current" />
     </div>
 
     <!-- Title -->
-    <p class="dvs-mb-2 dvs-font-thin uppercase dvs-text-xl" :style="{color: theme.sidebarText.color }">{{ title }}</p>
+    <p 
+      class="dvs-mb-2 dvs-font-thin uppercase dvs-text-xl" 
+      :style="{color: theme.adminText.color }"
+      v-if="title != null">
+        {{ title }}
+      </p>
 
   </div>
 </template>
@@ -65,6 +66,25 @@ export default {
       }
     }
   },
-  props: ['title', 'backPage', 'backText', 'backCallback']
+  props: {
+    title: {
+      default: null,
+      type: String
+    },
+    showLogo: {
+      default: true,
+      type: Boolean
+    },
+    backpage: {
+      default: null
+    },
+    backText: {
+      default: 'Back to Administration',
+      type: String
+    },
+    backCallback: {
+      type: Function
+    }
+  }
 }
 </script>

@@ -28,7 +28,7 @@
 
     <transition name="dvs-fade">
       <devise-modal class="dvs-z-50" v-if="showCreate">
-        <h4 class="dvs-mb-4" :style="{color: theme.statsText.color}">New Redirect</h4>
+        <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">New Redirect</h4>
 
         <fieldset class="dvs-fieldset dvs-mb-4">
           <label>From URL</label>

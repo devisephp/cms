@@ -1,5 +1,5 @@
 <template>
-  <div v-if="localValue.sidebarTop.color">
+  <div v-if="localValue.adminBackground.color">
     <div class="dvs-mb-10">
       <fieldset class="dvs-fieldset">
         <label>Presets</label>
@@ -33,7 +33,7 @@
         <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.adminText.color }">Info Block</h6>
         <color-editor v-model="localValue.statsLeft" :options="{label: 'Background Left Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.statsRight" :options="{label: 'Background Right Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.statsText" :options="{label: 'Text Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.adminText" :options="{label: 'Text Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.statsShadowColor" :options="{label: 'Shadow Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
         <text-editor v-model="localValue.statsShadowSize" :options="{label: 'Shadow Size', hidePreview: true}" class="dvs-mb-4"></text-editor>
 
@@ -64,15 +64,15 @@
               class="dvs-w-1/4 dvs-relative dvs-text-center dvs-p-8"
               style="min-height:400px;" 
               :style="`
-                background-image: linear-gradient(180deg, ${localValue.sidebarTop.color} 0%, ${localValue.sidebarBottom.color} 100%);
-                color: ${localValue.sidebarText.color}  
+                background-image: linear-gradient(180deg, ${localValue.adminBackground.color} 0%, ${localValue.sidebarBottom.color} 100%);
+                color: ${localValue.adminText.color}  
               `">
 
               <!-- Logo -->
-              <devise-logo class="dvs-my-4 dvs-mt-2" :color="localValue.sidebarText.color" v-if="!logo" />
+              <devise-logo class="dvs-my-4 dvs-mt-2" :color="localValue.adminText.color" v-if="!logo" />
 
               <!-- Titley-ish thing -->
-              <h2 :style="{color: localValue.sidebarText.color}" class="dvs-mb-2">Editor</h2>
+              <h2 :style="{color: localValue.adminText.color}" class="dvs-mb-2">Editor</h2>
               <div class="dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold">
                 <arrow-round-back-icon /> Full Administration
               </div>
@@ -135,7 +135,7 @@
               <div class="dvs-absolute dvs-pin-l dvs-pin-r dvs-pin-b dvs-flex dvs-justify-between dvs-items-end dvs-m-8 dvs-p-8 dvs-rounded"
                   :style="`
                     background-image: linear-gradient(90deg, ${localValue.statsLeft.color} 0%, ${localValue.statsRight.color} 100%);
-                    color: ${localValue.statsText.color};
+                    color: ${localValue.adminText.color};
                     box-shadow: -4px -4px ${localValue.statsShadowSize.text} ${localValue.statsShadowColor.color};
                   `"
               >
@@ -147,7 +147,7 @@
                   class="dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold" 
                   style="width:100px; height:100px;"
                   :style="`
-                    border-color: ${localValue.statsText.color};
+                    border-color: ${localValue.adminText.color};
                   `">
                   90M
                 </div>
@@ -156,7 +156,7 @@
                   class="dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold" 
                   style="width:100px; height:100px;"
                   :style="`
-                    border-color: ${localValue.statsText.color};
+                    border-color: ${localValue.adminText.color};
                   `">
                   90M
                 </div>
@@ -165,7 +165,7 @@
                   class="dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold" 
                   style="width:100px; height:100px;"
                   :style="`
-                    border-color: ${localValue.statsText.color};
+                    border-color: ${localValue.adminText.color};
                   `">
                   10K
                 </div>
@@ -188,15 +188,15 @@
               class="dvs-w-1/4 dvs-relative dvs-text-center dvs-p-8"
               style="min-height:400px;" 
               :style="`
-                background-image: linear-gradient(180deg, ${localValue.sidebarTop.color} 0%, ${localValue.sidebarBottom.color} 100%);
-                color: ${localValue.sidebarText.color}  
+                background-image: linear-gradient(180deg, ${localValue.adminBackground.color} 0%, ${localValue.sidebarBottom.color} 100%);
+                color: ${localValue.adminText.color}  
               `">
 
               <!-- Logo -->
-              <devise-logo class="dvs-my-4 dvs-mt-2" :color="localValue.sidebarText.color" v-if="!logo" />
+              <devise-logo class="dvs-my-4 dvs-mt-2" :color="localValue.adminText.color" v-if="!logo" />
 
               <!-- Titley-ish thing -->
-              <h2 :style="{color: localValue.sidebarText.color}" class="dvs-mb-2">Settings</h2>
+              <h2 :style="{color: localValue.adminText.color}" class="dvs-mb-2">Settings</h2>
               <div class="dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold">
                 <arrow-round-back-icon /> Back to Settings
               </div>
@@ -288,7 +288,7 @@ export default {
         userText: {color: null},
         userShadowColor: {color: null},
         userShadowSize: {text: null},
-        statsText: {color: null},
+        adminText: {color: null},
         statsLeft: {color: null},
         statsRight: {color: null},
         statsShadowColor: {color: null},
@@ -316,7 +316,7 @@ export default {
           userText: { color: '#ffffff' },
           userShadowColor: { color: 'rgba(0,0,0,0.43)' },
           userShadowSize: { text: '30px' },
-          statsText: { color: 'rgba(0,0,0,1)' },
+          adminText: { color: 'rgba(0,0,0,1)' },
           statsLeft: { color: '#eaeaea' },
           statsRight: { color: '#d6d6d6' },
           statsShadowColor: { color: 'rgba(0,0,0,0.51)' },
@@ -343,7 +343,7 @@ export default {
           userText: {color: '#ffffff'},
           userShadowColor: {color: '#1baeda'},
           userShadowSize: {text: '30px'},
-          statsText: {color: '#ffffff'},
+          adminText: {color: '#ffffff'},
           statsLeft: {color: '#2da2c4'},
           statsRight: {color: '#a67045'},
           statsShadowColor: {color: '#1baeda'},
@@ -370,7 +370,7 @@ export default {
           userText: { color: '#ffffff' },
           userShadowColor: { color: '#69267d' },
           userShadowSize: { text: '30px' },
-          statsText: { color: '#ffffff' },
+          adminText: { color: '#ffffff' },
           statsLeft: { color: 'rgba(70,34,112,0.87)' },
           statsRight: { color: 'rgba(86,26,167,0.66)' },
           statsShadowColor: { color: 'rgba(47,15,83,1)' },
@@ -400,7 +400,7 @@ export default {
           userText: { color: '#ffffff' },
           userShadowColor: { color: 'rgba(255,0,0,0.31)' },
           userShadowSize: { text: '30px' },
-          statsText: { color: '#ffffff' },
+          adminText: { color: '#ffffff' },
           statsLeft: { color: 'rgba(196,45,45,1)' },
           statsRight: { color: 'rgba(197,33,85,1)' },
           statsShadowColor: { color: 'rgba(218,27,27,1)' },
@@ -481,7 +481,7 @@ export default {
       let self = this
       this.placeholderLineData.data.datasets.map(function (dataset, index) {
           dataset.backgroundColor = [self.chartColors[index].background]
-          dataset.fontColor = self.theme.statsText.color
+          dataset.fontColor = self.theme.adminText.color
           dataset.borderColor = [self.chartColors[index].border]
           dataset.pointRadius = 4
 					dataset.pointHoverRadius = 10
@@ -497,20 +497,20 @@ export default {
         width: '8000px',
         legend: {
           labels: {
-              fontColor: this.theme.statsText.color,
+              fontColor: this.theme.adminText.color,
               fontSize: 14
           }
         },
         scales: {
             yAxes: [{
                 ticks: {
-                    fontColor: this.theme.statsText.color,
+                    fontColor: this.theme.adminText.color,
                     fontSize: 12
                 }
             }],
             xAxes: [{
                 ticks: {
-                    fontColor: this.theme.statsText.color,
+                    fontColor: this.theme.adminText.color,
                     fontSize: 12
                 }
             }]

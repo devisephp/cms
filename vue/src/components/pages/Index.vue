@@ -10,7 +10,7 @@
         </li>
       </action-bar>
 
-      <h2 class="dvs-mb-10" :style="{color: theme.sidebarText.color}">Current Site Pages</h2>
+      <h2 class="dvs-mb-10" :style="{color: theme.adminText.color}">Current Site Pages</h2>
 
       <fieldset class="dvs-fieldset dvs-mb-8">
         <label>Search Pages</label>
@@ -47,7 +47,7 @@
 
     <transition name="dvs-fade">
       <devise-modal @close="showCreate = false" class="dvs-z-50" v-if="showCreate">
-        <h3 class="dvs-mb-4" :style="{color: theme.sidebarText.color}">Create new page</h3>
+        <h3 class="dvs-mb-4" :style="{color: theme.adminText.color}">Create new page</h3>
 
         <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page Title</label>

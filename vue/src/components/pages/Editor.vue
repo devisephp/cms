@@ -1,84 +1,68 @@
 <template>
-  <div>
-    <div class="dvs-text-center">
-      <sidebar-header :title="`Editing: ${page.title}`" back-text="Back to Administration" back-page="devise-index" />
-    </div>
-
-    <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-12 dvs-pb-4">
-      <button 
-        class="dvs-block dvs-btn dvs-btn-sm dvs-mb-8 dvs-btn-success admin-component-third-in"  
-        :style="actionButtonTheme"
-        @click.prevent="requestSavePage()">
-        <checkmark-circle-icon class="dvs-mr-2" />Save this page
-      </button>
-
-      <div class="dvs-flex dvs-w-full dvs-justify-center dvs-items-center dvs-mb-8 dvs-w-full admin-component-second-in">
-        <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'desktop'}"  @click="setPreviewMode('desktop')">
-          <desktop-icon w="25" h="25" />
-        </div>
-        <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'tablet'}"  @click="setPreviewMode('tablet')">
-          <tablet-icon w="25" h="25" />
-        </div>
-        <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-portrait'}"  @click="setPreviewMode('mobile-portrait')">
-          <phone-portrait-icon w="25" h="25" />
-        </div>
-        <div class="dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'mobile-landscape'}"  @click="setPreviewMode('mobile-landscape')">
-          <phone-landscape-icon w="25" h="25" />
-        </div>
+  <div class="dvs-panel" v-tilt>
+    <div class="dvs-panel-shine"></div>
+    <div style="width:300px;" class="dvs-panel-contents">
+      <div class="dvs-text-center dvs-text-white">
+        <sidebar-header back-text="Administration" back-page="devise-index" :show-logo="false" />
       </div>
 
-      <div class="dvs-flex dvs-mb-8 dvs-justify-between dvs-text-sm dvs-font-bold dvs-w-full dvs-border-b"
-           :style="`border-color:${theme.sidebarText.color}`">
-        <div 
-          class="dvs-p-2 dvs-cursor-pointer dvs-uppercase dvs-text-xs dvs-opacity-50" 
-          :class="{'dvs-border-b-2 dvs-opacity-75': pageSettingsOpen}" 
-          :style="`border-color:${theme.sidebarText.color}`" 
-          @click="togglePageSettings">
-          Page Settings
+      <div class="dvs-flex">
+
+        <div class="dvs-bg-black dvs-flex dvs-flex-col" >
+          <button 
+            class="dvs-outline-none dvs-text-grey-darker hover:dvs-text-grey dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b dvs-border-grey-darkest"
+            @click.prevent="requestSavePage()">
+            <save-icon class="dvs-m-4" w="30" h="30" />
+          </button>
+          <button 
+            class="dvs-outline-none dvs-text-grey-darker hover:dvs-text-grey dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b dvs-border-grey-darkest"
+            @click="openPageContent">
+            <create-icon class="dvs-m-4" w="30" h="30" />
+          </button>
+          <button 
+            class="dvs-outline-none dvs-text-grey-darker hover:dvs-text-grey dvs-transitions-hover-slow dvs-cursor-pointer dvs-bg-black dvs-border-b dvs-border-grey-darkest dvs-hover-white"
+            @click="openPageSettings">
+            <cog-icon class="dvs-m-4" w="30" h="30" />
+          </button>
         </div>
-        <div 
-          class="dvs-p-2 dvs-cursor-pointer dvs-uppercase dvs-text-xs dvs-opacity-50"
-          :class="{'dvs-border-b-2 dvs-opacity-75': pageContentOpen}" 
-          :style="`border-color:${theme.sidebarText.color}`" 
-          @click="togglePageContent">
-          Page Content
+
+        <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-8 dvs-pb-8 dvs-pt-8">
+          <ul class="dvs-list-reset dvs-w-full dvs-pb-8">
+            <li class="dvs-collapsable dvs-mb-8" v-if="pageSettingsOpen" :class="{'dvs-open': pageSettingsOpen}">
+              <div class="dvs-collapsed">
+                <fieldset class="dvs-fieldset dvs-mb-4">
+                  <label class="dvs-text-grey-darker">Page Title</label>
+                  <input type="text" class="dvs-small dvs-dark" placeholder="Title of the Page">
+                </fieldset>
+
+                <fieldset class="dvs-fieldset dvs-mb-4">
+                  <label>Description</label>
+                  <textarea class="dvs-h-24 dvs-small dvs-dark" placeholder="Description of the Page - Try to aim for around 150 - 300 characters."></textarea>
+                </fieldset>
+
+                <fieldset class="dvs-fieldset">
+                  <label>Canonical</label>
+                  <input type="text" class="dvs-small dvs-dark" placeholder="Canonical">
+                </fieldset>
+
+                <router-link :to="{ name: 'devise-pages-view', params: { pageId: page.id }}" class="dvs-btn dvs-block dvs-font-bold dvs-text-center dvs-mt-8 dvs-bg-grey-darkest dvs-text-white">
+                  All Settings
+                </router-link>
+              </div>
+            </li>
+            <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
+              <div class="dvs-collapsed">
+                <ul class="dvs-list-reset">
+                  <template v-for="slice in pageSlices">
+                    <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" />
+                  </template>
+                </ul>
+              </div>
+            </li>
+          </ul>
+
         </div>
       </div>
-
-      <ul class="dvs-list-reset dvs-w-full dvs-pb-20">
-        <li class="dvs-collapsable dvs-mb-8" v-if="pageSettingsOpen" :class="{'dvs-open': pageSettingsOpen}">
-          <div class="dvs-collapsed">
-            <fieldset class="dvs-fieldset dvs-mb-8">
-              <label>Page Title</label>
-              <input type="text" placeholder="Title of the Page">
-            </fieldset>
-
-            <fieldset class="dvs-fieldset dvs-mb-8">
-              <label>Description</label>
-              <textarea class="dvs-h-24" placeholder="Description of the Page - Try to aim for around 150 - 300 characters."></textarea>
-            </fieldset>
-
-            <fieldset class="dvs-fieldset">
-              <label>Canonical</label>
-              <input type="text" placeholder="Canonical">
-            </fieldset>
-
-            <router-link :to="{ name: 'devise-pages-view', params: { pageId: page.id }}" class="dvs-btn dvs-block dvs-font-bold dvs-text-center dvs-mt-8" :style="actionButtonTheme">
-              All Settings
-            </router-link>
-          </div>
-        </li>
-        <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
-          <div class="dvs-collapsed">
-            <ul class="dvs-list-reset" style="padding-bottom:150px;" >
-              <template v-for="slice in pageSlices">
-                <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" />
-              </template>
-            </ul>
-          </div>
-        </li>
-      </ul>
-
     </div>
 
     <portal to="devise-root">
@@ -93,17 +77,14 @@ import { mapGetters, mapActions } from 'vuex'
 import AnalyticTotals from './AnalyticTotals'
 import SidebarHeader from './../utilities/SidebarHeader'
 
-import CheckmarkCircleIcon from 'vue-ionicons/dist/ios-checkmark-circle-outline.vue'
-import DesktopIcon from 'vue-ionicons/dist/md-desktop.vue'
-import TabletIcon from 'vue-ionicons/dist/md-tablet-portrait.vue'
-import PhonePortraitIcon from 'vue-ionicons/dist/md-phone-portrait.vue'
-import PhoneLandscapeIcon from 'vue-ionicons/dist/md-phone-landscape.vue'
+import SaveIcon from 'vue-ionicons/dist/md-save.vue'
+import CreateIcon from 'vue-ionicons/dist/md-create.vue'
+import CogIcon from 'vue-ionicons/dist/md-cog.vue'
 
 export default {
   name: 'PageEditor',
   data () {
     return {
-      previewMode: 'desktop',
       pageSlices: [],
       pageSettingsOpen: false,
       pageContentOpen: true
@@ -119,15 +100,12 @@ export default {
     requestSavePage () {
       this.savePage(this.page)
     },
-    togglePageSettings () {
+    openPageSettings () {
       this.pageSettingsOpen = !this.pageSettingsOpen
       this.pageContentOpen = false
     },
-    togglePageContent () {
-      this.pageContentOpen = !this.pageContentOpen
-      if (!this.pageContentOpen) {
-        this.pageSlices.map(s => this.closeSlice(s))
-      }
+    openPageContent () {
+      this.pageContentOpen = true
       this.pageSettingsOpen = false
     },
     toggleSlice (slice) {
@@ -143,10 +121,6 @@ export default {
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
-    },
-    setPreviewMode (mode) {
-      this.previewMode = mode
-      deviseSettings.$page.previewMode = mode
     }
   },
   computed: {
@@ -158,11 +132,9 @@ export default {
   props: ['page'],
   components: {
     AnalyticTotals,
-    CheckmarkCircleIcon,
-    DesktopIcon,
-    PhonePortraitIcon,
-    PhoneLandscapeIcon,
-    TabletIcon,
+    CogIcon,
+    CreateIcon,
+    SaveIcon,
     SidebarHeader
   }
 }

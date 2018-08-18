@@ -13,7 +13,10 @@
         <label class="dvs-mt-4 dvs-large-label">Image</label>
         <div class="dvs-flex dvs-items-center">
           <input type="text" v-model="localValue.url" :maxlength="getMaxLength" v-on:input="updateValue()">
-          <div  @click="launchMediaManager($event)">
+          <div @click="launchMediaEditor($event)">
+            <create-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px" />
+          </div>
+          <div @click="launchMediaManager($event)">
             <images-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px" />
           </div>
         </div>
@@ -30,6 +33,7 @@
 <script>
 import FieldEditor from './Field'
 import ImagesIcon from 'vue-ionicons/dist/ios-images.vue'
+import CreateIcon from 'vue-ionicons/dist/ios-create.vue'
 
 export default {
   name: 'ImageEditor',
@@ -64,9 +68,18 @@ export default {
         callback: this.mediaSelected
       })
     },
+    launchMediaEditor (event) {
+      devise.$bus.$emit('devise-launch-media-editor', {
+        source: this.localValue.url,
+        callback: this.mediaEdited
+      })
+    },
     mediaSelected (media) {
       this.localValue.url = media.url
       this.updateValue()
+    },
+    mediaSelected (urlString) {
+      console.log(urlString)
     }
   },
   computed: {
@@ -79,6 +92,7 @@ export default {
   },
   props: ['value', 'options'],
   components: {
+    CreateIcon,
     FieldEditor,
     ImagesIcon
   }

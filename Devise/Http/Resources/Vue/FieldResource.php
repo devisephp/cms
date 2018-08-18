@@ -37,7 +37,7 @@ class FieldResource extends Resource
 
   public function isMediaRelativePath($path)
   {
-    $folder = config('devise.media.root-directory');
+    $folder = config('devise.media.source-directory');
 
     return (strpos($path, $folder) === 0 || strpos($path, $folder) === 1);
   }

@@ -5,199 +5,112 @@ namespace Devise\Pages\Slices;
 use Devise\Models\DvsField;
 use Devise\Models\DvsPageVersion;
 use Devise\Models\DvsSliceInstance;
-use Devise\Models\DvsTemplateSlice;
 use Devise\Devise;
 
 use Illuminate\Support\Facades\File;
 
 class SlicesManager
 {
-  private $DvsSliceInstance;
+    private $DvsSliceInstance;
 
-  private $DvsTemplateSlice;
+    private $DvsField;
 
-  private $DvsField;
-
-  private $DvsPageVersion;
+    private $DvsPageVersion;
 
 
-  /**
-   * SlicesManager constructor.
-   * @param DvsSliceInstance $DvsSliceInstance
-   * @param DvsField $DvsField
-   */
-  public function __construct(DvsSliceInstance $DvsSliceInstance, DvsTemplateSlice $DvsTemplateSlice, DvsField $DvsField, DvsPageVersion $DvsPageVersion)
-  {
-    $this->DvsSliceInstance = $DvsSliceInstance;
-    $this->DvsTemplateSlice = $DvsTemplateSlice;
-    $this->DvsField = $DvsField;
-    $this->DvsPageVersion = $DvsPageVersion;
-  }
-
-  /**
-   * Copies all the fields from one page version into another page version
-   *
-   * @param $oldVersion
-   * @param $newVersion
-   * @return void
-   */
-  public function copySlicesAndFieldsFromVersionToVersion($oldVersion, $newVersion)
-  {
-    foreach ($oldVersion->slices as $sliceInstance)
+    /**
+     * SlicesManager constructor.
+     * @param DvsSliceInstance $DvsSliceInstance
+     * @param DvsField $DvsField
+     */
+    public function __construct(DvsSliceInstance $DvsSliceInstance, DvsField $DvsField, DvsPageVersion $DvsPageVersion)
     {
-      $this->copySlice($sliceInstance, $newVersion->id);
-    }
-  }
-
-  /**
-   * @param $templateId
-   * @param $slices
-   * @param int $parentId
-   * @param int $index
-   */
-  public function saveAllSlices($templateId, $slices, $parentId = 0, $index = 0, &$savedIds = [])
-  {
-    $pageVersionIds = $this->DvsPageVersion
-      ->where('template_id', $templateId)
-      ->pluck('id');
-
-    $this->iterateSlices($templateId, $slices, $parentId, $index, $pageVersionIds, $savedIds);
-
-    if ($parentId == 0 && $index == 0)
-    {
-      $this->DvsTemplateSlice
-        ->where('template_id', $templateId)
-        ->whereNotIn('id', $savedIds)
-        ->delete();
-
-      $this->DvsSliceInstance
-        ->leftJoin('dvs_template_slice', 'dvs_template_slice.id', '=', 'dvs_slice_instances.template_slice_id')
-        ->whereNull('dvs_template_slice.id')
-        ->delete();
-    }
-  }
-
-  public function copySlicesForNewPageVersion($slices, $pageVersionId, $index = 0)
-  {
-    foreach ($slices as $slice)
-    {
-      $instance = $this->DvsSliceInstance
-        ->firstOrNew(['page_version_id' => $pageVersionId, 'template_slice_id' => $slice->id]);
-
-      $instance->page_version_id = $pageVersionId;
-      $instance->parent_instance_id = ($slice->parent_id) ? $this->getParentInstanceId($pageVersionId, $slice->parent_id) : 0;
-      $instance->template_slice_id = $slice->id;
-      $instance->position = $index;
-      $instance->save();
-
-      $index++;
-
-      $this->copySlicesForNewPageVersion($slice->slices, $pageVersionId, $index);
-    }
-  }
-
-  /**
-   * @param $templateId
-   * @param $slices
-   * @param int $parentId
-   * @param int $index
-   * @param array $pageVersionIds
-   */
-  public function iterateSlices($templateId, $slices, $parentId = 0, $index = 0, $pageVersionIds = [], &$savedIds = [])
-  {
-    foreach ($slices as $slice)
-    {
-      $templateSlice = $this->DvsTemplateSlice
-        ->firstOrNew(['id' => $slice["id"]]);
-
-      $templateSlice->template_id = $templateId;
-      $templateSlice->parent_id = $parentId;
-      $templateSlice->view = $slice["view"];
-      $templateSlice->type = $slice["type"];
-      $templateSlice->label = $slice["label"];
-      $templateSlice->position = $index;
-      $templateSlice->model_query = $slice["model_query"] ?: "";
-      $templateSlice->config = $slice["config"] ?: "";
-      $templateSlice->save();
-
-      $savedIds[] = $templateSlice->id;
-
-      foreach ($pageVersionIds as $pageVersionId)
-      {
-        $instance = $this->DvsSliceInstance
-          ->firstOrNew(['page_version_id' => $pageVersionId, 'template_slice_id' => $templateSlice->id]);
-
-        $instance->page_version_id = $pageVersionId;
-        $instance->parent_instance_id = ($templateSlice->parent_id) ? $this->getParentInstanceId($pageVersionId, $templateSlice->parent_id) : 0;
-        $instance->template_slice_id = $templateSlice->id;
-        $instance->position = $index;
-        $instance->save();
-      }
-
-      $index++;
-      if (isset($slice['slices']) && is_array($slice['slices']))
-      {
-        $this->saveAllSlices($templateId, $slice['slices'], $templateSlice->id, $index, $savedIds);
-      }
-    }
-  }
-
-  /**
-   * @param $instance
-   * @param $pageVersionId
-   * @param int $parentSliceId
-   * @internal param int $parentId
-   */
-  private function copySlice($instance, $pageVersionId, $parentSliceId = 0)
-  {
-    $newSlice = $this->DvsSliceInstance->create([
-      'page_version_id'    => $pageVersionId,
-      'parent_instance_id' => $parentSliceId,
-      'template_slice_id'  => $instance->template_slice_id,
-      'enabled'            => $instance->enabled,
-      'position'           => $instance->position,
-    ]);
-
-    foreach ($instance->fields as $field)
-    {
-      $this->DvsField->create([
-        "slice_instance_id" => $newSlice->id,
-        "key"               => $field->key,
-        "json_value"        => $field->json_value,
-        "content_requested" => $field->content_requested
-      ]);
+        $this->DvsSliceInstance = $DvsSliceInstance;
+        $this->DvsField = $DvsField;
+        $this->DvsPageVersion = $DvsPageVersion;
     }
 
-    foreach ($instance->slices as $slice)
+    /**
+     * Copies all the fields from one page version into another page version
+     *
+     * @param $oldVersion
+     * @param $newVersion
+     * @return void
+     */
+    public function copySlicesAndFieldsFromVersionToVersion($oldVersion, $newVersion)
     {
-      $this->copySlice($slice, $pageVersionId, $newSlice->id);
+        foreach ($oldVersion->slices as $sliceInstance)
+        {
+            $this->copySlice($sliceInstance, $newVersion->id);
+        }
     }
-  }
 
-  /**
-   * @param $pageVersionId
-   * @param $parentTemplateSliceId
-   * @return mixed
-   */
-  private function getParentInstanceId($pageVersionId, $parentTemplateSliceId)
-  {
-    $parent = $this->DvsSliceInstance
-      ->where('page_version_id', $pageVersionId)
-      ->where('template_slice_id', $parentTemplateSliceId)
-      ->first();
-
-    return $parent->id;
-  }
-
-  public function registerAllComponents()
-  {
-    $files = collect(File::allFiles(resource_path('views/slices')));
-
-    $files = $files->mapInto(Component::class);
-
-    foreach ($files as $file)
+    public function copySlicesForNewPageVersion($slices, $pageVersionId, $index = 0)
     {
-      Devise::addComponent($file);
+        foreach ($slices as $slice)
+        {
+            $instance = new DvsSliceInstance();
+
+            $instance->page_version_id = $pageVersionId;
+            $instance->parent_instance_id = $slice->parent_id;
+            $instance->view = $slice->view;
+            $instance->type = $slice->type;
+            $instance->label = $slice->label;
+            $instance->position = $index;
+            $instance->settings = $slice->settings;
+            $instance->model_query = $slice->model_query;
+            $instance->save();
+
+            $index++;
+
+            $this->copySlicesForNewPageVersion($slice->slices, $pageVersionId, $index);
+        }
     }
-  }
+
+    /**
+     * @param $instance
+     * @param $pageVersionId
+     * @param int $parentSliceId
+     * @internal param int $parentId
+     */
+    private function copySlice($instance, $pageVersionId, $parentSliceId = 0)
+    {
+        $newSlice = $this->DvsSliceInstance->create([
+            'page_version_id'    => $pageVersionId,
+            'parent_instance_id' => $parentSliceId,
+            'view'               => $instance->view,
+            'type'               => $instance->type,
+            'label'              => $instance->label,
+            'position'           => $instance->position,
+            'settings'           => $instance->settings,
+            'model_query'        => $instance->model_query,
+        ]);
+
+        foreach ($instance->fields as $field)
+        {
+            $this->DvsField->create([
+                "slice_instance_id" => $newSlice->id,
+                "key"               => $field->key,
+                "json_value"        => $field->json_value,
+                "content_requested" => $field->content_requested
+            ]);
+        }
+
+        foreach ($instance->slices as $slice)
+        {
+            $this->copySlice($slice, $pageVersionId, $newSlice->id);
+        }
+    }
+
+    public function registerAllComponents()
+    {
+        $files = collect(File::allFiles(resource_path('views/slices')));
+
+        $files = $files->mapInto(Component::class);
+
+        foreach ($files as $file)
+        {
+            Devise::addComponent($file);
+        }
+    }
 }

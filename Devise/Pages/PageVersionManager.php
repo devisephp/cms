@@ -5,7 +5,6 @@ use Devise\Models\DvsField;
 use Devise\Models\DvsPage;
 use Devise\Models\DvsPageVersion;
 use Devise\Models\DvsSliceInstance;
-use Devise\Models\DvsTemplate;
 use Devise\Pages\Slices\SlicesManager;
 
 /**
@@ -15,10 +14,6 @@ use Devise\Pages\Slices\SlicesManager;
  */
 class PageVersionManager
 {
-  /**
-   * @var DvsTemplate
-   */
-  private $DvsTemplate;
 
   /**
    * Construction
@@ -31,12 +26,11 @@ class PageVersionManager
    * @internal param \DvsPageVersion $PageVersion
    * @internal param \DvsField $Field
    */
-  public function __construct(DvsPageVersion $DvsPageVersion, PagesRepository $PagesRepository, SlicesManager $SlicesManager, DvsTemplate $DvsTemplate)
+  public function __construct(DvsPageVersion $DvsPageVersion, PagesRepository $PagesRepository, SlicesManager $SlicesManager)
   {
     $this->PagesRepository = $PagesRepository;
     $this->DvsPageVersion = $DvsPageVersion;
     $this->SlicesManager = $SlicesManager;
-    $this->DvsTemplate = $DvsTemplate;
     $this->Hash = \Hash::getFacadeRoot();
   }
 
@@ -44,13 +38,12 @@ class PageVersionManager
    * Create a new default page version for given page
    *
    * @param DvsPage|DvsPa $page
-   * @param $templateId
    * @param null $startsAt
    * @return DvsPageVersion
    */
-  public function createDefaultPageVersion(DvsPage $page, $templateId, $startsAt = null)
+  public function createDefaultPageVersion(DvsPage $page, $startsAt = null)
   {
-    return $this->createNewPageVersion($page->id, 'Default', $templateId, $startsAt);
+    return $this->createNewPageVersion($page->id, 'Default', $startsAt);
   }
 
   /**
@@ -58,27 +51,19 @@ class PageVersionManager
    *
    * @param  int $pageId
    * @param  string $name
-   * @param $templateId
    * @param null $startsAt
    * @param null $endsAt
    * @return DvsPageVersion
    */
-  public function createNewPageVersion($pageId, $name, $templateId, $startsAt = null, $endsAt = null)
+  public function createNewPageVersion($pageId, $name, $startsAt = null, $endsAt = null)
   {
     $version = $this->DvsPageVersion->newInstance();
     $version->page_id = $pageId;
-    $version->template_id = $templateId;
     $version->name = $name;
     $version->starts_at = $startsAt;
     $version->ends_at = $endsAt;
     $version->preview_hash = null;
     $version->save();
-
-    $template = $this->DvsTemplate
-      ->with('slices')
-      ->findOrFail($templateId);
-
-    $this->SlicesManager->copySlicesForNewPageVersion($template->slices, $version->id);
 
     return $version;
   }
@@ -94,7 +79,7 @@ class PageVersionManager
   public function copyPageVersionToAnotherPage($fromVersion, $toPage)
   {
     // create a new page version
-    $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $fromVersion->template_id);
+    $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name);
 
     $this->SlicesManager
       ->copySlicesAndFieldsFromVersionToVersion($fromVersion, $newVersion);
@@ -115,7 +100,9 @@ class PageVersionManager
     $oldVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
 
     // create a new page version
-    $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name, $oldVersion->template_id);
+    $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name);
+
+    $this->SlicesManager->copySlicesForNewPageVersion($oldVersion->slices, $newVersion->id);
 
     // copy all existing fields from oldVersion to newVersion
     $this->SlicesManager

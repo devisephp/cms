@@ -2,18 +2,17 @@
 
 namespace Devise\Models;
 
+use Devise\Traits\IsDeviseComponent;
+
 class DvsSliceInstance extends Model
 {
-    protected $fillable = ['page_version_id', 'parent_instance_id', 'template_slice_id', 'enabled', 'position'];
+    use IsDeviseComponent;
+
+    protected $fillable = ['page_version_id', 'parent_instance_id', 'enabled', 'position'];
 
     protected $table = 'dvs_slice_instances';
 
     public $parent_type = 'single';
-
-    public function templateSlice()
-    {
-        return $this->belongsTo(DvsTemplateSlice::class, 'template_slice_id');
-    }
 
     public function pageVersion()
     {

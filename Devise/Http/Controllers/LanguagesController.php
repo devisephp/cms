@@ -54,11 +54,11 @@ class LanguagesController extends Controller
    */
   public function update(SaveLanguage $request, $id)
   {
-    $template = $this->DvsLanguage
+    $language = $this->DvsLanguage
       ->findOrFail($id);
 
-    $template->updateFromRequest($request);
+    $language->updateFromRequest($request);
 
-    return new LanguageResource($template);
+    return new LanguageResource($language);
   }
 }

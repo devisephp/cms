@@ -55,18 +55,18 @@ class SitesController extends Controller
    */
   public function update(SaveSite $request, $id)
   {
-    $template = $this->DvsSite
+    $site = $this->DvsSite
       ->findOrFail($id);
 
-    $template->updateFromRequest($request);
+    $site->updateFromRequest($request);
 
     $syncdata = $this->getLanguageSyncData($request->input('languages', []));
 
-    $template->languages()->sync($syncdata);
+    $site->languages()->sync($syncdata);
 
-    $template->load('languages');
+    $site->load('languages');
 
-    return new SiteResource($template);
+    return new SiteResource($site);
   }
 
   /**
@@ -75,10 +75,10 @@ class SitesController extends Controller
    */
   public function delete(DeleteSite $request, $id)
   {
-    $template = $this->DvsSite
+    $site = $this->DvsSite
       ->findOrFail($id);
 
-    $template->delete();
+    $site->delete();
   }
 
   private function getLanguageSyncData($languages)

@@ -121,9 +121,9 @@ class PagesManager
 
     $startsAt = array_get($input, 'published', false) ? date('Y-m-d H:i:s') : null;
 
-    $this->PageVersionManager->createDefaultPageVersion($page, $input['template_id'], $startsAt);
+    $this->PageVersionManager->createDefaultPageVersion($page, $startsAt);
 
-    $page->load('versions.template');
+    $page->load('versions');
 
     return $page;
   }
@@ -138,7 +138,7 @@ class PagesManager
   public function updatePage($id, $input)
   {
     $page = $this->Page
-      ->with('versions.template', 'currentVersion')
+      ->with('versions', 'currentVersion')
       ->findOrFail($id);
 
     $page->updateFromArray($input);

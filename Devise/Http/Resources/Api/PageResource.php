@@ -32,7 +32,7 @@ class PageResource extends Resource
     ];
 
     // Relationships
-    if ($this->currentVersion && $this->currentVersion->template)
+    if ($this->currentVersion && $this->currentVersion->slices->count())
     {
       $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
     }

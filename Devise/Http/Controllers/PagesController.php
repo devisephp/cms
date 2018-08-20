@@ -73,7 +73,7 @@ class PagesController extends Controller
       $page->currentVersion->registerComponents();
       $page->load('site');
 
-      return $this->View->make($page->currentVersion->template->layout, ['page' => $page]);
+      return $this->View->make($page->currentVersion->layout, ['page' => $page]);
     }
   }
 

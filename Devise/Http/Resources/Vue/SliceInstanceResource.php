@@ -10,57 +10,51 @@ use Illuminate\Support\Facades\App;
 class SliceInstanceResource extends Resource
 {
 
-
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request
-     * @return array
-     */
     public function toArray($request)
     {
         $data = [
             'metadata' => [
                 'instance_id' => $this->id,
-                'name'        => $this->templateSlice->component_name,
-                'type'        => $this->templateSlice->type,
-                'label'       => $this->templateSlice->label,
-                'placeholder' => ($this->templateSlice->type == 'single' || $this->parent_type == 'repeats') ? false : true,
+                'name'        => $this->component_name,
+                'type'        => $this->type,
+                'label'       => $this->label,
+                'view'        => $this->view,
+                'model_query' => $this->model_query,
+                'placeholder' => ($this->type == 'single' || $this->parent_type == 'repeats') ? false : true,
             ],
             'settings' => $this->settings
         ];
 
-        // Relationships
+        if ($this->type == 'model')
+        {
+            $this->setModelSlices($data);
+        } else
+        {
+            $this->setChildSlices($data);
+        }
+
+        $this->setFieldValues($data);
+
+        return $data;
+    }
+
+    private function setChildSlices(&$data)
+    {
         if ($this->slices->count())
         {
             $this->slices->map(function ($slice) {
-                $slice->parent_type = $this->templateSlice->type;
+                $slice->parent_type = $this->type;
 
                 return $slice;
             });
 
             $data['slices'] = SliceInstanceResource::collection($this->slices);
         }
-
-        if ($this->templateSlice->type == 'model')
-        {
-            $data['slices'] = $this->setModelSlices($this->templateSlice);
-        }
-
-        if ($this->fields->count())
-        {
-            foreach ($this->fields as $field)
-            {
-                $data[$field->key] = new FieldResource($field);
-            }
-        }
-
-        return $data;
     }
 
-    private function setModelSlices($modelSlice)
+    private function setModelSlices(&$data)
     {
-        parse_str($modelSlice->model_query, $input);
+        parse_str($this->model_query, $input);
 
         $repository = App::make(ModelRepository::class);
 
@@ -72,9 +66,11 @@ class SliceInstanceResource extends Resource
         {
             $data['metadata'] = [
                 'instance_id' => 0,
-                'name'        => $modelSlice->component_name,
-                'type'        => $modelSlice->type,
-                'label'       => $modelSlice->label,
+                'name'        => $this->component_name,
+                'type'        => $this->type,
+                'label'       => $this->label,
+                'view'        => $this->view,
+                'model_query' => $this->model_query,
                 'placeholder' => false,
             ];
 
@@ -86,6 +82,17 @@ class SliceInstanceResource extends Resource
             $all[] = $data;
         }
 
-        return $all;
+        $data['slices'] = $all;
+    }
+
+    private function setFieldValues(&$data)
+    {
+        if ($this->fields->count())
+        {
+            foreach ($this->fields as $field)
+            {
+                $data[$field->key] = new FieldResource($field);
+            }
+        }
     }
 }

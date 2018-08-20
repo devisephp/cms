@@ -2,7 +2,6 @@
 
 use Devise\Models\DvsField;
 use Devise\Models\DvsSliceInstance;
-use Devise\Models\DvsTemplateSlice;
 use Devise\Support\Framework;
 
 /**
@@ -15,8 +14,6 @@ class FieldManager
 
     private $DvsSliceInstance;
 
-    private $DvsTemplateSlice;
-
     private $FieldsRepository;
 
     private $Event;
@@ -26,15 +23,13 @@ class FieldManager
      *
      * @param DvsField $DvsField
      * @param DvsSliceInstance $DvsSliceInstance
-     * @param DvsTemplateSlice $DvsTemplateSlice
      * @param FieldsRepository $FieldsRepository
      * @param Framework $Framework
      */
-    public function __construct(DvsField $DvsField, DvsSliceInstance $DvsSliceInstance, DvsTemplateSlice $DvsTemplateSlice, FieldsRepository $FieldsRepository, Framework $Framework)
+    public function __construct(DvsField $DvsField, DvsSliceInstance $DvsSliceInstance, FieldsRepository $FieldsRepository, Framework $Framework)
     {
         $this->DvsField = $DvsField;
         $this->DvsSliceInstance = $DvsSliceInstance;
-        $this->DvsTemplateSlice = $DvsTemplateSlice;
         $this->FieldsRepository = $FieldsRepository;
         $this->Event = $Framework->Event;
     }
@@ -130,9 +125,11 @@ class FieldManager
                 $sliceInstance = $this->DvsSliceInstance->firstOrNew(['id' => $sliceInstanceId]);
                 $sliceInstance->page_version_id = $pageVersionId;
                 $sliceInstance->parent_instance_id = $parentId;
-                $sliceInstance->template_slice_id = ($sliceInstance->id) ? $sliceInstance->template_slice_id : $this->getTemplateSliceId($parentId);
                 $sliceInstance->settings = (isset($slice['settings'])) ? $slice['settings'] : null;
                 $sliceInstance->position = $index;
+                $sliceInstance->type = $slice['type'];
+                $sliceInstance->view = $slice['view'];
+                $sliceInstance->model_query = $slice['model_query'];
                 $sliceInstance->save();
 
                 $sliceInstanceId = $sliceInstance->id;
@@ -322,21 +319,5 @@ class FieldManager
         $field->save();
 
         return $field;
-    }
-
-    private function getTemplateSliceId($parentId)
-    {
-        $sliceInstance = $this->DvsSliceInstance->findOrFail($parentId);
-
-        if ($sliceInstance != 'single')
-        {
-            return $sliceInstance->template_slice_id;
-        }
-
-        $templateSlice = $this->DvsTemplateSlice
-            ->where('parent_id', $sliceInstance->template_slice_id)
-            ->firstOrFail();
-
-        return $templateSlice->id;
     }
 }

@@ -15,7 +15,6 @@ class UpdatePageVersion extends ApiRequest
   public function rules()
   {
     return [
-      'template_id'       => 'filled|exists:dvs_templates,id',
       'start_date'        => 'filled|date|nullable',
       'end_date'          => 'filled|date|nullable',
       'ab_testing_amount' => 'filled|numeric',

@@ -16,23 +16,29 @@
   }
 }
 
-.dvs-panel-shine {
-  @apply dvs-absolute dvs-pin dvs-z-50;
+.dvs-panel-shine-container {
+  @apply dvs-absolute dvs-pin dvs-z-50 dvs-pointer-events-none;
 
-  background: radial-gradient( rgba(255,255,255,0.6), rgba(255,255,255,0));
+  overflow:hidden;
+}
+
+.dvs-panel-shine {
+  @apply dvs-absolute dvs-pin dvs-pointer-events-none;
+
+  width:1000px;
+  height:1000px;
+
+  background:radial-gradient( rgba(255,255,255,0.4), rgba(255,255,255,0) 500px);
 }
 
 .dvs-panel-contents {
-  @apply dvs-relative dvs-m-8 dvs-rounded dvs-text-white dvs-border-2 dvs-border-white;
+  @apply dvs-relative dvs-rounded dvs-text-white;
 
-  opacity:1;
-  background: linear-gradient(135deg, #00dbde , #fc00ff);
   will-change: transform;
   perspective: 1000px;
-  transition: background-color 0.5s;
 
   &:after {
-    @apply dvs-absolute dvs-pin;
+    @apply dvs-absolute dvs-pin dvs-pointer-events-none;
 
     content: '';
     opacity:1;

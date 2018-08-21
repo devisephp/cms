@@ -1,18 +1,15 @@
 <template>
-  <div 
-    class="dvs-fixed dvs-p-6 dvs-z-40 dvs-rounded dvs-shadow-lg dvs-m-8" 
-    style="background:rgba(0,0,0,0.7)"
-    id="devise-menu-current-user">
-    <div class="dvs-flex dvs-justify-between dvs-items-center">
+  <panel id="devise-menu-current-user" class="dvs-z-40 dvs-p-8" :panel-style="theme.panel">
+    <div class="dvs-flex dvs-justify-between dvs-items-center dvs-p-8">
       <div>
         <router-link :to="{ name: 'devise-users-edit', params: { userId: user.id }}" class="dvs-mr-4">
-          <strong class="dvs-text-sm" :style="`color: ${theme.adminText.color};`">{{user.name}}</strong>
+          <strong class="dvs-text-sm" :style="`color: ${theme.panel.color};`">{{user.name}}</strong>
         </router-link><br>
-        <span class="dvs-text-xs" :style="`color: ${theme.adminText.color};`">{{user.email}}</span>
+        <span class="dvs-text-xs" :style="`color: ${theme.panel.color};`">{{user.email}}</span>
       </div>
       <div>
         <a href="/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          <power-icon class="mr-1" w="20" h="20" :style="`color: ${theme.adminText.color};`" />
+          <power-icon class="mr-1" w="20" h="20" :style="`color: ${theme.panelIcons.color};`" />
         </a>
 
         <form id="logout-form" action="/logout" method="POST" style="display: none;">
@@ -20,13 +17,14 @@
         </form>
       </div>
     </div>
-  </div>
+  </panel>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 
 import PowerIcon from 'vue-ionicons/dist/ios-power.vue'
+import Panel from './../utilities/Panel'
 
 export default {
   name: 'DeviseUser',
@@ -43,6 +41,7 @@ export default {
     }
   },
   components: {
+    Panel,
     PowerIcon
   }
 }

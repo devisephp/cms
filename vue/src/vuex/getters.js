@@ -128,6 +128,18 @@ const getters = {
 
   theme: (state, getters, rootState) => {
     var defaultColors = {
+      // Used by the admin panels
+      panel: {
+        background: `linear-gradient(135deg, #2C3858 , #182039)`,
+        color: '#979797'
+      },
+      panelSidebar: { 
+        backgroundColor: '#182039',
+        color: '#eee',
+        borderColor: '#3d4852'
+      },
+      panelIcons: { color: '#658BEF' },
+
       adminBackground: { color: 'rgba(0,0,0,0.8)' },
       adminText: { color: '#b8c2cc' },
       actionButtonBackground: { color: 'white' },

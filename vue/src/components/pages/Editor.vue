@@ -1,26 +1,29 @@
 <template>
-  <div class="dvs-panel" v-tilt>
-    <div class="dvs-panel-shine"></div>
-    <div style="width:300px;" class="dvs-panel-contents">
-      <div class="dvs-text-center dvs-text-white">
-        <sidebar-header back-text="Administration" back-page="devise-index" :show-logo="false" />
-      </div>
-
+  <div>
+    <panel class="dvs-m-8" style="width:300px;" :panel-style="theme.panel">
       <div class="dvs-flex">
-
-        <div class="dvs-bg-black dvs-flex dvs-flex-col" >
+        <div :style="theme.panelSidebar" class="dvs-flex dvs-flex-col" >
           <button 
-            class="dvs-outline-none dvs-text-grey-darker hover:dvs-text-grey dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b dvs-border-grey-darkest"
+            :style="theme.panelSidebar"
+            class="dvs-outline-none dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b dvs-border-grey-darkest"
+            @click.prevent="goToPage('devise-index')">
+            <back-icon class="dvs-panel-zoom1 dvs-m-4" w="30" h="30" />
+          </button>
+          <button 
+            :style="theme.panelSidebar"
+            class="dvs-outline-none dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b"
             @click.prevent="requestSavePage()">
             <save-icon class="dvs-m-4" w="30" h="30" />
           </button>
           <button 
-            class="dvs-outline-none dvs-text-grey-darker hover:dvs-text-grey dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b dvs-border-grey-darkest"
+            :style="theme.panelSidebar"
+            class="dvs-outline-none dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b"
             @click="openPageContent">
             <create-icon class="dvs-m-4" w="30" h="30" />
           </button>
           <button 
-            class="dvs-outline-none dvs-text-grey-darker hover:dvs-text-grey dvs-transitions-hover-slow dvs-cursor-pointer dvs-bg-black dvs-border-b dvs-border-grey-darkest dvs-hover-white"
+            :style="theme.panelSidebar"
+            class="dvs-outline-none dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b"
             @click="openPageSettings">
             <cog-icon class="dvs-m-4" w="30" h="30" />
           </button>
@@ -31,7 +34,7 @@
             <li class="dvs-collapsable dvs-mb-8" v-if="pageSettingsOpen" :class="{'dvs-open': pageSettingsOpen}">
               <div class="dvs-collapsed">
                 <fieldset class="dvs-fieldset dvs-mb-4">
-                  <label class="dvs-text-grey-darker">Page Title</label>
+                  <label>Page Title</label>
                   <input type="text" class="dvs-small dvs-dark" placeholder="Title of the Page">
                 </fieldset>
 
@@ -63,8 +66,7 @@
 
         </div>
       </div>
-    </div>
-
+    </panel>
     <portal to="devise-root">
       <analytic-totals />
     </portal>
@@ -75,11 +77,12 @@
 import { mapGetters, mapActions } from 'vuex'
 
 import AnalyticTotals from './AnalyticTotals'
-import SidebarHeader from './../utilities/SidebarHeader'
+import Panel from './../utilities/Panel'
 
 import SaveIcon from 'vue-ionicons/dist/md-save.vue'
 import CreateIcon from 'vue-ionicons/dist/md-create.vue'
 import CogIcon from 'vue-ionicons/dist/md-cog.vue'
+import BackIcon from 'vue-ionicons/dist/md-arrow-round-back.vue'
 
 export default {
   name: 'PageEditor',
@@ -132,10 +135,11 @@ export default {
   props: ['page'],
   components: {
     AnalyticTotals,
+    BackIcon,
     CogIcon,
     CreateIcon,
+    Panel,
     SaveIcon,
-    SidebarHeader
   }
 }
 </script>

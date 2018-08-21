@@ -6,41 +6,52 @@ export default {
   bind: function (panel, binding, vnode) {
 
     let panelContents = panel.querySelector('.dvs-panel-contents')
+    let panelZoom1 = panel.querySelector('.dvs-panel-zoom1')
     let panelShine = panel.querySelector('.dvs-panel-shine')
-
-    function setPanelShine() {
-      panelShine.style.width = `${panelContents.offsetWidth}px`
-      panelShine.style.height = `${panelContents.offsetHeight}px`
-    }
-
+    let xEffectStrength = 30
+    let yEffectStrength = 15
+    
     function focusPanel(scale, opacity, duration) {
       TweenMax.to(panelContents, duration, {
         scale: scale,
         opacity: opacity,
+        rotationX: '0deg',
+        rotationY: '0deg',
+        ease: 'elastic'
+      })
+
+      if (panelZoom1) {
+        TweenMax.to(panelZoom1, duration, {
+          z: 5,
+          ease: 'elastic'
+        })
+      }
+    }
+
+    function setPanelShine(xStrength, yStrength) {
+      TweenMax.to(panelShine, 0.5, {
+        top: `${xStrength * panelContents.offsetWidth}px`,
+        left: `${yStrength * panelContents.offsetHeight}px`,
         ease: 'elastic'
       })
     }
 
-    function tiltPanel(event) {
+    function tiltPanel(el, event) {
 
-      let xStrength = getXStrength(event.clientY) 
-      let yStrength = getYStrength(event.clientX)
+      let x = event.clientX - el.offsetLeft
+      let y = event.clientY - el.offsetTop
+
+      let xStrength = getXStrength(y) 
+      let yStrength = getYStrength(x)
+
+      setPanelShine(xStrength, yStrength)
 
       TweenMax.to(panelContents, 0.5, {
-        rotateX: `${xStrength * 30}deg`,
-        rotateY: `${yStrength * 30 * -1}deg`,
+        rotationX: `${xStrength * xEffectStrength}deg`,
+        rotationY: `${yStrength * yEffectStrength * -1}deg`,
         perspective: '1000px',
         ease: 'elastic'
       })
-
-      // anime({
-      //   targets: panelContents,
-      //   rotateX: `${xStrength * 30}deg`,
-      //   rotateY: `${yStrength * 30 * -1}deg`,
-      //   perspective: '1000px',
-      //   translateZ: `1em`,
-      //   duration: 500
-      // });
     }
 
     function getYStrength (cx) {
@@ -58,10 +69,10 @@ export default {
     setPanelShine()
 
     // Set the initial position of the panel
-    focusPanel(0.9, 0.7, 0)
+    focusPanel(0.9, 0.85, 0)
 
     function enterPanel() { focusPanel(1.0, 1, 0.2) };
-    function moveOverPanel(event) { tiltPanel(event) };
+    function moveOverPanel(event) { tiltPanel(this, event) };
     function leavePanel() { focusPanel(0.9, 0.7, 0.4) };
 
     panel.addEventListener('mouseenter', enterPanel, false);

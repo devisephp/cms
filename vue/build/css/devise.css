@@ -1065,6 +1065,7 @@ button,
   margin-left: 2rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  display: none;
   text-shadow: 0 0 12px rgba(0, 0, 0, .5);
   z-index: 99999;
 }
@@ -1227,6 +1228,10 @@ button,
   transition: opacity .5s ease-out;
 }
 
+.admin-closed #devise-admin-open {
+  display: block;
+}
+
 .admin-closed #devise-sidebar {
   left: -50%;
   opacity: 0;
@@ -1284,9 +1289,10 @@ button,
 }
 
 #devise-menu-current-user {
-  width: 300px;
+  position: fixed;
   bottom: 0;
   left: 0;
+  width: 300px;
 }
 
 #devise-iframe-editor {
@@ -1324,28 +1330,6 @@ button,
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-}
-
-#dvs-preview-mode-controls {
-  padding: 1.5rem;
-  color: #fff;
-  border-radius: .25rem;
-  -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
-          box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 2rem;
-  width: 300px;
-  top: 0;
-  right: 0;
-  position: fixed;
 }
 
 #devise-preview-content {
@@ -1577,11 +1561,6 @@ button,
   transition: .3s width ease;
 }
 
-#devise-menu-current-user {
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(50%, #fff), to(rgba(255, 255, 255, 0)));
-  background-image: linear-gradient(to top, #fff 50%, rgba(255, 255, 255, 0) 100%);
-}
-
 .dvs-alert-message {
   position: fixed;
   bottom: 0;
@@ -1722,30 +1701,36 @@ button,
   opacity: 1;
 }
 
-.dvs-panel-shine {
+.dvs-panel-shine-container {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 50;
-  background: radial-gradient(rgba(255, 255, 255, .6), rgba(255, 255, 255, 0));
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dvs-panel-shine {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, 0) 500px);
 }
 
 .dvs-panel-contents {
   position: relative;
-  margin: 2rem;
   border-radius: .25rem;
   color: #fff;
-  border-width: 2px;
-  border-color: #fff;
-  opacity: 1;
-  background: linear-gradient(135deg, #00dbde, #fc00ff);
   will-change: transform;
   -webkit-perspective: 1000px;
           perspective: 1000px;
-  -webkit-transition: background-color .5s;
-  transition: background-color .5s;
 }
 
 .dvs-panel-contents:after {
@@ -1754,6 +1739,7 @@ button,
   right: 0;
   bottom: 0;
   left: 0;
+  pointer-events: none;
   content: '';
   opacity: 1;
   -webkit-box-shadow: 0 20px 70px -10px rgba(51, 51, 51, .7), 0 50px 100px 0 rgba(51, 51, 51, .2);

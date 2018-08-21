@@ -8,7 +8,7 @@ class DvsSliceInstance extends Model
 {
     use IsDeviseComponent;
 
-    protected $fillable = ['page_version_id', 'parent_instance_id', 'enabled', 'position'];
+    protected $fillable = ['page_version_id', 'parent_instance_id', 'view','type','label', 'position', 'settings', 'model_query'];
 
     protected $table = 'dvs_slice_instances';
 

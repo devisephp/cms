@@ -1,10 +1,7 @@
 <?php namespace Devise\Pages;
 
-use DateTime;
-use Devise\Models\DvsField;
 use Devise\Models\DvsPage;
 use Devise\Models\DvsPageVersion;
-use Devise\Models\DvsSliceInstance;
 use Devise\Pages\Slices\SlicesManager;
 
 /**
@@ -15,158 +12,161 @@ use Devise\Pages\Slices\SlicesManager;
 class PageVersionManager
 {
 
-  /**
-   * Construction
-   * depends on PageVersin model and UserHelper to get current user id
-   *
-   * @param DvsPageVersion $DvsPageVersion
-   * @param DvsSliceInstance $DvsSliceInstance
-   * @param DvsField $DvsField
-   * @param PagesRepository $PagesRepository
-   * @internal param \DvsPageVersion $PageVersion
-   * @internal param \DvsField $Field
-   */
-  public function __construct(DvsPageVersion $DvsPageVersion, PagesRepository $PagesRepository, SlicesManager $SlicesManager)
-  {
-    $this->PagesRepository = $PagesRepository;
-    $this->DvsPageVersion = $DvsPageVersion;
-    $this->SlicesManager = $SlicesManager;
-    $this->Hash = \Hash::getFacadeRoot();
-  }
-
-  /**
-   * Create a new default page version for given page
-   *
-   * @param DvsPage|DvsPa $page
-   * @param null $startsAt
-   * @return DvsPageVersion
-   */
-  public function createDefaultPageVersion(DvsPage $page, $startsAt = null)
-  {
-    return $this->createNewPageVersion($page->id, 'Default', $startsAt);
-  }
-
-  /**
-   * Create a new page version with given parameters
-   *
-   * @param  int $pageId
-   * @param  string $name
-   * @param null $startsAt
-   * @param null $endsAt
-   * @return DvsPageVersion
-   */
-  public function createNewPageVersion($pageId, $name, $startsAt = null, $endsAt = null)
-  {
-    $version = $this->DvsPageVersion->newInstance();
-    $version->page_id = $pageId;
-    $version->name = $name;
-    $version->starts_at = $startsAt;
-    $version->ends_at = $endsAt;
-    $version->preview_hash = null;
-    $version->save();
-
-    return $version;
-  }
-
-  /**
-   * Copies a page version to another page this is useful
-   * when creating different languages of the same page
-   *
-   * @param $fromVersion
-   * @param $toPage
-   * @return DvsPageVersion
-   */
-  public function copyPageVersionToAnotherPage($fromVersion, $toPage)
-  {
-    // create a new page version
-    $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name);
-
-    $this->SlicesManager
-      ->copySlicesAndFieldsFromVersionToVersion($fromVersion, $newVersion);
-
-    return $newVersion;
-  }
-
-  /**
-   * Copy page version for given page version id and name
-   *
-   * @param $pageVersionId
-   * @param $name
-   * @return DvsPageVersion
-   */
-  public function copyPageVersion($pageVersionId, $name)
-  {
-    // get the old page version we are currently working with
-    $oldVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
-
-    // create a new page version
-    $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name);
-
-    $this->SlicesManager->copySlicesForNewPageVersion($oldVersion->slices, $newVersion->id);
-
-    // copy all existing fields from oldVersion to newVersion
-    $this->SlicesManager
-      ->copySlicesAndFieldsFromVersionToVersion($oldVersion, $newVersion);
-
-    // return the new page version we just created
-    return $newVersion;
-  }
-
-  /**
-   * Update the page version dates
-   *
-   * @param  int $pageVersionId
-   * @param $request
-   * @return DvsPagVersion
-   */
-  public function update($pageVersionId, $request)
-  {
-    $version = $this->DvsPageVersion->findOrFail($pageVersionId);
-
-    $version->updateFromRequest($request);
-
-    return $version;
-  }
-
-  /**
-   * Destroys a page version record
-   *
-   * @param $pageVersionId
-   * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-   * @return mixed
-   */
-  public function destroyPageVersion($pageVersionId)
-  {
-    $pageVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
-
-    $page = $this->DvsPageVersion
-      ->find($pageVersion['page_id']);
-
-    // throw exception if attempt to delete live page version
-    if ($page->liveVersion)
+    /**
+     * Construction
+     * depends on PageVersin model and UserHelper to get current user id
+     *
+     * @param DvsPageVersion $DvsPageVersion
+     * @param DvsPage $DvsPage
+     * @param PagesRepository $PagesRepository
+     * @internal param \DvsPageVersion $PageVersion
+     * @internal param \DvsField $Field
+     */
+    public function __construct(DvsPageVersion $DvsPageVersion, DvsPage $DvsPage, PagesRepository $PagesRepository, SlicesManager $SlicesManager)
     {
-      abort(422, 'Cannot delete live page version');
+        $this->PagesRepository = $PagesRepository;
+        $this->DvsPage = $DvsPage;
+        $this->DvsPageVersion = $DvsPageVersion;
+        $this->SlicesManager = $SlicesManager;
+        $this->Hash = \Hash::getFacadeRoot();
     }
 
-    $pageVersion->delete();
-  }
+    /**
+     * Create a new default page version for given page
+     *
+     * @param DvsPage|DvsPa $page
+     * @param null $startsAt
+     * @return DvsPageVersion
+     */
+    public function createDefaultPageVersion(DvsPage $page, $layout, $startsAt = null)
+    {
+        return $this->createNewPageVersion($page->id, 'Default', $layout, $startsAt);
+    }
 
-  /**
-   * Toggle "preview_hash" value between hashed string and null.
-   * The value determines whether preview url is publicly available.
-   *
-   * @param  integer $pageVersionId
-   * @return boolean
-   */
-  public function togglePageVersionPreviewShare($pageVersionId)
-  {
-    $pageVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
+    /**
+     * Create a new page version with given parameters
+     *
+     * @param  int $pageId
+     * @param  string $name
+     * @param null $startsAt
+     * @param null $endsAt
+     * @return DvsPageVersion
+     */
+    public function createNewPageVersion($pageId, $name, $layout, $startsAt = null, $endsAt = null)
+    {
+        $version = $this->DvsPageVersion->newInstance();
+        $version->layout = $layout;
+        $version->page_id = $pageId;
+        $version->name = $name;
+        $version->starts_at = $startsAt;
+        $version->ends_at = $endsAt;
+        $version->preview_hash = null;
+        $version->save();
 
-    $previewHashValue = is_null($pageVersion->preview_hash) ? $this->Hash->make($pageVersion->id) : null;
+        return $version;
+    }
 
-    $pageVersion->update(array('preview_hash' => $previewHashValue));
+    /**
+     * Copies a page version to another page this is useful
+     * when creating different languages of the same page
+     *
+     * @param $fromVersion
+     * @param $toPage
+     * @return DvsPageVersion
+     */
+    public function copyPageVersionToAnotherPage($fromVersion, $toPage)
+    {
+        // create a new page version
+        $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $fromVersion->layout);
 
-    return $pageVersion;
-  }
+        $this->SlicesManager
+            ->copySlicesAndFieldsFromVersionToVersion($fromVersion, $newVersion);
+
+        return $newVersion;
+    }
+
+    /**
+     * Copy page version for given page version id and name
+     *
+     * @param $pageVersionId
+     * @param $name
+     * @return DvsPageVersion
+     */
+    public function copyPageVersion($pageVersionId, $name)
+    {
+        // get the old page version we are currently working with
+        $oldVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
+
+        // create a new page version
+        $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name, $oldVersion->layout);
+
+        $this->SlicesManager->copySlicesForNewPageVersion($oldVersion->slices, $newVersion->id);
+
+        // copy all existing fields from oldVersion to newVersion
+        $this->SlicesManager
+            ->copySlicesAndFieldsFromVersionToVersion($oldVersion, $newVersion);
+
+        // return the new page version we just created
+        return $newVersion;
+    }
+
+    /**
+     * Update the page version dates
+     *
+     * @param  int $pageVersionId
+     * @param $request
+     * @return DvsPagVersion
+     */
+    public function update($pageVersionId, $request)
+    {
+        $version = $this->DvsPageVersion->findOrFail($pageVersionId);
+
+        $version->updateFromRequest($request);
+
+        return $version;
+    }
+
+    /**
+     * Destroys a page version record
+     *
+     * @param $pageVersionId
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @return mixed
+     */
+    public function destroyPageVersion($pageVersionId)
+    {
+        $pageVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
+
+        $page = $this->DvsPage
+            ->find($pageVersion['page_id']);
+
+        // throw exception if attempt to delete live page version
+        if ($page->liveVersion && $page->liveVersion->id == $pageVersion->id)
+        {
+            abort(422, 'Cannot delete live page version');
+        }
+
+        $pageVersion->deleteSlicesAndFields();
+
+        $pageVersion->delete();
+    }
+
+    /**
+     * Toggle "preview_hash" value between hashed string and null.
+     * The value determines whether preview url is publicly available.
+     *
+     * @param  integer $pageVersionId
+     * @return boolean
+     */
+    public function togglePageVersionPreviewShare($pageVersionId)
+    {
+        $pageVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
+
+        $previewHashValue = is_null($pageVersion->preview_hash) ? $this->Hash->make($pageVersion->id) : null;
+
+        $pageVersion->update(array('preview_hash' => $previewHashValue));
+
+        return $pageVersion;
+    }
 
 }

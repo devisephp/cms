@@ -45,25 +45,23 @@ class SlicesManager
         }
     }
 
-    public function copySlicesForNewPageVersion($slices, $pageVersionId, $index = 0)
+    public function copySlicesForNewPageVersion($slices, $pageVersionId, $parentId = 0)
     {
         foreach ($slices as $slice)
         {
             $instance = new DvsSliceInstance();
 
             $instance->page_version_id = $pageVersionId;
-            $instance->parent_instance_id = $slice->parent_id;
+            $instance->parent_instance_id = $parentId;
             $instance->view = $slice->view;
             $instance->type = $slice->type;
             $instance->label = $slice->label;
-            $instance->position = $index;
+            $instance->position = $slice->position;
             $instance->settings = $slice->settings;
             $instance->model_query = $slice->model_query;
             $instance->save();
 
-            $index++;
-
-            $this->copySlicesForNewPageVersion($slice->slices, $pageVersionId, $index);
+            $this->copySlicesForNewPageVersion($slice->slices, $pageVersionId, $instance->id);
         }
     }
 

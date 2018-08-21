@@ -64,23 +64,6 @@ class DvsPageVersion extends Model
         $this->iterateComponents($this->slices);
     }
 
-    public function deleteSlicesAndFields($slices = null)
-    {
-        $slicesToDelete = $slices ?: $this->slices;
-
-        foreach ($slicesToDelete as $slice)
-        {
-            $slice->fields()->delete();
-
-            $this->deleteSlicesAndFields($slice->slices);
-
-            $slice->slices()->delete();
-        }
-
-        if (!$slices)
-            $this->slices()->delete();
-    }
-
     private function iterateComponents($slices)
     {
         foreach ($slices as $child)

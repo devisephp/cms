@@ -146,8 +146,6 @@ class PageVersionManager
             abort(422, 'Cannot delete live page version');
         }
 
-        $pageVersion->deleteSlicesAndFields();
-
         $pageVersion->delete();
     }
 

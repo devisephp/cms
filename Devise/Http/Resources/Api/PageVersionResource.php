@@ -17,11 +17,11 @@ class PageVersionResource extends Resource
         return [
             'id'                => $this->id,
             'name'              => $this->name,
+            'layout'            => $this->layout,
             'starts_at'         => $this->starts_at,
             'ends_at'           => $this->ends_at,
             'ab_testing_amount' => $this->ab_testing_amount,
             'preview_hash'      => $this->preview_hash,
-            'layout'            => $this->layout,
 
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s')

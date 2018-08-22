@@ -74,10 +74,10 @@ class PageVersionManager
      * @param $toPage
      * @return DvsPageVersion
      */
-    public function copyPageVersionToAnotherPage($fromVersion, $toPage)
+    public function copyPageVersionToAnotherPage($fromVersion, $toPage, $startsAt = null)
     {
         // create a new page version
-        $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $fromVersion->layout);
+        $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $fromVersion->layout, $startsAt);
 
         $this->SlicesManager
             ->copySlicesAndFieldsFromVersionToVersion($fromVersion, $newVersion);

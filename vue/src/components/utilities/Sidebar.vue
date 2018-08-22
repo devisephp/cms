@@ -1,13 +1,16 @@
 <template>
-  <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
+  <panel class="dvs-m-8 dvs-absolute dvs-pin-l dvs-pin-t" style="width:300px;" :panel-style="theme.panel">
+    <div data-simplebar>
       <sidebar-header :title="title" :backPage="backPage" :backText="backText" :backCallback="backCallback" />
-      <main-menu :menu-items="menuItems" />
+      <div class="dvs-p-8">
+        <main-menu :menu-items="menuItems" />
+      </div>
     </div>
-  </div>
+  </panel>
 </template>
 
 <script>
+import Panel from './../utilities/Panel'
 import SidebarHeader from './../utilities/SidebarHeader'
 import MainMenu from './../menu/MainMenu'
 
@@ -15,7 +18,8 @@ export default {
   name: 'Sidebar',
   components: {
     SidebarHeader,
-    MainMenu
+    MainMenu,
+    Panel
   },
   props: ['title', 'backPage', 'backText', 'backCallback', 'menuItems']
 }

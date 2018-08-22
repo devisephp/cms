@@ -3,16 +3,7 @@ import { WSAETIMEDOUT } from 'constants';
 var tinycolor = require('tinycolor2')
 
 const getters = {
-
-  // Admin Menu
-  adminMenu: state => {
-    return state.adminMenu
-  },
-
-  settingsMenu: state => {
-    return state.settingsMenu
-  },
-
+  
   breakpoint: state => {
     return state.breakpoint.breakpoint
   },
@@ -131,14 +122,28 @@ const getters = {
       // Used by the admin panels
       panel: {
         background: `linear-gradient(135deg, #2C3858 , #182039)`,
-        color: '#979797'
+        color: '#F3F3F3',
+        secondaryColor: '#979797'
       },
       panelSidebar: { 
         backgroundColor: '#182039',
         color: '#eee',
         borderColor: '#3d4852'
       },
-      panelIcons: { color: '#658BEF' },
+      panelIcons: { 
+        color: '#658BEF',
+        secondaryColor: '#EB8F89'
+      },
+      actionButton: {
+        color: '#ffffff',
+        backgroundColor: '#EB8F89',
+        borderColor: '#EB8F89',
+      },
+      actionButtonGhost: {
+        color: '#EB8F89',
+        borderColor: '#EB8F89',
+        borderWidth: '2px'
+      },
 
       adminBackground: { color: 'rgba(0,0,0,0.8)' },
       adminText: { color: '#b8c2cc' },

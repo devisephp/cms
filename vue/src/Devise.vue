@@ -12,22 +12,7 @@
 
       <div id="devise-container" :class="[breakpoint, !adminOpen ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
         
-        <transition name="dvs-fade">
-          <div 
-            id="devise-admin"
-            :class="[deviseOptions.adminClass]" 
-            v-if="isLoggedIn && adminOpen" 
-            data-simplebar>
-              
-            <transition name="dvs-fade" mode="out-in">
-              <router-view name="devise" :page="page"></router-view>
-            </transition>
-
-            <user></user>
-            <preview-mode></preview-mode>
-
-          </div>
-        </transition>
+        <administration v-if="isLoggedIn && adminOpen" :page="page" />
 
         <div id="dvs-app-content" :class="{'dvs-no-scroll': wideAdmin}">
           <!-- Desktop mode in editor or just viewing page -->
@@ -73,7 +58,6 @@ import Loadbar from './components/utilities/Loadbar'
 import MediaEditor from './components/media-manager/MediaEditor'
 import MediaManager from './components/media-manager/MediaManager'
 import Messages from './components/utilities/Messages'
-import PreviewMode from './components/pages/PreviewMode'
 import Slice from './Slice'
 import TemplateIndex from './components/templates/Index'
 import TemplateEdit from './components/templates/Edit'
@@ -152,8 +136,6 @@ export default {
         if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
           self.adminOpen = true
           self.checkWidthOfInterface(self.$route)
-          self.openAnimation.restart()
-          self.openAnimation.seek(100)
         }
         setTimeout(function () {
           devise.$bus.$emit('devise-loaded')
@@ -177,8 +159,6 @@ export default {
       this.adminOpen = !this.adminOpen
       if (!this.adminOpen) {
         this.wideAdmin = false
-        this.openAnimation.reverse()
-        this.openAnimation.play()
         window.location.hash = '#'
       } else {
         if (deviseSettings.$page) {
@@ -186,7 +166,6 @@ export default {
         } else {
           this.goToPage('devise-index')
         }
-        this.openAnimation.restart()
       }
     },
     addWatchers () {
@@ -247,7 +226,6 @@ export default {
     Messages,
     MediaEditor,
     MediaManager,
-    PreviewMode,
     SettingsIcon,
     Slice,
     TemplateIndex,

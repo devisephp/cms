@@ -22,18 +22,20 @@
       </a>
     </div>
 
-    <!-- Logo -->
-    <div class="dvs-mt-8" v-if="showLogo">
-      <logo class="dvs-w-full mb-2 dvs-flex dvs-justify-center fill-current" />
-    </div>
+    <div class="dvs-p-8">
+      <!-- Logo -->
+      <div class="dvs-mt-8" v-if="showLogo">
+        <logo class="dvs-w-full mb-2 fill-current" />
+      </div>
 
-    <!-- Title -->
-    <p 
-      class="dvs-mb-2 dvs-font-thin uppercase dvs-text-xl" 
-      :style="{color: theme.adminText.color }"
-      v-if="title != null">
-        {{ title }}
-      </p>
+      <!-- Title -->
+      <p 
+        class="dvs-mb-2 dvs-font-thin uppercase dvs-text-xl" 
+        :style="{color: theme.adminText.color }"
+        v-if="title != null">
+          {{ title }}
+        </p>
+    </div>
 
   </div>
 </template>

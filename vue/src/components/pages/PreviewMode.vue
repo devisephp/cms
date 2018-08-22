@@ -1,7 +1,7 @@
 <template>
   <panel :panel-style="theme.panel" class="dvs-fixed dvs-pin-r dvs-pin-t dvs-m-8" id="dvs-preview-mode-controls">
     <div class="dvs-flex dvs-p-8">
-      <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'desktop'}"  @click="setPreviewMode('desktop')">
+      <div class="dvs-mr-6 dvs-cursor-pointer" :style="onStyle('desktop')"  @click="setPreviewMode('desktop')">
         <desktop-icon w="25" h="25" />
       </div>
       <div class="dvs-mr-6 dvs-cursor-pointer" :class="{'dvs-text-green': previewMode === 'tablet'}"  @click="setPreviewMode('tablet')">
@@ -34,6 +34,12 @@ export default {
     setPreviewMode (mode) {
       this.previewMode = mode
       deviseSettings.$page.previewMode = mode
+    },
+    onStyle (type) {
+      console.log(this.previewMode)
+      if (this.previewMode === type) {
+        return this.theme.panelIcons.color
+      }
     }
   },
   components: {

@@ -633,16 +633,6 @@ ul {
 }
 
 /**
- * Suppress the focus outline on elements that cannot be accessed via keyboard.
- * This prevents an unwanted focus outline from appearing around elements that
- * might still respond to pointer events.
- */
-
-[tabindex="-1"]:focus {
-  outline: none !important;
-}
-
-/**
  * Tailwind custom reset styles
  */
 
@@ -703,6 +693,7 @@ textarea {
 
 img {
   max-width: 100%;
+  height: auto;
 }
 
 button,
@@ -742,6 +733,10 @@ button,
   cursor: pointer;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 .dvs-badge {
   padding: .25rem;
 }
@@ -772,10 +767,14 @@ button,
 }
 
 .dvs-btn {
-  padding: 1rem;
+  padding: .75rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  text-align: center;
   border-radius: .25rem;
   text-transform: uppercase;
-  font-size: .875rem;
+  font-size: .75rem;
+  font-weight: 700;
   cursor: pointer;
   -webkit-transition: background-color .5s;
   transition: background-color .5s;
@@ -1167,6 +1166,7 @@ button,
   bottom: 0;
   overflow: scroll;
   margin-left: -1px;
+  font-size: 12px;
   width: 100%;
 }
 
@@ -1405,6 +1405,7 @@ button,
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+  outline: 0;
 }
 
 .dvs-fieldset textarea.dvs-w-auto,
@@ -1692,11 +1693,6 @@ button,
           perspective: 1000px;
 }
 
-.dvs-panel:hover .dvs-panel-contents {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-}
-
 .dvs-panel:hover .dvs-panel-contents:after {
   opacity: 1;
 }
@@ -1721,13 +1717,15 @@ button,
   pointer-events: none;
   width: 1000px;
   height: 1000px;
-  background: radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, 0) 500px);
+  background: radial-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, 0) 500px);
 }
 
 .dvs-panel-contents {
   position: relative;
   border-radius: .25rem;
   color: #fff;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
   will-change: transform;
   -webkit-perspective: 1000px;
           perspective: 1000px;
@@ -2180,8 +2178,8 @@ trix-toolbar .trix-input--dialog {
 }
 
 trix-toolbar .trix-input--dialog.validate:invalid {
-  -webkit-box-shadow: #f00 0 0 1.5px 1px;
-          box-shadow: #f00 0 0 1.5px 1px;
+  -webkit-box-shadow: #f00 0px 0px 1.5px 1px;
+          box-shadow: #f00 0px 0px 1.5px 1px;
 }
 
 trix-toolbar .trix-button--dialog {
@@ -2671,6 +2669,14 @@ trix-editor {
 
 .dvs-bg-contain {
   background-size: contain;
+}
+
+.dvs-border-collapse {
+  border-collapse: collapse;
+}
+
+.dvs-border-separate {
+  border-collapse: separate;
 }
 
 .dvs-border-transparent {
@@ -4447,6 +4453,14 @@ trix-editor {
   opacity: 1;
 }
 
+.dvs-outline-none {
+  outline: 0;
+}
+
+.focus\:dvs-outline-none:focus {
+  outline: 0;
+}
+
 .dvs-overflow-auto {
   overflow: auto;
 }
@@ -4469,6 +4483,22 @@ trix-editor {
 
 .dvs-overflow-y-auto {
   overflow-y: auto;
+}
+
+.dvs-overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.dvs-overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.dvs-overflow-x-visible {
+  overflow-x: visible;
+}
+
+.dvs-overflow-y-visible {
+  overflow-y: visible;
 }
 
 .dvs-overflow-x-scroll {
@@ -4915,6 +4945,14 @@ trix-editor {
 .dvs-shadow-none {
   -webkit-box-shadow: none;
           box-shadow: none;
+}
+
+.dvs-table-auto {
+  table-layout: auto;
+}
+
+.dvs-table-fixed {
+  table-layout: fixed;
 }
 
 .dvs-text-left {
@@ -7592,6 +7630,22 @@ trix-editor {
     overflow-y: auto;
   }
 
+  .md\:dvs-overflow-x-hidden {
+    overflow-x: hidden;
+  }
+
+  .md\:dvs-overflow-y-hidden {
+    overflow-y: hidden;
+  }
+
+  .md\:dvs-overflow-x-visible {
+    overflow-x: visible;
+  }
+
+  .md\:dvs-overflow-y-visible {
+    overflow-y: visible;
+  }
+
   .md\:dvs-overflow-x-scroll {
     overflow-x: scroll;
   }
@@ -8036,6 +8090,14 @@ trix-editor {
   .md\:dvs-shadow-none {
     -webkit-box-shadow: none;
             box-shadow: none;
+  }
+
+  .md\:dvs-table-auto {
+    table-layout: auto;
+  }
+
+  .md\:dvs-table-fixed {
+    table-layout: fixed;
   }
 
   .md\:dvs-text-left {
@@ -10539,6 +10601,22 @@ trix-editor {
     overflow-y: auto;
   }
 
+  .lg\:dvs-overflow-x-hidden {
+    overflow-x: hidden;
+  }
+
+  .lg\:dvs-overflow-y-hidden {
+    overflow-y: hidden;
+  }
+
+  .lg\:dvs-overflow-x-visible {
+    overflow-x: visible;
+  }
+
+  .lg\:dvs-overflow-y-visible {
+    overflow-y: visible;
+  }
+
   .lg\:dvs-overflow-x-scroll {
     overflow-x: scroll;
   }
@@ -10983,6 +11061,14 @@ trix-editor {
   .lg\:dvs-shadow-none {
     -webkit-box-shadow: none;
             box-shadow: none;
+  }
+
+  .lg\:dvs-table-auto {
+    table-layout: auto;
+  }
+
+  .lg\:dvs-table-fixed {
+    table-layout: fixed;
   }
 
   .lg\:dvs-text-left {

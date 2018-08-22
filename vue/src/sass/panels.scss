@@ -7,8 +7,6 @@
   
   &:hover {
     .dvs-panel-contents {
-      backface-visibility: hidden;
-
       &:after {
         opacity:1;
       }
@@ -28,12 +26,13 @@
   width:1000px;
   height:1000px;
 
-  background:radial-gradient( rgba(255,255,255,0.4), rgba(255,255,255,0) 500px);
+  background:radial-gradient( rgba(255,255,255,0.2), rgba(255,255,255,0) 500px);
 }
 
 .dvs-panel-contents {
   @apply dvs-relative dvs-rounded dvs-text-white;
 
+  backface-visibility: hidden;
   will-change: transform;
   perspective: 1000px;
 

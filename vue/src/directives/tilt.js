@@ -4,12 +4,11 @@ const plugins = [CSSPlugin];
 
 export default {
   bind: function (panel, binding, vnode) {
-
     let panelContents = panel.querySelector('.dvs-panel-contents')
-    let panelZoom1 = panel.querySelector('.dvs-panel-zoom1')
     let panelShine = panel.querySelector('.dvs-panel-shine')
-    let xEffectStrength = 30
-    let yEffectStrength = 15
+
+    let xEffectStrength = 10
+    let yEffectStrength = 10
     
     function focusPanel(scale, opacity, duration) {
       TweenMax.to(panelContents, duration, {
@@ -19,13 +18,6 @@ export default {
         rotationY: '0deg',
         ease: 'elastic'
       })
-
-      if (panelZoom1) {
-        TweenMax.to(panelZoom1, duration, {
-          z: 5,
-          ease: 'elastic'
-        })
-      }
     }
 
     function setPanelShine(xStrength, yStrength) {
@@ -69,11 +61,11 @@ export default {
     setPanelShine()
 
     // Set the initial position of the panel
-    focusPanel(0.9, 0.85, 0)
+    focusPanel(0.95, 1, 0)
 
     function enterPanel() { focusPanel(1.0, 1, 0.2) };
     function moveOverPanel(event) { tiltPanel(this, event) };
-    function leavePanel() { focusPanel(0.9, 0.7, 0.4) };
+    function leavePanel() { focusPanel(0.95, 1, 0.4) };
 
     panel.addEventListener('mouseenter', enterPanel, false);
     panel.addEventListener('mousemove', moveOverPanel, false);

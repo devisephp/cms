@@ -11,7 +11,9 @@
           <div @mouseover="showPreview = true" @mouseout="showPreview = false">
             <eye-icon class="dvs-mr-2" />
           </div>
-          <span class="dvs-cursor-pointer dvs-text-sm dvs-font-normal hover:underline" @click="toggleShowEditor">{{ options.label }}</span>
+          <span class="dvs-cursor-pointer dvs-text-xs dvs-font-normal hover:underline" @click="toggleShowEditor">
+            {{ options.label }}
+            </span>
           <div 
             v-show="showPreview" 
             class="dvs-absolute dvs-font-normal dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20"
@@ -27,30 +29,32 @@
     <template v-if="showEditor">
       <portal to="devise-root">
         <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="toggleShowEditor"></div>
-        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2" :style="adminTheme">
-          <h6 class="dvs-text-base dvs-mb-4">
-            <span>{{ localValue.label }}</span><br>
-            <small class="dvs-text-xs" v-if="localValue.instructions">
-              Hint from Developer: 
-              <span class="dvs-italic dvs-font-normal">
-                {{ localValue.instructions }}
-              </span>
-            </small>
-          </h6>
-          
-          <slot name="editor"></slot>
+        <panel class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2" :panel-style="theme.panel">
+          <div class="dvs-p-8">
+            <h6 class="dvs-text-base dvs-mb-4">
+              <span>{{ localValue.label }}</span><br>
+              <small class="dvs-text-xs" v-if="localValue.instructions">
+                Hint from Developer: 
+                <span class="dvs-italic dvs-font-normal">
+                  {{ localValue.instructions }}
+                </span>
+              </small>
+            </h6>
+            
+            <slot name="editor"></slot>
 
-          <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between">
-            <div>
-              <button class="dvs-btn dvs-mr-2" @click="toggleShowEditor" :style="regularButtonTheme">Done</button>
-              <button class="dvs-btn dvs-mr-2" @click="cancel" :style="regularButtonTheme">Cancel</button>
-            </div>
-            <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabler">
-              <label class="dvs-mr-2">Field Enabled</label>
-              <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
+            <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between">
+              <div class="dvs-flex dvs-items-center">
+                <button class="dvs-btn dvs-mr-2" @click="toggleShowEditor" :style="theme.actionButtonGhost">Done</button>
+                <button class="dvs-btn dvs-mr-2" @click="cancel" :style="theme.actionButtonGhost">Cancel</button>
+              </div>
+              <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabler">
+                <label class="dvs-mr-2">Field Enabled</label>
+                <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
+              </div>
             </div>
           </div>
-        </div>
+        </panel>
       </portal>
     </template>
 
@@ -60,6 +64,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import Panel from './../../utilities/Panel'
 import Strings from './../../../mixins/Strings'
 import Toggle from './../../utilities/Toggle'
 import EyeIcon from 'vue-ionicons/dist/ios-eye.vue'
@@ -101,6 +106,7 @@ export default {
   mixins: [Strings],
   components: {
     EyeIcon,
+    Panel,
     Toggle
   }
 }

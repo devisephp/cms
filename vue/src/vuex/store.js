@@ -18,43 +18,78 @@ const state = {
   // Possible Configuration Example
   // adminMenu: [
   //   {
+  //     icon: 'CogIcon',
   //     label: 'Link Label',
   //     routeName: 'devise-page-editor',
   //     parameters: {type: 'blog'},
   //     url: 'http://google.com',
-  //     target: '_blank'
+  //     target: '_blank',
+  //     menu: []
   //   }
   // ],
   adminMenu: [
     {
-      label: 'Edit this page',
-      routeName: 'devise-page-editor',
-      permissions: 'manage pages',
+      icon: 'CreateIcon',
+      routeName: 'devise-page-editor'
     },
     {
-      label: 'Pages',
-      routeName: 'devise-pages-index',
-      permissions: 'manage pages',
+      icon: 'DocumentIcon',
+      routeName: 'devise-page-settings'
     },
     {
-      label: 'Users',
-      routeName: 'devise-users-index',
-      permissions: 'manage users',
-    },
-    {
-      label: 'Mothership',
-      routeName: 'devise-mothership-index',
-      permissions: 'manage mothership',
-    },
-    {
-      label: 'Templates',
-      routeName: 'devise-templates-index',
-      permissions: 'manage templates',
-    },
-    {
+      icon: 'CogIcon',
       label: 'Settings',
-      routeName: 'devise-settings-index',
+      routeName: 'devise-settings',
       permissions: 'manage settings',
+      menu: [
+        {
+          label: 'Pages',
+          routeName: 'devise-pages-index',
+          permissions: 'manage pages',
+        },
+        {
+          label: 'Users',
+          routeName: 'devise-users-index',
+          permissions: 'manage users',
+        },
+        {
+          label: 'Mothership',
+          routeName: 'devise-mothership-index',
+          permissions: 'manage mothership',
+        },
+        {
+          label: 'Templates',
+          routeName: 'devise-templates-index',
+          permissions: 'manage templates',
+        },
+        {
+          label: 'Settings',
+          routeName: 'devise-settings-index',
+          permissions: 'manage settings',
+          menu: [
+            {
+              label: 'Global Meta',
+              routeName: 'devise-meta-manage',
+              permissions: 'manage meta',
+            },
+            {
+              label: 'Sites',
+              routeName: 'devise-sites-index',
+              permissions: 'manage sites',
+            },
+            {
+              label: 'Languages',
+              routeName: 'devise-languages-manage',
+              permissions: 'manage languages',
+            },
+            {
+              label: 'Redirects',
+              routeName: 'devise-redirects-index',
+              permissions: 'manage redirects',
+            }
+          ]
+        }
+      ]
     }
   ],
   breakpoint: {
@@ -84,28 +119,6 @@ const state = {
   pages: {
     data: []
   },
-  settingsMenu: [
-    {
-      label: 'Global Meta',
-      routeName: 'devise-meta-manage',
-      permissions: 'manage meta',
-    },
-    {
-      label: 'Sites',
-      routeName: 'devise-sites-index',
-      permissions: 'manage sites',
-    },
-    {
-      label: 'Languages',
-      routeName: 'devise-languages-manage',
-      permissions: 'manage languages',
-    },
-    {
-      label: 'Redirects',
-      routeName: 'devise-redirects-index',
-      permissions: 'manage redirects',
-    }
-  ],
   site: {},
   sites: {
     data: []

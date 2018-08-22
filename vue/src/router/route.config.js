@@ -8,6 +8,7 @@ import LanguagesManage from '../components/languages/Manage'
 import AdministrationIndex from '../components/admin/Index'
 import MetaManage from '../components/meta/Manage'
 import PageEditor from '../components/pages/Editor'
+import PageSettings from '../components/pages/Settings'
 import PagesIndex from '../components/pages/Index'
 import PagesView from '../components/pages/View'
 import SettingsIndex from '../components/settings/Index'
@@ -22,8 +23,15 @@ import RedirectsEdit from '../components/redirects/Edit'
 
 var routes = [
   {
-    path: '/devise',
-    name: 'devise-index',
+    path: '/devise-settings',
+    name: 'devise-settings',
+    components: {
+      'devise': AdministrationIndex
+    }
+  },
+  {
+    path: '/devise-models',
+    name: 'devise-models',
     components: {
       'devise': AdministrationIndex
     }
@@ -53,6 +61,13 @@ var routes = [
     name: 'devise-page-editor',
     components: {
       'devise': PageEditor
+    }
+  },
+  {
+    path: '/devise/page/settings',
+    name: 'devise-page-settings',
+    components: {
+      'devise': PageSettings
     }
   },
   {

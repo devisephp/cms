@@ -1,6 +1,6 @@
 <template>
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
-    <strong class="dvs-block dvs-uppercase dvs-mb-4 dvs-switch-sm dvs-text-xs dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer" @click="toggleSlice(slice)">
+    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-xs dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer" @click="toggleSlice(slice)">
       <template v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
         <div class="dvs-cursor-pointer dvs-text-sm dvs-font-normal dvs-capitalize hover:underline dvs-ml-4">
           {{ slice.metadata.label }} 
@@ -10,7 +10,10 @@
         </div>
       </template>
       <template v-else>
-        <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center" :class="{'pl-4': child}">
+        <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center" :style="{color: theme.panel.color}" :class="{'pl-4': child}">
+          <div class="mr-2" style="width:20px;" v-if="!sliceConfig(slice).fields"></div>
+          <add-icon w="20" h="20" class="mr-2" :style="theme.panelIcons" v-show="!slice.metadata.open && sliceConfig(slice).fields" /> 
+          <remove-icon w="20" h="20" class="mr-2" :style="{color: theme.panelIcons.secondaryColor}" v-show="slice.metadata.open" /> 
           {{ slice.metadata.label }}
         </div>
         <div v-else class="dvs-flex dvs-items-center dvs-w-full dvs-pl-4 dvs-justify-between">
@@ -93,6 +96,7 @@ import TextEditor from './editor/Text'
 import WysiwygEditor from './editor/Wysiwyg'
 
 import AddIcon from 'vue-ionicons/dist/ios-add.vue'
+import RemoveIcon from 'vue-ionicons/dist/ios-remove.vue'
 
 export default {
   name: 'SliceEditor',
@@ -108,10 +112,11 @@ export default {
   },
   methods: {
     toggleSlice (slice) {
-      let sliceOpen = slice.metadata.open
-      this.pageSlices.map(s => this.closeSlice(s))
-      this.$set(slice.metadata, 'open', !sliceOpen)
-      this.$emit('opened')
+      if (this.sliceConfig(slice).fields) {
+        let sliceOpen = Object.assign({}, slice.metadata)
+        this.pageSlices.map(s => this.closeSlice(s))
+        this.$set(slice.metadata, 'open', !sliceOpen.open)
+      }
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
@@ -224,6 +229,7 @@ export default {
     ImageEditor,
     LinkEditor,
     NumberEditor,
+    RemoveIcon,
     TextareaEditor,
     TextEditor,
     WysiwygEditor

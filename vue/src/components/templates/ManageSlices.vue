@@ -3,7 +3,7 @@
 
     <!-- Create Slice -->
     <div class="dvs-blocker dvs-blocker-light dvs-z-50" @click="closeManager()" v-if="originSlice"></div>
-    <div class="dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-8 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2" :style="adminTheme" v-if="originSlice">
+    <div class="dvs-fixed dvs-pin-b dvs-pin-l dvs-mb-10 dvs-mx-10 dvs-p-8 dvs-bg-white dvs-rounded-sm dvs-min-w-48 dvs-shadow-lg dvs-z-50 dvs-text-grey-darker dvs-font-normal dvs-min-w-1/2" v-if="originSlice">
 
       <div v-if="mode === 'add' && step === 'type'">
         <h3 class="dvs-font-hairline dvs-mb-8">Add Slice to Layout</h3>
@@ -40,7 +40,7 @@
             </optgroup>
           </select>
         </fieldset>
-        <button class="dvs-btn" :style="actionButtonTheme" :disabled="!sliceToAdd" @click="selectSliceToAdd()">Select</button>
+        <button class="dvs-btn" :style="theme.actionButton" :disabled="!sliceToAdd" @click="selectSliceToAdd()">Select</button>
       </div>
 
 
@@ -53,7 +53,7 @@
         <help class="dvs-mb-8">
           If you delete this slice it will effect all pages that implement this template.
         </help>
-        <button class="dvs-btn dvs-mr-2" @click="closeManager()" :style="actionButtonTheme">Cancel</button>
+        <button class="dvs-btn dvs-mr-2" @click="closeManager()" :style="theme.actionButton">Cancel</button>
         <button class="dvs-btn dvs-btn-danger" @click="removeSlice()">Confirm</button>
       </div>
     </div>

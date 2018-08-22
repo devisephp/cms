@@ -56,7 +56,7 @@
               <fieldset class="dvs-fieldset dvs-mb-4">
                 <input type="text" placeholder="New Directory" v-model="directoryToCreate" class="mr-2">
               </fieldset>
-              <button class="dvs-btn dvs-btn-sm" @click="requestCreateDirectory()" :style="actionButtonTheme">Create</button>
+              <button class="dvs-btn dvs-btn-sm" @click="requestCreateDirectory()" :style="theme.actionButton">Create</button>
             </div>
           </div>
           <div class="dvs-flex-grow dvs-relative dvs-overflow-scroll" :class="{'w-full': directories.length < 1}">
@@ -141,7 +141,7 @@
                       <input type="text" :value="file.url">
                     </fieldset>
 
-                    <p><button @click="selectFile(file)" class="dvs-btn" :style="actionButtonTheme">Select</button></p>
+                    <p><button @click="selectFile(file)" class="dvs-btn" :style="theme.actionButton">Select</button></p>
 
                     <template v-if="isActive(file)">
                       <h6 class="dvs-my-2 dvs-text-sm">Appears On</h6>

@@ -1,15 +1,14 @@
 <template>
 
-  <administration>
-    <sidebar title="Manage Languages" :menu-items="settingsMenu" />
-    <div id="devise-admin-content" :style="adminTheme">
-      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Add Meta</h3>
+  <div>
+    <div id="devise-admin-content">
+      <h3 class="dvs-mb-8 dvs-pr-16">Add Global Meta</h3>
 
       <help class="dvs-mb-8">Global Meta are the meta tags that will be attached to every page of this site. They can be overridden on a page level but this gives you to the opportunity to set the <span class="dvs-fonts-mono">&lt;meta&gt;</span> across <strong>all</strong> pages.</help>
 
       <meta-form v-model="localValue.data" @request-create-meta="requestCreateMeta" @request-update-meta="requestUpdateMeta" @request-delete-meta="requestDeleteMeta" />
     </div>
-  </administration>
+  </div>
 
 </template>
 
@@ -62,8 +61,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'meta',
-      'settingsMenu'
+      'meta'
     ])
   },
   components: {

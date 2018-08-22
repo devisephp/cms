@@ -3,14 +3,14 @@
   <administration>
     <sidebar title="Manage Users" />
 
-    <div id="devise-admin-content" :style="adminTheme">
+    <div id="devise-admin-content">
       <action-bar>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click.prevent="showCreate = true">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click.prevent="showCreate = true">
           Create New Template
         </li>
       </action-bar>
 
-      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Current Templates</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">Current Templates</h3>
 
       <div v-for="template in templates.data" :key="template.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-2/5 dvs-text-base dvs-font-bold dvs-pr-8">
@@ -21,8 +21,8 @@
           {{ template.layout }}
         </div>
         <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs dvs-mr-2" @click="goToTemplate(template)" :style="regularButtonTheme">Edit</button>
-          <button class="dvs-btn dvs-btn-xs" v-devise-alert-confirm="{callback: requestDeleteTemplate, arguments: template, message: 'Are you sure you want to delete this template?'}"  :style="regularButtonTheme">Delete</button>
+          <button class="dvs-btn dvs-btn-xs dvs-mr-2" @click="goToTemplate(template)" :style="theme.actionButtonGhost">Edit</button>
+          <button class="dvs-btn dvs-btn-xs" v-devise-alert-confirm="{callback: requestDeleteTemplate, arguments: template, message: 'Are you sure you want to delete this template?'}"  :style="theme.actionButtonGhost">Delete</button>
         </div>
       </div>
     </div>
@@ -54,8 +54,8 @@
           <input type="text" v-model="newTemplate.layout" placeholder="Layout of the Template">
         </fieldset>
 
-        <button class="dvs-btn" @click="requestCreateTemplate" :disabled="createInvalid" :style="actionButtonTheme">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
+        <button class="dvs-btn" @click="requestCreateTemplate" :disabled="createInvalid" :style="theme.actionButton">Create</button>
+        <button class="dvs-btn" @click="showCreate = false" :style="theme.actionButtonGhost">Cancel</button>
       </devise-modal>
     </transition>
   </administration>

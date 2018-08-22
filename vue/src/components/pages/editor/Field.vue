@@ -17,7 +17,7 @@
           <div 
             v-show="showPreview" 
             class="dvs-absolute dvs-font-normal dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20"
-            :style="adminTheme"
+           
             >
             <slot name="preview"></slot>
             {{ localValue.instructions }}

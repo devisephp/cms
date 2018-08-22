@@ -1,16 +1,14 @@
 <template>
 
-  <administration>
-    <sidebar title="Manage Redirects" />
-
-    <div id="devise-admin-content" :style="adminTheme">
+  <div>
+    <div id="devise-admin-content">
       <action-bar>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click.prevent="showCreate = true">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click.prevent="showCreate = true">
           Create Redirect
         </li>
       </action-bar>
-      <h2 class="dvs-mb-10" :style="{color: theme.adminText.color}">Current Redirects</h2>
-      <div v-for="redirect in redirects.data" class="dvs-mb-6  dvs-flex dvs-justify-between dvs-items-center">
+      <h3 class="dvs-mb-10 dvs-mr-12" :style="{color: theme.adminText.color}">Current Redirects</h3>
+      <div v-for="redirect in redirects.data" :key="redirect.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-1/6 dvs-font-bold dvs-pr-8">
           {{ redirect.type }}
         </div>
@@ -21,30 +19,35 @@
           To: {{ redirect.to_url }}
         </div>
         <div class="dvs-w-1/6 dvs-px-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs" @click="loadRedirect(redirect.id)" :style="regularButtonTheme">Manage</button>
+          <button class="dvs-btn dvs-btn-xs" @click="loadRedirect(redirect.id)" :style="theme.actionButtonGhost">Manage</button>
         </div>
       </div>
+      
+      <help v-if="redirects.data.length < 1">You do not have any redirects currently</help>
+
     </div>
 
     <transition name="dvs-fade">
-      <devise-modal class="dvs-z-50" v-if="showCreate">
-        <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">New Redirect</h4>
+      <portal to="devise-root">
+        <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
+          <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">New Redirect</h4>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>From URL</label>
-          <input type="text" v-model="newRedirect.from_url">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>From URL</label>
+            <input type="text" v-model="newRedirect.from_url">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>To URL</label>
-          <input type="text" v-model="newRedirect.to_url">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>To URL</label>
+            <input type="text" v-model="newRedirect.to_url">
+          </fieldset>
 
-        <button class="dvs-btn" @click="requestCreateRedirect" :disabled="createInvalid" :style="actionButtonTheme">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
-      </devise-modal>
+          <button class="dvs-btn" @click="requestCreateRedirect" :disabled="createInvalid" :style="theme.actionButton">Create</button>
+          <button class="dvs-btn" @click="showCreate = false" :style="theme.actionButtonGhost">Cancel</button>
+        </devise-modal>
+      </portal>
     </transition>
-  </administration>
+  </div>
 
 </template>
 

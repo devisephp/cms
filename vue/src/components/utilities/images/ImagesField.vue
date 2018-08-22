@@ -30,7 +30,7 @@
     <div v-if="showPreview">
       <portal to="devise-root">
         <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="showPreview = false"></div>
-        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2" :style="adminTheme">
+        <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2">
           <img :src="previewImagePath"/>
           <h6 class="dvs-text-base dvs-mb-4 dvs-mt-4" :style="{color: theme.adminText.color}">
             <span>{{ previewImageName }}</span><br>
@@ -43,7 +43,7 @@
           </h6>
           <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between">
             <div>
-              <button class="dvs-btn dvs-mr-2" @click="showPreview = false" :style="regularButtonTheme">Close</button>
+              <button class="dvs-btn dvs-mr-2" @click="showPreview = false" :style="theme.actionButtonGhost">Close</button>
             </div>
           </div>
         </div>

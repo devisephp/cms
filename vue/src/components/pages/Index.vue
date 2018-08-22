@@ -83,8 +83,8 @@
           </div>
         </fieldset>
 
-        <button class="dvs-btn" :style="actionButtonTheme" @click="requestCreatePage" :disabled="createInvalid">Create</button>
-        <button class="dvs-btn" :style="regularButtonTheme" @click="showCreate = false">Cancel</button>
+        <button class="dvs-btn" :style="theme.actionButton" @click="requestCreatePage" :disabled="createInvalid">Create</button>
+        <button class="dvs-btn" :style="theme.actionButtonGhost" @click="showCreate = false">Cancel</button>
       </devise-modal>
     </transition>
   </div>

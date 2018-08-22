@@ -40,7 +40,7 @@
               <help v-if="localValue.model_queries.length < 1">Currently you don't have any data assigned to this template. Data you add will be available whenever this template is applied to a page</help>
               <div 
                 class="dvs-flex dvs-justify-between dvs-items-center dvs-text-sm dvs-mb-2 dvs-font-bold dvs-p-4 dvs-rounded dvs-relative" 
-                :style="regularButtonTheme" 
+                :style="theme.actionButtonGhost" 
                 v-for="(query, key) in localValue.model_queries" 
                 :key="key"  
                 v-else>
@@ -78,7 +78,7 @@
 
                 </li>
               </draggable>
-              <button class="dvs-btn dvs-btn-sm dvs-mx-2 dvs-w-4/5 dvs-mt-8" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)"  :style="actionButtonTheme">Add Slice to Layout</button>
+              <button class="dvs-btn dvs-btn-sm dvs-mx-2 dvs-w-4/5 dvs-mt-8" v-if="!anySliceOpen" @click="requestAddSlice(localValue.slices, true)"  :style="theme.actionButton">Add Slice to Layout</button>
             </div>
 
           </div>
@@ -111,10 +111,10 @@
       />
 
     <!-- Save Controls -->
-    <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-p-4 dvs-mb-2 dvs-z-40" :style="adminTheme">
+    <div class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mr-8 dvs-rounded-sm dvs-p-4 dvs-mb-2 dvs-z-40">
       <h6 class="dvs-mb-4 dvs-text-base" :style="{color: theme.adminText.color}">Template Controls</h6>
-      <button class="dvs-btn dvs-btn-sm dvs-mr-2" @click="requestSaveTemplate" :style="actionButtonTheme">Save Template</button>
-      <button class="dvs-btn dvs-btn-sm dvs-btn-plain" @click="goToTemplates" :style="regularButtonTheme">Cancel</button>
+      <button class="dvs-btn dvs-btn-sm dvs-mr-2" @click="requestSaveTemplate" :style="theme.actionButton">Save Template</button>
+      <button class="dvs-btn dvs-btn-sm" @click="goToTemplates" :style="theme.actionButtonGhost">Cancel</button>
     </div>
 
     <portal to="devise-root">

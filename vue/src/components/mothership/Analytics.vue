@@ -4,7 +4,7 @@
       <sidebar-header title="Network Analytics" back-text="Back to Mothership" back-page="devise-mothership-index" />
     </div>
 
-    <div id="devise-admin-content" class="dvs-relative"  :style="adminTheme">
+    <div id="devise-admin-content" class="dvs-relative" >
       <div v-if="site !== null">
         <h2 class="dvs-mb-8" :style="{color: theme.adminText.color}">
           {{ site.name }} Analytics

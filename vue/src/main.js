@@ -177,20 +177,7 @@ const DevisePlugin = {
             background: this.theme.adminBackground.color,
             color: this.theme.adminText.color
           }
-        },
-        actionButtonTheme () {
-          return {
-            background: this.theme.actionButtonBackground.color,
-            color: this.theme.actionButtonText.color,
-            boxShadow: `2px 2px ${this.theme.buttonsActionShadowSize.text} ${this.theme.buttonsActionShadowColor.color}`
-          }
-        },
-        regularButtonTheme () {
-          return {
-            backgroundColor: this.theme.regularButtonBackground.color,
-            color: this.theme.regularButtonText.color
-          }
-        },
+        }
       },
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass

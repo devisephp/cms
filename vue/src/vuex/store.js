@@ -58,11 +58,6 @@ const state = {
           permissions: 'manage mothership',
         },
         {
-          label: 'Templates',
-          routeName: 'devise-templates-index',
-          permissions: 'manage templates',
-        },
-        {
           label: 'Settings',
           routeName: 'devise-settings-index',
           permissions: 'manage settings',

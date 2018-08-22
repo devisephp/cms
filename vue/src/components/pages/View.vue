@@ -3,27 +3,27 @@
   <administration>
     <sidebar title="Manage Page" />
 
-    <div id="devise-admin-content" :style="adminTheme" v-if="page">
+    <div id="devise-admin-content" v-if="page">
       <action-bar>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click="href(page.slug)">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="href(page.slug)">
           Go To Page
         </li>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click="href(page.slug + '/#/devise/edit-page')">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="href(page.slug + '/#/devise/edit-page')">
           Edit Page Content
         </li>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click="showCopy = true">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="showCopy = true">
           Copy This Page
         </li>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click="showTranslate = true">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="showTranslate = true">
           Translate This Page
         </li>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}">
           Delete This Page
         </li>
       </action-bar>
 
       <template v-if="analytics.data">
-        <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">{{ localValue.title }} Analytics</h3>
+        <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">{{ localValue.title }} Analytics</h3>
         <div class="flex dvs-mb-8">
           <fieldset class="dvs-fieldset mr-8">
             <label>Analytics Start Date</label>
@@ -39,7 +39,7 @@
         </div>
       </template>
 
-      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">{{ localValue.title }} Page Versions</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">{{ localValue.title }} Page Versions</h3>
 
       <help class="dvs-mb-4">Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
 
@@ -90,7 +90,7 @@
                 @click="requestSaveVersion(version)" 
                 title="Save Version Settings" 
                 v-tippy="tippyConfiguration"
-                :style="actionButtonTheme"
+                :style="theme.actionButton"
                 >
                 <checkmark-icon w="30" h="30" />
               </button>
@@ -99,7 +99,7 @@
                 @click="requestCopyVersion(version)" 
                 title="Copy Version" 
                 v-tippy="tippyConfiguration"
-                :style="regularButtonTheme"
+                :style="theme.actionButtonGhost"
                 >
                 <copy-icon w="30" h="30" />
               </button>
@@ -107,7 +107,7 @@
                 class="dvs-btn dvs-mr-2 dvs-px-8" 
                 v-tippy="tippyConfiguration" 
                 v-devise-alert-confirm="{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
-                :style="regularButtonTheme">
+                :style="theme.actionButtonGhost">
                 <trash-icon w="30" h="30" />
               </button>
             </div>
@@ -115,7 +115,7 @@
         </div>
       </div>
 
-      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Global Page Settings</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">Global Page Settings</h3>
 
       <help class="dvs-mb-8">These settings effect all of the page versions of this page.</help>
 
@@ -146,8 +146,8 @@
         </fieldset>
 
         <div class="dvs-flex">
-          <button @click="requestSavePage" class="dvs-btn dvs-mr-2" :style="actionButtonTheme">Save</button>
-          <button @click="goToPage" class="dvs-btn dvs-btn-plain dvs-mr-4" :style="regularButtonTheme">Cancel</button>
+          <button @click="requestSavePage" class="dvs-btn dvs-mr-2" :style="theme.actionButton">Save</button>
+          <button @click="goToPage" class="dvs-btn dvs-mr-4" :style="theme.actionButtonGhost">Cancel</button>
         </div>
       </div>
 
@@ -168,7 +168,7 @@
         </fieldset>
 
         <button class="dvs-btn" @click="requestCopyPage" :disabled="pageToCopy.title === null || pageToCopy.slug === null">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCopy = false">Cancel</button>
+        <button class="dvs-btn" @click="showCopy = false">Cancel</button>
       </devise-modal>
     </transition>
 
@@ -199,7 +199,7 @@
         </fieldset>
 
         <button class="dvs-btn" @click="requestTranslatePage" :disabled="pageToTranslate.title === null || pageToTranslate.slug === null || translateLanguage === null">Translate</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showTranslate = false">Cancel</button>
+        <button class="dvs-btn" @click="showTranslate = false">Cancel</button>
       </devise-modal>
     </transition>
 

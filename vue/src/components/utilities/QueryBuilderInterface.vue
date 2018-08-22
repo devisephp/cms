@@ -4,7 +4,7 @@
     <help v-if="modelQueries === null || modelQueries.length < 1">Currently you don't have any data assigned to this template. Data you add will be available whenever this template is applied to a page</help>
     <div 
       class="dvs-flex dvs-justify-between dvs-items-center dvs-text-sm dvs-mb-2 dvs-font-bold dvs-p-4 dvs-rounded dvs-relative" 
-      :style="regularButtonTheme" 
+      :style="theme.actionButtonGhost" 
       v-for="(query, key) in modelQueries" 
       :key="key"  
       v-else>

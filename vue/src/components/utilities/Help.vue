@@ -1,9 +1,5 @@
 <template>
-  <div class="help" :style="{
-    background: theme.userText.color,
-    color: theme.userBackground.color,
-    borderColor: theme.userBackground.color,
-  }">
+  <div class="help" :style="theme.help">
     <p>
       <slot></slot>
     </p>

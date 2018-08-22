@@ -1,56 +1,56 @@
 <template>
 
-  <administration>
-    <sidebar title="Manage Users" />
-
-    <div id="devise-admin-content" :style="adminTheme">
+  <div>
+    <div id="devise-admin-content">
       <action-bar>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click.prevent="showCreate = true">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click.prevent="showCreate = true">
           Create New User
         </li>
       </action-bar>
 
       <h3 class="dvs-mb-10" :style="{color: theme.adminText.color}">Current Users</h3>
 
-      <div v-for="user in users.data" :key="user.id" class="dvs-mb-6  dvs-flex dvs-justify-between dvs-items-center">
+      <div v-for="user in users.data" :key="user.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
           {{ user.name }}
         </div>
-        <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs" @click="loadUser(user.id)" :style="regularButtonTheme">Manage</button>
+        <div class="dvs-w-2/5 dvs-pl-8 dvs-flex dvs-justify-end">
+          <button class="dvs-btn dvs-btn-xs" @click="loadUser(user.id)" :style="theme.actionButtonGhost">Manage</button>
         </div>
       </div>
     </div>
 
     <transition name="dvs-fade">
-      <devise-modal class="dvs-z-50" v-if="showCreate">
-        <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">Create new user</h4>
+      <portal to="devise-root">
+        <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
+          <h3 class="dvs-mb-4" :style="{color: theme.adminText.color}">Create new user</h3>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Name</label>
-          <input type="text" v-model="newUser.name" placeholder="Name of the User">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Name</label>
+            <input type="text" v-model="newUser.name" placeholder="Name of the User">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Email</label>
-          <input type="text" v-model="newUser.email" placeholder="Email of the User">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Email</label>
+            <input type="text" v-model="newUser.email" placeholder="Email of the User">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Password</label>
-          <input type="password" v-model="newUser.password">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Password</label>
+            <input type="password" v-model="newUser.password">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Confirm Password</label>
-          <input type="password" v-model="newUser.password_confirmation">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Confirm Password</label>
+            <input type="password" v-model="newUser.password_confirmation">
+          </fieldset>
 
-        <button class="dvs-btn" @click="requestCreateUser" :disabled="createInvalid" :style="actionButtonTheme">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
-      </devise-modal>
+          <button class="dvs-btn" @click="requestCreateUser" :disabled="createInvalid" :style="theme.actionButton">Create</button>
+          <button class="dvs-btn" @click="showCreate = false" :style="theme.actionButtonGhost">Cancel</button>
+        </devise-modal>
+      </portal>
     </transition>
-  </administration>
+  </div>
 
 </template>
 

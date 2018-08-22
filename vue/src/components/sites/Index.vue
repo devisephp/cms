@@ -1,14 +1,12 @@
 <template>
 
-  <administration>
-    <sidebar title="Manage Languages" :menu-items="settingsMenu" />
-
-    <div id="devise-admin-content" :style="adminTheme">
+  <div>
+    <div id="devise-admin-content">
       <div class="devise-admin-action-bar">
-        <button class="dvs-btn dvs-btn-sm dvs-mx-1" :style="actionButtonTheme" @click.prevent="showCreate = true">
+        <button class="dvs-btn dvs-btn-sm dvs-mx-1" :style="theme.actionButton" @click.prevent="showCreate = true">
           Create New Site
         </button>
-        <button class="dvs-btn dvs-btn-sm dvs-mx-1" :style="actionButtonTheme" @click.prevent="requestSyncSites">
+        <button class="dvs-btn dvs-btn-sm dvs-mx-1" :style="theme.actionButton" @click.prevent="requestSyncSites">
           Sync Sites with Mothership
         </button>
       </div>
@@ -17,45 +15,47 @@
       <help class="dvs-mb-10">Here you can add and manage sites under this application. This means that you can add new domains, change themes for those domains, and add languages to those sites to make them more impacting for your users</help>
 
       <div v-for="site in sites.data" :key="site.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-p-12 dvs-text-center dvs-rounded" :style="{backgroundColor: theme.adminText.color }">
+        <div class="dvs-p-12 dvs-text-center dvs-rounded" :style="theme.panelCard">
           <div class="dvs-text-base">
-            <div class="dvs-mb-4 dvs-text-xl dvs-uppercase" :style="{color: theme.adminBackground.color }">{{ site.name }}</div>
-            <div class="dvs-mb-2" :style="{color: theme.adminBackground.color }">{{ site.domain }}</div>
+            <div class="dvs-mb-2 dvs-text-3xl dvs-uppercase">{{ site.name }}</div>
+            <div class="dvs-mb-4 dvs-opacity-75">Domain: {{ site.domain }}</div>
           </div>
           <div class="dvs-mb-8 dvs-flex dvs-flex-wrap dvs-justify-center">
             <span v-for="language in site.languages" :key="language.id" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
           </div>
           <div class="dvs-flex dvs-justify-center">
-            <a class="dvs-btn dvs-mr-2" :href="site.domain" :style="regularButtonTheme">Go</a>
-            <button class="dvs-btn dvs-mr-2" @click="showEditSite(site)" :style="regularButtonTheme">Edit</button>
-            <button class="dvs-btn" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="regularButtonTheme">Delete</button>
+            <a class="dvs-btn dvs-mr-2" :href="site.domain" :style="theme.actionButtonGhost">Go</a>
+            <button class="dvs-btn dvs-mr-2" @click="showEditSite(site)" :style="theme.actionButtonGhost">Edit</button>
+            <button class="dvs-btn" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="theme.actionButtonGhost">Delete</button>
           </div>
         </div>
       </div>
     </div>
 
     <transition name="dvs-fade">
-      <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
-        <h2 class="dvs-mb-8" :style="{color: theme.adminText.color }">Create new site</h2>
+      <portal to="devise-root">
+        <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
+          <h2 class="dvs-mb-8" :style="{color: theme.adminText.color }">Create new site</h2>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Name</label>
-          <input type="text" v-model="newSite.name" placeholder="Name of the Site">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Name</label>
+            <input type="text" v-model="newSite.name" placeholder="Name of the Site">
+          </fieldset>
 
-        <help class="dvs-mb-8">The domain should not include the http or https:// protocol identifier. So your site entry could be "my-super-awesome-site.com" or "sub-domain.my-super-awesome-site.com". To Support development environments you can override these values in your .env file in the root of your project with something like "SITE_1_DOMAIN=my-super-awesome-site.test" for your local development or staging.</help>
+          <help class="dvs-mb-8">The domain should not include the http or https:// protocol identifier. So your site entry could be "my-super-awesome-site.com" or "sub-domain.my-super-awesome-site.com". To Support development environments you can override these values in your .env file in the root of your project with something like "SITE_1_DOMAIN=my-super-awesome-site.test" for your local development or staging.</help>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Domain</label>
-          <input type="text" v-model="newSite.domain" placeholder="Domain of the Site">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Domain</label>
+            <input type="text" v-model="newSite.domain" placeholder="Domain of the Site">
+          </fieldset>
 
-        <button class="dvs-btn" @click="requestCreateSite" :disabled="createInvalid" :style="actionButtonTheme">Create</button>
-        <button class="dvs-btn dvs-btn-plain" @click="showCreate = false" :style="regularButtonTheme">Cancel</button>
+          <button class="dvs-btn" @click="requestCreateSite" :disabled="createInvalid" :style="theme.actionButton">Create</button>
+          <button class="dvs-btn" @click="showCreate = false" :style="theme.actionButtonGhost">Cancel</button>
 
-      </devise-modal>
+        </devise-modal>
+      </portal>
     </transition>
-  </administration>
+  </div>
 
 </template>
 

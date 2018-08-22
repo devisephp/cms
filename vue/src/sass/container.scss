@@ -20,6 +20,7 @@
 
     top: 20px;
     right: -10px;
+
   }
 
   &:hover {
@@ -63,9 +64,10 @@
 }
 
 #devise-admin {
-  @apply dvs-z-30 dvs-fixed dvs-pin-l dvs-pin-t dvs-pin-b dvs-overflow-scroll dvs--ml-px;
+  @apply dvs-z-30 dvs-fixed dvs-pin-l dvs-pin-t dvs-pin-b dvs--ml-px;
 
-  font-size:12px;
+  // Reset the base font size for Devise interface
+  font-size:14px;
   width:100%;
 }
 
@@ -188,7 +190,7 @@
 }
 
 #devise-admin-content {
-  @apply dvs-p-8 dvs-opacity-100;
+  @apply dvs-opacity-100 dvs-text-base dvs-px-9 dvs-pt-10 dvs-pb-20;
 
   transition: opacity 0.3s;
 
@@ -198,7 +200,7 @@
 }
 
 .devise-admin-action-bar {
-  @apply dvs-p-4 dvs-flex dvs-fixed dvs-pin-t dvs-pin-r dvs-justify-end;
+  @apply dvs-p-4 dvs-m-4 dvs-flex dvs-fixed dvs-pin-t dvs-pin-r dvs-justify-end;
 }
 
 #devise-preview-content {

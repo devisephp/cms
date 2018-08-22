@@ -11,7 +11,6 @@ import PageEditor from '../components/pages/Editor'
 import PageSettings from '../components/pages/Settings'
 import PagesIndex from '../components/pages/Index'
 import PagesView from '../components/pages/View'
-import SettingsIndex from '../components/settings/Index'
 import SitesIndex from '../components/sites/Index'
 import SitesEdit from '../components/sites/Edit'
 import TemplatesIndex from '../components/templates/Index'
@@ -124,7 +123,7 @@ var routes = [
     path: '/devise/settings',
     name: 'devise-settings-index',
     components: {
-      'devise': SettingsIndex
+      'devise': AdministrationIndex
     }
   },
   {

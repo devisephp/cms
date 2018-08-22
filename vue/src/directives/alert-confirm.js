@@ -17,7 +17,7 @@ export default {
             <div class="dvs-mb-8">${binding.value.message}</div>
 
             <button class="dvs-btn dvs-btn-danger" @click="ok">Confirm</button>
-            <button class="dvs-btn dvs-btn-plain" @click="cancel">Cancel</button>
+            <button class="dvs-btn" @click="cancel">Cancel</button>
             </div>
           </div>
         </div>

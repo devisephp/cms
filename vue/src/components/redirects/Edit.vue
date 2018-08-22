@@ -3,14 +3,14 @@
   <administration>
     <sidebar title="Manage Redirects" />
 
-    <div id="devise-admin-content" :style="adminTheme">
+    <div id="devise-admin-content">
       <action-bar>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" v-devise-alert-confirm="{callback: requestDeleteRedirect, message: 'Are you sure you want to delete this redirect?'}">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" v-devise-alert-confirm="{callback: requestDeleteRedirect, message: 'Are you sure you want to delete this redirect?'}">
           Delete This Redirect
         </li>
       </action-bar>
 
-      <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Redirect Settings</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">Redirect Settings</h3>
 
       <div class="dvs-mb-12">
         <form>
@@ -26,8 +26,8 @@
         </form>
 
         <div class="dvs-flex">
-          <button @click="requestSaveRedirect" class="dvs-btn dvs-mr-2" :style="actionButtonTheme">Save</button>
-          <button @click="goToPage('devise-redirects-index')" class="dvs-btn dvs-btn-plain dvs-mr-4" :style="regularButtonTheme">Cancel</button>
+          <button @click="requestSaveRedirect" class="dvs-btn dvs-mr-2" :style="theme.actionButton">Save</button>
+          <button @click="goToPage('devise-redirects-index')" class="dvs-btn dvs-mr-4" :style="theme.actionButtonGhost">Cancel</button>
         </div>
       </div>
 

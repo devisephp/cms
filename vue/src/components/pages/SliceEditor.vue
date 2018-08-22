@@ -1,6 +1,6 @@
 <template>
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
-    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-xs dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer" @click="toggleSlice(slice)">
+    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer" @click="toggleSlice(slice)">
       <template v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
         <div class="dvs-cursor-pointer dvs-text-sm dvs-font-normal dvs-capitalize hover:underline dvs-ml-4">
           {{ slice.metadata.label }} 

@@ -5,17 +5,9 @@
 }
 
 .dvs-btn {
-  @apply dvs-p-3 dvs-px-8 dvs-text-center dvs-rounded dvs-uppercase dvs-text-xs dvs-font-bold dvs-cursor-pointer;
+  @apply dvs-p-3 dvs-px-8 dvs-text-center dvs-rounded dvs-uppercase dvs-text-xs dvs-font-bold dvs-cursor-pointer dvs-outline-none;
 
   transition: background-color 0.5s;
-
-  &.dvs-btn-success {
-    @apply dvs-bg-green dvs-text-white;
-
-    &:hover {
-      @apply dvs-text-white;
-    }
-  }
 
   &:focus {
     outline-style: none;
@@ -28,23 +20,6 @@
       @apply dvs-bg-green;
     }
   }
-
-  &.dvs-btn-plain {
-    @apply dvs-bg-grey dvs-text-grey-darker;
-
-    &:hover {
-      @apply dvs-bg-grey-lighter;
-    }
-  }
-
-  &.dvs-btn-ghost {
-    @apply dvs-bg-transparent dvs-border-2 dvs-border-blue-dark dvs-text-blue-dark;
-
-    &:hover {
-      @apply dvs-bg-blue-dark dvs-text-white;
-    }
-  }
-
 
   &.dvs-btn-round {
     @apply dvs-rounded-full;

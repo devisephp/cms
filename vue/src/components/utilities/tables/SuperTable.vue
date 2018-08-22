@@ -56,7 +56,7 @@
           class="dvs-mb-2 dvs-px-4 py-3 dvs-flex dvs-items-center dvs-justify-between"
           v-for="(scope, key) in filters.scopes"
           :key="key"
-          :style="regularButtonTheme">
+          :style="theme.actionButtonGhost">
             {{ key }}
             <div @click="removeScope(key)">
               <close-icon class="dvs-pl-2 dvs-cursor-pointer" w="20" h="20" />
@@ -68,12 +68,12 @@
         <input class="dvs-mb-4 dvs-mr-4" v-model="newScope" placeholder="New Scope Name" type="text">
         <input class="dvs-mb-4" v-model="newScopeProperties" placeholder="New Scope Properties" type="text">
       </div>
-      <button class="dvs-btn dvs-btn-xs" :style="regularButtonTheme" @click="addScope">Add Scope</button>
+      <button class="dvs-btn dvs-btn-xs" :style="theme.actionButtonGhost" @click="addScope">Add Scope</button>
     </fieldset>
 
     <div>
-      <button class="dvs-btn" :style="actionButtonTheme" @click="updateValue">Done</button>
-      <button class="dvs-btn" :style="regularButtonTheme" @click="cancel">Cancel</button>
+      <button class="dvs-btn" :style="theme.actionButton" @click="updateValue">Done</button>
+      <button class="dvs-btn" :style="theme.actionButtonGhost" @click="cancel">Cancel</button>
     </div>
   </div>
 </template>

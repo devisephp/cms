@@ -55,10 +55,10 @@
         <sketch-picker v-model="backgroundColor" @input="setBackground(backgroundColor)" @ok="setBackground(backgroundColor)" />
 
         <div class="dvs-mt-8 dvs-flex">
-          <button class="dvs-btn dvs-mr-4" :style="actionButtonTheme" @click="toggleEditor">
+          <button class="dvs-btn dvs-mr-4" :style="theme.actionButton" @click="toggleEditor">
             Done
           </button>
-          <button class="dvs-btn dvs-mr-4" :style="regularButtonTheme" @click="resetStyles">
+          <button class="dvs-btn dvs-mr-4" :style="theme.actionButtonGhost" @click="resetStyles">
             Reset All Values
           </button>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="dvs-fade-delayed">
-      <div class="dvs-alert-message dvs-error" :style="adminTheme" v-show="messageErrors.length > 0">
+      <div class="dvs-alert-message dvs-error" v-show="messageErrors.length > 0">
         <div @click="closeErrors()" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mr-4 dvs-mt-4">
           <close-icon class="dvs-cursor-pointer" w="20" h="20" />
         </div>
@@ -17,7 +17,7 @@
       </div>
     </transition>
     <transition name="dvs-fade-delayed">
-      <div class="dvs-alert-message" :style="adminTheme" v-show="messages.length > 0">
+      <div class="dvs-alert-message" v-show="messages.length > 0">
         <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i>
         <ul>
           <transition-group name="list" tag="div">

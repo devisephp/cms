@@ -2,7 +2,7 @@
   <div 
     id="devise-in-page-analytics" 
     class="dvs-fixed dvs-pin-b dvs-pin-r dvs-z-30 dvs-mr-8 dvs-mb-8 dvs-p-4 dvs-pb-0" 
-    :style="adminTheme" 
+    
     v-if="analytics !== null">
     <div class="dvs-flex" v-if="anlyticsHasData">
       <div class="dvs-flex dvs-flex-wrap dvs-justify-around dvs-w-full">

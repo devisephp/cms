@@ -1,8 +1,16 @@
 <template>
   <div 
     id="devise-admin"
-    :class="[deviseOptions.adminClass]" 
-    data-simplebar>
+    :class="[deviseOptions.adminClass]">
+
+    <portal-target name="devise-root"></portal-target>
+    <messages />
+    <loadbar />
+    <media-manager />
+    <media-editor />
+    <transition name="dvs-fade">
+      <preview-mode v-if="managingPage" />
+    </transition>
       
     <panel class="dvs-m-8" style="min-width:300px;" :panel-style="theme.panel" v-tilt>
       <div class="dvs-flex">
@@ -28,14 +36,14 @@
           </form>
         </div>
 
-        <transition name="dvs-fade" mode="out-in">
-          <router-view name="devise" :page="page"></router-view>
-        </transition>
+        <div class="dvs-max-h-screen" v-bar>
+          <transition name="dvs-fade" mode="out-in">
+            <router-view name="devise" :page="page"></router-view>
+          </transition>
+        </div>
 
       </div>
     </panel>
-
-    <preview-mode></preview-mode>
 
   </div>
 </template>
@@ -50,22 +58,16 @@ import PowerIcon from 'vue-ionicons/dist/ios-power.vue'
 import BackIcon from 'vue-ionicons/dist/md-arrow-round-back.vue'
 import DocumentIcon from 'vue-ionicons/dist/md-document.vue'
 
+import Loadbar from './../utilities/Loadbar'
+import MediaEditor from './../media-manager/MediaEditor'
+import MediaManager from './../media-manager/MediaManager'
+import Messages from './../utilities/Messages'
 import Panel from './../utilities/Panel'
 import PreviewMode from './../pages/PreviewMode'
 import { mapState } from 'vuex';
 
 export default {
   name: 'Administration',
-  methods: {
-    openPageSettings () {
-      this.pageSettingsOpen = !this.pageSettingsOpen
-      this.pageContentOpen = false
-    },
-    openPageContent () {
-      this.pageContentOpen = true
-      this.pageSettingsOpen = false
-    },
-  },
   computed: {
     ...mapState('devise', [
       'adminMenu'
@@ -75,6 +77,9 @@ export default {
     },
     csrf_field () {
       return window.axios.defaults.headers.common['X-CSRF-TOKEN']
+    },
+    managingPage () {
+      return this.$route.name === 'devise-page-editor'
     }
   },
   props: {
@@ -83,6 +88,10 @@ export default {
     }
   },
   components: {
+    Loadbar,
+    Messages,
+    MediaEditor,
+    MediaManager,
     PreviewMode,
     BackIcon,
     CogIcon,

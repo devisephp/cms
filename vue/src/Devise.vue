@@ -1,12 +1,6 @@
 <template>
   <div>
-    <portal-target name="devise-root" v-if="isLoggedIn"></portal-target>
     <portal-target name="app-root"></portal-target>
-
-    <messages v-if="isLoggedIn" />
-    <loadbar v-if="isLoggedIn" />
-    <media-manager v-if="isLoggedIn" />
-    <media-editor v-if="isLoggedIn" />
 
     <template v-if="editorMode || pageMode">
 
@@ -54,10 +48,6 @@
 </template>
 
 <script>
-import Loadbar from './components/utilities/Loadbar'
-import MediaEditor from './components/media-manager/MediaEditor'
-import MediaManager from './components/media-manager/MediaManager'
-import Messages from './components/utilities/Messages'
 import Slice from './Slice'
 import TemplateIndex from './components/templates/Index'
 import TemplateEdit from './components/templates/Edit'
@@ -222,10 +212,6 @@ export default {
   },
 
   components: {
-    Loadbar,
-    Messages,
-    MediaEditor,
-    MediaManager,
     SettingsIcon,
     Slice,
     TemplateIndex,

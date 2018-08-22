@@ -1,15 +1,20 @@
 <template>
-  <div class="devise-admin-action-bar" style="width:200px;" >
+  <div class="devise-admin-action-bar">
     <button 
       @click="show = !show" 
-      class="dvs-rounded-full dvs-outline-none" 
-      style="width:75px;height:75px;">
+      class="dvs-rounded-full dvs-outline-none"
+      style="width:50px;height:50px;"
+      :style="theme.actionButtonGhost">
       <flash-icon w="30" h="30" />
     </button>
 
     <transition name="dvs-fade">
-      <ul v-if="show" class="dvs-min-w-full dvs-list-reset dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-8" style="margin-right:100px">
-        <slot></slot>
+      <ul 
+        v-if="show" 
+        @click="show = false"
+        class="dvs-list-reset dvs-absolute dvs-pin-t dvs-pin-l dvs-mt-4 dvs-z-10" 
+        style="width:200px; margin-left:80px;">
+          <slot></slot>
       </ul>
     </transition>
 

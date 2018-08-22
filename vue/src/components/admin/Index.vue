@@ -1,14 +1,15 @@
 <template>
 <div class="dvs-p-8">
-  <h3 class="mb-4">{{ currentMenu.label }}</h3>
+  <h3 class="mb-6">{{ currentMenu.label }}</h3>
   <ul class="dvs-list-reset">
     <transition-group name="dvs-fade">
       <li class="dvs-mb-4" v-for="(menuItem, key) in currentMenu.menu" :key="key">
-        <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-xs dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer">
-          <div :style="{color: theme.panel.color}" @click="goToPage(menuItem.routeName)">
+        <div 
+          :style="{color: theme.panel.color}" 
+          @click="goToPage(menuItem.routeName)"
+          class="dvs-block dvs-mb-4 dvs-switch-sm dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer">
             {{ menuItem.label }}
-          </div>
-        </strong>
+        </div>
       </li>
     </transition-group>
   </ul>

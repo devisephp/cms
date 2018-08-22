@@ -125,6 +125,10 @@ const getters = {
         color: '#F3F3F3',
         secondaryColor: '#979797'
       },
+      panelCard: {
+        backgroundColor: `#182039`,
+        color: '#eee'
+      },
       panelSidebar: { 
         backgroundColor: '#182039',
         color: '#eee',
@@ -143,6 +147,11 @@ const getters = {
         color: '#EB8F89',
         borderColor: '#EB8F89',
         borderWidth: '2px'
+      },
+      help: {
+        color: '#EB8F89',
+        borderColor: '#EB8F89',
+        backgroundColor: tinycolor('#EB8F89').lighten(25).toString()
       },
 
       adminBackground: { color: 'rgba(0,0,0,0.8)' },
@@ -170,18 +179,6 @@ const getters = {
     }
 
     colors = Object.assign({}, defaultColors, colors)
-
-    colors.buttonsInverseLeft = {
-      color: tinycolor(colors.buttonsActionLeft.color).spin(90).toString()
-    }
-
-    colors.buttonsInverseRight = {
-      color: tinycolor(colors.buttonsActionRight.color).spin(90).toString()
-    }
-
-    colors.buttonsInverseText = {
-      color: tinycolor(colors.buttonsActionText.color).spin(90).toString()
-    }
 
     return colors
   },

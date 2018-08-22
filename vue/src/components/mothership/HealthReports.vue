@@ -4,7 +4,7 @@
       <sidebar-header title="Network Analytics" back-text="Back to Mothership" back-page="devise-mothership-index" />
     </div>
 
-    <div id="devise-admin-content"  :style="adminTheme">
+    <div id="devise-admin-content" >
         It's time to health report!
     </div>
 </div>

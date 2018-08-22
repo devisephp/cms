@@ -19,9 +19,11 @@
       &lt;meta {{ newMeta.attribute_name }}="{{ newMeta.attribute_value }}" content="{{ newMeta.content }}"&gt;
     </help>
 
-    <button class="dvs-btn dvs-mb-8" :disabled="isInvalid" :style="actionButtonTheme" @click="requestCreateMeta">Add New Meta</button>
+    <button class="dvs-btn dvs-mb-11" :disabled="isInvalid" :style="theme.actionButton" @click="requestCreateMeta">Add New Meta</button>
 
-    <h3 class="dvs-mb-8" :style="{color: theme.adminText.color}">Existing Meta</h3>
+    <h3 class="dvs-mb-8 dvs-pr-16">Existing Global Meta</h3>
+
+    <help class="dvs-mb-8">You currently do not have any meta tags at this time.</help>
 
     <div class="dvs-mb-12 dvs-flex dvs-flex-col">
       <div v-for="(meta, key) in value" :key="key" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
@@ -44,15 +46,15 @@
 
         <div class="dvs-flex dvs-justify-between dvs-items-center">
           <div v-if="!meta.edit">
-            <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" :style="regularButtonTheme" @click="setEditMode(meta)">
+            <button class="dvs-btn dvs-btn-xs dvs-ml-4" :style="theme.actionButtonGhost" @click="setEditMode(meta)">
               <edit-icon w="20" h="20" />
             </button>
-            <button class="dvs-btn dvs-btn-plain dvs-btn-xs dvs-ml-4" :style="regularButtonTheme" v-devise-alert-confirm="{callback: requestDeleteMeta, arguments:meta, message: 'Are you sure you want to delete this meta?'}">
+            <button class="dvs-btn dvs-btn-xs dvs-ml-4" :style="theme.actionButtonGhost" v-devise-alert-confirm="{callback: requestDeleteMeta, arguments:meta, message: 'Are you sure you want to delete this meta?'}">
               <trash-icon w="20" h="20" />
             </button>
           </div>
-          <button class="dvs-btn dvs-mr-2" v-if="meta.edit" @click="requestUpdateMeta(value[key])" :style="actionButtonTheme">Save</button>
-          <button class="dvs-btn dvs-btn-plain" v-if="meta.edit" @click="setEditMode(meta)">Cancel</button>
+          <button class="dvs-btn dvs-mr-2" v-if="meta.edit" @click="requestUpdateMeta(value[key])" :style="theme.actionButton">Save</button>
+          <button class="dvs-btn" v-if="meta.edit" @click="setEditMode(meta)">Cancel</button>
         </div>
       </div>
     </div>

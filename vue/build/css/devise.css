@@ -773,20 +773,12 @@ table {
   text-align: center;
   border-radius: .25rem;
   text-transform: uppercase;
-  font-size: .75rem;
+  font-size: .75em;
   font-weight: 700;
   cursor: pointer;
+  outline: 0;
   -webkit-transition: background-color .5s;
   transition: background-color .5s;
-}
-
-.dvs-btn.dvs-btn-success {
-  background-color: #38c172;
-  color: #fff;
-}
-
-.dvs-btn.dvs-btn-success:hover {
-  color: #fff;
 }
 
 .dvs-btn:focus {
@@ -801,27 +793,6 @@ table {
   background-color: #38c172;
 }
 
-.dvs-btn.dvs-btn-plain {
-  background-color: #b8c2cc;
-  color: #606f7b;
-}
-
-.dvs-btn.dvs-btn-plain:hover {
-  background-color: #f1f5f8;
-}
-
-.dvs-btn.dvs-btn-ghost {
-  background-color: transparent;
-  border-width: 2px;
-  border-color: #2b6ed8;
-  color: #2b6ed8;
-}
-
-.dvs-btn.dvs-btn-ghost:hover {
-  background-color: #2b6ed8;
-  color: #fff;
-}
-
 .dvs-btn.dvs-btn-round {
   border-radius: 9999px;
   line-height: 1em;
@@ -832,7 +803,7 @@ table {
   padding-bottom: .75rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  font-size: .75rem;
+  font-size: .75em;
 }
 
 .dvs-btn.dvs-btn-xs {
@@ -840,7 +811,7 @@ table {
   padding-bottom: .5rem;
   padding-left: .75rem;
   padding-right: .75rem;
-  font-size: .75rem;
+  font-size: .75em;
 }
 
 .dvs-btn.dvs-btn-2xs {
@@ -848,7 +819,7 @@ table {
   padding-bottom: .5rem;
   padding-left: .75rem;
   padding-right: .75rem;
-  font-size: .65rem;
+  font-size: .65em;
 }
 
 .dvs-btn.dvs-btn-lg {
@@ -856,7 +827,7 @@ table {
   padding-bottom: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.125em;
 }
 
 .dvs-btn:disabled {
@@ -1077,7 +1048,7 @@ table {
 }
 
 #devise-admin-open .dvs-gear-2 {
-  font-size: 1rem;
+  font-size: 1em;
   position: absolute;
   top: 20px;
   right: -10px;
@@ -1164,9 +1135,8 @@ table {
   left: 0;
   top: 0;
   bottom: 0;
-  overflow: scroll;
   margin-left: -1px;
-  font-size: 12px;
+  font-size: 14px;
   width: 100%;
 }
 
@@ -1307,8 +1277,12 @@ table {
 }
 
 #devise-admin-content {
-  padding: 2rem;
   opacity: 1;
+  font-size: 1em;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  padding-top: 3rem;
+  padding-bottom: 6rem;
   -webkit-transition: opacity .3s;
   transition: opacity .3s;
 }
@@ -1319,6 +1293,7 @@ table {
 
 .devise-admin-action-bar {
   padding: 1rem;
+  margin: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1360,21 +1335,21 @@ table {
 .dvs-fieldset label {
   display: block;
   margin-bottom: .5rem;
-  font-size: .75rem;
+  font-size: .75em;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: .075em;
 }
 
 .dvs-fieldset label.dvs-large-label {
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
 }
 
 .dvs-fieldset label.dvs-small-label {
-  font-size: .875rem;
+  font-size: .875em;
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
@@ -1395,7 +1370,7 @@ table {
   padding-top: .75rem;
   padding-bottom: .75rem;
   line-height: 1.25;
-  font-size: .875rem;
+  font-size: .875em;
   width: 100%;
   background-color: #f1f5f8;
   color: #3d4852;
@@ -1504,7 +1479,7 @@ table {
 
 .help {
   padding: 1rem;
-  font-size: .875rem;
+  font-size: 1em;
   border-left-width: 4px;
 }
 
@@ -1779,7 +1754,7 @@ table.dvs-table th {
   border-color: #b8c2cc;
   text-align: left;
   position: relative;
-  font-size: .875rem;
+  font-size: .875em;
 }
 
 table.dvs-table td {
@@ -1790,7 +1765,7 @@ table.dvs-table td {
   border-bottom-width: 1px;
   border-color: #b8c2cc;
   text-align: left;
-  font-size: .875rem;
+  font-size: .875em;
 }
 
 table.dvs-table.tight td {
@@ -1811,14 +1786,14 @@ table.dvs-table.tight td {
   padding: .5rem;
   padding-top: .25rem;
   padding-bottom: .25rem;
-  font-size: .875rem;
+  font-size: .875em;
   border-radius: .125rem;
 }
 
 .dvs-empty-slot {
   padding: 2rem;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1.25em;
   text-transform: uppercase;
   font-weight: 700;
   border-radius: .125rem;
@@ -1902,34 +1877,34 @@ table.dvs-table.tight td {
 }
 
 #devise-admin h1 {
-  font-size: 2.25rem;
+  font-size: 2.25em;
   font-weight: 100;
 }
 
 #devise-admin h2 {
-  font-size: 1.875rem;
+  font-size: 1.875em;
   font-weight: 100;
 }
 
 #devise-admin h3 {
-  font-size: 1.5rem;
+  font-size: 1.5em;
   font-weight: 100;
 }
 
 #devise-admin h4 {
-  font-size: 1.25rem;
+  font-size: 1.25em;
   font-weight: 200;
 }
 
 #devise-admin h5 {
-  font-size: 1.125rem;
+  font-size: 1.125em;
 }
 
 #devise-admin h6 {
   text-transform: uppercase;
   letter-spacing: .05em;
   font-weight: 700;
-  font-size: .75rem;
+  font-size: .75em;
   letter-spacing: .075em;
 }
 
@@ -1961,7 +1936,7 @@ p:last-child {
 }
 
 small {
-  font-size: .75rem;
+  font-size: .75em;
 }
 
 .strikethrough {
@@ -3617,6 +3592,14 @@ trix-editor {
   margin: 6rem;
 }
 
+.dvs-m-16 {
+  margin: 4rem;
+}
+
+.dvs-m-20 {
+  margin: 6rem;
+}
+
 .dvs-m-auto {
   margin: auto;
 }
@@ -3731,6 +3714,26 @@ trix-editor {
 }
 
 .dvs-mx-12 {
+  margin-left: 6rem;
+  margin-right: 6rem;
+}
+
+.dvs-my-16 {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.dvs-mx-16 {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+
+.dvs-my-20 {
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+}
+
+.dvs-mx-20 {
   margin-left: 6rem;
   margin-right: 6rem;
 }
@@ -3928,6 +3931,38 @@ trix-editor {
 }
 
 .dvs-ml-12 {
+  margin-left: 6rem;
+}
+
+.dvs-mt-16 {
+  margin-top: 4rem;
+}
+
+.dvs-mr-16 {
+  margin-right: 4rem;
+}
+
+.dvs-mb-16 {
+  margin-bottom: 4rem;
+}
+
+.dvs-ml-16 {
+  margin-left: 4rem;
+}
+
+.dvs-mt-20 {
+  margin-top: 6rem;
+}
+
+.dvs-mr-20 {
+  margin-right: 6rem;
+}
+
+.dvs-mb-20 {
+  margin-bottom: 6rem;
+}
+
+.dvs-ml-20 {
   margin-left: 6rem;
 }
 
@@ -4543,8 +4578,20 @@ trix-editor {
   padding: 2rem;
 }
 
-.dvs-p-12 {
+.dvs-p-9 {
+  padding: 2.5rem;
+}
+
+.dvs-p-10 {
   padding: 3rem;
+}
+
+.dvs-p-11 {
+  padding: 4rem;
+}
+
+.dvs-p-12 {
+  padding: 6rem;
 }
 
 .dvs-p-16 {
@@ -4629,14 +4676,44 @@ trix-editor {
   padding-right: 2rem;
 }
 
-.dvs-py-12 {
+.dvs-py-9 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.dvs-px-9 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.dvs-py-10 {
   padding-top: 3rem;
   padding-bottom: 3rem;
 }
 
-.dvs-px-12 {
+.dvs-px-10 {
   padding-left: 3rem;
   padding-right: 3rem;
+}
+
+.dvs-py-11 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.dvs-px-11 {
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.dvs-py-12 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.dvs-px-12 {
+  padding-left: 6rem;
+  padding-right: 6rem;
 }
 
 .dvs-py-16 {
@@ -4781,20 +4858,68 @@ trix-editor {
   padding-left: 2rem;
 }
 
-.dvs-pt-12 {
+.dvs-pt-9 {
+  padding-top: 2.5rem;
+}
+
+.dvs-pr-9 {
+  padding-right: 2.5rem;
+}
+
+.dvs-pb-9 {
+  padding-bottom: 2.5rem;
+}
+
+.dvs-pl-9 {
+  padding-left: 2.5rem;
+}
+
+.dvs-pt-10 {
   padding-top: 3rem;
 }
 
-.dvs-pr-12 {
+.dvs-pr-10 {
   padding-right: 3rem;
 }
 
-.dvs-pb-12 {
+.dvs-pb-10 {
   padding-bottom: 3rem;
 }
 
-.dvs-pl-12 {
+.dvs-pl-10 {
   padding-left: 3rem;
+}
+
+.dvs-pt-11 {
+  padding-top: 4rem;
+}
+
+.dvs-pr-11 {
+  padding-right: 4rem;
+}
+
+.dvs-pb-11 {
+  padding-bottom: 4rem;
+}
+
+.dvs-pl-11 {
+  padding-left: 4rem;
+}
+
+.dvs-pt-12 {
+  padding-top: 6rem;
+}
+
+.dvs-pr-12 {
+  padding-right: 6rem;
+}
+
+.dvs-pb-12 {
+  padding-bottom: 6rem;
+}
+
+.dvs-pl-12 {
+  padding-left: 6rem;
 }
 
 .dvs-pt-16 {
@@ -5114,43 +5239,43 @@ trix-editor {
 }
 
 .dvs-text-2xs {
-  font-size: .65rem;
+  font-size: .65em;
 }
 
 .dvs-text-xs {
-  font-size: .75rem;
+  font-size: .75em;
 }
 
 .dvs-text-sm {
-  font-size: .875rem;
+  font-size: .875em;
 }
 
 .dvs-text-base {
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 .dvs-text-lg {
-  font-size: 1.125rem;
+  font-size: 1.125em;
 }
 
 .dvs-text-xl {
-  font-size: 1.25rem;
+  font-size: 1.25em;
 }
 
 .dvs-text-2xl {
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 
 .dvs-text-3xl {
-  font-size: 1.875rem;
+  font-size: 1.875em;
 }
 
 .dvs-text-4xl {
-  font-size: 2.25rem;
+  font-size: 2.25em;
 }
 
 .dvs-text-5xl {
-  font-size: 3rem;
+  font-size: 3em;
 }
 
 .dvs-italic {
@@ -6770,6 +6895,14 @@ trix-editor {
     margin: 6rem;
   }
 
+  .md\:dvs-m-16 {
+    margin: 4rem;
+  }
+
+  .md\:dvs-m-20 {
+    margin: 6rem;
+  }
+
   .md\:dvs-m-auto {
     margin: auto;
   }
@@ -6884,6 +7017,26 @@ trix-editor {
   }
 
   .md\:dvs-mx-12 {
+    margin-left: 6rem;
+    margin-right: 6rem;
+  }
+
+  .md\:dvs-my-16 {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .md\:dvs-mx-16 {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+
+  .md\:dvs-my-20 {
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+  }
+
+  .md\:dvs-mx-20 {
     margin-left: 6rem;
     margin-right: 6rem;
   }
@@ -7081,6 +7234,38 @@ trix-editor {
   }
 
   .md\:dvs-ml-12 {
+    margin-left: 6rem;
+  }
+
+  .md\:dvs-mt-16 {
+    margin-top: 4rem;
+  }
+
+  .md\:dvs-mr-16 {
+    margin-right: 4rem;
+  }
+
+  .md\:dvs-mb-16 {
+    margin-bottom: 4rem;
+  }
+
+  .md\:dvs-ml-16 {
+    margin-left: 4rem;
+  }
+
+  .md\:dvs-mt-20 {
+    margin-top: 6rem;
+  }
+
+  .md\:dvs-mr-20 {
+    margin-right: 6rem;
+  }
+
+  .md\:dvs-mb-20 {
+    margin-bottom: 6rem;
+  }
+
+  .md\:dvs-ml-20 {
     margin-left: 6rem;
   }
 
@@ -7688,8 +7873,20 @@ trix-editor {
     padding: 2rem;
   }
 
-  .md\:dvs-p-12 {
+  .md\:dvs-p-9 {
+    padding: 2.5rem;
+  }
+
+  .md\:dvs-p-10 {
     padding: 3rem;
+  }
+
+  .md\:dvs-p-11 {
+    padding: 4rem;
+  }
+
+  .md\:dvs-p-12 {
+    padding: 6rem;
   }
 
   .md\:dvs-p-16 {
@@ -7774,14 +7971,44 @@ trix-editor {
     padding-right: 2rem;
   }
 
-  .md\:dvs-py-12 {
+  .md\:dvs-py-9 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .md\:dvs-px-9 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .md\:dvs-py-10 {
     padding-top: 3rem;
     padding-bottom: 3rem;
   }
 
-  .md\:dvs-px-12 {
+  .md\:dvs-px-10 {
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  .md\:dvs-py-11 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .md\:dvs-px-11 {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .md\:dvs-py-12 {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .md\:dvs-px-12 {
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 
   .md\:dvs-py-16 {
@@ -7926,20 +8153,68 @@ trix-editor {
     padding-left: 2rem;
   }
 
-  .md\:dvs-pt-12 {
+  .md\:dvs-pt-9 {
+    padding-top: 2.5rem;
+  }
+
+  .md\:dvs-pr-9 {
+    padding-right: 2.5rem;
+  }
+
+  .md\:dvs-pb-9 {
+    padding-bottom: 2.5rem;
+  }
+
+  .md\:dvs-pl-9 {
+    padding-left: 2.5rem;
+  }
+
+  .md\:dvs-pt-10 {
     padding-top: 3rem;
   }
 
-  .md\:dvs-pr-12 {
+  .md\:dvs-pr-10 {
     padding-right: 3rem;
   }
 
-  .md\:dvs-pb-12 {
+  .md\:dvs-pb-10 {
     padding-bottom: 3rem;
   }
 
-  .md\:dvs-pl-12 {
+  .md\:dvs-pl-10 {
     padding-left: 3rem;
+  }
+
+  .md\:dvs-pt-11 {
+    padding-top: 4rem;
+  }
+
+  .md\:dvs-pr-11 {
+    padding-right: 4rem;
+  }
+
+  .md\:dvs-pb-11 {
+    padding-bottom: 4rem;
+  }
+
+  .md\:dvs-pl-11 {
+    padding-left: 4rem;
+  }
+
+  .md\:dvs-pt-12 {
+    padding-top: 6rem;
+  }
+
+  .md\:dvs-pr-12 {
+    padding-right: 6rem;
+  }
+
+  .md\:dvs-pb-12 {
+    padding-bottom: 6rem;
+  }
+
+  .md\:dvs-pl-12 {
+    padding-left: 6rem;
   }
 
   .md\:dvs-pt-16 {
@@ -8259,43 +8534,43 @@ trix-editor {
   }
 
   .md\:dvs-text-2xs {
-    font-size: .65rem;
+    font-size: .65em;
   }
 
   .md\:dvs-text-xs {
-    font-size: .75rem;
+    font-size: .75em;
   }
 
   .md\:dvs-text-sm {
-    font-size: .875rem;
+    font-size: .875em;
   }
 
   .md\:dvs-text-base {
-    font-size: 1rem;
+    font-size: 1em;
   }
 
   .md\:dvs-text-lg {
-    font-size: 1.125rem;
+    font-size: 1.125em;
   }
 
   .md\:dvs-text-xl {
-    font-size: 1.25rem;
+    font-size: 1.25em;
   }
 
   .md\:dvs-text-2xl {
-    font-size: 1.5rem;
+    font-size: 1.5em;
   }
 
   .md\:dvs-text-3xl {
-    font-size: 1.875rem;
+    font-size: 1.875em;
   }
 
   .md\:dvs-text-4xl {
-    font-size: 2.25rem;
+    font-size: 2.25em;
   }
 
   .md\:dvs-text-5xl {
-    font-size: 3rem;
+    font-size: 3em;
   }
 
   .md\:dvs-italic {
@@ -9741,6 +10016,14 @@ trix-editor {
     margin: 6rem;
   }
 
+  .lg\:dvs-m-16 {
+    margin: 4rem;
+  }
+
+  .lg\:dvs-m-20 {
+    margin: 6rem;
+  }
+
   .lg\:dvs-m-auto {
     margin: auto;
   }
@@ -9855,6 +10138,26 @@ trix-editor {
   }
 
   .lg\:dvs-mx-12 {
+    margin-left: 6rem;
+    margin-right: 6rem;
+  }
+
+  .lg\:dvs-my-16 {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .lg\:dvs-mx-16 {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+
+  .lg\:dvs-my-20 {
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+  }
+
+  .lg\:dvs-mx-20 {
     margin-left: 6rem;
     margin-right: 6rem;
   }
@@ -10052,6 +10355,38 @@ trix-editor {
   }
 
   .lg\:dvs-ml-12 {
+    margin-left: 6rem;
+  }
+
+  .lg\:dvs-mt-16 {
+    margin-top: 4rem;
+  }
+
+  .lg\:dvs-mr-16 {
+    margin-right: 4rem;
+  }
+
+  .lg\:dvs-mb-16 {
+    margin-bottom: 4rem;
+  }
+
+  .lg\:dvs-ml-16 {
+    margin-left: 4rem;
+  }
+
+  .lg\:dvs-mt-20 {
+    margin-top: 6rem;
+  }
+
+  .lg\:dvs-mr-20 {
+    margin-right: 6rem;
+  }
+
+  .lg\:dvs-mb-20 {
+    margin-bottom: 6rem;
+  }
+
+  .lg\:dvs-ml-20 {
     margin-left: 6rem;
   }
 
@@ -10659,8 +10994,20 @@ trix-editor {
     padding: 2rem;
   }
 
-  .lg\:dvs-p-12 {
+  .lg\:dvs-p-9 {
+    padding: 2.5rem;
+  }
+
+  .lg\:dvs-p-10 {
     padding: 3rem;
+  }
+
+  .lg\:dvs-p-11 {
+    padding: 4rem;
+  }
+
+  .lg\:dvs-p-12 {
+    padding: 6rem;
   }
 
   .lg\:dvs-p-16 {
@@ -10745,14 +11092,44 @@ trix-editor {
     padding-right: 2rem;
   }
 
-  .lg\:dvs-py-12 {
+  .lg\:dvs-py-9 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .lg\:dvs-px-9 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .lg\:dvs-py-10 {
     padding-top: 3rem;
     padding-bottom: 3rem;
   }
 
-  .lg\:dvs-px-12 {
+  .lg\:dvs-px-10 {
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  .lg\:dvs-py-11 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .lg\:dvs-px-11 {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .lg\:dvs-py-12 {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .lg\:dvs-px-12 {
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 
   .lg\:dvs-py-16 {
@@ -10897,20 +11274,68 @@ trix-editor {
     padding-left: 2rem;
   }
 
-  .lg\:dvs-pt-12 {
+  .lg\:dvs-pt-9 {
+    padding-top: 2.5rem;
+  }
+
+  .lg\:dvs-pr-9 {
+    padding-right: 2.5rem;
+  }
+
+  .lg\:dvs-pb-9 {
+    padding-bottom: 2.5rem;
+  }
+
+  .lg\:dvs-pl-9 {
+    padding-left: 2.5rem;
+  }
+
+  .lg\:dvs-pt-10 {
     padding-top: 3rem;
   }
 
-  .lg\:dvs-pr-12 {
+  .lg\:dvs-pr-10 {
     padding-right: 3rem;
   }
 
-  .lg\:dvs-pb-12 {
+  .lg\:dvs-pb-10 {
     padding-bottom: 3rem;
   }
 
-  .lg\:dvs-pl-12 {
+  .lg\:dvs-pl-10 {
     padding-left: 3rem;
+  }
+
+  .lg\:dvs-pt-11 {
+    padding-top: 4rem;
+  }
+
+  .lg\:dvs-pr-11 {
+    padding-right: 4rem;
+  }
+
+  .lg\:dvs-pb-11 {
+    padding-bottom: 4rem;
+  }
+
+  .lg\:dvs-pl-11 {
+    padding-left: 4rem;
+  }
+
+  .lg\:dvs-pt-12 {
+    padding-top: 6rem;
+  }
+
+  .lg\:dvs-pr-12 {
+    padding-right: 6rem;
+  }
+
+  .lg\:dvs-pb-12 {
+    padding-bottom: 6rem;
+  }
+
+  .lg\:dvs-pl-12 {
+    padding-left: 6rem;
   }
 
   .lg\:dvs-pt-16 {
@@ -11230,43 +11655,43 @@ trix-editor {
   }
 
   .lg\:dvs-text-2xs {
-    font-size: .65rem;
+    font-size: .65em;
   }
 
   .lg\:dvs-text-xs {
-    font-size: .75rem;
+    font-size: .75em;
   }
 
   .lg\:dvs-text-sm {
-    font-size: .875rem;
+    font-size: .875em;
   }
 
   .lg\:dvs-text-base {
-    font-size: 1rem;
+    font-size: 1em;
   }
 
   .lg\:dvs-text-lg {
-    font-size: 1.125rem;
+    font-size: 1.125em;
   }
 
   .lg\:dvs-text-xl {
-    font-size: 1.25rem;
+    font-size: 1.25em;
   }
 
   .lg\:dvs-text-2xl {
-    font-size: 1.5rem;
+    font-size: 1.5em;
   }
 
   .lg\:dvs-text-3xl {
-    font-size: 1.875rem;
+    font-size: 1.875em;
   }
 
   .lg\:dvs-text-4xl {
-    font-size: 2.25rem;
+    font-size: 2.25em;
   }
 
   .lg\:dvs-text-5xl {
-    font-size: 3rem;
+    font-size: 3em;
   }
 
   .lg\:dvs-italic {

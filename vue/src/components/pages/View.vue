@@ -1,8 +1,6 @@
 <template>
 
-  <administration>
-    <sidebar title="Manage Page" />
-
+  <div>
     <div id="devise-admin-content" v-if="page">
       <action-bar>
         <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="href(page.slug)">
@@ -61,11 +59,8 @@
           <div>
             <div class="dvs-mb-4">
               <fieldset class="dvs-fieldset dvs-mb-8">
-                <label>Template</label>
-                <select v-model="localValue.versions[key].template_id">
-                  <option :value="null">Please select a template</option>
-                  <option v-for="template in templates.data" :key="template.id" :value="template.id">{{ template.name }}</option>
-                </select>
+                <label>Layout</label>
+                <input type="text" v-model="localValue.versions[key].layout" />
               </fieldset>
 
               <fieldset class="dvs-fieldset dvs-mb-8">
@@ -203,7 +198,7 @@
       </devise-modal>
     </transition>
 
-  </administration>
+  </div>
 
 </template>
 
@@ -275,7 +270,6 @@ export default {
   },
   mounted () {
     this.retrieveAllPages()
-    this.retrieveAllTemplates()
     this.retrieveAllLanguages()
     this.setDefaultAnalytics()
   },
@@ -288,7 +282,6 @@ export default {
       'getPageAnalytics',
       'getPages',
       'getLanguages',
-      'getTemplates',
       'translatePage',
       'updatePage',
       'updatePageVersion'
@@ -360,12 +353,6 @@ export default {
         self.retrieveAnalytics()
       })
     },
-    retrieveAllTemplates () {
-      let self = this
-      this.getTemplates().then(function () {
-        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
-      })
-    },
     retrieveAllLanguages () {
       let self = this
       this.getLanguages().then(function () {
@@ -418,7 +405,6 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'templates',
       'page',
       'languages',
       'mothership'

@@ -15,63 +15,63 @@ use Illuminate\Routing\Controller;
  */
 class MediaController extends Controller
 {
-  use ValidatesRequests;
-  /**
-   * @var Manager
-   */
-  protected $FileManager;
-  protected $Repository;
+    use ValidatesRequests;
+    /**
+     * @var Manager
+     */
+    protected $FileManager;
+    protected $Repository;
 
-  /**
-   * Construct a new response handler
-   *
-   * @param Manager $FileManager
-   * @param null $Redirect
-   */
-  public function __construct(Manager $FileManager, Repository $Repository)
-  {
-    $this->FileManager = $FileManager;
-    $this->Repository = $Repository;
-  }
+    /**
+     * Construct a new response handler
+     *
+     * @param Manager $FileManager
+     * @param null $Redirect
+     */
+    public function __construct(Manager $FileManager, Repository $Repository)
+    {
+        $this->FileManager = $FileManager;
+        $this->Repository = $Repository;
+    }
 
-  /**
-   * Requests a file upload
-   *
-   * @param Request $request
-   * @param $folderPath
-   * @return mixed
-   */
-  public function all(Request $request, $folderPath = '')
-  {
-    $input = $request->all();
-    $input['category'] = $folderPath;
-    $results = $this->Repository->getIndex($input, ['media-items']);
+    /**
+     * Requests a file upload
+     *
+     * @param Request $request
+     * @param $folderPath
+     * @return mixed
+     */
+    public function all(Request $request, $folderPath = '')
+    {
+        $input = $request->all();
+        $input['category'] = $folderPath;
+        $results = $this->Repository->getIndex($input, ['media-items']);
 
-    return $results['media-items'];
-  }
+        return $results['media-items'];
+    }
 
-  /**
-   * Requests a file upload
-   *
-   * @param Request $request
-   * @return mixed
-   */
-  public function store(Request $request)
-  {
-    $this->validate($request, ['file' => 'required|file']);
+    /**
+     * Requests a file upload
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, ['file' => 'required|file']);
 
-    $file = $this->FileManager->saveUploadedFile($request->all());
+        $this->FileManager->saveUploadedFile($request->all());
+    }
 
-    return $this->Repository->getFileData($file);
-  }
+    /**
+     * Requests a file removal
+     *
+     * @param Request $request
+     */
+    public function remove(Request $request, $mediaId)
+    {
+        $this->validate($request, ['file' => 'required']);
 
-  /**
-   * Requests a file removal
-   *
-   * @param Request $request
-   */
-  public function remove(Request $request, $mediaId)
-  {
-    $this->FileManager->removeUploadedFile($mediaId);
-  }
+        $this->FileManager->removeUploadedFile($request->all());
+    }
 }

@@ -1,10 +1,8 @@
 <?php namespace Devise\Media\Files;
 
 use Devise\Media\Categories\CategoryPaths;
-use Devise\Models\DvsMedia;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
-use Illuminate\Http\UploadedFile;
 
 /**
  * Class Manager
@@ -12,20 +10,22 @@ use Illuminate\Http\UploadedFile;
  */
 class Manager
 {
-    private $DvsMedia;
-
     private $CategoryPaths;
 
     private $SiteDetector;
 
+    protected $Storage;
+
     /**
-     *
+     * @param CategoryPaths $CategoryPaths
+     * @param SiteDetector $SiteDetector
      */
-    public function __construct(DvsMedia $DvsMedia, CategoryPaths $CategoryPaths, SiteDetector $SiteDetector, Framework $Framework)
+    public function __construct(CategoryPaths $CategoryPaths, SiteDetector $SiteDetector, Framework $Framework)
     {
-        $this->DvsMedia = $DvsMedia;
         $this->CategoryPaths = $CategoryPaths;
         $this->SiteDetector = $SiteDetector;
+
+        $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
     }
 
     /**
@@ -38,33 +38,21 @@ class Manager
 
         $serverPath = $this->CategoryPaths->serverPath($categoryPath);
 
-        $mm = new DvsMedia();
-        $mm->directory = $categoryPath;
-        $mm->name = $file->getClientOriginalName();
-        $mm->size = $file->getClientSize();
-        $mm->used_count = 0;
-
-        $site = $this->SiteDetector->current();
-        $site->media()->save($mm, ['default' => 0]);
-
-        $mm->saveUploadTo($file, $serverPath);
-
-        return $mm;
+        $this->Storage->putFileAs($serverPath, $file, $file->getClientOriginalName());
     }
 
     /**
      *
      */
-    public function removeUploadedFile($id)
+    public function removeUploadedFile($input)
     {
-        $site = $this->SiteDetector->current();
+        $categoryPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
+        $file = array_get($input, 'file');
 
-        $file = $this->DvsMedia
-            ->findOrFail($id);
+        $serverPath = $this->CategoryPaths->serverPath($categoryPath);
+        $filePath = $serverPath . '/' . $file;
 
-        $site->media()->detach($id);
-
-        $file->delete();
+        $this->Storage->delete($filePath);
     }
 
 }

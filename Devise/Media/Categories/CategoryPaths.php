@@ -60,8 +60,6 @@ class CategoryPaths
 
     public function basePath()
     {
-        $site = $this->SiteDetector->current();
-
-        return $this->Config->get('devise.media.root-directory') . '/' . $site->domain;
+        return $this->Config->get('devise.media.root-directory');
     }
 }

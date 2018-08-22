@@ -22,13 +22,8 @@ class DvsSite extends Model
 
     public function languages()
     {
-        return $this->morphedByMany(DvsLanguage::class, 'element', 'dvs_site_element', 'site_id')
+        return $this->belongsToMany(DvsLanguage::class, 'dvs_site_language', 'language_id', 'site_id')
             ->withPivot('default');
-    }
-
-    public function media()
-    {
-        return $this->morphedByMany(DvsMedia::class, 'element', 'dvs_site_element', 'site_id');
     }
 
     public function getModelQueriesAttribute($value)

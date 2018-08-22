@@ -41,9 +41,6 @@ var routes = [
     name: 'devise-pages-index',
     components: {
       'devise': PagesIndex
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -51,9 +48,6 @@ var routes = [
     name: 'devise-pages-view',
     components: {
       'devise': PagesView
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -82,9 +76,6 @@ var routes = [
     name: 'devise-ms-analytics-index',
     components: {
       'devise': MothershipAnalytics
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -92,9 +83,6 @@ var routes = [
     name: 'devise-ms-releases-index',
     components: {
       'devise': MothershipReleases
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -102,9 +90,6 @@ var routes = [
     name: 'devise-ms-changes-index',
     components: {
       'devise': MothershipChanges
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -112,9 +97,6 @@ var routes = [
     name: 'devise-ms-backups-index',
     components: {
       'devise': MothershipBackups
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -122,9 +104,6 @@ var routes = [
     name: 'devise-ms-healthreports-index',
     components: {
       'devise': MothershipHealthReports
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -132,9 +111,6 @@ var routes = [
     name: 'devise-languages-manage',
     components: {
       'devise': LanguagesManage
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -142,9 +118,6 @@ var routes = [
     name: 'devise-meta-manage',
     components: {
       'devise': MetaManage
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -159,9 +132,6 @@ var routes = [
     name: 'devise-templates-index',
     components: {
       'devise': TemplatesIndex
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -170,19 +140,13 @@ var routes = [
     components: {
       'devise': TemplatesEdit
     },
-    props: true,
-    meta: {
-      wide: true
-    }
+    props: true
   },
   {
     path: '/devise/sites',
     name: 'devise-sites-index',
     components: {
       'devise': SitesIndex
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -190,9 +154,6 @@ var routes = [
     name: 'devise-sites-edit',
     components: {
       'devise': SitesEdit
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -200,9 +161,6 @@ var routes = [
     name: 'devise-users-index',
     components: {
       'devise': UsersIndex
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -211,19 +169,13 @@ var routes = [
     components: {
       'devise': UsersEdit
     },
-    props: true,
-    meta: {
-      wide: true
-    }
+    props: true
   },
   {
     path: '/devise/redirects',
     name: 'devise-redirects-index',
     components: {
       'devise': RedirectsIndex
-    },
-    meta: {
-      wide: true
     }
   },
   {
@@ -232,10 +184,7 @@ var routes = [
     components: {
       'devise': RedirectsEdit
     },
-    props: true,
-    meta: {
-      wide: true
-    }
+    props: true
   }
 ]
 

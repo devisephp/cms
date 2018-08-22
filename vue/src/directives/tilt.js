@@ -30,20 +30,24 @@ export default {
 
     function tiltPanel(el, event) {
 
-      let x = event.clientX - el.offsetLeft
-      let y = event.clientY - el.offsetTop
+      if (panelContents.offsetWidth < 350) {
+        let x = event.clientX - el.offsetLeft
+        let y = event.clientY - el.offsetTop
 
-      let xStrength = getXStrength(y) 
-      let yStrength = getYStrength(x)
+        let xStrength = getXStrength(y) 
+        let yStrength = getYStrength(x)
 
-      setPanelShine(xStrength, yStrength)
+        setPanelShine(xStrength, yStrength)
 
-      TweenMax.to(panelContents, 0.5, {
-        rotationX: `${xStrength * xEffectStrength}deg`,
-        rotationY: `${yStrength * yEffectStrength * -1}deg`,
-        perspective: '1000px',
-        ease: 'elastic'
-      })
+        TweenMax.to(panelContents, 0.5, {
+          rotationX: `${xStrength * xEffectStrength}deg`,
+          rotationY: `${yStrength * yEffectStrength * -1}deg`,
+          perspective: '1000px',
+          ease: 'elastic'
+        })
+      } else {
+        focusPanel(1, 1, 0.2)
+      }
     }
 
     function getYStrength (cx) {

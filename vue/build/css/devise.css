@@ -1239,7 +1239,6 @@ table {
 
 .admin-closed #devise-admin-content {
   opacity: 0;
-  width: 75%;
 }
 
 #devise-container.admin-closed #devise-in-page-analytics {
@@ -1308,8 +1307,7 @@ table {
 }
 
 #devise-admin-content {
-  padding: 5rem;
-  width: 75%;
+  padding: 2rem;
   opacity: 1;
   -webkit-transition: opacity .3s;
   transition: opacity .3s;
@@ -1715,9 +1713,9 @@ table {
   bottom: 0;
   left: 0;
   pointer-events: none;
-  width: 1000px;
-  height: 1000px;
-  background: radial-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, 0) 500px);
+  width: 3000px;
+  height: 3000px;
+  background: radial-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, 0) 1000px);
 }
 
 .dvs-panel-contents {

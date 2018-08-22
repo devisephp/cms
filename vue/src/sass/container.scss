@@ -129,7 +129,6 @@
 
   #devise-admin-content {
     opacity:0;
-    width:75%;
   }
 }
 
@@ -189,9 +188,7 @@
 }
 
 #devise-admin-content {
-  padding: 5rem;
-  width: 75%;
-  opacity:1;
+  @apply dvs-p-8 dvs-opacity-100;
 
   transition: opacity 0.3s;
 

@@ -1,6 +1,9 @@
 <template>
   <div class="devise-admin-action-bar" style="width:200px;" >
-    <button @click="show = !show" class="dvs-rounded-full dvs-outline-none" :style="actionButtonTheme" style="width:75px;height:75px;">
+    <button 
+      @click="show = !show" 
+      class="dvs-rounded-full dvs-outline-none" 
+      style="width:75px;height:75px;">
       <flash-icon w="30" h="30" />
     </button>
 

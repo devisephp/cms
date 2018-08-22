@@ -1,11 +1,10 @@
 <template>
 
-  <administration>
-    <sidebar title="Manage Pages" />
+  <div>
 
-    <div id="devise-admin-content" :style="adminTheme">
+    <div id="devise-admin-content" class="dvs-w-full">
       <action-bar>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="actionButtonTheme" @click.prevent="showCreate = true">
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" @click.prevent="showCreate = true">
           Create New Page
         </li>
       </action-bar>
@@ -29,17 +28,17 @@
         <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
           {{ page.title }}
         </div>
-        <div class="dvs-min-w-1/5 dvs-text-sm dvs-px-8 dvs-font-mono">
+        <div class="dvs-min-w-1/5 dvs-text-xs dvs-px-8 dvs-font-mono">
           {{ page.slug }}
         </div>
         <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
           <button 
             class="dvs-btn dvs-btn-xs dvs-mr-2"
-            :style="regularButtonTheme"
+            :style="theme.actionButton"
             @click="loadPage(page.id)">Manage</button>
           <a 
-            class="dvs-btn dvs-btn-plain dvs-btn-xs" 
-            :style="regularButtonTheme" 
+            class="dvs-btn dvs-btn-xs" 
+            :style="theme.actionButtonGhost" 
             :href="page.slug">Go</a>
         </div>
       </div>
@@ -88,7 +87,7 @@
         <button class="dvs-btn" :style="regularButtonTheme" @click="showCreate = false">Cancel</button>
       </devise-modal>
     </transition>
-  </administration>
+  </div>
 
 </template>
 

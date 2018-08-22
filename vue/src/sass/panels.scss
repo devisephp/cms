@@ -23,10 +23,10 @@
 .dvs-panel-shine {
   @apply dvs-absolute dvs-pin dvs-pointer-events-none;
 
-  width:1000px;
-  height:1000px;
+  width:3000px;
+  height:3000px;
 
-  background:radial-gradient( rgba(255,255,255,0.2), rgba(255,255,255,0) 500px);
+  background:radial-gradient( rgba(255,255,255,0.2), rgba(255,255,255,0) 1000px);
 }
 
 .dvs-panel-contents {

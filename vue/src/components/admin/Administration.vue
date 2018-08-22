@@ -4,11 +4,12 @@
     :class="[deviseOptions.adminClass]" 
     data-simplebar>
       
-    <panel class="dvs-m-8" style="width:300px;" :panel-style="theme.panel" v-tilt>
+    <panel class="dvs-m-8" style="min-width:300px;" :panel-style="theme.panel" v-tilt>
       <div class="dvs-flex">
         <div :style="theme.panelSidebar" class="dvs-flex dvs-flex-col" >
-          <template v-for="menuItem in adminMenu">
+          <template v-for="(menuItem, key) in adminMenu">
             <button 
+              :key="key"
               :style="theme.panelSidebar"
               class="dvs-outline-none dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b"
               @click.prevent="goToPage(menuItem.routeName)">

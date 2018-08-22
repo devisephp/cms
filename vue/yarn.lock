@@ -6965,10 +6965,6 @@ vue@^2.5.2:
   version "2.5.17"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
 
-vuebar@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/vuebar/-/vuebar-0.0.18.tgz#d769b6af334abb2c3fc02dbb5a02381a9d1080cf"
-
 vuedraggable@^2.16.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.16.0.tgz#52127081a2adb3de5fabd214d404ff3eee63575a"

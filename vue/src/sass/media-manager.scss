@@ -4,8 +4,8 @@
   .media-manager-interface {
     @apply dvs-flex dvs-flex-col dvs-items-stretch;
 
-    height:70vh;
-    width:70vw;
+    max-height:70vh;
+    width:90vw;
   }
 
   .dropzone {
@@ -22,9 +22,7 @@
 
     @apply dvs-bg-cover dvs-overflow-hidden dvs-bg-center dvs-rounded-sm;
 
-    width:200px;
-    height:200px;
-    max-width:200px;
-    max-height:200px;
+    width:300px;
+    height:300px;
   }
 }

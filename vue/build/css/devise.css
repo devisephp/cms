@@ -1276,6 +1276,10 @@ table {
           align-items: center;
 }
 
+#dvs-app-content {
+  width: 100%;
+}
+
 #devise-admin-content {
   opacity: 1;
   font-size: 1em;
@@ -1423,6 +1427,10 @@ table {
 .dvs-fieldset input[type="phone"].dvs-dark {
   background-color: #606f7b;
   color: #fff;
+}
+
+.dvs-fieldset textarea {
+  height: 8em;
 }
 
 .v-select-wrapper {
@@ -1614,8 +1622,8 @@ table {
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
-  height: 70vh;
-  width: 70vw;
+  max-height: 70vh;
+  width: 90vw;
 }
 
 .media-manager .dropzone {
@@ -1644,10 +1652,8 @@ table {
   overflow: hidden;
   background-position: center;
   border-radius: .125rem;
-  width: 200px;
-  height: 200px;
-  max-width: 200px;
-  max-height: 200px;
+  width: 300px;
+  height: 300px;
 }
 
 .dvs-modal {
@@ -1717,6 +1723,11 @@ table {
           box-shadow: 0 20px 70px -10px rgba(51, 51, 51, .7), 0 50px 100px 0 rgba(51, 51, 51, .2);
   -webkit-transition: opacity 1000s;
   transition: opacity 1000s;
+}
+
+.dvs-panel-contents li {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .dvs-absolute-center {

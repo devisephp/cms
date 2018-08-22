@@ -12,12 +12,12 @@ export default {
         template: `
         <div v-if="show" class="dvs-fixed dvs-pin dvs-z-50">
           <div class="dvs-blocker"></div>
-          <div class="dvs-absolute dvs-absolute-center dvs-z-50 dvs-bg-white dvs-rounded dvs-shadow-lg dvs-p-8">
-            <h3 class="dvs-mb-8 dvs-text-black">Please Confirm</h3>
-            <div class="dvs-mb-8">${binding.value.message}</div>
+          <div class="dvs-fixed dvs-absolute-center dvs-z-50 dvs-p-8 dvs-rounded dvs-shadow-lg" style="background-color:rgba(0,0,0,0.5)">
+            <h3 class="dvs-mb-8 dvs-text-white">Please Confirm</h3>
+            <div class="dvs-mb-8 dvs-text-white">${binding.value.message}</div>
 
             <button class="dvs-btn dvs-btn-danger" @click="ok">Confirm</button>
-            <button class="dvs-btn" @click="cancel">Cancel</button>
+            <button class="dvs-btn dvs-text-white" @click="cancel">Cancel</button>
             </div>
           </div>
         </div>

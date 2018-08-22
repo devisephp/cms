@@ -60,6 +60,6 @@ class CategoryPaths
 
     public function basePath()
     {
-        return $this->Config->get('devise.media.root-directory');
+        return $this->Config->get('devise.media.source-directory');
     }
 }

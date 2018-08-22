@@ -4,6 +4,10 @@ const qs = require('qs');
 const funcs = {
   // Build the parameters for the GET based on the filters.repertoire
   buildFilterParams (filter) {
+    if (typeof filter === 'undefined') {
+      return null
+    }
+    
     let filters = JSON.parse(JSON.stringify(filter))
     let params = {}
     let sortParams = funcs.buildSortParams(filters.sort)

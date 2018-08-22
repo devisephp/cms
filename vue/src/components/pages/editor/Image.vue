@@ -75,6 +75,7 @@ export default {
       })
     },
     mediaSelected (media) {
+      console.log('here', media)
       this.localValue.url = media.url
       this.updateValue()
     },

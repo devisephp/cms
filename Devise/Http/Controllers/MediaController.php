@@ -30,7 +30,6 @@ class MediaController extends Controller
     protected $FileManager;
     protected $Repository;
 
-<<<<<<< HEAD
   /**
    * Construct a new response handler
    *
@@ -44,19 +43,6 @@ class MediaController extends Controller
     $this->SiteDetector = $SiteDetector;
     $this->Config = $Framework->Config;
   }
-=======
-    /**
-     * Construct a new response handler
-     *
-     * @param Manager $FileManager
-     * @param null $Redirect
-     */
-    public function __construct(Manager $FileManager, Repository $Repository)
-    {
-        $this->FileManager = $FileManager;
-        $this->Repository = $Repository;
-    }
->>>>>>> 387bdd415b1611b5176d0ae63a5ff702c8922104
 
     /**
      * Requests a file upload

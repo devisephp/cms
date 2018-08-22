@@ -6,7 +6,7 @@
       <li class="dvs-mb-4" v-for="(menuItem, key) in currentMenu.menu" :key="key">
         <div 
           :style="{color: theme.panel.color}" 
-          @click="goToPage(menuItem.routeName)"
+          @click="goToPage(menuItem.routeName, menuItem.parameters)"
           class="dvs-block dvs-mb-4 dvs-switch-sm dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer">
             {{ menuItem.label }}
         </div>

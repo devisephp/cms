@@ -189,6 +189,10 @@
   @apply dvs-flex dvs-justify-center dvs-items-center;
 }
 
+#dvs-app-content {
+  @apply dvs-w-full;  
+}
+
 #devise-admin-content {
   @apply dvs-opacity-100 dvs-text-base dvs-px-9 dvs-pt-10 dvs-pb-20;
 

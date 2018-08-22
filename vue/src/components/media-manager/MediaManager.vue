@@ -8,24 +8,27 @@
         </div>
       </div>
       <div v-else class="media-manager-interface">
-        <div class="dvs-py-4 dvs-px-8 dvs-rounded-tl dvs-rounded-tr dvs-flex dvs-justify-between dvs-items-center dvs-bg-grey-lighter dvs-border-b dvs-border-lighter dvs-relative">
-          Media Manager
-          <div class="dvs-flex">
-            <div class="dvs-flex dvs-items-center">
-              <attach-icon />
-              <vue-dropzone
-                ref="myVueDropzone"
-                id="dropzone"
-                @vdropzone-success="uploadSuccess()"
-                @vdropzone-error="uploadError"
-                class="dvs-mr-8 dvs-uppercase dvs-font-bold dvs-text-xs"
-                includeStyling: false
-                :options="dropzoneOptions" />
+        <div style="min-height:70px" class="dvs-py-4 dvs-px-8 dvs-rounded-tl dvs-rounded-tr dvs-flex dvs-justify-between dvs-items-center dvs-bg-grey-lighter dvs-border-b dvs-border-lighter dvs-relative">
+          <div>
+            <div class="dvs-font-bold">Media Manager</div>
+            <div class="dvs-flex dvs-mt-2 dvs-justify-between dvs-items-center dvs-font-mono dvs-text-sm dvs-tracking-tight"  v-if="currentDirectory !== ''">
+              <breadcrumbs :currentDirectory="currentDirectory" @chooseDirectory="changeDirectories"></breadcrumbs>
             </div>
+          </div>
+          <div class="dvs-flex dvs-items-center">
+            <vue-dropzone
+              ref="myVueDropzone"
+              id="dropzone"
+              @vdropzone-success="uploadSuccess()"
+              @vdropzone-error="uploadError"
+              class="dvs-mr-8 dvs-uppercase dvs-font-bold dvs-text-xs dvs-p-4 dvs-rounded-sm"
+              :style="theme.actionButton"
+              includeStyling: false
+              :options="dropzoneOptions" />
             <fieldset class="dvs-fieldset">
               <div class="dvs-flex dvs-items-center">
-                <label class="dvs-mr-2 dvs-my-2">List Mode</label>
-                <input class="dvs-my-2" type="checkbox" v-model="listMode">
+                <label class="dvs-mr-2 dvs-my-2">Contact Sheet</label>
+                <input class="dvs-my-2" type="checkbox" v-model="thumbnail">
               </div>
             </fieldset>
           </div>
@@ -33,14 +36,9 @@
 
         <div class="dvs-flex dvs-items-stretch dvs-h-full">
 
-          <div class="dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter dvs-min-w-1/3">
-
-            <!-- Bread Crumbs -->
-            <div>
-              <div class="dvs-flex dvs-mb-8 dvs-justify-between dvs-items-center dvs-font-mono dvs-text-sm dvs-tracking-tight"  v-if="currentDirectory !== ''">
-                <breadcrumbs :currentDirectory="currentDirectory" @chooseDirectory="changeDirectories"></breadcrumbs>
-              </div>
-
+          <div data-simplebar class=" dvs-min-w-1/3">
+            <div class="dvsh-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter">
+              
               <ul class="dvs-list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">
                 <li v-for="directory in directories" :key="directory.id" class="dvs-cursor-pointer dvs-mt-2 dvs-text-bold" @click="changeDirectories(directory.path)">
                   <folder-icon class="dvs-mr-2"></folder-icon>
@@ -50,21 +48,23 @@
                   No directories within this directory
                 </li>
               </ul>
-            </div>
-
-            <div class="dvs-flex dvs-flex-col">
-              <fieldset class="dvs-fieldset dvs-mb-4">
-                <input type="text" placeholder="New Directory" v-model="directoryToCreate" class="mr-2">
-              </fieldset>
-              <button class="dvs-btn dvs-btn-sm" @click="requestCreateDirectory()" :style="theme.actionButton">Create</button>
+              
+              <div class="dvs-flex dvs-flex-col">
+                <fieldset class="dvs-fieldset dvs-mb-4">
+                  <input type="text" placeholder="New Directory" v-model="directoryToCreate" class="mr-2">
+                </fieldset>
+                <button class="dvs-btn dvs-btn-sm" @click="requestCreateDirectory()" :style="theme.actionButton">Create</button>
+              </div>
             </div>
           </div>
+
+
           <div class="dvs-flex-grow dvs-relative dvs-overflow-scroll" :class="{'w-full': directories.length < 1}">
 
             <!-- Delete Directory -->
             <div v-if="files.length < 1 && directories.length < 1 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
               <div class="dvs-bg-white dvs-text-grey-dark dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow dvs-cursor-pointer" @click="requestDeleteDirectory()">
-                <trash-icon :h="40" :w="40" :style="{color: theme.adminText.color}" />
+                <trash-icon h="40" w="40" :style="{color: theme.adminText.color}" />
                 <h6 class="dvs-mt-2 dvs-text-sm">
                   Delete this directory
                 </h6>
@@ -74,22 +74,18 @@
             <!-- Directories but no files -->
             <div v-if="files.length < 1 && directories.length > 0 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
               <div class="dvs-bg-white dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow">
-                <folder-icon :h="40" :w="40" :style="{color: theme.adminText.color}" />
+                <folder-icon h="40" w="40" :style="{color: theme.adminText.color}" />
                 <h6 class="dvs-mt-2 dvs-text-sm"><span>No files in this directory</span></h6>
               </div>
             </div>
 
             <!-- Files -->
-            <ul class="dvs-list-reset"
-              :class="{
-                'dvs-flex dvs-justify-center dvs-flex-wrap': !listMode
-              }"
-             v-else>
+            <ul class="dvs-list-reset dvs-flex dvs-justify-center dvs-flex-wrap" v-else>
               <li v-for="file in files" :key="file.id" class="dvs-relative dvs-bg-white dvs-card dvs-mt-2"
                 :class="{
                   'dvs-cursor-pointer': !file.on,
-                  'dvs-border-b dvs-border-lighter dvs-p-4 dvs-px-8': listMode,
-                  'dvs-m-4 dvs-p-0': !listMode
+                  'dvs-border-b dvs-border-lighter dvs-p-2 dvs-mx-4': thumbnail,
+                  'dvs-m-4 dvs-p-0': !thumbnail
                 }"
                 @click="openFile(file)">
 
@@ -101,19 +97,12 @@
                 <div v-if="!file.on">
 
                   <!-- List Mode -->
-                  <div class="dvs-flex dvs-justify-between dvs-items-center" v-if="listMode">
-                    <img :src="file.thumb" height="50">
-                    <h6 class="dvs-text-sm">{{ file.name }}</h6>
-                    <div class="dvs-rounded-full" :class="{
-                      'dvs-bg-green-dark': isActive(file),
-                      'dvs-bg-grey': !isActive(file)
-                    }" style="height:10px;width:10px;"></div>
+                  <div class="dvs-flex dvs-justify-between dvs-items-center" v-if="thumbnail">
+                    <img :src="file.url" style="height:75px">
                   </div>
 
                   <!-- Grid Mode -->
-                  <div class="dvs-grid-preview dvs-relative" :style="`background-size:cover;background-image:url('${file.url}')`" v-else>
-                    <h6 class="dvs-text-xs dvs-w-full dvs-py-2 dvs-bg-black-50 dvs-text-white dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-text-center dvs-rounded-sm">{{ file.name }}</h6>
-                  </div>
+                  <div class="dvs-grid-preview dvs-relative" :style="`background-size:cover;background-image:url('${file.url}')`" v-else></div>
                 </div>
 
                 <!-- Open File -->
@@ -124,7 +113,7 @@
                       <div class="dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: requestDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
                         <trash-icon h="20" w="20" :style="{color: theme.adminText.color}" />
                       </div>
-                      <a :href="file.url" target="_blank" :style="{color: theme.adminText.color}">
+                      <a href="file.url" target="_blank" :style="{color: theme.adminText.color}">
                         <link-icon h="20" w="20" />
                       </a>
                     </div>
@@ -132,9 +121,6 @@
                   <div class="dvs-w-1/2">
                     <h6 class="dvs-text-xs dvs-uppercase dvs-mb-1">Filename</h6>
                     <p class="dvs-text-sm">{{ file.name }}</p>
-
-                    <h6 class="dvs-text-xs dvs-uppercase dvs-mb-1">Size</h6>
-                    <p class="dvs-text-sm dvs-uppercase dvs-font-bold">{{ file.size }}</p>
 
                     <fieldset class="dvs-fieldset dvs-mb-4">
                       <label class="dvs-text-xs dvs-uppercase dvs-mb-1">URL</label>
@@ -147,7 +133,7 @@
                       <h6 class="dvs-my-2 dvs-text-sm">Appears On</h6>
                       <ul class="dvs-list-reset">
                         <li v-for="field in file.fields" :key="field.id" class="dvs-py-2">
-                          <a :href="field.page_slug" target="_blank" class="dvs-btn dvs-btn-sm">{{ field.page_title }} - {{ field.field_name }}</a>
+                          <a href="field.page_slug" target="_blank" class="dvs-btn dvs-btn-sm">{{ field.page_title }} - {{ field.field_name }}</a>
                         </li>
                       </ul>
                     </template>
@@ -181,7 +167,7 @@
       return {
         show: false,
         loaded: false,
-        listMode: true,
+        thumbnail: true,
         directoryToCreate: '',
         target: null,
         callback: null

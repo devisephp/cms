@@ -14,8 +14,6 @@ import { DeviseBus } from './event-bus.js'
 import routes from './router/route.config.js'
 import alertConfirm from './directives/alert-confirm'
 import Tilt from './directives/tilt'
-import Vuebar from 'vuebar'
-
 
 import EditPage from './components/pages/Editor'
 
@@ -81,9 +79,6 @@ const DevisePlugin = {
 
     // Portals to render items outside of their component
     Vue.use(PortalVue)
-
-    // Scrollbar hiding
-    Vue.use(Vuebar);
 
     // VueRouter Register global components
     Vue.component('Devise', Devise)

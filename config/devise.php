@@ -13,9 +13,9 @@ return [
     */
 
     'media' => [
-        'disk' => env('DVS_FILESYSTEM_DISK', 'public'),
-        'source-directory' => 'media',
+        'disk'                      => env('DVS_FILESYSTEM_DISK', 'public'),
         'cached-images-directory'   => 'styled',
+        'source-directory'          => 'media',
     ],
 
     /*

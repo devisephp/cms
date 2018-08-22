@@ -36,7 +36,7 @@
           </form>
         </div>
 
-        <div class="dvs-max-h-screen" v-bar>
+        <div class="dvs-max-h-screen" ref="admin-route-wrapper" data-simplebar>
           <transition name="dvs-fade" mode="out-in">
             <router-view name="devise" :page="page"></router-view>
           </transition>

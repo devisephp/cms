@@ -23,13 +23,14 @@ use Devise\Support\Framework;
  */
 class MediaController extends Controller
 {
-  use ValidatesRequests;
-  /**
-   * @var Manager
-   */
-  protected $FileManager;
-  protected $Repository;
+    use ValidatesRequests;
+    /**
+     * @var Manager
+     */
+    protected $FileManager;
+    protected $Repository;
 
+<<<<<<< HEAD
   /**
    * Construct a new response handler
    *
@@ -43,47 +44,58 @@ class MediaController extends Controller
     $this->SiteDetector = $SiteDetector;
     $this->Config = $Framework->Config;
   }
+=======
+    /**
+     * Construct a new response handler
+     *
+     * @param Manager $FileManager
+     * @param null $Redirect
+     */
+    public function __construct(Manager $FileManager, Repository $Repository)
+    {
+        $this->FileManager = $FileManager;
+        $this->Repository = $Repository;
+    }
+>>>>>>> 387bdd415b1611b5176d0ae63a5ff702c8922104
 
-  /**
-   * Requests a file upload
-   *
-   * @param Request $request
-   * @param $folderPath
-   * @return mixed
-   */
-  public function all(Request $request, $folderPath = '')
-  {
-    $input = $request->all();
-    $input['category'] = $folderPath;
-    $results = $this->Repository->getIndex($input, ['media-items']);
+    /**
+     * Requests a file upload
+     *
+     * @param Request $request
+     * @param $folderPath
+     * @return mixed
+     */
+    public function all(Request $request, $folderPath = '')
+    {
+        $input = $request->all();
+        $input['category'] = $folderPath;
+        $results = $this->Repository->getIndex($input, ['media-items']);
 
-    return $results['media-items'];
-  }
+        return $results['media-items'];
+    }
 
-  /**
-   * Requests a file upload
-   *
-   * @param Request $request
-   * @return mixed
-   */
-  public function store(Request $request)
-  {
-    $this->validate($request, ['file' => 'required|file']);
+    /**
+     * Requests a file upload
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, ['file' => 'required|file']);
 
-    $file = $this->FileManager->saveUploadedFile($request->all());
+        $this->FileManager->saveUploadedFile($request->all());
+    }
 
-    return $this->Repository->getFileData($file);
-  }
-
-  /**
-   * Requests a file removal
-   *
-   * @param Request $request
-   */
-  public function remove(Request $request, $mediaId)
-  {
-    $this->FileManager->removeUploadedFile($mediaId);
-  }
+    /**
+     * Requests a file removal
+     *
+     * @param Request $request
+     */
+    public function remove(Request $request, $mediaId)
+    {
+        $this->FileManager->removeUploadedFile($request->all());
+    }
 
   /**
    * Requests a preview of a generated media image

@@ -163,32 +163,6 @@ class DvsPage extends Model
         return $this->belongsTo(DvsSite::class, 'language_id');
     }
 
-    public function getDataAttribute()
-    {
-        $data = [];
-
-        if ($this->currentVersion && $this->currentVersion->template && $this->currentVersion->template->model_queries)
-        {
-            $queries = $this->currentVersion->template->model_queries;
-            if ($queries)
-            {
-                $repository = App::make(ModelRepository::class);
-
-                foreach ($queries as $name => $config)
-                {
-                    parse_str($config, $input);
-
-                    $records = $repository
-                        ->runQuery($input);
-
-                    $data[$name] = $records;
-                }
-            }
-        }
-
-        return $data;
-    }
-
     public function getResponseClassAttribute()
     {
         $parts = explode('.', $this->attributes['response_path']);

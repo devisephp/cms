@@ -5,14 +5,12 @@ namespace Devise\Providers;
 use Devise\Console\Commands\Install;
 use Devise\Devise;
 
-use Devise\Media\Files\MediaFieldObserver;
 use Devise\Models\DvsField;
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Compilers\BladeCompiler;
-use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization;
 
 class DeviseServiceProvider extends ServiceProvider
 {
@@ -35,8 +33,6 @@ class DeviseServiceProvider extends ServiceProvider
     $this->loadLaravelResources();
 
     $this->setCustomDirectives();
-
-    $this->registerObservers();
   }
 
   public function register()
@@ -108,10 +104,5 @@ class DeviseServiceProvider extends ServiceProvider
     Blade::directive('slices', function ($expression) {
       return "<?php echo '<slices :slices=\"slices\"/>' ?>";
     });
-  }
-
-  private function registerObservers()
-  {
-    DvsField::observe(MediaFieldObserver::class);
   }
 }

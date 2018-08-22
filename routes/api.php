@@ -101,14 +101,6 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
   Route::delete('slices/{slice_id}', 'SlicesController@delete');
 
   /**
-   * Templates
-   */
-  Route::get('templates', 'TemplatesController@all');
-  Route::post('templates', 'TemplatesController@store');
-  Route::put('templates/{template_id}', 'TemplatesController@update');
-  Route::delete('templates/{template_id}', 'TemplatesController@delete');
-
-  /**
    * Users
    */
   Route::get('users', 'UsersController@all');

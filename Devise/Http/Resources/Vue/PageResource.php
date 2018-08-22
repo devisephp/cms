@@ -22,7 +22,6 @@ class PageResource extends Resource
       'slug'               => $this->slug,
       'canonical'          => $this->canonical,
       'ab_testing_enabled' => $this->ab_testing_enabled,
-      'data'               => $this->data,
       'versions'           => PageVersionResource::collection($this->versions),
       'meta'               => MetaResource::collection($this->metas),
       'site'               => new SiteResource($this->site),
@@ -55,7 +54,7 @@ class PageResource extends Resource
     }
 
     // Relationships
-    if ($this->currentVersion && $this->currentVersion->template)
+    if ($this->currentVersion && $this->currentVersion->slices->count())
     {
       $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
     }

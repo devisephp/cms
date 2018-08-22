@@ -15,8 +15,8 @@ class SliceInstanceResource extends Resource
     public function toArray($request)
     {
         $data = [
-            'id'       => $this->templateSlice->id,
-            'name'     => $this->templateSlice->component_name
+            'id'       => $this->id,
+            'name'     => $this->component_name
         ];
 
         if ($this->fields->count())

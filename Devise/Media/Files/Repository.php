@@ -1,7 +1,6 @@
 <?php namespace Devise\Media\Files;
 
 use Devise\Media\Categories\CategoryPaths;
-use Devise\Models\DvsMedia;
 
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
@@ -16,18 +15,17 @@ use Devise\Support\Framework;
  */
 class Repository
 {
-    protected $DvsMedia;
-
-    protected $Storage;
+    private $SiteDetector;
 
     private $CategoryPaths;
+
+    protected $Storage;
 
     /**
      *
      */
-    public function __construct(DvsMedia $DvsMedia, SiteDetector $SiteDetector, CategoryPaths $CategoryPaths, Framework $Framework)
+    public function __construct(SiteDetector $SiteDetector, CategoryPaths $CategoryPaths, Framework $Framework)
     {
-        $this->DvsMedia = $DvsMedia;
         $this->SiteDetector = $SiteDetector;
         $this->CategoryPaths = $CategoryPaths;
 
@@ -66,12 +64,10 @@ class Repository
     public function getFileData($file)
     {
         $fileData = array();
-        $fileData['id'] = $file->id;
-        $fileData['thumb'] = $file->thumbnail_url;
-        $fileData['name'] = $file->name;
-        $fileData['url'] = $file->url;
-        $fileData['size'] = $file->size;
-        $fileData['used_count'] = $file->used_count;
+
+        $fileData['name'] = basename($file);
+        $fileData['size'] = $this->Storage->size($file);
+        $fileData['url'] = $this->Storage->url($file);
 
         return $fileData;
     }
@@ -109,12 +105,7 @@ class Repository
      */
     private function buildMediaItems($dir)
     {
-        $root = $this->CategoryPaths->basePath();
-        $dir = trim(str_replace($root, '', $dir), '/');
-        $site = $this->SiteDetector->current();
-        $files = $site->media()
-            ->where('directory', $dir)
-            ->get();
+        $files = $this->Storage->files($dir);
 
         return $this->buildMediaItemsFromFiles($files);
     }
@@ -127,7 +118,8 @@ class Repository
         $newFilesArray = array();
         foreach ($files as $file)
         {
-            $newFilesArray[] = $this->getFileData($file);
+            if (strpos($file, 'DS_Store') === false)
+                $newFilesArray[] = $this->getFileData($file);
         }
 
         return $newFilesArray;

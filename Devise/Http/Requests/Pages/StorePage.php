@@ -31,6 +31,7 @@ class StorePage extends ApiRequest
 
     return [
       'title' => 'required|min:3',
+      'layout' => 'required|min:3',
       'slug'  => [
         'required',
         Rule::unique('dvs_pages')->where(function ($query) use ($site) {

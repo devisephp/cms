@@ -36,7 +36,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Configuration for user permissions.
-    | Available Permissions: ['access admin','manage pages','manage users','manage mothership','manage templates',
+    | Available Permissions: ['access admin','manage pages','manage users','manage mothership',
     | 'manage settings','manage meta','manage sites','manage languages','manage redirects']
     |
     */
@@ -48,7 +48,6 @@ return [
                 'manage pages',
                 'manage users',
                 'manage mothership',
-                'manage templates',
                 'manage settings',
                 'manage meta',
                 'manage sites',
@@ -61,7 +60,6 @@ return [
                 'manage pages',
                 'manage users',
                 'manage mothership',
-                'manage templates',
                 'manage settings',
                 'manage meta',
                 'manage sites',

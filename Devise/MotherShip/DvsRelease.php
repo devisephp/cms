@@ -38,9 +38,6 @@ class DvsRelease extends Model
       case 'Devise\Models\DvsSliceInstance':
         return $this->modelRecord->pageVersion;
         break;
-      case 'Devise\Models\DvsTemplateSlice':
-        return $this->modelRecord->template;
-        break;
       default:
         return $this->modelRecord;
         break;
@@ -56,9 +53,6 @@ class DvsRelease extends Model
         break;
       case 'Devise\Models\DvsSliceInstance':
         return 'Slice Updated';
-        break;
-      case 'Devise\Models\DvsTemplateSlice':
-        return 'Template Slice Updated';
         break;
       default:
         return 'Update Made';

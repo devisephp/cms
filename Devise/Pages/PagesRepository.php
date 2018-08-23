@@ -187,14 +187,15 @@ class PagesRepository
      * @param  string $searchTerm
      * @return array
      */
-    public function getPagesList($searchTerm = null)
+    public function getPagesList($searchTerm = null, $siteId = null)
     {
         $pages = $this->Page->join('dvs_languages', 'dvs_languages.id', '=', 'dvs_pages.language_id');
 
+        if ($siteId != null)
+            $pages = $pages->where('site_id', $siteId);
+
         if ($searchTerm != null)
-        {
             $pages = $pages->where('title', 'LIKE', '%' . $searchTerm . '%');
-        }
 
         return $pages->select(DB::raw("CONCAT(title,' (',dvs_languages.code, ')') AS name"), 'dvs_pages.id')
             ->pluck('name', 'id');

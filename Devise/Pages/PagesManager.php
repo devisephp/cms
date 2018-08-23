@@ -6,8 +6,6 @@ use Illuminate\Support\Str;
 use Devise\Support\Framework;
 use Devise\Pages\Fields\FieldsRepository;
 use Devise\Pages\Fields\FieldManager;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
 /**
  * Class PageManager manages the creating of new pages,
@@ -271,7 +269,7 @@ class PagesManager
      * @param  integer $currentIteration
      * @return string
      */
-    protected function findAvailableRoute($suggestedRoute, $languageId)
+    protected function findAvailableRoute($suggestedRoute, $languageId, $siteId)
     {
         $sanity = 0;
 
@@ -283,7 +281,7 @@ class PagesManager
             $modifiedRoute = $language->code . '-' . $suggestedRoute;
         }
 
-        while ($this->Page->withTrashed()->where('route_name', '=', $modifiedRoute)->count() > 0 && $sanity++ < 100)
+        while ($this->Page->withTrashed()->where('route_name', '=', $modifiedRoute)->where('site_id', $siteId)->count() > 0 && $sanity++ < 100)
         {
             $modifiedRoute .= '-' . $sanity;
         }
@@ -302,10 +300,10 @@ class PagesManager
     {
         if (!isset($input['route_name']))
         {
-            $input['route_name'] = $this->findAvailableRoute(Str::slug(array_get($input, 'title', str_random(42))), $input['language_id']);
+            $input['route_name'] = $this->findAvailableRoute(Str::slug(array_get($input, 'title', str_random(42))), $input['language_id'], $input['site_id']);
         } else
         {
-            $input['route_name'] = $this->findAvailableRoute($input['route_name'], $input['language_id']);
+            $input['route_name'] = $this->findAvailableRoute($input['route_name'], $input['language_id'], $input['site_id']);
         }
 
         return $this->Page->createFromArray($input);

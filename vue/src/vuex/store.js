@@ -58,31 +58,24 @@ const state = {
           permissions: 'manage mothership',
         },
         {
-          label: 'Settings',
-          routeName: 'devise-settings-index',
-          permissions: 'manage settings',
-          menu: [
-            {
-              label: 'Global Meta',
-              routeName: 'devise-meta-manage',
-              permissions: 'manage meta',
-            },
-            {
-              label: 'Sites',
-              routeName: 'devise-sites-index',
-              permissions: 'manage sites',
-            },
-            {
-              label: 'Languages',
-              routeName: 'devise-languages-manage',
-              permissions: 'manage languages',
-            },
-            {
-              label: 'Redirects',
-              routeName: 'devise-redirects-index',
-              permissions: 'manage redirects',
-            }
-          ]
+          label: 'Global Meta',
+          routeName: 'devise-meta-manage',
+          permissions: 'manage meta',
+        },
+        {
+          label: 'Sites',
+          routeName: 'devise-sites-index',
+          permissions: 'manage sites',
+        },
+        {
+          label: 'Languages',
+          routeName: 'devise-languages-manage',
+          permissions: 'manage languages',
+        },
+        {
+          label: 'Redirects',
+          routeName: 'devise-redirects-index',
+          permissions: 'manage redirects',
         }
       ]
     }

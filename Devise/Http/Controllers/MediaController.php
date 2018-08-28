@@ -14,6 +14,7 @@ use League\Glide\Responses\LaravelResponseFactory;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 
+use Spatie\ImageOptimizer\OptimizerChain;
 
 /**
  * Class ResponseHandler handles controller part of media manager
@@ -36,12 +37,14 @@ class MediaController extends Controller
    * @param Manager $FileManager
    * @param null $Redirect
    */
-  public function __construct(Manager $FileManager, Repository $Repository, SiteDetector $SiteDetector, Framework $Framework)
+  public function __construct(Manager $FileManager, Repository $Repository, SiteDetector $SiteDetector, OptimizerChain $OptimizerChain, Framework $Framework)
   {
     $this->FileManager = $FileManager;
     $this->Repository = $Repository;
     $this->SiteDetector = $SiteDetector;
     $this->Config = $Framework->Config;
+    $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
+    $this->OptimizerChain = $OptimizerChain;
   }
 
     /**
@@ -109,43 +112,98 @@ class MediaController extends Controller
 
   public function generate(Filesystem $filesystem, $path)
   {
+    $finalImages = [];
+    $finalImageUrls = [];
     $urlParts = explode('|||', $path);
-    $modifierArray = $this->buildModifierArray($urlParts[1]);
+    $imagesAndSettings = $this->getImagesToMakeAndSettings($urlParts[1]);
+    
     $site = $this->SiteDetector->current();
-
-    $sourceDirectory = 'app/public/' . $this->Config->get('devise.media.source-directory') . '/' . $site->domain . '/';
+    $sourceDirectory = 'app/public/';
+    $urlParts[0] = str_replace("storage/", '', $urlParts[0]);
     $sourceImage = storage_path($sourceDirectory . $urlParts[0]);
+    
+    $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $urlParts[0]));
+    $this->Storage->makeDirectory($destinationDirectory);
 
-    $destinationDirectory = 'app/public/' . $this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain;
-    $destinationImage = storage_path($destinationDirectory . '/' . $path);
+    foreach($imagesAndSettings['images'] as $sizeLabel => $image) {
+      $destinationImage = $this->buildDestinationImagePath($destinationDirectory, basename($urlParts[0]), $image);
+      $destinationImageUrl = $this->buildDestinationImageUrl($urlParts[0], basename($urlParts[0]), $image);
 
-    // dd(storage_path($destinationDirectory));
-    \Storage::makeDirectory(storage_path($destinationDirectory));
+      $finalImageUrls[$sizeLabel] = $destinationImageUrl;
 
-    \GlideImage::create($sourceImage)
-      ->modify($modifierArray)
-      ->save($destinationImage);
+      $image = array_merge($image, $imagesAndSettings['settings']);
 
-
-      // $server = ServerFactory::create([
-      //     'response' => new LaravelResponseFactory(app('request')),
-      //     'source' => $filesystem->getDriver(),
-      //     'cache' => $filesystem->getDriver(),
-      //     'cache_path_prefix' => '.cache',
-      // ]);
-
-      // return $server->getImageResponse($path, request()->all());
-  }
-
-  private function buildModifierArray($settingsString) {
-    $settings = explode(',', $settingsString);
-
-    $modifierArray = [];
-    foreach($settings as $setting) {
-      $setting = explode('=', $setting);
-      $modifierArray[$setting[0]] = $setting[1];
+      $finalImages[] = \GlideImage::create($sourceImage)
+        ->modify($image)
+        ->save($destinationImage);
     }
 
-    return $modifierArray;
+    $this->optimizeImages($finalImages);
+
+    return [
+      'images' => $finalImageUrls,
+      'settings' => $imagesAndSettings['settings']
+    ];
+  }
+
+  private function optimizeImages($images) {
+    $optimize = function ($image) {
+      $this->OptimizerChain->optimize($image);
+    };
+
+    array_map($optimize, $images);
+  }
+
+  private function buildDestinationImagePath ($destinationDirectory, $originalImageName, $image) {
+    
+    $destinationImage = storage_path('app/public/' . $destinationDirectory . '/' . $originalImageName);
+    $destinationPathParts = pathinfo($destinationImage);
+    $sizeAppend = $this->getSizeNameAppend($image);
+    $hashAppend = $this->getHashNameAppend($image);
+
+    return $destinationPathParts['dirname'] . '/' . $destinationPathParts['filename'] . $sizeAppend . '-' . $hashAppend . '.' . strtolower($destinationPathParts['extension']);
+  }
+
+  private function buildDestinationImageUrl ($file, $originalImageName, $image) {
+    $site = $this->SiteDetector->current();
+    $destinationUrl = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $file)) . '/' . $originalImageName;
+    $destinationUrlParts = pathinfo($destinationUrl);
+    $sizeAppend = $this->getSizeNameAppend($image);
+    $hashAppend = $this->getHashNameAppend($image);
+
+    return $destinationUrlParts['dirname'] . '/' . $destinationUrlParts['filename'] . $sizeAppend . '-' . $hashAppend  . '.' . strtolower($destinationUrlParts['extension']);
+  }
+
+  private function getSizeNameAppend ($image) {
+    $sizeAppend = '';
+    if (isset($image['w'])) {
+      $sizeAppend = '-' . $image['w'] . '-' . $image['h'];
+    }
+
+    return $sizeAppend;
+  }
+
+  private function getHashNameAppend ($image) {
+    return md5(json_encode($image));
+  }
+
+
+  private function getImagesToMakeAndSettings($settingsString) {
+    if ($settingsString === null) {
+      $imagesToMake['original'] = null;
+      return ['images' => $imagesToMake, 'settings' => null];
+    }
+
+    $settings = json_decode($settingsString, true);
+    $sizes = array_pull($settings, 'sizes');
+    
+    $imagesToMake['original'] = $settings;
+    if ($sizes != null) {
+      foreach($sizes as $sizeLabel => $size) {
+        $imagesToMake[$sizeLabel] = ['w' => $size['w'], 'h' => $size['h']];
+      }
+    }
+
+    return ['images' => $imagesToMake, 'settings' => $settings];
   }
 }

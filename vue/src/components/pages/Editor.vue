@@ -29,7 +29,7 @@
           <div class="dvs-collapsed">
             <ul class="dvs-list-reset">
               <template v-for="slice in pageSlices">
-                <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" />
+                <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" />
               </template>
             </ul>
 
@@ -87,6 +87,9 @@ export default {
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
+    },
+    addSlice (newSlice, referenceSlice) {
+      this.pageSlices.splice(this.pageSlices.indexOf(referenceSlice), 0, newSlice)
     }
   },
   computed: {

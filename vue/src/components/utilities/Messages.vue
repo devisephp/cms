@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition name="dvs-fade-delayed">
+    <transition name="dvs-fade">
       <div class="dvs-alert-message dvs-error" v-show="messageErrors.length > 0">
         <div @click="closeErrors()" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mr-4 dvs-mt-4">
           <close-icon class="dvs-cursor-pointer" w="20" h="20" />
@@ -16,8 +16,8 @@
         </ul>
       </div>
     </transition>
-    <transition name="dvs-fade-delayed">
-      <div class="dvs-alert-message" v-show="messages.length > 0">
+    <transition name="dvs-fade">
+      <div class="dvs-alert-message dvs-bg-black" v-show="messages.length > 0">
         <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i>
         <ul>
           <transition-group name="list" tag="div">
@@ -118,12 +118,17 @@ export default {
         let error = {
           code: payload.code,
           title: payload.title,
-          message: payload.message
+          message: payload.message,
+          active: true
         }
         this.messageErrors.unshift(error)
 
         window._.debounce(function () {
-          self.messageErrors.pop()
+          error.active = false
+
+          setTimeout(() => {
+            self.messageErrors.pop()  
+          }, 2000);
         }, 5000)()
       }
     },
@@ -137,12 +142,17 @@ export default {
       if (!existingMessage) {
         let message = {
           title: payload.title,
-          message: payload.message
+          message: payload.message,
+          active: true
         }
         this.messages.unshift(message)
 
         window._.debounce(function () {
-          self.messages.pop()
+          message.active = false
+
+          setTimeout(() => {
+            self.messages.pop()  
+          }, 2000);
         }, 5000)()
       }
     },
@@ -157,6 +167,12 @@ export default {
       } else {
         return this.title
       }
+    },
+    activeErrors () {
+      this.errors.filter(error => error.active === true)
+    },
+    activeMessages () {
+      this.messages.filter(message => message.active === true)
     }
   },
   mixins: [Strings],

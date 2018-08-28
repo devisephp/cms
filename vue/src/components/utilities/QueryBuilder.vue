@@ -15,11 +15,11 @@
     <div v-if="model" class="dvs-relative dvs-mb-8">
       <super-table
           v-model="modelQuery"
+          :model="model"
           :editData="editData"
           :columns="model.columns"
           :showLinks="false"
-          @cancel="cancel"
-          @done="save"
+          @input="update"
           />
     </div>
 
@@ -71,24 +71,25 @@ export default {
       this.$emit('save')
     },
     update () {
+      console.log('here')
       this.$emit('input', {
         model: this.model, 
         name: this.name, 
         modelQuery: this.modelQuery
       })
     },
-    cancel () {
-      this.model = null
-      this.modelQuery = null
-      this.$emit('close')
-    },
     updateModelQueryModel () {
+      let self = this
       if (this.model !== null) {
         this.modelQuery = this.model.class
       }
       if (this.model === null) {
         this.modelQuery = null
       }
+      this.$nextTick(function () {
+        self.update()
+      })
+
     }
   },
   computed: {

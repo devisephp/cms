@@ -18,7 +18,7 @@
 
 <script>
 var tinycolor = require('tinycolor2')
-import { Photoshop, Sketch } from 'vue-color'
+import { Sketch } from 'vue-color'
 
 import FieldEditor from './Field'
 
@@ -85,7 +85,6 @@ export default {
   props: ['value', 'options'],
   components: {
     FieldEditor,
-    'photoshop-picker': Photoshop,
     'sketch-picker': Sketch
   }
 }

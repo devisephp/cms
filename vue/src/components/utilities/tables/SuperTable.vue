@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="dvs-table dvs-mb-8" :style="{backgroundColor:infoBlockFlatTheme.background}">
+    <table class="dvs-table dvs-mb-8">
       <tr>
         <th v-for="(column, key) in columns" :key="key" v-if="showColumn(column)" :class="{'dvs-hidden md:dvs-table-cell': column.hideMobile}" @click="showControls(column.key)">
           <div class="dvs-flex" v-if="!column.toggleColumns">
@@ -70,11 +70,6 @@
       </div>
       <button class="dvs-btn dvs-btn-xs" :style="theme.actionButtonGhost" @click="addScope">Add Scope</button>
     </fieldset>
-
-    <div>
-      <button class="dvs-btn" :style="theme.actionButton" @click="updateValue">Done</button>
-      <button class="dvs-btn" :style="theme.actionButtonGhost" @click="cancel">Cancel</button>
-    </div>
   </div>
 </template>
 
@@ -146,7 +141,7 @@
         'getModelRecords'
       ]),
       updateValue () {
-        let modelQuery = this.value + '&' + commonUtils.buildFilterParams(this.filters)
+        let modelQuery = this.model.class + '&' + commonUtils.buildFilterParams(this.filters)
         this.$emit('input', modelQuery)
         this.$emit('change', modelQuery)
         this.$nextTick(function () {
@@ -159,13 +154,17 @@
       requestRefreshRecords () {
         let self = this
 
+        this.updateValue()
+
         clearTimeout(this.refreshRecords)
 
         this.refreshRecords = setTimeout(function () {
+          console.log()
           self.getModelRecords({
             model: self.value,
             filters: self.filters
           }).then(function (response) {
+            console.log('refreshing records', response.data)
             self.records = response.data
           })
         }, 500)
@@ -182,6 +181,7 @@
       // Checks to see if the key includes a period meaning that its a property of a property
       getRecordColumn (record, key) {
         if (!key.includes('.')) {
+          console.log(record)
           return record[key]
         } else {
           return this.getRecordColumnTraversal(record, key)
@@ -251,7 +251,7 @@
       }
     },
     watch: {
-      value () {
+      model () {
         this.requestRefreshRecords()
       },
       filters () {
@@ -261,6 +261,9 @@
     props: {
       value: {
         type: String
+      },
+      model: {
+        type:Object
       },
       columns: {
         type: Array,

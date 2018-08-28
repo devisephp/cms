@@ -142,6 +142,7 @@ const getters = {
         color: '#ffffff',
         backgroundColor: '#EB8F89',
         borderColor: '#EB8F89',
+        borderWidth: '2px',
       },
       actionButtonGhost: {
         color: '#EB8F89',

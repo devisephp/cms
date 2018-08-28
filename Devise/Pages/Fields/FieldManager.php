@@ -127,9 +127,9 @@ class FieldManager
                 $sliceInstance->parent_instance_id = $parentId;
                 $sliceInstance->settings = (isset($slice['settings'])) ? $slice['settings'] : null;
                 $sliceInstance->position = $index;
-                $sliceInstance->type = $slice['type'];
-                $sliceInstance->view = $slice['view'];
-                $sliceInstance->model_query = $slice['model_query'];
+                $sliceInstance->type = $slice['metadata']['type'];
+                $sliceInstance->view = $slice['metadata']['view'];
+                $sliceInstance->model_query = $slice['metadata']['model_query'];
                 $sliceInstance->save();
 
                 $sliceInstanceId = $sliceInstance->id;

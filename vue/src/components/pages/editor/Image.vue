@@ -13,13 +13,14 @@
         <label class="dvs-mt-4 dvs-large-label">Image</label>
         <div class="dvs-flex dvs-items-center">
           <input type="text" v-model="localValue.url" :maxlength="getMaxLength" v-on:input="updateValue()">
-          <div @click="launchMediaEditor($event)">
-            <create-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px" />
-          </div>
           <div @click="launchMediaManager($event)">
             <images-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px" />
           </div>
         </div>
+      </fieldset>
+      <fieldset class="dvs-fieldset">
+        <label class="dvs-mt-4 dvs-large-label">Media Sizes</label>
+
       </fieldset>
       <fieldset class="dvs-fieldset">
         <label class="dvs-mt-4 dvs-large-label">Alt Tag</label>
@@ -39,7 +40,12 @@ export default {
   name: 'ImageEditor',
   data () {
     return {
-      localValue: {},
+      localValue: {
+        url: '',
+        alt: null,
+        sizemedia: [],
+        settings: {}
+      },
       originalValue: null,
       showEditor: false
     }
@@ -65,22 +71,15 @@ export default {
     },
     launchMediaManager (event) {
       devise.$bus.$emit('devise-launch-media-manager', {
-        callback: this.mediaSelected
+        callback: this.mediaSelected,
+        options: this.options
       })
     },
-    launchMediaEditor (event) {
-      devise.$bus.$emit('devise-launch-media-editor', {
-        source: this.localValue.url,
-        callback: this.mediaEdited
-      })
-    },
-    mediaSelected (media) {
-      console.log('here', media)
-      this.localValue.url = media.url
+    mediaSelected (imagesAndSettings) {
+      this.localValue.url = imagesAndSettings.images.original
+      this.localValue.sizemedia = imagesAndSettings.images
+      this.$set(this.localValue, 'settings', imagesAndSettings.settings)
       this.updateValue()
-    },
-    mediaSelected (urlString) {
-      console.log(urlString)
     }
   },
   computed: {

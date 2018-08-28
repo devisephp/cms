@@ -7,7 +7,6 @@
     <messages />
     <loadbar />
     <media-manager />
-    <media-editor />
     <transition name="dvs-fade">
       <preview-mode v-if="managingPage" />
     </transition>

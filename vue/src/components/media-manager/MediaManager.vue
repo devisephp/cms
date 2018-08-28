@@ -1,13 +1,13 @@
 <template>
   <div class="dvs-min-h-screen dvs-fixed dvs-pin dvs-z-60 dvs-text-grey-darker" :class="{'dvs-pointer-events-none': !loaded}" v-if="show">
     <div class="dvs-blocker dvs-z-30" @click="show = false"></div>
-    <div class="media-manager">
+    <div class="media-manager dvs-min-w-4/5">
       <div v-if="!loaded" class="media-manager-interface">
         <div class="dvs-absolute dvs-absolute-center dvs-w-1/2">
           <loadbar :percentage="0.5"/>
         </div>
       </div>
-      <div v-else class="media-manager-interface">
+      <div v-else-if="loaded && selectedFile === null" class="media-manager-interface">
         <div style="min-height:70px" class="dvs-py-4 dvs-px-8 dvs-rounded-tl dvs-rounded-tr dvs-flex dvs-justify-between dvs-items-center dvs-bg-grey-lighter dvs-border-b dvs-border-lighter dvs-relative">
           <div>
             <div class="dvs-font-bold">Media Manager</div>
@@ -37,7 +37,7 @@
         <div class="dvs-flex dvs-items-stretch dvs-h-full">
 
           <div data-simplebar class=" dvs-min-w-1/3">
-            <div class="dvsh-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter">
+            <div class="dvs-h-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter">
               
               <ul class="dvs-list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">
                 <li v-for="directory in directories" :key="directory.id" class="dvs-cursor-pointer dvs-mt-2 dvs-text-bold" @click="changeDirectories(directory.path)">
@@ -59,7 +59,7 @@
           </div>
 
 
-          <div class="dvs-flex-grow dvs-relative dvs-overflow-scroll" :class="{'w-full': directories.length < 1}">
+          <div class="dvs-flex-grow dvs-relative dvs-overflow-y-scroll" :class="{'w-full': directories.length < 1}">
 
             <!-- Delete Directory -->
             <div v-if="files.length < 1 && directories.length < 1 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
@@ -108,7 +108,7 @@
                 <!-- Open File -->
                 <div v-else class="dvs-flex dvs-p-4">
                   <div class="dvs-w-1/2 dvs-mr-8 dvs-flex dvs-flex-col dvs-justify-between">
-                    <img :src="file.url" class="dvs-cursor-pointer dvs-mb-4" @click="selectFile(file)">
+                    <img :src="file.url" class="dvs-cursor-pointer dvs-mb-4" @click="selectSourceFile(file)">
                     <div class="dvs-flex">
                       <div class="dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: requestDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
                         <trash-icon h="20" w="20" :style="{color: theme.adminText.color}" />
@@ -127,7 +127,7 @@
                       <input type="text" :value="file.url">
                     </fieldset>
 
-                    <p><button @click="selectFile(file)" class="dvs-btn" :style="theme.actionButton">Select</button></p>
+                    <p><button @click="selectSourceFile(file)" class="dvs-btn" :style="theme.actionButton">Select</button></p>
 
                     <template v-if="isActive(file)">
                       <h6 class="dvs-my-2 dvs-text-sm">Appears On</h6>
@@ -145,6 +145,11 @@
           </div>
         </div>
       </div>
+
+
+      <div v-else>
+        <media-editor :source="selectedFile.url" :sizes="options.sizes" @cancel="selectedFile = null" @done="setFile" />
+      </div>
     </div>
   </div>
 </template>
@@ -153,6 +158,7 @@
   import { mapGetters, mapActions } from 'vuex'
 
   import Loadbar from './../utilities/Loadbar'
+  import MediaEditor from './MediaEditor'
   import Breadcrumbs from './Breadcrumbs'
   import vue2Dropzone from 'vue2-dropzone'
 
@@ -170,7 +176,9 @@
         thumbnail: true,
         directoryToCreate: '',
         target: null,
-        callback: null
+        callback: null,
+        selectedFile: null,
+        options: null
       }
     },
     mounted () {
@@ -179,6 +187,7 @@
     methods: {
       ...mapActions('devise', [
         'setCurrentDirectory',
+        'generateImages',
         'getCurrentFiles',
         'getCurrentDirectories',
         'openFile',
@@ -190,9 +199,10 @@
       startOpenerListener () {
         var self = this
 
-        deviseSettings.$bus.$on('devise-launch-media-manager', function ({target, callback}) {
+        deviseSettings.$bus.$on('devise-launch-media-manager', function ({target, callback, options}) {
           self.callback = callback
-          self.target = target
+          self.target = target,
+          self.options = options,
           self.changeDirectories('')
           self.show = true
         })
@@ -225,16 +235,24 @@
 
         return (match && match.length > 1) ? match[1] : null
       },
-      selectFile (file) {
-        if (this.target) {
-          this.target.value = file.url
+      selectSourceFile (file) {
+        this.selectedFile = file
+      },
+      setFile (edits) {
+        let self = this
+        if (this.options.sizes) {
+          edits.sizes = this.options.sizes
         }
 
-        if (this.callback) {
-          this.callback(file)
-        }
-
-        this.show = false
+        this.generateImages({file: this.selectedFile.url, edits: edits}).then(function (response) {
+          if (typeof self.target !== 'undefined') {
+            self.target.value = response.data
+          }
+          if (typeof self.callback !== 'undefined') {
+            self.callback(response.data)
+          }
+          self.show = false
+        })
       },
       requestDeleteFile (file) {
         if (this.isActive(file)) {
@@ -294,8 +312,9 @@
       }
     },
     components: {
-      'loadbar': Loadbar,
-      'breadcrumbs': Breadcrumbs,
+      Loadbar,
+      Breadcrumbs,
+      MediaEditor,
       vueDropzone: vue2Dropzone,
       AttachIcon,
       FolderIcon,

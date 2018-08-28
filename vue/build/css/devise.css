@@ -1755,17 +1755,13 @@ table.dvs-table {
 }
 
 table.dvs-table th {
-  background-color: #f1f5f8;
   padding-top: 1rem;
   padding-bottom: .5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-weight: 700;
-  border-bottom-width: 1px;
-  border-color: #b8c2cc;
   text-align: left;
   position: relative;
-  font-size: .875em;
 }
 
 table.dvs-table td {
@@ -1773,10 +1769,7 @@ table.dvs-table td {
   padding-bottom: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-bottom-width: 1px;
-  border-color: #b8c2cc;
   text-align: left;
-  font-size: .875em;
 }
 
 table.dvs-table.tight td {
@@ -1904,7 +1897,7 @@ table.dvs-table.tight td {
 
 #devise-admin h4 {
   font-size: 1.25em;
-  font-weight: 200;
+  font-weight: 400;
 }
 
 #devise-admin h5 {

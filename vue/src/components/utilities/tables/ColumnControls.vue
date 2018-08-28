@@ -6,7 +6,7 @@
     <div v-show="show">
       <div class="dvs-blocker dvs-z-20" @click="hide"></div>
       <div v-show="show" class="dvs-absolute dvs-pin-b dvs-pin-l dvs-mb-1 dvs-bg-grey-lighter dvs-min-w-250 dvs-z-40 dvs-shadow-lg dvs-border-t-2 dvs-border-grey-lighter">
-        <div class="bg-background-darker pt-4 pb-2 px-4 flex justify-between">
+        <div class="pt-4 pb-2 px-4 flex justify-between">
           {{ this.column.label }}
           <div class="dvs-flex dvs-text-black">
             <button class="dvs-pr-2 dvs-uppercase dvs-text-xs dvs-outline-none dvs-font-bold" @click="clearAll()">Clear</button>

@@ -17,180 +17,182 @@ use Illuminate\Routing\Controller;
 
 class PagesController extends Controller
 {
-  protected $PagesRepository;
+    protected $PagesRepository;
 
-  private $PagesManager;
+    private $PagesManager;
 
-  private $SiteDetector;
+    private $SiteDetector;
 
-  private $Redirect;
+    private $Redirect;
 
-  private $View;
+    private $View;
 
-  private $Request;
+    private $Request;
 
-  private $Route;
+    private $Route;
 
-  /**
-   * Creates a new DvsPagesController instance.
-   *
-   * @param  PagesRepository $PagesRepository
-   * @param Framework $Framework
-   */
-  public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, Framework $Framework)
-  {
-    $this->PagesRepository = $PagesRepository;
-    $this->PagesManager = $PagesManager;
-    $this->SiteDetector = $SiteDetector;
-
-    $this->Redirect = $Framework->Redirect;
-    $this->View = $Framework->View;
-    $this->Request = $Framework->Request;
-    $this->Route = $Framework->Route;
-  }
-
-  /**
-   * Displays details of a page
-   *
-   * @return Response
-   */
-  public function show(ApiRequest $request)
-  {
-    $page = $this->PagesRepository->findByRouteName($this->Route->currentRouteName());
-
-    $localized = $this->PagesRepository->findLocalizedPage($page);
-
-    if ($localized)
+    /**
+     * Creates a new DvsPagesController instance.
+     *
+     * @param  PagesRepository $PagesRepository
+     * @param Framework $Framework
+     */
+    public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, Framework $Framework)
     {
-      $route = $this->Route->getCurrentRoute();
-      $params = $route ? $route->parameters() : [];
+        $this->PagesRepository = $PagesRepository;
+        $this->PagesManager = $PagesManager;
+        $this->SiteDetector = $SiteDetector;
 
-      return $this->Redirect->route($localized->route_name, $params);
-    } else
-    {
-      if(!$page->currentVersion) abort(404);
-
-      $page->currentVersion->registerComponents();
-      $page->load('site');
-
-      return $this->View->make($page->currentVersion->layout, ['page' => $page]);
+        $this->Redirect = $Framework->Redirect;
+        $this->View = $Framework->View;
+        $this->Request = $Framework->Request;
+        $this->Route = $Framework->Route;
     }
-  }
 
-  public function getVueData(ApiRequest $request, $pageId)
-  {
-    $page = $this->PagesRepository->findById($pageId);
+    /**
+     * Displays details of a page
+     *
+     * @return Response
+     */
+    public function show(ApiRequest $request)
+    {
+        $page = $this->PagesRepository->findByRouteName($this->Route->currentRouteName());
 
-    $page->currentVersion->registerComponents();
+        $localized = $this->PagesRepository->findLocalizedPage($page);
 
-    return Devise::dataAsArray($page);
-  }
+        if ($localized)
+        {
+            $route = $this->Route->getCurrentRoute();
+            $params = $route ? $route->parameters() : [];
 
-  /**
-   * Request the page listing
-   *
-   */
-  public function pages(ApiRequest $request)
-  {
-    $site = $this->SiteDetector->current();
+            return $this->Redirect->route($localized->route_name, $params);
+        } else
+        {
+            if (!$page->currentVersion) abort(404);
 
-    $defaultLanguage = $site->default_language;
+            $page->currentVersion->registerComponents();
+            $page->load('site');
 
-    $languageId = $request->input('language_id', $defaultLanguage->id);
+            return $this->View->make($page->currentVersion->layout, ['page' => $page]);
+        }
+    }
 
-    $pages = $this->PagesRepository->pages($site->id, $languageId);
+    public function getVueData(ApiRequest $request, $pageId)
+    {
+        $page = $this->PagesRepository->findById($pageId);
 
-    return PageResource::collection($pages);
-  }
+        $page->currentVersion->registerComponents();
 
-  /**
-   * Request the page listing
-   *
-   */
-  public function suggestList(ApiRequest $request)
-  {
-    $term = $request->input('term');
+        return Devise::dataAsArray($page);
+    }
 
-    return $this->PagesRepository->getPagesList($term);
-  }
+    /**
+     * Request the page listing
+     *
+     */
+    public function pages(ApiRequest $request)
+    {
+        $site = $this->SiteDetector->current();
 
-  /**
-   * Request a new page be created
-   *
-   * @param StorePage $request
-   * @return PageResource
-   */
-  public function store(StorePage $request)
-  {
-    $site = $this->SiteDetector->current();
+        $defaultLanguage = $site->default_language;
 
-    $defaultLanguage = $site->default_language;
+        $languageId = $request->input('language_id', $defaultLanguage->id);
 
-    $input = $request->all();
-    $input['site_id'] = $site->id;
-    $input['language_id'] = $request->input('language_id', $defaultLanguage->id);
+        $pages = $this->PagesRepository->pages($site->id, $languageId);
 
-    $page = $this->PagesManager->createNewPage($input);
+        return PageResource::collection($pages);
+    }
 
-    return new PageResource($page);
-  }
+    /**
+     * Request the page listing
+     *
+     */
+    public function suggestList(ApiRequest $request)
+    {
+        $term = $request->input('term');
 
-  /**
-   * Request page be updated with given input
-   *
-   * @param UpdatePage $request
-   * @param  integer $id
-   * @return PageResource
-   */
-  public function update(UpdatePage $request, $id)
-  {
-    $page = $this->PagesManager->updatePage($id, $request->all());
+        $site = $this->SiteDetector->current();
 
-    $page->load('versions','metas');
+        return $this->PagesRepository->getPagesList($term, $site->id);
+    }
 
-    return new PageResource($page);
-  }
+    /**
+     * Request a new page be created
+     *
+     * @param StorePage $request
+     * @return PageResource
+     */
+    public function store(StorePage $request)
+    {
+        $site = $this->SiteDetector->current();
 
-  /**
-   * Request page be copied
-   *
-   * @param CopyPage $request
-   * @param  integer $id
-   * @return PageResource
-   */
-  public function copy(CopyPage $request, $id)
-  {
-    $page = $this->PagesManager->copyPage($id, $request->all());
+        $defaultLanguage = $site->default_language;
 
-    $page->load('versions','metas');
+        $input = $request->all();
+        $input['site_id'] = $site->id;
+        $input['language_id'] = $request->input('language_id', $defaultLanguage->id);
 
-    return new PageResource($page);
-  }
+        $page = $this->PagesManager->createNewPage($input);
 
-  /**
-   * ApiRequest the page be copied to another page (duplicated)
-   *
-   * @param ApiRequest $request
-   * @param  integer $id
-   * @return PageResource
-   * @todo make this onework
-   */
-  public function requestCopyPage(ApiRequest $request, $id)
-  {
-    $page = $this->PagesManager->copyPage($id, $request->all());
+        return new PageResource($page);
+    }
 
-    return new PageResource($page);
-  }
+    /**
+     * Request page be updated with given input
+     *
+     * @param UpdatePage $request
+     * @param  integer $id
+     * @return PageResource
+     */
+    public function update(UpdatePage $request, $id)
+    {
+        $page = $this->PagesManager->updatePage($id, $request->all());
 
-  /**
-   * Request the page be deleted from database
-   *
-   * @param ApiRequest $request
-   * @param  integer $id
-   * @return PageResource
-   */
-  public function delete(ApiRequest $request, $id)
-  {
-    $this->PagesManager->destroyPage($id);
-  }
+        $page->load('versions', 'metas');
+
+        return new PageResource($page);
+    }
+
+    /**
+     * Request page be copied
+     *
+     * @param CopyPage $request
+     * @param  integer $id
+     * @return PageResource
+     */
+    public function copy(CopyPage $request, $id)
+    {
+        $page = $this->PagesManager->copyPage($id, $request->all());
+
+        $page->load('versions', 'metas');
+
+        return new PageResource($page);
+    }
+
+    /**
+     * ApiRequest the page be copied to another page (duplicated)
+     *
+     * @param ApiRequest $request
+     * @param  integer $id
+     * @return PageResource
+     * @todo make this onework
+     */
+    public function requestCopyPage(ApiRequest $request, $id)
+    {
+        $page = $this->PagesManager->copyPage($id, $request->all());
+
+        return new PageResource($page);
+    }
+
+    /**
+     * Request the page be deleted from database
+     *
+     * @param ApiRequest $request
+     * @param  integer $id
+     * @return PageResource
+     */
+    public function delete(ApiRequest $request, $id)
+    {
+        $this->PagesManager->destroyPage($id);
+    }
 }

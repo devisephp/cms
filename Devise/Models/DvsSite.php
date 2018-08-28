@@ -22,7 +22,7 @@ class DvsSite extends Model
 
     public function languages()
     {
-        return $this->belongsToMany(DvsLanguage::class, 'dvs_site_language', 'language_id', 'site_id')
+        return $this->belongsToMany(DvsLanguage::class, 'dvs_site_language', 'site_id', 'language_id')
             ->withPivot('default');
     }
 

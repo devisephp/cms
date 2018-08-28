@@ -27,11 +27,11 @@
         </li>
         <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
           <div class="dvs-collapsed">
-            <ul class="dvs-list-reset">
-              <template v-for="slice in pageSlices">
-                <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" />
+            <draggable v-model="page.slices" element="ul" class="dvs-list-reset" :options="{handle: '.handle'}">
+              <template v-for="slice in page.slices">
+                <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" />
               </template>
-            </ul>
+            </draggable>
 
             <button 
               :style="theme.actionButtonGhost"
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 import { mapGetters, mapActions } from 'vuex'
 
 import AnalyticTotals from './AnalyticTotals'
@@ -59,7 +61,6 @@ export default {
   name: 'PageEditor',
   data () {
     return {
-      pageSlices: [],
       pageSettingsOpen: false,
       pageContentOpen: true
     }
@@ -82,14 +83,20 @@ export default {
       }
     },
     openSlice (sliceToOpen) {
-      this.pageSlices.map(s => this.closeSlice(s))
+      this.page.slices.map(s => this.closeSlice(s))
       this.$set(sliceToOpen.metadata, 'open', true)
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
     },
     addSlice (newSlice, referenceSlice) {
-      this.pageSlices.splice(this.pageSlices.indexOf(referenceSlice), 0, newSlice)
+      this.page.slices.splice(this.page.slices.indexOf(referenceSlice) + 1, 0, newSlice)
+    },
+    addSlice (editedSlice, referenceSlice) {
+      this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)
+    },
+    removeSlice (referenceSlice) {
+      this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1)
     }
   },
   computed: {
@@ -100,7 +107,8 @@ export default {
   },
   props: ['page'],
   components: {
-    AnalyticTotals
+    AnalyticTotals,
+    draggable,
   }
 }
 </script>

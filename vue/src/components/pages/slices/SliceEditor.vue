@@ -1,35 +1,38 @@
 <template>
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
 
-    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer" @click="toggleSlice(slice)">
+    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer">
       <template v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
-        <div class="dvs-cursor-pointer dvs-text-sm dvs-font-normal dvs-capitalize hover:underline dvs-ml-4">
-          <menu-icon w="18" h="18" class="mr-2" :style="theme.panelIcons" /> 
-          <manage-slice @addSlice="addSlice" @removeSlice="removeSlice" />
-          {{ slice.metadata.label }} 
+        <div class="dvs-flex dvs-items-center dvs-cursor-pointer dvs-capitalize hover:underline">
+          <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
+          <div class="dvs-cursor-pointer" @click="manageSlice = true">
+            <cog-icon w="18" h="18" class="mt-1 mr-2" :style="theme.panelIcons" /> 
+          </div>
+          <span  @click="toggleSlice(slice)">{{ slice.metadata.label }}</span>
         </div>
         <div class="opacity-75" @click.stop="addInstance(slice)">
           Add New
         </div>
       </template>
       <template v-else>
-        <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center" :style="{color: theme.panel.color}" :class="{'pl-4': child}">
-          <div class="mr-2" style="width:20px;" v-if="!sliceConfig(slice).fields"></div>
-          <menu-icon w="18" h="18" class="mr-2" :style="theme.panelIcons" /> 
-          <manage-slice @addSlice="addSlice" @removeSlice="removeSlice" />
-          <add-icon w="20" h="20" class="mr-2" :style="theme.panelIcons" v-show="!slice.metadata.open && sliceConfig(slice).fields" /> 
-          <remove-icon w="20" h="20" class="mr-2" :style="{color: theme.panelIcons.secondaryColor}" v-show="slice.metadata.open" /> 
-          {{ slice.metadata.label }}
+        <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center" :style="{color: theme.panel.color}" :class="{'dvs-pl-4': child}">
+          <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
+          <div class="dvs-cursor-pointer" @click="manageSlice = true">
+            <cog-icon w="18" h="18" class="mt-1 mr-2" :style="theme.panelIcons" /> 
+          </div>
+          <span @click="toggleSlice(slice)">{{ slice.metadata.label }}</span>
         </div>
         <div v-else class="dvs-flex dvs-items-center dvs-w-full dvs-pl-4 dvs-justify-between">
-          <div>Instance</div>
+          <div @click="toggleSlice(slice)">Instance</div>
           <div class="dvs-pl-4" @click.stop="requestRemoveInstance(slice)">
             Remove
           </div>
         </div>
       </template>
-      
     </strong>
+
+
+    <manage-slice v-if="manageSlice === true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" :slice="slice" />
 
     <div class="dvs-collapsed" v-if="slice.metadata.open">
       <div v-if="!slice.metadata.placeholder">
@@ -104,6 +107,7 @@ import WysiwygEditor from './../editor/Wysiwyg'
 import ManageSlice from './ManageSlice'
 
 import AddIcon from 'vue-ionicons/dist/ios-add.vue'
+import CogIcon from 'vue-ionicons/dist/ios-cog.vue'
 import MenuIcon from 'vue-ionicons/dist/ios-menu.vue'
 import RemoveIcon from 'vue-ionicons/dist/ios-remove.vue'
 
@@ -111,6 +115,7 @@ export default {
   name: 'SliceEditor',
   data () {
     return {
+      manageSlice: false,
       pageSlices: []
     }
   },
@@ -201,13 +206,18 @@ export default {
       }
     },
 
-    // Adding and Removing Slices
+    // Adding, Editing and Removing Slices
     addSlice (slice) {
       this.$emit('addSlice', slice, this.slice)
+      this.manageSlice = false
     },
-
+    editSlice (slice) {
+      this.$emit('editSlice', slice, this.slice)
+      this.manageSlice = false
+    },
     removeSlice () {
-      console.log('remove this slice')
+      this.$emit('removeSlice', this.slice)
+      this.manageSlice = false
     }
   },
   computed: {
@@ -243,6 +253,7 @@ export default {
   components: {
     AddIcon,
     CheckboxEditor,
+    CogIcon,
     ColorEditor,
     ImageEditor,
     LinkEditor,

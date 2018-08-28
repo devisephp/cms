@@ -1,13 +1,39 @@
 <template>
 <div>
-  <div 
-    class="dvs-cursor-pointer" 
-    @click="requestInsertSlice">
-      <cog-icon w="18" h="18" class="mt-1 mr-2" :style="theme.panelIcons" /> 
-  </div>
 
-  <portal to="devise-root" v-if="showInsert">
-    <div class="dvs-blocker" @click="cancelInsertSlice"></div>
+  <portal to="devise-root" v-if="action === 'selectAction'">
+    <div class="dvs-blocker" @click="cancelManageSlice"></div>
+    <panel class="dvs-fixed dvs-absolute-center dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-4/5" :panel-style="theme.panel">
+      
+      <div class="dvs-p-8">
+        <h3 class="dvs-mb-8">What would you like to do?</h3>
+        
+        <div class="dvs-flex dvs-justify-between dvs-items-stretch">
+            <div class="dvs-btn dvs-text-base dvs-mr-4 dvs-p-8 dvs-w-1/3" :style="theme.actionButtonGhost" @click="action = 'insert'">
+              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-4"  :style="{borderColor: theme.actionButtonGhost.borderColor}">Insert New Slice</h4>
+
+              <p class="normal-case dvs-font-normal">Inserts a new slice below the current slice</p>
+            </div>
+
+            <div class="dvs-btn dvs-text-base dvs-mx-4 dvs-p-8 dvs-w-1/3" :style="theme.actionButtonGhost" @click="action = 'edit'">
+              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-4"  :style="{borderColor: theme.actionButtonGhost.borderColor}">Edit This Slice</h4>
+
+              <p class="normal-case dvs-font-normal">Edit the settings of this slice.</p>
+            </div>
+
+            <div class="dvs-btn dvs-text-base dvs-ml-4 dvs-p-8 dvs-w-1/3" :style="theme.actionButtonGhost" @click="removeSlice">
+              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-4"  :style="{borderColor: theme.actionButtonGhost.borderColor}">Remove This Slice</h4>
+
+              <p class="normal-case dvs-font-normal">Deletes the current slice from the page.</p>
+            </div>
+          </div>
+      </div>
+
+    </panel>
+  </portal>
+
+  <portal to="devise-root" v-if="action === 'insert'">
+    <div class="dvs-blocker" @click="cancelManageSlice"></div>
     <panel class="dvs-fixed dvs-absolute-center dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-4/5" :panel-style="theme.panel">
       
       <div class="dvs-p-8">
@@ -59,10 +85,54 @@
 
             <div>
               <button class="dvs-btn" :style="theme.actionButton" @click="addSlice">Insert</button>
-              <button class="dvs-btn" :style="theme.actionButtonGhost" @click="cancelInsertSlice">Cancel</button>
+              <button class="dvs-btn" :style="theme.actionButtonGhost" @click="cancelManageSlice">Cancel</button>
             </div>
           </div>
         </transition>
+      </div>
+
+    </panel>
+  </portal>
+  
+
+  <portal to="devise-root" v-if="action === 'edit'">
+    <div class="dvs-blocker" @click="cancelManageSlice"></div>
+    <panel class="dvs-fixed dvs-absolute-center dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-4/5" :panel-style="theme.panel">
+      
+      <div class="dvs-p-8">
+        <h3 class="dvs-mb-8">Edit Slice Settings</h3>
+        
+        <div>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Type of Slice</label>
+            <select @change="updateSliceType" v-model="editingSlice.metadata.type">
+              <option value="single">Single</option>
+              <option value="repeats">Repeats</option>
+              <option value="model">Model</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Select a Slice</label>
+            <select v-model="editingSlice.metadata.view">
+              <option :value="null">Select a Slice</option>
+              <optgroup v-for="(group, name) in sliceDirectoriesOptions" :key="name" :label="name">
+                <option v-for="option in group" :key="option.id" :value="`slices.${option.value}`">
+                  {{ option.name }}
+                </option>
+              </optgroup>
+            </select>
+          </fieldset>
+
+          <div class="dvs-mb-4" v-if="editingSlice.type === 'model'">
+            <query-builder v-model="editingSlice.data"></query-builder>
+          </div>
+
+          <div>
+            <button class="dvs-btn" :style="theme.actionButton" @click="editSlice">Edit</button>
+            <button class="dvs-btn" :style="theme.actionButtonGhost" @click="cancelManageSlice">Cancel</button>
+          </div>
+        </div>
       </div>
 
     </panel>
@@ -75,15 +145,9 @@ import Panel from './../../utilities/Panel'
 import QueryBuilder from './../../utilities/QueryBuilder'
 import SlicesMixin from './../../../mixins/Slices'
 
-import CogIcon from 'vue-ionicons/dist/ios-cog.vue'
-
 import { mapGetters, mapActions } from 'vuex'
 
-export default {
-  data () {
-    return {
-      showInsert: false,
-      insertSlice: {
+let defaultInsertSlice = {
         type: null,
         slice: null,
         data: {
@@ -92,9 +156,17 @@ export default {
           modelQuery: null
         }
       }
+
+export default {
+  data () {
+    return {
+      action: 'selectAction',
+      insertSlice: defaultInsertSlice,
+      editingSlice: {}
     }
   },
   mounted () {
+    this.editingSlice = Object.assign({}, this.slice)
     this.getSlicesDirectories()
     this.getSlices()
   },
@@ -104,10 +176,10 @@ export default {
       'getSlices',
       'getModelSettings'
     ]),
-    requestInsertSlice () {
-      this.showInsert = true
-    },
-    cancelInsertSlice () {
+    cancelManageSlice () {
+      this.action = null
+      this.insertSlice = defaultInsertSlice
+      this.editingSlice = this.slice
       this.showInsert = false
     },
     buildSlice () {
@@ -154,9 +226,22 @@ export default {
         this.$set(slice[field], d, defaults[d])
       }
     },
+    updateSliceType () {
+      if (this.editingSlice.metadata.type === 'repeats' || this.editingSlice.metadata.type === 'model') {
+        this.editingSlice.metadata.placeholder = this.editingSlice.metadata.label
+      }
+    },
     addSlice () {
       this.$emit('addSlice', this.buildSlice())
-      this.showInsert = false
+      this.action = 'selectAction'
+    },
+    editSlice () {
+      this.$emit('editSlice', this.editingSlice)
+      this.action = 'selectAction'
+    },
+    removeSlice () {
+      this.$emit('removeSlice')
+      this.action = 'selectAction'
     }
   },
   computed: {
@@ -165,8 +250,12 @@ export default {
       'slicesDirectories'
     ])
   },
+  props: {
+    slice: {
+      type: Object
+    }
+  },
   components: {
-    CogIcon,
     Panel,
     QueryBuilder
   },

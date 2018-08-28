@@ -14,6 +14,7 @@ import { DeviseBus } from './event-bus.js'
 import routes from './router/route.config.js'
 import alertConfirm from './directives/alert-confirm'
 import Tilt from './directives/tilt'
+import Tuck from './directives/tuck'
 
 import EditPage from './components/pages/Editor'
 
@@ -106,6 +107,9 @@ const DevisePlugin = {
 
     // Register tilt directive
     Vue.directive('tilt', Tilt)
+
+    // Register tuck directive
+    Vue.directive('tuck', Tuck)
 
     let deviseOptions = Object.assign({
       breakpoints: {

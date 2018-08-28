@@ -4,14 +4,14 @@
     :class="[deviseOptions.adminClass]">
 
     <portal-target name="devise-root"></portal-target>
-    <messages />
-    <loadbar />
-    <media-manager />
+    <messages class="dvs-z-9999" />
+    <loadbar class="dvs-z-9999" />
+    <media-manager class="dvs-z-9999" />
     <transition name="dvs-fade">
-      <preview-mode v-if="managingPage" />
+      <preview-mode class="dvs-z-9999" v-tuck v-if="managingPage" />
     </transition>
       
-    <panel class="dvs-m-8" style="min-width:300px;" :panel-style="theme.panel" v-tilt>
+    <panel class="dvs-m-8 dvs-fixed dvs-z-9999" style="min-width:300px;" :panel-style="theme.panel" v-tuck v-tilt>
       <div class="dvs-flex">
         <div :style="theme.panelSidebar" class="dvs-flex dvs-flex-col" >
           <template v-for="(menuItem, key) in adminMenu">

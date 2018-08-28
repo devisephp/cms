@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="dvs-absolute dvs-z-50" :style="controlStyles" v-if="editorMode">
-      <div @click="toggleEditor()">
+    <div class="dvs-absolute dvs-z-9999" :style="controlStyles" v-if="editorMode">
+      <div @click="toggleEditor()" class="dvs-flex dvs-items-center">
         <settings-icon class="dvs-gear-1 dvs-cursor-pointer" w="30px" h="30px" />
       </div>
-      <div class="dvs-absolute dvs-p-8 dvs-z-50 dvs-min-w-96" :style="infoBlockFlatTheme" style="top:40px;right:0px;" v-if="showEditor">
+      <div class="dvs-absolute dvs-p-8 dvs-z-50 dvs-min-w-96 dvs-z-50 dvs-pin-r dvs-mr-8 dvs-rounded" :style="theme.panelCard" v-if="showEditor">
         <fieldset class="dvs-fieldset">
           <label>Margins</label>
         </fieldset>

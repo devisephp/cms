@@ -1017,13 +1017,6 @@ table {
 #devise-container {
   font-family: Lato, system-ui, BlinkMacSystemFont, -apple-system, Roboto, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
 }
 
 #devise-admin-open {
@@ -1127,17 +1120,6 @@ table {
     -webkit-transform: rotate(-360deg);
             transform: rotate(-360deg);
   }
-}
-
-#devise-admin {
-  z-index: 30;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  margin-left: -1px;
-  font-size: 14px;
-  width: 100%;
 }
 
 @media (max-width: 767px) {
@@ -5576,6 +5558,10 @@ trix-editor {
   z-index: 60;
 }
 
+.dvs-z-9999 {
+  z-index: 9999;
+}
+
 .dvs-z-auto {
   z-index: auto;
 }
@@ -8871,6 +8857,10 @@ trix-editor {
     z-index: 60;
   }
 
+  .md\:dvs-z-9999 {
+    z-index: 9999;
+  }
+
   .md\:dvs-z-auto {
     z-index: auto;
   }
@@ -11990,6 +11980,10 @@ trix-editor {
 
   .lg\:dvs-z-60 {
     z-index: 60;
+  }
+
+  .lg\:dvs-z-9999 {
+    z-index: 9999;
   }
 
   .lg\:dvs-z-auto {

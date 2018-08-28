@@ -1,5 +1,5 @@
 #devise-container {
-  @apply dvs-font-sans dvs-w-full dvs-flex dvs-flex-row-reverse;
+  @apply dvs-font-sans dvs-w-full;
 }
 
 #devise-admin-open {
@@ -61,14 +61,6 @@
   } to { 
     transform: rotate(-360deg); 
   }
-}
-
-#devise-admin {
-  @apply dvs-z-30 dvs-fixed dvs-pin-l dvs-pin-t dvs-pin-b dvs--ml-px;
-
-  // Reset the base font size for Devise interface
-  font-size:14px;
-  width:100%;
 }
 
 @media (max-width: 767px) { 

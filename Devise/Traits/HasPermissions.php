@@ -30,4 +30,10 @@ trait HasPermissions
         return $all ?: $default;
     }
 
+    public function hasPermission($permission)
+    {
+        $all = $this->permissions_list;
+
+        return in_array($permission, $all);
+    }
 }

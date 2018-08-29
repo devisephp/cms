@@ -33,6 +33,7 @@ class SlicesController extends Controller
             $data['name'] = $slice->component_name;
             $data['view'] = $slice->view;
             $data['template'] = $slice->getTemplateHtml();
+            $data['has_child_slot'] = $slice->has_child_slot;
 
             $components[$slice->component_name] = $data;
         }

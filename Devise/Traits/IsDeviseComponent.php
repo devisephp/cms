@@ -29,17 +29,20 @@ trait IsDeviseComponent
         return $this->hasSliceSlot;
     }
 
+    public function getHasChildSlotStringAttribute()
+    {
+        return $this->hasSliceSlot ? 'true' : 'false';
+    }
+
     public function getComponentCodeAttribute()
     {
         $sections = $this->getViewSections();
-
-        $this->detectSlotAvailability($sections);
 
         $template = $this->cleanHtml($sections['template']);
 
         $partial = $this->getComponentScript($sections['component']);
 
-        $code = $this->component_name . ": {name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\"," . $partial;
+        $code = $this->component_name . ": {name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\",has_child_slot:" . $this->has_child_slot_string . "," . $partial;
 
         return $this->compress_script($code);
     }
@@ -79,6 +82,8 @@ trait IsDeviseComponent
             $view = View::make($this->view);
 
             $this->viewSections = $view->renderSections();
+
+            $this->detectSlotAvailability($this->viewSections);
         }
 
         return $this->viewSections;

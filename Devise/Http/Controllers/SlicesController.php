@@ -2,7 +2,6 @@
 
 namespace Devise\Http\Controllers;
 
-use Devise\Devise;
 use Devise\Http\Requests\ApiRequest;
 
 use Devise\Models\DvsSliceInstance;
@@ -13,26 +12,24 @@ class SlicesController extends Controller
 
     public function all(ApiRequest $request)
     {
-        $slices = [];
-        $directories = $this->scanSlicesDir(resource_path('views/slices'));
+        $directory = $this->scanSlicesDir(resource_path('views/slices'));
 
-        return $this->flattenSlice($slices, $directories);
+        return $this->flattenDirectory($directory);
     }
 
     public function components(ApiRequest $request)
     {
-        $slices = [];
         $directories = $this->scanSlicesDir(resource_path('views/slices'));
 
-        $allflat = $this->flattenSlice($slices, $directories);
+        $flat = $this->flattenDirectory($directories);
 
         $components = [];
-        foreach ($allflat as $item)
+        foreach ($flat as $item)
         {
             $slice = new DvsSliceInstance();
             $slice->view = 'slices.' . $item['value'];
 
-            $data = (array) $slice->getComponentAsArray();
+            $data = (array)$slice->getComponentAsArray();
             $data['name'] = $slice->component_name;
             $data['view'] = $slice->view;
             $data['template'] = $slice->getTemplateHtml();
@@ -43,28 +40,32 @@ class SlicesController extends Controller
         return $components;
     }
 
-    function flattenSlice($slices, $directories)
-    {
-        if (isset($directories['files']))
-        {
-            $slices = array_merge($slices, $directories['files']);
-            foreach ($directories['directories'] as $directory)
-            {
-                $slices = array_merge($slices, $this->flattenSlice($slices, $directory));
-            }
-
-            return $slices;
-        }
-
-        return [];
-    }
-
     public function allDirectories(ApiRequest $request)
     {
         return $this->scanSlicesDir(resource_path('views/slices'));
     }
 
-    function scanSlicesDir($dir)
+    private function flattenDirectory($directory)
+    {
+        $slices = [];
+
+        if (isset($directory['files']))
+        {
+            $slices = $directory['files'];
+        }
+
+        if (isset($directory['directories']))
+        {
+            foreach ($directory['directories'] as $directory)
+            {
+                $slices = array_merge($slices, $this->flattenDirectory($directory));
+            }
+        }
+
+        return $slices;
+    }
+
+    private function scanSlicesDir($dir)
     {
       if (is_dir($dir))
       {

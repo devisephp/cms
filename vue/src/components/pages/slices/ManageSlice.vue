@@ -153,6 +153,7 @@ export default {
   },
   mounted () {
     this.editingSlice = Object.assign({}, this.slice)
+    this.loadComponents()
     this.getSlicesDirectories()
     this.getSlices()
   },
@@ -160,6 +161,7 @@ export default {
     ...mapActions('devise', [
       'getSlicesDirectories',
       'getSlices',
+      'loadComponents',
       'getModelSettings'
     ]),
     cancelManageSlice () {
@@ -169,8 +171,7 @@ export default {
       this.showInsert = false
     },
     buildSlice () {
-      let component = this.componentFromView('slices.' + this.insertSlice.slice.value)
-
+      let component = this.componentFromView(this.insertSlice.slice.value)
       var finalSlice = {
         settings: {
           enabled: true

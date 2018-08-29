@@ -67,13 +67,15 @@
 
     </div>
     <component 
+      v-if="sliceComponent !== null"
       :style="styles"
-      v-bind:is="currentView" 
-      :devise="deviseForSlice" 
+      :is="currentView" 
+      :devise="deviseForSlice"
+      :breakpoint="breakpoint"
       :slices="devise.slices" 
       :models="pageData"
-      ref="component"
-      :responsive-breakpoint="breakpoint">
+      :component="sliceComponent"
+      ref="component">
     </component>
   </div>
 </template>
@@ -97,6 +99,7 @@ export default {
       backgroundColor: null,
       mounted: false,
       showEditor: false,
+      sliceEl: null,
       sliceComponent: null,
       resizeObserver: null,
       controlStyles: {
@@ -108,11 +111,12 @@ export default {
   created () {
     this.hydrateMissingProperties()
     this.backgroundColor = tinycolor('#fff').toRgb()
+    this.sliceComponent = this.component(this.devise.metadata.name)
   },
   mounted () {
     let self = this
     this.mounted = true
-    this.sliceComponent = this.$refs.component.$el
+    this.sliceEl = this.$refs.component.$el
 
     if (typeof this.devise.settings === 'undefined') {
       this.$set(this.devise, 'settings', {})
@@ -130,20 +134,17 @@ export default {
       let styles = {}
       for (let entry of entries) {
         let cs = window.getComputedStyle(entry.target);
-        let rect = this.sliceComponent.getBoundingClientRect();
+        let rect = this.sliceEl.getBoundingClientRect();
 
         this.controlStyles.right = `${entry.contentRect.right - entry.contentRect.width + 15}px`
         this.controlStyles.top = `${rect.top + window.scrollY + 15}px`
 
-        // console.log('watching element:', entry.target);
-        // console.log(entry.contentRect.width,' is ', cs.width);
-        // console.log(entry.contentRect.top,' is ', cs.paddingTop);
         if (entry.target.handleResize)
             entry.target.handleResize(entry);
       }
     })
 
-    this.resizeObserver.observe(this.sliceComponent)
+    this.resizeObserver.observe(this.sliceEl)
   },
   methods: {
     hydrateMissingProperties () {
@@ -240,6 +241,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
+      'component',
       'sliceConfig',
       'breakpoint'
     ]),

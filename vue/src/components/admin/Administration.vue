@@ -3,10 +3,6 @@
     id="devise-admin"
     :class="[deviseOptions.adminClass]">
 
-    <portal-target name="devise-root"></portal-target>
-    <messages class="dvs-z-9999" />
-    <loadbar class="dvs-z-9999" />
-    <media-manager class="dvs-z-9999" />
     <transition name="dvs-fade">
       <preview-mode class="dvs-z-9999" v-tuck v-if="managingPage" />
     </transition>
@@ -43,6 +39,11 @@
 
       </div>
     </panel>
+
+    <media-manager class="dvs-z-9999" />
+    <portal-target class="dvs-z-9999" name="devise-root"></portal-target>
+    <loadbar class="dvs-z-9999" />
+    <messages class="dvs-z-9999" />
 
   </div>
 </template>

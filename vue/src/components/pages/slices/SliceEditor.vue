@@ -207,6 +207,7 @@ export default {
       this.$set(data, property, {
         text: null,
         url: null,
+        sizemedia: {},
         target: null,
         color: null,
         checked: null,
@@ -222,7 +223,6 @@ export default {
 
     // Adding, Editing and Removing Slices
     requestInsertSlice () {
-      console.log('here')
       this.manageSlice = true
       this.$nextTick(function () {
         this.$refs.manageslice.action = 'insert'

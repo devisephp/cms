@@ -157,8 +157,8 @@ export default {
         for (var field in fields) {
           // Ok, so the property is missing from the slice.fields object so we're
           // going to add in a stub for the render.
-          if (!this.deviseForSlice.hasOwnProperty(field)) {
             this.addMissingProperty(field)
+          if (!this.deviseForSlice.hasOwnProperty(field)) {
             this.addFieldConfigurations(fields, field)
 
             // If defaults are set then set them on top of the placeholder missing properties
@@ -174,7 +174,6 @@ export default {
     },
     addMissingProperty (field) {
       // We just add all the properties to ensure there are not undefined props down the line
-
       let defaultProperties = {
         text: null,
         url: null,
@@ -184,8 +183,9 @@ export default {
         checked: null,
         enabled: true
       }
-
-      this.$set(this.deviseForSlice, field, defaultProperties)      
+      
+      let mergedData = Object.assign({}, defaultProperties, this.deviseForSlice[field])
+      this.$set(this.deviseForSlice, field, mergedData)     
     },
     addFieldConfigurations (fields, field) {
       for (var pp in fields[field]) {

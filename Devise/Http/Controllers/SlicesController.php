@@ -2,115 +2,148 @@
 
 namespace Devise\Http\Controllers;
 
+use Devise\Devise;
 use Devise\Http\Requests\ApiRequest;
 
+use Devise\Models\DvsSliceInstance;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\File;
 
 class SlicesController extends Controller
 {
 
-  public function all(ApiRequest $request)
-  {
-    $slices = [];
-    $directories = $this->scanSlicesDir(resource_path('views/slices'));
-    return $this->flattenSlice($slices, $directories);
-  }
+    public function all(ApiRequest $request)
+    {
+        $slices = [];
+        $directories = $this->scanSlicesDir(resource_path('views/slices'));
 
-  function flattenSlice ($slices, $directories) {
-    if (isset($directories['files'])) {
-      $slices = array_merge($slices, $directories['files']);
-      foreach($directories['directories'] as $directory) {
-        $slices = array_merge($slices, $this->flattenSlice($slices, $directory));
-      }
-      return $slices;
+        return $this->flattenSlice($slices, $directories);
     }
-    return [];
-  }
 
-  public function allDirectories(ApiRequest $request)
-  {
-    return $this->scanSlicesDir(resource_path('views/slices'));
-  }
+    public function components(ApiRequest $request)
+    {
+        $slices = [];
+        $directories = $this->scanSlicesDir(resource_path('views/slices'));
 
-  function scanSlicesDir($dir)
-  {
-    if (is_dir($dir)) {
-      $found = scandir($dir);
+        $allflat = $this->flattenSlice($slices, $directories);
 
-      $directories = [];
-      $files = [];
-
-      foreach ($found as $key => $value)
-      {
-        $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
-
-        if ($value != "." && $value != ".." && $value != ".DS_Store")
+        $components = [];
+        foreach ($allflat as $item)
         {
-          if (!is_dir($path))
-          {
-            $files[] = [
-              'name'  => $this->getFileName($path),
-              'value' => $this->getViewName($path)
-            ];
-          } else
-          {
-            $results = $this->scanSlicesDir($path);
-            $directories[] = $results;
-          }
+            $slice = new DvsSliceInstance();
+            $slice->view = 'slices.' . $item['value'];
+
+            $data = (array) $slice->getComponentAsArray();
+            $data['name'] = $slice->component_name;
+            $data['view'] = $slice->view;
+            $data['template'] = $slice->getTemplateHtml();
+
+            $components[$slice->component_name] = $data;
         }
-      }
 
-      return [
-        'name'        => $this->getDirName($dir),
-        'directories' => $directories,
-        'files'       => $files
-      ];
-    } 
-    return [];
-  }
+        return $components;
+    }
 
-  private function getFileName($path)
-  {
-    $name = $this->getName($path);
-    $name = str_replace('.blade.php', '', $name);
+    function flattenSlice($slices, $directories)
+    {
+        if (isset($directories['files']))
+        {
+            $slices = array_merge($slices, $directories['files']);
+            foreach ($directories['directories'] as $directory)
+            {
+                $slices = array_merge($slices, $this->flattenSlice($slices, $directory));
+            }
 
-    return $this->toHuman($name);
-  }
+            return $slices;
+        }
 
-  private function getViewName($path)
-  {
-    $name = $this->getName($path);
+        return [];
+    }
 
-    $path = str_replace($name, '', $path);
-    $path = str_replace(resource_path('views/slices'), '', $path);
-    $path = str_replace('/', '.', $path);
+    public function allDirectories(ApiRequest $request)
+    {
+        return $this->scanSlicesDir(resource_path('views/slices'));
+    }
 
-    $name = str_replace('.blade.php', '', $name);
+    function scanSlicesDir($dir)
+    {
+        if (is_dir($dir))
+        {
+            $found = scandir($dir);
 
-    return substr($path . $name, 1);
-  }
+            $directories = [];
+            $files = [];
 
-  private function getDirName($path)
-  {
-    $path = $this->getName($path);
+            foreach ($found as $key => $value)
+            {
+                $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
-    if ($path == "") return 'Slices';
+                if ($value != "." && $value != ".." && $value != ".DS_Store")
+                {
+                    if (!is_dir($path))
+                    {
+                        $files[] = [
+                            'name'  => $this->getFileName($path),
+                            'value' => $this->getViewName($path)
+                        ];
+                    } else
+                    {
+                        $results = $this->scanSlicesDir($path);
+                        $directories[] = $results;
+                    }
+                }
+            }
 
-    return $this->toHuman($path);
-  }
+            return [
+                'name'        => $this->getDirName($dir),
+                'directories' => $directories,
+                'files'       => $files
+            ];
+        }
 
-  private function toHuman($string)
-  {
-    $string = preg_replace("/[^a-zA-Z]/", " ", $string);
+        return [];
+    }
 
-    return ucwords($string);
-  }
+    private function getFileName($path)
+    {
+        $name = $this->getName($path);
+        $name = str_replace('.blade.php', '', $name);
 
-  private function getName($path)
-  {
-    $parts = explode('/', $path);
+        return $this->toHuman($name);
+    }
 
-    return $parts[count($parts) - 1];
-  }
+    private function getViewName($path)
+    {
+        $name = $this->getName($path);
+
+        $path = str_replace($name, '', $path);
+        $path = str_replace(resource_path('views/slices'), '', $path);
+        $path = str_replace('/', '.', $path);
+
+        $name = str_replace('.blade.php', '', $name);
+
+        return substr($path . $name, 1);
+    }
+
+    private function getDirName($path)
+    {
+        $path = $this->getName($path);
+
+        if ($path == "") return 'Slices';
+
+        return $this->toHuman($path);
+    }
+
+    private function toHuman($string)
+    {
+        $string = preg_replace("/[^a-zA-Z]/", " ", $string);
+
+        return ucwords($string);
+    }
+
+    private function getName($path)
+    {
+        $parts = explode('/', $path);
+
+        return $parts[count($parts) - 1];
+    }
 }

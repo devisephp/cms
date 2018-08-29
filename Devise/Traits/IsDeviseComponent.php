@@ -12,6 +12,8 @@ trait IsDeviseComponent
 {
     private $hasSliceSlot = false;
 
+    private $viewSections = false;
+
     public function getNameAttribute($value)
     {
         return $this->getNameFromView();
@@ -29,29 +31,57 @@ trait IsDeviseComponent
 
     public function getComponentCodeAttribute()
     {
-        $view = View::make($this->view);
-
-        $sections = $view->renderSections();
-
-        $component = $sections['component'];
+        $sections = $this->getViewSections();
 
         $this->detectSlotAvailability($sections);
 
         $template = $this->cleanHtml($sections['template']);
 
+        $partial = $this->getComponentScript($sections['component']);
+
+        $code = $this->component_name . ": {name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\"," . $partial;
+
+        return $this->compress_script($code);
+    }
+
+    public function getTemplateHtml()
+    {
+        $sections = $this->getViewSections();
+
+        return $this->cleanHtml($sections['template']);
+    }
+
+    public function getComponentAsArray()
+    {
+        $sections = $this->getViewSections();
+
+        $partial = $this->getComponentScript($sections['component']);
+        $str = preg_replace('/(\w+)\s{0,1}:/', '"\1":', str_replace(array("\r\n", "\r", "\n", "\t"), "", '{' . $partial));
+        return json_decode($str);
+    }
+
+    private function getComponentScript($component)
+    {
         preg_match("#<\s*?script\b[^>]*>(.*?)</script\b[^>]*>#s", $component, $match);
         $javascript = $match[1];
 
         $parts = explode('{', $javascript);
 
         array_shift($parts);
-        $partial = trim(implode('{', $parts));
 
-        $name = $this->component_name;
+        return trim(implode('{', $parts));
+    }
 
-        $code = $name . ": {name:\"" . $name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\"," . $partial;
+    private function getViewSections()
+    {
+        if(!$this->viewSections)
+        {
+            $view = View::make($this->view);
 
-        return $this->compress_script($code);
+            $this->viewSections = $view->renderSections();
+        }
+
+        return $this->viewSections;
     }
 
     private function cleanHtml($html)

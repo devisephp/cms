@@ -144,6 +144,11 @@ class Devise
         return 'Devise.prototype.$lang = ' . json_encode($langs[$locale]) . ";\n";
     }
 
+    public static function getComponents()
+    {
+        return self::$components;
+    }
+
     public static function components()
     {
         return 'Devise.prototype.$deviseComponents = {' . implode(',', self::$components) . "};\n";

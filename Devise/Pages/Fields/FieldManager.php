@@ -129,6 +129,7 @@ class FieldManager
                 $sliceInstance->position = $index;
                 $sliceInstance->type = $slice['metadata']['type'];
                 $sliceInstance->view = $slice['metadata']['view'];
+                $sliceInstance->label = $slice['metadata']['label'];
                 $sliceInstance->model_query = $slice['metadata']['model_query'];
                 $sliceInstance->save();
 

@@ -1,8 +1,13 @@
 export default {
 
-  // Languages
+  // Breakpoints
   setBreakpoint (state, payload) {
     state.breakpoint = payload
+  },
+
+  // Components
+  setComponents (state, payload) {
+    deviseSettings.$deviseComponents = payload
   },
 
   // Languages

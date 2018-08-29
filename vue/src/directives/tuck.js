@@ -4,7 +4,7 @@ const plugins = [CSSPlugin];
 
 export default {
   inserted: function (el) {
-    let offset = 30
+    let offset = 50
     var goHide = null
 
     let style = window.getComputedStyle ? getComputedStyle(el, null) : el.currentStyle;
@@ -32,25 +32,11 @@ export default {
       return - elWidth + offset
     }
 
-    function calculateTuckY () {
-      let topSide = elY + elHeight
-      let bottomSide = elY
-      let halfWindow = window.innerHeight / 2
-
-      if (topSide - halfWindow > halfWindow - bottomSide) {
-        return window.innerHeight - offset
-      }
-      
-      return -elHeight + offset
-    }
-
     function hide () {
-      let tuckY = calculateTuckY()
       let tuckX = calculateTuckX()
 
       goHide = setTimeout(() => {
         TweenMax.to(el, 1, {
-          top: `${tuckY}px`,
           left: `${tuckX}px`,
           width: `${elWidth}px`,
           height: `${elHeight}px`,
@@ -64,6 +50,7 @@ export default {
       TweenMax.to(el, 1, {
         top: `${elY}px`,
         left: `${elX}px`,
+        width: 'auto',
         ease: Elastic.easeOut.config(1, 0.5)
       })
     }

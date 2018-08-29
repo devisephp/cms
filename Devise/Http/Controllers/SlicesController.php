@@ -68,41 +68,41 @@ class SlicesController extends Controller
 
     private function scanSlicesDir($dir)
     {
-        if (is_dir($dir))
-        {
-            $found = scandir($dir);
+      if (is_dir($dir))
+      {
+          $found = scandir($dir);
 
-            $directories = [];
-            $files = [];
+          $directories = [];
+          $files = [];
 
-            foreach ($found as $key => $value)
-            {
-                $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+          foreach ($found as $key => $value)
+          {
+              $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
-                if ($value != "." && $value != ".." && $value != ".DS_Store")
-                {
-                    if (!is_dir($path))
-                    {
-                        $files[] = [
-                            'name'  => $this->getFileName($path),
-                            'value' => $this->getViewName($path)
-                        ];
-                    } else
-                    {
-                        $results = $this->scanSlicesDir($path);
-                        $directories[] = $results;
-                    }
-                }
-            }
+              if ($value != "." && $value != ".." && $value != ".DS_Store")
+              {
+                  if (!is_dir($path))
+                  {
+                      $files[] = [
+                          'name'  => $this->getFileName($path),
+                          'value' => $this->getViewName($path)
+                      ];
+                  } else
+                  {
+                      $results = $this->scanSlicesDir($path);
+                      $directories[] = $results;
+                  }
+              }
+          }
 
-            return [
-                'name'        => $this->getDirName($dir),
-                'directories' => $directories,
-                'files'       => $files
-            ];
-        }
-
-        return [];
+          return [
+            'name'        => $this->getDirName($dir),
+            'path'   => $this->getDirName($dir, false),
+            'directories' => $directories,
+            'files'       => $files
+          ];
+      }
+      return [];
     }
 
     private function getFileName($path)
@@ -126,14 +126,18 @@ class SlicesController extends Controller
         return substr($path . $name, 1);
     }
 
-    private function getDirName($path)
-    {
-        $path = $this->getName($path);
+  private function getDirName($path, $human = true)
+  {
+    $path = $this->getName($path);
 
         if ($path == "") return 'Slices';
 
-        return $this->toHuman($path);
+    if ($human) {
+      return $this->toHuman($path);
     }
+
+    return $path;
+  }
 
     private function toHuman($string)
     {

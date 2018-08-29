@@ -166,7 +166,7 @@ export default {
     },
     hydrateMissingProperties (data) {
       let fields = this.component(this.slice.metadata.name).fields
-
+      
       if (fields) {
         // Loop through the fields for this slice and check to see that all the
         // fields are present. If they aren't it's just because they haven't been

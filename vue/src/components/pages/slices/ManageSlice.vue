@@ -68,15 +68,7 @@
           <div v-else>
 
             <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Select a Slice</label>
-              <select v-model="insertSlice.slice">
-                <option :value="null">Select a Slice</option>
-                <optgroup v-for="(group, name) in sliceDirectoriesOptions" :key="name" :label="name">
-                  <option v-for="option in group" :key="option.id" :value="option">
-                    {{ option.name }}
-                  </option>
-                </optgroup>
-              </select>
+              <slice-selector v-model="insertSlice.slice" />
             </fieldset>
 
             <div class="dvs-mb-4" v-if="insertSlice.type === 'model'">
@@ -114,14 +106,7 @@
 
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Select a Slice</label>
-            <select v-model="editingSlice.metadata.view">
-              <option :value="null">Select a Slice</option>
-              <optgroup v-for="(group, name) in sliceDirectoriesOptions" :key="name" :label="name">
-                <option v-for="option in group" :key="option.id" :value="`slices.${option.value}`">
-                  {{ option.name }}
-                </option>
-              </optgroup>
-            </select>
+            <slice-selector v-model="editingSlice.metadata.view" />
           </fieldset>
 
           <div class="dvs-mb-4" v-if="editingSlice.type === 'model'">
@@ -144,6 +129,7 @@
 import Panel from './../../utilities/Panel'
 import QueryBuilder from './../../utilities/QueryBuilder'
 import SlicesMixin from './../../../mixins/Slices'
+import SliceSelector from './SliceSelector'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -184,7 +170,7 @@ export default {
     },
     buildSlice () {
       let component = this.componentFromView('slices.' + this.insertSlice.slice.value)
-      console.log('slices.' + this.insertSlice.slice.value, component)
+
       var finalSlice = {
         settings: {
           enabled: true
@@ -258,7 +244,8 @@ export default {
   },
   components: {
     Panel,
-    QueryBuilder
+    QueryBuilder,
+    SliceSelector
   },
   mixins: [SlicesMixin]
 }

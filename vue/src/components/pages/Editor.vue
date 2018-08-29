@@ -106,6 +106,8 @@ export default {
       } else {
         this.page.slices.push(newSlice)
       }
+
+      this.createFirstSlice = false
     },
     editSlice (editedSlice, referenceSlice) {
       this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)

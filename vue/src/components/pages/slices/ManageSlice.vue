@@ -153,7 +153,6 @@ export default {
   },
   mounted () {
     this.editingSlice = Object.assign({}, this.slice)
-    this.loadComponents()
     this.getSlicesDirectories()
     this.getSlices()
   },
@@ -161,7 +160,6 @@ export default {
     ...mapActions('devise', [
       'getSlicesDirectories',
       'getSlices',
-      'loadComponents',
       'getModelSettings'
     ]),
     cancelManageSlice () {
@@ -240,7 +238,7 @@ export default {
   },
   props: {
     slice: {
-      type: Object
+      type: Object|String
     }
   },
   components: {

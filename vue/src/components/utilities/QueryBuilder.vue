@@ -71,7 +71,6 @@ export default {
       this.$emit('save')
     },
     update () {
-      console.log('here')
       this.$emit('input', {
         model: this.model, 
         name: this.name, 

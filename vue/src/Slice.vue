@@ -178,6 +178,7 @@ export default {
       let defaultProperties = {
         text: null,
         url: null,
+        sizemedia: {},
         target: null,
         color: null,
         checked: null,

@@ -5,11 +5,6 @@ export default {
     state.breakpoint = payload
   },
 
-  // Components
-  setComponents (state, payload) {
-    deviseSettings.$deviseComponents = payload
-  },
-
   // Languages
   setLanguages (state, payload) {
     state.languages = payload

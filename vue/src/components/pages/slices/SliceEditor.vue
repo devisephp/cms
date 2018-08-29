@@ -1,26 +1,39 @@
 <template>
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
 
-    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer">
+    <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-flex dvs-justify-between dvs-items-center dvs-w-full">
       <template v-if="slice.metadata.placeholder && slice.metadata.type === 'repeats'">
         <div class="dvs-flex dvs-items-center dvs-cursor-pointer dvs-capitalize hover:underline">
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
-          <div class="dvs-cursor-pointer" @click="manageSlice = true">
-            <cog-icon w="18" h="18" class="mt-1 mr-2" :style="theme.panelIcons" /> 
-          </div>
           <span  @click="toggleSlice(slice)">{{ slice.metadata.label }}</span>
+        </div>
+        <div class="dvs-cursor-pointer" @click="manageSlice = true">
+          <more-icon w="18" h="18" class="mt-1 mr-2" style="transform:rotate(90deg)" :style="theme.panelIcons" /> 
         </div>
         <div class="opacity-75" @click.stop="addInstance(slice)">
           Add New
         </div>
       </template>
       <template v-else>
-        <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center" :style="{color: theme.panel.color}" :class="{'dvs-pl-4': child}">
-          <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
-          <div class="dvs-cursor-pointer" @click="manageSlice = true">
-            <cog-icon w="18" h="18" class="mt-1 mr-2" :style="theme.panelIcons" /> 
+        <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full" :style="{color: theme.panel.color}" :class="{'dvs-pl-4': child}">
+          <div class="dvs-flex dvs-items-center">
+            <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
+            <span @click="toggleSlice(slice)">{{ slice.metadata.label }}</span>
           </div>
-          <span @click="toggleSlice(slice)">{{ slice.metadata.label }}</span>
+          <div class="dvs-cursor-pointer dvs-ml-2 dvs-relative" style="height:30px;width:30px;" @mouseenter="moreHovered = true" @mouseleave="moreHovered = false">
+            <div class="dvs-overflow-hidden dvs-absolute dvs-pin-t dvs-pin-r dvs-flex dvs-flex-row-reverse dvs-pb-2 dvs-rounded-sm" style="transition:width 500ms;" :style="moreContainerStyles">
+              <more-icon w="18" h="18" class="mt-1 mr-2" style="transform:rotate(90deg)" :style="{color: 'white'}" />
+              <div class="dvs-cursor-pointer" @click="removeSlice()">
+                <remove-icon w="20" h="20" class="mt-1 mr-4" :style="theme.panelIcons" />
+              </div>
+              <div class="dvs-cursor-pointer" @click="requestEditSlice()">
+                <create-icon w="20" h="20" class="mt-1 mr-2" :style="theme.panelIcons" />
+              </div>
+              <div class="dvs-cursor-pointer" @click="requestInsertSlice()">
+                <add-icon w="20" h="20" class="mt-1 mr-2" :style="theme.panelIcons" />
+              </div>
+            </div>
+          </div>
         </div>
         <div v-else class="dvs-flex dvs-items-center dvs-w-full dvs-pl-4 dvs-justify-between">
           <div @click="toggleSlice(slice)">Instance</div>
@@ -31,7 +44,7 @@
       </template>
     </strong>
 
-    <manage-slice v-if="manageSlice === true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" :slice="slice" />
+    <manage-slice ref="manageslice" v-if="manageSlice === true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" :slice="slice" />
 
     <div class="dvs-collapsed" v-if="slice.metadata.open">
       <div v-if="!slice.metadata.placeholder">
@@ -82,7 +95,7 @@
 
         <ul class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" >
           <template v-for="(s, key) in slice.slices">
-            <slice-editor :key="key" :slice="s" :child="true" @removeInstance="removeInstance" />
+            <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @removeInstance="removeInstance" />
           </template>
         </ul>
       </div>
@@ -106,8 +119,9 @@ import WysiwygEditor from './../editor/Wysiwyg'
 import ManageSlice from './ManageSlice'
 
 import AddIcon from 'vue-ionicons/dist/ios-add.vue'
-import CogIcon from 'vue-ionicons/dist/ios-cog.vue'
+import MoreIcon from 'vue-ionicons/dist/ios-more.vue'
 import MenuIcon from 'vue-ionicons/dist/ios-menu.vue'
+import CreateIcon from 'vue-ionicons/dist/md-create.vue'
 import RemoveIcon from 'vue-ionicons/dist/ios-remove.vue'
 
 export default {
@@ -115,7 +129,8 @@ export default {
   data () {
     return {
       manageSlice: false,
-      pageSlices: []
+      pageSlices: [],
+      moreHovered: false
     }
   },
   mounted () {
@@ -166,7 +181,7 @@ export default {
     },
     hydrateMissingProperties (data) {
       let fields = this.component(this.slice.metadata.name).fields
-      
+
       if (fields) {
         // Loop through the fields for this slice and check to see that all the
         // fields are present. If they aren't it's just because they haven't been
@@ -206,16 +221,42 @@ export default {
     },
 
     // Adding, Editing and Removing Slices
-    addSlice (slice) {
-      this.$emit('addSlice', slice, this.slice)
+    requestInsertSlice () {
+      console.log('here')
+      this.manageSlice = true
+      this.$nextTick(function () {
+        this.$refs.manageslice.action = 'insert'
+      })
+    },
+    addSlice (slice, referringSlice) {
+      if (typeof referringSlice === 'undefined') {
+        referringSlice = this.slice
+      }
+
+      this.$emit('addSlice', slice, referringSlice)
       this.manageSlice = false
     },
-    editSlice (slice) {
-      this.$emit('editSlice', slice, this.slice)
+    requestEditSlice () {
+      this.manageSlice = true
+      this.$nextTick(function () {
+        this.$refs.manageslice.action = 'edit'
+      })
+    },
+    editSlice (slice, referringSlice) {
+      if (typeof referringSlice === 'undefined') {
+        referringSlice = this.slice
+      }
+      this.$emit('editSlice', slice, referringSlice)
       this.manageSlice = false
     },
-    removeSlice () {
-      this.$emit('removeSlice', this.slice)
+    removeSlice (slice, referringSlice) {
+      if (typeof slice === 'undefined') {
+        slice = this.slice
+      }
+      else if (typeof referringSlice === 'undefined') {
+        referringSlice = this.slice
+      }
+      this.$emit('removeSlice', slice, referringSlice)
       this.manageSlice = false
     }
   },
@@ -241,6 +282,18 @@ export default {
         }
       }
       return fields
+    },
+    moreContainerStyles () {
+      if (this.moreHovered) {
+        return {
+          backgroundColor: this.theme.panelCard.backgroundColor,
+          width: '130px'
+        }
+      }
+      return {
+        backgroundColor: this.theme.panelCard.backgroundColor,
+        width: '30px'
+      }
     }
   },
   props: {
@@ -252,12 +305,13 @@ export default {
   components: {
     AddIcon,
     CheckboxEditor,
-    CogIcon,
     ColorEditor,
+    CreateIcon,
     ImageEditor,
     LinkEditor,
     ManageSlice,
     MenuIcon,
+    MoreIcon,
     NumberEditor,
     RemoveIcon,
     TextareaEditor,

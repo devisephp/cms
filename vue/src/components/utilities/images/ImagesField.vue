@@ -97,7 +97,6 @@
           return this.value
         },
         set (newValue) {
-          console.log(newValue, 'here')
           this.$emit('input', newValue)
           this.$emit('change', newValue)
         }

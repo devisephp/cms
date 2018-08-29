@@ -159,12 +159,10 @@
         clearTimeout(this.refreshRecords)
 
         this.refreshRecords = setTimeout(function () {
-          console.log()
           self.getModelRecords({
             model: self.value,
             filters: self.filters
           }).then(function (response) {
-            console.log('refreshing records', response.data)
             self.records = response.data
           })
         }, 500)
@@ -181,7 +179,6 @@
       // Checks to see if the key includes a period meaning that its a property of a property
       getRecordColumn (record, key) {
         if (!key.includes('.')) {
-          console.log(record)
           return record[key]
         } else {
           return this.getRecordColumnTraversal(record, key)

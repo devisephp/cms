@@ -36,7 +36,6 @@ export default {
       deviseSettings.$page.previewMode = mode
     },
     onStyle (type) {
-      console.log(this.previewMode)
       if (this.previewMode === type) {
         return this.theme.panelIcons.color
       }

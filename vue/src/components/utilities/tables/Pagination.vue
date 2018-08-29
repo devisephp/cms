@@ -40,7 +40,6 @@ export default {
     },
     decideStyle (page) {
       if (this.isCurrentPage(page)) {
-        console.log(this.theme.actionButton)
         return this.theme.actionButton
       } 
       return this.theme.actionButtonGhost

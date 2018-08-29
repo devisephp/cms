@@ -102,8 +102,14 @@ export default {
     },
     addSlice (newSlice, referenceSlice) {
       if (typeof referenceSlice !== 'undefined') {
-        console.log(this.sliceConfig(newSlice))
-        this.page.slices[this.page.slices.indexOf(referenceSlice)].slices.push(newSlice)
+        let parentSlice = this.page.slices[this.page.slices.indexOf(referenceSlice)]
+        let config = this.sliceConfig(parentSlice)
+        if (config.has_child_slot === true) {
+          if (typeof parentSlice.slices === 'undefined') {
+            this.$set(parentSlice, 'slices', [])
+          }
+          parentSlice.slices.push(newSlice)
+        }
       } else {
         this.page.slices.push(newSlice)
       }
@@ -113,8 +119,11 @@ export default {
     editSlice (editedSlice, referenceSlice) {
       this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)
     },
-    removeSlice (referenceSlice) {
-      this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1)
+    removeSlice (deletingSlice,referenceSlice) {
+      if (typeof referenceSlice === 'undefined') {
+        referenceSlice = this.page
+      }
+      referenceSlice.slices.splice(referenceSlice.slices.indexOf(deletingSlice), 1)
     }
   },
   computed: {

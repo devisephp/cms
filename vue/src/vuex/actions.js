@@ -14,20 +14,6 @@ const actions = {
     })
   },
 
-  // Components (Slice meta information for inserting and such)
-  loadComponents (context) {
-    return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'components/').then(function (response) {
-        context.commit('setComponents', response.data)
-        resolve(response)
-      }).catch(function (error) {
-        devise.$bus.$emit('showError', error)
-      })
-    }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  },
-
   /*
   * Languages
   */

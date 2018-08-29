@@ -140,7 +140,6 @@ const DevisePlugin = {
       methods: {
         // Convienience method to push things into the router from templates
         goToPage (pageName, params) {
-          console.log(pageName, params)
           this.$router.push({name: pageName, params: params})
         },
         href (url) {

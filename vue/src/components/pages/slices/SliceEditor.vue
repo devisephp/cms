@@ -31,7 +31,6 @@
       </template>
     </strong>
 
-
     <manage-slice v-if="manageSlice === true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" :slice="slice" />
 
     <div class="dvs-collapsed" v-if="slice.metadata.open">

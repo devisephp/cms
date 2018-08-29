@@ -33,6 +33,15 @@
               </template>
             </draggable>
 
+            <manage-slice v-if="createFirstSlice === true" @addSlice="addSlice" />
+
+            <button 
+              :style="theme.actionButtonGhost"
+              class="dvs-btn dvs-block dvs-w-full dvs-mb-4"
+              @click.prevent="createFirstSlice = true">
+              Add Slice
+            </button>
+
             <button 
               :style="theme.actionButtonGhost"
               class="dvs-btn dvs-block dvs-w-full"
@@ -55,12 +64,14 @@ import draggable from 'vuedraggable'
 
 import { mapGetters, mapActions } from 'vuex'
 
+import ManageSlice from './slices/ManageSlice'
 import AnalyticTotals from './AnalyticTotals'
 
 export default {
   name: 'PageEditor',
   data () {
     return {
+      createFirstSlice: false,
       pageSettingsOpen: false,
       pageContentOpen: true
     }
@@ -90,9 +101,13 @@ export default {
       this.$set(slice.metadata, 'open', false)
     },
     addSlice (newSlice, referenceSlice) {
-      this.page.slices.splice(this.page.slices.indexOf(referenceSlice) + 1, 0, newSlice)
+      if (typeof referenceSlice !== 'undefined') {
+        this.page.slices.splice(this.page.slices.indexOf(referenceSlice) + 1, 0, newSlice)
+      } else {
+        this.page.slices.push(newSlice)
+      }
     },
-    addSlice (editedSlice, referenceSlice) {
+    editSlice (editedSlice, referenceSlice) {
       this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)
     },
     removeSlice (referenceSlice) {
@@ -109,6 +124,7 @@ export default {
   components: {
     AnalyticTotals,
     draggable,
+    ManageSlice
   }
 }
 </script>

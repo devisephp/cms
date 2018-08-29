@@ -13,8 +13,6 @@ import PagesIndex from '../components/pages/Index'
 import PagesView from '../components/pages/View'
 import SitesIndex from '../components/sites/Index'
 import SitesEdit from '../components/sites/Edit'
-import TemplatesIndex from '../components/templates/Index'
-import TemplatesEdit from '../components/templates/Edit'
 import UsersIndex from '../components/users/Index'
 import UsersEdit from '../components/users/Edit'
 import RedirectsIndex from '../components/redirects/Index'
@@ -125,21 +123,6 @@ var routes = [
     components: {
       'devise': AdministrationIndex
     }
-  },
-  {
-    path: '/devise/templates',
-    name: 'devise-templates-index',
-    components: {
-      'devise': TemplatesIndex
-    }
-  },
-  {
-    path: '/devise/templates/:templateId/edit',
-    name: 'devise-templates-edit',
-    components: {
-      'devise': TemplatesEdit
-    },
-    props: true
   },
   {
     path: '/devise/sites',

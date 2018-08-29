@@ -15,13 +15,13 @@
               <p class="normal-case dvs-font-normal">Inserts a new slice below the current slice</p>
             </div>
 
-            <div class="dvs-btn dvs-text-base dvs-mx-4 dvs-p-8 dvs-w-1/3" :style="theme.actionButtonGhost" @click="action = 'edit'">
+            <div class="dvs-btn dvs-text-base dvs-mx-4 dvs-p-8 dvs-w-1/3" v-if="typeof slice !== 'undefined'" :style="theme.actionButtonGhost" @click="action = 'edit'">
               <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-4"  :style="{borderColor: theme.actionButtonGhost.borderColor}">Edit This Slice</h4>
 
               <p class="normal-case dvs-font-normal">Edit the settings of this slice.</p>
             </div>
 
-            <div class="dvs-btn dvs-text-base dvs-ml-4 dvs-p-8 dvs-w-1/3" :style="theme.actionButtonGhost" @click="removeSlice">
+            <div class="dvs-btn dvs-text-base dvs-ml-4 dvs-p-8 dvs-w-1/3" v-if="typeof slice !== 'undefined'" :style="theme.actionButtonGhost" @click="removeSlice">
               <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-4"  :style="{borderColor: theme.actionButtonGhost.borderColor}">Remove This Slice</h4>
 
               <p class="normal-case dvs-font-normal">Deletes the current slice from the page.</p>
@@ -183,7 +183,8 @@ export default {
       this.showInsert = false
     },
     buildSlice () {
-      let component = this.componentFromView(this.insertSlice.slice.value)
+      let component = this.componentFromView('slices.' + this.insertSlice.slice.value)
+      console.log('slices.' + this.insertSlice.slice.value, component)
       var finalSlice = {
         settings: {
           enabled: true

@@ -37,21 +37,12 @@
 
       </div>
     </template>
-    <template v-if="templateMode && isLoggedIn">
-      <template-editor>
-        <slot name="on-top" slot="on-top"></slot>
-        <slot name="on-bottom" slot="on-bottom"></slot>
-      </template-editor>
-    </template>
 
   </div>
 </template>
 
 <script>
 import Slice from './Slice'
-import TemplateIndex from './components/templates/Index'
-import TemplateEdit from './components/templates/Edit'
-import TemplateEditor from './components/templates/TemplateEditor'
 import User from './components/menu/User'
 import SimpleBar from 'SimpleBar'
 import anime from 'animejs'
@@ -66,7 +57,6 @@ export default {
     return {
       showLoadbar: false,
       loadbarPercentage: 0,
-      templateMode: false,
       editorMode: false,
       pageMode: false,
       adminOpen: true,
@@ -84,13 +74,9 @@ export default {
     window.devise = this
     devise.$bus = deviseSettings.$bus
 
-    if (typeof deviseSettings.$template !== 'undefined') {
-      this.templateMode = true
-    } else {
-      this.editorMode = true
-      this.mountGlobalVariables()
-      this.initDevise()
-    }
+    this.editorMode = true
+    this.mountGlobalVariables()
+    this.initDevise()
 
     let blocker = document.getElementById('devise-blocker')
     if (blocker) {
@@ -214,9 +200,6 @@ export default {
   components: {
     SettingsIcon,
     Slice,
-    TemplateIndex,
-    TemplateEdit,
-    TemplateEditor,
     User
   }
 }

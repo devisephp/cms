@@ -102,7 +102,8 @@ export default {
     },
     addSlice (newSlice, referenceSlice) {
       if (typeof referenceSlice !== 'undefined') {
-        this.page.slices.splice(this.page.slices.indexOf(referenceSlice) + 1, 0, newSlice)
+        console.log(this.sliceConfig(newSlice))
+        this.page.slices[this.page.slices.indexOf(referenceSlice)].slices.push(newSlice)
       } else {
         this.page.slices.push(newSlice)
       }
@@ -118,8 +119,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'sliceConfig',
-      'fieldConfig'
+      'sliceConfig'
     ])
   },
   props: ['page'],

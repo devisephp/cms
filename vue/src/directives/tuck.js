@@ -42,7 +42,7 @@ export default {
           height: `${elHeight}px`,
           ease: Elastic.easeOut.config(1, 0.5)
         })
-      }, 3000)
+      }, 1500)
     }
 
     function show () {

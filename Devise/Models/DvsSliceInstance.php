@@ -8,7 +8,7 @@ class DvsSliceInstance extends Model
 {
     use IsDeviseComponent;
 
-    protected $fillable = ['page_version_id', 'parent_instance_id', 'view','type','label', 'position', 'settings', 'model_query'];
+    protected $fillable = ['page_version_id', 'parent_instance_id', 'view', 'type', 'label', 'position', 'settings', 'model_query'];
 
     protected $table = 'dvs_slice_instances';
 
@@ -28,6 +28,11 @@ class DvsSliceInstance extends Model
     public function fields()
     {
         return $this->hasMany(DvsField::class, 'slice_instance_id');
+    }
+
+    public function setModelQueryAttribute($value)
+    {
+        $this->attributes['model_query'] = $value ?: '';
     }
 
     public function setSettingsAttribute($value)

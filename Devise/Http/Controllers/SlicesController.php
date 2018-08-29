@@ -17,30 +17,6 @@ class SlicesController extends Controller
         return $this->flattenDirectory($directory);
     }
 
-    public function components(ApiRequest $request)
-    {
-        $directories = $this->scanSlicesDir(resource_path('views/slices'));
-
-        $flat = $this->flattenDirectory($directories);
-
-        $components = [];
-        foreach ($flat as $item)
-        {
-            $slice = new DvsSliceInstance();
-            $slice->view = 'slices.' . $item['value'];
-
-            $data = (array)$slice->getComponentAsArray();
-            $data['name'] = $slice->component_name;
-            $data['view'] = $slice->view;
-            $data['template'] = $slice->getTemplateHtml();
-            $data['has_child_slot'] = $slice->has_child_slot;
-
-            $components[$slice->component_name] = $data;
-        }
-
-        return $components;
-    }
-
     public function allDirectories(ApiRequest $request)
     {
         return $this->scanSlicesDir(resource_path('views/slices'));

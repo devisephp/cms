@@ -34,7 +34,7 @@ trait IsDeviseComponent
         return $this->hasSliceSlot ? 'true' : 'false';
     }
 
-    public function getComponentCodeAttribute()
+    public function getComponentCodeObjectAttribute()
     {
         $sections = $this->getViewSections();
 
@@ -42,7 +42,12 @@ trait IsDeviseComponent
 
         $partial = $this->getComponentScript($sections['component']);
 
-        $code = $this->component_name . ": {name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\",has_child_slot:" . $this->has_child_slot_string . "," . $partial;
+        return "{name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\",has_child_slot:" . $this->has_child_slot_string . "," . $partial;
+    }
+
+    public function getComponentCodeAttribute()
+    {
+        $code = $this->component_name . ": " . $this->component_code_object;
 
         return $this->compress_script($code);
     }
@@ -60,6 +65,7 @@ trait IsDeviseComponent
 
         $partial = $this->getComponentScript($sections['component']);
         $str = preg_replace('/(\w+)\s{0,1}:/', '"\1":', str_replace(array("\r\n", "\r", "\n", "\t"), "", '{' . $partial));
+
         return json_decode($str);
     }
 

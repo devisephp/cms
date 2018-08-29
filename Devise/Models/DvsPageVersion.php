@@ -3,7 +3,11 @@
 namespace Devise\Models;
 
 use Devise\Devise;
+use Devise\Support\Framework;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DvsPageVersion extends Model
 {
@@ -61,7 +65,14 @@ class DvsPageVersion extends Model
 
     public function registerComponents()
     {
-        $this->iterateComponents($this->slices);
+        $user = Auth::user();
+        if ($user && $user->hasPermission('access admin'))
+        {
+            $this->iterateAvailableComponents();
+        } else
+        {
+            $this->iterateComponents($this->slices);
+        }
     }
 
     private function iterateComponents($slices)
@@ -71,5 +82,36 @@ class DvsPageVersion extends Model
             Devise::addComponent($child);
             $this->iterateComponents($child->slices);
         }
+    }
+
+    private function iterateAvailableComponents()
+    {
+        $files = File::allFiles(resource_path('views/slices'));
+        foreach ($files as $file)
+        {
+            $fileName = $file->getFilename();
+            if (strpos($fileName, '.blade.php') !== false)
+            {
+                $viewname = str_replace('.blade.php', '', $fileName);
+                $path = $this->getDothPath($file->getRelativePath()) . '.' . $viewname;
+                $slice = new DvsSliceInstance();
+                $slice->view = 'slices.' . $path;
+                Devise::addComponent($slice);
+            }
+        }
+    }
+
+    private function getDothPath($path)
+    {
+        $path = str_replace(resource_path('views/slices'), '', $path);
+
+        return str_replace('/', '.', $path);
+    }
+
+    private function getName($path)
+    {
+        $parts = explode('/', $path);
+
+        return $parts[count($parts) - 1];
     }
 }

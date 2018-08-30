@@ -182,7 +182,7 @@ export default {
       let defaultProperties = {
         text: null,
         url: null,
-        sizemedia: {},
+        media: {},
         target: null,
         color: null,
         checked: null,

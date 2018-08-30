@@ -131,8 +131,13 @@ export default {
     }
 
     this.addListeners ()
+
+    this.checkMediaSizesForRegeneration ()
   },
   methods: {
+    ...mapActions([
+      'regenerateMedia'
+    ]),
     addListeners () {
       let self = this
 
@@ -241,8 +246,45 @@ export default {
         return 0
       }
     },
-    setBackground(color) {
+    setBackground (color) {
       this.$set(this.deviseForSlice.settings, 'backgroundColor', `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`)
+    },
+    checkMediaSizesForRegeneration () {
+      // If the current slice even has fields
+      if (typeof this.currentView.fields !== 'undefined') {
+        for (var fieldName in this.currentView.fields) {
+          const field = this.currentView.fields[fieldName]
+
+          // If the field is an image
+          if (field.type === 'image') {
+
+            // If sizes are defined on the image configuration and an image has already been selected
+            if (typeof field.sizes !== 'undefined' && field.url !== null) {
+              
+              // Build the sizes needed
+              let mediaRequest = {"sizes": {}}
+
+              // Check if all the sizes in the configuration are present in the media property
+              for (var sizeName in field.sizes) {
+                if (typeof this.devise[fieldName].media[sizeName] === 'undefined') {
+                  mediaRequest.sizes[sizeName] = field.sizes[sizeName]
+                }
+              }
+
+              // Build the request payload
+              let payload = {
+                sizes: mediaRequest,
+                instanceId: this.devise.metadata.instance_id,
+                fieldName: fieldName,
+              }
+              
+              this.regenerateMedia(payload).then(function () {
+                console.log('success')
+              })
+            }
+          }
+        }
+      }
     }
   },
   computed: {

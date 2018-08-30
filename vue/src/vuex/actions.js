@@ -84,6 +84,19 @@ const actions = {
     })
   },
 
+  regenerateMedia (context, payload) {
+    return new Promise((resolve, reject) => {
+      window.axios.put(context.state.api.baseUrl + 'media-styles/' + payload.instanceId + '/' + payload.fieldName, payload.sizes).then(function (response) {
+        context.commit('setFiles', response.data)
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
   getCurrentFiles (context, directory) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'media/' + context.state.currentDirectory).then(function (response) {

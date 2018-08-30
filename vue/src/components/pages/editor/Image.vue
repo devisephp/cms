@@ -43,7 +43,7 @@ export default {
       localValue: {
         url: '',
         alt: null,
-        sizemedia: [],
+        media: [],
         settings: {}
       },
       originalValue: null,
@@ -76,8 +76,8 @@ export default {
       })
     },
     mediaSelected (imagesAndSettings) {
-      this.localValue.url = imagesAndSettings.images.original
-      this.localValue.sizemedia = imagesAndSettings.images
+      this.localValue.url = imagesAndSettings.images.orig_optimized
+      this.localValue.media = imagesAndSettings.images
       this.$set(this.localValue, 'settings', imagesAndSettings.settings)
       this.updateValue()
     }

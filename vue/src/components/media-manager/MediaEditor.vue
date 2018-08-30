@@ -220,7 +220,7 @@ export default {
     },
     sizes: {
       type: Object,
-      required: true
+      required: false
     }
   },
   components: {

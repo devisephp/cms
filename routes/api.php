@@ -24,7 +24,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
     Route::delete('media/{media_id}', 'MediaController@remove');
 
     Route::post('media-styles', 'MediaController@generate');
-    Route::put('media-styles/{instance_id}/{field_name}', 'MediaController@generateAll');
+    Route::put('media-styles/{instance_id}/{field_type}', 'MediaController@reGenerateAll');
 
     /**
      * Media Categories

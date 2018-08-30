@@ -87,7 +87,7 @@ var tinycolor = require('tinycolor2')
 import { Photoshop, Sketch } from 'vue-color'
 
 import Slice from './Slice'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 import Strings from './mixins/Strings'
 import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
@@ -132,10 +132,12 @@ export default {
 
     this.addListeners ()
 
-    this.checkMediaSizesForRegeneration ()
+    if (this.editorMode) {
+      this.checkMediaSizesForRegeneration ()
+    }
   },
   methods: {
-    ...mapActions([
+    ...mapActions('devise', [
       'regenerateMedia'
     ]),
     addListeners () {
@@ -259,7 +261,7 @@ export default {
           if (field.type === 'image') {
 
             // If sizes are defined on the image configuration and an image has already been selected
-            if (typeof field.sizes !== 'undefined' && field.url !== null) {
+            if (typeof field.sizes !== 'undefined' && typeof this.devise[fieldName].media === 'object') {
               
               // Build the sizes needed
               let mediaRequest = {"sizes": {}}
@@ -271,16 +273,23 @@ export default {
                 }
               }
 
-              // Build the request payload
-              let payload = {
-                sizes: mediaRequest,
-                instanceId: this.devise.metadata.instance_id,
-                fieldName: fieldName,
+
+              // If there are any sizes needed
+              if (Object.keys(mediaRequest.sizes).length > 0) {
+                // Build the request payload
+                let payload = {
+                  sizes: mediaRequest,
+                  instanceId: this.devise.metadata.instance_id,
+                  fieldName: fieldName,
+                }
+                
+                this.regenerateMedia(payload).then(function () {
+                  devise.$bus.$emit('showMessage', {
+                    title: 'New Images Generated',
+                    message: 'Pro tip: Some new sizes were generated for a slice you were working on. You may need to refresh.'
+                  })
+                })
               }
-              
-              this.regenerateMedia(payload).then(function () {
-                console.log('success')
-              })
             }
           }
         }

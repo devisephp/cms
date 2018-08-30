@@ -197,8 +197,8 @@ export default {
       if (newRoute.name !== null) {
         this.adminOpen = true
       }
+    }
   },
-
   components: {
     SettingsIcon,
     Slice,

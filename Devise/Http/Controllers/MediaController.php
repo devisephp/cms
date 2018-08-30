@@ -5,6 +5,7 @@ use Devise\Media\Files\Manager;
 use Devise\Media\Files\Repository;
 
 use Devise\Models\DvsField;
+use Devise\Models\DvsSliceInstance;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -103,8 +104,6 @@ class MediaController extends Controller
             'group_cache_in_folders' => false,
             'base_url'               => 'styled/preview/'
         ]);
-
-        $site = $this->SiteDetector->current();
         $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
         $path = str_replace("media/", '', $path);
         $path = str_replace("storage/", '', $path);
@@ -112,43 +111,77 @@ class MediaController extends Controller
         return $server->getImageResponse($sourceDirectory . $path, request()->all());
     }
 
-    public function generateAll(Filesystem $filesystem, $fieldId, $path)
+    public function reGenerateAll(ApiRequest $request, $instanceId, $fieldType)
     {
-        $primaryField = DvsField::findOrFail($fieldId);
-        $primaryResult = $this->generate($path);
+        $instance = DvsSliceInstance::findOrFail($instanceId);
+        $allFields = DvsField::join('dvs_slice_instances', 'dvs_slice_instances.id', '=', 'dvs_fields.slice_instance_id')
+            ->where('dvs_slice_instances.view', $instance->view)
+            ->where('dvs_fields.key', $fieldType)
+            ->select('dvs_fields.*')
+            ->get();
+
+        foreach ($allFields as $field)
+        {
+            $value = (array)$field->value;
+            $settings = (isset($field->value->settings)) ? (array)$field->value->settings : [];
+            $settings['sizes'] = $request->get('sizes');
+
+            if (isset($field->value->media) && isset($field->value->media->original))
+            {
+                $originalImage = (string)$field->value->media->original;
+                $imagesAndSettings = $this->getImagesToMakeAndSettings($field->value->media->original, $settings);
+
+                $result = $this->generateAll($originalImage, $imagesAndSettings);
+                $value['url'] = $result['images']['orig_optimized'];
+                $currentMedia = (array) $value['media'];
+                $value['media'] = array_merge($currentMedia, $result['images']);
+                $field->json_value = json_encode($value);
+                $field->save();
+            }
+        }
     }
 
     public function generate(ApiRequest $request)
     {
         $originalImage = $request->get('original');
-
-        $finalImages = [];
-        $finalImageUrls = ['original' => $originalImage];
         $imagesAndSettings = $this->getImagesToMakeAndSettings($originalImage, $request->get('settings'));
+
+        return $this->generateAll($originalImage, $imagesAndSettings);
+    }
+
+    public function generateAll($original, $imagesAndSettings)
+    {
+        $finalImages = [];
+        $finalImageUrls = ['original' => $original];
 
         $site = $this->SiteDetector->current();
         $sourceDirectory = 'app/public/';
-        $originalImage = str_replace("storage/", '', $originalImage);
-        $sourceImage = storage_path($sourceDirectory . $originalImage);
+        $original = str_replace("storage/", '', $original);
+        $sourceImage = storage_path($sourceDirectory . $original);
 
-        $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $originalImage));
+        $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $original));
         $this->Storage->makeDirectory($destinationDirectory);
 
-        foreach ($imagesAndSettings['images'] as $sizeLabel => $image)
+        foreach ($imagesAndSettings['images'] as $sizeLabel => $sizeSettings)
         {
-            $destinationImage = $this->buildDestinationImagePath($destinationDirectory, basename($originalImage), $image);
-            $destinationImageUrl = $this->buildDestinationImageUrl($originalImage, basename($originalImage), $image);
+            $append = $this->getNameAppend($sizeSettings);
+            $destinationImage = $this->buildDestinationImagePath($destinationDirectory, basename($original), $append);
+            $destinationImageUrl = $this->buildDestinationImageUrl($original, basename($original), $append);
 
             $finalImageUrls[$sizeLabel] = $destinationImageUrl;
 
-            $image = array_merge($image, $imagesAndSettings['settings']);
+            $finalSettings = array_merge($sizeSettings, $imagesAndSettings['settings']);
 
             $finalImages[] = \GlideImage::create($sourceImage)
-                ->modify($image)
+                ->modify($finalSettings)
                 ->save($destinationImage);
         }
 
         $this->optimizeImages($finalImages);
+
+        if(isset($imagesAndSettings['settings']['sizes'])){
+            unset($imagesAndSettings['settings']['sizes']);
+        }
 
         return [
             'images'   => $finalImageUrls,
@@ -165,26 +198,29 @@ class MediaController extends Controller
         array_map($optimize, $images);
     }
 
-    private function buildDestinationImagePath($destinationDirectory, $originalImageName, $image)
+    private function buildDestinationImagePath($destinationDirectory, $originalImageName, $append)
     {
-
         $destinationImage = storage_path('app/public/' . $destinationDirectory . '/' . $originalImageName);
         $destinationPathParts = pathinfo($destinationImage);
-        $sizeAppend = $this->getSizeNameAppend($image);
-        $hashAppend = $this->getHashNameAppend($image);
 
-        return $destinationPathParts['dirname'] . '/' . $destinationPathParts['filename'] . $sizeAppend . '-' . $hashAppend . '.' . strtolower($destinationPathParts['extension']);
+        return $destinationPathParts['dirname'] . '/' . $destinationPathParts['filename'] . $append . '.' . strtolower($destinationPathParts['extension']);
     }
 
-    private function buildDestinationImageUrl($file, $originalImageName, $image)
+    private function buildDestinationImageUrl($file, $originalImageName, $append)
     {
         $site = $this->SiteDetector->current();
         $destinationUrl = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $file)) . '/' . $originalImageName;
         $destinationUrlParts = pathinfo($destinationUrl);
-        $sizeAppend = $this->getSizeNameAppend($image);
-        $hashAppend = $this->getHashNameAppend($image);
 
-        return $destinationUrlParts['dirname'] . '/' . $destinationUrlParts['filename'] . $sizeAppend . '-' . $hashAppend . '.' . strtolower($destinationUrlParts['extension']);
+        return $destinationUrlParts['dirname'] . '/' . $destinationUrlParts['filename'] . $append . '.' . strtolower($destinationUrlParts['extension']);
+    }
+
+    private function getNameAppend($settings)
+    {
+        $sizeAppend = $this->getSizeNameAppend($settings);
+        $hashAppend = $this->getHashNameAppend($settings);
+
+        return $sizeAppend . '-' . $hashAppend;
     }
 
     private function getSizeNameAppend($image)
@@ -198,22 +234,20 @@ class MediaController extends Controller
         return $sizeAppend;
     }
 
-    private function getHashNameAppend($image)
+    private function getHashNameAppend($settings)
     {
-        return md5(json_encode($image));
+        return md5(json_encode($settings));
     }
 
     private function getImagesToMakeAndSettings($original, $settings)
     {
-        $sizes = array_pull($settings, 'sizes');
+        $sizes = array_get($settings, 'sizes', []);
 
         $imagesToMake['orig_optimized'] = $settings;
-        if ($sizes != null)
+
+        foreach ($sizes as $sizeLabel => $size)
         {
-            foreach ($sizes as $sizeLabel => $size)
-            {
-                $imagesToMake[$sizeLabel] = ['w' => $size['w'], 'h' => $size['h']];
-            }
+            $imagesToMake[$sizeLabel] = ['w' => $size['w'], 'h' => $size['h']];
         }
 
         return ['images' => $imagesToMake, 'settings' => $settings];

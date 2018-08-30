@@ -244,7 +244,7 @@
           edits.sizes = this.options.sizes
         }
 
-        this.generateImages({file: this.selectedFile.url, edits: edits}).then(function (response) {
+        this.generateImages({original: this.selectedFile.url, settings: edits}).then(function (response) {
           if (typeof self.target !== 'undefined') {
             self.target.value = response.data
           }

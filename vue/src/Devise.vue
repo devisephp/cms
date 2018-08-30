@@ -185,16 +185,18 @@ export default {
     },
     isLoggedIn () {
       return this.currentUser
+    },
+    pageSlices () {
+      return this.page.slices
     }
   },
   watch: {
-    '$route': function (newRoute) {
+    '$route' (newRoute) {
       this.checkWidthOfInterface(newRoute)
 
       if (newRoute.name !== null) {
         this.adminOpen = true
       }
-    }
   },
 
   components: {

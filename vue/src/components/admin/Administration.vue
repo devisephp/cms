@@ -4,10 +4,10 @@
     :class="[deviseOptions.adminClass]">
 
     <transition name="dvs-fade">
-      <preview-mode class="dvs-z-9999" v-tuck v-if="managingPage" />
+      <preview-mode class="dvs-z-9980" v-tuck v-if="managingPage" />
     </transition>
       
-    <panel class="dvs-m-8 dvs-fixed dvs-z-9999" style="min-width:300px;" :panel-style="theme.panel" v-tuck v-tilt>
+    <panel class="dvs-m-8 dvs-fixed dvs-z-9980" style="min-width:300px;" :panel-style="theme.panel" v-tuck v-tilt>
       <div class="dvs-flex">
         <div :style="theme.panelSidebar" class="dvs-flex dvs-flex-col" >
           <template v-for="(menuItem, key) in adminMenu">
@@ -40,10 +40,10 @@
       </div>
     </panel>
 
-    <media-manager class="dvs-z-9999" />
-    <portal-target class="dvs-z-9999" name="devise-root"></portal-target>
-    <loadbar class="dvs-z-9999" />
-    <messages class="dvs-z-9999" />
+    <portal-target class="dvs-relative dvs-z-9999" name="devise-root"></portal-target>
+    <media-manager class="dvs-relative dvs-z-9999" />
+    <loadbar class="dvs-relative dvs-z-9999" />
+    <messages class="dvs-relative dvs-z-9999" />
 
   </div>
 </template>

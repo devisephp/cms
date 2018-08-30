@@ -33,17 +33,19 @@
               </template>
             </draggable>
 
-            <manage-slice v-if="createFirstSlice === true" @addSlice="addSlice" />
+            <manage-slice v-if="createSlice === true" @addSlice="addSlice" @cancel="createSlice = false" />
+
+            <div class="dvs-flex dvs-justify-center">
+              <button 
+                :style="theme.actionButtonGhost"
+                class="dvs-rounded-full dvs-mb-4 dvs-flex dvs-justify-center dvs-items-center dvs-p-2 dvs-pr-4 dvs-uppercase dvs-text-xs dvs-font-bold"
+                @click.prevent="createSlice = true">
+                <add-icon w="20" h="20" /> Add Slice
+              </button>
+            </div>
 
             <button 
-              :style="theme.actionButtonGhost"
-              class="dvs-btn dvs-block dvs-w-full dvs-mb-4"
-              @click.prevent="createFirstSlice = true">
-              Add Slice
-            </button>
-
-            <button 
-              :style="theme.actionButtonGhost"
+              :style="theme.actionButton"
               class="dvs-btn dvs-block dvs-w-full"
               @click.prevent="requestSavePage()">
               Save Page
@@ -66,12 +68,13 @@ import { mapGetters, mapActions } from 'vuex'
 
 import ManageSlice from './slices/ManageSlice'
 import AnalyticTotals from './AnalyticTotals'
+import AddIcon from 'vue-ionicons/dist/ios-add.vue'
 
 export default {
   name: 'PageEditor',
   data () {
     return {
-      createFirstSlice: false,
+      createSlice: false,
       pageSettingsOpen: false,
       pageContentOpen: true
     }
@@ -114,7 +117,7 @@ export default {
         this.page.slices.push(newSlice)
       }
 
-      this.createFirstSlice = false
+      this.createSlice = false
     },
     editSlice (editedSlice, referenceSlice) {
       this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)
@@ -133,6 +136,7 @@ export default {
   },
   props: ['page'],
   components: {
+    AddIcon,
     AnalyticTotals,
     draggable,
     ManageSlice

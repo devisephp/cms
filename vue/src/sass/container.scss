@@ -2,65 +2,8 @@
   @apply dvs-font-sans dvs-w-full;
 }
 
-#devise-admin-open {
-  @apply dvs-fixed dvs-pin-t dvs-pin-l dvs-opacity-75 dvs-cursor-pointer dvs-ml-8 dvs-my-4 dvs-hidden;
-
-  text-shadow: 0 0 12px rgba(0,0,0,0.5);
-  z-index:99999;
-
-  svg {
-    @apply dvs-cursor-pointer;
-    
-    fill:white;
-    filter: drop-shadow(0 0 12px rgba(0,0,0,0.5));  
-  }
-
-  .dvs-gear-2 {
-    @apply dvs-text-base dvs-absolute;
-
-    top: 20px;
-    right: -10px;
-
-  }
-
-  &:hover {
-    @apply dvs-opacity-100;
-
-    .dvs-gear-1,
-    .dvs-gear-2 {
-      animation-name: spinClockwise;
-      animation-duration: 4000ms;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
-    }
-
-    .dvs-gear-2 {
-      animation-name: spinCounterClockwise;
-    }
-  }
-}
-
-@media (max-width: 767px) { 
-  #devise-admin-open {
-    @apply dvs-hidden;
-  }
-}
-
-@keyframes spinClockwise { 
-  from { 
-    transform: rotate(0deg); 
-  } to { 
-    transform: rotate(360deg); 
-  }
-}
-
-
-@keyframes spinCounterClockwise { 
-  from { 
-    transform: rotate(0deg); 
-  } to { 
-    transform: rotate(-360deg); 
-  }
+#devise-admin {
+  @apply dvs-relative dvs-z-9999;
 }
 
 @media (max-width: 767px) { 

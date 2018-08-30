@@ -1019,107 +1019,9 @@ table {
   width: 100%;
 }
 
-#devise-admin-open {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: .75;
-  cursor: pointer;
-  margin-left: 2rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  display: none;
-  text-shadow: 0 0 12px rgba(0, 0, 0, .5);
-  z-index: 99999;
-}
-
-#devise-admin-open svg {
-  cursor: pointer;
-  fill: white;
-  -webkit-filter: drop-shadow(0 0 12px rgba(0, 0, 0, .5));
-          filter: drop-shadow(0 0 12px rgba(0, 0, 0, .5));
-}
-
-#devise-admin-open .dvs-gear-2 {
-  font-size: 1em;
-  position: absolute;
-  top: 20px;
-  right: -10px;
-}
-
-#devise-admin-open:hover {
-  opacity: 1;
-}
-
-#devise-admin-open:hover .dvs-gear-1,
-#devise-admin-open:hover .dvs-gear-2 {
-  -webkit-animation-name: spinClockwise;
-          animation-name: spinClockwise;
-  -webkit-animation-duration: 4000ms;
-          animation-duration: 4000ms;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-}
-
-#devise-admin-open:hover .dvs-gear-2 {
-  -webkit-animation-name: spinCounterClockwise;
-          animation-name: spinCounterClockwise;
-}
-
-@media (max-width: 767px) {
-  #devise-admin-open {
-    display: none;
-  }
-}
-
-@-webkit-keyframes spinClockwise {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-
-  to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@keyframes spinClockwise {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-
-  to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spinCounterClockwise {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-
-  to {
-    -webkit-transform: rotate(-360deg);
-            transform: rotate(-360deg);
-  }
-}
-
-@keyframes spinCounterClockwise {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-
-  to {
-    -webkit-transform: rotate(-360deg);
-            transform: rotate(-360deg);
-  }
+#devise-admin {
+  position: relative;
+  z-index: 9999;
 }
 
 @media (max-width: 767px) {
@@ -5558,6 +5460,10 @@ trix-editor {
   z-index: 60;
 }
 
+.dvs-z-9980 {
+  z-index: 9980;
+}
+
 .dvs-z-9999 {
   z-index: 9999;
 }
@@ -8857,6 +8763,10 @@ trix-editor {
     z-index: 60;
   }
 
+  .md\:dvs-z-9980 {
+    z-index: 9980;
+  }
+
   .md\:dvs-z-9999 {
     z-index: 9999;
   }
@@ -11980,6 +11890,10 @@ trix-editor {
 
   .lg\:dvs-z-60 {
     z-index: 60;
+  }
+
+  .lg\:dvs-z-9980 {
+    z-index: 9980;
   }
 
   .lg\:dvs-z-9999 {

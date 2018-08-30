@@ -73,7 +73,7 @@ const actions = {
 
   generateImages (context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.get('/styled/' + payload.file + '|||' + JSON.stringify(payload.edits)).then(function (response) {
+      window.axios.post(context.state.api.baseUrl + 'media-styles', payload).then(function (response) {
         context.commit('setFiles', response.data)
         resolve(response)
       }).catch(function (error) {

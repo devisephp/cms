@@ -163,10 +163,8 @@ export default {
       'getModelSettings'
     ]),
     cancelManageSlice () {
-      this.action = null
-      this.insertSlice = defaultInsertSlice
-      this.editingSlice = this.slice
-      this.showInsert = false
+      this.$emit('cancel')
+      this.action = 'selectAction'
     },
     buildSlice () {
       let component = this.componentFromView(this.insertSlice.slice.value)
@@ -179,7 +177,6 @@ export default {
           label: this.insertSlice.slice.name,
           model_query: null,
           name: component.name,
-          placeholder: this.insertSlice.slice.name,
           type: this.insertSlice.type,
           view: component.view
         }
@@ -214,7 +211,7 @@ export default {
     },
     updateSliceType () {
       if (this.editingSlice.metadata.type === 'repeats' || this.editingSlice.metadata.type === 'model') {
-        this.editingSlice.metadata.placeholder = this.editingSlice.metadata.label
+        this.editingSlice.slices = []
       }
     },
     addSlice () {

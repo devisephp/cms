@@ -130,23 +130,28 @@ export default {
       this.backgroundColor = tinycolor(this.devise.settings.backgroundColor).toRgb()
     }
 
-    this.resizeObserver = new ResizeObserver( entries => {
-      let styles = {}
-      for (let entry of entries) {
-        let cs = window.getComputedStyle(entry.target);
-        let rect = this.sliceEl.getBoundingClientRect();
-
-        this.controlStyles.right = `${entry.contentRect.right - entry.contentRect.width + 15}px`
-        this.controlStyles.top = `${rect.top + window.scrollY + 15}px`
-
-        if (entry.target.handleResize)
-            entry.target.handleResize(entry);
-      }
-    })
-
-    this.resizeObserver.observe(this.sliceEl)
+    this.addListeners ()
   },
   methods: {
+    addListeners () {
+      let self = this
+
+      this.resizeObserver = new ResizeObserver( entries => {
+        let styles = {}
+        for (let entry of entries) {
+          let cs = window.getComputedStyle(entry.target);
+          let rect = this.sliceEl.getBoundingClientRect();
+
+          this.controlStyles.right = `${entry.contentRect.right - entry.contentRect.width + 15}px`
+          this.controlStyles.top = `${rect.top + window.scrollY + 15}px`
+
+          if (entry.target.handleResize)
+              entry.target.handleResize(entry);
+        }
+      })
+
+      this.resizeObserver.observe(this.sliceEl)
+    },
     hydrateMissingProperties () {
       let fields = this.sliceConfig(this.devise).fields
 

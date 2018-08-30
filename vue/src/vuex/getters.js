@@ -22,7 +22,6 @@ const getters = {
   componentFromView: state => (view) => {
     for (var component in deviseSettings.$deviseComponents) {
       if (deviseSettings.$deviseComponents[component].view === 'slices.' + view) {
-        console.log('here')
         return deviseSettings.$deviseComponents[component]
       }
     }

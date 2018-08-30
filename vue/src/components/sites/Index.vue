@@ -14,19 +14,21 @@
       <h2 class="dvs-mb-8">Current Sites</h2>
       <help class="dvs-mb-10">Here you can add and manage sites under this application. This means that you can add new domains, change themes for those domains, and add languages to those sites to make them more impacting for your users</help>
 
-      <div v-for="site in sites.data" :key="site.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-p-12 dvs-text-center dvs-rounded" :style="theme.panelCard">
-          <div class="dvs-text-base">
-            <div class="dvs-mb-2 dvs-text-3xl dvs-uppercase">{{ site.name }}</div>
-            <div class="dvs-mb-4 dvs-opacity-75">Domain: {{ site.domain }}</div>
-          </div>
-          <div class="dvs-mb-8 dvs-flex dvs-flex-wrap dvs-justify-center">
-            <span v-for="language in site.languages" :key="language.id" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
-          </div>
-          <div class="dvs-flex dvs-justify-center">
-            <a class="dvs-btn dvs-mr-2" :href="site.domain" :style="theme.actionButtonGhost">Go</a>
-            <button class="dvs-btn dvs-mr-2" @click="showEditSite(site)" :style="theme.actionButtonGhost">Edit</button>
-            <button class="dvs-btn" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="theme.actionButtonGhost">Delete</button>
+      <div class="dvs-flex dvs-flex-wrap">
+        <div v-for="site in sites.data" :key="site.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center dvs-w-1/2">
+          <div class="dvs-p-8 dvs-text-center dvs-rounded" :style="theme.panelCard">
+            <div class="dvs-text-base">
+              <div class="dvs-mb-2 dvs-text-sm dvs-uppercase">{{ site.name }}</div>
+              <div class="dvs-mb-4 dvs-text-sm dvs-opacity-75">Domain: {{ site.domain }}</div>
+            </div>
+            <div class="dvs-mb-8 dvs-flex dvs-flex-wrap dvs-justify-center">
+              <span v-for="language in site.languages" :key="language.id" class="dvs-mb-2 dvs-mr-2 dvs-tag dvs-bg-grey-lighter dvs-text-black" :class="{'dvs-bg-green-dark dvs-text-white': language.default}">{{ language.code }}</span>
+            </div>
+            <div class="dvs-flex dvs-justify-center">
+              <a class="dvs-btn dvs-mr-2" :href="site.domain" :style="theme.actionButtonGhost">Go</a>
+              <button class="dvs-btn dvs-mr-2" @click="showEditSite(site)" :style="theme.actionButtonGhost">Edit</button>
+              <button class="dvs-btn" v-devise-alert-confirm="{callback: requestDeleteSite, arguments: site, message: 'Are you sure you want to delete this site?'}"  :style="theme.actionButtonGhost">Delete</button>
+            </div>
           </div>
         </div>
       </div>

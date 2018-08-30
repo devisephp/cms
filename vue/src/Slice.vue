@@ -87,7 +87,7 @@ var tinycolor = require('tinycolor2')
 import { Photoshop, Sketch } from 'vue-color'
 
 import Slice from './Slice'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 import Strings from './mixins/Strings'
 import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
@@ -131,8 +131,15 @@ export default {
     }
 
     this.addListeners ()
+
+    if (this.editorMode) {
+      this.checkMediaSizesForRegeneration ()
+    }
   },
   methods: {
+    ...mapActions('devise', [
+      'regenerateMedia'
+    ]),
     addListeners () {
       let self = this
 
@@ -241,8 +248,52 @@ export default {
         return 0
       }
     },
-    setBackground(color) {
+    setBackground (color) {
       this.$set(this.deviseForSlice.settings, 'backgroundColor', `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`)
+    },
+    checkMediaSizesForRegeneration () {
+      // If the current slice even has fields
+      if (typeof this.currentView.fields !== 'undefined') {
+        for (var fieldName in this.currentView.fields) {
+          const field = this.currentView.fields[fieldName]
+
+          // If the field is an image
+          if (field.type === 'image') {
+
+            // If sizes are defined on the image configuration and an image has already been selected
+            if (typeof field.sizes !== 'undefined' && typeof this.devise[fieldName].media === 'object') {
+              
+              // Build the sizes needed
+              let mediaRequest = {"sizes": {}}
+
+              // Check if all the sizes in the configuration are present in the media property
+              for (var sizeName in field.sizes) {
+                if (typeof this.devise[fieldName].media[sizeName] === 'undefined') {
+                  mediaRequest.sizes[sizeName] = field.sizes[sizeName]
+                }
+              }
+
+
+              // If there are any sizes needed
+              if (Object.keys(mediaRequest.sizes).length > 0) {
+                // Build the request payload
+                let payload = {
+                  sizes: mediaRequest,
+                  instanceId: this.devise.metadata.instance_id,
+                  fieldName: fieldName,
+                }
+                
+                this.regenerateMedia(payload).then(function () {
+                  devise.$bus.$emit('showMessage', {
+                    title: 'New Images Generated',
+                    message: 'Pro tip: Some new sizes were generated for a slice you were working on. You may need to refresh.'
+                  })
+                })
+              }
+            }
+          }
+        }
+      }
     }
   },
   computed: {

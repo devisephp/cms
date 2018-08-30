@@ -162,7 +162,7 @@ const DevisePlugin = {
 
             if(found) return true;
           }
-        },
+        }
       },
       computed: {
         ...mapGetters('devise', [

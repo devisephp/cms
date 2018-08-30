@@ -41,7 +41,7 @@
     </panel>
 
     <portal-target class="dvs-relative dvs-z-9999" name="devise-root"></portal-target>
-    <media-manager class="dvs-relative dvs-z-9999" />
+    <media-manager class="dvs-z-9999" />
     <loadbar class="dvs-relative dvs-z-9999" />
     <messages class="dvs-relative dvs-z-9999" />
 

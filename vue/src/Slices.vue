@@ -3,6 +3,24 @@
 import Slice from './Slice'
 import Strings from './mixins/Strings'
 
+const UNIQUE_KEY_PROP = '__unique_key_prop__'
+const KEY_PREFIX = '__key_prefix__' + Date.now() + '_'
+let uid = 0
+
+const isObject = val => val !== null && typeof val === 'object'
+
+const genUniqueKey = obj => {
+  if (isObject(obj)) {
+    if (UNIQUE_KEY_PROP in obj) {
+      return obj[UNIQUE_KEY_PROP]
+    }
+    const value = KEY_PREFIX + uid++
+    Object.defineProperty(obj, UNIQUE_KEY_PROP, { value })
+    return value
+  }
+  return obj
+}
+
 export default {
   name: 'DeviseSlices',
   functional: true,
@@ -14,7 +32,7 @@ export default {
           for (var i = 0; i < s.config.numberOfInstances; i++) {
             placeholderSlices.push(
               h(Slice, Object.assign({}, ctx.data, {
-                key: Strings.methods.randomString(8),
+                key: genUniqueKey(s),
                 props: {
                   devise: s,
                   editorMode: ctx.props.editorMode
@@ -31,7 +49,7 @@ export default {
               let slices = s.slices.map(s => h(
                 Slice, 
                 Object.assign({}, ctx.data, { 
-                  key: Strings.methods.randomString(8),
+                  key: genUniqueKey(s),
                   props: { 
                     devise: s,
                     editorMode: ctx.props.editorMode
@@ -41,14 +59,16 @@ export default {
               return slices
             }
           } else {
-            let slice = h(Slice, Object.assign({}, ctx.data, {
-              key: Strings.methods.randomString(8),
-              props: {
-                devise: s,
-                editorMode: ctx.props.editorMode
+            return h(
+              Slice, 
+              Object.assign({}, ctx.data, {
+                key: genUniqueKey(s),
+                props: {
+                  devise: s,
+                  editorMode: ctx.props.editorMode
+                }
               }
-            }))
-            return slice
+            ))
           }
         }
       })

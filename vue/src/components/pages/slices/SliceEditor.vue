@@ -18,7 +18,7 @@
         <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full" :style="{color: theme.panel.color}" :class="{'dvs-pl-4': child}">
           <div class="dvs-flex dvs-items-center">
             <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
-            <span @click="toggleSlice(slice)">{{ slice.metadata.label }}</span>
+            <span class="dvs-cursor-pointer" @click="toggleSlice(slice)">{{ slice.metadata.label }}</span>
           </div>
           <div class="dvs-cursor-pointer dvs-ml-2 dvs-relative" style="height:30px;width:30px;" @mouseenter="moreHovered = true" @mouseleave="moreHovered = false">
             <div class="dvs-overflow-hidden dvs-absolute dvs-pin-t dvs-pin-r dvs-flex dvs-flex-row-reverse dvs-pb-2 dvs-rounded-sm" style="transition:width 500ms;" :style="moreContainerStyles">
@@ -47,58 +47,55 @@
     <manage-slice ref="manageslice" v-if="manageSlice === true" @cancel="manageSlice = false" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" :slice="slice" />
 
     <div class="dvs-collapsed" v-if="slice.metadata.open">
-      <div v-if="!slice.metadata.placeholder">
-        <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-ml-4" :key="key" v-if="theFields[key]">
-          <div>
+      <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-ml-4" :key="key" v-if="theFields[key]">
+        <div>
 
-            <color-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'color'">
-            </color-editor>
+          <color-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'color'">
+          </color-editor>
 
-            <checkbox-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'checkbox'">
-            </checkbox-editor>
+          <checkbox-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'checkbox'">
+          </checkbox-editor>
 
-            <image-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'image'">
-            </image-editor>
+          <image-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'image'">
+          </image-editor>
 
-            <link-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'link'">
-            </link-editor>
+          <link-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'link'">
+          </link-editor>
 
-            <number-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'number'">
-            </number-editor>
+          <number-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'number'">
+          </number-editor>
 
-            <textarea-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'textarea'">
-            </textarea-editor>
+          <textarea-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'textarea'">
+          </textarea-editor>
 
-            <text-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'text'">
-            </text-editor>
+          <text-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'text'">
+          </text-editor>
 
-            <wysiwyg-editor v-model="theFields[key]" :options="field" :namekey="key" :show="slice.metadata.show" v-if="field.type === 'wysiwyg'">
-            </wysiwyg-editor>
-          </div>
+          <wysiwyg-editor v-model="theFields[key]" :options="field" :namekey="key" :show="slice.metadata.show" v-if="field.type === 'wysiwyg'">
+          </wysiwyg-editor>
+        </div>
 
-        </fieldset>
-      </div>
+      </fieldset>
+    </div>
 
-      <div class="dvs-collapsed">
+    <div class="dvs-collapsed">
+      <help 
+        v-if="slice.metadata.type === 'model'" 
+        class="dvs-mb-4"
+        :style="`
+          border-color:${theme.buttonsActionLeft.color};
+          background:${theme.buttonsActionRight.color};
+          color:${theme.buttonsActionText.color};
+        `" 
+        >
+        Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
+      </help>
 
-        <help 
-          v-if="slice.metadata.type === 'model'" 
-          class="dvs-mb-4"
-          :style="`
-            border-color:${theme.buttonsActionLeft.color};
-            background:${theme.buttonsActionRight.color};
-            color:${theme.buttonsActionText.color};
-          `" 
-          >
-          Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
-        </help>
-
-        <ul class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" >
-          <template v-for="(s, key) in slice.slices">
-            <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @removeInstance="removeInstance" />
-          </template>
-        </ul>
-      </div>
+      <ul class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" >
+        <template v-for="(s, key) in slice.slices">
+          <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @removeInstance="removeInstance" />
+        </template>
+      </ul>
     </div>
 
   </li>
@@ -140,7 +137,7 @@ export default {
   },
   methods: {
     toggleSlice (slice) {
-      if (this.sliceConfig(slice).fields) {
+      if (this.sliceConfig(slice).fields || slice.slices.length > 0) {
         let sliceOpen = Object.assign({}, slice.metadata)
         this.pageSlices.map(s => this.closeSlice(s))
         this.$set(slice.metadata, 'open', !sliceOpen.open)

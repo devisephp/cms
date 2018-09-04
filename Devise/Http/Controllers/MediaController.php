@@ -75,7 +75,6 @@ class MediaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['file' => 'required|file']);
-
         $this->FileManager->saveUploadedFile($request->all());
     }
 
@@ -84,9 +83,12 @@ class MediaController extends Controller
      *
      * @param Request $request
      */
-    public function remove(Request $request, $mediaId)
+    public function remove(Request $request, $mediaRoute)
     {
-        $this->FileManager->removeUploadedFile($request->all());
+        $mediaRoute = str_replace('storage', '', $mediaRoute);
+        if ($this->Storage->get($mediaRoute)) {
+            $this->FileManager->removeUploadedFile($mediaRoute);
+        }
     }
 
     /**

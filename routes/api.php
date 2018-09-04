@@ -20,7 +20,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
      */
     Route::get('media/{folder_dot_path?}', 'MediaController@all');
     Route::post('media', 'MediaController@store');
-    Route::delete('media/{media_id}', 'MediaController@remove');
+    Route::delete('media/{media_route}', 'MediaController@remove')->where(['media_route' => '.*']);
 
     Route::post('media-styles', 'MediaController@generate');
     Route::put('media-styles/{instance_id}/{field_type}', 'MediaController@reGenerateAll');

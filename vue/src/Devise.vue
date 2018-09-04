@@ -2,41 +2,31 @@
   <div>
     <portal-target name="app-root"></portal-target>
 
-    <template v-if="editorMode || pageMode">
+    <div id="devise-container" :class="[breakpoint, isPreviewFrame ? 'preview-frame' : '']">
+      
+      <administration v-if="isLoggedIn" :page="page" />
 
-      <div id="devise-container" :class="[breakpoint, !adminOpen ? 'admin-closed' : '', wideAdmin ? 'wide-admin' : '', isPreviewFrame ? 'preview-frame' : '']">
-        
-        <administration v-if="isLoggedIn && adminOpen" :page="page" />
+      <div id="dvs-app-content">
+        <!-- Desktop mode in editor or just viewing page -->
+        <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
+          <slot name="on-top"></slot>
+          <slot name="static-content"></slot>
 
-        <div id="dvs-app-content" :class="{'dvs-no-scroll': wideAdmin}">
-          <!-- Desktop mode in editor or just viewing page -->
-          <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
-            <slot name="on-top"></slot>
-            <slot name="static-content"></slot>
+          <template v-if="page.slices">
+            <slices :slices="page.slices"></slices>
+          </template>
 
-            <template v-if="page.slices">
-              <slices :slices="page.slices" :editorMode="adminOpen && editorMode"></slices>
-            </template>
-
-            <slot name="static-content-bottom"></slot>
-            <slot name="on-bottom"></slot>
-          </div>
-
-          <div id="devise-iframe-editor">
-            <!-- Preview mode in editor -->
-            <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[page.previewMode]"/>
-          </div>
+          <slot name="static-content-bottom"></slot>
+          <slot name="on-bottom"></slot>
         </div>
 
-        <template v-if="isLoggedIn && !isPreviewFrame">
-          <div id="devise-admin-open" @click="toggleAdmin">
-            <settings-icon class="dvs-gear-1" w="30px" h="30px" />
-            <settings-icon class="dvs-gear-2" w="20px" h="20px" />
-          </div>
-        </template>
-
+        <div id="devise-iframe-editor">
+          <!-- Preview mode in editor -->
+          <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[page.previewMode]"/>
+        </div>
       </div>
-    </template>
+
+    </div>
 
   </div>
 </template>
@@ -45,7 +35,6 @@
 import Slice from './Slice'
 import User from './components/menu/User'
 import SimpleBar from 'SimpleBar'
-import anime from 'animejs'
 
 import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
 
@@ -57,11 +46,7 @@ export default {
     return {
       showLoadbar: false,
       loadbarPercentage: 0,
-      editorMode: false,
       pageMode: false,
-      adminOpen: true,
-      openAnimation: null,
-      wideAdmin: false,
       page: {
         title: null,
         body: null,
@@ -74,15 +59,8 @@ export default {
     window.devise = this
     devise.$bus = deviseSettings.$bus
 
-    this.editorMode = true
     this.mountGlobalVariables()
     this.initDevise()
-
-    let blocker = document.getElementById('devise-blocker')
-    if (blocker) {
-      blocker.classList.add('fade')
-    }
-
   },
   methods: {
     ...mapActions('devise', [
@@ -97,6 +75,7 @@ export default {
         if (!this.isPreviewFrame) {
           deviseSettings.$page.previewMode = 'desktop'
           this.page = deviseSettings.$page
+          this.$router.push({name: 'devise-page-editor'})
         } else {
           this.page = window.parent.deviseSettings.$page
         }
@@ -106,43 +85,26 @@ export default {
       
       this.addWatchers()
       this.setSizeAndBreakpoint()
+      this.setSizeAndBreakpoint()
 
       let self = this
       this.$nextTick(function () {
-        if (self.$route.name !== null && self.$route.name !== 'devise-page-editor') {
-          self.adminOpen = true
-          self.checkWidthOfInterface(self.$route)
-        }
         setTimeout(function () {
+          self.removeBlocker()
           devise.$bus.$emit('devise-loaded')
         }, 10)
       })
+    },
+    removeBlocker () {
+      let blocker = document.getElementById('devise-blocker')
+      if (blocker) {
+        blocker.classList.add('fade')
+      }
     },
     mountGlobalVariables () {
       // page, sites
       this.setPage(deviseSettings.$page)
       this.setSites({data: deviseSettings.$sites})
-    },
-    checkWidthOfInterface (route) {
-      // If the route has the wide parameter set it to it's value
-      if (route.meta) {
-        this.wideAdmin = route.meta.wide
-      } else {
-        this.wideAdmin = false
-      }
-    },
-    toggleAdmin () {
-      this.adminOpen = !this.adminOpen
-      if (!this.adminOpen) {
-        this.wideAdmin = false
-        window.location.hash = '#'
-      } else {
-        if (deviseSettings.$page) {
-          this.goToPage('devise-page-editor')
-        } else {
-          this.goToPage('devise-index')
-        }
-      }
     },
     addWatchers () {
       window.onresize = this.setSizeAndBreakpoint
@@ -188,15 +150,6 @@ export default {
     },
     pageSlices () {
       return this.page.slices
-    }
-  },
-  watch: {
-    '$route' (newRoute) {
-      this.checkWidthOfInterface(newRoute)
-
-      if (newRoute.name !== null) {
-        this.adminOpen = true
-      }
     }
   },
   components: {

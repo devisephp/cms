@@ -75,8 +75,8 @@
           callback: this.mediaSelected
         })
       },
-      mediaSelected(media) {
-        this.images.push(media.url)
+      mediaSelected(url) {
+        this.images.push(url)
       },
       removeImage(index) {
         this.images.splice(index, 1)

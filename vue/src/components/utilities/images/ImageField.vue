@@ -59,8 +59,8 @@
           callback: this.mediaSelected
         })
       },
-      mediaSelected(media) {
-        this.image = media.url
+      mediaSelected(url) {
+        this.image = url
       },
       loadPreview() {
         if (this.previewEnabled)

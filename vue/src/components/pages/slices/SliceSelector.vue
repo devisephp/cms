@@ -25,7 +25,8 @@
       @click="selectSlice(file)" 
       v-for="(file, key) in currentDirectoryInformation['files']" 
       :key="key">
-        <div class="dvs-cursor-pointer" :style="isSelected(file)">{{ file.name }} </div>
+        {{ file }}
+        <div class="dvs-cursor-pointer" :style="isSelected(file)">{{ file.name }}</div>
         <div class="dvs-font-mono dvs-text-sm">({{ file.value }})</div>
     </li>
   </ul>

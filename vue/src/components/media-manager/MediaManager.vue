@@ -7,6 +7,7 @@
           <loadbar :percentage="0.5"/>
         </div>
       </div>
+
       <div v-else-if="loaded && selectedFile === null" class="media-manager-interface">
         <div style="min-height:70px" class="dvs-py-4 dvs-px-8 dvs-rounded-tl dvs-rounded-tr dvs-flex dvs-justify-between dvs-items-center dvs-bg-grey-lighter dvs-border-b dvs-border-lighter dvs-relative">
           <div>
@@ -110,7 +111,7 @@
                   <div class="dvs-w-1/2 dvs-mr-8 dvs-flex dvs-flex-col dvs-justify-between">
                     <img :src="file.url" class="dvs-cursor-pointer dvs-mb-4" @click="selectSourceFile(file)">
                     <div class="dvs-flex">
-                      <div class="dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: requestDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
+                      <div class="dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: confirmedDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
                         <trash-icon h="20" w="20" :style="{color: theme.adminText.color}" />
                       </div>
                       <a href="file.url" target="_blank" :style="{color: theme.adminText.color}">
@@ -147,8 +148,8 @@
       </div>
 
 
-      <div v-else>
-        <media-editor :source="selectedFile.url" :sizes="options.sizes" @cancel="selectedFile = null" @done="setFile" />
+      <div v-else-if="options.sizes">
+        <media-editor :source="selectedFile.url" :sizes="options.sizes" @cancel="selectedFile = null" @done="generateAndSetFile" />
       </div>
     </div>
   </div>
@@ -237,12 +238,20 @@
       },
       selectSourceFile (file) {
         this.selectedFile = file
-      },
-      setFile (edits) {
-        let self = this
-        if (this.options.sizes) {
-          edits.sizes = this.options.sizes
+
+        if (!this.options) {
+          if (typeof this.target !== 'undefined') {
+            this.target.value = this.selectedFile.url
+          }
+          if (typeof this.callback !== 'undefined') {
+            this.callback(this.selectedFile.url)
+          }
+          this.show = false
         }
+      },
+      generateAndSetFile (edits) {
+        let self = this
+        edits.sizes = this.options.sizes
 
         this.generateImages({original: this.selectedFile.url, settings: edits}).then(function (response) {
           if (typeof self.target !== 'undefined') {
@@ -251,17 +260,10 @@
           if (typeof self.callback !== 'undefined') {
             self.callback(response.data)
           }
-          self.show = false
+          return true
         })
-      },
-      requestDeleteFile (file) {
-        if (this.isActive(file)) {
-          if (window.confirm('This file is associated with fields on the site. Are you 100% positive you want to delete it?')) {
-            this.confirmedDeleteFile(file)
-          }
-        } else {
-          this.confirmedDeleteFile(file)
-        }
+        
+        this.show = false
       },
       confirmedDeleteFile (file) {
         var self = this
@@ -300,13 +302,16 @@
         'currentDirectory'
       ]),
       dropzoneOptions () {
+
+        let token = document.head.querySelector('meta[name="csrf-token"]');
+        
         return {
           url: '/api/devise/media?directory=' + this.currentDirectory,
           dictDefaultMessage: "<span class='dvs-cursor-pointer'>Upload New File</span>",
           method: 'post',
           createImageThumbnails: false,
           headers: {
-            'X-XSRF-TOKEN': window.csrfToken
+            'X-CSRF-TOKEN': token.content
           }
         }
       }

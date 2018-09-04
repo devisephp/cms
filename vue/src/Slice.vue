@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dvs-absolute dvs-z-9999" :style="controlStyles" v-if="editorMode">
+    <div class="dvs-absolute dvs-z-9999" :style="controlStyles" v-if="showEditor">
       <div @click="toggleEditor()" class="dvs-flex dvs-items-center">
         <settings-icon class="dvs-gear-1 dvs-cursor-pointer" w="30px" h="30px" />
       </div>
@@ -272,7 +272,6 @@ export default {
                   mediaRequest.sizes[sizeName] = field.sizes[sizeName]
                 }
               }
-
 
               // If there are any sizes needed
               if (Object.keys(mediaRequest.sizes).length > 0) {

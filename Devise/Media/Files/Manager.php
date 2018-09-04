@@ -44,15 +44,9 @@ class Manager
     /**
      *
      */
-    public function removeUploadedFile($input)
+    public function removeUploadedFile($mediaRoute)
     {
-        $categoryPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
-        $file = array_get($input, 'file');
-
-        $serverPath = $this->CategoryPaths->serverPath($categoryPath);
-        $filePath = $serverPath . '/' . $file;
-
-        $this->Storage->delete($filePath);
+        $this->Storage->delete($mediaRoute);
     }
 
 }

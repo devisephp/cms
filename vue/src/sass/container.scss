@@ -96,16 +96,6 @@
       min-height:auto
     }
   }
-
-  &.wide-admin {
-    #devise-admin {
-      @apply dvs-w-full;
-    }
-
-    #devise-content {
-      display:none;
-    }
-  }
 }
 
 #devise-sidebar {

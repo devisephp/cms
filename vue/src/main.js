@@ -6,6 +6,7 @@ import ActionBar from './components/utilities/ActionBar'
 import Sidebar from './components/utilities/Sidebar'
 import Help from './components/utilities/Help'
 import Logo from './components/utilities/Logo'
+import DeviseImg from './components/utilities/images/DeviseImage'
 import SliceEditor from './components/pages/slices/SliceEditor'
 import Slices from './Slices'
 import DeviseStore from './vuex/store'
@@ -83,6 +84,7 @@ const DevisePlugin = {
 
     // VueRouter Register global components
     Vue.component('Devise', Devise)
+    Vue.component('DeviseImg', DeviseImg)
     Vue.component('Logo', Logo)
     Vue.component('Help', Help)
     Vue.component('Slices', Slices)
@@ -166,6 +168,7 @@ const DevisePlugin = {
       },
       computed: {
         ...mapGetters('devise', [
+          'breakpoint',
           'currentPage',
           'lang',
           'theme'

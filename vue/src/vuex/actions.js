@@ -150,7 +150,7 @@ const actions = {
 
   deleteFile (context, file) {
     return new Promise((resolve, reject) => {
-      window.axios.delete(context.state.api.baseUrl + 'media/' + file.id)
+      window.axios.delete(context.state.api.baseUrl + 'media' + file.url)
         .then(function (response) {
           devise.$bus.$emit('showMessage', {title: 'File Deleted', message: 'The file was successfully deleted from the server.'})
           resolve(response)

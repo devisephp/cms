@@ -1120,14 +1120,6 @@ table {
   min-height: auto;
 }
 
-#devise-container.wide-admin #devise-admin {
-  width: 100%;
-}
-
-#devise-container.wide-admin #devise-content {
-  display: none;
-}
-
 #devise-sidebar {
   position: fixed;
   left: 0;

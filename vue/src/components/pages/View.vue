@@ -280,7 +280,7 @@ export default {
       'deletePage',
       'deletePageVersion',
       'getPageAnalytics',
-      'getPages',
+      'getPage',
       'getLanguages',
       'translatePage',
       'updatePage',
@@ -341,8 +341,10 @@ export default {
     },
     retrieveAllPages () {
       let self = this
-      this.getPages().then(function () {
+      this.getPage(this.$route.params.pageId).then(function () {
         self.localValue = Object.assign({}, self.localValue, self.page)
+
+        console.log( self.page)
 
         self.localValue.versions.map(version => {
           self.$set(version, 'editName', false)

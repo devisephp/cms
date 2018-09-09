@@ -2,57 +2,31 @@
   <div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-8 dvs-pb-8 dvs-pt-8">
-      <ul class="dvs-list-reset dvs-w-full dvs-pb-8">
-        <li class="dvs-collapsable dvs-mb-8" v-if="pageSettingsOpen" :class="{'dvs-open': pageSettingsOpen}">
-          <div class="dvs-collapsed">
-            <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Page Title</label>
-              <input type="text" class="dvs-small dvs-dark" placeholder="Title of the Page">
-            </fieldset>
+      <div class="dvs-pb-8">
+        <draggable v-model="page.slices" element="ul" class="dvs-list-reset" :options="{handle: '.handle'}">
+          <template v-for="slice in page.slices">
+            <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" @markSlice="markSlice" />
+          </template>
+        </draggable>
 
-            <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Description</label>
-              <textarea class="dvs-h-24 dvs-small dvs-dark" placeholder="Description of the Page - Try to aim for around 150 - 300 characters."></textarea>
-            </fieldset>
+        <manage-slice v-if="createSlice === true" @addSlice="addSlice" @cancel="createSlice = false" />
 
-            <fieldset class="dvs-fieldset">
-              <label>Canonical</label>
-              <input type="text" class="dvs-small dvs-dark" placeholder="Canonical">
-            </fieldset>
+        <div class="dvs-flex dvs-justify-center">
+          <button 
+            :style="theme.actionButtonGhost"
+            class="dvs-rounded-full dvs-mb-4 dvs-flex dvs-justify-center dvs-items-center dvs-p-2 dvs-pr-4 dvs-uppercase dvs-text-xs dvs-font-bold"
+            @click.prevent="createSlice = true">
+            <add-icon w="20" h="20" /> Add Slice
+          </button>
+        </div>
 
-            <router-link :to="{ name: 'devise-pages-view', params: { pageId: page.id }}" class="dvs-btn dvs-block dvs-font-bold dvs-text-center dvs-mt-8 dvs-bg-grey-darkest dvs-text-white">
-              All Settings
-            </router-link>
-          </div>
-        </li>
-        <li class="dvs-collapsable dvs-mb-2 " :class="{'dvs-open': pageContentOpen}">
-          <div class="dvs-collapsed">
-            <draggable v-model="page.slices" element="ul" class="dvs-list-reset" :options="{handle: '.handle'}">
-              <template v-for="slice in page.slices">
-                <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" />
-              </template>
-            </draggable>
-
-            <manage-slice v-if="createSlice === true" @addSlice="addSlice" @cancel="createSlice = false" />
-
-            <div class="dvs-flex dvs-justify-center">
-              <button 
-                :style="theme.actionButtonGhost"
-                class="dvs-rounded-full dvs-mb-4 dvs-flex dvs-justify-center dvs-items-center dvs-p-2 dvs-pr-4 dvs-uppercase dvs-text-xs dvs-font-bold"
-                @click.prevent="createSlice = true">
-                <add-icon w="20" h="20" /> Add Slice
-              </button>
-            </div>
-
-            <button 
-              :style="theme.actionButton"
-              class="dvs-btn dvs-block dvs-w-full"
-              @click.prevent="requestSavePage()">
-              Save Page
-            </button>
-          </div>
-        </li>
-      </ul>
+        <button 
+          :style="theme.actionButton"
+          class="dvs-btn dvs-block dvs-w-full"
+          @click.prevent="requestSavePage()">
+          Save Page
+        </button>
+      </div>
     </div>
 
     <portal to="devise-root">
@@ -74,9 +48,7 @@ export default {
   name: 'PageEditor',
   data () {
     return {
-      createSlice: false,
-      pageSettingsOpen: false,
-      pageContentOpen: true
+      createSlice: false
     }
   },
   mounted () {
@@ -102,6 +74,10 @@ export default {
     },
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
+    },
+    markSlice (payload) {
+      let theSlice = this.page.slices[this.page.slices.indexOf(payload.slice)]
+      this.$set(theSlice, 'mark', payload.on)
     },
     addSlice (newSlice, referenceSlice) {
       if (typeof referenceSlice !== 'undefined') {

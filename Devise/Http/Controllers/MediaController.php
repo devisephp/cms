@@ -104,7 +104,7 @@ class MediaController extends Controller
             'source'                 => $filesystem->getDriver(),
             'cache'                  => $filesystem->getDriver(),
             'group_cache_in_folders' => false,
-            'base_url'               => 'styled/preview/'
+            'base_url'               => '/styled/preview/'
         ]);
         $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
         $path = str_replace("media/", '', $path);
@@ -211,7 +211,7 @@ class MediaController extends Controller
     private function buildDestinationImageUrl($file, $originalImageName, $append)
     {
         $site = $this->SiteDetector->current();
-        $destinationUrl = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $file)) . '/' . $originalImageName;
+        $destinationUrl = '/' . dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $file)) . '/' . $originalImageName;
         $destinationUrlParts = pathinfo($destinationUrl);
 
         return $destinationUrlParts['dirname'] . '/' . $destinationUrlParts['filename'] . $append . '.' . strtolower($destinationUrlParts['extension']);

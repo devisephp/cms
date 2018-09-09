@@ -290,10 +290,23 @@ const actions = {
   },
 
   // Pages
-  getPages (context) {
+  getPages (context, filters) {
     return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'pages/').then(function (response) {
+      window.axios.get(context.state.api.baseUrl + 'pages/?' + commonUtils.buildFilterParams(filters)).then(function (response) {
         context.commit('setPages', response.data)
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
+  getPage (context, id) {
+    return new Promise((resolve, reject) => {
+      window.axios.get(context.state.api.baseUrl + 'pages-vue-data/' + id).then(function (response) {
+        context.commit('appendPage', response.data )
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)

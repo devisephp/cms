@@ -3,6 +3,8 @@
 namespace Devise\Models;
 
 use Devise\Models\Repository as ModelRepository;
+use Devise\Traits\Filterable;
+use Devise\Traits\Sortable;
 use DateTime;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\URL;
 
 class DvsPage extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Filterable, Sortable;
 
     protected $fillable = [
         'site_id',

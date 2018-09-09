@@ -8,6 +8,7 @@ export default {
     let panelShine = panel.querySelector('.dvs-panel-shine')
 
     let xEffectStrength = 10
+    let rotationXLimit = 8
     let yEffectStrength = 10
     
     function focusPanel(scale, opacity, duration) {
@@ -30,7 +31,7 @@ export default {
 
     function tiltPanel(el, event) {
 
-      if (panelContents.offsetWidth < 350) {
+      if (panelContents.offsetWidth < 500) {
         let x = event.clientX - el.offsetLeft
         let y = event.clientY - el.offsetTop
 
@@ -39,8 +40,13 @@ export default {
 
         setPanelShine(xStrength, yStrength)
 
+        var rotationX = xStrength * xEffectStrength
+        if (rotationX > rotationXLimit) {
+          rotationX = rotationXLimit
+        }
+
         TweenMax.to(panelContents, 0.5, {
-          rotationX: `${xStrength * xEffectStrength}deg`,
+          rotationX: `${rotationX}deg`,
           rotationY: `${yStrength * yEffectStrength * -1}deg`,
           perspective: '1000px',
           ease: 'elastic'

@@ -163,6 +163,7 @@ export default {
       'getModelSettings'
     ]),
     cancelManageSlice () {
+      this.$set(this, 'insertSlice', defaultInsertSlice)
       this.$emit('cancel')
       this.action = 'selectAction'
     },

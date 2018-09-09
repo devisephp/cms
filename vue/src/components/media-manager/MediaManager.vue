@@ -239,14 +239,16 @@
       selectSourceFile (file) {
         this.selectedFile = file
 
-        if (!this.options) {
+        if (!this.options.sizes) {
           if (typeof this.target !== 'undefined') {
             this.target.value = this.selectedFile.url
           }
           if (typeof this.callback !== 'undefined') {
             this.callback(this.selectedFile.url)
           }
+
           this.show = false
+          this.$set(this, 'selectedFile', null)
         }
       },
       generateAndSetFile (edits) {
@@ -264,6 +266,7 @@
         })
         
         this.show = false
+        this.$set(this, 'selectedFile', null)
       },
       confirmedDeleteFile (file) {
         var self = this

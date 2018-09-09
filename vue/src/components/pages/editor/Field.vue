@@ -17,10 +17,13 @@
           <div 
             v-show="showPreview" 
             class="dvs-absolute dvs-font-normal dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20"
-           
+            :style="theme.actionButton"
             >
             <slot name="preview"></slot>
-            {{ localValue.instructions }}
+            <div class="dvs-pt-4" v-if="localValue.instructions && localValue.instructions !== '' && localValue.instructions !== null">
+              <strong>Instructions from the Admin:</strong><br>
+              {{ localValue.instructions }}
+            </div>
           </div>
         </div>
       </div>

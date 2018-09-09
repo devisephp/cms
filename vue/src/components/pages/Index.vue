@@ -46,6 +46,9 @@
                             :href="page.slug">Go</a>
                 </div>
             </div>
+
+            <pagination class="mb-8" v-if="pages.data && pages.data.length" :meta="pages.meta" @changePage="changePage"></pagination>
+
         </div>
 
         <transition name="dvs-fade">
@@ -114,6 +117,7 @@
 
   import DeviseModal from './../utilities/Modal'
   import PageSearch from './../utilities/PageSearch'
+  import Pagination from './../utilities/tables/Pagination'
 
   import {mapActions, mapGetters} from 'vuex'
 
@@ -122,6 +126,9 @@
     data() {
       return {
         modulesToLoad: 3,
+        filters: {
+          page: '1'
+        },
         showCreate: false,
         searchDelay: 1000,
         searchTerm: '',
@@ -168,7 +175,7 @@
         })
       },
       retrieveAllPages(loadbar = true) {
-        this.getPages().then(function () {
+        this.getPages(this.filters).then(function () {
           if (loadbar) {
             devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
           }
@@ -203,6 +210,11 @@
         this.newPage.copy_page_id = page.id
         this.newPage.copy_page_title = page.title
       },
+      // Pagination Page... not page-page
+      changePage (page) {
+        this.filters.page = page
+        this.retrieveAllPages(false)
+      },
     },
     watch: {
       searchTerm(newValue) {
@@ -223,7 +235,8 @@
     },
     components: {
       DeviseModal,
-      PageSearch
+      PageSearch,
+      Pagination
     },
     directives: {
       debounce

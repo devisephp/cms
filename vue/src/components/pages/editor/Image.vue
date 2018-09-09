@@ -76,9 +76,14 @@ export default {
       })
     },
     mediaSelected (imagesAndSettings) {
-      this.localValue.url = imagesAndSettings.images.orig_optimized
-      this.localValue.media = imagesAndSettings.images
-      this.$set(this.localValue, 'settings', imagesAndSettings.settings)
+      if (typeof imagesAndSettings === 'object') {
+        this.localValue.url = imagesAndSettings.images.orig_optimized
+        this.localValue.media = imagesAndSettings.images
+        this.$set(this.localValue, 'settings', imagesAndSettings.settings)
+      } else {
+        this.localValue.url = imagesAndSettings
+      }
+
       this.updateValue()
     }
   },

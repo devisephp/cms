@@ -4,7 +4,7 @@
       <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
         Currently No Value
       </span>
-      <div v-html="clipString(localValue.text, 200, true)"></div>
+      <div v-html="clipString(localValue.text, 200, false)"></div>
     </template>
     <template slot="editor">
       <input type="hidden" :id="theId" v-model="localValue.text" :name="namekey" />
@@ -68,7 +68,7 @@ export default {
       this.theEditor = this.$refs.trixeditor.editor
     },
     hydrate () {
-      this.theEditor.insertHTML(this.value.text)
+      this.theEditor.loadHTML(this.value.text)
     },
     update (event) {
       this.localValue.text = event.target.value

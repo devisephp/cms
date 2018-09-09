@@ -2,19 +2,8 @@
   <div class="dvs-p-8">
     <fieldset class="dvs-fieldset dvs-mb-4">
       <label>Page Title</label>
-      <input type="text" class="dvs-small" placeholder="Title of the Page">
+      <input type="text" v-model="editPage.title" class="dvs-small" placeholder="Title of the Page">
     </fieldset>
-
-    <fieldset class="dvs-fieldset dvs-mb-4">
-      <label>Description</label>
-      <textarea class="dvs-h-24 dvs-small" placeholder="Description of the Page - Try to aim for around 150 - 300 characters."></textarea>
-    </fieldset>
-
-    <fieldset class="dvs-fieldset dvs-mb-4">
-      <label>Canonical</label>
-      <input type="text" class="dvs-small" placeholder="Canonical">
-    </fieldset>
-
 
     <button 
       :style="theme.actionButton"
@@ -38,7 +27,7 @@ import { mapGetters, mapActions } from 'vuex'
 import AnalyticTotals from './AnalyticTotals'
 
 export default {
-  name: 'PageEditor',
+  name: 'PageSettings',
   data () {
     return {
       pageSlices: [],
@@ -75,7 +64,15 @@ export default {
     ...mapGetters('devise', [
       'sliceConfig',
       'fieldConfig'
-    ])
+    ]),
+    editPage: {
+      get () {
+        return this.page
+      },
+      set (newValue) {
+        this.$emit('updatePage', newValue)
+      }
+    }
   },
   props: ['page'],
   components: {

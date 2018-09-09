@@ -116,11 +116,11 @@
             <h3 class="dvs-mb-4">Images</h3>
 
             <h6 class="dvs-mb-4">Original Image</h6>
-            <img :src="`styled/preview/${source}?${encodedEdits}`">
+            <img :src="`/styled/preview/${source}?${encodedEdits}`">
             <hr class="my-4">
             <div v-for="(size, key) in sizes" :key="key" class="mb-8">
               <h6 class="dvs-mb-4">{{ key }} ({{ size.w }}x{{ size.h }})</h6>
-              <img :src="`styled/preview/${source}?${encodedEdits}${encodedSize(size)}`">
+              <img :src="`/styled/preview/${source}?${encodedEdits}${encodedSize(size)}`">
             </div>
           </div>
         </div>

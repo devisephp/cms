@@ -18,13 +18,19 @@
         <div v-if="slice.metadata.type === 'single'" class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full" :style="{color: theme.panel.color}" :class="{'dvs-pl-4': child}">
           <div class="dvs-flex dvs-items-center">
             <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
-            <span class="dvs-cursor-pointer" @click="toggleSlice(slice)">{{ slice.metadata.label }}</span>
+            <span class="dvs-cursor-pointer" @click="toggleSlice(slice)"  @mouseenter="markSlice(true)"  @mouseleave="markSlice(false)">{{ slice.metadata.label }}</span>
           </div>
           <div class="dvs-cursor-pointer dvs-ml-2 dvs-relative" style="height:30px;width:30px;" @mouseenter="moreHovered = true" @mouseleave="moreHovered = false">
-            <div class="dvs-overflow-hidden dvs-absolute dvs-pin-t dvs-pin-r dvs-flex dvs-flex-row-reverse dvs-pb-2 dvs-rounded-sm" style="transition:width 500ms;" :style="moreContainerStyles">
+            <div class="dvs-overflow-hidden dvs-absolute dvs-pin-t dvs-pin-r dvs-flex dvs-items-center dvs-flex-row-reverse dvs-py-1 dvs-rounded-sm" style="transition:width 500ms;" :style="moreContainerStyles">
               <more-icon w="18" h="18" class="mt-1 mr-2" style="transform:rotate(90deg)" :style="{color: 'white'}" />
+              <div class="dvs-cursor-pointer" @click="jumpToSlice()">
+                <locate-icon w="20" h="20" class="mt-1 mr-4" :style="theme.panelIcons" />
+              </div>
+              <div class="dvs-cursor-pointer" @click="sliceSettings()">
+                <cog-icon w="20" h="20" class="mt-1 mr-4" :style="theme.panelIcons" />
+              </div>
               <div class="dvs-cursor-pointer" @click="removeSlice()">
-                <remove-icon w="20" h="20" class="mt-1 mr-4" :style="theme.panelIcons" />
+                <remove-icon w="20" h="20" class="mt-1 mr-2" :style="theme.panelIcons" />
               </div>
               <div class="dvs-cursor-pointer" @click="requestEditSlice()">
                 <create-icon w="20" h="20" class="mt-1 mr-2" :style="theme.panelIcons" />
@@ -65,6 +71,9 @@
           <number-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'number'">
           </number-editor>
 
+          <select-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'select'">
+          </select-editor>
+
           <textarea-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'textarea'">
           </textarea-editor>
 
@@ -93,7 +102,7 @@
 
       <ul class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" >
         <template v-for="(s, key) in slice.slices">
-          <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @removeInstance="removeInstance" />
+          <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @removeInstance="removeInstance" @markSlice="markSlice" />
         </template>
       </ul>
     </div>
@@ -109,6 +118,7 @@ import ColorEditor from './../editor/Color'
 import ImageEditor from './../editor/Image'
 import LinkEditor from './../editor/Link'
 import NumberEditor from './../editor/Number'
+import SelectEditor from './../editor/Select'
 import TextareaEditor from './../editor/Textarea'
 import TextEditor from './../editor/Text'
 import WysiwygEditor from './../editor/Wysiwyg'
@@ -116,6 +126,8 @@ import WysiwygEditor from './../editor/Wysiwyg'
 import ManageSlice from './ManageSlice'
 
 import AddIcon from 'vue-ionicons/dist/ios-add.vue'
+import CogIcon from 'vue-ionicons/dist/ios-cog.vue'
+import LocateIcon from 'vue-ionicons/dist/md-locate.vue'
 import MoreIcon from 'vue-ionicons/dist/ios-more.vue'
 import MenuIcon from 'vue-ionicons/dist/ios-menu.vue'
 import CreateIcon from 'vue-ionicons/dist/md-create.vue'
@@ -218,6 +230,21 @@ export default {
       }
     },
 
+    // Marking Slice
+    markSlice (payload) {
+      if (typeof payload === 'object') {
+        this.$emit('markSlice', {slice: this.slice, on: payload.on})
+      } else {
+        this.$emit('markSlice', {slice: this.slice, on: payload})
+      }
+    },
+    jumpToSlice () {
+      window.devise.$bus.$emit('jumpToSlice', this.slice)
+    },
+    sliceSettings () {
+      window.devise.$bus.$emit('openSliceSettings', this.slice)
+    },
+
     // Adding, Editing and Removing Slices
     requestInsertSlice () {
       this.manageSlice = true
@@ -284,7 +311,7 @@ export default {
       if (this.moreHovered) {
         return {
           backgroundColor: this.theme.panelCard.backgroundColor,
-          width: '130px'
+          width: '200px'
         }
       }
       return {
@@ -302,15 +329,18 @@ export default {
   components: {
     AddIcon,
     CheckboxEditor,
+    CogIcon,
     ColorEditor,
     CreateIcon,
     ImageEditor,
     LinkEditor,
+    LocateIcon,
     ManageSlice,
     MenuIcon,
     MoreIcon,
     NumberEditor,
     RemoveIcon,
+    SelectEditor,
     TextareaEditor,
     TextEditor,
     WysiwygEditor

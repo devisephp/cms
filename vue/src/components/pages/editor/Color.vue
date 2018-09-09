@@ -35,6 +35,8 @@ export default {
   mounted () {
     this.originalValue = Object.assign({}, this.value)
     this.localValue = this.value
+    
+
     this.setDefault()
   },
   methods: {
@@ -50,9 +52,15 @@ export default {
       if (this.localValue.color === null) {
         if (this.options.default) {
           this.color = this.convertColor(this.options.default)
+        } else {
+          this.color = this.convertColor('#000000')
         }
       } else {
-        this.color = this.convertColor(this.localValue.color)
+        if (this.localValue.color !== null) {
+          this.color = this.convertColor(this.localValue.color)
+        } else {
+          this.color = this.convertColor('#000000')
+        }
       }
     },
     convertColor (color) {

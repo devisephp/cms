@@ -17,8 +17,8 @@ export default {
     let elX = el.offsetLeft - marginLeft
     let elY = el.offsetTop - marginTop
 
-    let elWidth = el.offsetWidth
-    let elHeight = el.offsetHeight
+    var elWidth = el.offsetWidth
+    var elHeight = el.offsetHeight
 
     function calculateTuckX () {
       let rightSide = elX + elWidth + marginLeft + marginRight
@@ -33,14 +33,18 @@ export default {
     }
 
     function hide () {
+      elWidth = el.offsetWidth
+      elHeight = el.offsetHeight
+      
       let tuckX = calculateTuckX()
+      
 
       goHide = setTimeout(() => {
         TweenMax.to(el, 1, {
           left: `${tuckX}px`,
           width: `${elWidth}px`,
           height: `${elHeight}px`,
-          ease: Elastic.easeOut.config(1, 0.5)
+          ease: Elastic.easeOut.config(0.5, 0.5)
         })
       }, 1500)
     }
@@ -51,7 +55,7 @@ export default {
         top: `${elY}px`,
         left: `${elX}px`,
         width: 'auto',
-        ease: Elastic.easeOut.config(1, 0.5)
+        ease: Elastic.easeOut.config(0.5, 0.5)
       })
     }
 

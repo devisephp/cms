@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div class="dvs-absolute dvs-z-9999" :style="controlStyles" v-if="showEditor">
-      <div @click="toggleEditor()" class="dvs-flex dvs-items-center">
-        <settings-icon class="dvs-gear-1 dvs-cursor-pointer" w="30px" h="30px" />
-      </div>
-      <div class="dvs-absolute dvs-p-8 dvs-z-50 dvs-min-w-96 dvs-z-50 dvs-pin-r dvs-mr-8 dvs-rounded" :style="theme.panelCard" v-if="showEditor">
+    <div class="dvs-absolute dvs-z-9999" :style="controlStyles">
+      <div class="dvs-absolute dvs-p-8 dvs-z-50 dvs-min-w-96 dvs-z-50 dvs-pin-r dvs-mr-8 dvs-rounded shadow-lg" :style="theme.panelCard" v-if="showEditor">
         <fieldset class="dvs-fieldset">
           <label>Margins</label>
         </fieldset>
@@ -86,6 +83,8 @@ import ResizeObserver from 'resize-observer-polyfill';
 var tinycolor = require('tinycolor2')
 import { Photoshop, Sketch } from 'vue-color'
 
+import mezr from 'mezr'
+
 import Slice from './Slice'
 import {mapGetters, mapActions} from 'vuex'
 
@@ -110,6 +109,7 @@ export default {
   },
   created () {
     this.hydrateMissingProperties()
+    this.checkDefaults()
     this.backgroundColor = tinycolor('#fff').toRgb()
     this.sliceComponent = this.component(this.devise.metadata.name)
   },
@@ -141,23 +141,32 @@ export default {
       'regenerateMedia'
     ]),
     addListeners () {
-      let self = this
+      
+      
+      if (this.sliceEl.parentNode.children.length) {
+        
+        let self = this
+        this.resizeObserver = new ResizeObserver( entries => {
+          let styles = {}
+          for (let entry of entries) {
+            let cs = window.getComputedStyle(entry.target);
+            let rect = this.sliceEl.getBoundingClientRect();
 
-      this.resizeObserver = new ResizeObserver( entries => {
-        let styles = {}
-        for (let entry of entries) {
-          let cs = window.getComputedStyle(entry.target);
-          let rect = this.sliceEl.getBoundingClientRect();
+            this.controlStyles.right = `${entry.contentRect.right - entry.contentRect.width + 15}px`
+            this.controlStyles.top = `${rect.top + window.scrollY + 15}px`
 
-          this.controlStyles.right = `${entry.contentRect.right - entry.contentRect.width + 15}px`
-          this.controlStyles.top = `${rect.top + window.scrollY + 15}px`
+            if (entry.target.handleResize)
+                entry.target.handleResize(entry);
+          }
+        })
 
-          if (entry.target.handleResize)
-              entry.target.handleResize(entry);
-        }
-      })
+        this.resizeObserver.observe(this.sliceEl)
 
-      this.resizeObserver.observe(this.sliceEl)
+        window.devise.$bus.$on('jumpToSlice', this.attemptJumpToSlice)
+        window.devise.$bus.$on('openSliceSettings', this.attemptOpenSliceSettings)
+
+      }
+
     },
     hydrateMissingProperties () {
       let fields = this.sliceConfig(this.devise).fields
@@ -169,18 +178,10 @@ export default {
         for (var field in fields) {
           // Ok, so the property is missing from the slice.fields object so we're
           // going to add in a stub for the render.
-            this.addMissingProperty(field)
-          if (!this.deviseForSlice.hasOwnProperty(field)) {
-            this.addFieldConfigurations(fields, field)
+          this.addMissingProperty(field)
 
-            // If defaults are set then set them on top of the placeholder missing properties
-            if (fields[field].default) {
-              this.setDefaults(field, fields[field].default)
-            }
-          } else {
-            // The property is present but we need to make sure all the custom set properties are moved over
-            this.addFieldConfigurations(fields, field)
-          }
+          // The property is present but we need to make sure all the custom set properties are moved over
+          this.addFieldConfigurations(fields, field)
         }
       }
     },
@@ -199,6 +200,23 @@ export default {
       let mergedData = Object.assign({}, defaultProperties, this.deviseForSlice[field])
       this.$set(this.deviseForSlice, field, mergedData)     
     },
+    checkDefaults () {
+      let fields = this.sliceConfig(this.devise).fields
+
+      if (fields) {
+        // Loop through the fields for this slice and check to see that all the
+        // fields are present. If they aren't it's just because they haven't been
+        // hydrated via the editor yet.
+        for (var field in fields) {
+          if (this.deviseForSlice.hasOwnProperty(field)) {
+            // If defaults are set then set them on top of the placeholder missing properties
+            if (fields[field].default) {
+              this.setDefaults(field, fields[field].default)
+            }
+          }
+        }
+      }
+    },
     addFieldConfigurations (fields, field) {
       for (var pp in fields[field]) {
         if (!this.deviseForSlice[field].hasOwnProperty(pp)) {
@@ -209,7 +227,9 @@ export default {
     setDefaults (property, defaults) {
       // loop through the defaults and apply them to the field
       for (var d in defaults) {
-        this.$set(this.deviseForSlice[property], d, defaults[d])
+        if (!this.deviseForSlice[property][d] || this.deviseForSlice[property][d] === null) {
+          this.$set(this.deviseForSlice[property], d, defaults[d])
+        }
       }
     },
     toggleEditor () {
@@ -293,7 +313,25 @@ export default {
           }
         }
       }
-    }
+    },
+    attemptJumpToSlice (slice) {
+      if (this.devise.metadata && slice.metadata) {
+        if(this.devise.metadata.instance_id === slice.metadata.instance_id) {
+          let offset = mezr.offset(this.sliceEl, 'margin')
+          window.scrollTo({
+              top: offset.top,
+              behavior: "smooth"
+          });
+        }
+      }
+    },
+    attemptOpenSliceSettings (slice) {
+      if (this.devise.metadata && slice.metadata) {
+        if(this.devise.metadata.instance_id === slice.metadata.instance_id) {
+          this.showEditor = !this.showEditor
+        }
+      }
+    } 
   },
   computed: {
     ...mapGetters('devise', [
@@ -367,7 +405,35 @@ export default {
         return deviseSettings.$deviseComponents[this.devise.name]
       }
       return deviseSettings.$deviseComponents[this.devise.metadata.name]
+    },
+    mark () {
+      return this.devise.mark
     }
+  },
+  watch: {
+    mark (newValue) {
+      var markers = document.getElementsByClassName('devise-component-marker')
+      while(markers.length > 0){
+          markers[0].parentNode.removeChild(markers[0]);
+      }
+
+      if (newValue) {
+        let offset = mezr.offset(this.sliceEl, 'margin')
+        let width = mezr.width(this.sliceEl, 'margin');
+        let height = mezr.height(this.sliceEl, 'margin');
+
+        let marker  = document.createElement('div');
+        marker.innerHTML = `
+        <div class="dvs-absolute-center dvs-absolute">
+          <h1 class="dvs-text-grey-light dvs-font-hairline dvs-font-sans dvs-p-4 dvs-bg-abs-black dvs-rounded dvs-shadow-lg">
+            ${this.devise.metadata.label}
+          </h1>
+        </div>`
+        marker.classList = "devise-component-marker dvs-absolute dvs-bg-black dvs-z-60 dvs-opacity-75"
+        marker.style.cssText = `top:${offset.top}px;left:${offset.left}px;width:${width}px;height:${height}px`
+        document.body.appendChild(marker)
+      } 
+    } 
   },
   props: [
     'editorMode'

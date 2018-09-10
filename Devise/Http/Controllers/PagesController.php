@@ -98,7 +98,7 @@ class PagesController extends Controller
 
         $languageId = $request->input('language_id', $defaultLanguage->id);
 
-        if(!$request->get('paginate', false))
+        if($request->get('paginate', true))
         {
             $pages = $this->PagesRepository->pages($site->id, $languageId);
         } else {

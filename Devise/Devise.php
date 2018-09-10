@@ -50,7 +50,6 @@ class Devise
         $currentSite = $detector->current();
         $settings = $currentSite->settings;
 
-
         if (isset($settings->googleAnalytics) && $settings->googleAnalytics !== '')
         {
             $analytics = '

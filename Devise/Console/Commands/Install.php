@@ -133,10 +133,9 @@ class Install extends Command
         'updated_at'    => Date('Y-m-d H:i:s') 
       ]);
 
-      DB::table('dvs_site_element')->insert([
+      DB::table('dvs_site_language')->insert([
         'site_id'       => $site->id,
-        'element_type'  => 'Devise\Models\DvsLanguage',
-        'element_id'    => 1,
+        'language_id'    => 1,
         'default'       => 1,
         'created_at'    => Date('Y-m-d H:i:s'),
         'updated_at'    => Date('Y-m-d H:i:s') 

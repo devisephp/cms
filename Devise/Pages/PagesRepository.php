@@ -113,10 +113,9 @@ class PagesRepository
     }
 
     /**
-     * Finds lots of pages in the system that
-     * are not admin pages and belong to the current language
+     * Finds all pages belong to the site and language (paginated)
      *
-     * @return DvsPage
+     * @return Collection
      */
     public function pages($siteId, $languageId)
     {
@@ -125,6 +124,20 @@ class PagesRepository
             ->where('site_id', $siteId)
             ->where('language_id', $languageId)
             ->paginate();
+    }
+
+    /**
+     * Finds all pages belong to the site and language (paginated)
+     *
+     * @return Collection
+     */
+    public function all($siteId, $languageId)
+    {
+        return $this->Page
+            ->with('versions', 'metas')
+            ->where('site_id', $siteId)
+            ->where('language_id', $languageId)
+            ->get();
     }
 
     /**

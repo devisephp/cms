@@ -98,7 +98,12 @@ class PagesController extends Controller
 
         $languageId = $request->input('language_id', $defaultLanguage->id);
 
-        $pages = $this->PagesRepository->pages($site->id, $languageId);
+        if(!$request->get('paginate', false))
+        {
+            $pages = $this->PagesRepository->pages($site->id, $languageId);
+        } else {
+            $pages = $this->PagesRepository->all($site->id, $languageId);
+        }
 
         return PageResource::collection($pages);
     }

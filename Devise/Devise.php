@@ -33,7 +33,7 @@ class Devise
 
         if (Auth::user())
         {
-            $head .= '<link rel="stylesheet" href="' . mix('/css/devise.css', './devise/') . '">';
+            $head .= '<link rel="stylesheet" href="/devise/css/devise.css">';
         }
 
         $head .= '<style>';

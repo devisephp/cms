@@ -239,7 +239,7 @@
       selectSourceFile (file) {
         this.selectedFile = file
 
-        if (!this.options.sizes) {
+        if (!this.options || !this.options.sizes) {
           if (typeof this.target !== 'undefined') {
             this.target.value = this.selectedFile.url
           }

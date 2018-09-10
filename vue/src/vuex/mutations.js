@@ -84,6 +84,10 @@ export default {
     state.pages = payload
   },
 
+  setPagesList (state, payload) {
+    state.pagesList.data = payload
+  },
+
   appendPage (state, payload) {
     state.pages.data.push(payload)
   },

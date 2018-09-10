@@ -43,8 +43,6 @@ const funcs = {
       params['scopes'] = scopeParams
     }
 
-    
-
     if (filters.dates && Object.keys(filters.dates).length > 0) {
       let datesParams = {}
       for (let param in filters.dates) {

@@ -39,7 +39,7 @@ export default {
     ]),
     retrieveAnalytics () {
       let self = this
-      if (this.mothership) {
+      if (this.mothershipApiKey) {
 
         var yesterday = new Date()
         yesterday.setDate(yesterday.getDate() - 1)
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'mothership',
+      'mothershipApiKey',
       'currentPage'
     ]),
     anlyticsHasData () {

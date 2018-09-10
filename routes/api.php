@@ -1,7 +1,7 @@
 <?php
 
 //us ing web & auth so the user's web session will persist through the api. may need our own middware if we ever switch between web and oauth
-Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers', 'middleware' => ['web','auth']], function () {
+Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers', 'middleware' => []], function () {
 
     /**
      * Fields
@@ -53,9 +53,11 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
     Route::post('mothership/init', 'ReleasesController@init');
 
     Route::get('mothership/commit-hash', 'ReleasesController@commitHash');
-    Route::get('mothership/pending-changes', 'ReleasesController@all');
+    Route::get('mothership/pending-changes', 'ReleasesController@pendingChanges');
 
     Route::get('mothership/releases/{release_id}', 'ReleasesController@pull');
+    Route::get('mothership/releases', 'ReleasesController@ids');
+
     Route::post('mothership/releases', 'ReleasesController@send');
 
     /**

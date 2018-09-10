@@ -28,11 +28,17 @@ class ReleasesController extends Controller
         $this->Releases = $Releases;
     }
 
-    public function all(ApiRequest $request)
+    public function pendingChanges(ApiRequest $request)
     {
         $all = $this->Releases->getForDeviseFlow();
 
         return ReleaseModelResource::collection($all);
+    }
+
+    public function ids(ApiRequest $request)
+    {
+        return $this->Releases
+            ->releaseIds();
     }
 
     public function pull(ApiRequest $request, $releaseId)

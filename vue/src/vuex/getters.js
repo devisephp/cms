@@ -81,8 +81,11 @@ const getters = {
   },
 
   // Mothership API
-  mothership: state => {
-    return state.mothership
+  mothershipUrl: state => {
+    return state.mothership['url']
+  },
+  mothershipApiKey: state => {
+    return state.mothership['api-key']
   },
 
   changes: state => {

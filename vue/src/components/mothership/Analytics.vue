@@ -1,7 +1,7 @@
 <template>
 <div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
     <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-      <sidebar-header title="Network Analytics" back-text="Back to Mothership" back-page="devise-mothership-index" />
+      <sidebar-header title="Network Analytics" back-text="Back to Mothership" back-page="devise-mothershipApiKey-index" />
     </div>
 
     <div id="devise-admin-content" class="dvs-relative" >
@@ -271,7 +271,7 @@ export default {
     },
     retrieveAnalytics () {
       let self = this
-      if (this.mothership) {
+      if (this.mothershipApiKey) {
         if (typeof this.analyticsDateRange.start !== 'string' && this.analyticsDateRange.start[0]) {
           this.analyticsDateRange.start = this.formatDate(new Date(this.analyticsDateRange.start[0]))
         }
@@ -300,7 +300,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'mothership',
+      'mothershipApiKey',
       'currentPage',
       'sites'
     ]),

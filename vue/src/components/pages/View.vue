@@ -32,7 +32,7 @@
             <date-picker v-model="analyticsDateRange.end" :settings="{date: true, time: false}" placeholder="End Date" @update="retrieveAnalytics()" />
           </fieldset>
         </div>
-        <div class="dvs-mb-12" v-if="mothership">
+        <div class="dvs-mb-12" v-if="mothershipApiKey">
           <line-chart class="dvs-mb-8" :chart-data="analytics.data" :options="options" :width="800" :height="200" />
         </div>
       </template>
@@ -370,7 +370,7 @@ export default {
     retrieveAnalytics (version) {
       let self = this
 
-      if (this.mothership) {
+      if (this.mothershipApiKey) {
         if (typeof this.analyticsDateRange.start !== 'string' && this.analyticsDateRange.start[0]) {
           this.analyticsDateRange.start = this.formatDate(new Date(this.analyticsDateRange.start[0]))
         }
@@ -407,7 +407,7 @@ export default {
     ...mapGetters('devise', [
       'page',
       'languages',
-      'mothership'
+      'mothershipApiKey'
     ]),
     options () {
       return {

@@ -170,6 +170,7 @@ const DevisePlugin = {
         ...mapGetters('devise', [
           'breakpoint',
           'currentPage',
+          'currentUser',
           'lang',
           'theme'
         ]),

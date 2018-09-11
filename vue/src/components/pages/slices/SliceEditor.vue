@@ -91,11 +91,7 @@
       <help 
         v-if="slice.metadata.type === 'model'" 
         class="dvs-mb-4"
-        :style="`
-          border-color:${theme.buttonsActionLeft.color};
-          background:${theme.buttonsActionRight.color};
-          color:${theme.buttonsActionText.color};
-        `" 
+        :style="theme.panel" 
         >
         Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
       </help>

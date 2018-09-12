@@ -8,11 +8,9 @@ class DvsSliceInstance extends Model
 {
     use IsDeviseComponent;
 
-    protected $fillable = ['page_version_id', 'parent_instance_id', 'view', 'type', 'label', 'position', 'settings', 'model_query'];
+    protected $fillable = ['page_version_id', 'parent_instance_id', 'view', 'label', 'position', 'settings', 'model_query'];
 
     protected $table = 'dvs_slice_instances';
-
-    public $parent_type = 'single';
 
     public function pageVersion()
     {
@@ -45,5 +43,10 @@ class DvsSliceInstance extends Model
         $json = $value ?: '{}';
 
         return json_decode($json);
+    }
+
+    public function getHasModelQueryAttribute()
+    {
+        return ($this->model_query != '');
     }
 }

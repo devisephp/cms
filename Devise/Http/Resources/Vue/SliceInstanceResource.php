@@ -16,16 +16,15 @@ class SliceInstanceResource extends Resource
             'metadata' => [
                 'instance_id' => $this->id,
                 'name'        => $this->component_name,
-                'type'        => $this->type,
                 'label'       => $this->label,
                 'view'        => $this->view,
                 'model_query' => $this->model_query,
-                'placeholder' => ($this->type == 'single' || $this->parent_type == 'repeats') ? false : true,
+                'placeholder' => ($this->has_model_query) ? false : true,
             ],
             'settings' => $this->settings
         ];
 
-        if ($this->type == 'model')
+        if ($this->has_model_query)
         {
             $this->setModelSlices($data);
         } else
@@ -40,16 +39,7 @@ class SliceInstanceResource extends Resource
 
     private function setChildSlices(&$data)
     {
-        if ($this->slices->count())
-        {
-            $this->slices->map(function ($slice) {
-                $slice->parent_type = $this->type;
-
-                return $slice;
-            });
-
-            $data['slices'] = SliceInstanceResource::collection($this->slices);
-        }
+        $data['slices'] = SliceInstanceResource::collection($this->slices);
     }
 
     private function setModelSlices(&$data)
@@ -67,7 +57,6 @@ class SliceInstanceResource extends Resource
             $data['metadata'] = [
                 'instance_id' => 0,
                 'name'        => $this->component_name,
-                'type'        => $this->type,
                 'label'       => $this->label,
                 'view'        => $this->view,
                 'model_query' => $this->model_query,

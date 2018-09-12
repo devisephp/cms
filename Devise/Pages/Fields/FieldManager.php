@@ -114,6 +114,24 @@ class FieldManager
             ->delete();
     }
 
+    /**
+     * This function will get us our field
+     *
+     * @param  integer $fieldId
+     * @param  array $input
+     * @return Field
+     */
+    protected function getFieldToUpdate($fieldId, $fieldInput, $pageInput)
+    {
+        $scope = array_get($fieldInput, 'scope');
+
+        $field = $scope == 'global'
+            ? $this->GlobalField->whereId($fieldId)->firstOrFail()
+            : $this->DvsField->whereId($fieldId)->firstOrFail();
+
+        return $field;
+    }
+
     private function iterateSliceInstances($pageVersionId, $slices, $parentId = 0, &$index = 0, &$instanceIds = [])
     {
         foreach ($slices as $slice)
@@ -127,7 +145,6 @@ class FieldManager
                 $sliceInstance->parent_instance_id = $parentId;
                 $sliceInstance->settings = (isset($slice['settings'])) ? $slice['settings'] : null;
                 $sliceInstance->position = $index;
-                $sliceInstance->type = $slice['metadata']['type'];
                 $sliceInstance->view = $slice['metadata']['view'];
                 $sliceInstance->label = $slice['metadata']['label'];
                 $sliceInstance->model_query = $slice['metadata']['model_query'];
@@ -163,162 +180,5 @@ class FieldManager
                 $this->iterateSliceInstances($pageVersionId, $slice['slices'], $sliceInstanceId, $index, $instanceIds);
             }
         }
-    }
-
-    /**
-     * This function will get us our field
-     *
-     * @param  integer $fieldId
-     * @param  array $input
-     * @return Field
-     */
-    protected
-    function getFieldToUpdate($fieldId, $fieldInput, $pageInput)
-    {
-        $scope = array_get($fieldInput, 'scope');
-
-        $newScope = array_get($fieldInput, 'new_scope', $scope);
-
-        $field = $scope == 'global'
-            ? $this->GlobalField->whereId($fieldId)->firstOrFail()
-            : $this->DvsField->whereId($fieldId)->firstOrFail();
-
-        if ($newScope !== $scope)
-        {
-            $field = $this->changeFieldScope($field, $newScope, $fieldInput, $pageInput);
-        }
-
-        return $field;
-    }
-
-    /**
-     * Changes the field scope
-     *
-     * @param  DvsField|DvsGlobalField $field
-     * @param  string $newScope
-     * @param  array $input
-     * @return DvsField|DvsGlobalField
-     */
-    protected
-    function changeFieldScope($field, $newScope, $fieldInput, $pageInput)
-    {
-        if ($newScope == 'global')
-        {
-            $field->delete(); // delete the page field so the global field can take over
-
-            return $this->changeToGlobalField($fieldInput, $pageInput);
-        }
-
-        return $this->changeToPageField($fieldInput, $pageInput);
-    }
-
-    /**
-     * Changes this page field to a global field
-     *
-     * @param  array $fieldInput
-     * @param  array $pageInput
-     * @return DvsGlobalField
-     */
-    protected
-    function changeToGlobalField($fieldInput, $pageInput)
-    {
-        $field = $this->FieldsRepository->findFieldByGlobalKeyAndLanguage($fieldInput['key'], $pageInput['language_id']);
-
-        if (!$field)
-        {
-            $field = $this->newGlobalField($pageInput['language_id'], $fieldInput['key'], $fieldInput['type'], $fieldInput['human_name']);
-            $this->removePristinePageFields($fieldInput['key']);
-        }
-
-        return $field;
-    }
-
-    /**
-     * Removes the pristine page fields
-     * for this global field. We only
-     * do this when we *first* create
-     * the global field
-     *
-     * @param  DvsGlobalField $global
-     * @return void
-     */
-    protected
-    function removePristinePageFields($key)
-    {
-        $pristine = $this->FieldsRepository->findPristinePageFields($key);
-
-        foreach ($pristine as $field)
-        {
-            $field->delete();
-        }
-    }
-
-    /**
-     * Changes this global field to a page field
-     *
-     * @param  array $fieldInput
-     * @param  array $pageInput
-     * @return DvsField
-     */
-    protected
-    function changeToPageField($fieldInput, $pageInput)
-    {
-        $field = $this->FieldsRepository->findTrashedFieldByKeyAndPageVersion($fieldInput['key'], $pageInput['page_version_id']);
-
-        if ($field)
-        {
-            $field->restore();
-
-            return $field;
-        }
-
-        $field = $this->FieldsRepository->findFieldByKeyAndPageVersion($fieldInput['key'], $pageInput['page_version_id'], null);
-
-        return $field ?: $this->newPageField($pageInput['page_version_id'], $fieldInput['key'], $fieldInput['type'], $fieldInput['human_name']);
-    }
-
-    /**
-     * Create page field given input
-     *
-     * @param  array $input
-     * @internal param Field $field
-     * @return PageField
-     */
-    protected
-    function newGlobalField($languageId, $key, $type, $humanName)
-    {
-        $field = $this->GlobalField->newInstance();
-
-        $field->language_id = $languageId;
-        $field->type = $type;
-        $field->human_name = $humanName;
-        $field->key = $key;
-        $field->json_value = '{}';
-        $field->save();
-
-        return $field;
-    }
-
-    /**
-     * Create page field given input
-     *
-     * @param  array $input
-     * @internal param Field $field
-     * @return PageField
-     */
-    protected
-    function newPageField($pageVersionId, $key, $type, $humanName)
-    {
-        $field = $this->DvsField->newInstance();
-
-        $field->page_version_id = $pageVersionId;
-        $field->type = $type;
-        $field->human_name = $humanName;
-        $field->key = $key;
-        $field->collection_instance_id = null;
-        $field->json_value = '{}';
-        $field->save();
-
-        return $field;
     }
 }

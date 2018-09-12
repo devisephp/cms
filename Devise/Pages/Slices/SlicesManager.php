@@ -54,7 +54,6 @@ class SlicesManager
             $instance->page_version_id = $pageVersionId;
             $instance->parent_instance_id = $parentId;
             $instance->view = $slice->view;
-            $instance->type = $slice->type;
             $instance->label = $slice->label;
             $instance->position = $slice->position;
             $instance->settings = $slice->settings;
@@ -77,7 +76,6 @@ class SlicesManager
             'page_version_id'    => $pageVersionId,
             'parent_instance_id' => $parentSliceId,
             'view'               => $instance->view,
-            'type'               => $instance->type,
             'label'              => $instance->label,
             'position'           => $instance->position,
             'settings'           => $instance->settings,

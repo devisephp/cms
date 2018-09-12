@@ -94,6 +94,10 @@ const getters = {
     return state.pages
   },
 
+  pagesList: state => {
+    return state.pagesList
+  },
+
   page: (state, getters, rootState) => {
     var id = parseInt(rootState.route.params.pageId)
     return state.pages.data.find(page => page.id === id)

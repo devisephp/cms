@@ -112,6 +112,23 @@ class PagesController extends Controller
      * Request the page listing
      *
      */
+    public function pagesList(ApiRequest $request)
+    {
+        $site = $this->SiteDetector->current();
+
+        $defaultLanguage = $site->default_language;
+
+        $languageId = $request->input('language_id', $defaultLanguage->id);
+
+        $pages = $this->PagesRepository->list($site->id, $languageId);
+
+        return $pages;
+    }
+
+    /**
+     * Request the page listing
+     *
+     */
     public function suggestList(ApiRequest $request)
     {
         $term = $request->input('term');

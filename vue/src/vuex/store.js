@@ -107,6 +107,9 @@ const state = {
   pages: {
     data: []
   },
+  pagesList: {
+    data: []
+  },
   site: {},
   sites: {
     data: []

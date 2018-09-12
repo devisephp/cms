@@ -140,6 +140,21 @@ class PagesRepository
             ->get();
     }
 
+        /**
+     * Finds all pages belong to the site and language (paginated)
+     *
+     * @return Collection
+     */
+    public function list($siteId, $languageId)
+    {
+        return $this->Page
+            ->select('id', 'title')
+            ->where('site_id', $siteId)
+            ->where('language_id', $languageId)
+            ->orderBy('title')
+            ->get();
+    }
+
     /**
      * List of all the languages available for a page
      *

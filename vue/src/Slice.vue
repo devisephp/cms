@@ -9,8 +9,6 @@
     :models="pageData"
     :component="sliceComponent"
     ref="component">
-    
-    
   </component>
 </template>
 
@@ -54,7 +52,7 @@ export default {
     if (typeof this.devise.settings === 'undefined') {
       this.$set(this.devise, 'settings', {})
     }
-    
+
     if (typeof this.devise.settings.backgroundColor !== 'undefined') {
       this.backgroundColor = tinycolor(this.devise.settings.backgroundColor).toRgb()
     }

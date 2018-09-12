@@ -42,6 +42,7 @@
 
     <portal-target class="dvs-relative dvs-z-9999" name="devise-root"></portal-target>
     <media-manager class="dvs-z-9999" />
+    <slice-settings />
     <loadbar class="dvs-relative dvs-z-9999" />
     <messages class="dvs-relative dvs-z-9999" />
 
@@ -64,6 +65,7 @@ import MediaManager from './../media-manager/MediaManager'
 import Messages from './../utilities/Messages'
 import Panel from './../utilities/Panel'
 import PreviewMode from './../pages/PreviewMode'
+import SliceSettings from './../../SliceSettings'
 import { mapState } from 'vuex';
 
 export default {
@@ -101,6 +103,7 @@ export default {
     Panel,
     PowerIcon,
     SaveIcon,
+    SliceSettings,
   }
 }
 </script>

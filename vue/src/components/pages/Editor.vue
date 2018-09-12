@@ -2,32 +2,30 @@
   <div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-8 dvs-pb-8 dvs-pt-8">
-      <div class="dvs-pb-8">
         <draggable v-model="page.slices" element="ul" class="dvs-list-reset" :options="{handle: '.handle'}">
           <template v-for="slice in page.slices">
-            <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" @markSlice="markSlice" />
+            <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" @copySlice="copySlice" @markSlice="markSlice" />
           </template>
         </draggable>
 
-        <manage-slice v-if="createSlice === true" @addSlice="addSlice" @cancel="createSlice = false" />
+        <manage-slice ref="manageSlice" v-if="createSlice === true" @addSlice="addSlice" @cancel="createSlice = false" />
 
         <div class="dvs-flex dvs-justify-center">
           <button 
             :style="theme.actionButtonGhost"
-            class="dvs-rounded-full dvs-mb-4 dvs-flex dvs-justify-center dvs-items-center dvs-p-2 dvs-pr-4 dvs-uppercase dvs-text-xs dvs-font-bold"
-            @click.prevent="createSlice = true">
+            class="dvs-rounded-full dvs-my-4 dvs-flex dvs-justify-center dvs-items-center dvs-p-2 dvs-pr-4 dvs-uppercase dvs-text-xs dvs-font-bold"
+            @click.prevent="requestAddSlice">
             <add-icon w="20" h="20" /> Add Slice
           </button>
         </div>
 
         <button 
           :style="theme.actionButton"
-          class="dvs-btn dvs-block dvs-w-full"
+          class="dvs-btn dvs-mt-8 dvs-block dvs-w-full"
           @click.prevent="requestSavePage()">
           Save Page
         </button>
       </div>
-    </div>
 
     <portal to="devise-root">
       <analytic-totals />
@@ -79,6 +77,13 @@ export default {
       let theSlice = this.page.slices[this.page.slices.indexOf(payload.slice)]
       this.$set(theSlice, 'mark', payload.on)
     },
+    requestAddSlice () {
+      let self = this
+      this.createSlice = true
+      this.$nextTick(function () {
+        this.$refs.manageSlice.action = 'insert'
+      })
+    },
     addSlice (newSlice, referenceSlice) {
       if (typeof referenceSlice !== 'undefined') {
         let parentSlice = this.page.slices[this.page.slices.indexOf(referenceSlice)]
@@ -98,7 +103,15 @@ export default {
     editSlice (editedSlice, referenceSlice) {
       this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)
     },
-    removeSlice (deletingSlice,referenceSlice) {
+    copySlice (sliceToCopy, referenceSlice) {
+      if (typeof referenceSlice === 'undefined' || referenceSlice === null) {
+        referenceSlice = this.page
+      }
+      var newSlice = Object.assign({}, sliceToCopy)
+      newSlice.metadata.instance_id = 0
+      referenceSlice.slices.push(newSlice)
+    },
+    removeSlice (deletingSlice, referenceSlice) {
       if (typeof referenceSlice === 'undefined') {
         referenceSlice = this.page
       }

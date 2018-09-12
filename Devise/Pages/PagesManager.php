@@ -153,13 +153,12 @@ class PagesManager
 
         $page->updateFromArray($input);
 
-        if (isset($input['slices']) && $input['slices'])
+        if (isset($input['slices']))
         {
             $this->FieldManager->saveSliceInstanceFields($page->currentVersion->id, $input['slices']);
         }
 
         $this->PageMetaManager->savePageMeta($page->id, array_get($input, 'meta', []));
-
 
         return $page;
     }

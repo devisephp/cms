@@ -1,80 +1,17 @@
 <template>
-  <div>
-    <div class="dvs-absolute dvs-z-9999" :style="controlStyles">
-      <div class="dvs-absolute dvs-p-8 dvs-z-50 dvs-min-w-96 dvs-z-50 dvs-pin-r dvs-mr-8 dvs-rounded shadow-lg" :style="theme.panelCard" v-if="showEditor">
-        <fieldset class="dvs-fieldset">
-          <label>Margins</label>
-        </fieldset>
-        <div class="dvs-flex">
-          <fieldset class="dvs-fieldset dvs-mr-1 dvs-text-center">
-            <label>T</label>
-            <input type="number" :value="getStyle('margin', 'top')" @keyup="setMargin('top', $event)" @click="setMargin('top', $event)">
-          </fieldset>
-          <fieldset class="dvs-fieldset dvs-mr-1 dvs-text-center">
-            <label>R</label>
-            <input type="number" :value="getStyle('margin', 'right')" @keyup="setMargin('right', $event)" @click="setMargin('right', $event)">
-          </fieldset>
-          <fieldset class="dvs-fieldset dvs-mr-1 dvs-text-center">
-            <label>B</label>
-            <input type="number" :value="getStyle('margin', 'bottom')" @keyup="setMargin('bottom', $event)" @click="setMargin('bottom', $event)">
-          </fieldset>
-          <fieldset class="dvs-fieldset dvs-mr-1 dvs-text-center">
-            <label>L</label>
-            <input type="number" :value="getStyle('margin', 'left')" @keyup="setMargin('left', $event)" @click="setMargin('left', $event)">
-          </fieldset>
-        </div>
-
-        <fieldset class="dvs-fieldset dvs-mt-8">
-          <label>Padding</label>
-        </fieldset>
-        <div class="dvs-flex">
-          <fieldset class="dvs-fieldset dvs-mr-1 dvs-text-center">
-            <label>T</label>
-            <input type="number" :value="getStyle('padding', 'top')" @keyup="setPadding('top', $event)" @click="setPadding('top', $event)">
-          </fieldset>
-          <fieldset class="dvs-fieldset dvs-mr-1 dvs-text-center">
-            <label>R</label>
-            <input type="number" :value="getStyle('padding', 'right')" @keyup="setPadding('right', $event)" @click="setPadding('right', $event)">
-          </fieldset>
-          <fieldset class="dvs-fieldset dvs-mr-1 dvs-text-center">
-            <label>B</label>
-            <input type="number" :value="getStyle('padding', 'bottom')" @keyup="setPadding('bottom', $event)" @click="setPadding('bottom', $event)">
-          </fieldset>
-          <fieldset class="dvs-fieldset dvs-mr-1 dvs-text-center">
-            <label>L</label>
-            <input type="number" :value="getStyle('padding', 'left')" @keyup="setPadding('left', $event)" @click="setPadding('left', $event)">
-          </fieldset>
-        </div>
-
-        <fieldset class="dvs-fieldset dvs-mt-8">
-          <label>Background Color</label>
-        </fieldset>
-        <sketch-picker v-model="backgroundColor" @input="setBackground(backgroundColor)" @ok="setBackground(backgroundColor)" />
-
-        <div class="dvs-mt-8 dvs-flex">
-          <button class="dvs-btn dvs-mr-4" :style="theme.actionButton" @click="toggleEditor">
-            Done
-          </button>
-          <button class="dvs-btn dvs-mr-4" :style="theme.actionButtonGhost" @click="resetStyles">
-            Reset All Values
-          </button>
-
-        </div>
-      </div>
-
-    </div>
-    <component 
-      v-if="sliceComponent !== null"
-      :style="styles"
-      :is="currentView" 
-      :devise="deviseForSlice"
-      :breakpoint="breakpoint"
-      :slices="devise.slices" 
-      :models="pageData"
-      :component="sliceComponent"
-      ref="component">
-    </component>
-  </div>
+  <component 
+    v-if="sliceComponent !== null"
+    :style="styles"
+    :is="currentView" 
+    :devise="deviseForSlice"
+    :breakpoint="breakpoint"
+    :slices="devise.slices" 
+    :models="pageData"
+    :component="sliceComponent"
+    ref="component">
+    
+    
+  </component>
 </template>
 
 <script>
@@ -100,11 +37,7 @@ export default {
       showEditor: false,
       sliceEl: null,
       sliceComponent: null,
-      resizeObserver: null,
-      controlStyles: {
-        right: null,
-        top: null
-      }
+      resizeObserver: null
     }
   },
   created () {
@@ -121,11 +54,7 @@ export default {
     if (typeof this.devise.settings === 'undefined') {
       this.$set(this.devise, 'settings', {})
     }
-
-    if (this.devise.settings.length < 1) {
-      this.resetStyles()
-    }
-
+    
     if (typeof this.devise.settings.backgroundColor !== 'undefined') {
       this.backgroundColor = tinycolor(this.devise.settings.backgroundColor).toRgb()
     }
@@ -141,31 +70,9 @@ export default {
       'regenerateMedia'
     ]),
     addListeners () {
-      
-      
-      if (this.sliceEl.parentNode.children.length) {
-        
-        let self = this
-        this.resizeObserver = new ResizeObserver( entries => {
-          let styles = {}
-          for (let entry of entries) {
-            let cs = window.getComputedStyle(entry.target);
-            let rect = this.sliceEl.getBoundingClientRect();
-
-            this.controlStyles.right = `${entry.contentRect.right - entry.contentRect.width + 15}px`
-            this.controlStyles.top = `${rect.top + window.scrollY + 15}px`
-
-            if (entry.target.handleResize)
-                entry.target.handleResize(entry);
-          }
-        })
-
-        this.resizeObserver.observe(this.sliceEl)
-
-        window.devise.$bus.$on('jumpToSlice', this.attemptJumpToSlice)
-        window.devise.$bus.$on('openSliceSettings', this.attemptOpenSliceSettings)
-
-      }
+    
+      window.devise.$bus.$on('jumpToSlice', this.attemptJumpToSlice)
+      window.devise.$bus.$on('openSliceSettings', this.attemptOpenSliceSettings)
 
     },
     hydrateMissingProperties () {
@@ -227,49 +134,10 @@ export default {
     setDefaults (property, defaults) {
       // loop through the defaults and apply them to the field
       for (var d in defaults) {
-        if (!this.deviseForSlice[property][d] || this.deviseForSlice[property][d] === null) {
+        if (typeof this.deviseForSlice[property][d] === 'undefined' || this.deviseForSlice[property][d] === null) {
           this.$set(this.deviseForSlice[property], d, defaults[d])
         }
       }
-    },
-    toggleEditor () {
-      this.showEditor = !this.showEditor
-    },
-    resetStyles () {
-      this.$set(this.deviseForSlice, 'settings', {})
-      this.backgroundColor = tinycolor('#fff').toRgb()
-      this.showEditor = false
-    },
-    setMargin (position, event) {
-      let value = event.target.value
-
-      if (typeof this.deviseForSlice.settings.margin === 'undefined') {
-        this.$set(this.deviseForSlice.settings, 'margin', {})
-      }
-
-      this.$set(this.deviseForSlice.settings.margin, position, value)
-    },
-    setPadding (position, event) {
-      let value = event.target.value
-
-      if (typeof this.deviseForSlice.settings.padding === 'undefined') {
-        this.$set(this.deviseForSlice.settings, 'padding', {})
-      }
-
-      this.$set(this.deviseForSlice.settings.padding, position, value)
-    },
-    getStyle (type, position) {
-      if (type === 'margin' || type === 'padding') {
-        if (typeof this.deviseForSlice.settings[type] !== 'undefined') {
-          if (typeof this.deviseForSlice.settings[type][position] !== 'undefined') {
-            return this.deviseForSlice.settings[type][position]
-          }
-        }
-        return 0
-      }
-    },
-    setBackground (color) {
-      this.$set(this.deviseForSlice.settings, 'backgroundColor', `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`)
     },
     checkMediaSizesForRegeneration () {
       // If the current slice even has fields
@@ -328,7 +196,7 @@ export default {
     attemptOpenSliceSettings (slice) {
       if (this.devise.metadata && slice.metadata) {
         if(this.devise.metadata.instance_id === slice.metadata.instance_id) {
-          this.showEditor = !this.showEditor
+          deviseSettings.$bus.$emit('open-slice-settings', this.deviseForSlice)
         }
       }
     } 

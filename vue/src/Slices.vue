@@ -42,9 +42,9 @@ export default {
           }
           return placeholderSlices
         } else {
-          // If it's a placeholder for model or repeatable's we need to dig down
+          // If it's a placeholder for model we need to dig down
           // one level and use the placeholder's slices.
-          if (s.metadata.type === 'repeats' || s.metadata.type === 'model') {
+          if (s.metadata.type === 'model') {
             if (s.slices) {
               let slices = s.slices.map(s => h(
                 Slice, 

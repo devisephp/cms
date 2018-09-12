@@ -45,6 +45,11 @@ class DvsSliceInstance extends Model
         return json_decode($json);
     }
 
+    public function getTypeAttribute()
+    {
+        return $this->has_model_query ? 'model' : 'single';
+    }
+
     public function getHasModelQueryAttribute()
     {
         return ($this->model_query != '');

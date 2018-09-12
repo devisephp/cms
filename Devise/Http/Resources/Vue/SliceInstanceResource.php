@@ -18,6 +18,7 @@ class SliceInstanceResource extends Resource
                 'name'        => $this->component_name,
                 'label'       => $this->label,
                 'view'        => $this->view,
+                'type'        => $this->type,
                 'model_query' => $this->model_query,
                 'placeholder' => ($this->has_model_query) ? false : true,
             ],

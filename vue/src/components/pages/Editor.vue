@@ -2,7 +2,7 @@
   <div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-8 dvs-pb-8 dvs-pt-8">
-        <draggable v-model="page.slices" element="ul" class="dvs-list-reset" :options="{handle: '.handle'}">
+        <draggable v-model="page.slices" element="ul" class="dvs-list-reset" :options="{group:{ name:'g1'}}">
           <template v-for="slice in page.slices">
             <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" @copySlice="copySlice" @markSlice="markSlice" />
           </template>
@@ -73,10 +73,6 @@ export default {
     closeSlice (slice) {
       this.$set(slice.metadata, 'open', false)
     },
-    markSlice (payload) {
-      let theSlice = this.page.slices[this.page.slices.indexOf(payload.slice)]
-      this.$set(theSlice, 'mark', payload.on)
-    },
     requestAddSlice () {
       let self = this
       this.createSlice = true
@@ -104,11 +100,13 @@ export default {
       this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)
     },
     copySlice (sliceToCopy, referenceSlice) {
-      if (typeof referenceSlice === 'undefined' || referenceSlice === null) {
+      if (referenceSlice === null) {
         referenceSlice = this.page
       }
-      var newSlice = Object.assign({}, sliceToCopy)
+      
+      var newSlice = JSON.parse(JSON.stringify(sliceToCopy))
       newSlice.metadata.instance_id = 0
+
       referenceSlice.slices.push(newSlice)
     },
     removeSlice (deletingSlice, referenceSlice) {

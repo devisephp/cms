@@ -5,7 +5,7 @@
       <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full" :style="{color: theme.panel.color}" :class="{'dvs-pl-4': child}">
         <div class="dvs-flex dvs-items-center">
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
-          <span class="dvs-cursor-pointer" @click="toggleSlice(slice)"  @mouseenter="markSlice(true)"  @mouseleave="markSlice(false)">{{ slice.metadata.label }}</span>
+          <span class="dvs-cursor-pointer" @click="toggleSlice(slice)"  @mouseenter="markSlice(true, slice)"  @mouseleave="markSlice(false, slice)">{{ slice.metadata.label }}</span>
         </div>
         <div class="dvs-cursor-pointer dvs-ml-2 dvs-relative dvs-p-2 dvs-rounded-sm dvs-flex dvs-items-center" @mouseenter="moreHovered = true" @mouseleave="moreHovered = false" :style="{backgroundColor: this.theme.panelCard.backgroundColor}">
           <more-icon w="18" h="18" style="transform:rotate(90deg)" :style="{color: 'white'}" />
@@ -19,59 +19,11 @@
                   <locate-icon w="25" h="25" :style="theme.panelIcons" /> 
                   <div 
                     class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
-                      Jump To Slice
+                      Find
                   </div>
                 </div>
               </div>
 
-              <div class="dvs-w-1/3">
-                <div class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
-                    :style="{ borderColor: theme.panelIcons.color }" 
-                    @click="sliceSettings()">
-                  <cog-icon w="25" h="25" :style="theme.panelIcons" /> 
-                  <div 
-                    class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
-                      Display Settings
-                  </div>
-                </div>
-              </div>
-
-              <div class="dvs-w-1/3">
-                <div class="dvs-cursor-pointer dvs-mr-2  dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
-                    :style="{ borderColor: theme.panelIcons.color }" 
-                    @click="removeSlice()">
-                  <remove-icon w="25" h="25" :style="theme.panelIcons" /> 
-                  <div 
-                    class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
-                      Remove Slice
-                  </div>
-                </div>
-              </div>
-
-              <div class="dvs-w-1/3">
-                <div class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2  dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
-                    :style="{ borderColor: theme.panelIcons.color }" 
-                    @click="requestEditSlice()">
-                  <create-icon w="25" h="25" :style="theme.panelIcons" /> 
-                  <div 
-                    class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
-                      Edit Slice Properties
-                  </div>
-                </div>
-              </div>
-
-              <div class="dvs-w-1/3">
-                <div class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
-                    :style="{ borderColor: theme.panelIcons.color }" 
-                    @click="copySlice(slice, null)">
-                  <copy-icon w="25" h="25" :style="theme.panelIcons" /> 
-                  <div 
-                    class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
-                      Duplicate Slice
-                  </div>
-                </div>
-              </div>
-              
               <div class="dvs-w-1/3">              
                 <div class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
                     :style="{ borderColor: theme.panelIcons.color }" 
@@ -79,10 +31,59 @@
                   <add-icon w="25" h="25" :style="theme.panelIcons" /> 
                   <div 
                     class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
-                      Insert Child Slice
+                      Insert Slice
                   </div>
                 </div>
               </div>
+
+              <div class="dvs-w-1/3">
+                <div class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
+                    :style="{ borderColor: theme.panelIcons.color }" 
+                    @click="copySlice(slice, false)">
+                  <copy-icon w="25" h="25" :style="theme.panelIcons" /> 
+                  <div 
+                    class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
+                      Duplicate
+                  </div>
+                </div>
+              </div>
+
+              <div class="dvs-w-1/3">
+                <div class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
+                    :style="{ borderColor: theme.panelIcons.color }" 
+                    @click="sliceSettings()">
+                  <cog-icon w="25" h="25" :style="theme.panelIcons" /> 
+                  <div 
+                    class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
+                      Settings
+                  </div>
+                </div>
+              </div>
+
+              <div class="dvs-w-1/3">
+                <div class="dvs-cursor-pointer dvs-mr-2  dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
+                    :style="{ borderColor: theme.panelIcons.color }" 
+                    @click="requestEditSlice()">
+                  <create-icon w="25" h="25" :style="theme.panelIcons" /> 
+                  <div 
+                    class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
+                      Edit
+                  </div>
+                </div>
+              </div>
+
+              <div class="dvs-w-1/3">
+                <div class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2" 
+                    :style="{ borderColor: theme.panelIcons.color }" 
+                    @click="removeSlice()">
+                  <remove-icon w="25" h="25" :style="theme.panelIcons" /> 
+                  <div 
+                    class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">
+                      Remove
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -134,18 +135,22 @@
         >
         Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.
       </help>
+    </div>
 
-      <ul class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" >
+    <div class="dvs-collapsed" v-if="slice.metadata.open">
+      <draggable v-model="slice.slices" element="ul" class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" :options="{group:{ name:'g1'}}">
         <template v-for="(s, key) in slice.slices">
-          <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @copySlice="copySlice" @markSlice="markSlice" />
+          <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
         </template>
-      </ul>
+      </draggable>
     </div>
 
   </li>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 import { mapGetters } from 'vuex'
 
 import CheckboxEditor from './../editor/Checkbox'
@@ -240,12 +245,8 @@ export default {
     },
 
     // Marking Slice
-    markSlice (payload) {
-      if (typeof payload === 'object') {
-        this.$emit('markSlice', {slice: this.slice, on: payload.on})
-      } else {
-        this.$emit('markSlice', {slice: this.slice, on: payload})
-      }
+    markSlice (on, slice, referringSlice) {
+      this.$set(slice, 'mark', on)
     },
     jumpToSlice () {
       window.devise.$bus.$emit('jumpToSlice', this.slice)
@@ -282,9 +283,13 @@ export default {
       this.$emit('editSlice', slice, referringSlice)
       this.manageSlice = false
     },
-    copySlice (slice, referringSlice) {
-      if (typeof referringSlice === 'undefined') {
+    copySlice (slice, referringSlice) {      
+      if (referringSlice === null) {
         referringSlice = this.slice
+      }
+
+      if (referringSlice === false) {
+        referringSlice = null
       }
 
       this.$emit('copySlice', slice, referringSlice)
@@ -349,6 +354,7 @@ export default {
     CopyIcon,
     ColorEditor,
     CreateIcon,
+    draggable,
     ImageEditor,
     LinkEditor,
     LocateIcon,

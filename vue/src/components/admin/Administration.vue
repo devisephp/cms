@@ -7,7 +7,7 @@
       <preview-mode class="dvs-z-9980" v-tuck v-if="managingPage" />
     </transition>
       
-    <panel class="dvs-m-8 dvs-fixed dvs-z-9980" style="min-width:300px;" :panel-style="theme.panel" v-tuck v-tilt>
+    <panel class="dvs-m-8 dvs-fixed dvs-z-9980" style="min-width:360px;" :panel-style="theme.panel" v-tuck v-tilt>
       <div class="dvs-flex">
         <div :style="theme.panelSidebar" class="dvs-flex dvs-flex-col" >
           <template v-for="(menuItem, key) in adminMenu">
@@ -31,7 +31,7 @@
           </form>
         </div>
 
-        <div class="dvs-max-h-screen" ref="admin-route-wrapper" data-simplebar>
+        <div class="dvs-max-h-screen dvs-flex-grow" ref="admin-route-wrapper" data-simplebar>
           <transition name="dvs-fade" mode="out-in">
             <router-view name="devise" :page="page"></router-view>
           </transition>

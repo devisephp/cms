@@ -4,7 +4,7 @@
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-8 dvs-pb-8 dvs-pt-8">
         <draggable v-model="page.slices" element="ul" class="dvs-list-reset" :options="{group:{ name:'g1'}}">
           <template v-for="slice in page.slices">
-            <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" @copySlice="copySlice" @markSlice="markSlice" />
+            <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
           </template>
         </draggable>
 

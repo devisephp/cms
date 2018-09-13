@@ -245,7 +245,7 @@ export default {
     },
 
     // Marking Slice
-    markSlice (on, slice, referringSlice) {
+    markSlice (on, slice) {
       this.$set(slice, 'mark', on)
     },
     jumpToSlice () {

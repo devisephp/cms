@@ -19,7 +19,11 @@ class Repository
             $sort = array_get($input, 'sort');
             $limit = array_get($input, 'limit', 25);
 
-            $model = App::make($classPath);
+            try {
+                $model = App::make($classPath);
+            } catch (\Exception $e) {
+                return [];
+            }
 
             foreach ($scopes as $scopeNames)
             {

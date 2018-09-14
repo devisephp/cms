@@ -9,7 +9,7 @@
     </template>
 
     <template slot="editor">
-      <textarea type="text" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()"></textarea>
+      <textarea ref="focusInput" type="text" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()"></textarea>
     </template>
 
   </field-editor>
@@ -35,6 +35,16 @@ export default {
   methods: {
     toggleEditor () {
       this.showEditor = !this.showEditor
+      this.focusForm()
+    },
+    focusForm () {
+      if (this.showEditor) {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.focusInput.focus()
+          }, 200);
+        })
+      }
     },
     cancel () {
       this.localValue.text = this.originalValue.text

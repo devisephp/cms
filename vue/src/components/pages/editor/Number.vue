@@ -9,7 +9,9 @@ asdfasdf
     </template>
 
     <template slot="editor">
-      <input type="number" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()">
+      <fieldset class="dvs-fieldset">
+        <input ref="focusInput" type="number" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()">
+      </fieldset>
     </template>
 
   </field-editor>
@@ -33,6 +35,16 @@ export default {
     toggleEditor () {
       this.originalValue = Object.assign({}, this.value)
       this.showEditor = !this.showEditor
+      this.focusForm()
+    },
+    focusForm () {
+      if (this.showEditor) {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.focusInput.focus()
+          }, 200);
+        })
+      }
     },
     cancel () {
       this.localValue.text = this.originalValue.text

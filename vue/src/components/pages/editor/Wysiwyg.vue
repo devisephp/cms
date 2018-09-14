@@ -42,6 +42,17 @@ export default {
       if (this.showEditor) {
         this.resolveId()
       }
+      this.focusForm()
+    },
+    focusForm () {
+      if (this.showEditor) {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            var length = this.theEditor.getDocument().toString().length
+            this.theEditor.setSelectedRange(length - 1)
+          }, 200);
+        })
+      }
     },
     cancel () {
       this.theEditor.loadHTML(this.originalValue.text)

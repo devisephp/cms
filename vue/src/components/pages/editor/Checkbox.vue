@@ -10,7 +10,6 @@
 
     <template slot="editor">
       <div class="dvs-flex dvs-items-center">
-        <label class="dvs-mr-4">{{ options.label }}</label>
         <toggle v-model="localValue.checked" :id="randomString(8)"></toggle>
       </div>
     </template>

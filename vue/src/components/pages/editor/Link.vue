@@ -11,17 +11,21 @@
     <template slot="editor">
       <fieldset class="dvs-fieldset">
         <label>Label</label>
-        <input type="text" class="dvs-mb-4" v-model="localValue.text" v-on:input="updateValue()">
+        <input ref="focusInput" type="text" class="dvs-mb-4" v-model="localValue.text" v-on:input="updateValue()">
       </fieldset>
 
       <label>Link Mode</label>
       <div class="dvs-flex">
+        <label>
         <input type="radio" class="dvs-w-auto dvs-mr-2" v-model="localValue.mode" value="url" v-on:input="updateValue()">
-        <label>URL</label>
+        URL
+        </label>
       </div>
       <div class="dvs-flex dvs-mb-4">
+        <label>
         <input type="radio" class="dvs-w-auto dvs-mr-2" v-model="localValue.mode" value="page" v-on:input="updateValue()">
-        <label>Page</label>
+        Page
+        </label>
       </div>
 
       <template v-if="localValue.mode === 'url'">
@@ -59,6 +63,16 @@ export default {
   methods: {
     toggleEditor () {
       this.showEditor = !this.showEditor
+      this.focusForm()
+    },
+    focusForm () {
+      if (this.showEditor) {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.focusInput.focus()
+          }, 200);
+        })
+      }
     },
     cancel () {
       this.localValue.mode = this.originalValue.mode

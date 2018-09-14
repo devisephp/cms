@@ -8,7 +8,7 @@
     </template>
     <template slot="editor">
       <fieldset class="dvs-fieldset">
-        <select v-model="localValue.value" v-on:input="updateValue()">
+        <select ref="focusInput" v-model="localValue.value" v-on:input="updateValue()">
           <option :value="null">No Selection</option>
           <option v-for="(option, key) in options.options" :key="key" :value="key">{{ option }}</option>
         </select>
@@ -41,6 +41,16 @@ export default {
   methods: {
     toggleEditor () {
       this.showEditor = !this.showEditor
+      this.focusForm()
+    },
+    focusForm () {
+      if (this.showEditor) {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.focusInput.focus()
+          }, 200);
+        })
+      }
     },
     cancel () {
       this.localValue.value = this.originalValue.value

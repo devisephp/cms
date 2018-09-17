@@ -138,6 +138,11 @@ const getters = {
         color: '#eee',
         borderColor: '#3d4852'
       },
+      panelSidebarInverse: { 
+        backgroundColor: '#658BEF',
+        color: '#182039',
+        secondaryColor: '#fff'
+      },
       panelIcons: { 
         color: '#658BEF',
         secondaryColor: '#EB8F89'

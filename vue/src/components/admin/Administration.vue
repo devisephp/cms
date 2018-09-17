@@ -2,14 +2,13 @@
   <div 
     id="devise-admin"
     :class="[deviseOptions.adminClass]">
-
-    <transition name="dvs-fade">
-      <preview-mode class="dvs-z-9980" v-tuck v-if="managingPage" />
-    </transition>
       
     <panel class="dvs-m-8 dvs-fixed dvs-z-9980" style="min-width:360px;" :panel-style="theme.panel" v-tuck v-tilt>
       <div class="dvs-flex">
         <div :style="theme.panelSidebar" class="dvs-flex dvs-flex-col" >
+
+          <preview-mode />
+
           <template v-for="(menuItem, key) in adminMenu">
             <button 
               :key="key"
@@ -70,6 +69,16 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'Administration',
+  data () {
+    return {
+      everythingIsLoaded: false
+    } 
+  },
+  mounted () {
+    setTimeout(() => {
+      this.everythingIsLoaded = true
+    }, 2000);
+  },
   computed: {
     ...mapState('devise', [
       'adminMenu'
@@ -82,12 +91,27 @@ export default {
     },
     managingPage () {
       return this.$route.name === 'devise-page-editor'
-    }
+    },
   },
   props: {
     page: {
       type: Object
     }
+  },
+  watch: {
+    page: {
+      handler: function (val, oldVal) { 
+        // On the initial load the page will change when data for the page
+        // is assigned. We ignore changes for a few seconds while the data is 
+        // loading. A little janky and a TODO that needs to be addressed.
+        if (this.everythingIsLoaded) {
+          window.onbeforeunload = function() {
+              return true;
+          };
+        }
+      },
+      deep: true
+    },
   },
   components: {
     Loadbar,

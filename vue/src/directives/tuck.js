@@ -5,7 +5,6 @@ const plugins = [CSSPlugin];
 export default {
   inserted: function (el) {
     let offset = 50
-    var goHide = null
 
     let style = window.getComputedStyle ? getComputedStyle(el, null) : el.currentStyle;
 
@@ -19,6 +18,10 @@ export default {
 
     var elWidth = el.offsetWidth
     var elHeight = el.offsetHeight
+
+    var blocker = document.createElement("div")
+    blocker.classList.add('dvs-blocker')
+    document.body.appendChild(blocker)
 
     function calculateTuckX () {
       let rightSide = elX + elWidth + marginLeft + marginRight
@@ -38,30 +41,36 @@ export default {
       
       let tuckX = calculateTuckX()
       
+      TweenMax.to(el, 1, {
+        left: `${tuckX}px`,
+        width: `${elWidth}px`,
+        height: `${elHeight}px`,
+        ease: Elastic.easeOut.config(0.5, 0.5)
+      })
 
-      goHide = setTimeout(() => {
-        TweenMax.to(el, 1, {
-          left: `${tuckX}px`,
-          width: `${elWidth}px`,
-          height: `${elHeight}px`,
-          ease: Elastic.easeOut.config(0.5, 0.5)
-        })
-      }, 1500)
+      TweenMax.to(blocker, 0.5, {
+        opacity: 0,
+        ease: Power3.easeIn
+      })
     }
 
     function show () {
-      clearTimeout(goHide)
       TweenMax.to(el, 1, {
         top: `${elY}px`,
         left: `${elX}px`,
         width: 'auto',
         ease: Elastic.easeOut.config(0.5, 0.5)
       })
+
+      TweenMax.to(blocker, 0.5, {
+        opacity: 0.3,
+        ease: Power3.easeOut
+      })
     }
 
-    hide()
+    setTimeout(() => { hide() }, 1500)
 
     el.addEventListener('mouseenter', show)
-    el.addEventListener('mouseleave', hide)
+    blocker.addEventListener('click', hide)
   }
 }

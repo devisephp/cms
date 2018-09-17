@@ -7,9 +7,9 @@ export default {
     let panelContents = panel.querySelector('.dvs-panel-contents')
     let panelShine = panel.querySelector('.dvs-panel-shine')
 
-    let xEffectStrength = 10
+    let xEffectStrength = 5
     let rotationXLimit = 8
-    let yEffectStrength = 10
+    let yEffectStrength = 5
     
     function focusPanel(scale, opacity, duration) {
       TweenMax.to(panelContents, duration, {

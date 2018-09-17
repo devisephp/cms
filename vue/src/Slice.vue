@@ -57,7 +57,7 @@ export default {
       this.backgroundColor = tinycolor(this.devise.settings.backgroundColor).toRgb()
     }
 
-    this.addListeners ()
+    this.addListeners()
 
     if (this.editorMode) {
       this.checkMediaSizesForRegeneration ()
@@ -71,6 +71,7 @@ export default {
     
       window.devise.$bus.$on('jumpToSlice', this.attemptJumpToSlice)
       window.devise.$bus.$on('openSliceSettings', this.attemptOpenSliceSettings)
+      window.devise.$bus.$on('markSlice', this.markSlice)
 
     },
     hydrateMissingProperties () {
@@ -197,7 +198,35 @@ export default {
           deviseSettings.$bus.$emit('open-slice-settings', this.deviseForSlice)
         }
       }
-    } 
+    },
+    markSlice (slice, on) {
+      if (this.devise.metadata && slice.metadata) {
+        if(this.devise.metadata.instance_id === slice.metadata.instance_id) {
+
+          var markers = document.getElementsByClassName('devise-component-marker')
+          while(markers.length > 0){
+              markers[0].parentNode.removeChild(markers[0]);
+          }
+
+          if (on) {
+            let offset = mezr.offset(this.sliceEl, 'margin')
+            let width = mezr.width(this.sliceEl, 'margin');
+            let height = mezr.height(this.sliceEl, 'margin');
+
+            let marker  = document.createElement('div');
+            marker.innerHTML = `
+            <div class="dvs-absolute-center dvs-absolute">
+              <h1 class="dvs-text-grey-light dvs-font-hairline dvs-font-sans dvs-p-4 dvs-bg-abs-black dvs-rounded dvs-shadow-lg">
+                ${this.devise.metadata.label}
+              </h1>
+            </div>`
+            marker.classList = "devise-component-marker dvs-absolute dvs-bg-black dvs-z-60 dvs-opacity-75"
+            marker.style.cssText = `top:${offset.top}px;left:${offset.left}px;width:${width}px;height:${height}px`
+            document.body.appendChild(marker)
+          } 
+        }
+      }
+    }
   },
   computed: {
     ...mapGetters('devise', [
@@ -272,34 +301,6 @@ export default {
       }
       return deviseSettings.$deviseComponents[this.devise.metadata.name]
     },
-    mark () {
-      return this.devise.mark
-    }
-  },
-  watch: {
-    mark (newValue) {
-      var markers = document.getElementsByClassName('devise-component-marker')
-      while(markers.length > 0){
-          markers[0].parentNode.removeChild(markers[0]);
-      }
-
-      if (newValue) {
-        let offset = mezr.offset(this.sliceEl, 'margin')
-        let width = mezr.width(this.sliceEl, 'margin');
-        let height = mezr.height(this.sliceEl, 'margin');
-
-        let marker  = document.createElement('div');
-        marker.innerHTML = `
-        <div class="dvs-absolute-center dvs-absolute">
-          <h1 class="dvs-text-grey-light dvs-font-hairline dvs-font-sans dvs-p-4 dvs-bg-abs-black dvs-rounded dvs-shadow-lg">
-            ${this.devise.metadata.label}
-          </h1>
-        </div>`
-        marker.classList = "devise-component-marker dvs-absolute dvs-bg-black dvs-z-60 dvs-opacity-75"
-        marker.style.cssText = `top:${offset.top}px;left:${offset.left}px;width:${width}px;height:${height}px`
-        document.body.appendChild(marker)
-      } 
-    } 
   },
   props: [
     'editorMode'

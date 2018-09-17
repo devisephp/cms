@@ -1,11 +1,11 @@
 <template>
-  <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': slice.metadata.open}">
+  <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': sliceOpen}">
 
     <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-flex dvs-justify-between dvs-items-center dvs-w-full">
       <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full" :style="{color: theme.panel.color}" :class="{'dvs-pl-4': child}">
         <div class="dvs-flex dvs-items-center">
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
-          <span class="dvs-cursor-pointer" @click="toggleSlice(slice)"  @mouseenter="markSlice(true, slice)"  @mouseleave="markSlice(false, slice)">{{ slice.metadata.label }}</span>
+          <span class="dvs-cursor-pointer" @click="toggleSlice()"  @mouseenter="markSlice(true, slice)"  @mouseleave="markSlice(false, slice)">{{ slice.metadata.label }}</span>
         </div>
         <div class="dvs-cursor-pointer dvs-ml-2 dvs-relative dvs-p-2 dvs-rounded-sm dvs-flex dvs-items-center" @mouseenter="moreHovered = true" @mouseleave="moreHovered = false" :style="{backgroundColor: this.theme.panelCard.backgroundColor}">
           <more-icon w="18" h="18" style="transform:rotate(90deg)" :style="{color: 'white'}" />
@@ -92,7 +92,7 @@
 
     <manage-slice ref="manageslice" v-if="manageSlice === true" @cancel="manageSlice = false" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" :slice="slice" />
 
-    <div class="dvs-collapsed" v-if="slice.metadata.open">
+    <div class="dvs-collapsed" v-show="sliceOpen">
       <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-ml-4" :key="key" v-if="theFields[key]">
         <div>
 
@@ -137,7 +137,7 @@
       </help>
     </div>
 
-    <div class="dvs-collapsed" v-if="slice.metadata.open">
+    <div class="dvs-collapsed" v-show="sliceOpen">
       <draggable v-model="slice.slices" element="ul" class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" :options="{group:{ name:'g1'}}">
         <template v-for="(s, key) in slice.slices">
           <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
@@ -180,7 +180,8 @@ export default {
     return {
       manageSlice: false,
       pageSlices: [],
-      moreHovered: false
+      moreHovered: false,
+      sliceOpen: false
     }
   },
   mounted () {
@@ -189,15 +190,8 @@ export default {
     }
   },
   methods: {
-    toggleSlice (slice) {
-      if (this.sliceConfig(slice).fields || slice.slices.length > 0) {
-        let sliceOpen = Object.assign({}, slice.metadata)
-        this.pageSlices.map(s => this.closeSlice(s))
-        this.$set(slice.metadata, 'open', !sliceOpen.open)
-      }
-    },
-    closeSlice (slice) {
-      this.$set(slice.metadata, 'open', false)
+    toggleSlice () {
+      this.sliceOpen = !this.sliceOpen
     },
     toggleSliceTools() {
       this.slice.metadata.tools = !this.slice.metadata.tools
@@ -246,7 +240,7 @@ export default {
 
     // Marking Slice
     markSlice (on, slice) {
-      this.$set(slice, 'mark', on)
+      window.devise.$bus.$emit('markSlice', this.slice, on)
     },
     jumpToSlice () {
       window.devise.$bus.$emit('jumpToSlice', this.slice)

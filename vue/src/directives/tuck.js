@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { TweenMax, CSSPlugin } from 'gsap'
+import { TweenMax, TimelineLite, CSSPlugin } from 'gsap'
 const plugins = [CSSPlugin]; 
 
 export default {
@@ -39,6 +39,7 @@ export default {
       elWidth = el.offsetWidth
       elHeight = el.offsetHeight
       
+      let timeline = new TimelineLite()
       let tuckX = calculateTuckX()
       
       TweenMax.to(el, 1, {
@@ -48,13 +49,17 @@ export default {
         ease: Elastic.easeOut.config(0.5, 0.5)
       })
 
-      TweenMax.to(blocker, 0.5, {
+      timeline.to(blocker, 0.5, {
         opacity: 0,
         ease: Power3.easeIn
+      }).to(blocker, 0, {
+        top: `${window.innerHeight}px`
       })
     }
 
     function show () {
+      let timeline = new TimelineLite()
+      
       TweenMax.to(el, 1, {
         top: `${elY}px`,
         left: `${elX}px`,
@@ -62,7 +67,9 @@ export default {
         ease: Elastic.easeOut.config(0.5, 0.5)
       })
 
-      TweenMax.to(blocker, 0.5, {
+      timeline.to(blocker, 0, {
+        top: `0px`
+      }).to(blocker, 0.5, {
         opacity: 0.3,
         ease: Power3.easeOut
       })

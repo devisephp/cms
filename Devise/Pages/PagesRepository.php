@@ -148,7 +148,7 @@ class PagesRepository
     public function list($siteId, $languageId)
     {
         return $this->Page
-            ->select('id', 'title')
+            ->select('id', 'title', 'route_name')
             ->where('site_id', $siteId)
             ->where('language_id', $languageId)
             ->orderBy('title')

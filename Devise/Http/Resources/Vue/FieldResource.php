@@ -16,6 +16,10 @@ class FieldResource extends Resource
   public function toArray($request)
   {
     $value = $this->value;
+    if (isset($value->type) && isset($value->routeName) && ($value->type == 'link'))
+    {
+      $value->href = route($value->routeName);
+    }
 
     if (isset($value->type) && isset($value->url) && ($value->type == 'image' || $value->type == 'file'))
     {

@@ -5,7 +5,7 @@
       <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
         Currently No Value
       </span>
-      <div><a :href="localValue.href" :target="localValue.target">localValue.text</a></div>
+      <div><a :href="localValue.href" :target="localValue.target">{{localValue.text}}</a></div>
     </template>
 
     <template slot="editor">
@@ -37,7 +37,10 @@
       <template v-if="localValue.mode === 'page'">
         <fieldset class="dvs-fieldset">
           <label>Page</label>
-          <input type="text" v-model="localValue.pageId" v-on:input="updateValue()">
+          <select v-model="localValue.routeName" @change="updateValue()">
+            <option :value="0">Select a Page</option>
+            <option :value="page.route_name" v-for="page in pagesList.data" :key="page.id">{{page.title}}</option>
+          </select>
         </fieldset>
       </template>
     </template>
@@ -47,6 +50,8 @@
 
 <script>
 import FieldEditor from './Field'
+
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'LinkEditor',
@@ -59,8 +64,13 @@ export default {
   mounted () {
     this.originalValue = Object.assign({}, this.value)
     this.localValue = this.value
+
+    this.retrieveAllPagesList()
   },
   methods: {
+    ...mapActions('devise', [
+      'getPagesList'
+    ]),
     toggleEditor () {
       this.showEditor = !this.showEditor
       this.focusForm()
@@ -74,11 +84,18 @@ export default {
         })
       }
     },
+    retrieveAllPagesList (loadbar = true) {
+      this.getPagesList().then(function () {
+        if (loadbar) {
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
+        }
+      })
+    },
     cancel () {
       this.localValue.mode = this.originalValue.mode
       this.localValue.text = this.originalValue.text
       this.localValue.href = this.originalValue.href
-      this.localValue.pageId = this.originalValue.pageId
+      this.localValue.routeName = this.originalValue.routeName
       this.updateValue()
       this.toggleEditor()
     },
@@ -87,6 +104,11 @@ export default {
       this.$emit('input', this.localValue)
       this.$emit('change', this.localValue)
     }
+  },
+  computed: {
+    ...mapGetters('devise', [
+      'pagesList'
+    ]),
   },
   props: ['value', 'options'],
   components: {

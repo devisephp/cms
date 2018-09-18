@@ -57,7 +57,9 @@ export default {
       'savePage'
     ]),
     requestSavePage () {
-      this.savePage(this.page)
+      this.savePage(this.page).then(() => {
+        window.onbeforeunload = null
+      })
     },
     toggleSlice (slice) {
       if (slice.metadata.open) {

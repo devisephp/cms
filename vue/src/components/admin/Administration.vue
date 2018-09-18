@@ -105,9 +105,10 @@ export default {
         // is assigned. We ignore changes for a few seconds while the data is 
         // loading. A little janky and a TODO that needs to be addressed.
         if (this.everythingIsLoaded) {
+          // This is unbound where the save takes place on success
           window.onbeforeunload = function() {
-              return true;
-          };
+            return true
+          }
         }
       },
       deep: true

@@ -39,7 +39,13 @@
 
           <div data-simplebar class=" dvs-min-w-1/3">
             <div class="dvs-h-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter">
-              
+
+              <div class="mb-8">
+                <fieldset class="dvs-fieldset">
+                  <input type="text" placeholder="Search" @keyup="requestSearch" v-model="searchTerm" class="mr-2">
+                </fieldset>
+              </div>
+
               <ul class="dvs-list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">
                 <li v-for="directory in directories" :key="directory.id" class="dvs-cursor-pointer dvs-mt-2 dvs-text-bold" @click="changeDirectories(directory.path)">
                   <folder-icon class="dvs-mr-2"></folder-icon>
@@ -178,6 +184,7 @@
         directoryToCreate: '',
         target: null,
         callback: null,
+        searchTerm: null,
         selectedFile: null,
         options: null
       }
@@ -191,11 +198,12 @@
         'generateImages',
         'getCurrentFiles',
         'getCurrentDirectories',
+        'getSearchableMedia',
         'openFile',
         'closeFile',
         'deleteFile',
         'createDirectory',
-        'deleteDirectory'
+        'deleteDirectory',
       ]),
       startOpenerListener () {
         var self = this
@@ -296,13 +304,28 @@
         this.deleteDirectory(self.currentDirectory).then(function () {
           self.changeDirectories('')
         })
+      },
+      requestSearch () {
+        if (this.searchTerm !== '') {
+          if (this.searchableMedia.data.length < 1) {
+            this.getSearchableMedia().then(() => {
+              this.search()
+            })
+          }
+        } else {
+          this.search()
+        }
+      },
+      search () {
+        console.log(this.searchableMedia.data)
       }
     },
     computed: {
       ...mapGetters('devise', [
         'files',
         'directories',
-        'currentDirectory'
+        'currentDirectory',
+        'searchableMedia'
       ]),
       dropzoneOptions () {
 

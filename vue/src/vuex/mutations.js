@@ -27,6 +27,10 @@ export default {
     state.files = payload
   },
 
+  setSearchableMedia (state, payload) {
+    state.searchableMedia = payload
+  },
+
   setDirectories (state, payload) {
     state.directories = payload
   },

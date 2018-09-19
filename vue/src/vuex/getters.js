@@ -62,6 +62,10 @@ const getters = {
     return state.directories
   },
 
+  searchableMedia: state => {
+    return state.searchableMedia
+  },
+
   currentDirectory: state => {
     return state.currentDirectory
   },

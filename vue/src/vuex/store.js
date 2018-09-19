@@ -93,6 +93,9 @@ const state = {
   currentDirectory: '.',
   directories: [],
   files: [],
+  searchableMedia: {
+    data: []
+  },
   languages: {
     data: []
   },

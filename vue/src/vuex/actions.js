@@ -97,6 +97,19 @@ const actions = {
     })
   },
 
+  getSearchableMedia (context, directory) {
+    return new Promise((resolve, reject) => {
+      window.axios.get(context.state.api.baseUrl + 'searchable-media').then(function (response) {
+        context.commit('setSearchableMedia', response.data)
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
   getCurrentFiles (context, directory) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'media/' + context.state.currentDirectory).then(function (response) {
@@ -130,22 +143,6 @@ const actions = {
 
     let onOff = typeof match.on === 'undefined' || match.on === false
     context.commit('toggleFileOnOff', {file: match, on: onOff})
-  },
-
-  openFile (context, theFile) {
-    let match = context.state.files.find(function (file) {
-      return file.name === theFile.name
-    })
-
-    context.commit('toggleFileOnOff', {file: match, on: true})
-  },
-
-  closeFile (context, theFile) {
-    let match = context.state.files.find(function (file) {
-      return file.name === theFile.name
-    })
-
-    context.commit('toggleFileOnOff', {file: match, on: false})
   },
 
   deleteFile (context, file) {

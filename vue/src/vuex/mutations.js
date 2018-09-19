@@ -28,16 +28,11 @@ export default {
   },
 
   setSearchableMedia (state, payload) {
-    state.searchableMedia = payload
+    state.searchableMedia.data = payload
   },
 
   setDirectories (state, payload) {
     state.directories = payload
-  },
-
-  toggleFileOnOff (state, payload) {
-    payload.file.on = payload.on
-    state.files.splice(state.files.indexOf(payload.file), 1, payload.file)
   },
 
   // Meta

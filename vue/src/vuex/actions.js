@@ -145,22 +145,6 @@ const actions = {
     context.commit('toggleFileOnOff', {file: match, on: onOff})
   },
 
-  openFile (context, theFile) {
-    let match = context.state.files.find(function (file) {
-      return file.name === theFile.name
-    })
-
-    context.commit('toggleFileOnOff', {file: match, on: true})
-  },
-
-  closeFile (context, theFile) {
-    let match = context.state.files.find(function (file) {
-      return file.name === theFile.name
-    })
-
-    context.commit('toggleFileOnOff', {file: match, on: false})
-  },
-
   deleteFile (context, file) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'media' + file.url)

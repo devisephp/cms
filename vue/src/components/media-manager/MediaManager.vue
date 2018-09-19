@@ -40,10 +40,11 @@
           <div data-simplebar class=" dvs-min-w-1/3">
             <div class="dvs-h-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter">
 
-              <div class="mb-8">
-                <fieldset class="dvs-fieldset">
-                  <input type="text" placeholder="Search" @keyup="requestSearch" v-model="searchTerm" class="mr-2">
+              <div class="mb-8 flex">
+                <fieldset class="dvs-fieldset mr-2">
+                  <input type="text" placeholder="Search" v-model="searchTerms" class="mr-2">
                 </fieldset>
+                <button class="dvs-btn dvs-btn-sm" @click="requestSearch" :style="theme.actionButton">Search</button>
               </div>
 
               <ul class="dvs-list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">
@@ -68,8 +69,22 @@
 
           <div class="dvs-flex-grow dvs-relative dvs-overflow-y-scroll" :class="{'w-full': directories.length < 1}">
 
+            <div class="dvs-p-8 dvs-flex" v-if="searchResults.length > 0">
+              <h4>Showing Results for: <strong>{{ searchTerms }}</strong></h4>
+              <div @click="closeSearch">
+                <close-icon class="dvs-ml-2 dvs-cursor-pointer" w="30" h="30" />
+              </div>
+            </div>
+
+            <div class="dvs-p-8 dvs-flex" v-else-if="searchableMedia.data.length > 0 && searchTerms !== null && searchTerms !== ''">
+              <h4>Hit "Search" for results of: <strong>{{ searchTerms }}</strong></h4>
+              <div @click="closeSearch">
+                <close-icon class="dvs-ml-2 dvs-cursor-pointer" w="30" h="30" />
+              </div>
+            </div>
+
             <!-- Delete Directory -->
-            <div v-if="files.length < 1 && directories.length < 1 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
+            <div v-if="currentFiles.length < 1 && directories.length < 1 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
               <div class="dvs-bg-white dvs-text-grey-dark dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow dvs-cursor-pointer" @click="requestDeleteDirectory()">
                 <trash-icon h="40" w="40" :style="{color: theme.adminText.color}" />
                 <h6 class="dvs-mt-2 dvs-text-sm">
@@ -79,7 +94,7 @@
             </div>
 
             <!-- Directories but no files -->
-            <div v-if="files.length < 1 && directories.length > 0 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
+            <div v-if="currentFiles.length < 1 && directories.length > 0 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
               <div class="dvs-bg-white dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow">
                 <folder-icon h="40" w="40" :style="{color: theme.adminText.color}" />
                 <h6 class="dvs-mt-2 dvs-text-sm"><span>No files in this directory</span></h6>
@@ -88,7 +103,7 @@
 
             <!-- Files -->
             <ul class="dvs-list-reset dvs-flex dvs-justify-center dvs-flex-wrap" v-else>
-              <li v-for="file in files" :key="file.id" class="dvs-relative dvs-bg-white dvs-card dvs-mt-2"
+              <li v-for="file in currentFiles" :key="file.id" class="dvs-relative dvs-bg-white dvs-card dvs-mt-2"
                 :class="{
                   'dvs-cursor-pointer': !file.on,
                   'dvs-border-b dvs-border-lighter dvs-p-2 dvs-mx-4': thumbnail,
@@ -97,12 +112,12 @@
                 @click="openFile(file)">
 
                 <!-- Close File if On -->
-                <div v-if="file.on" @click.stop.prevent="closeFile(file)">
+                <div v-if="file === currentlyOpenFile" @click.stop.prevent="closeFile(file)">
                   <close-icon class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-4 dvs-mr-4 dvs-cursor-pointer" w="30" h="30" />
                 </div>
-                <!-- Closed File -->
-                <div v-if="!file.on">
 
+                <!-- Closed File -->
+                <div v-if="file !== currentlyOpenFile">
                   <!-- List Mode -->
                   <div class="dvs-flex dvs-justify-between dvs-items-center" v-if="thumbnail">
                     <img :src="file.url" style="height:75px">
@@ -151,6 +166,7 @@
             </ul>
           </div>
         </div>
+
       </div>
 
 
@@ -184,8 +200,10 @@
         directoryToCreate: '',
         target: null,
         callback: null,
-        searchTerm: null,
+        searchTerms: null,
+        searchResults: [],
         selectedFile: null,
+        currentlyOpenFile: null,
         options: null
       }
     },
@@ -199,8 +217,6 @@
         'getCurrentFiles',
         'getCurrentDirectories',
         'getSearchableMedia',
-        'openFile',
-        'closeFile',
         'deleteFile',
         'createDirectory',
         'deleteDirectory',
@@ -219,6 +235,8 @@
       changeDirectories (directory) {
         let self = this
         self.loaded = false
+        this.searchTerms = null
+        this.$set(this, 'searchResults', [])
 
         self.setCurrentDirectory(directory).then(function () {
           self.getCurrentFiles().then(function () {
@@ -243,6 +261,12 @@
         var match = window.location.search.match(reParam)
 
         return (match && match.length > 1) ? match[1] : null
+      },
+      openFile (file) {
+        this.$set(this, 'currentlyOpenFile', file)
+      },
+      closeFile (file) {
+        this.$set(this, 'currentlyOpenFile', null)
       },
       selectSourceFile (file) {
         this.selectedFile = file
@@ -306,18 +330,32 @@
         })
       },
       requestSearch () {
-        if (this.searchTerm !== '') {
+        if (this.searchTerms !== '') {
+          // If we don't have the searchable Media yet then let's go get it
+          // this means that the browser will require a refresh for this to be
+          // updated. We are fine with that for now
           if (this.searchableMedia.data.length < 1) {
             this.getSearchableMedia().then(() => {
               this.search()
             })
+
+          // Else lets go ahead with the search
+          } else {
+            this.search()
           }
-        } else {
-          this.search()
-        }
+        } 
       },
       search () {
-        console.log(this.searchableMedia.data)
+        var terms = this.searchTerms.split(' ')
+        this.searchResults = this.searchableMedia.data.filter((media) => {
+          if (terms.every(function(v) { return media.search.toLowerCase().indexOf(v.toLowerCase()) >= 0; })) {
+            return true
+          }
+        })
+      },
+      closeSearch () {
+        this.searchTerms = null
+        this.$set(this, 'searchResults', [])
       }
     },
     computed: {
@@ -327,6 +365,12 @@
         'currentDirectory',
         'searchableMedia'
       ]),
+      currentFiles () {
+        if (this.searchResults.length > 0) {
+          return this.searchResults
+        } 
+        return this.files
+      },
       dropzoneOptions () {
 
         let token = document.head.querySelector('meta[name="csrf-token"]');

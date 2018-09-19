@@ -100,8 +100,6 @@ class PageVersionManager
         // create a new page version
         $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name, $oldVersion->layout);
 
-        $this->SlicesManager->copySlicesForNewPageVersion($oldVersion->slices, $newVersion->id);
-
         // copy all existing fields from oldVersion to newVersion
         $this->SlicesManager
             ->copySlicesAndFieldsFromVersionToVersion($oldVersion, $newVersion);

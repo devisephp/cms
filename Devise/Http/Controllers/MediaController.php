@@ -51,11 +51,10 @@ class MediaController extends Controller
     }
 
     /**
-     * Requests a file upload
      *
      * @param Request $request
      * @param $folderPath
-     * @return mixed
+     * @return array
      */
     public function all(Request $request, $folderPath = '')
     {
@@ -64,6 +63,16 @@ class MediaController extends Controller
         $results = $this->Repository->getIndex($input, ['media-items']);
 
         return $results['media-items'];
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function searchable(Request $request)
+    {
+        return $this->Repository->buildSearchableMediaItems();
     }
 
     /**

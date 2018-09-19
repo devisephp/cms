@@ -97,23 +97,6 @@ class FieldManager
         return $this->DvsField->whereIn('id', $fieldIds)->update(['content_requested' => false]);
     }
 
-
-    /**
-     * @param $slices
-     */
-    public function saveSliceInstanceFields($pageVersionId, $slices)
-    {
-        $instanceIds = [];
-        $index = 0;
-
-        $this->iterateSliceInstances($pageVersionId, $slices, 0, $index, $instanceIds);
-
-        $this->DvsSliceInstance
-            ->whereNotIn('id', $instanceIds)
-            ->where('page_version_id', $pageVersionId)
-            ->delete();
-    }
-
     /**
      * This function will get us our field
      *
@@ -130,6 +113,23 @@ class FieldManager
             : $this->DvsField->whereId($fieldId)->firstOrFail();
 
         return $field;
+    }
+
+
+    /**
+     * @param $slices
+     */
+    public function saveSliceInstanceFields($pageVersionId, $slices)
+    {
+        $instanceIds = [];
+        $index = 0;
+
+        $this->iterateSliceInstances($pageVersionId, $slices, 0, $index, $instanceIds);
+
+        $this->DvsSliceInstance
+            ->whereNotIn('id', $instanceIds)
+            ->where('page_version_id', $pageVersionId)
+            ->delete();
     }
 
     private function iterateSliceInstances($pageVersionId, $slices, $parentId = 0, &$index = 0, &$instanceIds = [])

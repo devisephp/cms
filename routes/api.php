@@ -19,6 +19,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
      * Media
      */
     Route::get('media/{folder_dot_path?}', 'MediaController@all');
+    Route::get('searchable-media', 'MediaController@searchable');
     Route::post('media', 'MediaController@store');
     Route::delete('media/{media_route}', 'MediaController@remove')->where(['media_route' => '.*']);
 

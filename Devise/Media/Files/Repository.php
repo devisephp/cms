@@ -61,13 +61,22 @@ class Repository
         return $data;
     }
 
-    public function getFileData($file)
+    public function getFileData($file, $addSearchableData = false)
     {
         $fileData = array();
 
         $fileData['name'] = basename($file);
-        $fileData['size'] = $this->Storage->size($file);
         $fileData['url'] = $this->Storage->url($file);
+
+        if($addSearchableData){
+            $pathParts = explode('/', $file);
+            array_shift($pathParts); // removing media dir
+
+            $fileData['search'] = implode(' ', $pathParts);
+
+            array_pop($pathParts); // removing file name
+            $fileData['directories'] = $pathParts;
+        }
 
         return $fileData;
     }
@@ -113,13 +122,25 @@ class Repository
     /**
      *
      */
-    private function buildMediaItemsFromFiles($files)
+    public function buildSearchableMediaItems()
+    {
+        $mediaDir = $this->CategoryPaths->serverPath('');
+
+        $files = $this->Storage->allFiles($mediaDir);
+
+        return $this->buildMediaItemsFromFiles($files, true);
+    }
+
+    /**
+     *
+     */
+    private function buildMediaItemsFromFiles($files, $addSearchableData = false)
     {
         $newFilesArray = array();
         foreach ($files as $file)
         {
             if (strpos($file, 'DS_Store') === false)
-                $newFilesArray[] = $this->getFileData($file);
+                $newFilesArray[] = $this->getFileData($file, $addSearchableData);
         }
 
         return $newFilesArray;

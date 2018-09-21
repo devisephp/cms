@@ -70,7 +70,7 @@
           <div class="dvs-flex-grow dvs-relative dvs-overflow-y-scroll" :class="{'w-full': directories.length < 1}">
 
             <div class="dvs-p-8 dvs-flex" v-if="searchResults.length > 0">
-              <h4>Showing Results for: <strong>{{ searchTerms }}</strong></h4>
+              <h4>Showing up to {{ searchResultsLimit }} results for: <strong>{{ searchTerms }}</strong></h4>
               <div @click="closeSearch">
                 <close-icon class="dvs-ml-2 dvs-cursor-pointer" w="30" h="30" />
               </div>
@@ -203,6 +203,7 @@
         searchTerms: null,
         searchResults: [],
         selectedFile: null,
+        searchResultsLimit: 10,
         currentlyOpenFile: null,
         options: null
       }
@@ -346,12 +347,14 @@
         } 
       },
       search () {
-        var terms = this.searchTerms.split(' ')
-        this.searchResults = this.searchableMedia.data.filter((media) => {
+        let terms = this.searchTerms.split(' ')
+        let results = this.searchableMedia.data.filter((media) => {
           if (terms.every(function(v) { return media.search.toLowerCase().indexOf(v.toLowerCase()) >= 0; })) {
             return true
           }
         })
+
+        this.searchResults = results.slice(0,this.searchResultsLimit)
       },
       closeSearch () {
         this.searchTerms = null

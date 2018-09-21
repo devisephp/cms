@@ -41,10 +41,12 @@
             <div class="dvs-h-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter">
 
               <div class="mb-8 flex">
-                <fieldset class="dvs-fieldset mr-2">
-                  <input type="text" placeholder="Search" v-model="searchTerms" class="mr-2">
-                </fieldset>
-                <button class="dvs-btn dvs-btn-sm" @click="requestSearch" :style="theme.actionButton">Search</button>
+                <form @submit.prevent="requestSearch">
+                  <fieldset class="dvs-fieldset mr-2">
+                    <input type="text" placeholder="Search" v-model="searchTerms" class="mr-2">
+                  </fieldset>
+                  <button class="dvs-btn dvs-btn-sm" @click="requestSearch" :style="theme.actionButton">Search</button>
+                </form>
               </div>
 
               <ul class="dvs-list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">

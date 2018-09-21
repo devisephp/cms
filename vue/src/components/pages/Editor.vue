@@ -21,9 +21,10 @@
 
         <button 
           :style="theme.actionButton"
-          class="dvs-btn dvs-mt-8 dvs-block dvs-w-full"
+          class="dvs-btn dvs-mt-8 dvs-block dvs-w-full dvs-flex dvs-justify-center dvs-items-center"
           @click.prevent="requestSavePage()">
-          Save Page
+          <refresh-icon w="15" h="15" v-if="saving" animate="rotate"/>
+          <span class="dvs-ml-2">Save Page</span>
         </button>
       </div>
 
@@ -41,11 +42,13 @@ import { mapGetters, mapActions } from 'vuex'
 import ManageSlice from './slices/ManageSlice'
 import AnalyticTotals from './AnalyticTotals'
 import AddIcon from 'vue-ionicons/dist/ios-add.vue'
+import RefreshIcon from 'vue-ionicons/dist/ios-refresh.vue'
 
 export default {
   name: 'PageEditor',
   data () {
     return {
+      saving: false,
       createSlice: false
     }
   },
@@ -57,7 +60,9 @@ export default {
       'savePage'
     ]),
     requestSavePage () {
+      this.saving = true
       this.savePage(this.page).then(() => {
+        this.saving = false
         window.onbeforeunload = null
       })
     },
@@ -144,7 +149,8 @@ export default {
     AddIcon,
     AnalyticTotals,
     draggable,
-    ManageSlice
+    ManageSlice,
+    RefreshIcon
   }
 }
 </script>

@@ -101,6 +101,17 @@ export default {
     editSlice (editedSlice, referenceSlice) {
       this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)
     },
+    setSubSliceInstaceToZero (slices) {
+      for (let i = 0; i < slices.length; i++) {        
+        slices[i].metadata.instance_id = 0
+
+        if (typeof slices[i].slices === 'object' && slices[i].slices.length > 0) {
+          slices[i].slices = this.setSubSliceInstaceToZero(slices[i].slices)
+        }
+      }
+
+      return slices
+    },
     copySlice (sliceToCopy, referenceSlice) {
       if (referenceSlice === null) {
         referenceSlice = this.page
@@ -108,6 +119,11 @@ export default {
       
       var newSlice = JSON.parse(JSON.stringify(sliceToCopy))
       newSlice.metadata.instance_id = 0
+
+      console.log(typeof newSlice.slices)
+      if (typeof newSlice.slices === 'object' && newSlice.slices.length > 0) {
+        newSlice.slices = this.setSubSliceInstaceToZero(newSlice.slices)
+      }
 
       referenceSlice.slices.push(newSlice)
     },

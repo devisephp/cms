@@ -40,14 +40,14 @@
           <div data-simplebar class=" dvs-min-w-1/3">
             <div class="dvs-h-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter">
 
+            <form @submit.prevent="requestSearch">
               <div class="mb-8 flex">
-                <form @submit.prevent="requestSearch">
                   <fieldset class="dvs-fieldset mr-2">
                     <input type="text" placeholder="Search" v-model="searchTerms" class="mr-2">
                   </fieldset>
                   <button type="submit" class="dvs-btn dvs-btn-sm" @click="requestSearch" :style="theme.actionButton">Search</button>
-                </form>
               </div>
+            </form>
 
               <ul class="dvs-list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">
                 <li v-for="directory in directories" :key="directory.id" class="dvs-cursor-pointer dvs-mt-2 dvs-text-bold" @click="changeDirectories(directory.path)">
@@ -122,17 +122,17 @@
                 <div v-if="file !== currentlyOpenFile">
                   <!-- List Mode -->
                   <div class="dvs-flex dvs-justify-between dvs-items-center" v-if="thumbnail">
-                    <img :src="file.url" style="height:75px">
+                    <img :src="`/styled/preview/${file.url}?w=100&h=100`" style="min-width:75px;height:75px">
                   </div>
 
                   <!-- Grid Mode -->
-                  <div class="dvs-grid-preview dvs-relative" :style="`background-size:cover;background-image:url('${file.url}')`" v-else></div>
+                  <div class="dvs-grid-preview dvs-relative" :style="`background-size:cover;background-image:url('${`/styled/preview/${file.url}?w=300&h=300`}')`" v-else></div>
                 </div>
 
                 <!-- Open File -->
                 <div v-else class="dvs-flex dvs-p-4">
                   <div class="dvs-w-1/2 dvs-mr-8 dvs-flex dvs-flex-col dvs-justify-between">
-                    <img :src="file.url" class="dvs-cursor-pointer dvs-mb-4" @click="selectSourceFile(file)">
+                    <img :src="`/styled/preview/${file.url}?w=500&h=500`" class="dvs-cursor-pointer dvs-mb-4" @click="selectSourceFile(file)">
                     <div class="dvs-flex">
                       <div class="dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: confirmedDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
                         <trash-icon h="20" w="20" :style="{color: theme.adminText.color}" />
@@ -205,7 +205,7 @@
         searchTerms: null,
         searchResults: [],
         selectedFile: null,
-        searchResultsLimit: 10,
+        searchResultsLimit: 100,
         currentlyOpenFile: null,
         options: null
       }

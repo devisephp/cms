@@ -40,14 +40,14 @@
           <div data-simplebar class=" dvs-min-w-1/3">
             <div class="dvs-h-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter">
 
-            <form @submit.prevent="requestSearch">
-              <div class="mb-8 flex">
-                  <fieldset class="dvs-fieldset mr-2">
-                    <input type="text" placeholder="Search" v-model="searchTerms" class="mr-2">
-                  </fieldset>
-                  <button type="submit" class="dvs-btn dvs-btn-sm" @click="requestSearch" :style="theme.actionButton">Search</button>
-              </div>
-            </form>
+              <form @submit.prevent="requestSearch">
+                <div class="mb-8 flex">
+                    <fieldset class="dvs-fieldset mr-2">
+                      <input type="text" placeholder="Search" v-model="searchTerms" class="mr-2">
+                    </fieldset>
+                    <button type="submit" class="dvs-btn dvs-btn-sm" @click="requestSearch" :style="theme.actionButton">Search</button>
+                </div>
+              </form>
 
               <ul class="dvs-list-reset dvs-mb-10 dvs-font-mono dvs-text-sm dvs-tracking-tight">
                 <li v-for="directory in directories" :key="directory.id" class="dvs-cursor-pointer dvs-mt-2 dvs-text-bold" @click="changeDirectories(directory.path)">

@@ -45,7 +45,7 @@
                   <fieldset class="dvs-fieldset mr-2">
                     <input type="text" placeholder="Search" v-model="searchTerms" class="mr-2">
                   </fieldset>
-                  <button class="dvs-btn dvs-btn-sm" @click="requestSearch" :style="theme.actionButton">Search</button>
+                  <button type="submit" class="dvs-btn dvs-btn-sm" @click="requestSearch" :style="theme.actionButton">Search</button>
                 </form>
               </div>
 

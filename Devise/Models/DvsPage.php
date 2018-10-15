@@ -162,7 +162,7 @@ class DvsPage extends Model
 
     public function site()
     {
-        return $this->belongsTo(DvsSite::class, 'language_id');
+        return $this->belongsTo(DvsSite::class, 'site_id');
     }
 
     public function getResponseClassAttribute()

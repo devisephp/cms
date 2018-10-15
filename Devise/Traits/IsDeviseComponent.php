@@ -42,7 +42,7 @@ trait IsDeviseComponent
 
         $partial = $this->getComponentScript($sections['component']);
 
-        return "{name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\",has_child_slot:" . $this->has_child_slot_string . "," . $partial;
+        return "{name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\",has_child_slot:true," . $partial;
     }
 
     public function getComponentCodeAttribute()

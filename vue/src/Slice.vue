@@ -8,7 +8,8 @@
     :slices="devise.slices" 
     :models="pageData"
     :component="sliceComponent"
-    ref="component">
+    ref="component"
+    v-on="$listeners">
   </component>
 </template>
 
@@ -72,7 +73,8 @@ export default {
       window.devise.$bus.$on('jumpToSlice', this.attemptJumpToSlice)
       window.devise.$bus.$on('openSliceSettings', this.attemptOpenSliceSettings)
       window.devise.$bus.$on('markSlice', this.markSlice)
-
+      
+      this.addVisibilityScrollListeners()
     },
     hydrateMissingProperties () {
       let fields = this.sliceConfig(this.devise).fields
@@ -226,6 +228,32 @@ export default {
           } 
         }
       }
+    },
+    addVisibilityScrollListeners () {
+      if (
+          (
+            typeof this.$refs.component.isVisible !== 'undefined' ||
+            typeof this.$refs.component.isHidden !== 'undefined'
+          ) && 
+          typeof this.$refs.component !== 'undefined'
+        ) {
+        window.addEventListener('scroll', () => {
+          if (this.checkVisible(this.$refs.component.$el)) {
+            if (typeof this.$refs.component.isVisible !== 'undefined') {
+              this.$refs.component.isVisible()
+            }
+          } else {
+            if (typeof this.$refs.component.isHidden !== 'undefined') {
+              this.$refs.component.isHidden()
+            }
+          }
+        })
+      }
+    },
+    checkVisible(elm) {
+      var rect = elm.getBoundingClientRect();
+      var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+      return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
     }
   },
   computed: {

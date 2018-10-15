@@ -9,6 +9,7 @@ use Devise\Models\DvsPage;
 use Devise\Models\DvsPageMeta;
 
 use Devise\Sites\SiteDetector;
+use Devise\Languages\LanguageDetector;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
@@ -136,9 +137,9 @@ class Devise
 
     public static function lang()
     {
-        $locale = App::getLocale();
         $langs = LaravelLocalization::export()->toArray();
-        $langs['locale'] = $locale;
+        $locale = App::getLocale();
+        $langs[$locale]['locale'] = $locale;
 
         return 'Devise.prototype.$lang = ' . json_encode($langs[$locale]) . ";\n";
     }

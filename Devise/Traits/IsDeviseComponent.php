@@ -83,6 +83,7 @@ trait IsDeviseComponent
 
     private function getViewSections()
     {
+        
         if(!$this->viewSections)
         {
             $view = View::make($this->view);
@@ -158,6 +159,10 @@ trait IsDeviseComponent
 
     private function detectSlotAvailability($sections)
     {
+        if (!isset($sections['template'])) {
+            throw new \Exception('Something is wrong with this template: ' . $this->view);
+        }
+
         $this->hasSliceSlot = (strpos($sections['template'], '<slices') !== false);
 
         if (!$this->hasSliceSlot)

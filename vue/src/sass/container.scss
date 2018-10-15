@@ -1,5 +1,7 @@
 #devise-container {
   @apply dvs-font-sans dvs-w-full;
+
+  font-size:16px;
 }
 
 #devise-admin {
@@ -15,15 +17,10 @@
 .devise-content {
   @apply dvs-z-10 dvs-relative dvs-min-h-screen;
 
-  // Trap any fixed content
-  transform: translate(0, 0);
-
   width:100%;
 }
 
 #devise-responsive-preview {
-  
-  transform: translate(0, 0);
   transition: width 0.2s ease-out, height 0.2s ease-out, margin 0.2s ease-out;
 
   &.tablet {

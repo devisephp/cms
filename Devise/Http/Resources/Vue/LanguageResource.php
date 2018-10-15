@@ -20,12 +20,14 @@ class LanguageResource extends Resource
         $detector = App::make(SiteDetector::class);
         $site = $detector->current();
 
+        // dd($this);
+
         return [
             'id'      => $this->id,
             'name'    => $this->name,
-            'default' => $this->pivot->default,
-            'path'    => ($this->pivot->default) ? '/' : '/' . $this->code,
-            'url'     => ($this->pivot->default) ? $site->url . '/' : $site->url . '/' . $this->code,
+            'default' => $this->pivot_default,
+            'path'    => ($this->pivot_default) ? '/' : '/' . $this->code,
+            'url'     => ($this->pivot_default) ? $site->url . '/' : $site->url . '/' . $this->code,
         ];
     }
 }

@@ -40,32 +40,30 @@ return [
     | 'manage settings','manage meta','manage sites','manage languages','manage redirects']
     |
     */
-    [
-        'permissions' => [
-            /*
-            'example@email.com' => [
-                'access admin',
-                'manage pages',
-                'manage users',
-                'manage mothership',
-                'manage settings',
-                'manage meta',
-                'manage sites',
-                'manage languages',
-                'manage redirects'
-            ],
-            */
-            'default' => [
-                'access admin',
-                'manage pages',
-                'manage users',
-                'manage mothership',
-                'manage settings',
-                'manage meta',
-                'manage sites',
-                'manage languages',
-                'manage redirects'
-            ]
+    'permissions' => [
+        /*
+        'example@email.com' => [
+            'access admin',
+            'manage pages',
+            'manage users',
+            'manage mothership',
+            'manage settings',
+            'manage meta',
+            'manage sites',
+            'manage languages',
+            'manage redirects'
+        ],
+        */
+        'default' => [
+            'access admin',
+            'manage pages',
+            'manage users',
+            'manage mothership',
+            'manage settings',
+            'manage meta',
+            'manage sites',
+            'manage languages',
+            'manage redirects'
         ]
     ]
 ];

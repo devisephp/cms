@@ -7,59 +7,62 @@ use Illuminate\Http\Resources\Json\Resource;
 class PageResource extends Resource
 {
 
-  /**
-   * Transform the resource into an array.
-   *
-   * @param  \Illuminate\Http\Request
-   * @return array
-   */
-  public function toArray($request)
-  {
-    $data = [
-      'id'                 => $this->id,
-      'site_id'            => $this->site_id,
-      'title'              => $this->title,
-      'slug'               => $this->slug,
-      'canonical'          => $this->canonical,
-      'ab_testing_enabled' => $this->ab_testing_enabled,
-      'versions'           => PageVersionResource::collection($this->versions),
-      'meta'               => MetaResource::collection($this->metas),
-      'site'               => new SiteResource($this->site),
-      'slices'             => [],
-      'language'           => new LanguageResource($this->language),
-      'languages'          => []
-    ];
-
-
-    if ($this->translatedFromPage)
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return array
+     */
+    public function toArray($request)
     {
-      $data['languages'][] = [
-        'name'    => $this->translatedFromPage->language->human_name,
-        'url'     => $this->translatedFromPage->slug,
-        'current' => ($this->translatedFromPage->id == $this->id)
-      ];
+        $data = [
+            'id'                 => $this->id,
+            'site_id'            => $this->site_id,
+            'title'              => $this->title,
+            'slug'               => $this->slug,
+            'canonical'          => $this->canonical,
+            'ab_testing_enabled' => $this->ab_testing_enabled,
+            'versions'           => PageVersionResource::collection($this->versions),
+            'meta'               => MetaResource::collection($this->metas),
+            'site'               => new SiteResource($this->site),
+            'slices'             => [],
+            'language'           => new LanguageResource($this->language),
+            'languages'          => []
+        ];
 
-      $localizedPages = $this->translatedFromPage->localizedPages;
-    } else
-    {
-      $localizedPages = $this->localizedPages;
+
+        if ($this->translatedFromPage)
+        {
+            $this->setLanguages($data, $this->translatedFromPage, $this->translatedFromPage->localizedPages);
+        } else
+        {
+            $this->setLanguages($data, $this, $this->localizedPages);
+        }
+
+        // Relationships
+        if ($this->currentVersion && $this->currentVersion->slices->count())
+        {
+            $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
+        }
+
+        return $data;
     }
 
-    foreach ($localizedPages as $page)
+    private function setLanguages(&$data, $page, $localizedPages)
     {
-      $data['languages'][] = [
-        'name'    => $page->language->human_name,
-        'url'     => $page->slug,
-        'current' => ($page->translatedFromPage->id == $this->id)
-      ];
-    }
+        $data['languages'][] = [
+            'name'    => $page->language->human_name,
+            'url'     => $page->slug,
+            'current' => ($page->id == $this->id)
+        ];
 
-    // Relationships
-    if ($this->currentVersion && $this->currentVersion->slices->count())
-    {
-      $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
+        foreach ($localizedPages as $page)
+        {
+            $data['languages'][] = [
+                'name'    => $page->language->human_name,
+                'url'     => $page->slug,
+                'current' => ($page->id == $this->id)
+            ];
+        }
     }
-
-    return $data;
-  }
 }

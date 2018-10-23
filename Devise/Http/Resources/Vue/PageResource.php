@@ -51,7 +51,7 @@ class PageResource extends Resource
     private function setLanguages(&$data, $page, $localizedPages)
     {
         $data['languages'][] = [
-            'name'    => $page->language->human_name,
+            'name'    => $page->language->name,
             'url'     => $page->slug,
             'current' => ($page->id == $this->id)
         ];
@@ -59,7 +59,7 @@ class PageResource extends Resource
         foreach ($localizedPages as $page)
         {
             $data['languages'][] = [
-                'name'    => $page->language->human_name,
+                'name'    => $page->language->name,
                 'url'     => $page->slug,
                 'current' => ($page->id == $this->id)
             ];

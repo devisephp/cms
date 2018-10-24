@@ -85,7 +85,8 @@ export default {
       }
     },
     retrieveAllPagesList (loadbar = true) {
-      this.getPagesList().then(function () {
+      let filters = {language_id:deviseSettings.$page.language.id}
+      this.getPagesList(filters).then(function () {
         if (loadbar) {
           devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         }

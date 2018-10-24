@@ -302,7 +302,8 @@ const actions = {
 
   getPagesList (context, filters) {
     return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'pagesList').then(function (response) {
+      let params = filters.hasOwnProperty('language_id') ? 'language_id=' + filters.language_id : ''
+      window.axios.get(context.state.api.baseUrl + 'pagesList?' + params).then(function (response) {
         context.commit('setPagesList', response.data)
         resolve(response)
       }).catch(function (error) {

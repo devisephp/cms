@@ -139,8 +139,8 @@
 
     <div class="dvs-collapsed" v-show="sliceOpen">
       <draggable v-model="slice.slices" element="ul" class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" :options="{group:{ name:'g1'}}">
-        <template v-for="(s, key) in slice.slices">
-          <slice-editor :key="key" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
+        <template v-for="s in slice.slices">
+          <slice-editor :key="s.metadata.instance_id" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
         </template>
       </draggable>
     </div>

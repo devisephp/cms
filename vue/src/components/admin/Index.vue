@@ -25,8 +25,15 @@ export default {
   name: 'DeviseIndex',
   methods: {
     findMenu (menu) {
-      for (let i = 0; i < menu.length; i++) {
-        const m = menu[i]
+  
+      if(typeof menu === 'object') {
+        var safeMenu = Object.keys(menu).map(i => menu[i])
+      } else {
+        var safeMenu = menu
+      }
+
+      for (let i = 0; i < safeMenu.length; i++) {
+        const m = safeMenu[i]
         if (m.routeName === this.$route.name) {
           return m
         }
@@ -37,10 +44,13 @@ export default {
           }
         } 
       }
+
+      console.warn('No menu found.')
+      return []
     }
   },
   computed: {
-    ...mapState([
+    ...mapState('devise', [
       'adminMenu'
     ]),
     currentMenu () {

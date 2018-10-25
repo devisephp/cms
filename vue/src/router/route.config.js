@@ -8,6 +8,7 @@ import LanguagesManage from '../components/languages/Manage'
 import AdministrationIndex from '../components/admin/Index'
 import MetaManage from '../components/meta/Manage'
 import PageEditor from '../components/pages/Editor'
+import PageCreate from '../components/pages/Create'
 import PageSettings from '../components/pages/Settings'
 import PagesIndex from '../components/pages/Index'
 import PagesView from '../components/pages/View'
@@ -38,6 +39,13 @@ var routes = [
     name: 'devise-pages-index',
     components: {
       'devise': PagesIndex
+    }
+  },
+  {
+    path: '/devise/pages',
+    name: 'devise-pages-create',
+    components: {
+      'devise': PageCreate
     }
   },
   {

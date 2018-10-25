@@ -25,6 +25,8 @@ import { mapGetters } from 'vuex'
 
 const DevisePlugin = {
   install (Vue, { store, router, bus, options }) {
+    
+
     if (typeof store === 'undefined') {
       throw new Error('Please provide a vuex store.')
     }
@@ -100,6 +102,11 @@ const DevisePlugin = {
     if (typeof store.state.settingsMenu !== 'undefined') {
       DeviseStore.state.settingsMenu = Object.assign({}, store.state.settingsMenu)
     }
+
+    // Setup the currentPage and Sites arrays in the store b/c they are necessary in 
+    // some apps to be ready to go right away
+    DeviseStore.state.currentPage = Object.assign({}, DeviseStore.state.currentPage, deviseSettings.$page)
+    DeviseStore.state.sites = Object.assign({}, DeviseStore.state.sites, {data: deviseSettings.$sites})
 
     // Register devise vuex module and sync it with the store
     store.registerModule('devise', DeviseStore)

@@ -344,8 +344,6 @@ export default {
       this.getPage(this.$route.params.pageId).then(function () {
         self.localValue = Object.assign({}, self.localValue, self.page)
 
-        console.log( self.page)
-
         self.localValue.versions.map(version => {
           self.$set(version, 'editName', false)
         })

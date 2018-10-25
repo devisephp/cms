@@ -301,7 +301,6 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'mothership',
-      'currentPage',
       'sites'
     ]),
     options () {

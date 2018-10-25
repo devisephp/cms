@@ -32,7 +32,7 @@
 
         <div class="dvs-max-h-screen dvs-flex-grow" ref="admin-route-wrapper" data-simplebar>
           <transition name="dvs-fade" mode="out-in">
-            <router-view name="devise" :page="page"></router-view>
+            <router-view name="devise"></router-view>
           </transition>
         </div>
 
@@ -65,7 +65,7 @@ import Messages from './../utilities/Messages'
 import Panel from './../utilities/Panel'
 import PreviewMode from './../pages/PreviewMode'
 import SliceSettings from './../../SliceSettings'
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Administration',
@@ -88,30 +88,6 @@ export default {
     },
     csrf_field () {
       return window.axios.defaults.headers.common['X-CSRF-TOKEN']
-    },
-    managingPage () {
-      return this.$route.name === 'devise-page-editor'
-    },
-  },
-  props: {
-    page: {
-      type: Object
-    }
-  },
-  watch: {
-    page: {
-      handler: function (val, oldVal) { 
-        // On the initial load the page will change when data for the page
-        // is assigned. We ignore changes for a few seconds while the data is 
-        // loading. A little janky and a TODO that needs to be addressed.
-        if (this.everythingIsLoaded) {
-          // This is unbound where the save takes place on success
-          window.onbeforeunload = function() {
-            return true
-          }
-        }
-      },
-      deep: true
     },
   },
   components: {

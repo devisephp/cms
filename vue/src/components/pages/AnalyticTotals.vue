@@ -53,7 +53,6 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'mothership',
-      'currentPage'
     ]),
     anlyticsHasData () {
       for(var date in this.analytics) {

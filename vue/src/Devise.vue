@@ -4,25 +4,25 @@
 
     <div id="devise-container" :class="[breakpoint, isPreviewFrame ? 'preview-frame' : '']">
       
-      <administration v-if="isLoggedIn" :page="page" />
+      <administration v-if="isLoggedIn" />
 
       <div id="dvs-app-content">
         <!-- Desktop mode in editor or just viewing page -->
-        <div class="devise-content" v-if="page.previewMode === 'desktop' || isPreviewFrame">
+        <div class="devise-content" v-if="typeof currentPage === 'undefined' || currentPage.previewMode === 'desktop' || isPreviewFrame">
           <slot name="on-top"></slot>
           <slot name="static-content"></slot>
 
-          <template v-if="page.slices">
-            <slices :slices="page.slices"></slices>
+          <template v-if="typeof currentPage !== 'undefined' && currentPage.slices">
+            <slices :slices="currentPage.slices"></slices>
           </template>
 
           <slot name="static-content-bottom"></slot>
           <slot name="on-bottom"></slot>
         </div>
 
-        <div id="devise-iframe-editor">
+        <div id="devise-iframe-editor" v-if="typeof currentPage !== 'undefined'">
           <!-- Preview mode in editor -->
-          <iframe v-if="page.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[page.previewMode]"/>
+          <iframe v-if="currentPage.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[currentPage.previewMode]"/>
         </div>
       </div>
 
@@ -47,19 +47,12 @@ export default {
       showLoadbar: false,
       loadbarPercentage: 0,
       pageMode: false,
-      page: {
-        title: null,
-        body: null,
-        slices: {},
-        previewMode: 'desktop'
-      }
     }
   },
   mounted () {
     window.devise = this
     devise.$bus = deviseSettings.$bus
 
-    this.mountGlobalVariables()
     this.initDevise()
   },
   methods: {
@@ -67,13 +60,13 @@ export default {
       'setBreakpoint'
     ]),
     ...mapMutations('devise', [
-      'setPage',
+      'setCurrentPage',
       'setSites'
     ]),
     initDevise () {
       try {
         if (!this.isPreviewFrame) {
-          deviseSettings.$page.previewMode = 'desktop'
+          this.currentPage.previewMode = 'desktop'
           this.page = deviseSettings.$page
           this.$router.push({name: 'devise-page-editor'})
         } else {
@@ -100,11 +93,6 @@ export default {
       if (blocker) {
         blocker.classList.add('fade')
       }
-    },
-    mountGlobalVariables () {
-      // page, sites
-      this.setPage(deviseSettings.$page)
-      this.setSites({data: deviseSettings.$sites})
     },
     addWatchers () {
       window.onresize = this.setSizeAndBreakpoint
@@ -133,7 +121,8 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'breakpoint',
-      'currentUser'
+      'currentUser',
+      'currentPage'
     ]),
     currentUrl () {
       return window.location.href
@@ -147,9 +136,6 @@ export default {
     },
     isLoggedIn () {
       return this.currentUser
-    },
-    pageSlices () {
-      return this.page.slices
     }
   },
   components: {

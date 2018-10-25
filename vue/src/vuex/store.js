@@ -107,6 +107,12 @@ const state = {
   },
   modelSettings: {},
   mothership: null,
+  currentPage: {
+    languages: [],
+    slices: [],
+    meta: [],
+    versions: []
+  },
   pages: {
     data: []
   },

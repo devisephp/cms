@@ -6,7 +6,7 @@
     :devise="deviseForSlice"
     :breakpoint="breakpoint"
     :slices="devise.slices" 
-    :models="pageData"
+    :models="currentPage"
     :component="sliceComponent"
     ref="component"
     v-on="$listeners">
@@ -267,12 +267,6 @@ export default {
         return this.devise.config
       }
       return this.devise
-    },
-    pageData () {
-      if (deviseSettings.$page && deviseSettings.$page.data) {
-        return deviseSettings.$page.data
-      }
-      return null
     },
     styles () {
       var styles = {}

@@ -170,6 +170,8 @@ class MediaController extends Controller
         $original = str_replace("storage/", '', $original);
         $sourceImage = storage_path($sourceDirectory . $original);
 
+
+        
         $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $original));
         $this->Storage->makeDirectory($destinationDirectory);
 
@@ -183,9 +185,11 @@ class MediaController extends Controller
 
             $finalSettings = array_merge($sizeSettings, $imagesAndSettings['settings']);
 
+            // TODO: Can we catch memory timeouts here a little better? 
             $finalImages[] = \GlideImage::create($sourceImage)
-                ->modify($finalSettings)
-                ->save($destinationImage);
+                                ->modify($finalSettings)
+                                ->save($destinationImage);
+            
         }
 
         $this->optimizeImages($finalImages);

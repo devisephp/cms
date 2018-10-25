@@ -16,7 +16,8 @@
             <fieldset class="dvs-fieldset dvs-mb-4">
               <label>Crop / Fitting</label>
               <select v-model="edits.fit">
-                <option value="null">Contain</option>
+                <option :label="null">None</option>
+                <option value="crop">Contain</option>
                 <option value="max">Best Fit</option>
                 <option value="fill">Fill</option>
                 <option value="stretch">Stretch</option>
@@ -138,7 +139,7 @@ export default {
       edits: {
         or: null,
         flip: null,
-        fit: null,
+        fit: 'crop',
         bri: null,
         con: null,
         gam: null,

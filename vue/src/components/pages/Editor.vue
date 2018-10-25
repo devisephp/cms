@@ -2,8 +2,8 @@
   <div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-8 dvs-pb-8 dvs-pt-8">
-        <draggable v-model="page.slices" element="ul" class="dvs-list-reset dvs-w-full" :options="{group:{ name:'g1'}}">
-          <template v-for="slice in page.slices">
+        <draggable v-model="currentPage.slices" element="ul" class="dvs-list-reset dvs-w-full" :options="{group:{ name:'g1'}}">
+          <template v-for="slice in currentPage.slices">
             <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
           </template>
         </draggable>
@@ -52,16 +52,13 @@ export default {
       createSlice: false
     }
   },
-  mounted () {
-    this.pageSlices = this.page.slices
-  },
   methods: {
     ...mapActions('devise', [
       'savePage'
     ]),
     requestSavePage () {
       this.saving = true
-      this.savePage(this.page).then(() => {
+      this.savePage(this.currentPage).then(() => {
         this.saving = false
         window.onbeforeunload = null
       })
@@ -74,7 +71,7 @@ export default {
       }
     },
     openSlice (sliceToOpen) {
-      this.page.slices.map(s => this.closeSlice(s))
+      this.currentPage.slices.map(s => this.closeSlice(s))
       this.$set(sliceToOpen.metadata, 'open', true)
     },
     closeSlice (slice) {
@@ -89,7 +86,7 @@ export default {
     },
     addSlice (newSlice, referenceSlice) {
       if (typeof referenceSlice !== 'undefined') {
-        let parentSlice = this.page.slices[this.page.slices.indexOf(referenceSlice)]
+        let parentSlice = this.currentPage.slices[this.currentPage.slices.indexOf(referenceSlice)]
         let config = this.sliceConfig(parentSlice)
         if (config.has_child_slot === true) {
           if (typeof parentSlice.slices === 'undefined') {
@@ -98,13 +95,13 @@ export default {
           parentSlice.slices.push(newSlice)
         }
       } else {
-        this.page.slices.push(newSlice)
+        this.currentPage.slices.push(newSlice)
       }
 
       this.createSlice = false
     },
     editSlice (editedSlice, referenceSlice) {
-      this.page.slices.splice(this.page.slices.indexOf(referenceSlice), 1, editedSlice)
+      this.currentPage.slices.splice(this.currentPage.slices.indexOf(referenceSlice), 1, editedSlice)
     },
     setSubSliceInstaceToZero (slices) {
       for (let i = 0; i < slices.length; i++) {        
@@ -119,13 +116,12 @@ export default {
     },
     copySlice (sliceToCopy, referenceSlice) {
       if (referenceSlice === null) {
-        referenceSlice = this.page
+        referenceSlice = this.currentPage
       }
       
       var newSlice = JSON.parse(JSON.stringify(sliceToCopy))
       newSlice.metadata.instance_id = 0
 
-      console.log(typeof newSlice.slices)
       if (typeof newSlice.slices === 'object' && newSlice.slices.length > 0) {
         newSlice.slices = this.setSubSliceInstaceToZero(newSlice.slices)
       }
@@ -134,17 +130,17 @@ export default {
     },
     removeSlice (deletingSlice, referenceSlice) {
       if (typeof referenceSlice === 'undefined') {
-        referenceSlice = this.page
+        referenceSlice = this.currentPage
       }
       referenceSlice.slices.splice(referenceSlice.slices.indexOf(deletingSlice), 1)
     }
   },
   computed: {
     ...mapGetters('devise', [
+      'currentPage',
       'sliceConfig'
     ])
   },
-  props: ['page'],
   components: {
     AddIcon,
     AnalyticTotals,

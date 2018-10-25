@@ -107,8 +107,8 @@ const getters = {
     return state.pages.data.find(page => page.id === id)
   },
 
-  currentPage: (state, getters, rootState) => {
-    return deviseSettings.$page
+  currentPage: state => {
+    return state.currentPage
   },
 
   // Sites

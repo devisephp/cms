@@ -70,13 +70,14 @@ export default {
     state.changes = payload
   },
 
+  // Current Page
+  setCurrentPage(state, page) {
+    Object.assign({}, state.currentPage, page)
+  },
+
   // Pages
   createPage (state, page) {
     state.pages.data.push(page)
-  },
-
-  setPage (state, payload) {
-    state.page = payload
   },
 
   setPages (state, payload) {

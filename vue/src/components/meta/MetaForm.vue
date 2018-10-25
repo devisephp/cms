@@ -25,7 +25,7 @@
 
     <help class="dvs-mb-8">You currently do not have any meta tags at this time.</help>
 
-    <div class="dvs-mb-12 dvs-flex dvs-flex-col">
+    <div class="dvs-mb-8 dvs-flex dvs-flex-col">
       <div v-for="(meta, key) in value" :key="key" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
         <div class="dvs-font-mono dvs-pr-8">
           <template v-if="!meta.edit">

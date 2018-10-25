@@ -44,9 +44,6 @@ export default {
           }
         } 
       }
-
-      console.warn('No menu found.')
-      return []
     }
   },
   computed: {

@@ -42,7 +42,7 @@ var routes = [
     }
   },
   {
-    path: '/devise/pages',
+    path: '/devise/pages/create',
     name: 'devise-pages-create',
     components: {
       'devise': PageCreate

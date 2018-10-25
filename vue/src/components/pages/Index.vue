@@ -4,7 +4,7 @@
 
         <div id="devise-admin-content">
             <action-bar>
-                <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click.prevent="goToPage('devise-index')">
+                <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="goToPage('devise-pages-create')">
                     Create New Page
                 </li>
             </action-bar>
@@ -147,10 +147,6 @@
         } else {
           this.autosuggest = Object.assign({}, {})
         }
-      },
-      setPage(page) {
-        this.newPage.copy_page_id = page.id
-        this.newPage.copy_page_title = page.title
       },
       // Pagination Page... not page-page
       changePage (page) {

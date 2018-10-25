@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <div id="devise-admin-content" v-if="page">
+    <div id="devise-admin-content" v-if="localValue.id">
       <action-bar>
         <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="href(page.slug)">
           Go To Page
@@ -41,7 +41,7 @@
 
       <help class="dvs-mb-4">Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
 
-      <div class="dvs-mb-12 dvs--m8">
+      <div class="dvs-mb-8 dvs--m8">
         <div v-for="(version, key) in localValue.versions" :key="key" class="dvs-flex-grow dvs-p-8 dvs-rounded-sm dvs-shadow-sm dvs-mb-8">
           <div class="dvs-text-xl dvs-font-bold dvs-mb-4 dvs-flex dvs-justify-between">
             <div>
@@ -135,7 +135,7 @@
           <input type="checkbox" v-model="localValue.ab_testing_enabled">
         </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-8">
+        <fieldset class="dvs-fieldset">
           <h4 :style="{color: theme.adminText.color}" class="dvs-mb-4">Page Specific Meta Tags</h4>
           <meta-form v-model="localValue.meta" @request-create-meta="requestCreateMeta" @request-update-meta="requestUpdateMeta" @request-delete-meta="requestDeleteMeta" />
         </fieldset>
@@ -227,7 +227,7 @@ export default {
         end: null
       },
       localValue: {},
-      modulesToLoad: 3,
+      modulesToLoad: 2,
       showCopy: false,
       showTranslate: false,
       pageToCopy: {
@@ -269,7 +269,7 @@ export default {
     }
   },
   mounted () {
-    this.retrieveAllPages()
+    this.retrievePage()
     this.retrieveAllLanguages()
     this.setDefaultAnalytics()
   },
@@ -287,11 +287,11 @@ export default {
       'updatePageVersion'
     ]),
     requestSavePage () {
-      this.updatePage({page: this.page, data: this.localValue})
+      this.updatePage({data: this.localValue})
     },
     requestCopyPage () {
       let self = this
-      this.copyPage({page: this.page, data: this.pageToCopy}).then(function () {
+      this.copyPage({data: this.pageToCopy}).then(function () {
         self.pageToCopy.title = null
         self.pageToCopy.slug = null
         self.showCopy = false
@@ -306,7 +306,7 @@ export default {
       // Append the language code to the front of the slug
       this.pageToTranslate.slug = '/' + this.translateLanguage.code + this.pageToTranslate.slug
 
-      this.translatePage({page: this.page, data: this.pageToTranslate}).then(function () {
+      this.translatePage({page: this.localValue, data: this.pageToTranslate}).then(function () {
         self.pageToTranslate.title = null
         self.pageToTranslate.slug = null
         self.pageToTranslate.language_id = null
@@ -314,13 +314,13 @@ export default {
       })
     },
     requestSaveVersion (version) {
-      this.updatePageVersion({page: this.page, version: version})
+      this.updatePageVersion({page: this.localValue, version: version})
     },
     requestCopyVersion (version) {
-      this.copyPageVersion({page: this.page, version: version})
+      this.copyPageVersion({page: this.localValue, version: version})
     },
     requestDeleteVersion (version) {
-      this.deletePageVersion({page: this.page, version: version})
+      this.deletePageVersion({page: this.localValue, version: version})
     },
     requestCreateMeta (newMeta) {
       this.localValue.meta.push(newMeta)
@@ -335,19 +335,19 @@ export default {
     },
     requestDeletePage () {
       let self = this
-      this.deletePage(this.page).then(function () {
+      this.deletePage(this.localValue).then(function () {
         self.goToPage('devise-pages-index')
       })
     },
-    retrieveAllPages () {
+    retrievePage () {
       let self = this
-      this.getPage(this.$route.params.pageId).then(function () {
-        self.localValue = Object.assign({}, self.localValue, self.page)
+      this.getPage(this.$route.params.pageId).then(function (response) {
+        self.localValue = Object.assign({}, self.localValue, response.data.page)
 
         self.localValue.versions.map(version => {
           self.$set(version, 'editName', false)
         })
-        self.pageToTranslate.slug = self.page.slug
+        self.pageToTranslate.slug = self.localValue.slug
         devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
         
         self.retrieveAnalytics()
@@ -379,7 +379,7 @@ export default {
           this.analyticsDateRange.end = this.formatDate(new Date(this.analyticsDateRange.end[0]))
         }
 
-        this.getPageAnalytics({slug: this.page.slug, dates: self.analyticsDateRange}).then(function (response) {
+        this.getPageAnalytics({slug: this.localValue.slug, dates: self.analyticsDateRange}).then(function (response) {
 
           response.data.data.datasets.map(function (dataset, index) {
             dataset.backgroundColor = [self.colors[index].background]
@@ -405,7 +405,6 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'page',
       'languages',
       'mothership'
     ]),

@@ -12,8 +12,8 @@
       <ul 
         v-if="show" 
         @click="show = false"
-        class="dvs-list-reset dvs-absolute dvs-pin-t dvs-pin-l dvs-mt-4 dvs-z-10" 
-        style="width:200px; margin-left:80px;">
+        class="dvs-list-reset dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-4 dvs-z-10" 
+        style="width:200px; margin-right:80px;">
           <slot></slot>
       </ul>
     </transition>

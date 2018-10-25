@@ -383,9 +383,9 @@ const actions = {
 
   updatePage (context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.put(context.state.api.baseUrl + 'pages/' + payload.page.id, payload.data).then(function (response) {
+      window.axios.put(context.state.api.baseUrl + 'pages/' + payload.data.id, payload.data).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.data.title + ' has been saved.'})
-        context.commit('updatePage', {page: payload.page, data: response.data})
+        context.commit('updatePage', {page: payload.data, data: response.data})
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)

@@ -3,28 +3,15 @@
     <div class="dvs-flex dvs-justify-between dvs-items-center">
       <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4 dvs-font-bold dvs-w-full">
         <div 
-          class="dvs-rounded-full dvs-mr-2 dvs-w-2 dvs-h-2 dvs-mr-2" 
+          class="dvs-rounded-full dvs-mr-2 dvs-w-2 dvs-h-2 dvs-mr-2"
+          @click="localValue.enabled = !localValue.enabled"
           :class="{'dvs-bg-green': localValue.enabled, 'dvs-bg-white': !localValue.enabled, 'dvs-invisible': !localValue.enabler}" 
           :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration">
         </div>
         <div class="dvs-flex dvs-items-center dvs-justify-start dvs-w-full">
-          <div @mouseover="showPreview = true" @mouseout="showPreview = false">
-            <eye-icon class="dvs-mr-2" />
-          </div>
           <span class="dvs-cursor-pointer dvs-text-xs dvs-font-normal hover:underline" @click="toggleShowEditor">
             {{ options.label }}
             </span>
-          <div 
-            v-show="showPreview" 
-            class="dvs-absolute dvs-font-normal dvs-p-4 dvs-mt-2 dvs-text-xs dvs-rounded dvs-shadow-lg dvs-pin-t dvs-pin-l dvs-mt-8 dvs-z-20"
-            :style="theme.actionButton"
-            >
-            <slot name="preview"></slot>
-            <div class="dvs-pt-4" v-if="localValue.instructions && localValue.instructions !== '' && localValue.instructions !== null">
-              <strong>Instructions from the Admin:</strong><br>
-              {{ localValue.instructions }}
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -70,14 +57,12 @@ import { mapGetters } from 'vuex'
 import Panel from './../../utilities/Panel'
 import Strings from './../../../mixins/Strings'
 import Toggle from './../../utilities/Toggle'
-import EyeIcon from 'vue-ionicons/dist/ios-eye.vue'
 
 export default {
   name: 'FieldEditor',
   data () {
     return {
-      localValue: {},
-      showPreview: false
+      localValue: {}
     }
   },
   mounted () {
@@ -108,7 +93,6 @@ export default {
   props: ['value', 'options', 'showEditor'],
   mixins: [Strings],
   components: {
-    EyeIcon,
     Panel,
     Toggle
   }

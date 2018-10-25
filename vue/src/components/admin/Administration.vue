@@ -14,7 +14,7 @@
               :key="key"
               :style="theme.panelSidebar"
               class="dvs-outline-none dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b"
-              @click.prevent="goToPage(menuItem.routeName)">
+              @click.prevent="loadAdminPage(menuItem)">
               <component v-bind:is="menuItem.icon" class="dvs-m-4" w="25" h="25"></component>
             </button>
           </template>
@@ -78,6 +78,15 @@ export default {
     setTimeout(() => {
       this.everythingIsLoaded = true
     }, 2000);
+  },
+  methods: {
+    loadAdminPage(menuItem) {
+      if (typeof menuItem.routeParams !== 'undefined') {
+        this.goToPage(menuItem.routeName, menuItem.routeParams)
+      } else {
+        this.goToPage(menuItem.routeName)
+      }
+    }
   },
   computed: {
     ...mapState('devise', [

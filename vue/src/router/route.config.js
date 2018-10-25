@@ -21,6 +21,13 @@ import RedirectsEdit from '../components/redirects/Edit'
 
 var routes = [
   {
+    path: '/devise-settings',
+    name: 'devise-settings',
+    components: {
+      'devise': AdministrationIndex
+    }
+  },
+  {
     path: '/devise-models',
     name: 'devise-models',
     components: {

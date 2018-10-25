@@ -34,7 +34,10 @@ const state = {
     },
     {
       icon: 'DocumentIcon',
-      routeName: 'devise-page-settings'
+      routeName: 'devise-page-settings',
+      routeParams: {
+        pageId: deviseSettings.$page.id
+      }
     },
     {
       icon: 'CogIcon',

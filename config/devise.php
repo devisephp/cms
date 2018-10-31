@@ -12,10 +12,10 @@ return [
     |
     */
 
-    'media' => [
-        'disk'                      => env('DVS_FILESYSTEM_DISK', 'public'),
-        'cached-images-directory'   => 'styled',
-        'source-directory'          => 'media',
+    'media'      => [
+        'disk'                    => env('DVS_FILESYSTEM_DISK', 'public'),
+        'cached-images-directory' => 'styled',
+        'source-directory'        => 'media',
     ],
 
     /*
@@ -27,6 +27,7 @@ return [
     |
     */
     'mothership' => [
+        'url'     => env('MOTHERSHIP_URL', 'https://mothership.app/'),
         'api-key' => env('MOTHERSHIP_API_KEY', null)
     ],
 

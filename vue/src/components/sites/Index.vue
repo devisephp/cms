@@ -100,7 +100,7 @@ export default {
       'deleteSite'
     ]),
     requestSyncSites () {
-      if (this.mothership !== null) {
+      if (this.mothershipApiKey !== null) {
         let self = this
         this.syncSites(this.sites.data)
       }
@@ -170,7 +170,7 @@ export default {
     ...mapGetters('devise', [
       'sites',
       'languages',
-      'mothership',
+      'mothershipApiKey',
       'settingsMenu'
     ]),
     createInvalid () {

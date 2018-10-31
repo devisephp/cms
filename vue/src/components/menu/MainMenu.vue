@@ -18,8 +18,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', [
-      'adminMenu',
-      'mothership'
+      'adminMenu'
     ]),
     menu () {
       if (this.menuItems !== null) {

@@ -5,7 +5,7 @@ const actions = {
   /*
   * Breakpoint
   */
-  setBreakpoint (context, data) {
+  setBreakpoint(context, data) {
     return new Promise((resolve, reject) => {
       context.commit('setBreakpoint', data)
       resolve(data)
@@ -17,7 +17,7 @@ const actions = {
   /*
   * Languages
   */
-  getLanguages (context) {
+  getLanguages(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'languages/').then(function (response) {
         context.commit('setLanguages', response.data)
@@ -30,7 +30,7 @@ const actions = {
     })
   },
 
-  createLanguage (context, language) {
+  createLanguage(context, language) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'languages/', language).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Your new language has been added.'})
@@ -44,7 +44,7 @@ const actions = {
     })
   },
 
-  updateLanguage (context, language) {
+  updateLanguage(context, language) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'languages/' + language.id, language).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Your new language has been updated.'})
@@ -62,7 +62,7 @@ const actions = {
   * Media Manager
   */
 
-  setCurrentDirectory (context, directory) {
+  setCurrentDirectory(context, directory) {
     return new Promise((resolve, reject) => {
       context.commit('setCurrentDirectory', directory)
       resolve()
@@ -71,7 +71,7 @@ const actions = {
     })
   },
 
-  generateImages (context, payload) {
+  generateImages(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'media-styles', payload).then(function (response) {
         context.commit('setFiles', response.data)
@@ -84,7 +84,7 @@ const actions = {
     })
   },
 
-  regenerateMedia (context, payload) {
+  regenerateMedia(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'media-styles/' + payload.instanceId + '/' + payload.fieldName, payload.sizes).then(function (response) {
         context.commit('setFiles', response.data)
@@ -97,7 +97,7 @@ const actions = {
     })
   },
 
-  getSearchableMedia (context, directory) {
+  getSearchableMedia(context, directory) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'searchable-media').then(function (response) {
         context.commit('setSearchableMedia', response.data)
@@ -109,8 +109,7 @@ const actions = {
       devise.$bus.$emit('showError', error)
     })
   },
-
-  getCurrentFiles (context, directory) {
+  getCurrentFiles(context, directory) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'media/' + context.state.currentDirectory).then(function (response) {
         context.commit('setFiles', response.data)
@@ -123,7 +122,7 @@ const actions = {
     })
   },
 
-  getCurrentDirectories (context, directory) {
+  getCurrentDirectories(context, directory) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'media-directories/' + context.state.currentDirectory).then(function (response) {
         context.commit('setDirectories', response.data)
@@ -136,7 +135,7 @@ const actions = {
     })
   },
 
-  toggleFile (context, theFile) {
+  toggleFile(context, theFile) {
     let match = context.state.files.find(function (file) {
       return file.name === theFile.name
     })
@@ -144,44 +143,71 @@ const actions = {
     let onOff = typeof match.on === 'undefined' || match.on === false
     context.commit('toggleFileOnOff', {file: match, on: onOff})
   },
+  openFile(context, theFile) {
+    let match = context.state.files.find(function (file) {
+      return file.name === theFile.name
+    })
 
-  deleteFile (context, file) {
+    context.commit('toggleFileOnOff', {file: match, on: true})
+  },
+
+  closeFile(context, theFile) {
+    let match = context.state.files.find(function (file) {
+      return file.name === theFile.name
+    })
+
+    context.commit('toggleFileOnOff', {file: match, on: false})
+  },
+
+  deleteFile(context, file) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'media' + file.url)
         .then(function (response) {
-          devise.$bus.$emit('showMessage', {title: 'File Deleted', message: 'The file was successfully deleted from the server.'})
+          devise.$bus.$emit('showMessage', {
+            title: 'File Deleted',
+            message: 'The file was successfully deleted from the server.'
+          })
           resolve(response)
         }).catch(function (error) {
-          devise.$bus.$emit('showError', error)
-        })
+        devise.$bus.$emit('showError', error)
+      })
     }).catch(function (error) {
       devise.$bus.$emit('showError', error)
     })
   },
 
-  createDirectory (context, payload) {
+  createDirectory(context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.post(context.state.api.baseUrl + 'media-directories', {directory: payload.directory, name: payload.name})
+      window.axios.post(context.state.api.baseUrl + 'media-directories', {
+        directory: payload.directory,
+        name: payload.name
+      })
         .then(function (response) {
-          devise.$bus.$emit('showMessage', {title: 'Directory Created', message: 'The directory was successfully created.'})
+          devise.$bus.$emit('showMessage', {
+            title: 'Directory Created',
+            message: 'The directory was successfully created.'
+          })
           resolve(response)
         }).catch(function (error) {
-          devise.$bus.$emit('showError', error)
-        })
+        devise.$bus.$emit('showError', error)
+      })
     }).catch(function (error) {
       devise.$bus.$emit('showError', error)
     })
   },
 
-  deleteDirectory (context, directory) {
+  deleteDirectory(context, directory) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'media-directories', {params: {directory: directory}})
         .then(function (response) {
-          devise.$bus.$emit('showMessage', {title: 'Directory Deleted', message: 'The directory was successfully deleted from the server.'})
+          devise.$bus.$emit('showMessage', {
+            title: 'Directory Deleted',
+            message: 'The directory was successfully deleted from the server.'
+          })
           resolve(response)
         }).catch(function (error) {
-          devise.$bus.$emit('showError', error)
-        })
+        devise.$bus.$emit('showError', error)
+      })
     }).catch(function (error) {
       devise.$bus.$emit('showError', error)
     })
@@ -190,7 +216,7 @@ const actions = {
   /*
   * Meta
   */
-  getMeta (context) {
+  getMeta(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'meta/').then(function (response) {
         context.commit('setMeta', response.data)
@@ -203,7 +229,7 @@ const actions = {
     })
   },
 
-  createMeta (context, meta) {
+  createMeta(context, meta) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'meta/', meta).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Your new meta has been added.'})
@@ -217,7 +243,7 @@ const actions = {
     })
   },
 
-  updateMeta (context, meta) {
+  updateMeta(context, meta) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'meta/' + meta.id, meta).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Your new meta has been updated.'})
@@ -231,7 +257,7 @@ const actions = {
     })
   },
 
-  deleteMeta (context, meta) {
+  deleteMeta(context, meta) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'meta/' + meta.id).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: 'The meta has been deleted.'})
@@ -248,7 +274,7 @@ const actions = {
   /*
   * Models
   */
-  getModels (context) {
+  getModels(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'models/').then(function (response) {
         context.commit('setModels', response.data)
@@ -261,7 +287,7 @@ const actions = {
     })
   },
 
-  getModelSettings (context, modelQuery) {
+  getModelSettings(context, modelQuery) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'models/settings?' + modelQuery).then(function (response) {
         context.commit('setModelSettings', response.data)
@@ -274,7 +300,7 @@ const actions = {
     })
   },
 
-  getModelRecords (context, {model, filters}) {
+  getModelRecords(context, {model, filters}) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'models/query?class=' + model + '&' + commonUtils.buildFilterParams(filters)).then(function (response) {
         resolve(response)
@@ -287,7 +313,7 @@ const actions = {
   },
 
   // Pages
-  getPages (context, filters) {
+  getPages(context, filters) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'pages/?' + commonUtils.buildFilterParams(filters)).then(function (response) {
         context.commit('setPages', response.data)
@@ -299,8 +325,7 @@ const actions = {
       devise.$bus.$emit('showError', error)
     })
   },
-
-  getPagesList (context, filters) {
+  getPagesList(context, filters) {
     return new Promise((resolve, reject) => {
       let params = filters.hasOwnProperty('language_id') ? 'language_id=' + filters.language_id : ''
       window.axios.get(context.state.api.baseUrl + 'pagesList?' + params).then(function (response) {
@@ -314,10 +339,10 @@ const actions = {
     })
   },
 
-  getPage (context, id) {
+  getPage(context, id) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'pages-vue-data/' + id).then(function (response) {
-        context.commit('appendPage', response.data )
+        context.commit('appendPage', response.data)
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)
@@ -326,8 +351,7 @@ const actions = {
       devise.$bus.$emit('showError', error)
     })
   },
-
-  searchPages (context, search) {
+  searchPages(context, search) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'pages-suggest/', {params: {term: search}}).then(function (response) {
         resolve(response)
@@ -339,10 +363,13 @@ const actions = {
     })
   },
 
-  copyPage (context, payload) {
+  copyPage(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'pages/' + payload.page.id + '/copy', payload.data).then(function (response) {
-        devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.data.title + ' has been copied from ' + payload.page.title + '.'})
+        devise.$bus.$emit('showMessage', {
+          title: 'Success!',
+          message: payload.data.title + ' has been copied from ' + payload.page.title + '.'
+        })
         context.commit('createPage', response.data)
         resolve(response)
       }).catch(function (error) {
@@ -353,10 +380,13 @@ const actions = {
     })
   },
 
-  translatePage (context, payload) {
+  translatePage(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'pages/' + payload.page.id + '/copy', payload.data).then(function (response) {
-        devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.data.title + ' has been copied for translation from ' + payload.page.title + '.'})
+        devise.$bus.$emit('showMessage', {
+          title: 'Success!',
+          message: payload.data.title + ' has been copied for translation from ' + payload.page.title + '.'
+        })
         context.commit('createPage', response.data)
         resolve(response)
       }).catch(function (error) {
@@ -367,7 +397,7 @@ const actions = {
     })
   },
 
-  createPage (context, page) {
+  createPage(context, page) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'pages/', page).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: page.title + ' has been created.'})
@@ -381,7 +411,7 @@ const actions = {
     })
   },
 
-  updatePage (context, payload) {
+  updatePage(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'pages/' + payload.data.id, payload.data).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.data.title + ' has been saved.'})
@@ -395,7 +425,7 @@ const actions = {
     })
   },
 
-  deletePage (context, page) {
+  deletePage(context, page) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'pages/' + page.id).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: page.title + ' has been deleted.'})
@@ -410,7 +440,7 @@ const actions = {
   },
 
   // This is the save used from the page editor
-  savePage (context, page) {
+  savePage(context, page) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'pages/' + page.id, page).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: page.title + ' has been saved.'})
@@ -425,9 +455,12 @@ const actions = {
   },
 
   // Page versions
-  copyPageVersion (context, payload) {
+  copyPageVersion(context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.post(context.state.api.baseUrl + 'page-versions', {'page_version_id': payload.version.id, name: payload.version.name + ' Copy'}).then(function (response) {
+      window.axios.post(context.state.api.baseUrl + 'page-versions', {
+        'page_version_id': payload.version.id,
+        name: payload.version.name + ' Copy'
+      }).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.version.name + ' has been copied.'})
         context.commit('createPageVersion', {page: payload.page, data: response.data.data})
         resolve(response)
@@ -439,7 +472,7 @@ const actions = {
     })
   },
 
-  deletePageVersion (context, payload) {
+  deletePageVersion(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'page-versions/' + payload.version.id).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.version.name + ' has been deleted.'})
@@ -453,7 +486,7 @@ const actions = {
     })
   },
 
-  updatePageVersion (context, payload) {
+  updatePageVersion(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'page-versions/' + payload.version.id, payload.version).then(function (response) {
         context.commit('updatePageVersion', {page: payload.page, version: payload.version, data: response.data})
@@ -469,10 +502,12 @@ const actions = {
 
   // Mothership
 
-  syncSites (context, payload) {
+  syncSites(context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
-      window.axios.post(`https://mothership.app/api/v1/sites/sync`, {sites: payload}).then(function (response) {
+      let url = context.state.mothership.url
+      let apiKey = context.state.mothership['api-key']
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`
+      window.axios.post(`${url}/api/v1/sites/sync`, {sites: payload}).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Sync Complete!', message: 'All sites are registred with Mothership!'})
         resolve(response)
       }).catch(function (error) {
@@ -483,10 +518,12 @@ const actions = {
     })
   },
 
-  getSiteAnalytics (context, payload) {
+  getSiteAnalytics(context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
-      window.axios.get(`https://mothership.app/api/v1/analytics/site?site_id=${payload.site}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
+      let url = context.state.mothership.url
+      let apiKey = context.state.mothership['api-key']
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`
+      window.axios.get(`${url}/api/v1/analytics/site?site_id=${payload.site}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)
@@ -496,10 +533,12 @@ const actions = {
     })
   },
 
-  getPageAnalytics (context, payload) {
+  getPageAnalytics(context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
-      window.axios.get(`https://mothership.app/api/v1/analytics/page?site_id=${context.state.page.site_id}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
+      let url = context.state.mothership.url
+      let apiKey = context.state.mothership['api-key']
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`
+      window.axios.get(`${url}/api/v1/analytics/page?site_id=${context.state.page.site_id}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)
@@ -509,10 +548,12 @@ const actions = {
     })
   },
 
-  getPageAnalyticsTotals (context, payload) {
+  getPageAnalyticsTotals(context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
-      window.axios.get(`https://mothership.app/api/v1/analytics/page/totals?site_id=${context.state.page.site_id}&slug=${payload.slug}&date=${payload.date}`).then(function (response) {
+      let url = context.state.mothership.url
+      let apiKey = context.state.mothership['api-key']
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`
+      window.axios.get(`${url}/api/v1/analytics/page/totals?site_id=${context.state.page.site_id}&slug=${payload.slug}&date=${payload.date}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)
@@ -522,7 +563,35 @@ const actions = {
     })
   },
 
-  getPendingChanges (context) {
+  getPushedReleases(context, payload) {
+    return new Promise((resolve, reject) => {
+      let url = context.state.mothership.url
+      let apiKey = context.state.mothership['api-key']
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`
+      window.axios.get(`${url}/api/v1/releases/all`).then(function (response) {
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
+  // Mothership on Devise
+  getPulledReleases(context) {
+    return new Promise((resolve, reject) => {
+      window.axios.get(context.state.api.baseUrl + 'mothership/releases').then(function (response) {
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
+  getPendingChanges(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'mothership/pending-changes').then(function (response) {
         context.commit('setChanges', response.data)
@@ -535,8 +604,22 @@ const actions = {
     })
   },
 
+  initReleases(context, force) {
+    return new Promise((resolve, reject) => {
+      let param = (force) ? '?force=1' : ''
+      window.axios.post(context.state.api.baseUrl + 'mothership/init' + param).then(function (response) {
+        resolve(response)
+      }).catch(function (error) {
+        resolve(error)
+        devise.$bus.$emit('showError', error)
+      })
+    }).catch(function (error) {
+      devise.$bus.$emit('showError', error)
+    })
+  },
+
   // Sites
-  getSites (context) {
+  getSites(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'sites/').then(function (response) {
         context.commit('setSites', response.data)
@@ -549,7 +632,7 @@ const actions = {
     })
   },
 
-  createSite (context, site) {
+  createSite(context, site) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'sites/', site).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: site.name + ' has been created.'})
@@ -563,7 +646,7 @@ const actions = {
     })
   },
 
-  updateSite (context, payload) {
+  updateSite(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'sites/' + payload.site.id, payload.data).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.site.name + ' has been saved.'})
@@ -577,7 +660,7 @@ const actions = {
     })
   },
 
-  deleteSite (context, site) {
+  deleteSite(context, site) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'sites/' + site.id).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: site.name + ' has been deleted.'})
@@ -592,7 +675,7 @@ const actions = {
   },
 
   // Slices
-  getSlices (context) {
+  getSlices(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'slices/').then(function (response) {
         context.commit('setSlices', response.data)
@@ -605,7 +688,7 @@ const actions = {
     })
   },
 
-  getSlicesDirectories (context) {
+  getSlicesDirectories(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'slices-directories/').then(function (response) {
         context.commit('setSlicesDirectories', response.data)
@@ -618,7 +701,7 @@ const actions = {
     })
   },
 
-  createSlice (context, slice) {
+  createSlice(context, slice) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'slices/', slice).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: slice.name + ' has been created.'})
@@ -634,7 +717,7 @@ const actions = {
     })
   },
 
-  updateSlice (context, payload) {
+  updateSlice(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'slices/' + payload.slice.id, payload.data).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.data.name + ' has been saved.'})
@@ -648,7 +731,7 @@ const actions = {
     })
   },
 
-  deleteSlice (context, slice) {
+  deleteSlice(context, slice) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'slices/' + slice.id).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: slice.name + ' has been deleted.'})
@@ -663,7 +746,7 @@ const actions = {
   },
 
   // Templates
-  createTemplate (context, template) {
+  createTemplate(context, template) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'templates/', template).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: template.name + ' has been created.'})
@@ -679,7 +762,7 @@ const actions = {
     })
   },
 
-  updateTemplate (context, template) {
+  updateTemplate(context, template) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'templates/' + template.id, template).then(function (response) {
         context.commit('updateTemplate', {template: template, data: response.data})
@@ -692,7 +775,7 @@ const actions = {
     })
   },
 
-  deleteTemplate (context, template) {
+  deleteTemplate(context, template) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'templates/' + template.id).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: template.name + ' has been deleted.'})
@@ -706,11 +789,11 @@ const actions = {
     })
   },
 
-  updateCurrentTemplate (context, templateId) {
+  updateCurrentTemplate(context, templateId) {
     context.commit('updateCurrentTemplate', templateId)
   },
 
-  getTemplates (context) {
+  getTemplates(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'templates/').then(function (response) {
         context.commit('setTemplates', response.data)
@@ -724,63 +807,63 @@ const actions = {
   },
 
   // Redirects
-  getRedirects (context) {
+  getRedirects(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'redirects/').then(function (response) {
-      context.commit('setRedirects', response.data)
-      resolve(response)
+        context.commit('setRedirects', response.data)
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
     }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  }).catch(function (error) {
       devise.$bus.$emit('showError', error)
     })
   },
 
-  createRedirect (context, redirect) {
+  createRedirect(context, redirect) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'redirects/', redirect).then(function (response) {
-      devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been created.'})
-      context.commit('createRedirect', response.data.data)
-      resolve(response)
+        devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been created.'})
+        context.commit('createRedirect', response.data.data)
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
     }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  }).catch(function (error) {
       devise.$bus.$emit('showError', error)
     })
   },
 
-  updateRedirect (context, payload) {
+  updateRedirect(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'redirects/' + payload.redirect.id, payload.data).then(function (response) {
-      devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been saved.'})
-      context.commit('updateRedirect', {redirect: payload, data: response.data})
-      resolve(response)
+        devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been saved.'})
+        context.commit('updateRedirect', {redirect: payload, data: response.data})
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
     }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  }).catch(function (error) {
       devise.$bus.$emit('showError', error)
     })
   },
 
-  deleteRedirect (context, redirect) {
+  deleteRedirect(context, redirect) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'redirects/' + redirect.id).then(function (response) {
-      devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been deleted.'})
-      context.commit('deleteRedirect', redirect)
-      resolve(response)
+        devise.$bus.$emit('showMessage', {title: 'Success!', message: 'Redirect has been deleted.'})
+        context.commit('deleteRedirect', redirect)
+        resolve(response)
+      }).catch(function (error) {
+        devise.$bus.$emit('showError', error)
+      })
     }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  }).catch(function (error) {
       devise.$bus.$emit('showError', error)
     })
   },
 
   // Users
-  getUsers (context) {
+  getUsers(context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'users/').then(function (response) {
         context.commit('setUsers', response.data)
@@ -793,7 +876,7 @@ const actions = {
     })
   },
 
-  createUser (context, user) {
+  createUser(context, user) {
     return new Promise((resolve, reject) => {
       window.axios.post(context.state.api.baseUrl + 'users/', user).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: user.name + ' has been created.'})
@@ -807,7 +890,7 @@ const actions = {
     })
   },
 
-  updateUser (context, payload) {
+  updateUser(context, payload) {
     return new Promise((resolve, reject) => {
       window.axios.put(context.state.api.baseUrl + 'users/' + payload.user.id, payload.data).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.data.name + ' has been saved.'})
@@ -821,7 +904,7 @@ const actions = {
     })
   },
 
-  deleteUser (context, user) {
+  deleteUser(context, user) {
     return new Promise((resolve, reject) => {
       window.axios.delete(context.state.api.baseUrl + 'users/' + user.id).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: user.name + ' has been deleted.'})

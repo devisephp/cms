@@ -15,94 +15,102 @@ use Illuminate\View\Compilers\BladeCompiler;
 class DeviseServiceProvider extends ServiceProvider
 {
 
-  /**
-   * Perform post-registration booting of services.
-   *
-   * @return void
-   */
-  public function boot(BladeCompiler $blade)
-  {
-    $this->setSiteConfig();
-
-    $this->setCommands();
-
-    $this->setPublishables();
-
-    $this->setRoutes();
-
-    $this->loadLaravelResources();
-
-    $this->setCustomDirectives();
-  }
-
-  public function register()
-  {
-    $this->mergeConfigFrom(
-      __DIR__ . '/../../config/devise.php', 'devise'
-    );
-
-    if (!class_exists('Devise'))
+    /**
+     * Perform post-registration booting of services.
+     *
+     * @return void
+     */
+    public function boot(BladeCompiler $blade)
     {
-      class_alias(Devise::class, 'Devise');
-    }
-  }
+        $this->setSnapshotConfig();
 
-  private function setSiteconfig()
-  {
-    if (!$this->app->runningInConsole())
+        $this->setSiteConfig();
+
+        $this->setCommands();
+
+        $this->setPublishables();
+
+        $this->setRoutes();
+
+        $this->loadLaravelResources();
+
+        $this->setCustomDirectives();
+    }
+
+    public function register()
     {
-      $siteDetector = App::make(SiteDetector::class);
-      $site = $siteDetector->current();
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/devise.php', 'devise'
+        );
 
-      if ($site)
-      {
-        $protocol = request()->secure ? 'http://' : 'https://';
-        config()->set('app.url', $protocol . $site->domain);
-      }
+        if (!class_exists('Devise'))
+        {
+            class_alias(Devise::class, 'Devise');
+        }
     }
-  }
 
-  private function setCommands()
-  {
-    if ($this->app->runningInConsole())
+    private function setSnapshotConfig()
     {
-      $this->commands([
-        Install::class,
-      ]);
+        config()->set('filesystems.disks.snapshots.driver', 'local');
+        config()->set('filesystems.disks.snapshots.root', database_path('snapshots'));
     }
-  }
 
-  private function setPublishables()
-  {
-    $this->publishes([
-      __DIR__ . '/../../vue/build' => public_path('devise'),
-    ], 'dvs-assets');
+    private function setSiteConfig()
+    {
+        if (!$this->app->runningInConsole())
+        {
+            $siteDetector = App::make(SiteDetector::class);
+            $site = $siteDetector->current();
 
-    $this->publishes([
-      __DIR__ . '/../../config/devise.php' => config_path('devise.php'),
-    ], 'dvs-config');
-  }
+            if ($site)
+            {
+                $protocol = request()->secure ? 'http://' : 'https://';
+                config()->set('app.url', $protocol . $site->domain);
+            }
+        }
+    }
 
-  private function setRoutes()
-  {
-    $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+    private function setCommands()
+    {
+        if ($this->app->runningInConsole())
+        {
+            $this->commands([
+                Install::class,
+            ]);
+        }
+    }
 
-    $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
-  }
+    private function setPublishables()
+    {
+        $this->publishes([
+            __DIR__ . '/../../vue/build' => public_path('devise'),
+        ], 'dvs-assets');
 
-  private function loadLaravelResources()
-  {
-    $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->publishes([
+            __DIR__ . '/../../config/devise.php' => config_path('devise.php'),
+        ], 'dvs-config');
+    }
 
-    $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'devise');
+    private function setRoutes()
+    {
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
 
-    $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');
-  }
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+    }
 
-  private function setCustomDirectives()
-  {
-    Blade::directive('slices', function ($expression) {
-      return "<?php echo '<slices :slices=\"slices\"/>' ?>";
-    });
-  }
+    private function loadLaravelResources()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'devise');
+
+        $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'devise');
+    }
+
+    private function setCustomDirectives()
+    {
+        Blade::directive('slices', function ($expression) {
+            return "<?php echo '<slices :slices=\"slices\"/>' ?>";
+        });
+    }
 }

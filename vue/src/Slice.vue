@@ -69,10 +69,9 @@ export default {
       'regenerateMedia'
     ]),
     addListeners () {
-    
-      window.devise.$bus.$on('jumpToSlice', this.attemptJumpToSlice)
-      window.devise.$bus.$on('openSliceSettings', this.attemptOpenSliceSettings)
-      window.devise.$bus.$on('markSlice', this.markSlice)
+      deviseSettings.$bus.$on('jumpToSlice', this.attemptJumpToSlice)
+      deviseSettings.$bus.$on('openSliceSettings', this.attemptOpenSliceSettings)
+      deviseSettings.$bus.$on('markSlice', this.markSlice)
       
       this.addVisibilityScrollListeners()
     },
@@ -186,11 +185,15 @@ export default {
     attemptJumpToSlice (slice) {
       if (this.devise.metadata && slice.metadata) {
         if(this.devise.metadata.instance_id === slice.metadata.instance_id) {
-          let offset = mezr.offset(this.sliceEl, 'margin')
-          window.scrollTo({
-              top: offset.top,
-              behavior: "smooth"
-          });
+          try {
+            let offset = mezr.offset(this.sliceEl, 'margin')
+            window.scrollTo({
+                top: offset.top,
+                behavior: "smooth"
+            });
+          } catch(error) {
+            console.warn('Devise Warning: There may be a problem with this slice. Try wrapping the template in a single <div> to resolve and prevent children components to be at the root level.');
+          }
         }
       }
     },
@@ -211,20 +214,24 @@ export default {
           }
 
           if (on) {
-            let offset = mezr.offset(this.sliceEl, 'margin')
-            let width = mezr.width(this.sliceEl, 'margin');
-            let height = mezr.height(this.sliceEl, 'margin');
+            try {
+              let offset = mezr.offset(this.sliceEl, 'margin')
+              let width = mezr.width(this.sliceEl, 'margin');
+              let height = mezr.height(this.sliceEl, 'margin');
 
-            let marker  = document.createElement('div');
-            marker.innerHTML = `
-            <div class="dvs-absolute-center dvs-absolute">
-              <h1 class="dvs-text-grey-light dvs-font-hairline dvs-font-sans dvs-p-4 dvs-bg-abs-black dvs-rounded dvs-shadow-lg">
-                ${this.devise.metadata.label}
-              </h1>
-            </div>`
-            marker.classList = "devise-component-marker dvs-absolute dvs-bg-black dvs-z-60 dvs-opacity-75"
-            marker.style.cssText = `top:${offset.top}px;left:${offset.left}px;width:${width}px;height:${height}px`
-            document.body.appendChild(marker)
+              let marker  = document.createElement('div');
+              marker.innerHTML = `
+              <div class="dvs-absolute-center dvs-absolute">
+                <h1 class="dvs-text-grey-light dvs-font-hairline dvs-font-sans dvs-p-4 dvs-bg-abs-black dvs-rounded dvs-shadow-lg">
+                  ${this.devise.metadata.label}
+                </h1>
+              </div>`
+              marker.classList = "devise-component-marker dvs-absolute dvs-bg-black dvs-z-60 dvs-opacity-75"
+              marker.style.cssText = `top:${offset.top}px;left:${offset.left}px;width:${width}px;height:${height}px`
+              document.body.appendChild(marker)
+            } catch(error) {
+              console.warn('Devise Warning: There may be a problem with this slice. Try wrapping the template in a single <div> to resolve and prevent children components to be at the root level.');
+            }
           } 
         }
       }

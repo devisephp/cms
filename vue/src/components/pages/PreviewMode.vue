@@ -37,6 +37,7 @@ import PhonePortraitIcon from 'vue-ionicons/dist/md-phone-portrait.vue'
 import PhoneLandscapeIcon from 'vue-ionicons/dist/md-phone-landscape.vue'
 
 import { TweenMax, CSSPlugin } from 'gsap'
+import { mapActions } from 'vuex';
 
 export default {
   data () {
@@ -50,6 +51,9 @@ export default {
     this.closePreviewSelector()
   },
   methods: {
+    ...mapActions('devise', [
+      'setPreviewModeInCurrentPage'
+    ]),
     closePreviewSelector() {
       TweenMax.to(this.previewSelector, 0.5, {
         maxHeight: `0px`,
@@ -62,7 +66,7 @@ export default {
     },
     setPreviewMode (mode) {
       this.previewMode = mode
-      deviseSettings.$page.previewMode = mode
+      this.setPreviewModeInCurrentPage(mode)
     },
     onStyle (type) {
       if (this.previewMode === type) {

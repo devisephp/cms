@@ -4,7 +4,7 @@
 
     <div id="devise-container" :class="[breakpoint, isPreviewFrame ? 'preview-frame' : '']">
       
-      <administration v-if="isLoggedIn" />
+      <administration v-if="isLoggedIn && !isPreviewFrame" />
 
       <div id="dvs-app-content">
         <!-- Desktop mode in editor or just viewing page -->
@@ -20,9 +20,9 @@
           <slot name="on-bottom"></slot>
         </div>
 
-        <div id="devise-iframe-editor" v-if="typeof currentPage !== 'undefined'">
+        <div id="devise-iframe-editor" v-if="typeof currentPage !== 'undefined' && !isPreviewFrame">
           <!-- Preview mode in editor -->
-          <iframe v-if="currentPage.previewMode !== 'desktop' && !isPreviewFrame && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[currentPage.previewMode]"/>
+          <iframe v-if="currentPage.previewMode !== 'desktop' && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[currentPage.previewMode]"/>
         </div>
       </div>
 
@@ -58,10 +58,6 @@ export default {
   methods: {
     ...mapActions('devise', [
       'setBreakpoint'
-    ]),
-    ...mapMutations('devise', [
-      'setCurrentPage',
-      'setSites'
     ]),
     initDevise () {
       try {

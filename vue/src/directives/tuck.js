@@ -59,6 +59,9 @@ export default {
 
     function show () {
       let timeline = new TimelineLite()
+
+      // Kill the initial page hide if I mouse over 
+      clearTimeout(initTimeout)
       
       TweenMax.to(el, 1, {
         top: `${elY}px`,
@@ -75,7 +78,7 @@ export default {
       })
     }
 
-    setTimeout(() => { hide() }, 1500)
+    let initTimeout = setTimeout(() => { hide() }, 1500)
 
     el.addEventListener('mouseenter', show)
     blocker.addEventListener('click', hide)

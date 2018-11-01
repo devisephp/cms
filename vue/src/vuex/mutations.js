@@ -75,6 +75,11 @@ export default {
     Object.assign({}, state.currentPage, page)
   },
 
+  setPreviewModeInCurrentPage(state, mode) {
+    console.log(mode, state.currentPage.previewMode)
+    state.currentPage.previewMode = mode
+  },
+
   // Pages
   createPage (state, page) {
     state.pages.data.push(page)
@@ -166,27 +171,6 @@ export default {
 
   deleteSlice (state, slice) {
     state.slices.data.splice(state.slices.data.indexOf(slice), 1)
-  },
-
-  // Templates
-  createTemplate (state, template) {
-    state.templates.data.push(template)
-  },
-
-  updateTemplate (state, {template, data}) {
-    template = data
-  },
-
-  deleteTemplate (state, template) {
-    state.templates.data.splice(state.templates.data.indexOf(template), 1)
-  },
-
-  updateCurrentTemplate (state, templateId) {
-    state.currentTemplate = templateId
-  },
-
-  setTemplates (state, payload) {
-    state.templates = payload
   },
 
   // Redirect

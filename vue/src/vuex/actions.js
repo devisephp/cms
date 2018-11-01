@@ -467,6 +467,10 @@ const actions = {
     })
   },
 
+  setPreviewModeInCurrentPage (context, payload) {
+    context.commit('setPreviewModeInCurrentPage', payload)
+  },
+
   // Mothership
 
   syncSites (context, payload) {

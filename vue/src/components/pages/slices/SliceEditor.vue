@@ -2,7 +2,7 @@
   <li class="dvs-mb-4 dvs-collapsable" :class="{'dvs-open': sliceOpen}">
 
     <strong class="dvs-block dvs-mb-4 dvs-switch-sm dvs-text-sm dvs-flex dvs-justify-between dvs-items-center dvs-w-full">
-      <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full" :style="{color: theme.panel.color}" :class="{'dvs-pl-4': child}">
+      <div class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full" :style="{color: theme.panel.color}">
         <div class="dvs-flex dvs-items-center">
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
           <span class="dvs-cursor-pointer" @click="toggleSlice()"  @mouseenter="markSlice(true, slice)"  @mouseleave="markSlice(false, slice)">{{ slice.metadata.label }}</span>
@@ -93,7 +93,12 @@
     <manage-slice ref="manageslice" v-if="manageSlice === true" @cancel="manageSlice = false" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" :slice="slice" />
 
     <div class="dvs-collapsed" v-show="sliceOpen">
-      <fieldset v-for="(field, key) in sliceConfig(slice).fields" class="dvs-fieldset dvs-mb-4 dvs-ml-4" :key="key" v-if="theFields[key]">
+      <fieldset 
+        v-for="(field, key) in sliceConfig(slice).fields" 
+        class="dvs-fieldset dvs-mb-1"
+        :key="key"
+        v-if="theFields[key]">
+
         <div>
 
           <color-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'color'">
@@ -137,7 +142,7 @@
       </help>
     </div>
 
-    <div class="dvs-collapsed" v-show="sliceOpen">
+    <div class="dvs-collapsed ml-4" v-show="sliceOpen">
       <draggable v-model="slice.slices" element="ul" class="dvs-list-reset" v-if="slice.metadata.type !== 'model'" :options="{group:{ name:'g1'}}">
         <template v-for="s in slice.slices">
           <slice-editor :key="s.metadata.instance_id" :slice="s" :child="true" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
@@ -261,6 +266,7 @@ export default {
         referringSlice = this.slice
       }
 
+      console.log('here - addSlice 1', slice, referringSlice)
       this.$emit('addSlice', slice, referringSlice)
       this.manageSlice = false
     },

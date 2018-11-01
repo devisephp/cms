@@ -86,19 +86,25 @@ export default {
     },
     addSlice (newSlice, referenceSlice) {
       if (typeof referenceSlice !== 'undefined') {
-        let parentSlice = this.currentPage.slices[this.currentPage.slices.indexOf(referenceSlice)]
-        let config = this.sliceConfig(parentSlice)
+        let config = this.sliceConfig(referenceSlice)
         if (config.has_child_slot === true) {
-          if (typeof parentSlice.slices === 'undefined') {
-            this.$set(parentSlice, 'slices', [])
+          if (typeof referenceSlice.slices === 'undefined') {
+            this.$set(referenceSlice, 'slices', [])
           }
-          parentSlice.slices.push(newSlice)
+          referenceSlice.slices.push(newSlice)
         }
       } else {
         this.currentPage.slices.push(newSlice)
       }
 
       this.createSlice = false
+    },
+    findReferenceSliceInSlices (slices, referenceSlice) {
+      return slices.find((slice) => {
+        if(slice === referenceSlice) return slice;
+        else if(slice.slices) return this.findReferenceSliceInSlices(slice.slices, referenceSlice)
+      })
+      // this.currentPage.slices[this.currentPage.slices.indexOf(referenceSlice)]
     },
     editSlice (editedSlice, referenceSlice) {
       this.currentPage.slices.splice(this.currentPage.slices.indexOf(referenceSlice), 1, editedSlice)

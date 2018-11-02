@@ -114,15 +114,38 @@
 
         <div class="dvs-flex-grow dvs-relative dvs-overflow-y-scroll">
           <div class="dvs-p-8 dvs-border-l dvs-border-grey-lighter">
-            <h3 class="dvs-mb-4">Images</h3>
 
-            <h6 class="dvs-mb-4">Original Image</h6>
-            <img :src="`/styled/preview/${source}?${encodedEdits}`">
-            <hr class="my-4">
-            <div v-for="(size, key) in sizes" :key="key" class="mb-8">
-              <h6 class="dvs-mb-4">{{ key }} ({{ size.w }}x{{ size.h }})</h6>
-              <img :src="`/styled/preview/${source}?${encodedEdits}${encodedSize(size)}`">
-            </div>
+            <template v-if="sizes">
+              <h3 class="dvs-mb-4">Images</h3>
+
+              <h6 class="dvs-mb-4">Original Image</h6>
+              <img :src="`/styled/preview/${source}?${encodedEdits}`">
+              <hr class="my-4">
+              <div v-for="(size, key) in sizes" :key="key" class="mb-8">
+                <h6 class="dvs-mb-4">{{ key }} ({{ size.w }}x{{ size.h }})</h6>
+                <img :src="`/styled/preview/${source}?${encodedEdits}${encodedSize(size)}`">
+              </div>
+            </template>
+
+            <template v-else>
+              <h3 class="dvs-mb-4">Image</h3>
+
+              <help class="dvs-mb-4" v-if="!customSize.w || !customSize.h">Please provide a width and height for this image</help>
+
+              <div class="dvs-flex dvs-mb-8">
+                <fieldset class="dvs-fieldset dvs-mr-4">
+                  <label>Width</label>
+                  <input type="number" v-model="customSize.w">
+                </fieldset>
+                <fieldset class="dvs-fieldset">
+                  <label>Height</label>
+                  <input type="number" v-model="customSize.h">
+                </fieldset>
+              </div>
+
+              <img v-if="customSize.w && customSize.h" :src="`/styled/preview/${source}?${encodedEdits}${encodedSize(customSize)}`">
+
+            </template>
           </div>
         </div>
       </div>
@@ -147,6 +170,10 @@ export default {
         pixel: null,
         filt: null,
         bg: null
+      },
+      customSize: {
+        w: null,
+        h: null
       }
     }
   },
@@ -176,6 +203,12 @@ export default {
           obj[propName] = obj[propName].substring(1)
         }
       }
+
+      if (this.customSize.w && this.customSize.h) {
+        obj.w = this.customSize.w
+        obj.h = this.customSize.h
+      }
+
       return obj
     }
   },

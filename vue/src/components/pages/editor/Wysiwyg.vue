@@ -7,25 +7,21 @@
       <div v-html="clipString(localValue.text, 200, false)"></div>
     </template>
     <template slot="editor">
-      <input type="hidden" :id="theId" v-model="localValue.text" :name="namekey" />
-      <trix-editor :input="theId" @trix-change="update" @trix-initialize="editorInitialized" ref="trixeditor"></trix-editor>
+      <wysiwyg ref="editor" v-model="localValue.text"></wysiwyg>
     </template>
   </field-editor>
 </template>
 
 <script>
-import 'trix'
-
 import Strings from './../../../mixins/Strings'
 import Toggle from './../../utilities/Toggle'
+import Wysiwyg from './../../utilities/Wysiwyg'
 import FieldEditor from './Field'
 
 export default {
   name: 'WysiwygEditor',
   data () {
     return {
-      theId: '',
-      theEditor: null,
       localValue: {},
       originalValue: null,
       showEditor: false
@@ -38,48 +34,12 @@ export default {
   methods: {
     toggleEditor () {
       this.showEditor = !this.showEditor
-
-      if (this.showEditor) {
-        this.resolveId()
-      }
-      this.focusForm()
-    },
-    focusForm () {
-      if (this.showEditor) {
-        this.$nextTick(() => {
-          setTimeout(() => {
-            var length = this.theEditor.getDocument().toString().length
-            this.theEditor.setSelectedRange(length - 1)
-          }, 200);
-        })
-      }
     },
     cancel () {
-      this.theEditor.loadHTML(this.originalValue.text)
       this.$emit('input', this.originalValue)
       this.$emit('change', this.originalValue)
 
       this.toggleEditor()
-    },
-    resolveId () {
-      this.theId = this.id
-      if (this.id === '') {
-        this.theId = this.randomString(8)
-      }
-    },
-    editorInitialized () {
-      let self = this
-
-      this.$nextTick(function () {
-        self.resolveEditor()
-        self.hydrate()
-      })
-    },
-    resolveEditor () {
-      this.theEditor = this.$refs.trixeditor.editor
-    },
-    hydrate () {
-      this.theEditor.loadHTML(this.value.text)
     },
     update (event) {
       this.localValue.text = event.target.value
@@ -91,7 +51,8 @@ export default {
   mixins: [Strings],
   components: {
     Toggle,
-    FieldEditor
+    FieldEditor,
+    Wysiwyg
   }
 }
 </script>

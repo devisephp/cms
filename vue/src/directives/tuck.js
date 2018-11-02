@@ -56,12 +56,13 @@ export default {
         top: `${window.innerHeight}px`
       })
     }
+
     function show () {
       let timeline = new TimelineLite()
 
-      // Kill the initial page hide if I mouse over
+      // Kill the initial page hide if I mouse over 
       clearTimeout(initTimeout)
-
+      
       TweenMax.to(el, 1, {
         top: `${elY}px`,
         left: `${elX}px`,

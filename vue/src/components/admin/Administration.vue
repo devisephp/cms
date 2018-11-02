@@ -81,7 +81,6 @@ export default {
   },
   methods: {
     loadAdminPage(menuItem) {
-      console.log(menuItem)
       if (typeof menuItem.routeParams !== 'undefined') {
         this.goToPage(menuItem.routeName, menuItem.routeParams)
       } else {

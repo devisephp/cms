@@ -1969,6 +1969,10 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
+dayjs@^1.7.7:
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.7.7.tgz#8df20f78ac2476e3f5348ef49f8f22ebc3016370"
+
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
@@ -3706,6 +3710,10 @@ isurl@^1.0.0-alpha5:
   dependencies:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
+
+jquery@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.8"
@@ -6644,15 +6652,15 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
 
-trix@^0.11.1:
-  version "0.11.4"
-  resolved "https://registry.yarnpkg.com/trix/-/trix-0.11.4.tgz#bac2b6ffac7146150e2f2b02b3695902aab78eba"
-
 "true-case-path@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/true-case-path/-/true-case-path-1.0.2.tgz#7ec91130924766c7f573be3020c34f8fdfd00d62"
   dependencies:
     glob "^6.0.4"
+
+trumbowyg@^2.9.4:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/trumbowyg/-/trumbowyg-2.11.1.tgz#908127a8c915702e43ef18fb17949bea360e105c"
 
 tty-browserify@0.0.0:
   version "0.0.0"
@@ -6954,6 +6962,12 @@ vue-tippy@^2.0.8:
   dependencies:
     popper.js "^1.14.3"
     tippy.js "^2.5.2"
+
+vue-trumbowyg@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/vue-trumbowyg/-/vue-trumbowyg-3.4.0.tgz#f350a872fbc5acc2aaf387312aa80485e6ace5a5"
+  dependencies:
+    trumbowyg "^2.9.4"
 
 vue2-dropzone@^3.0.4:
   version "3.2.2"

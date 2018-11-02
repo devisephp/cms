@@ -173,27 +173,6 @@ export default {
     state.slices.data.splice(state.slices.data.indexOf(slice), 1)
   },
 
-  // Templates
-  createTemplate (state, template) {
-    state.templates.data.push(template)
-  },
-
-  updateTemplate (state, {template, data}) {
-    template = data
-  },
-
-  deleteTemplate (state, template) {
-    state.templates.data.splice(state.templates.data.indexOf(template), 1)
-  },
-
-  updateCurrentTemplate (state, templateId) {
-    state.currentTemplate = templateId
-  },
-
-  setTemplates (state, payload) {
-    state.templates = payload
-  },
-
   // Redirect
   createRedirect (state, redirect) {
     state.redirects.data.push(redirect)

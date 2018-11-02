@@ -1,7 +1,7 @@
 <template>
-  <div class="dvs-relative">
+  <div class="dvs-relative dvs-ml-8 dvs-px-1 dvs-py-1 dvs-rounded-sm dvs-text-xs dvs-cursor-pointer" :style="theme.panelSidebar" @click="toggleShowEditor">
     <div class="dvs-flex dvs-justify-between dvs-items-center">
-      <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs--ml-4 dvs-font-bold dvs-w-full">
+      <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs-font-bold dvs-w-full">
         <div 
           class="dvs-rounded-full dvs-mr-2 dvs-w-2 dvs-h-2 dvs-mr-2"
           @click="localValue.enabled = !localValue.enabled"
@@ -9,9 +9,7 @@
           :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration">
         </div>
         <div class="dvs-flex dvs-items-center dvs-justify-start dvs-w-full">
-          <span class="dvs-cursor-pointer dvs-text-xs dvs-font-normal hover:underline" @click="toggleShowEditor">
-            {{ options.label }}
-            </span>
+          {{ options.label }}
         </div>
       </div>
     </div>

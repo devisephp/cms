@@ -172,8 +172,12 @@
       </div>
 
 
-      <div v-else-if="options.sizes">
+      <div v-else-if="typeof options !== 'undefined' && options.sizes">
         <media-editor :source="selectedFile.url" :sizes="options.sizes" @cancel="selectedFile = null" @done="generateAndSetFile" />
+      </div>
+
+      <div v-else>
+        <media-editor :source="selectedFile.url" @cancel="selectedFile = null" @done="generateAndSetFile" />
       </div>
     </div>
   </div>
@@ -274,21 +278,29 @@
       selectSourceFile (file) {
         this.selectedFile = file
 
-        if (!this.options || !this.options.sizes) {
-          if (typeof this.target !== 'undefined') {
-            this.target.value = this.selectedFile.url
-          }
-          if (typeof this.callback !== 'undefined') {
-            this.callback(this.selectedFile.url)
-          }
+        // Originally we simply kicked to the callback 
+        // in the event there were no sizes. This may need
+        // to be an option in the future but for now you just
+        // go to the media editor where you set sizes
 
-          this.show = false
-          this.$set(this, 'selectedFile', null)
-        }
+        // if (!this.options || !this.options.sizes) {
+        //   if (typeof this.target !== 'undefined') {
+        //     this.target.value = this.selectedFile.url
+        //   }
+        //   if (typeof this.callback !== 'undefined') {
+        //     this.callback(this.selectedFile.url)
+        //   }
+
+        //   this.show = false
+        //   this.$set(this, 'selectedFile', null)
+        // }
       },
       generateAndSetFile (edits) {
         let self = this
-        edits.sizes = this.options.sizes
+
+        if (this.options && this.options.sizes) {
+          edits.sizes = this.options.sizes
+        }
 
         this.generateImages({original: this.selectedFile.url, settings: edits}).then(function (response) {
           if (typeof self.target !== 'undefined') {

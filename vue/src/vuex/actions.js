@@ -500,6 +500,10 @@ const actions = {
     })
   },
 
+  setPreviewModeInCurrentPage(context, payload) {
+    context.commit('setPreviewModeInCurrentPage', payload)
+  },
+
   // Mothership
 
   syncSites(context, payload) {
@@ -538,7 +542,7 @@ const actions = {
       let url = context.state.mothership.url
       let apiKey = context.state.mothership['api-key']
       window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`
-      window.axios.get(`${url}/api/v1/analytics/page?site_id=${context.state.page.site_id}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
+      window.axios.get(`${url}/api/v1/analytics/page?site_id=${deviseSettings.$page.site_id}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)
@@ -553,7 +557,7 @@ const actions = {
       let url = context.state.mothership.url
       let apiKey = context.state.mothership['api-key']
       window.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`
-      window.axios.get(`${url}/api/v1/analytics/page/totals?site_id=${context.state.page.site_id}&slug=${payload.slug}&date=${payload.date}`).then(function (response) {
+      window.axios.get(`${url}/api/v1/analytics/page/totals?site_id=${deviseSettings.$page.site_id}&slug=${payload.slug}&date=${payload.date}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)

@@ -75,6 +75,11 @@ export default {
     Object.assign({}, state.currentPage, page)
   },
 
+  setPreviewModeInCurrentPage(state, mode) {
+    console.log(mode, state.currentPage.previewMode)
+    state.currentPage.previewMode = mode
+  },
+
   // Pages
   createPage (state, page) {
     state.pages.data.push(page)

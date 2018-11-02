@@ -4,7 +4,7 @@
 
     <div id="devise-container" :class="[breakpoint, isPreviewFrame ? 'preview-frame' : '']">
       
-      <administration v-if="isLoggedIn" />
+      <administration v-if="isLoggedIn && !isPreviewFrame" />
 
       <div id="dvs-app-content">
         <!-- Desktop mode in editor or just viewing page -->

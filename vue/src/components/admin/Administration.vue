@@ -3,7 +3,7 @@
     id="devise-admin"
     :class="[deviseOptions.adminClass]">
       
-    <panel class="dvs-m-8 dvs-fixed dvs-z-9980" style="min-width:360px;" :panel-style="theme.panel" v-tuck v-tilt>
+    <panel class="dvs-m-8 dvs-fixed dvs-z-9980" style="min-width:360px;" :panel-style="theme.panel" v-tuck>
       <div class="dvs-flex">
         <div :style="theme.panelSidebar" class="dvs-flex dvs-flex-col" >
 

@@ -36,6 +36,7 @@ export default {
       this.showEditor = !this.showEditor
     },
     cancel () {
+      this.localValue.text = this.originalValue.text
       this.$emit('input', this.originalValue)
       this.$emit('change', this.originalValue)
 

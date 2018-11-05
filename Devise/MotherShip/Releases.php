@@ -33,6 +33,14 @@ class Releases
         $this->dvsMigration = $dvsMigration;
     }
 
+    public function releaseIds()
+    {
+        return DvsRelease::where('model_name', 'Devise\MotherShip\DvsRelease')
+            ->orderBy('created_at')
+            ->select('model_id')
+            ->pluck('model_id');
+    }
+
     public function initWithMotherShip()
     {
         $config = config('database.connections.' . config('database.default'));
@@ -141,7 +149,7 @@ class Releases
 
     public function getCurrentRelease()
     {
-        return DvsRelease::where('model_name', 'Release')
+        return DvsRelease::where('model_name', 'Devise\MotherShip\DvsRelease')
             ->orderBy('created_at', 'desc')
             ->first();
     }
@@ -155,7 +163,7 @@ class Releases
     {
         $r = new DvsRelease();
         $r->model_id = $release->id;
-        $r->model_name = 'Release';
+        $r->model_name = 'Devise\MotherShip\DvsRelease';
         $r->msh_id = $release->id;
         $r->created_at = $release->created_at;
         $r->updated_at = $release->updated_at;
@@ -179,6 +187,7 @@ class Releases
                     ->orWhere('updated_at', '>', $currentReleaseDate)
                     ->orWhere('deleted_at', '>', $currentReleaseDate);
             })
+            ->where('model_name', '!=', 'Devise\MotherShip\DvsRelease')
             ->orderBy('created_at')
             ->get();
     }

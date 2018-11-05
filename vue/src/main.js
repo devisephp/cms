@@ -195,8 +195,8 @@ const DevisePlugin = {
       store: store
     })
 
-    if (typeof deviseSettings.$mothership !== 'undefined' && deviseSettings.$mothership['api-key'] !== null) {
-      store.commit('devise/setMothership', deviseSettings.$mothership['api-key'])
+    if (typeof deviseSettings.$mothership !== 'undefined' && deviseSettings.$mothership !== null) {
+      store.commit('devise/setMothership', deviseSettings.$mothership)
     }
   }
 }

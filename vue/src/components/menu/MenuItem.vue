@@ -29,7 +29,7 @@ export default {
   computed: {
     ...mapGetters('devise', [
       'adminMenu',
-      'mothership'
+      'mothershipApiKey'
     ]),
     show () {
       // Page Editor
@@ -41,7 +41,7 @@ export default {
 
       // Mothership
       if (this.item.routeName === 'devise-mothership-index') {
-        if (this.mothership === null) {
+        if (this.mothershipApiKey === null) {
           return false
         }
       }

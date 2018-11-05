@@ -102,6 +102,15 @@ export default {
           title: 'Uh-Oh!',
           message: error
         })
+      } else if (
+        typeof error.message !== 'undefined' &&
+        error.message !== null
+      ) {
+        self.appendError({
+          code: '',
+          title: 'Uh-Oh!',
+          message: error.message
+        })
       } else {
         self.appendError({
           code: error.status,

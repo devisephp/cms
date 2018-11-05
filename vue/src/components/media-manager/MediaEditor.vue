@@ -132,14 +132,17 @@
 
               <help class="dvs-mb-4" v-if="!customSize.w || !customSize.h">Please provide a width and height for this image</help>
 
-              <div class="dvs-flex dvs-mb-8">
+              <div class="dvs-flex dvs-mb-8 dvs-items-center">
                 <fieldset class="dvs-fieldset dvs-mr-4">
                   <label>Width</label>
                   <input type="number" v-model="customSize.w">
                 </fieldset>
-                <fieldset class="dvs-fieldset">
+                <fieldset class="dvs-fieldset dvs-mr-4">
                   <label>Height</label>
                   <input type="number" v-model="customSize.h">
+                </fieldset>
+                <fieldset>
+                  <button class="btn btn-sm" :style="theme.actionButton" @click="setCustomSizeToOriginal">Original Dimensions</button>
                 </fieldset>
               </div>
 
@@ -174,8 +177,15 @@ export default {
       customSize: {
         w: null,
         h: null
+      },
+      originalDims: {
+        w: null,
+        h: null
       }
     }
+  },
+  mounted () {
+    this.loadOriginalDimentions()
   },
   methods: {
     done () {
@@ -185,6 +195,28 @@ export default {
     },
     cancel () {
       this.$emit('cancel')
+    },
+    loadOriginalDimentions () {
+      let file = `/styled/preview/${this.source}`
+      let self = this
+
+      let img = new Image();
+      img.onload = function() {
+        self.originalDims.w = this.width;
+        self.originalDims.h = this.height;
+        
+        self.setCustomSizeToOriginal()
+      };
+
+      img.onerror = function() {
+        alert( "not a valid file: " + file.type);
+      };
+
+      img.src = file;
+    },
+    setCustomSizeToOriginal () {
+      this.customSize.w = this.originalDims.w
+      this.customSize.h = this.originalDims.h
     },
     encodedSize (size) {
       var encodedString = ''

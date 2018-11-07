@@ -69,6 +69,7 @@ export default {
 
         ],
         autogrow: true,
+        fixedBtnPane: true,
         btnsDef: {
           deviseImage: {
             fn: this.launchMediaManager,
@@ -106,10 +107,10 @@ export default {
       })
     },
     mediaSelected (imagesAndSettings) {
+      console.log(imagesAndSettings.images.orig_optimized)
       if (typeof imagesAndSettings === 'object') {
         let html = this.theEditor.el.trumbowyg('html')
         this.theEditor.el.trumbowyg('html', `${html}<img src="${imagesAndSettings.images.orig_optimized}" width="${imagesAndSettings.settings.w}" height="${imagesAndSettings.settings.h}">`)
-        // this.theEditor.insertHTML()
       }
     },
     update () {

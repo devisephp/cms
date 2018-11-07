@@ -199,8 +199,8 @@ export default {
     loadOriginalDimentions () {
       let file = `/styled/preview/${this.source}`
       let self = this
-
       let img = new Image();
+      
       img.onload = function() {
         self.originalDims.w = this.width;
         self.originalDims.h = this.height;

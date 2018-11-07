@@ -140,7 +140,7 @@ class PagesRepository
             ->get();
     }
 
-        /**
+    /**
      * Finds all pages belong to the site and language (paginated)
      *
      * @return Collection

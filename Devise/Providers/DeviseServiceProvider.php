@@ -2,6 +2,7 @@
 
 namespace Devise\Providers;
 
+use Devise\Console\Commands\CleanStyledMedia;
 use Devise\Console\Commands\Install;
 use Devise\Devise;
 
@@ -76,6 +77,10 @@ class DeviseServiceProvider extends ServiceProvider
         {
             $this->commands([
                 Install::class,
+            ]);
+
+            $this->commands([
+                CleanStyledMedia::class,
             ]);
         }
     }

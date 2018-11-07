@@ -27,7 +27,7 @@ class RoutesGenerator
    */
   public function loadRoutes()
   {
-    if (Schema::hasTable('dvs_pages'))
+    if (!app()->runningInConsole() && Schema::hasTable('dvs_pages'))
     {
       $routes = $this->findDvsPageRoutes();
 

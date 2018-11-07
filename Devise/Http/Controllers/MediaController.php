@@ -95,7 +95,8 @@ class MediaController extends Controller
     public function remove(Request $request, $mediaRoute)
     {
         $mediaRoute = str_replace('storage', '', $mediaRoute);
-        if ($this->Storage->get($mediaRoute)) {
+        if ($this->Storage->get($mediaRoute))
+        {
             $this->FileManager->removeUploadedFile($mediaRoute);
         }
     }
@@ -144,7 +145,7 @@ class MediaController extends Controller
 
                 $result = $this->generateAll($originalImage, $imagesAndSettings);
                 $value['url'] = $result['images']['orig_optimized'];
-                $currentMedia = (array) $value['media'];
+                $currentMedia = (array)$value['media'];
                 $value['media'] = array_merge($currentMedia, $result['images']);
                 $field->json_value = json_encode($value);
                 $field->save();
@@ -171,7 +172,6 @@ class MediaController extends Controller
         $sourceImage = storage_path($sourceDirectory . $original);
 
 
-        
         $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $original));
         $this->Storage->makeDirectory($destinationDirectory);
 
@@ -187,14 +187,15 @@ class MediaController extends Controller
 
             // TODO: Can we catch memory timeouts here a little better? 
             $finalImages[] = \GlideImage::create($sourceImage)
-                                ->modify($finalSettings)
-                                ->save($destinationImage);
-            
+                ->modify($finalSettings)
+                ->save($destinationImage);
+
         }
 
         $this->optimizeImages($finalImages);
 
-        if(isset($imagesAndSettings['settings']['sizes'])){
+        if (isset($imagesAndSettings['settings']['sizes']))
+        {
             unset($imagesAndSettings['settings']['sizes']);
         }
 
@@ -227,7 +228,7 @@ class MediaController extends Controller
         $destinationUrl = '/' . dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $file)) . '/' . $originalImageName;
         $destinationUrlParts = pathinfo($destinationUrl);
 
-        return $destinationUrlParts['dirname'] . '/' . $destinationUrlParts['filename'] . $append . '.' . strtolower($destinationUrlParts['extension']);
+        return $this->Storage->url($destinationUrlParts['dirname'] . '/' . $destinationUrlParts['filename'] . $append . '.' . strtolower($destinationUrlParts['extension']));
     }
 
     private function getNameAppend($settings)

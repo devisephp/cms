@@ -73,7 +73,6 @@
           return this.value
         },
         set (newValue) {
-          console.log(newValue)
           this.$emit('input', newValue.images.orig_optimized)
           this.$emit('change', newValue.images.orig_optimized)
         }

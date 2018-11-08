@@ -1,15 +1,17 @@
 <template>
-  <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
-    <template slot="preview">
-      <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
-        Currently No Value
-      </span>
-      <div v-html="clipString(localValue.text, 200, false)"></div>
-    </template>
-    <template slot="editor">
-      <wysiwyg ref="editor" v-model="localValue.text"></wysiwyg>
-    </template>
-  </field-editor>
+  <div>
+    <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
+      <template slot="preview">
+        <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
+          Currently No Value
+        </span>
+        <div v-html="clipString(localValue.text, 200, false)"></div>
+      </template>
+      <template slot="editor">
+        <wysiwyg ref="editor" v-model="localValue.text"></wysiwyg>
+      </template>
+    </field-editor>
+  </div>
 </template>
 
 <script>

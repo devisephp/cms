@@ -37,7 +37,8 @@
 </template>
 
 <script>
-// Import this component
+import mezr from 'mezr'
+
 import Trumbowyg from 'vue-trumbowyg'
 import Table from 'trumbowyg/dist/plugins/table/trumbowyg.table.min.js'
 
@@ -54,6 +55,8 @@ export default {
       theEditor: null,
       imageToManage: null,
       localValue: '',
+      scrollEvent: null,
+      buttonPane: null,
       config: {
         btns: [
           ['viewHTML'],
@@ -68,8 +71,7 @@ export default {
           ['undo', 'redo']
 
         ],
-        autogrow: true,
-        fixedBtnPane: true,
+        autogrow: true, 
         btnsDef: {
           deviseImage: {
             fn: this.launchMediaManager,
@@ -99,6 +101,31 @@ export default {
   mounted () {
     this.localValue = this.value
     this.theEditor = this.$refs.theEditor
+
+    this.$nextTick(() => {
+      let fieldPanel = document.querySelector('#field-panel')
+      let container = fieldPanel.querySelector('.simplebar-scroll-content')
+      this.buttonPane = fieldPanel.querySelector('.trumbowyg-button-pane')
+  
+      if (container) {
+        container.addEventListener('scroll', () => {
+          if (!this.checkInView()) {
+            this.buttonPane.style.position = 'fixed'
+            this.buttonPane.style.maxWidth = '300px'
+            this.buttonPane.style.right = '3em'
+            this.buttonPane.style.borderRadius = '3px'
+          } else {
+            this.buttonPane.style.position = 'relative'
+            this.buttonPane.style.maxWidth = 'none'
+            this.buttonPane.style.right = 'auto'
+            this.buttonPane.style.borderRadius = '0'
+          }
+        });
+      }
+    })
+  },
+  destroy () {
+    
   },
   methods: {
     launchMediaManager (event) {
@@ -147,6 +174,13 @@ export default {
       this.theEditor.el.trumbowyg('toggle')
       this.theEditor.el.trumbowyg('toggle')
       this.update()
+    },
+    checkInView () {
+        let fieldPanel = document.querySelector('#field-panel')
+        let container = fieldPanel.querySelector('.simplebar-scroll-content')
+        let contTop = container.scrollTop;
+        
+        return contTop < 100
     }
   },
   components: {

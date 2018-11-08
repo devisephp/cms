@@ -73,8 +73,9 @@
           return this.value
         },
         set (newValue) {
-          this.$emit('input', newValue)
-          this.$emit('change', newValue)
+          console.log(newValue)
+          this.$emit('input', newValue.images.orig_optimized)
+          this.$emit('change', newValue.images.orig_optimized)
         }
       },
       fileName() {

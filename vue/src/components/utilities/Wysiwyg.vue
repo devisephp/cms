@@ -104,23 +104,26 @@ export default {
 
     this.$nextTick(() => {
       let fieldPanel = document.querySelector('#field-panel')
-      let container = fieldPanel.querySelector('.simplebar-scroll-content')
-      this.buttonPane = fieldPanel.querySelector('.trumbowyg-button-pane')
-  
-      if (container) {
-        container.addEventListener('scroll', () => {
-          if (!this.checkInView()) {
-            this.buttonPane.style.position = 'fixed'
-            this.buttonPane.style.maxWidth = '300px'
-            this.buttonPane.style.right = '3em'
-            this.buttonPane.style.borderRadius = '3px'
-          } else {
-            this.buttonPane.style.position = 'relative'
-            this.buttonPane.style.maxWidth = 'none'
-            this.buttonPane.style.right = 'auto'
-            this.buttonPane.style.borderRadius = '0'
-          }
-        });
+
+      if (fieldPanel) {
+        let container = fieldPanel.querySelector('.simplebar-scroll-content')
+        this.buttonPane = fieldPanel.querySelector('.trumbowyg-button-pane')
+    
+        if (container) {
+          container.addEventListener('scroll', () => {
+            if (!this.checkInView()) {
+              this.buttonPane.style.position = 'fixed'
+              this.buttonPane.style.maxWidth = '300px'
+              this.buttonPane.style.right = '3em'
+              this.buttonPane.style.borderRadius = '3px'
+            } else {
+              this.buttonPane.style.position = 'relative'
+              this.buttonPane.style.maxWidth = 'none'
+              this.buttonPane.style.right = 'auto'
+              this.buttonPane.style.borderRadius = '0'
+            }
+          });
+        }
       }
     })
   },

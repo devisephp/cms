@@ -60,20 +60,19 @@
         <div>
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Type of Slice</label>
-            <select @change="updateSliceType" v-model="editingSlice.metadata.type">
+            <select v-model="insertSlice.type">
               <option value="single">Single</option>
-              <option value="repeats">Repeats</option>
               <option value="model">Model</option>
             </select>
           </fieldset>
 
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Select a Slice</label>
-            <slice-selector v-model="editingSlice.metadata.view" />
+            <slice-selector v-model="insertSlice.slice" />
           </fieldset>
 
-          <div class="dvs-mb-4" v-if="editingSlice.type === 'model'">
-            <query-builder v-model="editingSlice.data"></query-builder>
+          <div class="dvs-mb-4" v-if="insertSlice.type === 'model'">
+            <query-builder v-model="insertSlice.data"></query-builder>
           </div>
 
           <div>
@@ -110,14 +109,18 @@ export default {
   data () {
     return {
       action: 'insert',
-      insertSlice: Object.assign({}, defaultInsertSlice),
-      editingSlice: {}
+      insertSlice: Object.assign({}, defaultInsertSlice)
     }
   },
   mounted () {
-    this.editingSlice = Object.assign({}, this.slice)
     this.getSlicesDirectories()
     this.getSlices()
+
+    this.$nextTick(() => {
+      if (this.action === 'edit') {
+        this.insertSlice.type = this.slice.metadata.type
+      }
+    })
   },
   methods: {
     ...mapActions('devise', [
@@ -128,7 +131,6 @@ export default {
     cancelManageSlice () {
       this.$set(this, 'action', 'insert')
       this.$set(this, 'insertSlice', defaultInsertSlice)
-      this.$set(this, 'editingSlice', {})
       this.$emit('cancel')
       this.action = 'insert'
     },
@@ -175,17 +177,12 @@ export default {
         this.$set(slice[field], d, defaults[d])
       }
     },
-    updateSliceType () {
-      if (this.editingSlice.metadata.type === 'repeats' || this.editingSlice.metadata.type === 'model') {
-        this.editingSlice.slices = []
-      }
-    },
     addSlice () {
       this.$emit('addSlice', this.buildSlice())
       this.action = 'selectAction'
     },
     editSlice () {
-      this.$emit('editSlice', this.editingSlice)
+      this.$emit('editSlice', this.buildSlice())
       this.action = 'selectAction'
     },
     removeSlice () {

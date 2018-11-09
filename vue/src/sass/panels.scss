@@ -3,7 +3,6 @@
 
   float:left;
   background-color: rgba(255,255,255,0);
-  perspective: 1000px;
   
   &:hover {
     .dvs-panel-contents {
@@ -32,10 +31,6 @@
 .dvs-panel-contents {
   @apply dvs-relative dvs-rounded dvs-text-white;
 
-  backface-visibility: hidden;
-  will-change: transform;
-  perspective: 1000px;
-
   &:after {
     @apply dvs-absolute dvs-pin dvs-pointer-events-none;
 
@@ -45,9 +40,5 @@
       0 20px 70px -10px rgba(51, 51, 51, 0.7), 
       0 50px 100px 0 rgba(51, 51, 51, 0.2);
     transition: opacity 1000s;
-  }
-
-  li {
-    backface-visibility: hidden;
   }
 }

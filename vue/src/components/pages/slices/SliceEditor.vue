@@ -7,9 +7,9 @@
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
           <span class="dvs-cursor-pointer" @click="toggleSlice()"  @mouseenter="markSlice(true, slice)"  @mouseleave="markSlice(false, slice)">{{ slice.metadata.label }}</span>
         </div>
-        <div class="dvs-cursor-pointer dvs-ml-2 dvs-relative dvs-p-2 dvs-rounded-sm dvs-flex dvs-items-center" @mouseenter="moreHovered = true" @mouseleave="moreHovered = false" :style="{backgroundColor: this.theme.panelCard.backgroundColor}">
+        <div class="dvs-cursor-pointer dvs-ml-2 dvs-relative dvs-p-2 dvs-rounded-sm dvs-flex dvs-items-center" @mouseenter="moreHovered = true" @mouseleave="moreHovered = false" :style="{backgroundColor: this.theme.panelCard.background}">
           <more-icon w="18" h="18" style="transform:rotate(90deg)" :style="{color: 'white'}" />
-          <div class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm dvs-mt-8" style="width:250px;transition:height 500ms" :style="moreContainerStyles">
+          <div class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm dvs-mt-8" style="width:250px;transition:height 500ms, opacity 500ms" :style="moreContainerStyles">
             <div class="dvs-py-2 dvs-flex dvs-items-end dvs-flex-wrap ">
               
               <div class="dvs-w-1/3">              
@@ -264,8 +264,6 @@ export default {
       if (typeof referringSlice === 'undefined') {
         referringSlice = this.slice
       }
-
-      console.log('here - addSlice 1', slice, referringSlice)
       this.$emit('addSlice', slice, referringSlice)
       this.manageSlice = false
     },
@@ -330,13 +328,15 @@ export default {
     moreContainerStyles () {
       if (this.moreHovered) {
         return {
-          height: '170px',
-          backgroundColor: this.theme.panelCard.backgroundColor
+          height: '150px',
+          opacity: 1,
+          backgroundColor: this.theme.panelCard.background
         }
       }
       return {
         height: '0',
-        backgroundColor: this.theme.panelCard.backgroundColor
+        opacity: 0,
+        backgroundColor: this.theme.panelCard.background
       }
     }
   },

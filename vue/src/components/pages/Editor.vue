@@ -4,7 +4,7 @@
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-8 dvs-pb-8 dvs-pt-8">
         <draggable v-model="currentPage.slices" element="ul" class="dvs-list-reset dvs-w-full" :options="{group:{ name:'g1'}}">
           <template v-for="slice in currentPage.slices">
-            <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
+            <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
           </template>
         </draggable>
 
@@ -107,6 +107,7 @@ export default {
       // this.currentPage.slices[this.currentPage.slices.indexOf(referenceSlice)]
     },
     editSlice (editedSlice, referenceSlice) {
+      console.log(editedSlice, referenceSlice)
       this.currentPage.slices.splice(this.currentPage.slices.indexOf(referenceSlice), 1, editedSlice)
     },
     setSubSliceInstaceToZero (slices) {

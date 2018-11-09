@@ -58,7 +58,7 @@ export default {
     isSelected (file) {
       if (this.value !== null) {
         if (file.value === this.value.value) {
-          return {color: this.theme.actionButton.backgroundColor}
+          return {color: this.theme.actionButton.background}
         }
       }
     }

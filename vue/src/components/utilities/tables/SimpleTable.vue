@@ -3,7 +3,7 @@
     <div v-for="(column, index) in columns" :key="index" class="dvs-flex dvs-flex-col dvs-justify-between dvs-w-full">
       <div 
         class="dvs-font-bold dvs-mb-2 dvs-pb-2 dvs-px-2 dvs-border-b" 
-        :style="{borderColor: theme.adminText.color}"
+        :style="{borderColor: theme.panelText.color}"
         @click="sortByColumn(column)">
           {{ column.name }}
           <template v-if="column === sortBy">

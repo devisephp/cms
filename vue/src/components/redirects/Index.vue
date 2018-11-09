@@ -7,7 +7,7 @@
           Create Redirect
         </li>
       </action-bar>
-      <h3 class="dvs-mb-10 dvs-mr-12" :style="{color: theme.adminText.color}">Current Redirects</h3>
+      <h3 class="dvs-mb-10 dvs-mr-12" :style="{color: theme.panelText.color}">Current Redirects</h3>
       <div v-for="redirect in redirects.data" :key="redirect.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-1/6 dvs-font-bold dvs-pr-8">
           {{ redirect.type }}
@@ -30,7 +30,7 @@
     <transition name="dvs-fade">
       <portal to="devise-root">
         <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
-          <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">New Redirect</h4>
+          <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">New Redirect</h4>
 
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>From URL</label>

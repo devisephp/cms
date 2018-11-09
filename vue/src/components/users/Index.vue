@@ -8,7 +8,7 @@
         </li>
       </action-bar>
 
-      <h3 class="dvs-mb-10" :style="{color: theme.adminText.color}">Current Users</h3>
+      <h3 class="dvs-mb-10" :style="{color: theme.panelText.color}">Current Users</h3>
 
       <div v-for="user in users.data" :key="user.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
         <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
@@ -23,7 +23,7 @@
     <transition name="dvs-fade">
       <portal to="devise-root">
         <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
-          <h3 class="dvs-mb-4" :style="{color: theme.adminText.color}">Create new user</h3>
+          <h3 class="dvs-mb-4" :style="{color: theme.panelText.color}">Create new user</h3>
 
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Name</label>

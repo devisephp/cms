@@ -6,7 +6,7 @@
 
     <div id="devise-admin-content" class="dvs-relative" >
       <div v-if="site !== null">
-        <h2 class="dvs-mb-8" :style="{color: theme.adminText.color}">
+        <h2 class="dvs-mb-8" :style="{color: theme.panelText.color}">
           {{ site.name }} Analytics
         </h2>
         <div class="dvs-flex dvs-mb-8">
@@ -25,25 +25,25 @@
         <!-- Usage Totals -->
         <div class="dvs-flex dvs-justify-between dvs-text-center dvs-text-xs dvs-mb-8">
           <div>
-            <h2 :style="{color: theme.adminText.color}">
+            <h2 :style="{color: theme.panelText.color}">
               {{ analytics['usage-totals'].Users }}
             </h2>
             <strong class="dvs-uppercase">Users</strong>
           </div>
           <div>
-            <h2 :style="{color: theme.adminText.color}">
+            <h2 :style="{color: theme.panelText.color}">
               {{ analytics['usage-totals'].Sessions }}
             </h2>
             <strong class="dvs-uppercase">Sessions</strong>
           </div>
           <div>
-            <h2 :style="{color: theme.adminText.color}">
+            <h2 :style="{color: theme.panelText.color}">
               {{ analytics['usage-totals']['Page Views'] }}
             </h2>
             <strong class="dvs-uppercase">Page Views</strong>
           </div>
           <div>
-            <h2 :style="{color: theme.adminText.color}">
+            <h2 :style="{color: theme.panelText.color}">
               {{ analytics['usage-totals']['Bounce Rate'] }}
             </h2>
             <strong class="dvs-uppercase">Bounce Rate</strong>
@@ -57,19 +57,19 @@
           <div class="lg:dvs-w-1/2 lg:dvs-pr-4">
 
             <div class="dvs-mb-8">
-              <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">How are site sessions trending?</h4>
+              <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">How are site sessions trending?</h4>
               <line-chart class="dvs-mb-8" :chart-data="analytics.sessions" :options="options" />
             </div>
 
             <div class="dvs-mb-8">
-              <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">Channels</h4>
+              <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">Channels</h4>
               <div>
                 <bar-chart class="dvs-mb-8" :chart-data="analytics.channels" :options="barOptions" />
               </div>
             </div>
 
             <div class="dvs-mb-8">
-              <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">Channels</h4>
+              <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">Channels</h4>
               <div>
                 <pie-chart class="dvs-mb-8" :chart-data="analytics.browser" :options="pieOptions" />
               </div>
@@ -81,7 +81,7 @@
           <div class="lg:dvs-w-1/2 lg:dvs-pl-4">
             
             <div class="dvs-mb-8">
-              <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">What are the top countries by sessions?</h4>
+              <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">What are the top countries by sessions?</h4>
               <simple-table
               class="dvs-w-full"
               :data="analytics.countries"
@@ -108,7 +108,7 @@
         </div>
 
         <div class="dvs-mb-8">
-          <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">Acquisition Sources</h4>
+          <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">Acquisition Sources</h4>
           <simple-table
           class="dvs-w-full"
           :data="analytics['sources-sessions-pageviews']"
@@ -121,7 +121,7 @@
         </div>
 
          <div class="dvs-mb-8">
-          <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">Date Searched</h4>
+          <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">Date Searched</h4>
           <simple-table
           class="dvs-w-full"
           :data="analytics['date-searched']"
@@ -133,7 +133,7 @@
         </div>
 
         <div class="dvs-mb-8">
-          <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">Landing Page</h4>
+          <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">Landing Page</h4>
           <simple-table
           class="dvs-w-full"
           :data="analytics['landing-page']"
@@ -145,7 +145,7 @@
         </div>
 
         <div class="dvs-mb-8">
-          <h4 class="dvs-mb-4" :style="{color: theme.adminText.color}">Devices</h4>
+          <h4 class="dvs-mb-4" :style="{color: theme.panelText.color}">Devices</h4>
           <simple-table
           class="dvs-w-full"
           :data="analytics['devices']"
@@ -162,7 +162,7 @@
       </div>
       
       <div class="dvs-absolute dvs-absolute-center dvs-p-8" :style="infoBlockFlatTheme" v-else>
-        <h2 class="dvs-mb-4" :style="{color: theme.adminText.color}">To get started select a Site</h2>
+        <h2 class="dvs-mb-4" :style="{color: theme.panelText.color}">To get started select a Site</h2>
         <fieldset class="dvs-fieldset">
           <select v-model="site" @change="retrieveAnalytics()">
             <option :value="null">Select a site</option>
@@ -215,7 +215,7 @@ export default {
       this.analyticsDateRange.end = this.formatDate(today)
     },
     formatColors (dataset, index) {
-      dataset.fontColor = this.theme.adminText.color
+      dataset.fontColor = this.theme.panelText.color
 
       if (typeof this.theme[`chartColor1`] !== 'undefined') {
         dataset.borderColor = []
@@ -229,7 +229,7 @@ export default {
           }
         }
       } else {
-        dataset.borderColor = this.theme.adminText.color
+        dataset.borderColor = this.theme.panelText.color
         dataset.backgroundColor = this.theme.statsLeft.color
         dataset.pointBackgroundColor = this.theme.statsRight.color
         dataset.pointBorderColor = this.theme.statsRight.color
@@ -242,7 +242,7 @@ export default {
       return dataset
     },
     formatColors (dataset, index) {
-      dataset.fontColor = this.theme.adminText.color
+      dataset.fontColor = this.theme.panelText.color
 
       if (typeof this.theme[`chartColor1`] !== 'undefined') {
         dataset.borderColor = []
@@ -257,7 +257,7 @@ export default {
           }
         }
       } else {
-        dataset.borderColor = this.theme.adminText.color
+        dataset.borderColor = this.theme.panelText.color
         dataset.backgroundColor = this.theme.statsLeft.color
         dataset.pointBackgroundColor = this.theme.statsRight.color
         dataset.pointBorderColor = this.theme.statsRight.color
@@ -310,20 +310,20 @@ export default {
         maintainAspectRatio: false,
         legend: {
           labels: {
-              fontColor: this.theme.adminText.color,
+              fontColor: this.theme.panelText.color,
               fontSize: 14
           }
         },
         scales: {
             yAxes: [{
                 ticks: {
-                    fontColor: this.theme.adminText.color,
+                    fontColor: this.theme.panelText.color,
                     fontSize: 12
                 }
             }],
             xAxes: [{
                 ticks: {
-                    fontColor: this.theme.adminText.color,
+                    fontColor: this.theme.panelText.color,
                     fontSize: 12
                 }
             }]
@@ -336,20 +336,20 @@ export default {
         maintainAspectRatio: false,
         legend: {
           labels: {
-              fontColor: this.theme.adminText.color,
+              fontColor: this.theme.panelText.color,
               fontSize: 14
           }
         },
         scales: {
             yAxes: [{
                 ticks: {
-                    fontColor: this.theme.adminText.color,
+                    fontColor: this.theme.panelText.color,
                     fontSize: 12
                 }
             }],
             xAxes: [{
                 ticks: {
-                    fontColor: this.theme.adminText.color,
+                    fontColor: this.theme.panelText.color,
                     fontSize: 12
                 }
             }]
@@ -362,7 +362,7 @@ export default {
         maintainAspectRatio: false,
         legend: {
           labels: {
-              fontColor: this.theme.adminText.color,
+              fontColor: this.theme.panelText.color,
               fontSize: 14
           }
         }

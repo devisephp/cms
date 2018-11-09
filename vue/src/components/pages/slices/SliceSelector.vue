@@ -1,7 +1,7 @@
 <template>
 <div class="dvs-flex dvs-pb-8">
   <div class="dvs-w-1/3 dvs-text-sm dvs-font-mono dvs-pr-8">
-    <h6 class="dvs-mb-4 dvs-font-sans">Directories</h6>
+    <h6 class="dvs-mb-4 dvs-font-sans dvs-text-white">Directories</h6>
     <ul class="dvs-list-reset dvs-flex dvs-flex-wrap dvs-mb-8">
       <li class="dvs-cursor-pointer" @click="jumpToTop">
         Back to Top

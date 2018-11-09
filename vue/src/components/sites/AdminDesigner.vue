@@ -1,5 +1,5 @@
 <template>
-  <div v-if="localValue.adminBackground.color">
+  <div>
     <div class="dvs-mb-10">
       <fieldset class="dvs-fieldset">
         <label>Presets</label>
@@ -11,114 +11,128 @@
     </div>
 
     <div class="dvs-flex dvs-w-full">
-      <div class="dvs-w-1/4 dvs-pt-12">
-        <h6 class="dvs-mb-2" :style="{color: theme.adminText.color }">Sidebar</h6>
-        <color-editor v-model="localValue.sidebarTop" :options="{label: 'Top Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.sidebarBottom" :options="{label: 'Bottom Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.sidebarText" :options="{label: 'Text Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
+      <div class="dvs-w-1/4 dvs-pr-8">
+      
+        <h6 class="dvs-mb-2" :style="{color: localValue.panelText.color }">Panel</h6>
+        <color-editor v-model="localValue.panelTop" :options="{label: 'Panel Top Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.panelBottom" :options="{label: 'Panel Bottom Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.panelText" :options="{label: 'Panel Text Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.panelAction" :options="{label: 'Panel Action Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.panelSidebarBackground" :options="{label: 'Panel Sidebar Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.panelSidebarText" :options="{label: 'Panel Sidebar Icon Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.panelSidebarAction" :options="{label: 'Panel Sidebar Action Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
 
-        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.adminText.color }">Action Buttons</h6>
-        <color-editor v-model="localValue.buttonsActionText" :options="{label: 'Text Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.buttonsActionLeft" :options="{label: 'Left Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.buttonsActionRight" :options="{label: 'Right Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.buttonsActionShadowColor" :options="{label: 'Shadow Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <text-editor v-model="localValue.buttonsActionShadowSize" :options="{label: 'Shadow Size', hidePreview: true}" class="dvs-mb-4"></text-editor>
+        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: localValue.panelText.color }">Buttons</h6>
+        <color-editor v-model="localValue.buttonsActionText" :options="{label: 'Action Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.buttonsActionBackground" :options="{label: 'Action Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.buttonSecondaryText" :options="{label: 'Secondary Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.buttonSecondaryBackground" :options="{label: 'Secondary Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         
-        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.adminText.color }">User / Help Blocks</h6>
-        <color-editor v-model="localValue.userBackground" :options="{label: 'Background Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.userText" :options="{label: 'Text Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.userShadowColor" :options="{label: 'Shadow Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <text-editor v-model="localValue.userShadowSize" :options="{label: 'Shadow Size', hidePreview: true}" class="dvs-mb-4"></text-editor>
+        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: localValue.panelText.color }">Help Blocks</h6>
+        <color-editor v-model="localValue.helpBackground" :options="{label: 'Background Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.helpText" :options="{label: 'Text Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
 
-        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.adminText.color }">Info Block</h6>
-        <color-editor v-model="localValue.statsLeft" :options="{label: 'Background Left Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.statsRight" :options="{label: 'Background Right Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.adminText" :options="{label: 'Text Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.statsShadowColor" :options="{label: 'Shadow Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <text-editor v-model="localValue.statsShadowSize" :options="{label: 'Shadow Size', hidePreview: true}" class="dvs-mb-4"></text-editor>
-
-        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.adminText.color }">Admin Wide Windows</h6>
-        <color-editor v-model="localValue.adminBackground" :options="{label: 'Background Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.adminText" :options="{label: 'Text Color', hidePreview: true}" class="dvs-mb-4"></color-editor>
-
-        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.adminText.color }">Chart Colors</h6>
-        <color-editor v-model="localValue.chartColor1" :options="{label: 'Chart Color 1', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.chartColor2" :options="{label: 'Chart Color 2', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.chartColor3" :options="{label: 'Chart Color 3', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.chartColor4" :options="{label: 'Chart Color 4', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.chartColor5" :options="{label: 'Chart Color 5', hidePreview: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.chartColor6" :options="{label: 'Chart Color 6', hidePreview: true}" class="dvs-mb-4"></color-editor>
+        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: localValue.panelText.color }">Chart Colors</h6>
+        <color-editor v-model="localValue.chartColor1" :options="{label: 'Chart Color 1', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor2" :options="{label: 'Chart Color 2', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor3" :options="{label: 'Chart Color 3', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor4" :options="{label: 'Chart Color 4', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor5" :options="{label: 'Chart Color 5', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.chartColor6" :options="{label: 'Chart Color 6', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
       </div>
 
       <div class="dvs-w-3/4 dvs-mb-8">
 
-        <h3 class="dvs-mb-4" :style="{color: theme.adminText.color}">Mini-Preview of the Editor</h3>
+        <h3 class="dvs-mb-4" :style="{color: localValue.panelText.color}">Mini-Preview of the Editor</h3>
         <div class="dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch dvs-mb-12" style="min-height:400px">
           
           <div class="dvs-bg-white dvs-m-4 dvs-rounded dvs-px-4 dvs-py-1 dvs-text-sm" style="height:30px;">
             http://{{ domain }}
           </div>
 
-          <div class="dvs-flex dvs-justify-stretch dvs-relative dvs-flex-grow">
+          <div class="dvs-relative">
             <div 
-              class="dvs-w-1/4 dvs-relative dvs-text-center dvs-p-8"
-              style="min-height:400px;" 
+              class="dvs-absolute dvs-pin-t dvs-pin-l z-10 dvs-text-center dvs-rounded dvs-mt-8 dvs-ml-8 dvs-shadow dvs-min-w-64 dvs-flex dvs-items-stretch"
               :style="`
-                background-image: linear-gradient(180deg, ${localValue.adminBackground.color} 0%, ${localValue.sidebarBottom.color} 100%);
-                color: ${localValue.adminText.color}  
+                background-image: linear-gradient(135deg, ${localValue.panelTop.color} 0%, ${localValue.panelBottom.color} 100%);
+                color: ${localValue.panelText.color}  
               `">
 
-              <!-- Logo -->
-              <devise-logo class="dvs-my-4 dvs-mt-2" :color="localValue.adminText.color" v-if="!logo" />
-
-              <!-- Titley-ish thing -->
-              <h2 :style="{color: localValue.adminText.color}" class="dvs-mb-2">Editor</h2>
-              <div class="dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold">
-                <arrow-round-back-icon /> Full Administration
+              <div
+                class="dvs-flex dvs-flex-col dvs-items-center dvs-p-2" 
+                  :style="`
+                    background-color: ${localValue.panelSidebarBackground.color};
+                    color: ${localValue.panelSidebarText.color};
+                  `">
+                  <div class="dvs-p-2">
+                    <document-icon w="18" h="18" :style="localValue.panelSidebarText.color" /> 
+                  </div>
+                  <div class="dvs-p-2">
+                    <cube-icon w="18" h="18" :style="localValue.panelSidebarText.color" /> 
+                  </div>
+                  <div class="dvs-p-2">
+                    <cog-icon w="18" h="18" :style="localValue.panelSidebarText.color" /> 
+                  </div>
+                  <div class="dvs-p-2">
+                    <power-icon w="18" h="18" :style="localValue.panelSidebarText.color" /> 
+                  </div>
               </div>
 
-              <!-- Action Button -->
-              <button 
-                class="dvs-btn dvs-btn-xs dvs-mb-8" 
-                :style="`
-                  background-image: linear-gradient(90deg, ${localValue.buttonsActionLeft.color} 0%, ${localValue.buttonsActionRight.color} 100%);
-                  color: ${localValue.buttonsActionText.color};
-                  box-shadow: -4px -4px ${localValue.buttonsActionShadowSize.text} ${localValue.buttonsActionShadowColor.color};
-                `">Save Page
-              </button>
+              <div class="dvs-text-center dvs-w-full dvs-p-8 ">
 
-              <!-- Some Bonus text stuff... maybe a menu? :) -->
-              <ul class="dvs-text-left dvs-text-xs dvs-list-reset">
-                <li class="dvs-mb-4">Lorem</li>
-                <li class="dvs-mb-4">Lorem</li>
-                <li class="dvs-mb-4">Lorem
-                  <ul class="dvs-list-reset dvs-ml-4">
-                    <li>Ipsum</li>
-                  </ul>
-                </li>
-                <li class="dvs-mb-4">Lorem</li>
+                <!-- Some Bonus text stuff... maybe a menu? :) -->
+                <ul class="dvs-text-left dvs-text-xs dvs-list-reset dvs-font-bold">
+                  <li class="dvs-mb-4">
+                    <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
+                    Lorem
+                  </li>
+                  <li class="dvs-mb-4">
+                    <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
+                    Lorem
+                  </li>
+                  <li class="dvs-mb-4">
+                    <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
+                    Lorem
+                    <ul class="dvs-list-reset dvs-ml-8">
+                      <li 
+                        class="dvs-mt-2 dvs-mb-4 dvs-p-1 dvs-px-4 dvs-text-sm dvs-rounded-sm"
+                        :style="`
+                          background-color: ${localValue.buttonSecondaryBackground.color};
+                          color: ${localValue.buttonSecondaryText.color};
+                        `"
+                      >
+                        Lorem
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="dvs-mb-4">
+                    <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons" /> 
+                    Lorem
+                  </li>
 
-              </ul>
+                </ul>
 
-              <!-- User Block -->
-              <div 
-                class="dvs-rounded-sm dvs-flex dvs-items-center dvs-text-xs dvs-p-2 dvs-absolute pin-b pin-l pin-r dvs-m-8"
-                :style="`
-                  background: ${localValue.userBackground.color};
-                  color: ${localValue.userText.color};
-                  box-shadow: -4px -4px ${localValue.userShadowSize.text} ${localValue.userShadowColor.color};
-                `">
-                <div class="dvs-w-3/4">
-                  John Doh
-                </div>
-                <div>
-                  <power-icon />
-                </div>
+                <!-- Action Button -->
+                <button 
+                  class="dvs-btn dvs-btn-xs dvs-mb-4 dvs-rounded-full dvs-border" 
+                  :style="`
+                    border-color: ${localValue.buttonsActionBackground.color};
+                    color: ${localValue.buttonsActionBackground.color};
+                  `">+ Add Slice
+                </button>
+
+                <button 
+                  class="dvs-btn dvs-btn-xs dvs-py-4 dvs-w-full" 
+                  :style="`
+                    background-color: ${localValue.buttonsActionBackground.color};
+                    color: ${localValue.buttonsActionText.color};
+                  `">Save Page
+                </button>
+
               </div>
-
             </div>
 
-            <div class="dvs-bg-white dvs-w-3/4 dvs-p-4 dvs-relative">
+            <div class="dvs-bg-white dvs-w-full dvs-p-4 dvs-relative">
               <h3>Just an example page</h3>
               <p class="dvs-text-xs dvs-mt-4 dvs-text-black">Bacon ipsum dolor amet brisket porchetta doner shankle sirloin pancetta rump alcatra strip steak pig burgdoggen frankfurter cupim kevin. Bacon alcatra flank buffalo beef andouille spare ribs porchetta. Shank corned beef pork loin bacon beef pork belly frankfurter tri-tip venison tenderloin alcatra chuck prosciutto filet mignon cow. Kielbasa t-bone fatback filet mignon frankfurter burgdoggen biltong tri-tip jerky pork chop. Hamburger pork pork loin, brisket chuck beef turkey spare ribs swine.</p>
               <div class="dvs-flex dvs-justify-between">
@@ -134,9 +148,8 @@
 
               <div class="dvs-absolute dvs-pin-l dvs-pin-r dvs-pin-b dvs-flex dvs-justify-between dvs-items-end dvs-m-8 dvs-p-8 dvs-rounded"
                   :style="`
-                    background-image: linear-gradient(90deg, ${localValue.statsLeft.color} 0%, ${localValue.statsRight.color} 100%);
-                    color: ${localValue.adminText.color};
-                    box-shadow: -4px -4px ${localValue.statsShadowSize.text} ${localValue.statsShadowColor.color};
+                    background-color: ${localValue.helpBackground.color});
+                    color: ${localValue.panelText.color};
                   `"
               >
                 <div>
@@ -147,7 +160,7 @@
                   class="dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold" 
                   style="width:100px; height:100px;"
                   :style="`
-                    border-color: ${localValue.adminText.color};
+                    border-color: ${localValue.panelText.color};
                   `">
                   90M
                 </div>
@@ -156,7 +169,7 @@
                   class="dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold" 
                   style="width:100px; height:100px;"
                   :style="`
-                    border-color: ${localValue.adminText.color};
+                    border-color: ${localValue.panelText.color};
                   `">
                   90M
                 </div>
@@ -165,7 +178,7 @@
                   class="dvs-rounded-full dvs-border dvs-border-white dvs-flex dvs-justify-center dvs-align-center dvs-p-8 dvs-text-xl dvs-font-bold" 
                   style="width:100px; height:100px;"
                   :style="`
-                    border-color: ${localValue.adminText.color};
+                    border-color: ${localValue.panelText.color};
                   `">
                   10K
                 </div>
@@ -174,81 +187,6 @@
 
           </div>
         </div>
-
-        <h3 class="dvs-mb-4" :style="{color: theme.adminText.color}">Mini-Preview of the Admin</h3>
-
-        <div class="dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch" style="min-height:400px">
-          
-          <div class="dvs-bg-white dvs-m-4 dvs-rounded dvs-px-4 dvs-py-1 dvs-text-sm" style="height:30px;">
-            http://{{ domain }}
-          </div>
-
-          <div class="dvs-flex dvs-justify-stretch dvs-relative dvs-flex-grow">
-            <div 
-              class="dvs-w-1/4 dvs-relative dvs-text-center dvs-p-8"
-              style="min-height:400px;" 
-              :style="`
-                background-image: linear-gradient(180deg, ${localValue.adminBackground.color} 0%, ${localValue.sidebarBottom.color} 100%);
-                color: ${localValue.adminText.color}  
-              `">
-
-              <!-- Logo -->
-              <devise-logo class="dvs-my-4 dvs-mt-2" :color="localValue.adminText.color" v-if="!logo" />
-
-              <!-- Titley-ish thing -->
-              <h2 :style="{color: localValue.adminText.color}" class="dvs-mb-2">Settings</h2>
-              <div class="dvs-mb-8 dvs-text-2xs dvs-uppercase dvs-font-bold">
-                <arrow-round-back-icon /> Back to Settings
-              </div>
-
-              <!-- User Block -->
-              <div 
-                class="dvs-rounded-sm dvs-flex dvs-items-center dvs-text-xs dvs-p-2 dvs-absolute pin-b pin-l pin-r dvs-m-8"
-                :style="`
-                  background: ${localValue.userBackground.color};
-                  color: ${localValue.userText.color};
-                  box-shadow: -4px -4px ${localValue.userShadowSize.text} ${localValue.userShadowColor.color};
-                `">
-                <div class="dvs-w-3/4">
-                  John Doh
-                </div>
-                <div>
-                  <power-icon />
-                </div>
-              </div>
-
-            </div>
-
-            <div class="dvs-w-3/4 dvs-p-4 dvs-relative"  :style="{ backgroundColor: localValue.adminBackground.color, color: localValue.adminText.color}">
-              <h3 :style="{color: localValue.adminText.color}">Full-width administration page</h3>
-              <p class="dvs-text-xs dvs-mt-4">Below are a few examples of things you will see in the administration sections of Devise. Note: when building your own administration sections it is up to you (or your developer) to construct pages utilizing the "theme" variable. It is auto-injected as a computed property in every Devise component.</p>
-
-              <line-chart class="dvs-mb-8" :chart-data="placeholderLineData.data" :options="options" :width="800" :height="200" />
-
-              <h6 class="dvs-mb-4" :style="{color: localValue.adminText.color}"> Buttons</h6>
-              <div class="dvs-flex">
-                <button class="dvs-btn dvs-mr-4" :style="{
-                  backgroundImage: `linear-gradient(90deg, ${localValue.buttonsActionLeft.color} 0%, ${localValue.buttonsActionRight.color} 100%)`,
-                  color: localValue.buttonsActionText.color,
-                  boxShadow: `-4px -4px ${localValue.buttonsActionShadowSize.text} ${localValue.buttonsActionShadowColor.color}`
-                }"
-                >
-                  Action Button
-                </button>
-
-                <button class="dvs-btn" :style="{
-                  backgroundColor: localValue.buttonsActionLeft.color,
-                  color: localValue.buttonsActionText.color
-                }">
-                  Regular Button
-                </button>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-
 
       </div>
 
@@ -263,10 +201,13 @@ import TextEditor from './../pages/editor/Text'
 import DeviseLogo from './../utilities/DeviseLogo'
 import LineChart from './../pages/analytics/Line'
 
-import ArrowRoundBackIcon from 'vue-ionicons/dist/ios-arrow-round-back.vue'
+import CogIcon from 'vue-ionicons/dist/md-cog.vue'
+import CubeIcon from 'vue-ionicons/dist/md-cube.vue'
+import DocumentIcon from 'vue-ionicons/dist/md-document.vue'
+import MenuIcon from 'vue-ionicons/dist/ios-menu.vue'
 import PowerIcon from 'vue-ionicons/dist/ios-power.vue'
 import ImagesIcon from 'vue-ionicons/dist/ios-images.vue'
-
+import ArrowRoundBackIcon from 'vue-ionicons/dist/ios-arrow-round-back.vue'
 
 var lineData = {"data":{"labels":["May 16","May 17","May 18","May 19","May 20","May 21","May 22","May 23"],"datasets":[{"label":"Page Views","data":[33,41,19,5,4,23,30,11]},{"label":"Sessions","data":[25,24,14,4,4,10,17,9]},{"label":"Avg. Time On Page","data":[64,38,155,10,7,26,145,6]},{"label":"Bounce Rate","data":[48,45,57,50,25,10,47,22]}]},"releases":["Apr 25","Apr 24","May 2"]}
 
@@ -276,25 +217,19 @@ export default {
     return {
       logo: null,
       localValue: {
-        sidebarTop: {color: null},
-        sidebarBottom: {color: null},
-        sidebarText: {color: null},
+        panelTop: {color: null},
+        panelBottom: {color: null},
+        panelText: {color: null},
+        panelAction: {color: null},
+        panelSidebarBackground: {color: null},
+        panelSidebarText: {color: null},
+        panelSidebarAction: {color: null},
         buttonsActionText: {color: null},
-        buttonsActionLeft: {color: null},
-        buttonsActionRight: {color: null},
-        buttonsActionShadowColor: {color: null},
-        buttonsActionShadowSize: {text: null},
-        userBackground: {color: null},
-        userText: {color: null},
-        userShadowColor: {color: null},
-        userShadowSize: {text: null},
-        adminText: {color: null},
-        statsLeft: {color: null},
-        statsRight: {color: null},
-        statsShadowColor: {color: null},
-        statsShadowSize: {text: null},
-        adminBackground: {color: null},
-        adminText: {color: null},
+        buttonsActionBackground: {color: null},
+        buttonSecondaryText: {color: null},
+        buttonSecondaryBackground: {color: null},
+        helpBackground: {color: null},
+        helpText: {color: null},
         chartColor1: {color: null},
         chartColor2: {color: null},
         chartColor3: {color: null},
@@ -304,116 +239,23 @@ export default {
       },
       presets: {
         Default: {
-          sidebarTop: { color: 'rgba(242,242,242,1)' },
-          sidebarBottom: { color: 'rgba(230,230,230,1)' },
-          sidebarText: { color: 'rgba(107,107,107,1)' },
-          buttonsActionText: { color: 'rgba(0,0,0,1)' },
-          buttonsActionLeft: { color: '#fafafa' },
-          buttonsActionRight: { color: '#e8e8e8' },
-          buttonsActionShadowColor: { color: 'rgba(126,126,126,0.14)' },
-          buttonsActionShadowSize: { text: '2px' },
-          userBackground: { color: 'rgba(0,0,0,0.6)' },
-          userText: { color: '#ffffff' },
-          userShadowColor: { color: 'rgba(0,0,0,0.43)' },
-          userShadowSize: { text: '30px' },
-          adminText: { color: 'rgba(0,0,0,1)' },
-          statsLeft: { color: '#eaeaea' },
-          statsRight: { color: '#d6d6d6' },
-          statsShadowColor: { color: 'rgba(0,0,0,0.51)' },
-          statsShadowSize: { text: '30px' },
-          adminBackground: { color: 'rgba(255,255,255,1)' },
-          adminText: { color: 'rgba(80,80,80,1)' },
-          chartColor1: { color: 'rgba(54, 162, 235, 1)' },
-          chartColor2: { color: 'rgba(75, 192, 192, 1)' },
-          chartColor3: { color: 'rgba(255, 206, 86, 1)' },
-          chartColor4: { color: 'rgba(255, 99, 132, 1)' },
-          chartColor5: { color: 'rgba(153, 102, 255, 1)' },
-          chartColor6: { color: 'rgba(255, 159, 64, 1)' }
-        },
-        'Blue Sunrise': {
-          sidebarTop: {color: '#343434'},
-          sidebarBottom: {color: '#2199be'},
-          sidebarText: {color: '#ffffff'},
-          buttonsActionText: {color: '#ffffff'},
-          buttonsActionLeft: {color: '#4e9bb5'},
-          buttonsActionRight: {color: '#27afd8'},
-          buttonsActionShadowColor: {color: '#1baeda'},
-          buttonsActionShadowSize: {text: '30px'},
-          userBackground: {color: 'rgba(0,0,0,0.4)'},
-          userText: {color: '#ffffff'},
-          userShadowColor: {color: '#1baeda'},
-          userShadowSize: {text: '30px'},
-          adminText: {color: '#ffffff'},
-          statsLeft: {color: '#2da2c4'},
-          statsRight: {color: '#a67045'},
-          statsShadowColor: {color: '#1baeda'},
-          statsShadowSize: {text: '30px'},
-          adminBackground: {color: '#2199be'},
-          adminText: {color: '#ffffff'},
+          panelTop: {color: 'rgb(44, 56, 88)'},
+          panelBottom: {color: 'rgb(24, 32, 57)'},
+          panelText: {color: 'rgb(243, 243, 243)'},
+          panelAction: {color: 'rgb(101, 139, 239)'},
+          panelSidebarBackground: {color: '#182039'},
+          panelSidebarText: {color: 'rgb(243, 243, 243)'},
+          panelSidebarAction: {color: 'rgb(101, 139, 239)'},
+          buttonsActionText: {color: 'rgb(243, 243, 243)'},
+          buttonsActionBackground: {color: 'rgb(235, 143, 137)'},
+          buttonSecondaryText: {color: 'rgb(243, 243, 243)'},
+          buttonSecondaryBackground: {color: 'rgb(24, 32, 57)'},
+          helpBackground: {color: '#FDF6F6'},
+          helpText: {color: 'rgb(235, 143, 137)'},
           chartColor1: {color: 'rgba(54, 162, 235, 1)'},
           chartColor2: {color: 'rgba(75, 192, 192, 1)'},
           chartColor3: {color: 'rgba(255, 206, 86, 1)'},
-          chartColor4: {color: 'rgba(255, 99, 132, 1)'},
-          chartColor5: {color: 'rgba(153, 102, 255, 1)'},
-          chartColor6: {color: 'rgba(255, 159, 64, 1)'}
-        },
-        'Purple Dinosaur': {
-          sidebarTop: { color: '#855791' },
-          sidebarBottom: { color: '#564278' },
-          sidebarText: { color: '#ffffff' },
-          buttonsActionText: { color: '#ffffff' },
-          buttonsActionLeft: { color: '#7148c1' },
-          buttonsActionRight: { color: '#c57dd5' },
-          buttonsActionShadowColor: { color: 'rgba(185,46,215,0.3)' },
-          buttonsActionShadowSize: { text: '8px' },
-          userBackground: { color: 'rgba(66,41,118,0.6)' },
-          userText: { color: '#ffffff' },
-          userShadowColor: { color: '#69267d' },
-          userShadowSize: { text: '30px' },
-          adminText: { color: '#ffffff' },
-          statsLeft: { color: 'rgba(70,34,112,0.87)' },
-          statsRight: { color: 'rgba(86,26,167,0.66)' },
-          statsShadowColor: { color: 'rgba(47,15,83,1)' },
-          statsShadowSize: { text: '30px' },
-          adminBackground: { color: '#564278' },
-          adminText: { color: '#ffffff' },
-          buttonsInverseLeft: { color: '#c1485c' },
-          buttonsInverseRight: { color: '#d5997d' },
-          buttonsInverseText: { color: '#ffffff' },
-          chartColor1: {color: 'rgba(54, 162, 235, 1)'},
-          chartColor2: {color: 'rgba(75, 192, 192, 1)'},
-          chartColor3: {color: 'rgba(255, 206, 86, 1)'},
-          chartColor4: {color: 'rgba(255, 99, 132, 1)'},
-          chartColor5: {color: 'rgba(153, 102, 255, 1)'},
-          chartColor6: {color: 'rgba(255, 159, 64, 1)'}
-        },
-        'RedRum': {
-          sidebarTop: { color: 'rgba(194,33,33,1)' },
-          sidebarBottom: { color: 'rgba(83,10,10,1)' },
-          sidebarText: { color: '#ffffff' },
-          buttonsActionText: { color: '#ffffff' },
-          buttonsActionLeft: { color: 'rgba(195,70,70,1)' },
-          buttonsActionRight: { color: 'rgba(226,15,15,1)' },
-          buttonsActionShadowColor: { color: 'rgba(0,0,0,0.19)' },
-          buttonsActionShadowSize: { text: '30px' },
-          userBackground: { color: 'rgba(0,0,0,0.4)' },
-          userText: { color: '#ffffff' },
-          userShadowColor: { color: 'rgba(255,0,0,0.31)' },
-          userShadowSize: { text: '30px' },
-          adminText: { color: '#ffffff' },
-          statsLeft: { color: 'rgba(196,45,45,1)' },
-          statsRight: { color: 'rgba(197,33,85,1)' },
-          statsShadowColor: { color: 'rgba(218,27,27,1)' },
-          statsShadowSize: { text: '30px' },
-          adminBackground: { color: 'rgba(177,42,44,1)' },
-          adminText: { color: '#ffffff' },
-          buttonsInverseLeft: { color: 'rgb(132, 195, 70)' },
-          buttonsInverseRight: { color: 'rgb(120, 226, 15)' },
-          buttonsInverseText: { color: '#ffffff' },
-          chartColor1: {color: 'rgba(54, 162, 235, 1)'},
-          chartColor2: {color: 'rgba(75, 192, 192, 1)'},
-          chartColor3: {color: 'rgba(255, 206, 86, 1)'},
-          chartColor4: {color: 'rgba(255, 99, 132, 1)'},
+          chartColor4: {color: 'rgba(255,99,132,1)'},
           chartColor5: {color: 'rgba(153, 102, 255, 1)'},
           chartColor6: {color: 'rgba(255, 159, 64, 1)'}
         }
@@ -481,7 +323,7 @@ export default {
       let self = this
       this.placeholderLineData.data.datasets.map(function (dataset, index) {
           dataset.backgroundColor = [self.chartColors[index].background]
-          dataset.fontColor = self.theme.adminText.color
+          dataset.fontColor = self.localValue.panelText.color
           dataset.borderColor = [self.chartColors[index].border]
           dataset.pointRadius = 4
 					dataset.pointHoverRadius = 10
@@ -497,20 +339,20 @@ export default {
         width: '8000px',
         legend: {
           labels: {
-              fontColor: this.theme.adminText.color,
+              fontColor: this.localValue.panelText.color,
               fontSize: 14
           }
         },
         scales: {
             yAxes: [{
                 ticks: {
-                    fontColor: this.theme.adminText.color,
+                    fontColor: this.localValue.panelText.color,
                     fontSize: 12
                 }
             }],
             xAxes: [{
                 ticks: {
-                    fontColor: this.theme.adminText.color,
+                    fontColor: this.localValue.panelText.color,
                     fontSize: 12
                 }
             }]
@@ -533,7 +375,12 @@ export default {
     ImagesIcon,
     LineChart,
     PowerIcon,
-    TextEditor
+    TextEditor,
+    MenuIcon,
+    DocumentIcon,
+    CogIcon,
+    CubeIcon,
+    PowerIcon
   },
   props: ['value', 'domain']
 }

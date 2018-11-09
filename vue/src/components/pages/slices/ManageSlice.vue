@@ -9,19 +9,19 @@
         <!-- Choose the type of the slice -->
         <h3 class="dvs-mb-8" v-if="insertSlice.type === null">Choose Type of New Slice</h3>
         <!-- Slice Settings -->
-        <h3 class="dvs-mb-8" v-else>Slice Settings</h3>
+        <h3 class="dvs-mb-8 dvs-text-white" v-else>Slice Settings</h3>
         
         <transition name="dvs-fade">
           <!-- Choose the type of the slice -->
           <div class="dvs-flex dvs-justify-between dvs-items-stretch" v-if="insertSlice.type === null">
             <div class="dvs-btn dvs-text-base dvs-mr-4 dvs-p-8 dvs-w-1/2" :style="theme.actionButtonGhost" @click="insertSlice.type = 'single'">
-              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"  :style="{borderColor: theme.actionButtonGhost.borderColor}">Single Instance</h4>
+              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"  :style="{borderColor: theme.actionButtonGhost.borderColor, color: theme.actionButtonGhost.borderColor}">Single Instance</h4>
 
               <p class="normal-case dvs-font-normal">A single slice-type is just one instance of the slice you're choosing to insert</p>
             </div>
 
             <div class="dvs-btn dvs-text-base dvs-ml-4 dvs-p-8 dvs-w-1/2" :style="theme.actionButtonGhost" @click="insertSlice.type = 'model'">
-              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"  :style="{borderColor: theme.actionButtonGhost.borderColor}">Repeats from Model</h4>
+              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"  :style="{borderColor: theme.actionButtonGhost.borderColor, color: theme.actionButtonGhost.borderColor}">Repeats from Model</h4>
 
               <p class="normal-case dvs-font-normal">Model slices will insert instances on the page based data you define in the next steps.</p>
             </div>

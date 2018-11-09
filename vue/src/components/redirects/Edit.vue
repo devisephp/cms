@@ -10,7 +10,7 @@
         </li>
       </action-bar>
 
-      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">Redirect Settings</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panelText.color}">Redirect Settings</h3>
 
       <div class="dvs-mb-12">
         <form>

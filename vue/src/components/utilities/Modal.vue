@@ -5,7 +5,7 @@
       <panel class="dvs-w-full" :panel-style="theme.panel">
         <div class="dvs-p-8"> 
           <div @click="close">
-            <close-icon w="40" h="40" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-m-6 dvs-cursor-pointer"  :style="{color: theme.adminText.color }" />
+            <close-icon w="40" h="40" class="dvs-absolute dvs-pin-t dvs-pin-r dvs-m-6 dvs-cursor-pointer"  :style="{color: theme.panelText.color }" />
           </div>
           <slot></slot>
         </div>

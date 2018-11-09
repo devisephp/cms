@@ -9,7 +9,16 @@
           :title="enabledTip(localValue.enabled)" v-tippy="tippyConfiguration">
         </div>
         <div class="dvs-flex dvs-items-center dvs-justify-start dvs-w-full">
+          
+          <!-- Swatch -->
+          <div 
+            v-if="options.swatch && localValue.color" 
+            :style="`background-color:${localValue.color}`" 
+            class="dvs-rounded-sm dvs-mr-2" 
+            style="width:10px; height:10px;"></div>
+
           {{ options.label }}
+
         </div>
       </div>
     </div>

@@ -184,7 +184,7 @@ const DevisePlugin = {
         adminTheme () {
           return {
             background: this.theme.adminBackground.color,
-            color: this.theme.panelText.color
+            color: this.theme.panel.color
           }
         }
       },

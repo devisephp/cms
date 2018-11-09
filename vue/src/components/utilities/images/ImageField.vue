@@ -18,7 +18,7 @@
         <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2"
             >
           <img :src="value"/>
-          <h6 class="dvs-text-base dvs-mb-4 dvs-mt-4" :style="{color: theme.panelText.color}">
+          <h6 class="dvs-text-base dvs-mb-4 dvs-mt-4" :style="{color: theme.panel.color}">
             <span>{{ fileName }}</span><br>
             <small class="dvs-text-xs">
               Location:

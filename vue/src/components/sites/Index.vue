@@ -37,7 +37,7 @@
     <transition name="dvs-fade">
       <portal to="devise-root">
         <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
-          <h2 class="dvs-mb-8" :style="{color: theme.panelText.color }">Create new site</h2>
+          <h2 class="dvs-mb-8" :style="{color: theme.panel.color }">Create new site</h2>
 
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Name</label>

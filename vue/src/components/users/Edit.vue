@@ -8,7 +8,7 @@
         </li>
       </action-bar>
 
-      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panelText.color}">{{ localValue.name }} Settings</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panel.color}">{{ localValue.name }} Settings</h3>
 
       <div>
         <form>

@@ -13,7 +13,7 @@
     <div class="dvs-flex dvs-w-full">
       <div class="dvs-w-1/4 dvs-pr-8">
       
-        <h6 class="dvs-mb-2" :style="{color: localValue.panelText.color }">Panel</h6>
+        <h6 class="dvs-mb-2">Panel</h6>
         <color-editor v-model="localValue.panelTop" :options="{label: 'Panel Top Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelBottom" :options="{label: 'Panel Bottom Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelText" :options="{label: 'Panel Text Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
@@ -22,17 +22,17 @@
         <color-editor v-model="localValue.panelSidebarText" :options="{label: 'Panel Sidebar Icon Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelSidebarAction" :options="{label: 'Panel Sidebar Action Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
 
-        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: localValue.panelText.color }">Buttons</h6>
+        <h6 class="dvs-mb-2 dvs-mt-8">Buttons</h6>
         <color-editor v-model="localValue.buttonsActionText" :options="{label: 'Action Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.buttonsActionBackground" :options="{label: 'Action Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.buttonsSecondaryText" :options="{label: 'Secondary Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.buttonsSecondaryBackground" :options="{label: 'Secondary Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         
-        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: localValue.panelText.color }">Help Blocks</h6>
+        <h6 class="dvs-mb-2 dvs-mt-8">Help Blocks</h6>
         <color-editor v-model="localValue.helpBackground" :options="{label: 'Background Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.helpText" :options="{label: 'Text Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
 
-        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: localValue.panelText.color }">Chart Colors</h6>
+        <h6 class="dvs-mb-2 dvs-mt-8">Chart Colors</h6>
         <color-editor v-model="localValue.chartColor1" :options="{label: 'Chart Color 1', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.chartColor2" :options="{label: 'Chart Color 2', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.chartColor3" :options="{label: 'Chart Color 3', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
@@ -43,7 +43,7 @@
 
       <div class="dvs-w-3/4 dvs-mb-8">
 
-        <h3 class="dvs-mb-4" :style="{color: localValue.panelText.color}">Mini-Preview of the Editor</h3>
+        <h3 class="dvs-mb-4">Mini-Preview of the Editor</h3>
         <div class="dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch dvs-mb-12" style="min-height:400px">
           
           <div class="dvs-bg-white dvs-m-4 dvs-rounded dvs-px-4 dvs-py-1 dvs-text-sm" style="height:30px;">

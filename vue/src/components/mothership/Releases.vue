@@ -48,7 +48,7 @@
     <transition name="dvs-fade">
       <portal to="devise-root">
         <devise-modal class="dvs-z-50" v-if="showCreate" @close="showCreate = false">
-          <h3 class="dvs-mb-4" :style="{color: theme.panelText.color}">Create New Release</h3>
+          <h3 class="dvs-mb-4" :style="{color: theme.panel.color}">Create New Release</h3>
 
 
           <div v-for="update in recentUpdates" :key="update.id"

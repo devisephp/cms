@@ -7,6 +7,7 @@ use Devise\Console\Commands\Install;
 use Devise\Devise;
 
 use Devise\Models\DvsField;
+use Devise\Observers\DvsFieldObserver;
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
@@ -36,6 +37,8 @@ class DeviseServiceProvider extends ServiceProvider
         $this->loadLaravelResources();
 
         $this->setCustomDirectives();
+
+        $this->setObservers();
     }
 
     public function register()
@@ -117,5 +120,10 @@ class DeviseServiceProvider extends ServiceProvider
         Blade::directive('slices', function ($expression) {
             return "<?php echo '<slices :slices=\"slices\"/>' ?>";
         });
+    }
+
+    private function setObservers()
+    {
+        DvsField::observe(DvsFieldObserver::class);
     }
 }

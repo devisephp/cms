@@ -135,7 +135,16 @@ const getters = {
   },
 
   theme: (state, getters, rootState) => {
-    var defaultColors = {
+
+    // chartColor1: {color: 'rgba(54, 162, 235, 1)'},
+    // chartColor2: {color: 'rgba(75, 192, 192, 1)'},
+    // chartColor3: {color: 'rgba(255, 206, 86, 1)'},
+    // chartColor4: {color: 'rgba(255,99,132,1)'},
+    // chartColor5: {color: 'rgba(153, 102, 255, 1)'},
+    // chartColor6: {color: 'rgba(255, 159, 64, 1)'}
+
+
+    let defaultColors = {
       // Used by the admin panels
       panel: {
         background: `linear-gradient(135deg, #2C3858 , #182039)`,
@@ -149,24 +158,24 @@ const getters = {
       panelSidebar: { 
         backgroundColor: '#182039',
         color: '#eee',
-        borderColor: '#3d4852'
-      },
-      panelSidebarInverse: { 
-        backgroundColor: '#658BEF',
-        color: '#182039',
-        secondaryColor: '#fff'
       },
       panelIcons: { 
-        color: '#658BEF',
-        secondaryColor: '#EB8F89'
+        color: '#658BEF'
       },
       actionButton: {
         color: '#ffffff',
         backgroundColor: '#EB8F89',
-        borderColor: '#EB8F89',
-        borderWidth: '2px',
       },
       actionButtonGhost: {
+        color: '#EB8F89',
+        borderColor: '#EB8F89',
+        borderWidth: '2px'
+      },
+      secondaryButton: {
+        color: '#ffffff',
+        backgroundColor: '#EB8F89',
+      },
+      secondaryButtonGhost: {
         color: '#EB8F89',
         borderColor: '#EB8F89',
         borderWidth: '2px'
@@ -176,13 +185,6 @@ const getters = {
         borderColor: '#EB8F89',
         backgroundColor: tinycolor('#EB8F89').lighten(25).toString()
       },
-
-      adminBackground: { color: 'rgba(0,0,0,0.8)' },
-      adminText: { color: '#b8c2cc' },
-      actionButtonBackground: { color: 'white' },
-      actionButtonText: { color: 'black' },
-      regularButtonBackground: { color: '#3d4852' },
-      regularButtonText: { color: 'white' },
       chartColor1: { color: 'rgba(54, 162, 235, 1)' },
       chartColor2: { color: 'rgba(75, 192, 192, 1)' },
       chartColor3: { color: 'rgba(255, 206, 86, 1)' },
@@ -191,13 +193,70 @@ const getters = {
       chartColor6: { color: 'rgba(255, 159, 64, 1)' }
     }
 
-    return defaultColors
+    let colors = defaultColors
+    
+    if (state.currentPage) {
+      let site = getters.siteById(state.currentPage.site_id)
 
-    if (state.page) {
-      let site = getters.siteById(state.page.site_id)
+      // The last part of this if is checking for new initial color scheme to accommodate 
+      // older instances of alpha Devise 2
+      if (site && site.settings && site.settings.colors.buttonsSecondaryBackground) {
+        
+        let sc = site.settings.colors
 
-      if (site && site.settings) {
-        var colors = site.settings.colors
+        colors.panel = {
+          background: `linear-gradient(135deg, ${sc.panelTop.color}, ${sc.panelBottom.color})`,
+          color: sc.panelText.color,
+          secondaryColor: '#979797'
+        }
+
+        colors.panelCard = {
+          background: sc.panelSidebarBackground.color,
+          color: sc.panelSidebarText.color,
+        }
+
+        colors.panelSidebar = {
+          background: sc.panelSidebarBackground.color,
+          color: sc.panelSidebarText.color,
+          secondaryColor: sc.panelSidebarAction.color,
+        }
+
+        colors.panelIcons = {
+          color: sc.panelAction.color,
+        }
+
+        colors.actionButton = {
+          background: sc.buttonsActionBackground.color,
+          color: sc.buttonsActionText.color,
+        }
+
+        colors.actionButtonGhost = {
+          border: `2px solid ${sc.buttonsActionBackground.color}`,
+          color: sc.buttonsActionBackground.color,
+        }
+
+        colors.secondaryButton = {
+          background: sc.buttonsSecondaryBackground.color,
+          color: sc.buttonsSecondaryText.color,
+        }
+
+        colors.secondaryButtonGhost = {
+          border: `2px solid ${sc.buttonsSecondaryBackground.color}`,
+          color: sc.buttonsSecondaryBackground.color,
+        }
+
+        colors.help = {
+          background: tinycolor(sc.helpBackground.color).lighten(25).toString(),
+          border: `1px solid ${sc.helpBackground.color}`,
+          color: sc.helpText.color,
+        }
+
+        colors.chartColor1 = { color: sc.chartColor1.color }
+        colors.chartColor2 = { color: sc.chartColor2.color }
+        colors.chartColor3 = { color: sc.chartColor3.color }
+        colors.chartColor4 = { color: sc.chartColor4.color }
+        colors.chartColor5 = { color: sc.chartColor5.color }
+        colors.chartColor6 = { color: sc.chartColor6.color }
       }
     }
 

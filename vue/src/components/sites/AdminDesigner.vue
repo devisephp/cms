@@ -25,8 +25,8 @@
         <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: localValue.panelText.color }">Buttons</h6>
         <color-editor v-model="localValue.buttonsActionText" :options="{label: 'Action Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.buttonsActionBackground" :options="{label: 'Action Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.buttonSecondaryText" :options="{label: 'Secondary Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
-        <color-editor v-model="localValue.buttonSecondaryBackground" :options="{label: 'Secondary Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.buttonsSecondaryText" :options="{label: 'Secondary Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.buttonsSecondaryBackground" :options="{label: 'Secondary Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         
         <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: localValue.panelText.color }">Help Blocks</h6>
         <color-editor v-model="localValue.helpBackground" :options="{label: 'Background Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
@@ -97,8 +97,8 @@
                       <li 
                         class="dvs-mt-2 dvs-mb-4 dvs-p-1 dvs-px-4 dvs-text-sm dvs-rounded-sm"
                         :style="`
-                          background-color: ${localValue.buttonSecondaryBackground.color};
-                          color: ${localValue.buttonSecondaryText.color};
+                          background-color: ${localValue.buttonsSecondaryBackground.color};
+                          color: ${localValue.buttonsSecondaryText.color};
                         `"
                       >
                         Lorem
@@ -226,8 +226,8 @@ export default {
         panelSidebarAction: {color: null},
         buttonsActionText: {color: null},
         buttonsActionBackground: {color: null},
-        buttonSecondaryText: {color: null},
-        buttonSecondaryBackground: {color: null},
+        buttonsSecondaryText: {color: null},
+        buttonsSecondaryBackground: {color: null},
         helpBackground: {color: null},
         helpText: {color: null},
         chartColor1: {color: null},
@@ -248,8 +248,8 @@ export default {
           panelSidebarAction: {color: 'rgb(101, 139, 239)'},
           buttonsActionText: {color: 'rgb(243, 243, 243)'},
           buttonsActionBackground: {color: 'rgb(235, 143, 137)'},
-          buttonSecondaryText: {color: 'rgb(243, 243, 243)'},
-          buttonSecondaryBackground: {color: 'rgb(24, 32, 57)'},
+          buttonsSecondaryText: {color: 'rgb(243, 243, 243)'},
+          buttonsSecondaryBackground: {color: 'rgb(24, 32, 57)'},
           helpBackground: {color: '#FDF6F6'},
           helpText: {color: 'rgb(235, 143, 137)'},
           chartColor1: {color: 'rgba(54, 162, 235, 1)'},
@@ -290,13 +290,12 @@ export default {
     }
   },
   mounted () {
-    let self = this
     this.setLineGraphStyles()
-    this.$nextTick(function () {
-      if (typeof self.value.sidebarTop !== 'undefined') {
-        self.applyStyles(self.value)
+    this.$nextTick(() => {
+      if (typeof this.value.panelTop !== 'undefined') {
+        this.applyStyles(this.value)
       } else {
-        self.applyStyles(this.presets.Default)
+        this.applyStyles(this.presets.Default)
       }
     })
   },

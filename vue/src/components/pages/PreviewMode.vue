@@ -1,18 +1,18 @@
 <template>
   <div class="dvs-relative dvs-cursor-pointer dvs-border-b dvs-transitions-hover-slow" @mouseenter="openPreviewSelector" @mouseleave="closePreviewSelector" :style="theme.panelSidebar">
-    <div class="dvs-m-4 dvs-cursor-pointer" v-if="previewMode === 'desktop'" :style="this.theme.panelIcons">
+    <div class="dvs-m-4 dvs-cursor-pointer" v-if="previewMode === 'desktop'" :style="{color: theme.panelSidebar.secondaryColor}">
       <desktop-icon w="25" h="25" />
     </div>
-    <div class="dvs-m-4 dvs-cursor-pointer" v-if="previewMode === 'tablet'" :style="this.theme.panelIcons">
+    <div class="dvs-m-4 dvs-cursor-pointer" v-if="previewMode === 'tablet'" :style="{color: theme.panelSidebar.secondaryColor}">
       <tablet-icon w="25" h="25" />
     </div>
-    <div class="dvs-m-4 dvs-cursor-pointer" v-if="previewMode === 'mobile-portrait'" :style="this.theme.panelIcons">
+    <div class="dvs-m-4 dvs-cursor-pointer" v-if="previewMode === 'mobile-portrait'" :style="{color: theme.panelSidebar.secondaryColor}">
       <phone-portrait-icon w="25" h="25" />
     </div>
-    <div class="dvs-m-4 dvs-cursor-pointer" v-if="previewMode === 'mobile-landscape'" :style="this.theme.panelIcons">
+    <div class="dvs-m-4 dvs-cursor-pointer" v-if="previewMode === 'mobile-landscape'" :style="{color: theme.panelSidebar.secondaryColor}">
       <phone-landscape-icon w="25" h="25" />
     </div>
-    <div ref="previewSelector" class="dvs-flex dvs-overflow-hidden dvs-flex-col dvs-rounded-sm dvs-absolute dvs-pin-t dvs-pin-l dvs-mt-2 dvs-ml-10 dvs-z-10" :style="this.theme.panelSidebarInverse">
+    <div ref="previewSelector" class="dvs-flex dvs-overflow-hidden dvs-flex-col dvs-rounded-sm dvs-absolute dvs-pin-t dvs-pin-l dvs-mt-2 dvs-ml-10 dvs-z-10" :style="theme.panelSidebar">
       <div class="dvs-p-3 dvs-cursor-pointer dvs-border-b" :style="onStyle('desktop')" @click="setPreviewMode('desktop')">
         <desktop-icon w="20" h="20" />
       </div>
@@ -71,7 +71,7 @@ export default {
     onStyle (type) {
       if (this.previewMode === type) {
         return {
-          color: this.theme.panelSidebarInverse.secondaryColor
+          color: this.theme.panelSidebar.secondaryColor
         }
       }
     }

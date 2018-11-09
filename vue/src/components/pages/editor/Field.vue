@@ -42,7 +42,7 @@
 
             <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between">
               <div class="dvs-flex dvs-items-center">
-                <button class="dvs-btn dvs-mr-2" @click="toggleShowEditor" :style="theme.actionButtonGhost">Done</button>
+                <button class="dvs-btn dvs-mr-2" @click="toggleShowEditor" :style="theme.actionButton">Done</button>
                 <button class="dvs-btn dvs-mr-2" @click="cancel" :style="theme.actionButtonGhost">Cancel</button>
               </div>
               <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabler">

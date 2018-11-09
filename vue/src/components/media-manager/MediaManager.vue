@@ -88,7 +88,7 @@
             <!-- Delete Directory -->
             <div v-if="currentFiles.length < 1 && directories.length < 1 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
               <div class="dvs-bg-white dvs-text-grey-dark dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow dvs-cursor-pointer" @click="requestDeleteDirectory()">
-                <trash-icon h="40" w="40" :style="{color: theme.panelText.color}" />
+                <trash-icon h="40" w="40" :style="{color: theme.panel.color}" />
                 <h6 class="dvs-mt-2 dvs-text-sm">
                   Delete this directory
                 </h6>
@@ -98,7 +98,7 @@
             <!-- Directories but no files -->
             <div v-if="currentFiles.length < 1 && directories.length > 0 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
               <div class="dvs-bg-white dvs-rounded dvs-p-8 dvs--mt-15 dvs-text-center dvs-shadow">
-                <folder-icon h="40" w="40" :style="{color: theme.panelText.color}" />
+                <folder-icon h="40" w="40" :style="{color: theme.panel.color}" />
                 <h6 class="dvs-mt-2 dvs-text-sm"><span>No files in this directory</span></h6>
               </div>
             </div>
@@ -135,9 +135,9 @@
                     <img :src="`/styled/preview/${file.url}?w=500&h=500`" class="dvs-cursor-pointer dvs-mb-4" @click="selectSourceFile(file)">
                     <div class="dvs-flex">
                       <div class="dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: confirmedDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
-                        <trash-icon h="20" w="20" :style="{color: theme.panelText.color}" />
+                        <trash-icon h="20" w="20" :style="{color: theme.panel.color}" />
                       </div>
-                      <a href="file.url" target="_blank" :style="{color: theme.panelText.color}">
+                      <a href="file.url" target="_blank" :style="{color: theme.panel.color}">
                         <link-icon h="20" w="20" />
                       </a>
                     </div>

@@ -84,7 +84,7 @@ const DevisePlugin = {
     // Portals to render items outside of their component
     Vue.use(PortalVue)
 
-    // VueRouter Register global components
+    // Register global components
     Vue.component('Devise', Devise)
     Vue.component('DeviseImg', DeviseImg)
     Vue.component('Logo', Logo)

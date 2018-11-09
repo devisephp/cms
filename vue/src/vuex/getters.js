@@ -200,7 +200,7 @@ const getters = {
 
       // The last part of this if is checking for new initial color scheme to accommodate 
       // older instances of alpha Devise 2
-      if (site && site.settings && site.settings.colors.buttonsSecondaryBackground) {
+      if (site && site.settings && site.settings.colors) {
         
         let sc = site.settings.colors
 

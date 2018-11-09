@@ -21,7 +21,7 @@
       </action-bar>
 
       <template v-if="analytics.data">
-        <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">{{ localValue.title }} Analytics</h3>
+        <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panelText.color}">{{ localValue.title }} Analytics</h3>
         <div class="flex dvs-mb-8">
           <fieldset class="dvs-fieldset mr-8">
             <label>Analytics Start Date</label>
@@ -37,7 +37,7 @@
         </div>
       </template>
 
-      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">{{ localValue.title }} Page Versions</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panelText.color}">{{ localValue.title }} Page Versions</h3>
 
       <help class="dvs-mb-4">Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
 
@@ -110,7 +110,7 @@
         </div>
       </div>
 
-      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">Global Page Settings</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panelText.color}">Global Page Settings</h3>
 
       <help class="dvs-mb-8">These settings effect all of the page versions of this page.</help>
 
@@ -136,7 +136,7 @@
         </fieldset>
 
         <fieldset class="dvs-fieldset">
-          <h4 :style="{color: theme.adminText.color}" class="dvs-mb-4">Page Specific Meta Tags</h4>
+          <h4 :style="{color: theme.panelText.color}" class="dvs-mb-4">Page Specific Meta Tags</h4>
           <meta-form v-model="localValue.meta" @request-create-meta="requestCreateMeta" @request-update-meta="requestUpdateMeta" @request-delete-meta="requestDeleteMeta" />
         </fieldset>
 
@@ -383,7 +383,7 @@ export default {
 
           response.data.data.datasets.map(function (dataset, index) {
             dataset.backgroundColor = [self.colors[index].background]
-            dataset.fontColor = self.theme.adminText.color
+            dataset.fontColor = self.theme.panelText.color
             dataset.borderColor = [self.colors[index].border]
             dataset.pointRadius = 4
             dataset.pointHoverRadius = 10
@@ -413,20 +413,20 @@ export default {
         width: '8000px',
         legend: {
           labels: {
-              fontColor: this.theme.adminText.color,
+              fontColor: this.theme.panelText.color,
               fontSize: 14
           }
         },
         scales: {
             yAxes: [{
                 ticks: {
-                    fontColor: this.theme.adminText.color,
+                    fontColor: this.theme.panelText.color,
                     fontSize: 12
                 }
             }],
             xAxes: [{
                 ticks: {
-                    fontColor: this.theme.adminText.color,
+                    fontColor: this.theme.panelText.color,
                     fontSize: 12
                 }
             }]

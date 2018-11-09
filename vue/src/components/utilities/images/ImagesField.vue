@@ -2,7 +2,7 @@
 
   <div class="dvs-mb-8">
     <div class="dvs-flex dvs-items-center dvs-mb-4">
-      <h3 :style="{color: theme.adminText.color}">{{ labelText }}</h3>
+      <h3 :style="{color: theme.panelText.color}">{{ labelText }}</h3>
       <div @click="showMediaManager">
         <images-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px"/>
       </div>
@@ -32,7 +32,7 @@
         <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="showPreview = false"></div>
         <div class="dvs-modal dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-1/2">
           <img :src="previewImagePath"/>
-          <h6 class="dvs-text-base dvs-mb-4 dvs-mt-4" :style="{color: theme.adminText.color}">
+          <h6 class="dvs-text-base dvs-mb-4 dvs-mt-4" :style="{color: theme.panelText.color}">
             <span>{{ previewImageName }}</span><br>
             <small class="dvs-text-xs">
               Location:

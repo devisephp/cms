@@ -31,7 +31,7 @@
       <!-- Title -->
       <p 
         class="dvs-mb-2 dvs-font-thin uppercase dvs-text-xl" 
-        :style="{color: theme.adminText.color }"
+        :style="{color: theme.panelText.color }"
         v-if="title != null">
           {{ title }}
         </p>

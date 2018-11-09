@@ -3,7 +3,7 @@
   <div v-if="languages.data.length">
 
     <div id="devise-admin-content">
-      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">Add Language</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panelText.color}">Add Language</h3>
 
       <help class="dvs-mb-8">When you add a language to this site it is immediately enabled. Afterwards you can create translated versions of pages that will be linked to one another allowing you to provide ways to switch languages on your front-end. We <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" class="dvs-font-bold" target="_blank">highly suggest using the ISO 639-1 2 letter codes</a> but you can technically use whatever you want.</help>
 
@@ -14,7 +14,7 @@
 
       <button class="dvs-btn dvs-mb-8" :disabled="newLanguage.code === null" @click="requestCreateLanguage" :style="theme.actionButton">Save New Language</button>
 
-      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.adminText.color}">Existing Languages</h3>
+      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panelText.color}">Existing Languages</h3>
 
       <div class="dvs-mb-12 dvs-flex dvs-flex-col">
         <div v-for="(language, key) in localValue.data" :key="key" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">

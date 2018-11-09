@@ -4,7 +4,7 @@ const plugins = [CSSPlugin];
 
 export default {
   inserted: function (el) {
-    let offset = 50
+    let offset = 5
 
     let style = window.getComputedStyle ? getComputedStyle(el, null) : el.currentStyle;
 

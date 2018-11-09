@@ -56,7 +56,8 @@ var routes = [
     }
   },
   {
-    path: '*',
+    path: '/',
+    alias: '*',
     name: 'devise-page-editor',
     components: {
       'devise': PageEditor

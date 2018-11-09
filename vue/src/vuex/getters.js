@@ -219,6 +219,7 @@ const getters = {
           background: sc.panelSidebarBackground.color,
           color: sc.panelSidebarText.color,
           secondaryColor: sc.panelSidebarAction.color,
+          borderColor:  tinycolor(sc.panelSidebarBackground.color).lighten(10).toString()
         }
 
         colors.panelIcons = {

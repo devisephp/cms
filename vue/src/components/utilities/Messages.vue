@@ -7,10 +7,10 @@
         </div>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="(error, key) in messageErrors" :key="key" :style="`border-bottom-color:${adminTheme.color}`">
-              <h6 :style="`color:${adminTheme.color}`">{{ error.title }}</h6>
-              <p :style="`color:${adminTheme.color}`">{{ error.message }}</p>
-              <p :style="`color:${adminTheme.color}`" class="dvs-text-sm" v-if="error.code">Error Code: {{ error.code }}</p>
+            <li v-for="(error, key) in messageErrors" :key="key" :style="`border-bottom-color:${theme.panel.color}`">
+              <h6 :style="`color:${theme.panel.color}`">{{ error.title }}</h6>
+              <p :style="`color:${theme.panel.color}`">{{ error.message }}</p>
+              <p :style="`color:${theme.panel.color}`" class="dvs-text-sm" v-if="error.code">Error Code: {{ error.code }}</p>
             </li>
           </transition-group>
         </ul>
@@ -21,9 +21,9 @@
         <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="(message, key) in messages" :key="key" :style="`border-bottom-color:${adminTheme.color}`">
-              <h6 class="dvs-text-base" :style="`color:${adminTheme.color}`">{{ message.title }}</h6>
-              <p :style="`color:${adminTheme.color}`">{{ message.message }}</p>
+            <li v-for="(message, key) in messages" :key="key" :style="`border-bottom-color:${theme.panel.color}`">
+              <h6 class="dvs-text-base" :style="`color:${theme.panel.color}`">{{ message.title }}</h6>
+              <p :style="`color:${theme.panel.color}`">{{ message.message }}</p>
             </li>
           </transition-group>
         </ul>

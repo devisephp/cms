@@ -25,6 +25,9 @@ var routes = [
     name: 'devise-settings',
     components: {
       'devise': AdministrationIndex
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -32,6 +35,9 @@ var routes = [
     name: 'devise-models',
     components: {
       'devise': AdministrationIndex
+    },
+    meta: {
+      parentRouteName: 'devise-models'
     }
   },
   {
@@ -39,6 +45,9 @@ var routes = [
     name: 'devise-pages-index',
     components: {
       'devise': PagesIndex
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -46,6 +55,9 @@ var routes = [
     name: 'devise-pages-create',
     components: {
       'devise': PageCreate
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -53,6 +65,9 @@ var routes = [
     name: 'devise-pages-view',
     components: {
       'devise': PagesView
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -61,6 +76,9 @@ var routes = [
     name: 'devise-page-editor',
     components: {
       'devise': PageEditor
+    },
+    meta: {
+      parentRouteName: 'devise-page-editor'
     }
   },
   {
@@ -68,6 +86,9 @@ var routes = [
     name: 'devise-page-settings',
     components: {
       'devise': PageSettings
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -75,6 +96,9 @@ var routes = [
     name: 'devise-mothership-index',
     components: {
       'devise': MothershipIndex
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -82,6 +106,9 @@ var routes = [
     name: 'devise-ms-analytics-index',
     components: {
       'devise': MothershipAnalytics
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -89,6 +116,9 @@ var routes = [
     name: 'devise-ms-releases-index',
     components: {
       'devise': MothershipReleases
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -96,6 +126,9 @@ var routes = [
     name: 'devise-ms-changes-index',
     components: {
       'devise': MothershipChanges
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -103,6 +136,9 @@ var routes = [
     name: 'devise-ms-backups-index',
     components: {
       'devise': MothershipBackups
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -110,6 +146,9 @@ var routes = [
     name: 'devise-ms-healthreports-index',
     components: {
       'devise': MothershipHealthReports
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -117,6 +156,9 @@ var routes = [
     name: 'devise-languages-manage',
     components: {
       'devise': LanguagesManage
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -124,6 +166,9 @@ var routes = [
     name: 'devise-meta-manage',
     components: {
       'devise': MetaManage
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -131,6 +176,9 @@ var routes = [
     name: 'devise-settings-index',
     components: {
       'devise': AdministrationIndex
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -138,6 +186,9 @@ var routes = [
     name: 'devise-sites-index',
     components: {
       'devise': SitesIndex
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -145,6 +196,9 @@ var routes = [
     name: 'devise-sites-edit',
     components: {
       'devise': SitesEdit
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -152,6 +206,9 @@ var routes = [
     name: 'devise-users-index',
     components: {
       'devise': UsersIndex
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -160,6 +217,9 @@ var routes = [
     components: {
       'devise': UsersEdit
     },
+    meta: {
+      parentRouteName: 'devise-settings'
+    },
     props: true
   },
   {
@@ -167,6 +227,9 @@ var routes = [
     name: 'devise-redirects-index',
     components: {
       'devise': RedirectsIndex
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     }
   },
   {
@@ -174,6 +237,9 @@ var routes = [
     name: 'devise-redirects-edit',
     components: {
       'devise': RedirectsEdit
+    },
+    meta: {
+      parentRouteName: 'devise-settings'
     },
     props: true
   }

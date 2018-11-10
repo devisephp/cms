@@ -12,7 +12,7 @@
           <template v-for="(menuItem, key) in adminMenu">
             <button 
               :key="key"
-              :style="theme.panelSidebar"
+              :style="checkActivePanelSidebar(menuItem)"
               class="dvs-outline-none dvs-transitions-hover-slow dvs-cursor-pointer dvs-border-b"
               @click.prevent="loadAdminPage(menuItem)">
               <component v-bind:is="menuItem.icon" class="dvs-m-4" w="25" h="25"></component>
@@ -80,12 +80,34 @@ export default {
     }, 2000);
   },
   methods: {
-    loadAdminPage(menuItem) {
+    loadAdminPage (menuItem) {
       if (typeof menuItem.routeParams !== 'undefined') {
         this.goToPage(menuItem.routeName, menuItem.routeParams)
       } else {
         this.goToPage(menuItem.routeName)
       }
+    },
+    checkActivePanelSidebar (menuItem) {
+      var styles = Object.assign({}, this.theme.panelSidebar)
+      if (this.$route.meta && this.$route.meta.parentRouteName) {
+        if (
+          this.$route.name === 'devise-pages-view' &&
+          this.$route.params.pageId === this.currentPage.id &&
+          menuItem.routeName === 'devise-pages-view'
+        ) {
+            styles.background = this.theme.panelSidebar.secondaryColor
+        }
+
+        if (
+          menuItem.routeName === this.$route.meta.parentRouteName &&
+          (this.$route.name !== 'devise-pages-view' ||
+          this.$route.params.pageId !== this.currentPage.id)
+        ) {
+          styles.background = this.theme.panelSidebar.secondaryColor
+        } 
+      }
+
+      return styles
     }
   },
   computed: {

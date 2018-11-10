@@ -63,7 +63,7 @@ export default {
           ['strong', 'em', 'del'],
           ['unorderedList', 'orderedList'],
           ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
-          ['deviseImage'],
+          ['deviseImage', 'link'],
           ['formatting'],
           ['removeformat'],
           ['table'],

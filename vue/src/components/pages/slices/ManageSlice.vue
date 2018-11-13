@@ -143,7 +143,7 @@ export default {
         metadata: {
           instance_id: 0,
           label: this.insertSlice.slice.name,
-          model_query: this.insertSlice.data.modelQuery,
+          model_query: `class=${this.insertSlice.data.modelQuery}`,
           name: component.name,
           type: this.insertSlice.type,
           view: component.view

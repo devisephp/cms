@@ -52,9 +52,9 @@ class SliceInstanceResource extends Resource
         $records = $repository
             ->runQuery($input);
 
+        $all = [];
         if ($records)
         {
-            $all = [];
             if (is_a($records, $input['class']))
             {
                 $all[] = $this->getModelSliceData($records);

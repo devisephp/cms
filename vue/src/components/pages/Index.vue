@@ -9,7 +9,7 @@
                 </li>
             </action-bar>
 
-            <h2 class="dvs-mb-10">Current Site Pages</h2>
+            <h2 class="dvs-mb-10" :style="{color: theme.panel.color}">Current Site Pages</h2>
 
             <fieldset class="dvs-fieldset dvs-mb-8">
                 <label>Search Pages</label>

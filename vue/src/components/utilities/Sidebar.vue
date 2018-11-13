@@ -11,13 +11,11 @@
 
 <script>
 import Panel from './../utilities/Panel'
-import SidebarHeader from './../utilities/SidebarHeader'
 import MainMenu from './../menu/MainMenu'
 
 export default {
   name: 'Sidebar',
   components: {
-    SidebarHeader,
     MainMenu,
     Panel
   },

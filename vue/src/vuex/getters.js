@@ -152,19 +152,21 @@ const getters = {
         secondaryColor: '#979797'
       },
       panelCard: {
-        backgroundColor: `#182039`,
+        background: `#182039`,
         color: '#eee'
       },
       panelSidebar: { 
-        backgroundColor: '#182039',
+        background: '#182039',
         color: '#eee',
+        secondaryColor: 'rgb(101, 139, 239)',
+        borderColor:  tinycolor('#182039').lighten(10).toString()
       },
       panelIcons: { 
         color: '#658BEF'
       },
       actionButton: {
         color: '#ffffff',
-        backgroundColor: '#EB8F89',
+        background: '#EB8F89',
       },
       actionButtonGhost: {
         color: '#EB8F89',
@@ -173,7 +175,7 @@ const getters = {
       },
       secondaryButton: {
         color: '#ffffff',
-        backgroundColor: '#EB8F89',
+        background: '#EB8F89',
       },
       secondaryButtonGhost: {
         color: '#EB8F89',
@@ -201,57 +203,88 @@ const getters = {
       // The last part of this if is checking for new initial color scheme to accommodate 
       // older instances of alpha Devise 2
       if (site && site.settings && site.settings.colors) {
-        
+
         let sc = site.settings.colors
 
-        colors.panel = {
-          background: `linear-gradient(135deg, ${sc.panelTop.color}, ${sc.panelBottom.color})`,
-          color: sc.panelText.color,
-          secondaryColor: '#979797'
+        if (sc.panelTop && sc.panelBottom) {
+          colors.panel = {
+            background: `linear-gradient(135deg, ${sc.panelTop.color}, ${sc.panelBottom.color})`,
+            color: sc.panelText.color,
+            secondaryColor: '#979797'
+          }
         }
 
-        colors.panelCard = {
-          background: sc.panelSidebarBackground.color,
-          color: sc.panelSidebarText.color,
+        if (sc.panelpanelSidebarBackgroundTop && sc.panelSidebarText) {
+          colors.panelCard = {
+            background: sc.panelSidebarBackground.color,
+            color: sc.panelSidebarText.color,
+          }
         }
 
-        colors.panelSidebar = {
-          background: sc.panelSidebarBackground.color,
-          color: sc.panelSidebarText.color,
-          secondaryColor: sc.panelSidebarAction.color,
-          borderColor:  tinycolor(sc.panelSidebarBackground.color).lighten(10).toString()
+        if (
+          sc.penalSidebarBackground &&
+          sc.panelSidebarText &&
+          sc.panelSidebarAction &&
+          sc.panelSidebarBackground
+        ) {
+          colors.panelSidebar = {
+            background: sc.panelSidebarBackground.color,
+            color: sc.panelSidebarText.color,
+            secondaryColor: sc.panelSidebarAction.color,
+            borderColor:  tinycolor(sc.panelSidebarBackground.color).lighten(10).toString()
+          }
         }
 
-        colors.panelIcons = {
-          color: sc.panelAction.color,
+        if (sc.panelAction) {
+          colors.panelIcons = {
+            color: sc.panelAction.color,
+          }
         }
 
-        colors.actionButton = {
-          background: sc.buttonsActionBackground.color,
-          color: sc.buttonsActionText.color,
+        if (sc.buttonsActionBackground && sc.buttonsActionText) {
+          colors.actionButton = {
+            background: sc.buttonsActionBackground.color,
+            color: sc.buttonsActionText.color,
+          }
         }
 
-        colors.actionButtonGhost = {
-          border: `2px solid ${sc.buttonsActionBackground.color}`,
-          color: sc.buttonsActionBackground.color,
+        if (sc.buttonsActionBackground) {
+          colors.actionButtonGhost = {
+            border: `2px solid ${sc.buttonsActionBackground.color}`,
+            color: sc.buttonsActionBackground.color,
+          }
         }
 
-        colors.secondaryButton = {
-          background: sc.buttonsSecondaryBackground.color,
-          color: sc.buttonsSecondaryText.color,
+        if (sc.buttonsSecondaryBackground && sc.buttonsSecondaryText) {
+          colors.secondaryButton = {
+            background: sc.buttonsSecondaryBackground.color,
+            color: sc.buttonsSecondaryText.color,
+          }
         }
 
-        colors.secondaryButtonGhost = {
-          border: `2px solid ${sc.buttonsSecondaryBackground.color}`,
-          color: sc.buttonsSecondaryBackground.color,
+        if (sc.buttonsSecondaryBackground) {
+          colors.secondaryButtonGhost = {
+            border: `2px solid ${sc.buttonsSecondaryBackground.color}`,
+            color: sc.buttonsSecondaryBackground.color,
+          }
         }
 
-        colors.help = {
-          background: tinycolor(sc.helpBackground.color).lighten(25).toString(),
-          border: `1px solid ${sc.helpBackground.color}`,
-          color: sc.helpText.color,
+        if (sc.helpBackground && sc.helpText) {
+          colors.help = {
+            background: tinycolor(sc.helpBackground.color).lighten(25).toString(),
+            border: `1px solid ${sc.helpBackground.color}`,
+            color: sc.helpText.color,
+          }
         }
 
+        if (
+          sc.chartColor1 &&
+          sc.chartColor2 &&
+          sc.chartColor3 &&
+          sc.chartColor4 &&
+          sc.chartColor5 &&
+          sc.chartColor6
+        )
         colors.chartColor1 = { color: sc.chartColor1.color }
         colors.chartColor2 = { color: sc.chartColor2.color }
         colors.chartColor3 = { color: sc.chartColor3.color }

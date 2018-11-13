@@ -9,7 +9,9 @@
     </template>
 
     <template slot="editor">
-      <textarea ref="focusInput" type="text" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()"></textarea>
+      <fieldset class="dvs-fieldset">
+        <textarea ref="focusInput" type="text" v-model="localValue.text" :maxlength="getMaxLength" v-on:input="updateValue()"></textarea>
+      </fieldset>
     </template>
 
   </field-editor>

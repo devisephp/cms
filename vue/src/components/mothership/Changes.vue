@@ -11,7 +11,6 @@
 <script>
 
   import {mapGetters, mapActions} from 'vuex'
-  import SidebarHeader from './../utilities/SidebarHeader'
 
   export default {
     name: 'MothershipChanges',
@@ -40,9 +39,6 @@
       ...mapGetters('devise', [
         'changes'
       ])
-    },
-    components: {
-      SidebarHeader
     }
   }
 </script>

@@ -28,7 +28,7 @@
         <div class="dvs-blocker" :style="{backgroundColor: 'transparent'}" @click="toggleShowEditor"></div>
         <panel id="field-panel" class="dvs-fixed dvs-pin-b dvs-pin-r dvs-mx-8 dvs-mb-8 dvs-z-40" :panel-style="theme.panel">
           <div class="dvs-p-8">
-            <h6 class="dvs-text-base dvs-mb-4">
+            <h6 class="dvs-text-base dvs-mb-4" :style="{color: theme.panel.color}">
               <span>{{ localValue.label }}</span><br>
               <small class="dvs-text-xs" v-if="localValue.instructions">
                 Hint from Developer: 

@@ -126,7 +126,7 @@
 }
 
 .devise-admin-action-bar {
-  @apply dvs-p-4 dvs-m-4 dvs-flex dvs-fixed dvs-pin-t dvs-pin-r dvs-justify-end;
+  @apply dvs-p-4 dvs-m-4 dvs-flex dvs-absolute dvs-pin-t dvs-pin-r dvs-justify-end;
 }
 
 #devise-preview-content {

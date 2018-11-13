@@ -54,4 +54,8 @@
       @apply dvs-bg-red dvs-text-white;
     }
   }
+
+  &:disabled {
+    @apply dvs-opacity-75 cursor-not-allowed;
+  }
 }

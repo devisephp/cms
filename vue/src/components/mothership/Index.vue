@@ -1,6 +1,6 @@
 <template>
     <div class="dvs-p-8">
-        <h3 class="mb-6">Mothership</h3>
+        <h3 class="mb-6" :style="{color: theme.panel.color}">Mothership</h3>
         <ul class="dvs-list-reset dvs-mt-8">
             <li class="dvs-cursor-pointer dvs-mb-6 dvs-text-sm uppercase font-bold"
                 @click="goToPage('devise-ms-analytics-index')">
@@ -24,12 +24,7 @@
 
 <script>
 
-  import SidebarHeader from './../utilities/SidebarHeader'
-
   export default {
-    name: 'MothershipIndex',
-    components: {
-      SidebarHeader
-    },
+    name: 'MothershipIndex'
   }
 </script>

@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import SidebarHeader from './../utilities/SidebarHeader'
-
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -81,9 +79,6 @@ export default {
     ...mapGetters('devise', [
       'redirect'
     ])
-  },
-  components: {
-    SidebarHeader
   }
 }
 </script>

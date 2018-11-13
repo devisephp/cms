@@ -4,6 +4,7 @@ namespace Devise\Http\Resources\Vue;
 
 use Devise\Models\Repository as ModelRepository;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Facades\App;
 
@@ -52,27 +53,39 @@ class SliceInstanceResource extends Resource
         $records = $repository
             ->runQuery($input);
 
-        $all = [];
-        foreach ($records as $record)
+        if (is_a($records, Collection::class))
         {
-            $data['metadata'] = [
-                'instance_id' => 0,
-                'name'        => $this->component_name,
-                'label'       => $this->label,
-                'view'        => $this->view,
-                'model_query' => $this->model_query,
-                'placeholder' => false,
-            ];
-
-            foreach ($record->slice as $field)
+            $all = [];
+            foreach ($records as $record)
             {
-                $data[$field] = $record->$field;
+                $all[] = $this->getModelSliceData($record);
             }
-
-            $all[] = $data;
+        } else
+        {
+            $all[] = $this->getModelSliceData($records);
         }
 
         $data['slices'] = $all;
+    }
+
+    private function getModelSliceData($record)
+    {
+        $data['metadata'] = [
+            'instance_id' => 0,
+            'name'        => $this->component_name,
+            'label'       => $this->label,
+            'view'        => $this->view,
+            'model_query' => $this->model_query,
+            'placeholder' => false,
+        ];
+
+        // slice should be a property of the model. it's an array of fields that will end up in the slice
+        foreach ($record->slice as $field)
+        {
+            $data[$field] = $record->$field;
+        }
+
+        return $data;
     }
 
     private function setFieldValues(&$data)

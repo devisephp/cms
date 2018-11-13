@@ -138,44 +138,36 @@ class FieldManager
         {
             $sliceInstanceId = $slice['metadata']['instance_id'];
 
-            if ($slice['metadata']['type'] != 'model')
+            $sliceInstance = $this->DvsSliceInstance->firstOrNew(['id' => $sliceInstanceId]);
+            $sliceInstance->page_version_id = $pageVersionId;
+            $sliceInstance->parent_instance_id = $parentId;
+            $sliceInstance->settings = (isset($slice['settings'])) ? $slice['settings'] : null;
+            $sliceInstance->position = $index;
+            $sliceInstance->view = $slice['metadata']['view'];
+            $sliceInstance->label = $slice['metadata']['label'];
+            $sliceInstance->model_query = $slice['metadata']['model_query'];
+            $sliceInstance->save();
+
+            $sliceInstanceId = $sliceInstance->id;
+            $instanceIds[] = $sliceInstanceId;
+
+            foreach ($slice as $fieldKey => $fieldValue)
             {
-                $sliceInstance = $this->DvsSliceInstance->firstOrNew(['id' => $sliceInstanceId]);
-                $sliceInstance->page_version_id = $pageVersionId;
-                $sliceInstance->parent_instance_id = $parentId;
-                $sliceInstance->settings = (isset($slice['settings'])) ? $slice['settings'] : null;
-                $sliceInstance->position = $index;
-                $sliceInstance->view = $slice['metadata']['view'];
-                $sliceInstance->label = $slice['metadata']['label'];
-                $sliceInstance->model_query = $slice['metadata']['model_query'];
-                $sliceInstance->save();
-
-                $sliceInstanceId = $sliceInstance->id;
-                $instanceIds[] = $sliceInstanceId;
-
-                foreach ($slice as $fieldKey => $fieldValue)
+                if ($fieldKey != 'metadata' && $fieldKey != 'slices')
                 {
-                    if ($fieldKey != 'metadata' && $fieldKey != 'slices')
-                    {
-                        $field = $this->DvsField
-                            ->firstOrNew(['slice_instance_id' => $sliceInstanceId, 'key' => $fieldKey]);
+                    $field = $this->DvsField
+                        ->firstOrNew(['slice_instance_id' => $sliceInstanceId, 'key' => $fieldKey]);
 
-                        $field->slice_instance_id = $sliceInstanceId;
-                        $field->key = $fieldKey;
-                        $field->json_value = json_encode($fieldValue);
-                        $field->save();
-                    }
+                    $field->slice_instance_id = $sliceInstanceId;
+                    $field->key = $fieldKey;
+                    $field->json_value = json_encode($fieldValue);
+                    $field->save();
                 }
-
-                $index++;
             }
 
-            if ($slice['metadata']['type'] == 'model')
-            {
-                $instanceIds[] = $sliceInstanceId;
-            }
+            $index++;
 
-            if (isset($slice['slices']) && $slice['slices'])
+            if ($slice['metadata']['type'] != 'model' && isset($slice['slices']) && $slice['slices'])
             {
                 $this->iterateSliceInstances($pageVersionId, $slice['slices'], $sliceInstanceId, $index, $instanceIds);
             }

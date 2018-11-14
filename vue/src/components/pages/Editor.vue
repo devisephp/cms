@@ -2,7 +2,7 @@
   <div>
 
     <div class="dvs-flex dvs-flex-col dvs-items-center dvs-px-8 dvs-pb-8 dvs-pt-8">
-        <draggable v-model="currentPage.slices" element="ul" class="dvs-list-reset dvs-w-full" :options="{group:{ name:'g1'}}">
+        <draggable v-model="currentPage.slices" element="ul" class="dvs-list-reset dvs-w-full">
           <template v-for="slice in currentPage.slices">
             <slice-editor @opened="openSlice(slice)" :key="slice.id" :slice="slice" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" @copySlice="copySlice" />
           </template>

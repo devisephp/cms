@@ -4,7 +4,7 @@
 
         <div id="devise-admin-content">
 
-          <h3 class="dvs-mb-4">Create new page</h3>
+          <h3 class="dvs-mb-4" :style="{'color': theme.panel.color}">Create new page</h3>
 
           <fieldset class="dvs-fieldset dvs-mb-4">
               <label>Page Title</label>

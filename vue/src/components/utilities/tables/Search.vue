@@ -8,12 +8,12 @@
 
       <select v-model="localFilters.search[column]" class="w-full" @change="updateValue" v-if="uiType === 'array-select'">
         <option value="">Any</option>
-        <option v-for="option in options">{{ option }}</option>
+        <option v-for="option in options" :key="option">{{ option }}</option>
       </select>
 
       <select v-model="localFilters.search[column]" class="w-full" @change="updateValue" v-if="uiType === 'object-select'">
         <option value="">Any</option>
-        <option v-for="(option, value) in options" :value="value">{{ option }}</option>
+        <option v-for="(option, value) in options" :value="value" :key="option">{{ option }}</option>
       </select>
 
     </fieldset>

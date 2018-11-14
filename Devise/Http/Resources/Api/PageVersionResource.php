@@ -22,6 +22,7 @@ class PageVersionResource extends Resource
             'ends_at'           => $this->ends_at,
             'ab_testing_amount' => $this->ab_testing_amount,
             'preview_hash'      => $this->preview_hash,
+            'is_live'           => ($this->page->currentVersion) ? ($this->page->currentVersion->id == $this->id) : false,
 
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s')

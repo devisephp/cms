@@ -316,7 +316,7 @@ const actions = {
 
   getPage (context, id) {
     return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'pages-vue-data/' + id).then(function (response) {
+      window.axios.get(context.state.api.baseUrl + 'pages/' + id).then(function (response) {
         context.commit('appendPage', response.data )
         resolve(response)
       }).catch(function (error) {

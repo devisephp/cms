@@ -81,7 +81,8 @@ class PagesController extends Controller
     {
         $page = $this->PagesRepository->findById($pageId);
 
-        $page->currentVersion->registerComponents();
+        if ($page->currentVersion)
+            $page->currentVersion->registerComponents();
 
         return Devise::dataAsArray($page);
     }
@@ -98,10 +99,11 @@ class PagesController extends Controller
 
         $languageId = $request->input('language_id', $defaultLanguage->id);
 
-        if($request->get('paginate', true))
+        if ($request->get('paginate', true))
         {
             $pages = $this->PagesRepository->pages($site->id, $languageId);
-        } else {
+        } else
+        {
             $pages = $this->PagesRepository->all($site->id, $languageId);
         }
 

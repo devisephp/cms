@@ -1,56 +1,57 @@
 <template>
 
-    <div>
+  <div>
 
-        <div id="devise-admin-content">
-            <action-bar>
-                <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="goToPage('devise-pages-create')">
-                    Create New Page
-                </li>
-            </action-bar>
+    <div id="devise-admin-content">
+      <action-bar>
+        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="goToPage('devise-pages-create')">
+          Create New Page
+        </li>
+      </action-bar>
 
-            <h2 class="dvs-mb-10">Current Site Pages</h2>
+      <h2 class="dvs-mb-10">Current Site Pages</h2>
 
-            <fieldset class="dvs-fieldset dvs-mb-8">
-                <label>Search Pages</label>
-                <input type="text" v-model.lazy="searchTerm" v-debounce="searchDelay">
+      <fieldset class="dvs-fieldset dvs-mb-8">
+        <label>Search Pages</label>
+        <input type="text" v-model.lazy="searchTerm" v-debounce="searchDelay">
 
-                <div class="dvs-relative">
-                    <ul class="dvs-list-reset dvs-bg-white dvs-text-black dvs-absolute dvs-shadow-lg">
-                        <li v-for="(suggestion, key) in autosuggest.data" :key="key"
-                            class="dvs-border-b dvs-border-grey-lighter dvs-p-4 dvs-cursor-pointer"
-                            @click="loadPage(key)">
-                            {{ suggestion }}
-                        </li>
-                    </ul>
-                </div>
-            </fieldset>
-
-            <div v-for="page in pages.data" :key="page.id"
-                 class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
-                <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
-                    {{ page.title }}
-                </div>
-                <div class="dvs-min-w-1/5 dvs-text-sm dvs-px-8 dvs-font-mono">
-                    {{ page.slug }}
-                </div>
-                <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
-                    <button
-                            class="dvs-btn dvs-btn-xs dvs-mr-2"
-                            :style="theme.actionButtonGhost"
-                            @click="loadPage(page.id)">Manage
-                    </button>
-                    <a
-                            class="dvs-btn dvs-btn-xs"
-                            :style="theme.actionButtonGhost"
-                            :href="page.slug">Go</a>
-                </div>
-            </div>
-
-            <pagination class="mb-8" v-if="pages.data && pages.data.length" :meta="pages.meta" @changePage="changePage"></pagination>
-
+        <div class="dvs-relative">
+          <ul class="dvs-list-reset dvs-bg-white dvs-text-black dvs-absolute dvs-shadow-lg">
+            <li v-for="(suggestion, key) in autosuggest.data" :key="key"
+                class="dvs-border-b dvs-border-grey-lighter dvs-p-4 dvs-cursor-pointer"
+                @click="loadPage(key)">
+              {{ suggestion }}
+            </li>
+          </ul>
         </div>
+      </fieldset>
+
+      <div v-for="page in pages.data" :key="page.id"
+           class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
+        <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
+          {{ page.title }}
+        </div>
+        <div class="dvs-min-w-1/5 dvs-text-sm dvs-px-8 dvs-font-mono">
+          {{ page.slug }}
+        </div>
+        <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
+          <button
+            class="dvs-btn dvs-btn-xs dvs-mr-2"
+            :style="theme.actionButtonGhost"
+            @click="loadPage(page.id)">Manage
+          </button>
+          <a
+            class="dvs-btn dvs-btn-xs"
+            :style="theme.actionButtonGhost"
+            :href="getSlug(page)">Go</a>
+        </div>
+      </div>
+
+      <pagination class="mb-8" v-if="pages.data && pages.data.length" :meta="pages.meta"
+                  @changePage="changePage"></pagination>
+
     </div>
+  </div>
 
 </template>
 
@@ -149,10 +150,17 @@
         }
       },
       // Pagination Page... not page-page
-      changePage (page) {
+      changePage(page) {
         this.filters.page = page
         this.retrieveAllPages(false)
       },
+      getSlug(page) {
+        if (page.is_live) {
+          return page.slug
+        }
+
+        return page.slug + '?version_id=' + page.versions[0].id
+      }
     },
     watch: {
       searchTerm(newValue) {

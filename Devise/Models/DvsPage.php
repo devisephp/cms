@@ -8,6 +8,7 @@ use Devise\Traits\Sortable;
 use DateTime;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -40,9 +41,13 @@ class DvsPage extends Model
 
     public function currentVersion()
     {
-        if (request()->has('version_id'))
+        if (request()->has('version_id') && Auth::check())
         {
-            return $this->versionById(request()->get('version_id'));
+            $user = Auth::user();
+            if ($user->hasPermission('manage pages'))
+            {
+                return $this->versionById(request()->get('version_id'));
+            }
         }
 
         return $this->liveVersion();

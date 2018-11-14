@@ -68,7 +68,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
     Route::get('pages', 'PagesController@pages');
     Route::get('pagesList', 'PagesController@pagesList');
     Route::get('pages-suggest', 'PagesController@suggestList');
-    Route::get('pages-vue-data/{page_id}', 'PagesController@getVueData');
+    Route::get('pages/{page_id}', 'PagesController@single');
     Route::post('pages', 'PagesController@store');
     Route::put('pages/{page_id}', 'PagesController@update');
     Route::put('pages/{page_id}/copy', 'PagesController@copy');

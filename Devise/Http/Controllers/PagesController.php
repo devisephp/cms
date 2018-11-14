@@ -77,12 +77,9 @@ class PagesController extends Controller
         }
     }
 
-    public function getVueData(ApiRequest $request, $pageId)
+    public function single(ApiRequest $request, $pageId)
     {
         $page = $this->PagesRepository->findById($pageId);
-
-        if ($page->currentVersion)
-            $page->currentVersion->registerComponents();
 
         return Devise::dataAsArray($page);
     }

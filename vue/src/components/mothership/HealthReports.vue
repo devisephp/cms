@@ -15,7 +15,6 @@
 
 import { mapGetters, mapActions } from 'vuex'
 import Dates from './../../mixins/Dates'
-import SidebarHeader from './../utilities/SidebarHeader'
 // import StatBlockDoughnut from './analytics/StatBlockDoughnut'
 
 export default {
@@ -52,9 +51,6 @@ export default {
 //       'currentPage'
 //     ])
 //   },
-  components: {
-    SidebarHeader
-  },
 //   mixins: [Dates]
 }
 </script>

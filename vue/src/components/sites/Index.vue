@@ -11,7 +11,7 @@
         </button>
       </div>
 
-      <h2 class="dvs-mb-8">Current Sites</h2>
+      <h2 class="dvs-mb-8" :style="{color: theme.panel.color}">Current Sites</h2>
       <help class="dvs-mb-10">Here you can add and manage sites under this application. This means that you can add new domains, change themes for those domains, and add languages to those sites to make them more impacting for your users</help>
 
       <div class="dvs-flex dvs-flex-wrap">

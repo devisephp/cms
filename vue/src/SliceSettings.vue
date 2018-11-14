@@ -90,11 +90,7 @@ export default {
   },
   mounted () {
     let self = this
-
-    // if (typeof this.devise.settings.backgroundColor !== 'undefined') {
-    //   this.backgroundColor = tinycolor(this.devise.settings.backgroundColor).toRgb()
-    // }
-
+    
     this.addListeners ()
 
     if (this.editorMode) {

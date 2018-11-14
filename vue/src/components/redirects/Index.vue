@@ -53,7 +53,6 @@
 
 <script>
 import DeviseModal from './../utilities/Modal'
-import SidebarHeader from './../utilities/SidebarHeader'
 import ArrowIcon from 'vue-ionicons/dist/ios-arrow-dropright-circle.vue'
 
 import { mapActions, mapGetters } from 'vuex'
@@ -111,7 +110,6 @@ export default {
   },
   components: {
     DeviseModal,
-    SidebarHeader,
     ArrowIcon
   }
 }

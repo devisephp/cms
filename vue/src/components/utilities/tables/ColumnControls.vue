@@ -5,17 +5,17 @@
     </div>
     <div v-show="show">
       <div class="dvs-blocker dvs-z-20" @click="hide"></div>
-      <div v-show="show" class="dvs-absolute dvs-pin-b dvs-pin-l dvs-mb-1 dvs-bg-grey-lighter dvs-min-w-250 dvs-z-40 dvs-shadow-lg dvs-border-t-2 dvs-border-grey-lighter">
-        <div class="pt-4 pb-2 px-4 flex justify-between">
+      <div v-show="show" :style="theme.panel" class="dvs-absolute dvs-pin-b dvs-pin-l dvs-mb-1 dvs-min-w-250 dvs-z-40 dvs-shadow-lg">
+        <div class="dvs-pt-4 dvs-pb-2 dvs-px-4 dvs-flex dvs-justify-between dvs-min-w-64">
           {{ this.column.label }}
-          <div class="dvs-flex dvs-text-black">
-            <button class="dvs-pr-2 dvs-uppercase dvs-text-xs dvs-outline-none dvs-font-bold" @click="clearAll()">Clear</button>
+          <div class="dvs-flex dvs-justify-between">
+            <button class="dvs-btn dvs-btn-xs" :style="theme.actionButton" @click="clearAll()">Clear</button>
             <div @click="hide">
               <close-icon class="dvs-pl-2 dvs-cursor-pointer" w="20" h="20" />
             </div>
           </div>
         </div>
-        <div class="dvs-px-4 dvs-column-control-modules dvs-bg-white">
+        <div class="dvs-px-4 dvs-column-control-modules" :style="theme.panel">
           <search ref="search" v-model="localFilters" @change="updateValue" v-if="typeof column.search !== 'undefined'" :column="column.search" :options="column.options"></search>
           <!-- <sort ref="sort" v-if="typeof column.sort !== 'undefined'" :column="column.sort"></sort> -->
         </div>

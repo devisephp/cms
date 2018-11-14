@@ -7,7 +7,7 @@
       
       <div class="dvs-p-8">
         <!-- Choose the type of the slice -->
-        <h3 class="dvs-mb-8" v-if="insertSlice.type === null">Choose Type of New Slice</h3>
+        <h3 class="dvs-mb-8" v-if="insertSlice.type === null" :style="{color: theme.panel.color}">Choose Type of New Slice</h3>
         <!-- Slice Settings -->
         <h3 class="dvs-mb-8 dvs-text-white" v-else>Slice Settings</h3>
         
@@ -143,7 +143,7 @@ export default {
         metadata: {
           instance_id: 0,
           label: this.insertSlice.slice.name,
-          model_query: null,
+          model_query: `class=${this.insertSlice.data.modelQuery}`,
           name: component.name,
           type: this.insertSlice.type,
           view: component.view

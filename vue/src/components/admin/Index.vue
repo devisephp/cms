@@ -1,6 +1,6 @@
 <template>
 <div class="dvs-p-8">
-  <h3 class="mb-6">{{ currentMenu.label }}</h3>
+  <h3 class="mb-6" :style="{color: theme.panel.color}">{{ currentMenu.label }}</h3>
   <ul class="dvs-list-reset">
     <transition-group name="dvs-fade">
       <li class="dvs-mb-4" v-for="(menuItem, key) in currentMenu.menu" :key="key">

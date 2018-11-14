@@ -2,7 +2,7 @@
 
   <div>
     <div id="devise-admin-content">
-      <h3 class="dvs-mb-8 dvs-pr-16">Add Global Meta</h3>
+      <h3 class="dvs-mb-8" :style="{color: theme.panel.color}">Add Global Meta</h3>
 
       <help class="dvs-mb-8">Global Meta are the meta tags that will be attached to every page of this site. They can be overridden on a page level but this gives you to the opportunity to set the <span class="dvs-fonts-mono">&lt;meta&gt;</span> across <strong>all</strong> pages.</help>
 

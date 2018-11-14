@@ -183,7 +183,6 @@ import DatePicker from './../utilities/DatePicker'
 import Dates from './../../mixins/Dates'
 import DoughnutChart from './../pages/analytics/Doughnut'
 import PieChart from './../pages/analytics/Pie'
-import SidebarHeader from './../utilities/SidebarHeader'
 import LineChart from './../pages/analytics/Line'
 import SimpleTable from './../utilities/tables/SimpleTable'
 
@@ -374,7 +373,6 @@ export default {
     DatePicker,
     DoughnutChart,
     PieChart,
-    SidebarHeader,
     LineChart,
     SimpleTable
   },

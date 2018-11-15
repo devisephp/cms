@@ -56,6 +56,6 @@
   }
 
   &:disabled {
-    @apply dvs-opacity-75 cursor-not-allowed;
+    @apply dvs-opacity-75 dvs-cursor-not-allowed;
   }
 }

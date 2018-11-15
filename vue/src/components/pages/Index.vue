@@ -159,7 +159,9 @@
           return page.slug
         }
 
-        return page.slug + '?version_id=' + page.versions[0].id
+        if (page.versions) {
+          return page.slug + '?version_id=' + page.versions[0].id
+        }
       }
     },
     watch: {

@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import FieldEditor from './Field'
 import Strings from './../../../mixins/Strings'
 
 export default {
@@ -70,7 +69,7 @@ export default {
   props: ['value', 'options'],
   mixins: [Strings],
   components: {
-    FieldEditor
+    FieldEditor: () => import(/* webpackChunkName: "devise-editors" */ './Field'),
   }
 }
 </script>

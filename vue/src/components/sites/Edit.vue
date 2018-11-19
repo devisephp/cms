@@ -45,7 +45,7 @@
 
           <fieldset class="dvs-fieldset dvs-mb-10">
             <label>Admin Styles</label>
-            <help class="dvs-mb-8">You can change the styles of the admin to more closely match the brand of the site as well as upload a logo for the admin.</help>
+            <help class="dvs-mb-8">You can change the styles of the admin to more closely match the brand of the site.</help>
             <admin-designer v-if="localValue.settings.colors" v-model="localValue.settings.colors"></admin-designer>
           </fieldset>
 

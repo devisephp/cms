@@ -1,38 +1,40 @@
 <template>
-<div class="dvs-flex dvs-pb-8">
-  <div class="dvs-w-1/3 dvs-text-sm dvs-font-mono dvs-pr-8">
-    <h6 class="dvs-mb-4 dvs-font-sans dvs-text-white">Directories</h6>
-    <ul class="dvs-list-reset dvs-flex dvs-flex-wrap dvs-mb-8">
-      <li class="dvs-cursor-pointer" @click="jumpToTop">
-        Back to Top
-      </li>
-    </ul>
-    <ul class="dvs-list-reset">
-      <li
-        class="dvs-border-b dvs-py-2 dvs-cursor-pointer"
-        :style="{borderColor: theme.panel.secondaryColor}"
+<div>
+  <div>
+    <a class="dvs-btn inline-block mb-4" :style="theme.actionButton" @click="jumpToTop">
+      Back to Top
+    </a>
+    <select @change="chooseDirectory">
+      <option>Choose a Directory</option>
+      <option
         v-for="(directory, key) in currentDirectoryInformation['directories']" 
-        @click="chooseDirectory(directory)" 
         :key="key">
         {{ directory.name }}
+      </option>
+    </select>
+  </div>
+  <div class="dvs-flex dvs-pb-8">
+
+    <ul class="dvs-list-reset dvs-w-2/3 dvs-flex dvs-flex-wrap">
+      <li 
+        class="dvs-cursor-pointer dvs-py-2 dvs-flex dvs-flex-col dvs-justify-between dvs-align-items dvs-w-2/5 dvs-m-4 dvs-p-8 dvs-rounded-sm" 
+        :class="{'dvs-w-full': isSelected(file)}"
+        :style="{backgroundColor: theme.panelCard.background}"
+        @click="toggleSelectSlice(file)" 
+        v-for="(file, key) in currentDirectoryInformation['files']" 
+        :key="key">
+          <slice-diagram :file="file" :height-of-preview="200"></slice-diagram>
+          <div class="dvs-cursor-pointer" :style="isSelected(file)">{{ file.name }}</div>
+          <div class="dvs-font-mono dvs-text-xs">({{ file.value }})</div>
       </li>
     </ul>
   </div>
-  <ul class="dvs-list-reset dvs-w-2/3">
-    <li 
-      class="dvs-cursor-pointer dvs-border-b dvs-py-2 dvs-flex dvs-justify-between dvs-align-items " 
-      :style="{borderColor: theme.panel.secondaryColor}"
-      @click="selectSlice(file)" 
-      v-for="(file, key) in currentDirectoryInformation['files']" 
-      :key="key">
-        <div class="dvs-cursor-pointer" :style="isSelected(file)">{{ file.name }}</div>
-        <div class="dvs-font-mono dvs-text-sm">({{ file.value }})</div>
-    </li>
-  </ul>
 </div>
 </template>
 
 <script>
+
+import SliceDiagram from './SliceDiagram'
 
 import { mapGetters } from 'vuex'
 
@@ -49,11 +51,16 @@ export default {
     jumpToTop () {
       this.directoryStack = []
     },
-    getDirectoryContents (directories, directory) {
-      return directories.find(dir => dir.path === directory)
+    getDirectoryFiles (directories, directory) {
+      directory = directories.find(dir => dir.path === directory)
+      return directory['files']
     },
-    selectSlice (slice) {
-      this.$emit('input', slice)
+    toggleSelectSlice (slice) {
+      if (!this.isSelected(slice)) {
+        this.$emit('input', slice)
+      } else {
+        this.$emit('input', null)
+      }
     },
     isSelected (file) {
       if (this.value !== null) {
@@ -72,7 +79,7 @@ export default {
       var directoryContents = this.slicesDirectories
 
       this.directoryStack.forEach(function (dir) {
-        directoryContents = self.getDirectoryContents(directoryContents['directories'], dir)
+        directoryContents['files'] = self.getDirectoryFiles(directoryContents['directories'], dir)
       })
 
       return directoryContents
@@ -82,6 +89,9 @@ export default {
     value: {
       type: Object
     }
+  },
+  components: {
+    SliceDiagram
   }
 }
 </script>

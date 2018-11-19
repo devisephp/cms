@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import FieldEditor from './Field'
 import ImagesIcon from 'vue-ionicons/dist/ios-images.vue'
 import CreateIcon from 'vue-ionicons/dist/ios-create.vue'
 
@@ -98,7 +97,7 @@ export default {
   props: ['value', 'options'],
   components: {
     CreateIcon,
-    FieldEditor,
+    FieldEditor: () => import(/* webpackChunkName: "devise-editors" */ './Field'),
     ImagesIcon
   }
 }

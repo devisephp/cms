@@ -1,23 +1,23 @@
-import MothershipIndex from '../components/mothership/Index'
-import MothershipAnalytics from '../components/mothership/Analytics'
-import MothershipBackups from '../components/mothership/Backups'
-import MothershipReleases from '../components/mothership/Releases'
-import MothershipChanges from '../components/mothership/Changes'
-import MothershipHealthReports from '../components/mothership/HealthReports'
-import LanguagesManage from '../components/languages/Manage'
-import AdministrationIndex from '../components/admin/Index'
-import MetaManage from '../components/meta/Manage'
-import PageEditor from '../components/pages/Editor'
-import PageCreate from '../components/pages/Create'
-import PageSettings from '../components/pages/Settings'
-import PagesIndex from '../components/pages/Index'
-import PagesView from '../components/pages/View'
-import SitesIndex from '../components/sites/Index'
-import SitesEdit from '../components/sites/Edit'
-import UsersIndex from '../components/users/Index'
-import UsersEdit from '../components/users/Edit'
-import RedirectsIndex from '../components/redirects/Index'
-import RedirectsEdit from '../components/redirects/Edit'
+const MothershipIndex = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/Index')
+const MothershipAnalytics = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/Analytics')
+const MothershipBackups = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/Backups')
+const MothershipReleases = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/Releases')
+const MothershipChanges = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/Changes')
+const MothershipHealthReports = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/HealthReports')
+const LanguagesManage = () => import(/* webpackChunkName: "devise-languages" */ '../components/languages/Manage')
+const AdministrationIndex = () => import/* webpackChunkName: "devise-administration" */ ('../components/admin/Index')
+const MetaManage = () => import(/* webpackChunkName: "devise-meta" */ '../components/meta/Manage')
+const PageEditor = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/Editor')
+const PageCreate = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/Create')
+const PageSettings = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/Settings')
+const PagesIndex = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/Index')
+const PagesView = () => import(/* webpackChunkName: "devise-pages" */ '../components/pages/View')
+const SitesIndex = () => import(/* webpackChunkName: "devise-sites" */ '../components/sites/Index')
+const SitesEdit = () => import(/* webpackChunkName: "devise-sites" */ '../components/sites/Edit')
+const UsersIndex = () => import(/* webpackChunkName: "devise-users" */ '../components/users/Index')
+const UsersEdit = () => import(/* webpackChunkName: "devise-users" */ '../components/users/Edit')
+const RedirectsIndex = () => import(/* webpackChunkName: "devise-redirects" */ '../components/redirects/Index')
+const RedirectsEdit = () => import(/* webpackChunkName: "devise-redirects" */ '../components/redirects/Edit')
 
 var routes = [
   {

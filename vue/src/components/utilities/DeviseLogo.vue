@@ -6,6 +6,8 @@
 
 <script>
 
+// currently unused but we need to optimized if we want to use this in the future
+
 export default {
     props: {
         color: {

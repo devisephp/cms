@@ -198,7 +198,6 @@
 
 import ColorEditor from './../pages/editor/Color'
 import TextEditor from './../pages/editor/Text'
-import DeviseLogo from './../utilities/DeviseLogo'
 import LineChart from './../pages/analytics/Line'
 
 import CogIcon from 'vue-ionicons/dist/md-cog.vue'
@@ -215,7 +214,6 @@ export default {
   name: 'AdminDesigner',
   data () {
     return {
-      logo: null,
       localValue: {
         panelTop: {color: null},
         panelBottom: {color: null},
@@ -370,7 +368,6 @@ export default {
   components: {
     ArrowRoundBackIcon,
     ColorEditor,
-    DeviseLogo,
     ImagesIcon,
     LineChart,
     PowerIcon,

@@ -20,7 +20,7 @@
 
 <script>
 import flatPickr from 'vue-flatpickr-component'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -51,11 +51,11 @@ export default {
     if (dates.hasOwnProperty(this.column)) {
       let range = dates[this.column]
       if (range.hasOwnProperty('after') && range.after !== '') {
-        this.after = moment(range.after, 'YYYY-MM-DD').format('MMMM D YYYY')
+        this.after = dayjs(range.after, 'YYYY-MM-DD').format('MMMM D YYYY')
         this.dates.after = range.after
       }
       if (range.hasOwnProperty('before') && range.before !== '') {
-        this.before = moment(range.before, 'YYYY-MM-DD').format('MMMM D YYYY')
+        this.before = dayjs(range.before, 'YYYY-MM-DD').format('MMMM D YYYY')
         this.dates.before = range.before
       }
     }
@@ -65,11 +65,11 @@ export default {
       'updateFilters'
     ]),
     onAfterChange (selectedDates, dateStr, instance) {
-      this.dates.after = (dateStr) ? moment(dateStr, 'MMMM D YYYY').format('YYYY-MM-DD') : ''
+      this.dates.after = (dateStr) ? dayjs(dateStr, 'MMMM D YYYY').format('YYYY-MM-DD') : ''
       this.update()
     },
     onBeforeChange (selectedDates, dateStr, instance) {
-      this.dates.before = (dateStr) ? moment(dateStr, 'MMMM D YYYY').format('YYYY-MM-DD') : ''
+      this.dates.before = (dateStr) ? dayjs(dateStr, 'MMMM D YYYY').format('YYYY-MM-DD') : ''
       this.update()
     },
     clear () {

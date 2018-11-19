@@ -49,22 +49,6 @@
 </template>
 
 <script>
-
-import SaveIcon from 'vue-ionicons/dist/md-save.vue'
-import CreateIcon from 'vue-ionicons/dist/md-create.vue'
-import CogIcon from 'vue-ionicons/dist/md-cog.vue'
-import CubeIcon from 'vue-ionicons/dist/md-cube.vue'
-import PowerIcon from 'vue-ionicons/dist/ios-power.vue'
-import BackIcon from 'vue-ionicons/dist/md-arrow-round-back.vue'
-import DocumentIcon from 'vue-ionicons/dist/md-document.vue'
-
-import Loadbar from './../utilities/Loadbar'
-import MediaEditor from './../media-manager/MediaEditor'
-import MediaManager from './../media-manager/MediaManager'
-import Messages from './../utilities/Messages'
-import Panel from './../utilities/Panel'
-import PreviewMode from './../pages/PreviewMode'
-import SliceSettings from './../../SliceSettings'
 import { mapGetters, mapState } from 'vuex';
 
 export default {
@@ -122,20 +106,20 @@ export default {
     },
   },
   components: {
-    Loadbar,
-    Messages,
-    MediaEditor,
-    MediaManager,
-    PreviewMode,
-    BackIcon,
-    CogIcon,
-    CreateIcon,
-    CubeIcon,
-    DocumentIcon,
-    Panel,
-    PowerIcon,
-    SaveIcon,
-    SliceSettings,
+    Loadbar: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Loadbar'),
+    Messages: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Messages'),
+    MediaEditor: () => import(/* webpackChunkName: "js/devise-media" */ './../media-manager/MediaEditor'),
+    MediaManager: () => import(/* webpackChunkName: "js/devise-media" */ './../media-manager/MediaManager'),
+    PreviewMode: () => import(/* webpackChunkName: "js/devise-pages" */ './../pages/PreviewMode'),
+    BackIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-arrow-round-back.vue'),
+    CogIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-cog.vue'),
+    CreateIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-create.vue'),
+    CubeIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-cube.vue'),
+    DocumentIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-document.vue'),
+    Panel: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Panel'),
+    PowerIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-power.vue'),
+    SaveIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-save.vue'),
+    SliceSettings: () => import(/* webpackChunkName: "js/devise-pages" */ './../../SliceSettings'),
   }
 }
 </script>

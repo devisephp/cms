@@ -51,8 +51,8 @@ export default {
   props: ['value', 'options'],
   mixins: [Strings],
   components: {
-    FieldEditor: () => import(/* webpackChunkName: "devise-editors" */ './Field'),
-    Toggle: () => import(/* webpackChunkName: "devise-utilities" */ './../../utilities/Toggle')
+    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
+    Toggle: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Toggle')
   }
 }
 </script>

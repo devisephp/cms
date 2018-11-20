@@ -196,7 +196,6 @@ class PagesController extends Controller
      * @param ApiRequest $request
      * @param  integer $id
      * @return PageResource
-     * @todo make this onework
      */
     public function requestCopyPage(ApiRequest $request, $id)
     {

@@ -10,13 +10,6 @@ use Illuminate\Routing\Controller;
 class SlicesController extends Controller
 {
 
-    public function all(ApiRequest $request)
-    {
-        $directory = $this->scanSlicesDir(resource_path('views/slices'));
-
-        return $this->flattenDirectory($directory);
-    }
-
     public function allDirectories(ApiRequest $request)
     {
         return $this->scanSlicesDir(resource_path('views/slices'));
@@ -44,41 +37,42 @@ class SlicesController extends Controller
 
     private function scanSlicesDir($dir)
     {
-      if (is_dir($dir))
-      {
-          $found = scandir($dir);
+        if (is_dir($dir))
+        {
+            $found = scandir($dir);
 
-          $directories = [];
-          $files = [];
+            $directories = [];
+            $files = [];
 
-          foreach ($found as $key => $value)
-          {
-              $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            foreach ($found as $key => $value)
+            {
+                $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
-              if ($value != "." && $value != ".." && $value != ".DS_Store")
-              {
-                  if (!is_dir($path))
-                  {
-                      $files[] = [
-                          'name'  => $this->getFileName($path),
-                          'value' => $this->getViewName($path)
-                      ];
-                  } else
-                  {
-                      $results = $this->scanSlicesDir($path);
-                      $directories[] = $results;
-                  }
-              }
-          }
+                if ($value != "." && $value != ".." && $value != ".DS_Store")
+                {
+                    if (!is_dir($path))
+                    {
+                        $files[] = [
+                            'name'  => $this->getFileName($path),
+                            'value' => $this->getViewPath($path)
+                        ];
+                    } else
+                    {
+                        $results = $this->scanSlicesDir($path);
+                        $directories[] = $results;
+                    }
+                }
+            }
 
-          return [
-            'name'        => $this->getDirName($dir),
-            'path'   => $this->getDirName($dir, false),
-            'directories' => $directories,
-            'files'       => $files
-          ];
-      }
-      return [];
+            return [
+                'name'        => $this->getHumanName($dir),
+                'path'        => $this->getDirPath($dir, false),
+                'directories' => $directories,
+                'files'       => $files
+            ];
+        }
+
+        return [];
     }
 
     private function getFileName($path)
@@ -89,7 +83,7 @@ class SlicesController extends Controller
         return $this->toHuman($name);
     }
 
-    private function getViewName($path)
+    private function getViewPath($path)
     {
         $name = $this->getName($path);
 
@@ -102,18 +96,22 @@ class SlicesController extends Controller
         return substr($path . $name, 1);
     }
 
-  private function getDirName($path, $human = true)
-  {
-    $path = $this->getName($path);
+    private function getHumanName($path)
+    {
+        $path = $this->getName($path);
 
         if ($path == "") return 'Slices';
 
-    if ($human) {
-      return $this->toHuman($path);
+        return $this->toHuman($path);
     }
 
-    return $path;
-  }
+    private function getDirPath($path)
+    {
+        $path = str_replace(resource_path('views/slices'), '', $path);
+        $path = str_replace('/', '.', $path);
+
+        return substr($path, 1);
+    }
 
     private function toHuman($string)
     {

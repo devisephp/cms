@@ -13,7 +13,6 @@ import PortalVue from 'portal-vue'
 import { DeviseBus } from './event-bus.js'
 import routes from './router/route.config.js'
 import alertConfirm from './directives/alert-confirm'
-import Tilt from './directives/tilt'
 import Tuck from './directives/tuck'
 
 import EditPage from './components/pages/Editor'
@@ -24,7 +23,6 @@ import { mapGetters } from 'vuex'
 
 const DevisePlugin = {
   install (Vue, { store, router, bus, options }) {
-    
 
     if (typeof store === 'undefined') {
       throw new Error('Please provide a vuex store.')
@@ -112,9 +110,6 @@ const DevisePlugin = {
     // Register alert / confirm directive
     Vue.directive('devise-alert-confirm', alertConfirm)
 
-    // Register tilt directive
-    Vue.directive('tilt', Tilt)
-
     // Register tuck directive
     Vue.directive('tuck', Tuck)
 
@@ -126,6 +121,9 @@ const DevisePlugin = {
         largeDesktop: 1199
       }
     }, options)
+
+    // enables passive event listeners by default for some events
+    require('default-passive-events');
 
     // We call Vue.mixin() here to inject functionality into all components.
     Vue.mixin({

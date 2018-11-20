@@ -1,11 +1,7 @@
 <template>
-<div class="dvs-flex dvs-justify-end dvs-items-stretch dvs-min-h-screen dvs-relative">
-    <div id="devise-sidebar" :style="sidebarTheme" data-simplebar>
-      <sidebar-header title="Network Analytics" back-text="Back to Mothership" back-page="devise-mothershipApiKey-index" />
-    </div>
-
-    <div id="devise-admin-content" class="dvs-relative" >
-      <div v-if="site !== null">
+<div>
+  <div id="devise-admin-content" class="dvs-relative dvs-full" >
+      <div v-if="site !== null" class="dvs-p-10">
         <h2 class="dvs-mb-8" :style="{color: theme.panel.color}">
           {{ site.name }} Analytics
         </h2>
@@ -25,7 +21,7 @@
         <!-- Usage Totals -->
         <div class="dvs-flex dvs-justify-between dvs-text-center dvs-text-xs dvs-mb-8">
           <div>
-            <h2 :style="{color: theme.panel.color}">
+            <h2 class="dvs-font-bold" :style="{color: theme.panel.color}">
               {{ analytics['usage-totals'].Users }}
             </h2>
             <strong class="dvs-uppercase">Users</strong>
@@ -161,7 +157,7 @@
 
       </div>
       
-      <div class="dvs-absolute dvs-absolute-center dvs-p-8" :style="infoBlockFlatTheme" v-else>
+      <div class="dvs-p-8" v-else>
         <h2 class="dvs-mb-4" :style="{color: theme.panel.color}">To get started select a Site</h2>
         <fieldset class="dvs-fieldset">
           <select v-model="site" @change="retrieveAnalytics()">
@@ -178,13 +174,7 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex'
-import BarChart from './../pages/analytics/Bar'
-import DatePicker from './../utilities/DatePicker'
 import Dates from './../../mixins/Dates'
-import DoughnutChart from './../pages/analytics/Doughnut'
-import PieChart from './../pages/analytics/Pie'
-import LineChart from './../pages/analytics/Line'
-import SimpleTable from './../utilities/tables/SimpleTable'
 
 export default {
   name: 'MothershipAnalytics',
@@ -369,12 +359,12 @@ export default {
     }
   },
   components: {
-    BarChart,
-    DatePicker,
-    DoughnutChart,
-    PieChart,
-    LineChart,
-    SimpleTable
+    BarChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Bar'),
+    DoughnutChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Doughnut'),
+    PieChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Pie'),
+    LineChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Line'),
+    DatePicker: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/DatePicker'),
+    SimpleTable: () => import(/* webpackChunkName: "js/devise-tables" */ './../utilities/tables/SimpleTable')
   },
   mixins: [Dates]
 }

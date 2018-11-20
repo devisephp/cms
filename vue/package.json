@@ -16,6 +16,7 @@
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "chart.js": "^2.7.2",
     "dayjs": "^1.7.7",
+    "default-passive-events": "^1.0.10",
     "faker": "^4.1.0",
     "gsap": "^2.0.1",
     "lodash.debounce": "^4.0.8",

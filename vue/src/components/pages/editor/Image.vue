@@ -97,7 +97,7 @@ export default {
   props: ['value', 'options'],
   components: {
     CreateIcon,
-    FieldEditor: () => import(/* webpackChunkName: "devise-editors" */ './Field'),
+    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
     ImagesIcon
   }
 }

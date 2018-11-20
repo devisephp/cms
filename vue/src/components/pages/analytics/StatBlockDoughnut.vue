@@ -5,7 +5,7 @@
         :chart-data="{
           datasets: [{
             data: chartData,
-            // backgroundColor: ['rgba(255,255,255,0.4)'], 
+            backgroundColor: [theme.panel.color], 
             borderWidth: 0
           }],
           labels: [``, ``]
@@ -45,7 +45,12 @@ export default {
         weekAgo = 1
       }
 
-      return [yesterday, weekAgo]
+      if(yesterday / weekAgo > 1) {
+        yesterday = 0
+        weekAgo = 1
+      }
+
+      return [weekAgo, yesterday]
     },
     yesterday () {
       let yesterdayKey = Object.keys(this.analytics)[1]

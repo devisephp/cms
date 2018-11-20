@@ -3,9 +3,9 @@
 #devise-admin {
   h1,h2,h3,h4,h5,h6 { @apply dvs-font-light}
 
-  h1 { @apply dvs-text-4xl dvs-font-hairline }
-  h2 { @apply dvs-text-3xl dvs-font-hairline }
-  h3 { @apply dvs-text-2xl dvs-font-hairline }
+  h1 { @apply dvs-text-4xl dvs-font-thin }
+  h2 { @apply dvs-text-3xl dvs-font-thin }
+  h3 { @apply dvs-text-2xl dvs-font-thin }
   h4 { @apply dvs-text-xl dvs-font-normal }
   h5 { @apply dvs-text-lg; }
   h6 { @apply dvs-uppercase dvs-tracking-wide dvs-font-bold dvs-text-xs dvs-tracking-superwide; }

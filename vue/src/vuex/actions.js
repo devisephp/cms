@@ -475,7 +475,7 @@ const actions = {
 
   syncSites (context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership['api-key']}`
       window.axios.post(`https://mothership.app/api/v1/sites/sync`, {sites: payload}).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Sync Complete!', message: 'All sites are registred with Mothership!'})
         resolve(response)
@@ -489,7 +489,7 @@ const actions = {
 
   getSiteAnalytics (context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership['api-key']}`
       window.axios.get(`https://mothership.app/api/v1/analytics/site?site_id=${payload.site}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
@@ -502,8 +502,8 @@ const actions = {
 
   getPageAnalytics (context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
-      window.axios.get(`https://mothership.app/api/v1/analytics/page?site_id=${context.state.page.site_id}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership['api-key']}`
+      window.axios.get(`https://mothership.app/api/v1/analytics/page?site_id=${context.state.currentPage.site_id}&slug=${payload.slug}&start_date=${payload.dates.start}&end_date=${payload.dates.end}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)
@@ -515,8 +515,8 @@ const actions = {
 
   getPageAnalyticsTotals (context, payload) {
     return new Promise((resolve, reject) => {
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership}`
-      window.axios.get(`https://mothership.app/api/v1/analytics/page/totals?site_id=${context.state.page.site_id}&slug=${payload.slug}&date=${payload.date}`).then(function (response) {
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${context.state.mothership['api-key']}`
+      window.axios.get(`https://mothership.app/api/v1/analytics/page/totals?site_id=${context.state.currentPage.site_id}&slug=${payload.slug}&date=${payload.date}`).then(function (response) {
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)

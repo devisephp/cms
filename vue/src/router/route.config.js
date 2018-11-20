@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const MothershipIndex = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/Index')
 const MothershipAnalytics = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/Analytics')
 const MothershipBackups = () => import(/* webpackChunkName: "devise-mothership" */ '../components/mothership/Backups')
@@ -18,6 +19,28 @@ const UsersIndex = () => import(/* webpackChunkName: "devise-users" */ '../compo
 const UsersEdit = () => import(/* webpackChunkName: "devise-users" */ '../components/users/Edit')
 const RedirectsIndex = () => import(/* webpackChunkName: "devise-redirects" */ '../components/redirects/Index')
 const RedirectsEdit = () => import(/* webpackChunkName: "devise-redirects" */ '../components/redirects/Edit')
+=======
+const MothershipIndex = () => import(/* webpackChunkName: "js/devise-mothership" */ '../components/mothership/Index')
+const MothershipAnalytics = () => import(/* webpackChunkName: "js/devise-mothership" */ '../components/mothership/Analytics')
+const MothershipBackups = () => import(/* webpackChunkName: "js/devise-mothership" */ '../components/mothership/Backups')
+const MothershipReleases = () => import(/* webpackChunkName: "js/devise-mothership" */ '../components/mothership/Releases')
+const MothershipChanges = () => import(/* webpackChunkName: "js/devise-mothership" */ '../components/mothership/Changes')
+const MothershipHealthReports = () => import(/* webpackChunkName: "js/devise-mothership" */ '../components/mothership/HealthReports')
+const LanguagesManage = () => import(/* webpackChunkName: "js/devise-languages" */ '../components/languages/Manage')
+const AdministrationIndex = () => import/* webpackChunkName: "js/devise-administration" */ ('../components/admin/Index')
+const MetaManage = () => import(/* webpackChunkName: "js/devise-meta" */ '../components/meta/Manage')
+const PageEditor = () => import(/* webpackChunkName: "js/devise-pages" */ '../components/pages/Editor')
+const PageCreate = () => import(/* webpackChunkName: "js/devise-pages" */ '../components/pages/Create')
+const PageSettings = () => import(/* webpackChunkName: "js/devise-pages" */ '../components/pages/Settings')
+const PagesIndex = () => import(/* webpackChunkName: "js/devise-pages" */ '../components/pages/Index')
+const PagesView = () => import(/* webpackChunkName: "js/devise-pages" */ '../components/pages/View')
+const SitesIndex = () => import(/* webpackChunkName: "js/devise-sites" */ '../components/sites/Index')
+const SitesEdit = () => import(/* webpackChunkName: "js/devise-sites" */ '../components/sites/Edit')
+const UsersIndex = () => import(/* webpackChunkName: "js/devise-users" */ '../components/users/Index')
+const UsersEdit = () => import(/* webpackChunkName: "js/devise-users" */ '../components/users/Edit')
+const RedirectsIndex = () => import(/* webpackChunkName: "js/devise-redirects" */ '../components/redirects/Index')
+const RedirectsEdit = () => import(/* webpackChunkName: "js/devise-redirects" */ '../components/redirects/Edit')
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
 
 var routes = [
   {

@@ -178,13 +178,7 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex'
-import BarChart from './../pages/analytics/Bar'
-import DatePicker from './../utilities/DatePicker'
 import Dates from './../../mixins/Dates'
-import DoughnutChart from './../pages/analytics/Doughnut'
-import PieChart from './../pages/analytics/Pie'
-import LineChart from './../pages/analytics/Line'
-import SimpleTable from './../utilities/tables/SimpleTable'
 
 export default {
   name: 'MothershipAnalytics',
@@ -369,12 +363,12 @@ export default {
     }
   },
   components: {
-    BarChart,
-    DatePicker,
-    DoughnutChart,
-    PieChart,
-    LineChart,
-    SimpleTable
+    BarChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Bar'),
+    DoughnutChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Doughnut'),
+    PieChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Pie'),
+    LineChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Line'),
+    DatePicker: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/DatePicker'),
+    SimpleTable: () => import(/* webpackChunkName: "js/devise-tables" */ './../utilities/tables/SimpleTable')
   },
   mixins: [Dates]
 }

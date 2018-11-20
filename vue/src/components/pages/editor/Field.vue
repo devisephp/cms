@@ -97,8 +97,8 @@ export default {
   props: ['value', 'options', 'showEditor'],
   mixins: [Strings],
   components: {
-    Panel: () => import(/* webpackChunkName: "devise-utilities" */ './../../utilities/Panel'),
-    Toggle: () => import(/* webpackChunkName: "devise-utilities" */ './../../utilities/Toggle'),
+    Panel: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Panel'),
+    Toggle: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Toggle'),
   }
 }
 </script>

@@ -1,8 +1,19 @@
 <template>
+<<<<<<< HEAD
 <div class="flex justify-center">
   <div v-if="hasPreview" class="my-4 dvs-shadow-lg" style="background-color: rgba(0,0,0,0.2);padding:15px;" :style="{width: width}">
     <div v-html="preview"></div>
   </div>
+=======
+<div class="dvs-flex dvs-justify-center" style="font-size:12px;">
+    <div 
+      v-if="preview" 
+      class="dvs-my-4 dvs-p-4 dvs-shadow-lg dvs-rounded-sm dvs-overflow-hidden" 
+      style="background-color: rgba(0,0,0,0.2);" 
+      :style="{width: width, height: `${heightOfPreview + 30}px`}">
+      <div class="dvs-overflow-hidden dvs-rounded-sm dvs--mx-1" v-html="preview"></div>
+    </div>
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
 </div>
 </template>
 
@@ -25,7 +36,11 @@ export default {
   },
   methods: {
     checkHasPreview () {
+<<<<<<< HEAD
       if (this.component.preview) {
+=======
+      if (this.component.preview && this.preview) {
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
         this.hasPreview = true
       }
     },
@@ -35,25 +50,54 @@ export default {
       }
     },
     buildPreview (markup) {
+<<<<<<< HEAD
       
       let preview = ''
       let markupParts = []
 
+=======
+      if (typeof markup !== 'object') {
+        return false
+      }
+
+      let preview = ''
+      let markupParts = []
+
+      this.totalHeight = 0
+
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
       markup.map((row) => {
         let re = /\{(.*)\}(.*)/g
         let markupPartsArr = re.exec(row)
 
         if (markupPartsArr) {
           markupParts.push(markupPartsArr)
+<<<<<<< HEAD
           this.totalHeight += parseInt(markupPartsArr[2])
+=======
+          let partHeight = parseInt(markupPartsArr[2])
+          if (partHeight > 0) {
+            this.totalHeight += parseInt(markupPartsArr[2])
+          } else {
+            this.totalHeight += 25
+          }
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
         }
       })
 
       markupParts.map((markupPart) => {
           var html = ' '
+<<<<<<< HEAD
           let htmlParts = this.getPreviewHtmlParts(markupPart[1], markupPart[2])
           htmlParts.map((part) => {
             html += part
+=======
+          let htmlParts = this.getPreviewHtmlParts(markupPart[1], parseInt(markupPart[2]))
+          htmlParts.map((part) => {
+            if (typeof part !== 'undefined') {
+              html += part
+            }
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
           })
 
           preview += html
@@ -62,6 +106,7 @@ export default {
       return preview
     },
     getPreviewHtmlParts (description, size) {
+<<<<<<< HEAD
       let previewHtmlParts = []
       let partDescriptions = description.split(',')
       let height = (size / this.totalHeight) * this.heightOfPreview
@@ -70,6 +115,23 @@ export default {
 
       // Generate Rows
       previewHtmlParts.push(`<div class="dvs-flex dvs-justify-between" style="height:${height}px">`)
+=======
+      var previewHtmlParts = []
+      var partDescriptions = description.split(',')
+      var height = 'auto'
+
+      if (size > 1 && !isNaN(size)) { 
+        var potentialHeight = size * (this.heightOfPreview / this.totalHeight)
+        if (potentialHeight > size) {
+          height = `${size}px`
+        } else {
+          height = `${potentialHeight}px`
+        }
+      }
+
+      // Generate Rows
+      previewHtmlParts.push(`<div class="dvs-flex dvs-justify-between align-center dvs-mb-2" style="height:${height}">`)
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
       previewHtmlParts = previewHtmlParts.concat(partDescriptions.map((partDescription) => {
         return this.getPreviewHtmlPart(partDescription.trim(), partDescriptions.length, height)
       }))
@@ -83,8 +145,12 @@ export default {
       let width = `${1/columns * 100}%`
       let styles = `width:${width};padding:5px;`
 
+<<<<<<< HEAD
       if (type == 'I') {
         // Icon Size: height * .75 by default, "L" = height, "S" = height * .5 
+=======
+      if (type == 'B') {
+        // Icon Size: height * .75 by default, "l" = height, "s" = height * .5 
         let dims = height * .75
         if (settings.includes('s')) {
           dims = height * .5
@@ -93,7 +159,37 @@ export default {
           dims = height
         }
 
+        return `<div style="${styles}background-color:rgba(255,255,255,0.0)" class="dvs-text-center dvs-relative dvs-mx-1">&nbsp;</div>`
+      }
+
+      if (type == 'I') {
+        // Icon Size: height * .75 by default, "l" = height, "s" = height * .5 
+        let dims = height * .75
+        if (settings.includes('s')) {
+          dims = height * .5
+        } 
+        if (settings.includes('l')) {
+          dims = height
+        }
+
+        return `<div style="${styles}background-color:rgba(255,255,255,0.2)" class="dvs-text-center dvs-relative dvs-mx-1"><svg width="20px" height="20px" class="ion__svg dvs-absolute dvs-pin-t dvs-pin-l dvs-mt-4 dvs-ml-4" viewBox="0 0 512 512"><path d="M112.6 312.3h190.7c4.5 0 7.1-5.1 4.5-8.8l-95.4-153.4c-2.2-3.2-6.9-3.2-9.1 0L108 303.5c-2.6 3.7.1 8.8 4.6 8.8zm194.1-58l35 55.7c1 1.5 2.7 2.4 4.5 2.4h53.2c4.5 0 7.1-5.1 4.5-8.8l-61.6-87.7c-2.2-3.2-6.9-3.2-9.1 0L306.6 248c-1.2 1.8-1.2 4.3.1 6.3zm44.4-86.4c13.1-1.3 23.7-11.9 25-25 1.8-17.7-13-32.5-30.7-30.7-13.1 1.3-23.7 11.9-25 25-1.7 17.7 13 32.5 30.7 30.7z"/><path d="M432 48H80c-17.7 0-32 14.3-32 32v352c0 17.7 14.3 32 32 32h352c17.7 0 32-14.3 32-32V80c0-17.7-14.3-32-32-32zm-2.7 280c0 4.4-3.6 8-8 8H90.7c-4.4 0-8-3.6-8-8V90.7c0-4.4 3.6-8 8-8h330.7c4.4 0 8 3.6 8 8V328z"/></svg></div>`
+      }
+      if (type == 'V') {
+        // Icon Size: height * .75 by default, "l" = height, "s" = height * .5 
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
+        let dims = height * .75
+        if (settings.includes('s')) {
+          dims = height * .5
+        } 
+        if (settings.includes('l')) {
+          dims = height
+        }
+
+<<<<<<< HEAD
         return `<div style="${styles}background-color:rgba(255,255,255,0.2)" class="dvs-text-center dvs-relative dvs-mx-4"><svg width="20px" height="20px" class="ion__svg dvs-absolute dvs-pin-t dvs-pin-l dvs-mt-4 dvs-ml-4" viewBox="0 0 512 512"><path d="M112.6 312.3h190.7c4.5 0 7.1-5.1 4.5-8.8l-95.4-153.4c-2.2-3.2-6.9-3.2-9.1 0L108 303.5c-2.6 3.7.1 8.8 4.6 8.8zm194.1-58l35 55.7c1 1.5 2.7 2.4 4.5 2.4h53.2c4.5 0 7.1-5.1 4.5-8.8l-61.6-87.7c-2.2-3.2-6.9-3.2-9.1 0L306.6 248c-1.2 1.8-1.2 4.3.1 6.3zm44.4-86.4c13.1-1.3 23.7-11.9 25-25 1.8-17.7-13-32.5-30.7-30.7-13.1 1.3-23.7 11.9-25 25-1.7 17.7 13 32.5 30.7 30.7z"/><path d="M432 48H80c-17.7 0-32 14.3-32 32v352c0 17.7 14.3 32 32 32h352c17.7 0 32-14.3 32-32V80c0-17.7-14.3-32-32-32zm-2.7 280c0 4.4-3.6 8-8 8H90.7c-4.4 0-8-3.6-8-8V90.7c0-4.4 3.6-8 8-8h330.7c4.4 0 8 3.6 8 8V328z"/></svg></div>`
+=======
+        return `<div style="${styles}background-color:rgba(255,255,255,0.2)" class="dvs-text-center dvs-relative dvs-mx-1"><svg width="20px" height="20px" class="ion__svg dvs-absolute dvs-pin-t dvs-pin-l dvs-mt-4 dvs-ml-4" viewBox="0 0 512 512"><path d="M256 48C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48zm83.8 211.9l-137.2 83c-2.9 1.8-6.7-.4-6.7-3.9V173c0-3.5 3.7-5.7 6.7-3.9l137.2 83c2.9 1.7 2.9 6.1 0 7.8z"/></svg></div>`
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
       }
       if (type == 'T') {
         let text = "Lorem ipsum dolar imet"
@@ -105,10 +201,23 @@ export default {
           styles += 'text-align:right;'
         }
         if (settings.includes('l')) {
+<<<<<<< HEAD
           styles += 'font-size:1.25rem;'
         }
         if (settings.includes('s')) {
           styles += 'font-size:0.75rem;'
+=======
+          styles += 'font-size:rem;'
+        }
+        if (settings.includes('xl')) {
+          styles += 'font-size:1.25em;'
+        }
+        if (settings.includes('s')) {
+          styles += 'font-size:0.50em;'
+        }
+        if (settings.includes('b')) {
+          styles += 'font-weight:700;'
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
         }
         if (settings.includes('~')) {
           let re = /~([0-9]*)/g
@@ -127,6 +236,31 @@ export default {
         }
         return `<div style="${styles}" class=" dvs-mx-4">${text}</div>`
       }
+<<<<<<< HEAD
+=======
+      if (type == 'F') {
+        let finalForm = `<div class="dvs-flex dvs-flex-col dvs-w-full">`
+        let textField = `<div style="background-color:rgba(255,255,255,0.2);height:20px;" class="dvs-p-1 dvs-w-full dvs-mb-4"></div>`
+        let textArea = `<div style="background-color:rgba(255,255,255,0.2);height:60px;" class="dvs-p-1 dvs-w-full dvs-mb-4"></div>`
+        let submit = `<div style="background-color:rgba(255,255,255,0.4);height:30px;" class="dvs-p-1 dvs-w-1/3 dvs-rounded-sm dvs-mb-4 dvs-flex dvs-justify-center dvs-items-center dvs-uppercase dvs-text-xs">Submit</div>`
+
+        // Form Size: 2 fields by default, "l" = 3 fields, "s" = 1 field
+        finalForm += textField
+        if (settings.includes('l')) {
+          finalForm += textField
+          finalForm += textField
+          finalForm += textArea
+        }
+        if (!settings.includes('s') && !settings.includes('l')) {
+          finalForm += textArea
+        }
+
+        finalForm += submit
+        finalForm += `</div>`
+
+        return finalForm
+      }
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
     }
   },
   computed: {
@@ -141,6 +275,10 @@ export default {
 
       if(component.preview) {
         let preview = this.buildPreview(component.preview)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
         if(preview) {
           return preview
         }
@@ -156,7 +294,12 @@ export default {
     },
     heightOfPreview: {
       type: Number,
+<<<<<<< HEAD
       required: true
+=======
+      required: true,
+      default: 200
+>>>>>>> 9fbca0b37aed2e408c84aa31361e7e953df1abe2
     }
   }
 }

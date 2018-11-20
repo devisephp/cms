@@ -39,7 +39,6 @@
 <script>
 import mezr from 'mezr'
 
-import Trumbowyg from 'vue-trumbowyg'
 import Table from 'trumbowyg/dist/plugins/table/trumbowyg.table.min.js'
 
 // Import editor cs
@@ -186,7 +185,7 @@ export default {
     }
   },
   components: {
-    Trumbowyg
+    Trumbowyg: () => import(/* webpackChunkName: "js/devise-editors" */ 'vue-trumbowyg'),
   },
   mixins: [Strings],
   props: ['id', 'value']

@@ -15,15 +15,15 @@
           <!-- Choose the type of the slice -->
           <div class="dvs-flex dvs-justify-between dvs-items-stretch" v-if="insertSlice.type === null">
             <div class="dvs-btn dvs-text-base dvs-mr-4 dvs-p-8 dvs-w-1/2" :style="theme.actionButtonGhost" @click="insertSlice.type = 'single'">
-              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"  :style="{borderColor: theme.actionButtonGhost.borderColor, color: theme.actionButtonGhost.borderColor}">Single Instance</h4>
+              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"  :style="{borderColor: theme.actionButtonGhost.borderColor, color: theme.actionButtonGhost.borderColor}">Single Slice</h4>
 
-              <p class="normal-case dvs-font-normal">A single slice-type is just one instance of the slice you're choosing to insert</p>
+              <p class="dvs-normal-case dvs-font-normal">A single slice-type is just one instance of the slice you're choosing to insert</p>
             </div>
 
             <div class="dvs-btn dvs-text-base dvs-ml-4 dvs-p-8 dvs-w-1/2" :style="theme.actionButtonGhost" @click="insertSlice.type = 'model'">
-              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"  :style="{borderColor: theme.actionButtonGhost.borderColor, color: theme.actionButtonGhost.borderColor}">Repeats from Model</h4>
+              <h4 class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"  :style="{borderColor: theme.actionButtonGhost.borderColor, color: theme.actionButtonGhost.borderColor}">Repeats from Database</h4>
 
-              <p class="normal-case dvs-font-normal">Model slices will insert instances on the page based data you define in the next steps.</p>
+              <p class="dvs-normal-case dvs-font-normal">Slices will repeat on the page based data you define in the next steps.</p>
             </div>
           </div>
 
@@ -114,7 +114,6 @@ export default {
   },
   mounted () {
     this.getSlicesDirectories()
-    this.getSlices()
 
     this.$nextTick(() => {
       if (this.action === 'edit') {
@@ -125,7 +124,6 @@ export default {
   methods: {
     ...mapActions('devise', [
       'getSlicesDirectories',
-      'getSlices',
       'getModelSettings'
     ]),
     cancelManageSlice () {

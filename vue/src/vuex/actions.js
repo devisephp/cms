@@ -596,19 +596,6 @@ const actions = {
   },
 
   // Slices
-  getSlices (context) {
-    return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'slices/').then(function (response) {
-        context.commit('setSlices', response.data)
-        resolve(response)
-      }).catch(function (error) {
-        devise.$bus.$emit('showError', error)
-      })
-    }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  },
-
   getSlicesDirectories (context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'slices-directories/').then(function (response) {

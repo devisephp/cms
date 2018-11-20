@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# This script is written to assist the Devise team and any contributors to quickly
+# get up and running on this project and use it to develop Devise. To use it ensure
+# that you have the devise repo in a parallel folder and it is named 'devise' or
+# edit the configuration of deviseSrc variable below.
+
+deviseSrc="${PWD}/../devise"
+deviseLocalSrc="${PWD}/vendor/devisephp/cms"
+
+
+#Colors
+BAD='\033[0;31m' # Red
+GOOD='\033[0;33m' # Orange
+FINISHED='\033[0;35m' # Purple
+NC='\033[0m' # No Color
+BOLD=$(tput bold)
+NORMAL=$(tput sgr0)
+
+
+# Ask the user if they want to be in development mode
+
+echo -e "Would you like to turn on development mode? (Y/N)\n"
+read inDevelopMode
+
+echo ""
+
+# If the user says yes
+if [ "$inDevelopMode" = "Y" ] || [ "$inDevelopMode" = "y" ]
+then
+
+  # If the devise holding file is in place and the app holding file
+  # isn't in place then move forward.
+  if [ -s $deviseSrc ]
+  then
+    rm -rf $deviseLocalSrc
+    cp -r $deviseSrc $deviseLocalSrc
+    
+    composer du
+  else
+    echo -e "${BAD}You need to have the devise src code in a devise directory parallel to this project in a folder called 'devise'${NC}\n"
+  fi
+
+  echo -e "${BOLD}${FINISHED}Devise Develop Mode turned ${GOOD}On${NC}${NORMAL}\n"
+
+fi

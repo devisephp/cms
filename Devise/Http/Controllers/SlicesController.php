@@ -66,7 +66,8 @@ class SlicesController extends Controller
 
             return [
                 'name'        => $this->getHumanName($dir),
-                'path'        => $this->getDirPath($dir, false),
+                'path'        => $this->getDirPath($dir),
+                'dirName'     => $this->getDirName($dir, false),
                 'directories' => $directories,
                 'files'       => $files
             ];
@@ -111,6 +112,17 @@ class SlicesController extends Controller
         $path = str_replace('/', '.', $path);
 
         return substr($path, 1);
+    }
+
+    private function getDirName($path, $human = true)
+    {
+        $path = $this->getName($path);
+        if ($path == "") return 'Slices';
+        
+        if ($human) {	        
+            return $this->toHuman($path);	
+        }
+        return $path;
     }
 
     private function toHuman($string)

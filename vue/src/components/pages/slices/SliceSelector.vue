@@ -13,11 +13,12 @@
   </div>
   <div class="dvs-flex dvs-pb-8">
 
-    <div class="dvs-w-full dvs-flex dvs-flex-wrap dvs-justify-start dvs-my-4">
+    <div class="dvs-w-full dvs-flex dvs-flex-wrap dvs-justify-start dvs-my-4"        v-if=" currentDirectoryInformation['files'].length > 0">
       <div 
         class="dvs-cursor-pointer dvs-w-1/3 dvs-flex dvs-flex-col dvs-justify-between dvs-align-items dvs-p-2 dvs-rounded-sm" 
         @click="toggleSelectSlice(file)" 
-        v-for="(file, key) in currentDirectoryInformation['files']" 
+
+        v-for="(file, key) in currentDirectoryInformation['files']"
         :key="key">
           <div :style="isSelected(file)" class="p-4">
             <slice-diagram :file="file" :height-of-preview="200"></slice-diagram>
@@ -25,8 +26,10 @@
             <div class="dvs-font-mono dvs-text-xs">({{ file.value }})</div>
           </div>
       </div>
-
     </div>
+      <div class="dvs-cursor-pointer dvs-w-1/3 dvs-flex dvs-flex-col dvs-justify-between dvs-align-items dvs-p-2 dvs-rounded-sm"  v-else>
+        No files in this directory
+      </div>
   </div>
 </div>
 </template>
@@ -50,8 +53,9 @@ export default {
       this.directoryStack = pathString.split('.')
     },
     getDirectoryFiles (directories, directory) {
-      directory = directories.find(dir => dir.path === directory)
-      return directory['files']
+      console.log(directories, directory)
+      directory = directories.find(dir => dir.dirName === directory)
+      return directory
     },
     getDirectories (directories, level) {
       let dirs = []
@@ -95,9 +99,12 @@ export default {
       let self = this
       var directoryContents = this.slicesDirectories
 
-      this.directoryStack.forEach(function (dir) {
-        directoryContents['files'] = self.getDirectoryFiles(directoryContents['directories'], dir)
+      this.directoryStack.forEach((dir) => {
+        console.log('directoryContents', directoryContents)
+        directoryContents = self.getDirectoryFiles(directoryContents['directories'], dir)
       })
+
+      console.log('end', directoryContents)
 
       return directoryContents
     },

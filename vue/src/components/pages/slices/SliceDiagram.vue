@@ -29,7 +29,11 @@ export default {
   },
   methods: {
     checkHasPreview () {
+<<<<<<< HEAD
+      if (this.component.preview) {
+=======
       if (this.component.preview && this.preview) {
+>>>>>>> 354d4d3b86c88338ba4c4d3867700c7bc0ed3e5b
         this.hasPreview = true
       }
     },

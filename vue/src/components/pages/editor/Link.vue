@@ -49,8 +49,6 @@
 </template>
 
 <script>
-import FieldEditor from './Field'
-
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -113,7 +111,7 @@ export default {
   },
   props: ['value', 'options'],
   components: {
-    FieldEditor
+    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
   }
 }
 </script>

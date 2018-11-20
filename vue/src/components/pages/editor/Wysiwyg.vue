@@ -16,9 +16,6 @@
 
 <script>
 import Strings from './../../../mixins/Strings'
-import Toggle from './../../utilities/Toggle'
-import Wysiwyg from './../../utilities/Wysiwyg'
-import FieldEditor from './Field'
 
 export default {
   name: 'WysiwygEditor',
@@ -53,9 +50,9 @@ export default {
   props: ['value', 'options', 'namekey'],
   mixins: [Strings],
   components: {
-    Toggle,
-    FieldEditor,
-    Wysiwyg
+    Toggle: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Toggle'),
+    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
+    Wysiwyg: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Wysiwyg')
   }
 }
 </script>

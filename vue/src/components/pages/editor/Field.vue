@@ -60,10 +60,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
-import Panel from './../../utilities/Panel'
 import Strings from './../../../mixins/Strings'
-import Toggle from './../../utilities/Toggle'
 
 export default {
   name: 'FieldEditor',
@@ -100,8 +97,8 @@ export default {
   props: ['value', 'options', 'showEditor'],
   mixins: [Strings],
   components: {
-    Panel,
-    Toggle
+    Panel: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Panel'),
+    Toggle: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Toggle'),
   }
 }
 </script>

@@ -18,9 +18,7 @@
 </template>
 
 <script>
-import FieldEditor from './Field'
 import Strings from './../../../mixins/Strings'
-import Toggle from './../../utilities/Toggle'
 
 export default {
   name: 'CheckboxEditor',
@@ -53,8 +51,8 @@ export default {
   props: ['value', 'options'],
   mixins: [Strings],
   components: {
-    FieldEditor,
-    Toggle
+    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
+    Toggle: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Toggle')
   }
 }
 </script>

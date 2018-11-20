@@ -5,7 +5,6 @@ import Administration from './components/admin/Administration'
 import ActionBar from './components/utilities/ActionBar'
 import Sidebar from './components/utilities/Sidebar'
 import Help from './components/utilities/Help'
-import Logo from './components/utilities/Logo'
 import DeviseImg from './components/utilities/images/DeviseImage'
 import SliceEditor from './components/pages/slices/SliceEditor'
 import Slices from './Slices'
@@ -14,7 +13,6 @@ import PortalVue from 'portal-vue'
 import { DeviseBus } from './event-bus.js'
 import routes from './router/route.config.js'
 import alertConfirm from './directives/alert-confirm'
-import Tilt from './directives/tilt'
 import Tuck from './directives/tuck'
 
 import EditPage from './components/pages/Editor'
@@ -25,7 +23,6 @@ import { mapGetters } from 'vuex'
 
 const DevisePlugin = {
   install (Vue, { store, router, bus, options }) {
-    
 
     if (typeof store === 'undefined') {
       throw new Error('Please provide a vuex store.')
@@ -87,7 +84,6 @@ const DevisePlugin = {
     // Register global components
     Vue.component('Devise', Devise)
     Vue.component('DeviseImg', DeviseImg)
-    Vue.component('Logo', Logo)
     Vue.component('Help', Help)
     Vue.component('Slices', Slices)
     Vue.component('SliceEditor', SliceEditor)
@@ -114,9 +110,6 @@ const DevisePlugin = {
     // Register alert / confirm directive
     Vue.directive('devise-alert-confirm', alertConfirm)
 
-    // Register tilt directive
-    Vue.directive('tilt', Tilt)
-
     // Register tuck directive
     Vue.directive('tuck', Tuck)
 
@@ -128,6 +121,9 @@ const DevisePlugin = {
         largeDesktop: 1199
       }
     }, options)
+
+    // enables passive event listeners by default for some events
+    require('default-passive-events');
 
     // We call Vue.mixin() here to inject functionality into all components.
     Vue.mixin({

@@ -18,8 +18,6 @@ asdfasdf
 </template>
 
 <script>
-import FieldEditor from './Field'
-
 export default {
   name: 'NumberEditor',
   data () {
@@ -67,7 +65,7 @@ export default {
   },
   props: ['value', 'options'],
   components: {
-    FieldEditor
+    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
   }
 }
 </script>

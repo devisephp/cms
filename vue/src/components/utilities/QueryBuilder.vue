@@ -29,8 +29,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
-import SuperTable from './../utilities/tables/SuperTable'
-
 export default {
   data () {
     return {
@@ -98,7 +96,7 @@ export default {
     ])
   },
   components: {
-    SuperTable
+    SuperTable: () => import(/* webpackChunkName: "js/devise-tables" */ './../utilities/tables/SuperTable')
   },
   props: ['value', 'editData']
 }

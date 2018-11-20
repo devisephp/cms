@@ -20,8 +20,6 @@
 var tinycolor = require('tinycolor2')
 import { Sketch } from 'vue-color'
 
-import FieldEditor from './Field'
-
 export default {
   name: 'ColorEditor',
   data () {
@@ -92,7 +90,7 @@ export default {
   },
   props: ['value', 'options'],
   components: {
-    FieldEditor,
+    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
     'sketch-picker': Sketch
   }
 }

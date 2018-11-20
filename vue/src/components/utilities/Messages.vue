@@ -36,6 +36,7 @@
 <script>
 import CloseIcon from 'vue-ionicons/dist/ios-close.vue'
 import Strings from '../../mixins/Strings'
+import debounce from 'lodash.debounce'
 
 export default {
   data () {
@@ -132,7 +133,7 @@ export default {
         }
         this.messageErrors.unshift(error)
 
-        window._.debounce(function () {
+        debounce(function () {
           error.active = false
 
           setTimeout(() => {
@@ -156,7 +157,7 @@ export default {
         }
         this.messages.unshift(message)
 
-        window._.debounce(function () {
+        debounce(function () {
           message.active = false
 
           setTimeout(() => {

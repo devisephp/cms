@@ -65,10 +65,6 @@
 <script>
   import debounce from 'v-debounce'
 
-  import DeviseModal from './../utilities/Modal'
-  import PageSearch from './../utilities/PageSearch'
-  import Pagination from './../utilities/tables/Pagination'
-
   import {mapActions, mapGetters} from 'vuex'
 
   export default {
@@ -131,9 +127,9 @@
       }
     },
     components: {
-      DeviseModal,
-      PageSearch,
-      Pagination
+      DeviseModal: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Modal'),
+      PageSearch: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/PageSearch'),
+      Pagination: () => import(/* webpackChunkName: "js/devise-tables" */ './../utilities/tables/Pagination')
     },
     directives: {
       debounce

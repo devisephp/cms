@@ -205,7 +205,6 @@
 <script>
 import DatePicker from './../utilities/DatePicker'
 import DeviseModal from './../utilities/Modal'
-import LineChart from './analytics/Line'
 import MetaForm from './../meta/MetaForm'
 
 import Dates from './../../mixins/Dates'
@@ -441,9 +440,10 @@ export default {
     DeviseModal,
     EditIcon,
     TrashIcon,
-    LineChart,
+    LineChart: () => import(/* webpackChunkName: "js/devise-charts" */ './analytics/Line'),
     MetaForm
   },
   mixins: [Dates]
 }
+
 </script>

@@ -1,10 +1,10 @@
 <template>
-  <div 
+  <panel 
     id="devise-in-page-analytics" 
+    :panel-style="theme.panel"
     class="dvs-fixed dvs-pin-b dvs-pin-r dvs-z-30 dvs-mr-8 dvs-mb-8 dvs-p-4 dvs-pb-0" 
-    
     v-if="analytics !== null">
-    <div class="dvs-flex" v-if="anlyticsHasData">
+    <div class="dvs-flex dvs-p-4" v-if="anlyticsHasData">
       <div class="dvs-flex dvs-flex-wrap dvs-justify-around dvs-w-full">
         <stat-block-doughnut class="dvs-mr-4 dvs-mb-4" :analytics="this.analytics" stat="Sessions" />
         <stat-block-doughnut class="dvs-mr-4 dvs-mb-4" :analytics="this.analytics" stat="Page Views" />
@@ -15,7 +15,7 @@
     <div v-else class="dvs-p-8 dvs-pt-4 dvs-text-center">
       It appears there is not enough data in Google Analytics yet to present statistics. There needs to be at least one week of data and then we will start showing you how this page is performing!
     </div>
-  </div>
+  </panel>
 </template>
 
 <script>
@@ -65,6 +65,7 @@ export default {
     }
   },
   components: {
+    Panel: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Panel'),
     StatBlockDoughnut
   },
   mixins: [Dates]

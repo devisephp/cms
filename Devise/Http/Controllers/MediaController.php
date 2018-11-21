@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Intervention\Image\Facades\Image;
 use League\Glide\ServerFactory;
 use League\Glide\Responses\LaravelResponseFactory;
 
@@ -18,6 +19,7 @@ use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 
 use Spatie\ImageOptimizer\OptimizerChain;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
 /**
  * Class ResponseHandler handles controller part of media manager
@@ -48,6 +50,8 @@ class MediaController extends Controller
         $this->Config = $Framework->Config;
         $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
         $this->OptimizerChain = $OptimizerChain;
+
+        $this->guesser = MimeTypeGuesser::getInstance();
     }
 
     /**
@@ -109,18 +113,30 @@ class MediaController extends Controller
      */
     public function preview(Filesystem $filesystem, $path)
     {
-        $server = ServerFactory::create([
-            'response'               => new LaravelResponseFactory(app('request')),
-            'source'                 => $filesystem->getDriver(),
-            'cache'                  => $filesystem->getDriver(),
-            'group_cache_in_folders' => false,
-            'base_url'               => '/styled/preview/'
-        ]);
-        $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
-        $path = str_replace("media/", '', $path);
         $path = str_replace("storage/", '', $path);
 
-        return $server->getImageResponse($sourceDirectory . $path, request()->all());
+        $type = $this->guesser->guess($this->Storage->path($path));
+
+        if (strpos($type, 'image') !== false)
+        {
+            try
+            {
+                $path = str_replace("media/", '', $path);
+
+                $server = ServerFactory::create([
+                    'response'               => new LaravelResponseFactory(app('request')),
+                    'source'                 => $filesystem->getDriver(),
+                    'cache'                  => $filesystem->getDriver(),
+                    'group_cache_in_folders' => false,
+                    'base_url'               => '/styled/preview/'
+                ]);
+                $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
+
+                return $server->getImageResponse($sourceDirectory . $path, request()->all());
+            } catch (\Exception $e){}
+        }
+
+        return Image::make(base_path('vendor/devisephp/cms/resources/images/file-icon.gif'))->response();
     }
 
     public function reGenerateAll(ApiRequest $request, $instanceId, $fieldType)

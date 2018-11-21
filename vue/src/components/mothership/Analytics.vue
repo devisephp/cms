@@ -1,7 +1,7 @@
 <template>
 <div>
   <div id="devise-admin-content" class="dvs-relative dvs-full" >
-      <div v-if="site !== null" class="dvs-p-10">
+      <div v-if="site !== null" class="dvs-p-8">
         <h2 class="dvs-mb-8" :style="{color: theme.panel.color}">
           {{ site.name }} Analytics
         </h2>
@@ -20,26 +20,26 @@
 
         <!-- Usage Totals -->
         <div class="dvs-flex dvs-justify-between dvs-text-center dvs-text-xs dvs-mb-8">
-          <div>
-            <h2 class="dvs-font-bold" :style="{color: theme.panel.color}">
+          <div class="dvs-rounded-sm dvs-p-4 dvs-w-1/5" :style="theme.actionButton">
+            <h2 class="dvs-font-bold" :style="{color: theme.actionButton.color}">
               {{ analytics['usage-totals'].Users }}
             </h2>
             <strong class="dvs-uppercase">Users</strong>
           </div>
-          <div>
-            <h2 :style="{color: theme.panel.color}">
+          <div class="dvs-rounded-sm dvs-p-4 dvs-w-1/5" :style="theme.actionButton">
+            <h2 :style="{color: theme.actionButton.color}">
               {{ analytics['usage-totals'].Sessions }}
             </h2>
             <strong class="dvs-uppercase">Sessions</strong>
           </div>
-          <div>
-            <h2 :style="{color: theme.panel.color}">
+          <div class="dvs-rounded-sm dvs-p-4 dvs-w-1/5" :style="theme.actionButton">
+            <h2 :style="{color: theme.actionButton.color}">
               {{ analytics['usage-totals']['Page Views'] }}
             </h2>
             <strong class="dvs-uppercase">Page Views</strong>
           </div>
-          <div>
-            <h2 :style="{color: theme.panel.color}">
+          <div class="dvs-rounded-sm dvs-p-4 dvs-w-1/5" :style="theme.actionButton">
+            <h2 :style="{color: theme.actionButton.color}">
               {{ analytics['usage-totals']['Bounce Rate'] }}
             </h2>
             <strong class="dvs-uppercase">Bounce Rate</strong>
@@ -50,14 +50,14 @@
         <div class="dvs-flex dvs-flex-col lg:dvs-flex-row dvs-mb-8">
           
           <!-- Left Column -->
-          <div class="lg:dvs-w-1/2 lg:dvs-pr-4">
+          <div class="lg:dvs-w-1/2 lg:dvs-pr-10">
 
-            <div class="dvs-mb-8">
+            <div class="dvs-mb-16">
               <h4 class="dvs-mb-4" :style="{color: theme.panel.color}">How are site sessions trending?</h4>
               <line-chart class="dvs-mb-8" :chart-data="analytics.sessions" :options="options" />
             </div>
 
-            <div class="dvs-mb-8">
+            <div class="dvs-mb-16">
               <h4 class="dvs-mb-4" :style="{color: theme.panel.color}">Channels</h4>
               <div>
                 <bar-chart class="dvs-mb-8" :chart-data="analytics.channels" :options="barOptions" />
@@ -74,7 +74,7 @@
           </div>
 
           <!-- Right Column -->
-          <div class="lg:dvs-w-1/2 lg:dvs-pl-4">
+          <div class="lg:dvs-w-1/2 dvs-p-8 dvs-rounded dvs-shadow-lg" :style="theme.panelCard">
             
             <div class="dvs-mb-8">
               <h4 class="dvs-mb-4" :style="{color: theme.panel.color}">What are the top countries by sessions?</h4>
@@ -268,7 +268,7 @@ export default {
         if (typeof this.analyticsDateRange.end !== 'string' && this.analyticsDateRange.end[0]) {
           this.analyticsDateRange.end = this.formatDate(new Date(this.analyticsDateRange.end[0]))
         }
-        this.getSiteAnalytics({site: this.site.id, dates: this.analyticsDateRange}).then(function (response) {
+        this.getSiteAnalytics({site: this.site.id, dates: this.analyticsDateRange}).then((response) => {
 
           response.data.sessions.datasets.map(function (dataset, index) {
             return self.formatColors(dataset, index)
@@ -281,6 +281,17 @@ export default {
           response.data.browser.datasets.map(function (dataset, index) {
             return self.formatColors(dataset, index)
           })
+
+
+          // response.data['date-searched'].map(function (dataset, index) {
+            //   console.log(dataset, index)
+          // })
+          for (var date in response.data['date-searched']) {
+            if (response.data['date-searched'].hasOwnProperty(date)) {
+              response.data['date-searched'][this.formatDate(date)] = response.data['date-searched'][date]
+              delete response.data['date-searched'][date]
+            }
+          }
 
           self.$set(self, 'analytics', response.data)
         })

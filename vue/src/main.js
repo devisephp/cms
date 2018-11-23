@@ -123,7 +123,7 @@ const DevisePlugin = {
     }, options)
 
     // enables passive event listeners by default for some events
-    require('default-passive-events');
+    // require('default-passive-events');
 
     // We call Vue.mixin() here to inject functionality into all components.
     Vue.mixin({

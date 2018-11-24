@@ -26,12 +26,25 @@
               :style="theme.actionButton"
               includeStyling: false
               :options="dropzoneOptions" />
-            <fieldset class="dvs-fieldset">
+            <fieldset class="dvs-fieldset dvs-mr-8">
               <div class="dvs-flex dvs-items-center">
                 <label class="dvs-mr-2 dvs-my-2">Contact Sheet</label>
-                <input class="dvs-my-2" type="checkbox" v-model="thumbnail">
+                <input class="dvs-my-2" type="radio" value="contactSheet" v-model="mode">
               </div>
             </fieldset>
+            <fieldset class="dvs-fieldset dvs-mr-8">
+              <div class="dvs-flex dvs-items-center">
+                <label class="dvs-mr-2 dvs-my-2">Thumbnails</label>
+                <input class="dvs-my-2" type="radio" value="thumbnails" v-model="mode">
+              </div>
+            </fieldset>
+            <fieldset class="dvs-fieldset">
+              <div class="dvs-flex dvs-items-center">
+                <label class="dvs-mr-2 dvs-my-2">List</label>
+                <input class="dvs-my-2" type="radio" value="list" v-model="mode">
+              </div>
+            </fieldset>
+
           </div>
         </div>
 
@@ -108,8 +121,9 @@
               <li v-for="file in currentFiles" :key="file.id" class="dvs-relative dvs-bg-white dvs-card dvs-mt-2"
                 :class="{
                   'dvs-cursor-pointer': !file.on,
-                  'dvs-border-b dvs-border-lighter dvs-p-2 dvs-mx-4': thumbnail,
-                  'dvs-m-4 dvs-p-0': !thumbnail
+                  'dvs-border-b dvs-border-lighter dvs-p-2 dvs-mx-4': mode === 'thumbnails',
+                  'dvs-m-4 dvs-p-0': mode !== 'thumbnails',
+                  'dvs-w-full': mode === 'list'
                 }"
                 @click="openFile(file)">
 
@@ -120,13 +134,37 @@
 
                 <!-- Closed File -->
                 <div v-if="file !== currentlyOpenFile">
-                  <!-- List Mode -->
-                  <div class="dvs-flex dvs-justify-between dvs-items-center" v-if="thumbnail">
+                  <!-- Contact Sheet -->
+                  <div 
+                    class="dvs-overflow-hidden dvs-text-center" 
+                    style="width:100px;height:105px" 
+                    v-if="mode === 'contactSheet'">
                     <img :src="`/styled/preview/${file.url}?w=100&h=100`" style="min-width:75px;height:75px">
+                    <div class="dvs-text-xs dvs-font-bold">
+                      {{ file.name }}
+                    </div>
                   </div>
 
-                  <!-- Grid Mode -->
-                  <div class="dvs-grid-preview dvs-relative" :style="`background-size:cover;background-image:url('${`/styled/preview/${file.url}?w=300&h=300`}')`" v-else></div>
+                  <!-- Thumbnails Mode -->
+                  <div 
+                    class="dvs-grid-preview dvs-font-bold dvs-relative" 
+                    :style="`background-size:cover;background-image:url('${`/styled/preview/${file.url}?w=300&h=300`}')`" 
+                    v-else-if="mode === 'thumbnails'">
+                    <div class="dvs-text-center dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-text-white dvs-p-4"
+                    style="text-shadow:2px 2px 2px rgba(0,0,0,0.5);background-color:rgba(0,0,0,0.4)">
+                      {{ file.name }}
+                    </div>
+                  </div>
+
+                  <!-- List Mode -->
+                  <div 
+                    class="dvs-w-full dvs-flex dvs-items-center"
+                    v-else>
+                    <img :src="`/styled/preview/${file.url}?w=100&h=100`" style="min-width:75px;height:75px">
+                    <div class="dvs-ml-4 dvs-font-bold">
+                      {{ file.name }}
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Open File -->
@@ -202,7 +240,7 @@
       return {
         show: false,
         loaded: false,
-        thumbnail: true,
+        mode: 'list',
         directoryToCreate: '',
         target: null,
         callback: null,

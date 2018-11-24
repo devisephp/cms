@@ -40,6 +40,11 @@ const state = {
       }
     }],
     {
+      icon: 'ImageIcon',
+      label: 'Settings',
+      routeName: 'media-manager'
+    },
+    {
       icon: 'CogIcon',
       label: 'Settings',
       routeName: 'devise-settings',

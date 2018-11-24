@@ -189,7 +189,11 @@
                       <input type="text" :value="file.url">
                     </fieldset>
 
-                    <p><button @click="selectSourceFile(file)" class="dvs-btn" :style="theme.actionButton">Select</button></p>
+                    <p v-if="target"><button @click="selectSourceFile(file)" class="dvs-btn" :style="theme.actionButton">Select</button></p>
+
+                   <fieldset class="dvs-fieldset dvs-mb-4">
+                      <a class="dvs-btn" :href="file.url" target="_blank" :style="theme.actionButtonGhost" download>Click to download</a>
+                    </fieldset>
 
                     <template v-if="isActive(file)">
                       <h6 class="dvs-my-2 dvs-text-sm">Appears On</h6>
@@ -270,6 +274,7 @@
         var self = this
 
         deviseSettings.$bus.$on('devise-launch-media-manager', function ({target, callback, options}) {
+          console.log('open')
           self.callback = callback
           self.target = target,
           self.options = options,

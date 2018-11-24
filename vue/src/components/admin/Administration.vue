@@ -65,7 +65,9 @@ export default {
   },
   methods: {
     loadAdminPage (menuItem) {
-      if (typeof menuItem.routeParams !== 'undefined') {
+      if (menuItem.routeName === 'media-manager') {
+        devise.$bus.$emit('devise-launch-media-manager', {})
+      } else if (typeof menuItem.routeParams !== 'undefined') {
         this.goToPage(menuItem.routeName, menuItem.routeParams)
       } else {
         this.goToPage(menuItem.routeName)
@@ -116,6 +118,7 @@ export default {
     CreateIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-create.vue'),
     CubeIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-cube.vue'),
     DocumentIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-document.vue'),
+    ImageIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-image.vue'),
     Panel: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Panel'),
     PowerIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-power.vue'),
     SaveIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-save.vue'),

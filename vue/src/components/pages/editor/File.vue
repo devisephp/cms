@@ -13,13 +13,9 @@
         <div class="dvs-flex dvs-items-center">
           <input type="text" v-model="localValue.url" :maxlength="getMaxLength" v-on:input="updateValue()">
           <div @click="launchMediaManager($event)">
-            <images-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px" />
+            <document-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px" />
           </div>
         </div>
-      </fieldset>
-      <fieldset class="dvs-fieldset">
-        <label class="dvs-mt-4">Alt Tag</label>
-        <input type="text" v-model="localValue.alt" v-on:input="updateValue()">
       </fieldset>
     </template>
 
@@ -27,11 +23,11 @@
 </template>
 
 <script>
-import ImagesIcon from 'vue-ionicons/dist/ios-images.vue'
+import DocumentIcon from 'vue-ionicons/dist/ios-document.vue'
 import CreateIcon from 'vue-ionicons/dist/ios-create.vue'
 
 export default {
-  name: 'ImageEditor',
+  name: 'FileEditor',
   data () {
     return {
       localValue: {
@@ -64,7 +60,6 @@ export default {
       this.$emit('change', this.localValue)
     },
     launchMediaManager (event) {
-      this.options.type = 'image'
       devise.$bus.$emit('devise-launch-media-manager', {
         callback: this.mediaSelected,
         options: this.options
@@ -94,7 +89,7 @@ export default {
   components: {
     CreateIcon,
     FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
-    ImagesIcon
+    DocumentIcon
   }
 }
 </script>

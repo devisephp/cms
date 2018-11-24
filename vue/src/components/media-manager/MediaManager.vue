@@ -189,7 +189,7 @@
                       <input type="text" :value="file.url">
                     </fieldset>
 
-                    <p v-if="target"><button @click="selectSourceFile(file)" class="dvs-btn" :style="theme.actionButton">Select</button></p>
+                    <p v-if="callback"><button @click="selectSourceFile(file)" class="dvs-btn" :style="theme.actionButton">Select</button></p>
 
                    <fieldset class="dvs-fieldset dvs-mb-4">
                       <a class="dvs-btn" :href="file.url" target="_blank" :style="theme.actionButtonGhost" download>Click to download</a>
@@ -274,7 +274,6 @@
         var self = this
 
         deviseSettings.$bus.$on('devise-launch-media-manager', function ({target, callback, options}) {
-          console.log('open')
           self.callback = callback
           self.target = target,
           self.options = options,
@@ -319,6 +318,7 @@
         this.$set(this, 'currentlyOpenFile', null)
       },
       selectSourceFile (file) {
+        console.log(file)
         this.selectedFile = file
 
         // Originally we simply kicked to the callback 

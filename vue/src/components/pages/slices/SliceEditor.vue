@@ -110,6 +110,9 @@
           <image-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'image'">
           </image-editor>
 
+          <file-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'file'">
+          </file-editor>
+
           <link-editor v-model="theFields[key]" :options="field" :namekey="key" v-if="field.type === 'link'">
           </link-editor>
 
@@ -331,6 +334,7 @@ export default {
     ColorEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './../editor/Color'),
     CreateIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-create.vue'),
     draggable: () => import(/* webpackChunkName: "devise-admin-vendors" */ 'vuedraggable'),
+    FileEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './../editor/File'),
     ImageEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './../editor/Image'),
     LinkEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './../editor/Link'),
     LocateIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-locate.vue'),

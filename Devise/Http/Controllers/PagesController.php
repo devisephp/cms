@@ -7,6 +7,7 @@ use Devise\Http\Requests\ApiRequest;
 use Devise\Http\Requests\Pages\CopyPage;
 use Devise\Http\Requests\Pages\StorePage;
 use Devise\Http\Requests\Pages\UpdatePage;
+use Devise\Http\Resources\Api\ListedPageResource;
 use Devise\Http\Resources\Api\PageResource;
 use Devise\Pages\PagesManager;
 use Devise\Pages\PagesRepository;
@@ -121,7 +122,7 @@ class PagesController extends Controller
 
         $pages = $this->PagesRepository->list($site->id, $languageId);
 
-        return $pages;
+        return ListedPageResource::collection($pages);
     }
 
     /**

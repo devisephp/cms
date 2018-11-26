@@ -151,6 +151,7 @@ class PagesRepository
             ->select('id', 'title', 'route_name')
             ->where('site_id', $siteId)
             ->where('language_id', $languageId)
+            ->where('slug', 'not like', '%{%')
             ->orderBy('title')
             ->get();
     }

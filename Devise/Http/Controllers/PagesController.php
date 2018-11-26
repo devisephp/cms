@@ -7,7 +7,7 @@ use Devise\Http\Requests\ApiRequest;
 use Devise\Http\Requests\Pages\CopyPage;
 use Devise\Http\Requests\Pages\StorePage;
 use Devise\Http\Requests\Pages\UpdatePage;
-use Devise\Http\Resources\Api\ListedPageResource;
+use Devise\Http\Resources\Api\RouteResource;
 use Devise\Http\Resources\Api\PageResource;
 use Devise\Pages\PagesManager;
 use Devise\Pages\PagesRepository;
@@ -112,7 +112,7 @@ class PagesController extends Controller
      * Request the page listing
      *
      */
-    public function pagesList(ApiRequest $request)
+    public function routes(ApiRequest $request)
     {
         $site = $this->SiteDetector->current();
 
@@ -120,9 +120,9 @@ class PagesController extends Controller
 
         $languageId = $request->input('language_id', $defaultLanguage->id);
 
-        $pages = $this->PagesRepository->list($site->id, $languageId);
+        $pages = $this->PagesRepository->routes($site->id, $languageId);
 
-        return ListedPageResource::collection($pages);
+        return RouteResource::collection($pages);
     }
 
     /**

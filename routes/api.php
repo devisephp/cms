@@ -66,7 +66,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
      * Pages
      */
     Route::get('pages', 'PagesController@pages');
-    Route::get('pagesList', 'PagesController@pagesList');
+    Route::get('routes', 'PagesController@routes');
     Route::get('pages-suggest', 'PagesController@suggestList');
     Route::get('pages/{page_id}', 'PagesController@single');
     Route::post('pages', 'PagesController@store');

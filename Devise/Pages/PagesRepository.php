@@ -145,7 +145,7 @@ class PagesRepository
      *
      * @return Collection
      */
-    public function list($siteId, $languageId)
+    public function routes($siteId, $languageId)
     {
         return $this->Page
             ->select('id', 'title', 'route_name')

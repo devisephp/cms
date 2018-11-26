@@ -31,13 +31,13 @@
       <template v-if="localValue.mode === 'url'">
         <fieldset class="dvs-fieldset dvs-mb-4">
           <label>URL</label>
-          <input type="text" v-model="localValue.url" v-on:input="updateValue()">
+          <input type="text" v-model="localValue.url" v-on:input="updateUrl()">
         </fieldset>
       </template>
       <template v-if="localValue.mode === 'page'">
         <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page</label>
-          <select v-model="localValue.routeName" @change="updateValue()">
+          <select v-model="localValue.routeName" @change="selectPage()">
             <option :value="0">Select a Page</option>
             <option :value="page.route_name" v-for="page in pagesList.data" :key="page.id">{{page.title}}</option>
           </select>
@@ -69,6 +69,7 @@ export default {
         href: '',
         url: '',
         text: '',
+        routeName: '',
         target: '_self'
       },
       showEditor: false
@@ -80,6 +81,8 @@ export default {
     if (!this.localValue.target) {
       this.localValue.target = '_self'
     }
+
+
 
     this.retrieveAllPagesList()
   },
@@ -116,8 +119,20 @@ export default {
       this.updateValue()
       this.toggleEditor()
     },
-    updateValue: function () {
+    updateUrl () {
       this.localValue.href = this.localValue.url
+      this.updateValue()
+    },
+    selectPage (e) {
+
+      let page = this.pagesList.data.find((page) => {
+        return page.route_name === this.localValue.routeName
+      })
+
+      this.localValue.href = page.url
+      this.updateValue()
+    },
+    updateValue: function () {
       // Emit the number value through the input event
       this.$emit('input', this.localValue)
       this.$emit('change', this.localValue)

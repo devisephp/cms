@@ -187,7 +187,7 @@ class Devise
 
     public static function mothershipEnabled()
     {
-        if (Schema::hasTable('dvs_releases') && config('devise.mothership.api-key')) return true;
+        if (!app()->runningInConsole() && Schema::hasTable('dvs_releases') && config('devise.mothership.api-key')) return true;
 
         return false;
     }

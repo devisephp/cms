@@ -171,6 +171,33 @@ const funcs = {
     j = (j = i.length) > 3 ? j % 3 : 0
 
     return '$' + (s + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : ''))
+  },
+
+  sanitizeField (field) {
+    switch (field.type) {
+      case 'link':
+        delete field.href
+        break;
+    }
+    return field
+  },
+
+  sanitizeSlice(slice) {
+    for (var property in slice) {
+      if (slice.hasOwnProperty(property) && slice[property].hasOwnProperty('type') && property !== 'metadata') {
+        slice[property] = this.sanitizeField(slice[property])
+      }
+    }
+
+    slice.slices.map((slice) => {
+      return this.sanitizeSlice(slice)
+    })
+  },
+
+  sanitizePageData(data) {
+    return data.slices.map((slice) => {
+      return this.sanitizeSlice(slice)
+    })
   }
 }
 

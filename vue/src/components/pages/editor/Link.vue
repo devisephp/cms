@@ -31,7 +31,7 @@
       <template v-if="localValue.mode === 'url'">
         <fieldset class="dvs-fieldset">
           <label>URL</label>
-          <input type="text" v-model="localValue.href" v-on:input="updateValue()">
+          <input type="text" v-model="localValue.url" v-on:input="updateValue()">
         </fieldset>
       </template>
       <template v-if="localValue.mode === 'page'">

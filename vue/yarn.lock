@@ -2293,11 +2293,6 @@ dotenv@^4.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
   integrity sha1-hk7xN5rO1Vzm+V3r7NzhefegzR0=
 
-dropzone@^5.5.0:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-5.5.1.tgz#06e2f513e61d6aa363d4b556f18574f47cf7ba26"
-  integrity sha512-3VduRWLxx9hbVr42QieQN25mx/I61/mRdUSuxAmDGdDqZIN8qtP7tcKMa3KfpJjuGjOJGYYUzzeq6eGDnkzesA==
-
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
@@ -7757,13 +7752,6 @@ vue-trumbowyg@^3.4.0:
   integrity sha512-5WDkJR3vuI+3/HkZvwOKf1l7zRXXbM4jtG20soX93A9hxbceZa/McjIptJHtJdLLRyxUeiIbPkFtJ1ZZ8mII9w==
   dependencies:
     trumbowyg "^2.9.4"
-
-vue2-dropzone@^3.0.4:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/vue2-dropzone/-/vue2-dropzone-3.5.2.tgz#602630b1577d861810555646b72338de69feebe2"
-  integrity sha512-cigwZLe2USiIdxHEUKHNuJcbrGDNwuyqSE/FnYXQpG27cxCFtbyo1b8ZxRTa0sTY3czcrFtIZTox67VMahA7cg==
-  dependencies:
-    dropzone "^5.5.0"
 
 vue@^2.5.2:
   version "2.5.17"

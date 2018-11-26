@@ -387,6 +387,7 @@ const actions = {
 
   updatePage (context, payload) {
     return new Promise((resolve, reject) => {
+      const data = sanitizePageData(payload.data)
       window.axios.put(context.state.api.baseUrl + 'pages/' + payload.data.id, payload.data).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.data.title + ' has been saved.'})
         context.commit('updatePage', {page: payload.data, data: response.data})

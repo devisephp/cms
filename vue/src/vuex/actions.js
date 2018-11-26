@@ -97,7 +97,7 @@ const actions = {
     })
   },
 
-  getSearchableMedia (context, directory) {
+  getSearchableMedia (context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'searchable-media').then(function (response) {
         context.commit('setSearchableMedia', response.data)
@@ -110,9 +110,13 @@ const actions = {
     })
   },
 
-  getCurrentFiles (context, directory) {
+  getCurrentFiles (context, options) {
+    var imagesOnly = ``
+    if (options && options.type === 'image') {
+      imagesOnly = `?type=image`
+    }
     return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'media/' + context.state.currentDirectory).then(function (response) {
+      window.axios.get(context.state.api.baseUrl + 'media/' + context.state.currentDirectory + imagesOnly).then(function (response) {
         context.commit('setFiles', response.data)
         resolve(response)
       }).catch(function (error) {
@@ -123,7 +127,7 @@ const actions = {
     })
   },
 
-  getCurrentDirectories (context, directory) {
+  getCurrentDirectories (context) {
     return new Promise((resolve, reject) => {
       window.axios.get(context.state.api.baseUrl + 'media-directories/' + context.state.currentDirectory).then(function (response) {
         context.commit('setDirectories', response.data)

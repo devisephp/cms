@@ -32,7 +32,7 @@
 
   </div>
   <div class="dvs-blocker dvs-z-20" v-if="imageToManage !== null" @click="imageToManage = null"></div>
-  <trumbowyg class="dvs-relative dvs-z-10" ref="theEditor" v-model="localValue" :config="config" :svg-path="'devise/icons/icons.svg'" @tbw-change="update" @tbw-paste="update"></trumbowyg>
+  <trumbowyg class="dvs-relative dvs-z-10" ref="theEditor" v-model="localValue" :config="config" :svg-path="'devise/icons/icons.svg'" @tbw-change="update" @tbw-paste="update" @tbw-blur="update"></trumbowyg>
 </div>
 </template>
 
@@ -84,7 +84,7 @@ export default {
             forceCSS: true,
             ico: 'insert-image',
             hasIcon: true
-          }
+          },
         },
         imageWidthModalEdit: false,
         imgDblClickHandler: this.imageManager
@@ -140,6 +140,7 @@ export default {
       }
     },
     update () {
+      console.log('in update')
       this.localValue = this.theEditor.el.trumbowyg('html')
       this.$emit('input', this.localValue)
       this.$emit('change', this.localValue)

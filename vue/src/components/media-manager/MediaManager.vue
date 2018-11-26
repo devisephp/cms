@@ -1,5 +1,6 @@
 <template>
   <div class="dvs-min-h-screen dvs-fixed dvs-pin dvs-z-60 dvs-text-grey-darker" :class="{'dvs-pointer-events-none': !loaded}" v-if="show">
+    
     <div class="dvs-blocker dvs-z-30" @click="show = false"></div>
     <div class="media-manager dvs-min-w-4/5">
       <div v-if="!loaded" class="media-manager-interface">
@@ -17,15 +18,6 @@
             </div>
           </div>
           <div class="dvs-flex dvs-items-center">
-            <vue-dropzone
-              ref="myVueDropzone"
-              id="dropzone"
-              @vdropzone-success="uploadSuccess()"
-              @vdropzone-error="uploadError"
-              class="dvs-mr-8 dvs-uppercase dvs-font-bold dvs-text-xs dvs-p-4 dvs-rounded-sm"
-              :style="theme.actionButton"
-              includeStyling: false
-              :options="dropzoneOptions" />
             <fieldset class="dvs-fieldset dvs-mr-8">
               <div class="dvs-flex dvs-items-center">
                 <label class="dvs-mr-2 dvs-my-2">Contact Sheet</label>
@@ -97,6 +89,9 @@
                 <close-icon class="dvs-ml-2 dvs-cursor-pointer" w="30" h="30" />
               </div>
             </div>
+
+            <!-- File uploader -->
+            <uploader></uploader>
 
             <!-- Delete Directory -->
             <div v-if="currentFiles.length < 1 && directories.length < 1 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
@@ -172,10 +167,10 @@
                   <div class="dvs-w-1/2 dvs-mr-8 dvs-flex dvs-flex-col dvs-justify-between">
                     <img :src="`/styled/preview/${file.url}?w=500&h=500`" class="dvs-cursor-pointer dvs-mb-4" @click="selectSourceFile(file)">
                     <div class="dvs-flex">
-                      <div class="dvs-mr-4 dvs-cursor-pointer" v-devise-alert-confirm="{callback: confirmedDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
-                        <trash-icon h="20" w="20" :style="{color: theme.panel.color}" />
+                      <div class="dvs-mr-4 dvs-cursor-pointer" :style="{color: theme.actionButton.background}" v-devise-alert-confirm="{callback: confirmedDeleteFile, arguments: file, message: 'Are you sure you want to delete this media?'}">
+                        <trash-icon h="20" w="20" />
                       </div>
-                      <a href="file.url" target="_blank" :style="{color: theme.panel.color}">
+                      <a href="file.url" target="_blank" :style="{color: theme.actionButton.background}">
                         <link-icon h="20" w="20" />
                       </a>
                     </div>
@@ -229,9 +224,9 @@
   import { mapGetters, mapActions } from 'vuex'
 
   import Loadbar from './../utilities/Loadbar'
+  import Uploader from './../utilities/Uploader'
   import MediaEditor from './MediaEditor'
   import Breadcrumbs from './Breadcrumbs'
-  import vue2Dropzone from 'vue2-dropzone'
 
   import FolderIcon from 'vue-ionicons/dist/ios-folder.vue'
   import TrashIcon from 'vue-ionicons/dist/md-trash.vue'
@@ -288,7 +283,7 @@
         this.$set(this, 'searchResults', [])
 
         self.setCurrentDirectory(directory).then(function () {
-          self.getCurrentFiles().then(function () {
+          self.getCurrentFiles(self.options).then(function () {
             self.getCurrentDirectories().then(function () {
               self.loaded = true
             })
@@ -303,7 +298,7 @@
         this.changeDirectories(this.currentDirectory)
       },
       uploadError (file, message) {
-        deviseSettings.$bus.$emit('showError', {title: 'Upload Error', message: 'There was a problem uploading your file. Either the file was too large or it has been uploaded too many times.'})
+        deviseSettings.$bus.$emit('showError', {title: 'Upload Error', message: 'There was a problem uploading your file. The file may be too large to be uploaded.'})
       },
       getUrlParam (paramName) {
         var reParam = new RegExp('(?:[?&]|&)' + paramName + '=([^&]+)', 'i')
@@ -318,25 +313,7 @@
         this.$set(this, 'currentlyOpenFile', null)
       },
       selectSourceFile (file) {
-        console.log(file)
         this.selectedFile = file
-
-        // Originally we simply kicked to the callback 
-        // in the event there were no sizes. This may need
-        // to be an option in the future but for now you just
-        // go to the media editor where you set sizes
-
-        // if (!this.options || !this.options.sizes) {
-        //   if (typeof this.target !== 'undefined') {
-        //     this.target.value = this.selectedFile.url
-        //   }
-        //   if (typeof this.callback !== 'undefined') {
-        //     this.callback(this.selectedFile.url)
-        //   }
-
-        //   this.show = false
-        //   this.$set(this, 'selectedFile', null)
-        // }
       },
       generateAndSetFile (edits) {
         let self = this
@@ -431,18 +408,10 @@
         } 
         return this.files
       },
-      dropzoneOptions () {
-
-        let token = document.head.querySelector('meta[name="csrf-token"]');
-        
+      uploadHeaders () {
+        let token = document.head.querySelector('meta[name="csrf-token"]')
         return {
-          url: '/api/devise/media?directory=' + this.currentDirectory,
-          dictDefaultMessage: "<span class='dvs-cursor-pointer'>Upload New File</span>",
-          method: 'post',
-          createImageThumbnails: false,
-          headers: {
-            'X-CSRF-TOKEN': token.content
-          }
+          'X-CSRF-TOKEN': token.content
         }
       }
     },
@@ -450,12 +419,12 @@
       Loadbar,
       Breadcrumbs,
       MediaEditor,
-      vueDropzone: vue2Dropzone,
       AttachIcon,
       FolderIcon,
       LinkIcon,
       TrashIcon,
-      CloseIcon
+      CloseIcon,
+      Uploader
     }
   }
 </script>

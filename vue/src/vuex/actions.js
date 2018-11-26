@@ -305,10 +305,11 @@ const actions = {
   },
 
   getPagesList (context, filters) {
+    console.log('here')
     return new Promise((resolve, reject) => {
       let params = filters.hasOwnProperty('language_id') ? 'language_id=' + filters.language_id : ''
-      window.axios.get(context.state.api.baseUrl + 'pagesList?' + params).then(function (response) {
-        context.commit('setPagesList', response.data)
+      window.axios.get(context.state.api.baseUrl + 'routes?' + params).then(function (response) {
+        context.commit('setPagesList', response.data.data)
         resolve(response)
       }).catch(function (error) {
         devise.$bus.$emit('showError', error)
@@ -387,6 +388,7 @@ const actions = {
 
   updatePage (context, payload) {
     return new Promise((resolve, reject) => {
+      const data = sanitizePageData(payload.data)
       window.axios.put(context.state.api.baseUrl + 'pages/' + payload.data.id, payload.data).then(function (response) {
         devise.$bus.$emit('showMessage', {title: 'Success!', message: payload.data.title + ' has been saved.'})
         context.commit('updatePage', {page: payload.data, data: response.data})

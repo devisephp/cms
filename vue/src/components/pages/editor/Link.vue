@@ -29,20 +29,30 @@
       </div>
 
       <template v-if="localValue.mode === 'url'">
-        <fieldset class="dvs-fieldset">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>URL</label>
-          <input type="text" v-model="localValue.href" v-on:input="updateValue()">
+          <input type="text" v-model="localValue.url" v-on:input="updateUrl()">
         </fieldset>
       </template>
       <template v-if="localValue.mode === 'page'">
-        <fieldset class="dvs-fieldset">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page</label>
-          <select v-model="localValue.routeName" @change="updateValue()">
+          <select v-model="localValue.routeName" @change="selectPage()">
             <option :value="0">Select a Page</option>
             <option :value="page.route_name" v-for="page in pagesList.data" :key="page.id">{{page.title}}</option>
           </select>
         </fieldset>
       </template>
+
+        <fieldset class="dvs-fieldset">
+          <label>Target</label>
+          <select v-model="localValue.target" @change="updateValue()">
+            <option value="_self">Same Window</option>
+            <option value="_blank">New Tab / Window</option>
+            <option value="_parent">Parent</option>
+            <option value="_top">Top</option>
+          </select>
+        </fieldset>
     </template>
 
   </field-editor>
@@ -55,13 +65,24 @@ export default {
   name: 'LinkEditor',
   data () {
     return {
-      localValue: {},
+      localValue: {
+        href: '',
+        url: '',
+        text: '',
+        routeName: '',
+        target: '_self'
+      },
       showEditor: false
     }
   },
   mounted () {
     this.originalValue = Object.assign({}, this.value)
     this.localValue = this.value
+    if (!this.localValue.target) {
+      this.localValue.target = '_self'
+    }
+
+
 
     this.retrieveAllPagesList()
   },
@@ -97,6 +118,19 @@ export default {
       this.localValue.routeName = this.originalValue.routeName
       this.updateValue()
       this.toggleEditor()
+    },
+    updateUrl () {
+      this.localValue.href = this.localValue.url
+      this.updateValue()
+    },
+    selectPage (e) {
+
+      let page = this.pagesList.data.find((page) => {
+        return page.route_name === this.localValue.routeName
+      })
+
+      this.localValue.href = page.url
+      this.updateValue()
     },
     updateValue: function () {
       // Emit the number value through the input event

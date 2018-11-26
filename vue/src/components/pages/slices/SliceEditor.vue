@@ -92,7 +92,7 @@
 
     <manage-slice ref="manageslice" v-if="manageSlice === true" @cancel="manageSlice = false" @addSlice="addSlice" @editSlice="editSlice" @removeSlice="removeSlice" :slice="slice" />
 
-    <div class="dvs-collapsed dvs-mb-4" v-show="sliceOpen">
+    <div class="dvs-collapsed dvs-mb-4" v-if="sliceOpen">
       <fieldset 
         v-for="(field, key) in sliceConfig(slice).fields" 
         class="dvs-fieldset dvs-mb-1"

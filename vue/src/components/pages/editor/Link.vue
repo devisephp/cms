@@ -29,13 +29,13 @@
       </div>
 
       <template v-if="localValue.mode === 'url'">
-        <fieldset class="dvs-fieldset">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>URL</label>
           <input type="text" v-model="localValue.url" v-on:input="updateValue()">
         </fieldset>
       </template>
       <template v-if="localValue.mode === 'page'">
-        <fieldset class="dvs-fieldset">
+        <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page</label>
           <select v-model="localValue.routeName" @change="updateValue()">
             <option :value="0">Select a Page</option>
@@ -43,6 +43,16 @@
           </select>
         </fieldset>
       </template>
+
+        <fieldset class="dvs-fieldset">
+          <label>Target</label>
+          <select v-model="localValue.target" @change="updateValue()">
+            <option value="_self">Same Window</option>
+            <option value="_blank">New Tab / Window</option>
+            <option value="_parent">Parent</option>
+            <option value="_top">Top</option>
+          </select>
+        </fieldset>
     </template>
 
   </field-editor>
@@ -55,13 +65,21 @@ export default {
   name: 'LinkEditor',
   data () {
     return {
-      localValue: {},
+      localValue: {
+        href: '',
+        url: '',
+        text: '',
+        target: '_self'
+      },
       showEditor: false
     }
   },
   mounted () {
     this.originalValue = Object.assign({}, this.value)
     this.localValue = this.value
+    if (!this.localValue.target) {
+      this.localValue.target = '_self'
+    }
 
     this.retrieveAllPagesList()
   },
@@ -99,6 +117,7 @@ export default {
       this.toggleEditor()
     },
     updateValue: function () {
+      this.localValue.href = this.localValue.url
       // Emit the number value through the input event
       this.$emit('input', this.localValue)
       this.$emit('change', this.localValue)

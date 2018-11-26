@@ -75,6 +75,7 @@ class Repository
 
         $fileData['name'] = basename($file);
         $fileData['url'] = $this->Storage->url($file);
+        $fileData['type'] = 'file';
 
         if ($addSearchableData)
         {
@@ -85,6 +86,12 @@ class Repository
 
             array_pop($pathParts); // removing file name
             $fileData['directories'] = $pathParts;
+        }
+
+        $type = $this->guesser->guess($this->Storage->path($file));
+        if (strpos($type, 'image') !== false)
+        {
+            $fileData['type'] = 'image';
         }
 
         return $fileData;

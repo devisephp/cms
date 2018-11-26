@@ -1,11 +1,6 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
   <head>
-    @isset($page)
-    {!! Devise::head($page) !!}
-    @else
-    {!! Devise::head() !!}
-    @endif
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,9 +28,6 @@
 
       </devise>
     </div>
-
-    <script src="{{mix('/manifest.js', './devise')}}"></script>
-    <script src="{{mix('/js/devise.js', './devise')}}"></script>
 
   </body>
 </html>

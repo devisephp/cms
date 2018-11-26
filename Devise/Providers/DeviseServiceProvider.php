@@ -79,10 +79,6 @@ class DeviseServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole())
         {
             $this->commands([
-                Install::class,
-            ]);
-
-            $this->commands([
                 CleanStyledMedia::class,
             ]);
         }

@@ -6,9 +6,8 @@
       </div>
 
       <div data-simplebar>
-        <slot />
+        <slot/>
       </div>
-    
     </div>
   </div>
 </template>
@@ -22,5 +21,5 @@ export default {
       type: Object
     }
   }
-}
+};
 </script>

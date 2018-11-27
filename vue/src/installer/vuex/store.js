@@ -1,17 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import mutations from './mutations'
-import actions from './actions'
-import getters from './getters'
+import Vue from "vue";
+import Vuex from "vuex";
+import mutations from "./mutations";
+import actions from "./actions";
+import getters from "./getters";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // root state object.
 // each Vuex instance is just a single state tree.
 const state = {
   // Application State
   api: {
-    baseUrl: '/api/devise/'
+    baseUrl: "/api/devise/"
   },
   checklist: {
     database: true,
@@ -22,14 +22,14 @@ const state = {
     page: false,
     image_library: false,
     image_optimization: {
-      jpegoptim: false, 
-      optipng: false, 
-      pngquant: false, 
+      jpegoptim: false,
+      optipng: false,
+      pngquant: false,
       svgo: false,
       gifsicle: false
     }
   }
-}
+};
 
 // A Vuex instance is created by combining the state, the actions,
 // and the mutations. Because the actions and mutations are just
@@ -45,4 +45,4 @@ export default {
   mutations,
   actions,
   getters
-}
+};

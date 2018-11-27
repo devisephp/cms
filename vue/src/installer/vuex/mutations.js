@@ -1,8 +1,6 @@
 export default {
-
   // Checklist
-  createPage (state, checklist) {
-    state.checklist = checklist
+  createPage(state, checklist) {
+    state.checklist = checklist;
   }
-  
-}
+};

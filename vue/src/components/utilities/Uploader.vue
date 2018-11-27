@@ -1,8 +1,12 @@
 <template>
   <div>
-    <div  v-show="$refs.upload && $refs.upload.dropActive" class="dvs-fixed dvs-pin" style="z-index:9999">
+    <div
+      v-show="$refs.upload && $refs.upload.dropActive"
+      class="dvs-fixed dvs-pin"
+      style="z-index:9999"
+    >
       <div class="dvs-blocker"></div>
-      <div class=" dvs-flex dvs-justify-center dvs-items-center dvs-relative" style="z-index:9999">
+      <div class="dvs-flex dvs-justify-center dvs-items-center dvs-relative" style="z-index:9999">
         <div class="dvs-bg-black dvs-p-8 dvs-rounded dvs-shadow">
           <h3 class="dvs-text-abs-white">Drop files to upload</h3>
         </div>
@@ -31,38 +35,59 @@
         <tr v-for="file in uploadingFiles" :key="file.id" class="dvs-border-b">
           <td class="dvs-p-4">
             <div class="dvs-flex">
-              <div class="dvs-cursor-pointer dvs-flex dvs-justify-center dvs-items-center dvs-mr-2" @click="removeFileFromQueue(file)">
-                <close-icon w="40" h="40" />
+              <div
+                class="dvs-cursor-pointer dvs-flex dvs-justify-center dvs-items-center dvs-mr-2"
+                @click="removeFileFromQueue(file)"
+              >
+                <close-icon w="40" h="40"/>
               </div>
-              <div class="dvs-bg-cover dvs-bg-center" :style="`width:40px;height:40px;background-image:url(${file.thumb})`">
+              <div
+                class="dvs-bg-cover dvs-bg-center"
+                :style="`width:40px;height:40px;background-image:url(${file.thumb})`"
+              >
                 <span v-if="!file.thumb">No Image</span>
               </div>
-              <div class="dvs-ml-4 dvs-text-sm dvs-font-normal">
-                {{ file.name }}
-              </div>
+              <div class="dvs-ml-4 dvs-text-sm dvs-font-normal">{{ file.name }}</div>
             </div>
-            <div class="dvs-bg-grey dvs-w-full dvs-mt-4 dvs-flex dvs-items-center" style="height:5px;">
-              <div style="height:3px;" :style="{background: theme.actionButton.background, width: `${file.progress}%`}"></div>
+            <div
+              class="dvs-bg-grey dvs-w-full dvs-mt-4 dvs-flex dvs-items-center"
+              style="height:5px;"
+            >
+              <div
+                style="height:3px;"
+                :style="{background: theme.actionButton.background, width: `${file.progress}%`}"
+              ></div>
             </div>
           </td>
         </tr>
       </table>
-      <button v-show="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true" type="button" class="dvs-btn" :style="theme.actionButton">Start upload</button>
-      <button v-show="$refs.upload && $refs.upload.active" @click.prevent="$refs.upload.active = false" type="button" class="dvs-btn" :style="theme.actionButtonGhost">Stop upload</button>
+      <button
+        v-show="!$refs.upload || !$refs.upload.active"
+        @click.prevent="$refs.upload.active = true"
+        type="button"
+        class="dvs-btn"
+        :style="theme.actionButton"
+      >Start upload</button>
+      <button
+        v-show="$refs.upload && $refs.upload.active"
+        @click.prevent="$refs.upload.active = false"
+        type="button"
+        class="dvs-btn"
+        :style="theme.actionButtonGhost"
+      >Stop upload</button>
     </div>
   </div>
 </template>
 
 <script>
-
-const VueUpload = require('vue-upload-component')
-import CloseIcon from 'vue-ionicons/dist/ios-close.vue'
+const VueUpload = require("vue-upload-component");
+import CloseIcon from "vue-ionicons/dist/ios-close.vue";
 
 export default {
-  data () {
+  data() {
     return {
       uploadingFiles: []
-    }
+    };
   },
   methods: {
     /**
@@ -71,17 +96,20 @@ export default {
      * @param  Object|undefined   oldFile   Read only
      * @return undefined
      */
-    inputFile: function (newFile, oldFile) {
+    inputFile: function(newFile, oldFile) {
       if (newFile && oldFile && !newFile.active && oldFile.active) {
         // Get response data
         if (newFile.xhr) {
           //  Get the response status code
-          if(newFile.xhr.status === 200) {
-            this.removeFileFromQueue (newFile)
+          if (newFile.xhr.status === 200) {
+            this.removeFileFromQueue(newFile);
 
             if (this.uploadingFiles.length < 1) {
-              deviseSettings.$bus.$emit('showMessage', {title: 'Upload Complete', message: 'Your upload has been successfully completed'})
-              this.$emit('all-files-uploaded', newFile)
+              deviseSettings.$bus.$emit("showMessage", {
+                title: "Upload Complete",
+                message: "Your upload has been successfully completed"
+              });
+              this.$emit("all-files-uploaded", newFile);
             }
           }
         }
@@ -94,30 +122,30 @@ export default {
      * @param  Function           prevent   Prevent changing
      * @return undefined
      */
-    inputFilter: function (newFile, oldFile, prevent) {
+    inputFilter: function(newFile, oldFile, prevent) {
       // Create a blob field
-      newFile.blob = ''
-      let URL = window.URL || window.webkitURL
+      newFile.blob = "";
+      let URL = window.URL || window.webkitURL;
       if (URL && URL.createObjectURL) {
-        newFile.blob = URL.createObjectURL(newFile.file)
+        newFile.blob = URL.createObjectURL(newFile.file);
       }
 
       // Thumbnails
-      newFile.thumb = ''
-      if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
-        newFile.thumb = newFile.blob
+      newFile.thumb = "";
+      if (newFile.blob && newFile.type.substr(0, 6) === "image/") {
+        newFile.thumb = newFile.blob;
       }
     },
-    removeFileFromQueue (file) {
-      this.uploadingFiles.splice(this.uploadingFiles.indexOf(file), 1)
+    removeFileFromQueue(file) {
+      this.uploadingFiles.splice(this.uploadingFiles.indexOf(file), 1);
     }
   },
   computed: {
-    uploadHeaders () {
-      let token = document.head.querySelector('meta[name="csrf-token"]')
+    uploadHeaders() {
+      let token = document.head.querySelector('meta[name="csrf-token"]');
       return {
-        'X-CSRF-TOKEN': token.content
-      }
+        "X-CSRF-TOKEN": token.content
+      };
     }
   },
   components: {
@@ -130,5 +158,5 @@ export default {
       required: true
     }
   }
-}
+};
 </script>

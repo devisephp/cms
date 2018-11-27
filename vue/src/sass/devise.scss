@@ -1,5 +1,7 @@
 @tailwind preflight;
 
+@tailwind components
+
 @import "./badges";
 @import "./blocker";
 @import "./buttons";
@@ -8,7 +10,6 @@
 @import "./colors";
 @import "./color-picker";
 @import "./container";
-@import "./dropzone";
 @import "./forms";
 @import "./help";
 @import "./lists";

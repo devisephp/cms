@@ -659,67 +659,6 @@ const actions = {
     })
   },
 
-  // Templates
-  createTemplate (context, template) {
-    return new Promise((resolve, reject) => {
-      window.axios.post(context.state.api.baseUrl + 'templates/', template).then(function (response) {
-        devise.$bus.$emit('showMessage', {title: 'Success!', message: template.name + ' has been created.'})
-        context.commit('createTemplate', response.data.data)
-        resolve(response)
-      }).catch(function (error) {
-        devise.$bus.$emit('showError', error)
-      }).catch(function (error) {
-        devise.$bus.$emit('showError', error)
-      })
-    }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  },
-
-  updateTemplate (context, template) {
-    return new Promise((resolve, reject) => {
-      window.axios.put(context.state.api.baseUrl + 'templates/' + template.id, template).then(function (response) {
-        context.commit('updateTemplate', {template: template, data: response.data})
-        resolve(response)
-      }).catch(function (error) {
-        devise.$bus.$emit('showError', error)
-      })
-    }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  },
-
-  deleteTemplate (context, template) {
-    return new Promise((resolve, reject) => {
-      window.axios.delete(context.state.api.baseUrl + 'templates/' + template.id).then(function (response) {
-        devise.$bus.$emit('showMessage', {title: 'Success!', message: template.name + ' has been deleted.'})
-        context.commit('deleteTemplate', template)
-        resolve(response)
-      }).catch(function (error) {
-        devise.$bus.$emit('showError', error)
-      })
-    }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  },
-
-  updateCurrentTemplate (context, templateId) {
-    context.commit('updateCurrentTemplate', templateId)
-  },
-
-  getTemplates (context) {
-    return new Promise((resolve, reject) => {
-      window.axios.get(context.state.api.baseUrl + 'templates/').then(function (response) {
-        context.commit('setTemplates', response.data)
-        resolve(response)
-      }).catch(function (error) {
-        devise.$bus.$emit('showError', error)
-      })
-    }).catch(function (error) {
-      devise.$bus.$emit('showError', error)
-    })
-  },
-
   // Redirects
   getRedirects (context) {
     return new Promise((resolve, reject) => {

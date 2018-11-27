@@ -74,7 +74,7 @@
           </div>
 
 
-          <div class="dvs-flex-grow dvs-relative dvs-overflow-y-scroll" :class="{'w-full': directories.length < 1}">
+          <div class="dvs-flex-grow dvs-relative dvs-overflow-y-scroll dvs-p-4" :class="{'w-full': directories.length < 1}">
 
             <div class="dvs-p-8 dvs-flex" v-if="searchResults.length > 0">
               <h4>Showing up to {{ searchResultsLimit }} results for: <strong>{{ searchTerms }}</strong></h4>
@@ -91,7 +91,7 @@
             </div>
 
             <!-- File uploader -->
-            <uploader></uploader>
+            <uploader :current-directory="currentDirectory" @all-files-uploaded="refreshDirectory"></uploader>
 
             <!-- Delete Directory -->
             <div v-if="currentFiles.length < 1 && directories.length < 1 && currentDirectory !== ''" class="dvs-flex dvs-justify-center dvs-items-center dvs-absolute dvs-absolute-center">
@@ -112,12 +112,13 @@
             </div>
 
             <!-- Files -->
-            <ul class="dvs-list-reset dvs-flex dvs-justify-center dvs-flex-wrap" v-else>
+            <ul class="dvs-list-reset dvs-flex dvs-justify-center dvs-flex-wrap dvs-p-4" v-else>
               <li v-for="file in currentFiles" :key="file.id" class="dvs-relative dvs-bg-white dvs-card dvs-mt-2"
                 :class="{
                   'dvs-cursor-pointer': !file.on,
                   'dvs-border-b dvs-border-lighter dvs-p-2 dvs-mx-4': mode === 'thumbnails',
-                  'dvs-m-4 dvs-p-0': mode !== 'thumbnails',
+                  'dvs-p-0 dvs-mb-4': mode !== 'thumbnails',
+                  'dvs-mx-2': mode === 'contactSheet',
                   'dvs-w-full': mode === 'list'
                 }"
                 @click="openFile(file)">
@@ -128,14 +129,14 @@
                 </div>
 
                 <!-- Closed File -->
-                <div v-if="file !== currentlyOpenFile">
+                <div class="dvs-overflow-hidden" v-if="file !== currentlyOpenFile">
                   <!-- Contact Sheet -->
                   <div 
                     class="dvs-overflow-hidden dvs-text-center" 
                     style="width:100px;height:105px" 
                     v-if="mode === 'contactSheet'">
                     <img :src="`/styled/preview/${file.url}?w=100&h=100`" style="min-width:75px;height:75px">
-                    <div class="dvs-text-xs dvs-font-bold">
+                    <div class="dvs-text-xs dvs-font-bold dvs-px-2">
                       {{ file.name }}
                     </div>
                   </div>
@@ -143,7 +144,7 @@
                   <!-- Thumbnails Mode -->
                   <div 
                     class="dvs-grid-preview dvs-font-bold dvs-relative" 
-                    :style="`background-size:cover;background-image:url('${`/styled/preview/${file.url}?w=300&h=300`}')`" 
+                    :style="`background-size:cover;background-image:url('${`/styled/preview/${file.url}?w=200&h=200`}')`" 
                     v-else-if="mode === 'thumbnails'">
                     <div class="dvs-text-center dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-text-white dvs-p-4"
                     style="text-shadow:2px 2px 2px rgba(0,0,0,0.5);background-color:rgba(0,0,0,0.4)">
@@ -156,14 +157,14 @@
                     class="dvs-w-full dvs-flex dvs-items-center"
                     v-else>
                     <img :src="`/styled/preview/${file.url}?w=100&h=100`" style="min-width:75px;height:75px">
-                    <div class="dvs-ml-4 dvs-font-bold">
+                    <div class="dvs-px-4 dvs-font-bold">
                       {{ file.name }}
                     </div>
                   </div>
                 </div>
 
                 <!-- Open File -->
-                <div v-else class="dvs-flex dvs-p-4">
+                <div v-else class="dvs-flex dvs-p-4 dvs-overflow-hidden">
                   <div class="dvs-w-1/2 dvs-mr-8 dvs-flex dvs-flex-col dvs-justify-between">
                     <img :src="`/styled/preview/${file.url}?w=500&h=500`" class="dvs-cursor-pointer dvs-mb-4" @click="selectSourceFile(file)">
                     <div class="dvs-flex">
@@ -293,8 +294,7 @@
       isActive (file) {
         return file.used_count > 0
       },
-      uploadSuccess () {
-        deviseSettings.$bus.$emit('showMessage', {title: 'Upload Complete', message: 'Your upload has been successfully completed'})
+      refreshDirectory () {
         this.changeDirectories(this.currentDirectory)
       },
       uploadError (file, message) {

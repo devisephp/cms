@@ -6,6 +6,8 @@
   "author": "LBM",
   "license": "MIT",
   "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
+    "prismjs": "^1.15.0",
     "vue-ionicons": "^2.2.1",
     "vuejs": "^3.0.1",
     "vuex": "^3.0.1"

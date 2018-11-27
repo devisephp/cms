@@ -3,20 +3,20 @@ const actions = {
   createPage(context, page) {
     return new Promise((resolve, reject) => {
       window.axios
-        .post(context.state.api.baseUrl + "pages/", page)
+        .post(context.state.api.baseUrl + 'pages/', page)
         .then(function(response) {
-          devise.$bus.$emit("showMessage", {
-            title: "Success!",
-            message: page.title + " has been created."
+          devise.$bus.$emit('showMessage', {
+            title: 'Success!',
+            message: page.title + ' has been created.'
           });
-          context.commit("createPage", response.data.data);
+          context.commit('createPage', response.data.data);
           resolve(response);
         })
         .catch(function(error) {
-          devise.$bus.$emit("showError", error);
+          devise.$bus.$emit('showError', error);
         });
     }).catch(function(error) {
-      devise.$bus.$emit("showError", error);
+      devise.$bus.$emit('showError', error);
     });
   },
 
@@ -24,40 +24,40 @@ const actions = {
   createSite(context, site) {
     return new Promise((resolve, reject) => {
       window.axios
-        .post(context.state.api.baseUrl + "sites/", site)
+        .post(context.state.api.baseUrl + 'sites/', site)
         .then(function(response) {
-          devise.$bus.$emit("showMessage", {
-            title: "Success!",
-            message: site.name + " has been created."
+          devise.$bus.$emit('showMessage', {
+            title: 'Success!',
+            message: site.name + ' has been created.'
           });
-          context.commit("createSite", response.data.data);
+          context.commit('createSite', response.data.data);
           resolve(response);
         })
         .catch(function(error) {
-          devise.$bus.$emit("showError", error);
+          devise.$bus.$emit('showError', error);
         });
     }).catch(function(error) {
-      devise.$bus.$emit("showError", error);
+      devise.$bus.$emit('showError', error);
     });
   },
   // Users
   createUser(context, user) {
     return new Promise((resolve, reject) => {
       window.axios
-        .post(context.state.api.baseUrl + "users/", user)
+        .post(context.state.api.baseUrl + 'users/', user)
         .then(function(response) {
-          devise.$bus.$emit("showMessage", {
-            title: "Success!",
-            message: user.name + " has been created."
+          devise.$bus.$emit('showMessage', {
+            title: 'Success!',
+            message: user.name + ' has been created.'
           });
-          context.commit("createUser", response.data.data);
+          context.commit('createUser', response.data.data);
           resolve(response);
         })
         .catch(function(error) {
-          devise.$bus.$emit("showError", error);
+          devise.$bus.$emit('showError', error);
         });
     }).catch(function(error) {
-      devise.$bus.$emit("showError", error);
+      devise.$bus.$emit('showError', error);
     });
   }
 };

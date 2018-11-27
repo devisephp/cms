@@ -1,0 +1,13 @@
+{
+  "name": "DeviseInstaller",
+  "version": "1.0.0",
+  "description": "Guided dynamic documentation",
+  "main": "installer.js",
+  "author": "LBM",
+  "license": "MIT",
+  "dependencies": {
+    "vue-ionicons": "^2.2.1",
+    "vuejs": "^3.0.1",
+    "vuex": "^3.0.1"
+  }
+}

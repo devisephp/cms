@@ -4,7 +4,8 @@ namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
 
-use Illuminate\Database\Query\Builder;
+use Devise\Support\Database;
+use Devise\Support\Env;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,7 @@ class InstallController extends Controller
     public function checklist(ApiRequest $request)
     {
         return [
-            "database"           => Builder::connected(),
+            "database"           => Database::connected(),
             "migrations"         => $this->migrationsAreRun(),
             "auth"               => $this->basicAuthIsReady(),
             "user"               => $this->firstUserReady(),
@@ -41,10 +42,15 @@ class InstallController extends Controller
         ];
     }
 
+    public function complete(ApiRequest $request)
+    {
+        Env::set('DVS_MODE', 'active');
+    }
+
     private function migrationsAreRun()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('migrations')
             &&
@@ -55,7 +61,7 @@ class InstallController extends Controller
     private function basicAuthIsReady()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('users')
             &&
@@ -66,7 +72,7 @@ class InstallController extends Controller
     private function firstUserReady()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('users')
             &&
@@ -77,7 +83,7 @@ class InstallController extends Controller
     private function firstSiteReady()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('dvs_sites')
             &&
@@ -96,7 +102,7 @@ class InstallController extends Controller
     private function firstPageReady()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('dvs_pages')
             &&

@@ -8,9 +8,8 @@ use Devise\Devise;
 use Devise\Models\DvsField;
 use Devise\Observers\DvsFieldObserver;
 use Devise\Sites\SiteDetector;
-use Illuminate\Database\Query\Builder;
+use Devise\Support\Database;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -25,8 +24,6 @@ class DeviseServiceProvider extends ServiceProvider
      */
     public function boot(BladeCompiler $blade)
     {
-        $this->defineMacros();
-
         $this->setSnapshotConfig();
 
         $this->setSiteConfig();
@@ -64,7 +61,7 @@ class DeviseServiceProvider extends ServiceProvider
 
     private function setSiteConfig()
     {
-        if (!$this->app->runningInConsole() && Builder::connected())
+        if (!$this->app->runningInConsole() && Database::connected())
         {
             $siteDetector = App::make(SiteDetector::class);
             $site = $siteDetector->current();
@@ -123,21 +120,9 @@ class DeviseServiceProvider extends ServiceProvider
 
     private function setObservers()
     {
-        if (Builder::connected())
+        if (Database::connected())
         {
             DvsField::observe(DvsFieldObserver::class);
         }
-    }
-
-    private function defineMacros()
-    {
-        Builder::macro('connected', function () {
-            try {
-                DB::connection()->getPdo();
-                return true;
-            } catch (\Exception $e) {
-                return false;
-            }
-        });
     }
 }

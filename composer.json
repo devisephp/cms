@@ -34,5 +34,10 @@
             ]
         }
     },
+    "scripts": {
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=dvs-assets"
+        ]
+    },
     "minimum-stability": "stable"
 }

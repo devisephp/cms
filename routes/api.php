@@ -8,6 +8,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
          * Install
          */
         Route::get('install-checklist', 'InstallController@checklist');
+        Route::post('install-complete', 'InstallController@complete');
 
         /**
          * Sites

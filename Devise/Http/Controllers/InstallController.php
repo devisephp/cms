@@ -4,39 +4,53 @@ namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
 
-use Illuminate\Database\Query\Builder;
+use Devise\Support\Database;
+use Devise\Support\Env;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Spatie\ImageOptimizer\OptimizerChain;
 
 class InstallController extends Controller
 {
+    /**
+     * @var OptimizerChain
+     */
+    private $OptimizerChain;
+
+
+    /**
+     * InstallController constructor.
+     */
+    public function __construct(OptimizerChain $OptimizerChain)
+    {
+        $this->OptimizerChain = $OptimizerChain;
+    }
 
     public function checklist(ApiRequest $request)
     {
         return [
-            "database"           => Builder::connected(),
+            "database"           => Database::connected(),
             "migrations"         => $this->migrationsAreRun(),
             "auth"               => $this->basicAuthIsReady(),
             "user"               => $this->firstUserReady(),
             "site"               => $this->firstSiteReady(),
             "page"               => $this->firstPageReady(),
-            "image_library"      => true,
-            "image_optimization" => [
-                "jpegoptim" => true,
-                "optipng  " => false,
-                "pngquant"  => true,
-                "svgo"      => true,
-                "gifsicle"  => true
-            ]
+            "image_library"      => $this->imageLibraryAvailable(),
+            "image_optimization" => $this->optimizersStatus()
         ];
+    }
+
+    public function complete(ApiRequest $request)
+    {
+        Env::set('DVS_MODE', 'active');
     }
 
     private function migrationsAreRun()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('migrations')
             &&
@@ -47,7 +61,7 @@ class InstallController extends Controller
     private function basicAuthIsReady()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('users')
             &&
@@ -58,7 +72,7 @@ class InstallController extends Controller
     private function firstUserReady()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('users')
             &&
@@ -69,7 +83,7 @@ class InstallController extends Controller
     private function firstSiteReady()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('dvs_sites')
             &&
@@ -88,7 +102,7 @@ class InstallController extends Controller
     private function firstPageReady()
     {
         return (
-            Builder::connected()
+            Database::connected()
             &&
             Schema::hasTable('dvs_pages')
             &&
@@ -98,5 +112,20 @@ class InstallController extends Controller
             &&
             DB::table('dvs_page_versions')->count() > 0
         );
+    }
+
+    private function imageLibraryAvailable()
+    {
+        return (extension_loaded('gd') || extension_loaded('imagick'));
+    }
+
+    private function optimizersStatus()
+    {
+        $status = [];
+        $optimizers = $this->OptimizerChain->getOptimizers();
+        foreach ($optimizers as $optimizer){
+            $status[ $optimizer->binaryName ] = $optimizer->binaryPath !== "";
+        }
+        return $status;
     }
 }

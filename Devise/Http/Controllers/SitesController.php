@@ -12,82 +12,88 @@ use Illuminate\Routing\Controller;
 
 class SitesController extends Controller
 {
-  /**
-   * @var DvsSite
-   */
-  private $DvsSite;
+    /**
+     * @var DvsSite
+     */
+    private $DvsSite;
 
 
-  /**
-   * SitesController constructor.
-   * @param DvsSite $DvsSite
-   */
-  public function __construct(DvsSite $DvsSite)
-  {
-    $this->DvsSite = $DvsSite;
-  }
+    /**
+     * SitesController constructor.
+     * @param DvsSite $DvsSite
+     */
+    public function __construct(DvsSite $DvsSite)
+    {
+        $this->DvsSite = $DvsSite;
+    }
 
-  public function all(ApiRequest $request)
-  {
-    $all = $this->DvsSite
-      ->with('languages')
-      ->get();
+    public function all(ApiRequest $request)
+    {
+        $all = $this->DvsSite
+            ->with('languages')
+            ->get();
 
-    return SiteResource::collection($all);
-  }
+        return SiteResource::collection($all);
+    }
 
-  /**
-   * @param SaveSite $request
-   * @return SiteResource
-   */
-  public function store(SaveSite $request)
-  {
-    $new = $this->DvsSite
-      ->createFromRequest($request);
+    /**
+     * @param SaveSite $request
+     * @return SiteResource
+     */
+    public function store(SaveSite $request)
+    {
+        $new = $this->DvsSite
+            ->createFromRequest($request);
 
-    return new SiteResource($new);
-  }
+        $syncdata = $this->getLanguageSyncData($request->input('languages', []));
 
-  /**
-   * @param SaveSite $request
-   * @param $id
-   * @return SiteResource
-   */
-  public function update(SaveSite $request, $id)
-  {
-    $site = $this->DvsSite
-      ->findOrFail($id);
+        $new->languages()->sync($syncdata);
 
-    $site->updateFromRequest($request);
+        $new->load('languages');
 
-    $syncdata = $this->getLanguageSyncData($request->input('languages', []));
+        return new SiteResource($new);
+    }
 
-    $site->languages()->sync($syncdata);
+    /**
+     * @param SaveSite $request
+     * @param $id
+     * @return SiteResource
+     */
+    public function update(SaveSite $request, $id)
+    {
+        $site = $this->DvsSite
+            ->findOrFail($id);
 
-    $site->load('languages');
+        $site->updateFromRequest($request);
 
-    return new SiteResource($site);
-  }
+        $syncdata = $this->getLanguageSyncData($request->input('languages', []));
 
-  /**
-   * @param DeleteSite $request
-   * @param $id
-   */
-  public function delete(DeleteSite $request, $id)
-  {
-    $site = $this->DvsSite
-      ->findOrFail($id);
+        $site->languages()->sync($syncdata);
 
-    $site->delete();
-  }
+        $site->load('languages');
 
-  private function getLanguageSyncData($languages)
-  {
-    $languages = collect($languages);
-    $languages = $languages->keyBy('id');
+        return new SiteResource($site);
+    }
 
-    return $languages->map(function ($language) {
-      return ['default' => $language['default']];
-    });
-  }
+    /**
+     * @param DeleteSite $request
+     * @param $id
+     */
+    public function delete(DeleteSite $request, $id)
+    {
+        $site = $this->DvsSite
+            ->findOrFail($id);
+
+        $site->delete();
+    }
+
+    private function getLanguageSyncData($languages)
+    {
+        $languages = collect($languages);
+        $languages = $languages->keyBy('id');
+
+        return $languages->map(function ($language) {
+            return ['default' => $language['default']];
+        });
+    }
 }

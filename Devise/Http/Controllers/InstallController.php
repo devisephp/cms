@@ -9,9 +9,23 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Spatie\ImageOptimizer\OptimizerChain;
 
 class InstallController extends Controller
 {
+    /**
+     * @var OptimizerChain
+     */
+    private $OptimizerChain;
+
+
+    /**
+     * InstallController constructor.
+     */
+    public function __construct(OptimizerChain $OptimizerChain)
+    {
+        $this->OptimizerChain = $OptimizerChain;
+    }
 
     public function checklist(ApiRequest $request)
     {
@@ -22,14 +36,8 @@ class InstallController extends Controller
             "user"               => $this->firstUserReady(),
             "site"               => $this->firstSiteReady(),
             "page"               => $this->firstPageReady(),
-            "image_library"      => true,
-            "image_optimization" => [
-                "jpegoptim" => true,
-                "optipng  " => false,
-                "pngquant"  => true,
-                "svgo"      => true,
-                "gifsicle"  => true
-            ]
+            "image_library"      => $this->imageLibraryAvailable(),
+            "image_optimization" => $this->optimizersStatus()
         ];
     }
 
@@ -98,5 +106,20 @@ class InstallController extends Controller
             &&
             DB::table('dvs_page_versions')->count() > 0
         );
+    }
+
+    private function imageLibraryAvailable()
+    {
+        return (extension_loaded('gd') || extension_loaded('imagick'));
+    }
+
+    private function optimizersStatus()
+    {
+        $status = [];
+        $optimizers = $this->OptimizerChain->getOptimizers();
+        foreach ($optimizers as $optimizer){
+            $status[ $optimizer->binaryName ] = $optimizer->binaryPath !== "";
+        }
+        return $status;
     }
 }

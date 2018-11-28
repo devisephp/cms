@@ -1,20 +1,19 @@
 const actions = {
   // Checklist
   refreshChecklist(context) {
-    console.log('here');
-    // return new Promise((resolve, reject) => {
-    //   window.axios
-    //     .get(context.state.api.baseUrl + 'install-checklist/')
-    //     .then(function(response) {
-    //       context.commit('updateChecklist', response.data.data);
-    //       resolve(response);
-    //     })
-    //     .catch(function(error) {
-    //       console.log('error in retrieving checklist');
-    //     });
-    // }).catch(function(error) {
-    //   console.log('error in retrieving checklist');
-    // });
+    return new Promise((resolve, reject) => {
+      window.axios
+        .get(context.state.api.baseUrl + 'install-checklist/')
+        .then(function(response) {
+          context.commit('updateChecklist', response.data.data);
+          resolve(response);
+        })
+        .catch(function(error) {
+          console.log('error in retrieving checklist');
+        });
+    }).catch(function(error) {
+      console.log('error in retrieving checklist');
+    });
   }
 
   // // Pages

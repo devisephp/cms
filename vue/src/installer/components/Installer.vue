@@ -22,218 +22,220 @@
         <div></div>
       </section>
 
-      <!-- Database -->
-      <devise-installer-item :item="checklist.database" title="Database Connection (required)">
-        <template slot="instructions">
-          <p>
-            Your application will need to connect to a database. You can do this by editing your
-            <span
-              class="dvs-font-monospace"
-            >.env</span> file in the root of your project and ensuring the following values are set:
-          </p>
-        </template>
+      <template v-if="checklist">
+        <!-- Database -->
+        <devise-installer-item :item="checklist.database" title="Database Connection (required)">
+          <template slot="instructions">
+            <p>
+              Your application will need to connect to a database. You can do this by editing your
+              <span
+                class="dvs-font-monospace"
+              >.env</span> file in the root of your project and ensuring the following values are set:
+            </p>
+          </template>
 
-        <template slot="example">In your .env file
-          <pre class="lang-ini line-numbers" data-start="1">
-              <code>
-                DB_CONNECTION=mysql
-                <br>DB_HOST=127.0.0.1
-                <br>DB_PORT=3306
-                <br>DB_DATABASE=database_name
-                <br>DB_USERNAME=root
-                <br>DB_PASSWORD=
-                <br>
-              </code>
+          <template slot="example">In your .env file
+            <pre class="lang-ini line-numbers" data-start="1">
+                <code>
+                  DB_CONNECTION=mysql
+                  <br>DB_HOST=127.0.0.1
+                  <br>DB_PORT=3306
+                  <br>DB_DATABASE=database_name
+                  <br>DB_USERNAME=root
+                  <br>DB_PASSWORD=
+                  <br>
+                </code>
+              </pre>
+          </template>
+        </devise-installer-item>
+
+        <!-- Migrations -->
+        <devise-installer-item :item="checklist.migrations" title="Database Migrations (required)">
+          <template slot="instructions">
+            <p>Now to populate the database you'll run the Laravel artisan migration command. This command will build out the tables needed for Devise to run properly.</p>
+            <p>
+              More information on migrations can be found
+              <a
+                href="https://laravel.com/docs/5.7/migrations"
+              >here</a>
+            </p>
+          </template>
+
+          <template slot="example">
+            <p>From the root of your project on the command line run the following command</p>
+            <pre class="lang-bash" data-start="1">
+                <code>
+                  php artisan migrate
+                </code>
+              </pre>
+          </template>
+        </devise-installer-item>
+
+        <!-- Authentication -->
+        <devise-installer-item :item="checklist.auth" title="Authentication (required)">
+          <template slot="instructions">
+            <p>Devise is not opinionated about the authentication system that you use. But to get started fast you can use the one that ships with Laravel which is great for systems with simple permissions.</p>
+            <p>
+              More information on laravels authentication you can read the documentation
+              <a
+                href="https://laravel.com/docs/5.7/authentication"
+              >here</a>
+            </p>
+          </template>
+
+          <template slot="example">
+            <p>From the root of your project on the command line run the following command</p>
+            <pre class="lang-bash" data-start="1">
+                <code>
+                  php artisan make:auth
+                </code>
+              </pre>
+          </template>
+        </devise-installer-item>
+
+        <!-- User -->
+        <devise-installer-item :item="checklist.auth" title="First Administration User (required)">
+          <template slot="instructions">
+            <p>For the first user to login you will need to create a user. You can either enter one directly into the database manually or add one using the form to the right.</p>
+          </template>
+
+          <template slot="example">
+            <h3 class="dvs-mb-4">Create Your first User</h3>
+            <form>
+              <fieldset class="dvs-fieldset dvs-mb-4">
+                <label>Name</label>
+                <input type="text" v-model="newUser.name">
+              </fieldset>
+              <fieldset class="dvs-fieldset dvs-mb-4">
+                <label>Email</label>
+                <input type="email" v-model="newUser.email">
+              </fieldset>
+              <fieldset class="dvs-fieldset dvs-mb-6">
+                <label>Password</label>
+                <input type="text" v-model="newUser.password">
+              </fieldset>
+              <button class="dvs-btn dvs-bg-green dvs-text-white">Create User</button>
+            </form>
+          </template>
+        </devise-installer-item>
+
+        <!-- Site -->
+        <devise-installer-item :item="checklist.site" title="First Site and Language (required)">
+          <template slot="instructions">
+            <p>Devise works as a multi-tenant system out of the box meaning that you can run multiple sites under the same code base. Even if you are running only one domain Devise needs to know about it. Use the form to the right to set this up.</p>
+            <p>
+              Each site also needs a language. You can assign any number of languages once you have completed installation. The language should be the
+              <a
+                href="https://www.loc.gov/standards/iso639-2/php/code_list.php"
+              >ISO Code</a> of that language
+            </p>
+
+            <help>
+              <p>The domain should not include the http or https:// protocol identifier. So your site entry could be "my-super-awesome-site.com" or "sub-domain.my-super-awesome-site.com". To Support development environments you can override these values in your .env file in the root of your project with something like "SITE_1_DOMAIN=my-super-awesome-site.test" for your local development or staging.</p>
+            </help>
+          </template>
+
+          <template slot="example">
+            <h3 class="dvs-mb-4">Create Your first Site</h3>
+            <form>
+              <fieldset class="dvs-fieldset dvs-mb-4">
+                <label>Site Name</label>
+                <input type="text" v-model="newSite.name">
+              </fieldset>
+              <fieldset class="dvs-fieldset dvs-mb-4">
+                <label>Site Domain</label>
+                <input type="text" v-model="newSite.domain">
+              </fieldset>
+              <fieldset class="dvs-fieldset dvs-mb-6">
+                <label>Language</label>
+                <input type="text" v-model="newSite.language">
+              </fieldset>
+              <button class="dvs-btn dvs-bg-green dvs-text-white">Create Site</button>
+            </form>
+          </template>
+        </devise-installer-item>
+
+        <!-- Create your first page -->
+        <devise-installer-item :item="checklist.site" title="First Page (required)">
+          <template slot="instructions">
+            <p>It's time to create your first page. We'd suggest maybe making your homepage. There's a lot to cover here but don't be intimidated. We will walk you through each step.</p>
+            <p>
+              A Devise page is built on two parts: A layout file which follows
+              <a
+                href="https://laravel.com/docs/5.7/blade"
+                target="_blank"
+              >Laravel's Blade System</a> and slices.
+            </p>
+            <p>
+              <strong>What a Layout Is:</strong> A layout blade file is a file that is intended to be used across many pages. This way you don't have to set the &lt;head&gt;, Javascript includes, style inclues, etc on every single page. Each page that is assigned that layout extends it placing it's content where you see fit. We have provided a boilerplate for you to the right. Copy the contents and save them to "/resources/views/layouts/master.blade.php"
+            </p>
+
+            <p>
+              <strong>Language:</strong>: The language should be pretty obvious: What language is this page in? But what is exciting is that if you have multiple languages you'll be able to quickly deploy localized content based on whatever language the user has selected. More on that in the official documention. For now: select your first language you created above in the sites section.
+            </p>
+
+            <p>
+              <strong>Slug:</strong> Finally, the slug is just the url the page lives on. The homepage slug would be "/" while an about page might live at "/about" or "/about-us". The important thing is that it is lower case, has no spaces and is prefixed with a slash.
+            </p>
+          </template>
+
+          <template slot="example">
+            <h3 class="dvs-mb-4">Create Your first Page</h3>
+            <form class="dvs-mb-8">
+              <fieldset class="dvs-fieldset dvs-mb-4">
+                <label>Page Name</label>
+                <input type="text" v-model="newPage.name">
+              </fieldset>
+              <fieldset class="dvs-fieldset dvs-mb-4">
+                <label>Layout</label>
+                <input type="text" v-model="newPage.layout">
+              </fieldset>
+              <fieldset class="dvs-fieldset dvs-mb-6">
+                <label>Language</label>
+                <input type="text" v-model="newPage.language">
+              </fieldset>
+              <fieldset class="dvs-fieldset dvs-mb-6">
+                <label>Slug</label>
+                <input type="text" v-model="newPage.slug">
+              </fieldset>
+              <button class="dvs-btn dvs-bg-green dvs-text-white">Create Page</button>
+            </form>
+
+            <h3 class="dvs-mb-4">A solid boilerplate for your first layout file</h3>
+            <p>
+              Save the following to
+              <span
+                class="dvs-font-mono"
+              >/resource/views/layouts/master.blade.php</span>
+            </p>
+            <pre class="lang-html line-numbers">
+              <code v-html="layoutTemplate"></code>
             </pre>
-        </template>
-      </devise-installer-item>
+          </template>
+        </devise-installer-item>
 
-      <!-- Migrations -->
-      <devise-installer-item :item="checklist.migrations" title="Database Migrations (required)">
-        <template slot="instructions">
-          <p>Now to populate the database you'll run the Laravel artisan migration command. This command will build out the tables needed for Devise to run properly.</p>
-          <p>
-            More information on migrations can be found
-            <a
-              href="https://laravel.com/docs/5.7/migrations"
-            >here</a>
-          </p>
-        </template>
+        <!-- Assets -->
+        <devise-installer-item :item="checklist.auth" title="Assets (required)">
+          <template slot="instructions">
+            <p>Devise has some styles and assets that it will need to reach. You can quickly publish these assets by running the command to the right.</p>
+          </template>
 
-        <template slot="example">
-          <p>From the root of your project on the command line run the following command</p>
-          <pre class="lang-bash" data-start="1">
-              <code>
-                php artisan migrate
-              </code>
-            </pre>
-        </template>
-      </devise-installer-item>
-
-      <!-- Authentication -->
-      <devise-installer-item :item="checklist.auth" title="Authentication (required)">
-        <template slot="instructions">
-          <p>Devise is not opinionated about the authentication system that you use. But to get started fast you can use the one that ships with Laravel which is great for systems with simple permissions.</p>
-          <p>
-            More information on laravels authentication you can read the documentation
-            <a
-              href="https://laravel.com/docs/5.7/authentication"
-            >here</a>
-          </p>
-        </template>
-
-        <template slot="example">
-          <p>From the root of your project on the command line run the following command</p>
-          <pre class="lang-bash" data-start="1">
-              <code>
-                php artisan make:auth
-              </code>
-            </pre>
-        </template>
-      </devise-installer-item>
-
-      <!-- User -->
-      <devise-installer-item :item="checklist.auth" title="First Administration User (required)">
-        <template slot="instructions">
-          <p>For the first user to login you will need to create a user. You can either enter one directly into the database manually or add one using the form to the right.</p>
-        </template>
-
-        <template slot="example">
-          <h3 class="dvs-mb-4">Create Your first User</h3>
-          <form>
-            <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Name</label>
-              <input type="text" v-model="newUser.name">
-            </fieldset>
-            <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Email</label>
-              <input type="email" v-model="newUser.email">
-            </fieldset>
-            <fieldset class="dvs-fieldset dvs-mb-6">
-              <label>Password</label>
-              <input type="text" v-model="newUser.password">
-            </fieldset>
-            <button class="dvs-btn dvs-bg-green dvs-text-white">Create User</button>
-          </form>
-        </template>
-      </devise-installer-item>
-
-      <!-- Site -->
-      <devise-installer-item :item="checklist.site" title="First Site and Language (required)">
-        <template slot="instructions">
-          <p>Devise works as a multi-tenant system out of the box meaning that you can run multiple sites under the same code base. Even if you are running only one domain Devise needs to know about it. Use the form to the right to set this up.</p>
-          <p>
-            Each site also needs a language. You can assign any number of languages once you have completed installation. The language should be the
-            <a
-              href="https://www.loc.gov/standards/iso639-2/php/code_list.php"
-            >ISO Code</a> of that language
-          </p>
-
-          <help>
-            <p>The domain should not include the http or https:// protocol identifier. So your site entry could be "my-super-awesome-site.com" or "sub-domain.my-super-awesome-site.com". To Support development environments you can override these values in your .env file in the root of your project with something like "SITE_1_DOMAIN=my-super-awesome-site.test" for your local development or staging.</p>
-          </help>
-        </template>
-
-        <template slot="example">
-          <h3 class="dvs-mb-4">Create Your first Site</h3>
-          <form>
-            <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Site Name</label>
-              <input type="text" v-model="newSite.name">
-            </fieldset>
-            <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Site Domain</label>
-              <input type="text" v-model="newSite.domain">
-            </fieldset>
-            <fieldset class="dvs-fieldset dvs-mb-6">
-              <label>Language</label>
-              <input type="text" v-model="newSite.language">
-            </fieldset>
-            <button class="dvs-btn dvs-bg-green dvs-text-white">Create Site</button>
-          </form>
-        </template>
-      </devise-installer-item>
-
-      <!-- Create your first page -->
-      <devise-installer-item :item="checklist.site" title="First Page (required)">
-        <template slot="instructions">
-          <p>It's time to create your first page. We'd suggest maybe making your homepage. There's a lot to cover here but don't be intimidated. We will walk you through each step.</p>
-          <p>
-            A Devise page is built on two parts: A layout file which follows
-            <a
-              href="https://laravel.com/docs/5.7/blade"
-              target="_blank"
-            >Laravel's Blade System</a> and slices.
-          </p>
-          <p>
-            <strong>What a Layout Is:</strong> A layout blade file is a file that is intended to be used across many pages. This way you don't have to set the &lt;head&gt;, Javascript includes, style inclues, etc on every single page. Each page that is assigned that layout extends it placing it's content where you see fit. We have provided a boilerplate for you to the right. Copy the contents and save them to "/resources/views/layouts/master.blade.php"
-          </p>
-
-          <p>
-            <strong>Language:</strong>: The language should be pretty obvious: What language is this page in? But what is exciting is that if you have multiple languages you'll be able to quickly deploy localized content based on whatever language the user has selected. More on that in the official documention. For now: select your first language you created above in the sites section.
-          </p>
-
-          <p>
-            <strong>Slug:</strong> Finally, the slug is just the url the page lives on. The homepage slug would be "/" while an about page might live at "/about" or "/about-us". The important thing is that it is lower case, has no spaces and is prefixed with a slash.
-          </p>
-        </template>
-
-        <template slot="example">
-          <h3 class="dvs-mb-4">Create Your first Page</h3>
-          <form class="dvs-mb-8">
-            <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Page Name</label>
-              <input type="text" v-model="newPage.name">
-            </fieldset>
-            <fieldset class="dvs-fieldset dvs-mb-4">
-              <label>Layout</label>
-              <input type="text" v-model="newPage.layout">
-            </fieldset>
-            <fieldset class="dvs-fieldset dvs-mb-6">
-              <label>Language</label>
-              <input type="text" v-model="newPage.language">
-            </fieldset>
-            <fieldset class="dvs-fieldset dvs-mb-6">
-              <label>Slug</label>
-              <input type="text" v-model="newPage.slug">
-            </fieldset>
-            <button class="dvs-btn dvs-bg-green dvs-text-white">Create Page</button>
-          </form>
-
-          <h3 class="dvs-mb-4">A solid boilerplate for your first layout file</h3>
-          <p>
-            Save the following to
-            <span
-              class="dvs-font-mono"
-            >/resource/views/layouts/master.blade.php</span>
-          </p>
-          <pre class="lang-html line-numbers">
-            <code v-html="layoutTemplate"></code>
-          </pre>
-        </template>
-      </devise-installer-item>
-
-      <!-- Assets -->
-      <devise-installer-item :item="checklist.auth" title="Assets (required)">
-        <template slot="instructions">
-          <p>Devise has some styles and assets that it will need to reach. You can quickly publish these assets by running the command to the right.</p>
-        </template>
-
-        <template slot="example">
-          <p>From the root of your project on the command line run the following command</p>
-          <pre class="lang-bash" data-start="1">
-              <code>
-                php artisan vendor:publish --tag=dvs-assets
-              </code>
-            </pre>
-        </template>
-      </devise-installer-item>
+          <template slot="example">
+            <p>From the root of your project on the command line run the following command</p>
+            <pre class="lang-bash" data-start="1">
+                <code>
+                  php artisan vendor:publish --tag=dvs-assets
+                </code>
+              </pre>
+          </template>
+        </devise-installer-item>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   data() {
@@ -317,18 +319,15 @@ export default {
   methods: {
     ...mapActions(['refreshChecklist']),
     startChecker() {
-      // console.log(this.$store);
-      // this.$store.dispatch('refreshChecklist');
-      // this.refreshChecklist();
-      // setInterval(() => {
-      //   this.refreshChecklist();
-      // }, 5000);
+      setInterval(() => {
+        this.refreshChecklist();
+      }, 5000);
     }
   },
   computed: {
-    checklist() {
-      return this.$store.state.checklist;
-    }
+    ...mapState({
+      checklist: state => state.checklist
+    })
   }
 };
 </script>

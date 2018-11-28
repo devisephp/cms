@@ -1,6 +1,6 @@
 export default {
   // Checklist
   updateChecklist(state, checklist) {
-    state.checklist = checklist;
+    state.checklist = Object.assign({}, state.checklist, checklist);
   }
 };

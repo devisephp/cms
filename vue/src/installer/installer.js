@@ -4,6 +4,24 @@ import 'es6-promise/auto';
 
 import store from './vuex/store';
 
+window.axios = require('axios');
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/**
+ * CSRF Token as a common header with Axios so that
+ * all outgoing HTTP requests automatically have it attached. This is just
+ * a simple convenience so we don't have to attach every token manually.
+ */
+
+let token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
 import Installer from './components/Installer';
 Vue.component('devise-installer', Installer);
 
@@ -49,5 +67,5 @@ console.log(store);
 
 new Vue({
   el: '#installer-app',
-  store
+  store: store
 });

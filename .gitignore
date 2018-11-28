@@ -3,3 +3,4 @@
 /.idea
 /vue/node_modules
 npm-debug.log
+/vue/src/installer/node_modules

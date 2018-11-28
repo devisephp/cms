@@ -1,12 +1,12 @@
-import Vue from 'vue'
+import Vue from "vue";
 
-function insertBefore (el, referenceNode) {
-  return referenceNode.parentNode.insertBefore(el, referenceNode)
+function insertBefore(el, referenceNode) {
+  return referenceNode.parentNode.insertBefore(el, referenceNode);
 }
 
 export default {
-  bind: function (el, binding, vnode) {
-    var clickHandler = function (e) {
+  bind: function(el, binding, vnode) {
+    var clickHandler = function(e) {
       // create constructor
       var Confirm = Vue.extend({
         template: `
@@ -22,35 +22,38 @@ export default {
           </div>
         </div>
         `,
-        data: function () {
+        data: function() {
           return {
             clicks: 0,
             show: true
-          }
+          };
         },
         methods: {
-          ok () {
-            binding.value.callback(binding.value.arguments)
-            this.close()
+          ok() {
+            binding.value.callback(binding.value.arguments);
+            this.close();
           },
-          cancel () {
-            this.close()
+          cancel() {
+            this.close();
           },
-          close () {
-            this.show = false
-            el.removeEventListener('click', clickHandler, true)
-            insertedElement.remove()
+          close() {
+            this.show = false;
+            el.removeEventListener("click", clickHandler, true);
+            insertedElement.remove();
           }
         }
-      })
+      });
 
-      let deviseAdmin = document.querySelector('#devise-admin')
-      var newEl = document.createElement('devise-confirm')
-      var insertedElement = deviseAdmin.parentNode.insertBefore(newEl, deviseAdmin.nextSibling)
+      let deviseAdmin = document.querySelector("#devise-admin");
+      var newEl = document.createElement("devise-confirm");
+      var insertedElement = deviseAdmin.parentNode.insertBefore(
+        newEl,
+        deviseAdmin.nextSibling
+      );
 
-      new Confirm().$mount(insertedElement)
-    }
-    
-    el.addEventListener('click', clickHandler)
+      new Confirm().$mount(insertedElement);
+    };
+
+    el.addEventListener("click", clickHandler);
   }
-}
+};

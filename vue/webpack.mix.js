@@ -12,12 +12,12 @@ var tailwindcss = require('tailwindcss');
  | file for the application as well as bundling up all the JS files.
  |
  */
- mix.webpackConfig({
-   output: {
-     publicPath: '/',
-     chunkFilename: '[name].[chunkhash].js',
-   },
- });
+mix.webpackConfig({
+  output: {
+    publicPath: '/',
+    chunkFilename: '[name].[chunkhash].js'
+  }
+});
 
 mix
   .setPublicPath(path.normalize('build'))
@@ -26,9 +26,9 @@ mix
   .sass('src/sass/devise.scss', 'css/devise.css')
   .options({
     processCssUrls: false,
-    postCss: [ tailwindcss('./tailwind.js') ],
-  })
-  // .purgeCss({
-  //   enabled: true,
-  //   whitelistPatterns: [/mobile/, /tablet/, /desktop/, /largeDesktop/, /ultraWideDesktop/]
-  // });
+    postCss: [tailwindcss('./tailwind.js')]
+  });
+// .purgeCss({
+//   enabled: true,
+//   whitelistPatterns: [/mobile/, /tablet/, /desktop/, /largeDesktop/, /ultraWideDesktop/]
+// });

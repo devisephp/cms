@@ -1,8 +1,6 @@
 export default {
-
   // Checklist
-  createPage (state, checklist) {
-    state.checklist = checklist
+  updateChecklist(state, checklist) {
+    state.checklist = Object.assign({}, state.checklist, checklist);
   }
-  
-}
+};

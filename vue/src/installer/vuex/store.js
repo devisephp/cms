@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import mutations from './mutations'
-import actions from './actions'
-import getters from './getters'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import mutations from './mutations';
+import actions from './actions';
+import getters from './getters';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // root state object.
 // each Vuex instance is just a single state tree.
@@ -14,22 +14,22 @@ const state = {
     baseUrl: '/api/devise/'
   },
   checklist: {
-    database: true,
+    database: false,
     migrations: false,
-    auth: true,
+    auth: false,
     user: false,
     site: false,
     page: false,
     image_library: false,
     image_optimization: {
-      jpegoptim: false, 
-      optipng: false, 
-      pngquant: false, 
+      jpegoptim: false,
+      optipng: false,
+      pngquant: false,
       svgo: false,
       gifsicle: false
     }
   }
-}
+};
 
 // A Vuex instance is created by combining the state, the actions,
 // and the mutations. Because the actions and mutations are just
@@ -39,10 +39,9 @@ const state = {
 // You can also provide middlewares, which is just an array of
 // objects containing some hooks to be called at initialization
 // and after each mutation.
-export default {
-  namespaced: true,
+export default new Vuex.Store({
   state,
   mutations,
   actions,
   getters
-}
+});

@@ -1,14 +1,20 @@
 <template>
-  <flat-pickr v-model="localDateTime" :config="config" class="w-full" ref="picker" :placeholder="placeholder" />
+  <flat-pickr
+    v-model="localDateTime"
+    :config="config"
+    class="w-full"
+    ref="picker"
+    :placeholder="placeholder"
+  />
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
-import 'flatpickr/dist/flatpickr.min.css'
-import dayjs from 'dayjs'
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.min.css";
+import dayjs from "dayjs";
 
 export default {
-  data () {
+  data() {
     return {
       localDateTime: this.value,
       config: {
@@ -16,38 +22,38 @@ export default {
         enableTime: this.settings.time,
         onChange: this.updateValue
       }
-    }
+    };
   },
-  mounted () {
-    this.localDateTime = this.value
+  mounted() {
+    this.localDateTime = this.value;
   },
   methods: {
-    updateValue (value) {
-      value = this.formatValue(value)
-      this.$emit('input', value)
-      this.$emit('update', value)
-      this.$refs.picker.fp.close()
+    updateValue(value) {
+      value = this.formatValue(value);
+      this.$emit("input", value);
+      this.$emit("update", value);
+      this.$refs.picker.fp.close();
     },
-    formatValue (value) {
+    formatValue(value) {
       // 2018-04-27 13:34:00
       if (this.settings.date && this.settings.time) {
-        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+        return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
       }
       // 2018-04-27
       if (this.settings.date && !this.settings.time) {
-        return dayjs(value).format('YYYY-MM-DD')
+        return dayjs(value).format("YYYY-MM-DD");
       }
       // 13:34:00
       if (!this.settings.date && this.settings.time) {
-        return dayjs(value).format('HH:mm:ss')
+        return dayjs(value).format("HH:mm:ss");
       }
 
-      return null
+      return null;
     }
   },
   components: {
     flatPickr
   },
-  props: ['value', 'settings', 'placeholder']
-}
+  props: ["value", "settings", "placeholder"]
+};
 </script>

@@ -21,9 +21,9 @@ mix.webpackConfig({
 
 mix
   .setPublicPath(path.normalize('build'))
-  // .js('src/devise-app.js', 'js/devise.js')
+  .js('src/devise-app.js', 'js/devise.js')
   .js('src/installer/installer.js', 'js/devise-installer.js')
-  // .sass('src/sass/devise.scss', 'css/devise.css')
+  .sass('src/sass/devise.scss', 'css/devise.css')
   .options({
     processCssUrls: false,
     postCss: [tailwindcss('./tailwind.js')]

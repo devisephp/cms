@@ -1,4 +1,6 @@
-let Vue = require('vue');
+import Vue from 'vue';
+
+import 'es6-promise/auto';
 
 import store from './vuex/store';
 
@@ -43,7 +45,9 @@ Prism.plugins.NormalizeWhitespace.setDefaults({
 	'spaces-to-tabs': 4*/
 });
 
+console.log(store);
+
 new Vue({
   el: '#installer-app',
-  store: store
+  store
 });

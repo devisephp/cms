@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-preset-stage-2": "^6.24.1",
+    "es6-promise": "^4.2.5",
     "prismjs": "^1.15.0",
     "vue-ionicons": "^2.2.1",
     "vuejs": "^3.0.1",

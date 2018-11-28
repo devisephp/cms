@@ -1,6 +1,6 @@
 export default {
   // Checklist
-  createPage(state, checklist) {
+  updateChecklist(state, checklist) {
     state.checklist = checklist;
   }
 };

@@ -312,12 +312,18 @@ export default {
     };
   },
   mounted() {
-    setInterval(() => {
-      this.refreshChecklist();
-    }, 5000);
+    this.startChecker();
   },
   methods: {
-    ...mapActions(['refreshChecklist'])
+    ...mapActions(['refreshChecklist']),
+    startChecker() {
+      // console.log(this.$store);
+      // this.$store.dispatch('refreshChecklist');
+      // this.refreshChecklist();
+      // setInterval(() => {
+      //   this.refreshChecklist();
+      // }, 5000);
+    }
   },
   computed: {
     checklist() {

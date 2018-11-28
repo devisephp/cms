@@ -22,7 +22,7 @@ class PageResource extends Resource
             'slug'               => $this->slug,
             'canonical'          => $this->canonical,
             'ab_testing_enabled' => $this->ab_testing_enabled,
-            'is_live'            => ($this->currentVersion) ? true : false,
+            'is_live'            => ($this->liveVersion) ? true : false,
 
             // Relationships
             'versions'           => PageVersionResource::collection($this->whenLoaded('versions')),

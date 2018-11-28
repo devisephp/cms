@@ -3,10 +3,7 @@
     <div>
       <h3 class="dvs-my-4">{{ title }}</h3>
 
-      <close-circle-icon w="50" v-if="!item" h="50"/>
-      <div v-else class="dvs-text-green">
-        <checkmark-icon w="50" h="50"/>
-      </div>
+      <item-check :item="item"></item-check>
 
       <slot name="instructions"/>
     </div>

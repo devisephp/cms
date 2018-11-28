@@ -1,9 +1,113 @@
 <template>
   <div class="dvs-flex">
-    <div id="sidebar" class="dvs-absolute dvs-pin-l dvs-pin-t dvs-pin-b dvs-bg-grey-lighter">Sidebar</div>
+    <div
+      id="sidebar"
+      class="dvs-absolute dvs-pin-l dvs-pin-t dvs-pin-b dvs-bg-grey-lighter dvs-p-4"
+    >
+      <scrollactive
+        :offset="80"
+        :duration="800"
+        bezier-easing-value=".5,0,.35,1"
+        scroll-container-selector="#content"
+        id="menu"
+      >
+        <ul class="dvs-list-reset">
+          <li>
+            <a href="#nav-welcome" class="scrollactive-item">Welcome</a>
+          </li>
+          <li>
+            <a href="#nav-required" class="scrollactive-item">Required</a>
+            <ul class="dvs-list-reset dvs-ml-4">
+              <li class="dvs-flex">
+                <item-check :item="checklist.database" :size="15" class="dvs-mr-2"></item-check>
+                <a href="#nav-database-connection" class="scrollactive-item">Database Connection</a>
+              </li>
+              <li class="dvs-flex">
+                <item-check :item="checklist.migrations" :size="15" class="dvs-mr-2"></item-check>
+                <a href="#nav-database-migration" class="scrollactive-item">Database Migration</a>
+              </li>
+              <li class="dvs-flex">
+                <item-check :item="checklist.auth" :size="15" class="dvs-mr-2"></item-check>
+                <a href="#nav-auth" class="scrollactive-item">Authentication</a>
+              </li>
+              <li class="dvs-flex">
+                <item-check :item="checklist.user" :size="15" class="dvs-mr-2"></item-check>
+                <a href="#nav-user" class="scrollactive-item">First User</a>
+              </li>
+              <li class="dvs-flex">
+                <item-check :item="checklist.site" :size="15" class="dvs-mr-2"></item-check>
+                <a href="#nav-site" class="scrollactive-item">First Site</a>
+              </li>
+              <li class="dvs-flex">
+                <item-check :item="checklist.page" :size="15" class="dvs-mr-2"></item-check>
+                <a href="#nav-page" class="scrollactive-item">First Page</a>
+              </li>
+              <li class="dvs-flex">
+                <item-check :item="checklist.image_library" :size="15" class="dvs-mr-2"></item-check>
+                <a href="#nav-image-library" class="scrollactive-item">Image Library</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#nav-required" class="scrollactive-item">Suggested</a>
+            <ul class="dvs-list-reset dvs-ml-4">
+              <li>
+                <a href="#nav-database-connection" class="scrollactive-item">Image Optimization</a>
+                <ul>
+                  <li class="dvs-flex">
+                    <item-check
+                      :item="checklist.image_optimization.gifsicle"
+                      :size="15"
+                      class="dvs-mr-2"
+                    ></item-check>
+                    <a href="#nav-image-optimization" class="scrollactive-item">Gifsicle</a>
+                  </li>
+                  <li class="dvs-flex">
+                    <item-check
+                      :item="checklist.image_optimization.jpegoptim"
+                      :size="15"
+                      class="dvs-mr-2"
+                    ></item-check>
+                    <a href="#nav-image-optimization" class="scrollactive-item">Jpegoptim</a>
+                  </li>
+                  <li class="dvs-flex">
+                    <item-check
+                      :item="checklist.image_optimization.optipng"
+                      :size="15"
+                      class="dvs-mr-2"
+                    ></item-check>
+                    <a href="#nav-image-optimization" class="scrollactive-item">Optipng</a>
+                  </li>
+                  <li class="dvs-flex">
+                    <item-check
+                      :item="checklist.image_optimization.pngquant"
+                      :size="15"
+                      class="dvs-mr-2"
+                    ></item-check>
+                    <a href="#nav-image-optimization" class="scrollactive-item">Pngquant</a>
+                  </li>
+                  <li class="dvs-flex">
+                    <item-check
+                      :item="checklist.image_optimization.svgo"
+                      :size="15"
+                      class="dvs-mr-2"
+                    ></item-check>
+                    <a href="#nav-image-optimization" class="scrollactive-item">Svgo</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="dvs-flex">
+                <item-check :item="checklist.migrations" :size="15" class="dvs-mr-2"></item-check>
+                <a href="#nav-database-migration" class="scrollactive-item">Database Migration</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </scrollactive>
+    </div>
 
     <div id="content" class="dvs-absolute dvs-pin dvs-overflow-scroll">
-      <section>
+      <section id="nav-welcome" name="nav-welcome">
         <div>
           <h1 class="dvs-mb-8 dvs-font-light">Welcome to Devise</h1>
 
@@ -22,9 +126,15 @@
         <div></div>
       </section>
 
+      <section id="nav-required"></section>
+
       <template v-if="checklist">
         <!-- Database -->
-        <devise-installer-item :item="checklist.database" title="Database Connection (required)">
+        <devise-installer-item
+          :item="checklist.database"
+          id="nav-database-connection"
+          title="Database Connection (required)"
+        >
           <template slot="instructions">
             <p>
               Your application will need to connect to a database. You can do this by editing your
@@ -50,7 +160,11 @@
         </devise-installer-item>
 
         <!-- Migrations -->
-        <devise-installer-item :item="checklist.migrations" title="Database Migrations (required)">
+        <devise-installer-item
+          :item="checklist.migrations"
+          id="nav-database-migration"
+          title="Database Migrations (required)"
+        >
           <template slot="instructions">
             <p>Now to populate the database you'll run the Laravel artisan migration command. This command will build out the tables needed for Devise to run properly.</p>
             <p>
@@ -72,7 +186,11 @@
         </devise-installer-item>
 
         <!-- Authentication -->
-        <devise-installer-item :item="checklist.auth" title="Authentication (required)">
+        <devise-installer-item
+          :item="checklist.auth"
+          id="nav-auth"
+          title="Authentication (required)"
+        >
           <template slot="instructions">
             <p>Devise is not opinionated about the authentication system that you use. But to get started fast you can use the one that ships with Laravel which is great for systems with simple permissions.</p>
             <p>
@@ -94,33 +212,55 @@
         </devise-installer-item>
 
         <!-- User -->
-        <devise-installer-item :item="checklist.auth" title="First Administration User (required)">
+        <devise-installer-item
+          :item="checklist.user"
+          id="nav-user"
+          title="First Administration User (required)"
+        >
           <template slot="instructions">
             <p>For the first user to login you will need to create a user. You can either enter one directly into the database manually or add one using the form to the right.</p>
           </template>
 
           <template slot="example">
-            <h3 class="dvs-mb-4">Create Your first User</h3>
-            <form>
+            <h3 class="dvs-mb-4">Create Your first User
+              <template v-if="checklist.user">(Already Created)</template>
+            </h3>
+            <form :class="{'dvs-opacity-50': checklist.user}">
               <fieldset class="dvs-fieldset dvs-mb-4">
                 <label>Name</label>
-                <input type="text" v-model="newUser.name">
+                <input type="text" v-model="newUser.name" :disabled="checklist.user">
               </fieldset>
               <fieldset class="dvs-fieldset dvs-mb-4">
                 <label>Email</label>
-                <input type="email" v-model="newUser.email">
+                <input type="email" v-model="newUser.email" :disabled="checklist.user">
               </fieldset>
               <fieldset class="dvs-fieldset dvs-mb-6">
                 <label>Password</label>
-                <input type="text" v-model="newUser.password">
+                <input type="text" v-model="newUser.password" :disabled="checklist.user">
               </fieldset>
-              <button class="dvs-btn dvs-bg-green dvs-text-white">Create User</button>
+              <fieldset class="dvs-fieldset dvs-mb-6">
+                <label>Confirm Password</label>
+                <input
+                  type="text"
+                  v-model="newUser.password_confirmation"
+                  :disabled="checklist.user"
+                >
+              </fieldset>
+              <button
+                class="dvs-btn dvs-bg-green dvs-text-white"
+                :disabled="checklist.user"
+                @click.prevent="attemptCreateUser()"
+              >Create User</button>
             </form>
           </template>
         </devise-installer-item>
 
         <!-- Site -->
-        <devise-installer-item :item="checklist.site" title="First Site and Language (required)">
+        <devise-installer-item
+          :item="checklist.site"
+          id="nav-site"
+          title="First Site and Language (required)"
+        >
           <template slot="instructions">
             <p>Devise works as a multi-tenant system out of the box meaning that you can run multiple sites under the same code base. Even if you are running only one domain Devise needs to know about it. Use the form to the right to set this up.</p>
             <p>
@@ -132,31 +272,47 @@
 
             <help>
               <p>The domain should not include the http or https:// protocol identifier. So your site entry could be "my-super-awesome-site.com" or "sub-domain.my-super-awesome-site.com". To Support development environments you can override these values in your .env file in the root of your project with something like "SITE_1_DOMAIN=my-super-awesome-site.test" for your local development or staging.</p>
+              <p>
+                <strong>Important:</strong> The domain should be the
+                <em>final</em> domain name. If you're working on this site locally you will need to add an override in your .env file like the example to the right.
+              </p>
             </help>
           </template>
 
           <template slot="example">
             <h3 class="dvs-mb-4">Create Your first Site</h3>
-            <form>
+            <form class="dvs-mb-8">
               <fieldset class="dvs-fieldset dvs-mb-4">
                 <label>Site Name</label>
                 <input type="text" v-model="newSite.name">
               </fieldset>
               <fieldset class="dvs-fieldset dvs-mb-4">
-                <label>Site Domain</label>
+                <label>Site's Actual Domain (See below)</label>
                 <input type="text" v-model="newSite.domain">
               </fieldset>
               <fieldset class="dvs-fieldset dvs-mb-6">
                 <label>Language</label>
                 <input type="text" v-model="newSite.language">
               </fieldset>
-              <button class="dvs-btn dvs-bg-green dvs-text-white">Create Site</button>
+              <button
+                type="submit"
+                class="dvs-btn dvs-bg-green dvs-text-white"
+                @click.prevent="attemptCreateSite()"
+              >Create Site</button>
             </form>
+
+            <h3 class="dvs-mb-4">A note on the domain during development</h3>
+            <p>If you're working locally using something like Larvel's Valet or Homestead make sure you provide the acutal domain name above and add a development override in your local .env file. Since this is the first site it needs to have a "1" (which will be the ID of the site)</p>
+            <pre class="lang-bash" data-start="1">
+              <code>
+                SITE_1_DOMAIN=project-name.test 
+              </code>
+            </pre>
           </template>
         </devise-installer-item>
 
         <!-- Create your first page -->
-        <devise-installer-item :item="checklist.site" title="First Page (required)">
+        <devise-installer-item :item="checklist.page" id="nav-page" title="First Page (required)">
           <template slot="instructions">
             <p>It's time to create your first page. We'd suggest maybe making your homepage. There's a lot to cover here but don't be intimidated. We will walk you through each step.</p>
             <p>
@@ -167,7 +323,7 @@
               >Laravel's Blade System</a> and slices.
             </p>
             <p>
-              <strong>What a Layout Is:</strong> A layout blade file is a file that is intended to be used across many pages. This way you don't have to set the &lt;head&gt;, Javascript includes, style inclues, etc on every single page. Each page that is assigned that layout extends it placing it's content where you see fit. We have provided a boilerplate for you to the right. Copy the contents and save them to "/resources/views/layouts/master.blade.php"
+              <strong>What a Layout Is:</strong> A layout blade file is a file that is intended to be used across many pages. This way you don't have to set the &lt;head&gt;, Javascript includes, style inclues, etc on every single page. Each page that is assigned that layout extends it placing it's content where you see fit. We have provided a boilerplate for you to the right. Copy the contents and save them to "/resources/views/layouts/master.blade.php". Then in the layout field enter dot-notation of that directory: "layouts.master".
             </p>
 
             <p>
@@ -198,7 +354,11 @@
                 <label>Slug</label>
                 <input type="text" v-model="newPage.slug">
               </fieldset>
-              <button class="dvs-btn dvs-bg-green dvs-text-white">Create Page</button>
+              <button
+                type="submit"
+                class="dvs-btn dvs-bg-green dvs-text-white"
+                @click.prevent="attemptCreatePage()"
+              >Create Page</button>
             </form>
 
             <h3 class="dvs-mb-4">A solid boilerplate for your first layout file</h3>
@@ -214,28 +374,89 @@
           </template>
         </devise-installer-item>
 
-        <!-- Assets -->
-        <devise-installer-item :item="checklist.auth" title="Assets (required)">
+        <!-- ImageMagick -->
+        <devise-installer-item
+          :item="checklist.image_library"
+          id="nav-image-library"
+          title="Image Library"
+        >
           <template slot="instructions">
-            <p>Devise has some styles and assets that it will need to reach. You can quickly publish these assets by running the command to the right.</p>
+            <p>Devise allows users to select images from a media manager and manipulate them. To do this Devise needs ImageMagick (preferred) or GD installed. You don't need both - just one or the other. Getting either library installed can be a little tricky depending on the version of PHP you're running and environment but we have provided a few tips to the right.</p>
           </template>
 
           <template slot="example">
-            <p>From the root of your project on the command line run the following command</p>
+            <h3 class="dvs-mb-4">
+              Mac OS (using
+              <a href="https://brew.sh/" target="_blank">Homebrew</a>)
+            </h3>
+            <p>On the command line run the following command</p>
             <pre class="lang-bash" data-start="1">
                 <code>
-                  php artisan vendor:publish --tag=dvs-assets
+                  brew install imagemagick
+                </code>
+              </pre>
+            <p>Or</p>
+            <pre class="lang-bash" data-start="1">
+                <code>
+                  brew install gd
+                </code>
+              </pre>
+
+            <h3 class="dvs-mb-4">Windows</h3>
+            <p>This is very much dependent on what you are using for development but any help you can provide others is greatly appreciated. Please submit any ideas for this section through a pull request.</p>
+          </template>
+        </devise-installer-item>
+
+        <!-- ImageMagick -->
+        <devise-installer-item
+          :item="checklist.image_optimization.jpegoptim || checklist.image_optimization.optipng || checklist.image_optimization.pngquant || checklist.image_optimization.svgo || checklist.image_optimization.gifsicle"
+          id="nav-image-optimization"
+          title="Image Optimization"
+        >
+          <template slot="instructions">
+            <p>When images are uploaded to the media manager nothing happens. We store the highest resolution image we can. However, when a user select's an image when populating content Devise will attempt to optimize the image by running a series of optimizations depending on file type. These are not required but you can greatly increase the performance for end-users by having these installed.</p>
+          </template>
+
+          <template slot="example">
+            <h3 class="dvs-mb-4">
+              Mac OS (using
+              <a href="https://brew.sh/" target="_blank">Homebrew</a>)
+            </h3>
+            <p>On the command line run the following command</p>
+            <pre class="lang-bash" data-start="1">
+                <code>
+                  brew install jpegoptim
+                  brew install optipng
+                  brew install pngquant
+                  brew install svgo
+                  brew install gifsicle
+                </code>
+              </pre>
+
+            <h3 class="dvs-mb-4">Ubuntu</h3>
+            <p>On the command line run the following command</p>
+            <pre class="lang-bash" data-start="1">
+                <code>
+                  sudo apt-get install jpegoptim
+                  sudo apt-get install optipng
+                  sudo apt-get install pngquant
+                  sudo npm install -g svgo
+                  sudo apt-get install gifsicle
                 </code>
               </pre>
           </template>
         </devise-installer-item>
       </template>
     </div>
+
+    <messages/>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
+
+import Messages from './Messages';
 
 export default {
   data() {
@@ -244,7 +465,7 @@ export default {
         name: '',
         email: '',
         password: '',
-        confirm_password: ''
+        password_confirmation: ''
       },
       newSite: {
         name: '',
@@ -317,17 +538,30 @@ export default {
     this.startChecker();
   },
   methods: {
-    ...mapActions(['refreshChecklist']),
+    ...mapActions(['refreshChecklist', 'createUser', 'createSite', 'createPage']),
     startChecker() {
+      this.refreshChecklist();
       setInterval(() => {
         this.refreshChecklist();
       }, 5000);
+    },
+    attemptCreateUser() {
+      this.createUser(this.newUser);
+    },
+    attemptCreateSite() {
+      this.createSite(this.newSite);
+    },
+    attemptCreatePage() {
+      this.createPage(this.newPage);
     }
   },
   computed: {
     ...mapState({
       checklist: state => state.checklist
     })
+  },
+  components: {
+    Messages
   }
 };
 </script>
@@ -363,6 +597,31 @@ section {
       padding: 3em;
       font-size: 0.8em;
     }
+  }
+}
+
+#menu {
+  font-size: 0.9em;
+
+  a {
+    text-decoration: none;
+    font-weight: normal;
+
+    &.is-active {
+      font-weight: bold;
+    }
+  }
+
+  ul {
+    padding-bottom: 2em;
+
+    > li:first-child {
+      margin-top: 0.5em;
+    }
+  }
+  li {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
 }
 </style>

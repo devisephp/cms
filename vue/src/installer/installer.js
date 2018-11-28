@@ -1,4 +1,7 @@
-import Vue from 'vue';
+window.Vue = require('vue');
+
+var VueScrollactive = require('vue-scrollactive');
+Vue.use(VueScrollactive);
 
 import 'es6-promise/auto';
 
@@ -22,11 +25,16 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+window.$bus = new Vue();
+
 import Installer from './components/Installer';
 Vue.component('devise-installer', Installer);
 
 import Item from './components/Item';
 Vue.component('devise-installer-item', Item);
+
+import ItemCheck from './components/ItemCheck';
+Vue.component('item-check', ItemCheck);
 
 import Help from './components/Help';
 Vue.component('help', Help);
@@ -62,8 +70,6 @@ Prism.plugins.NormalizeWhitespace.setDefaults({
 	'tabs-to-spaces': 4,
 	'spaces-to-tabs': 4*/
 });
-
-console.log(store);
 
 new Vue({
   el: '#installer-app',

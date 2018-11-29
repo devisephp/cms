@@ -5,28 +5,30 @@
 <script>
 export default {
   computed: {
-    theImageSize () {
-      let sizes = this.component.fields[this.field].sizes
-      return sizes[this.currentSize]
+    theImageSize() {
+      let sizes = this.component.fields[this.field].sizes;
+      return sizes[this.currentSize];
     },
-    theImage () {
-      return this.devise[this.field].media[this.currentSize]
+    theImage() {
+      return this.devise[this.field].media[this.currentSize];
     },
-    currentSize () {
-      let sizes = this.component.fields[this.field].sizes
-      let self = this
-      if (Object.keys(sizes).length) {
-        for (const size in sizes) {
-          if (sizes.hasOwnProperty(size)) {
-            const s = sizes[size];
-            if (s.breakpoints) {
-              if (s.breakpoints.find(breakpoint => breakpoint.toLowerCase() === self.breakpoint.toLowerCase())) {
-                return size
+    currentSize() {
+      let sizes = this.component.fields[this.field].sizes;
+      let self = this;
+      this.$nextTick(() => {
+        if (Object.keys(sizes).length) {
+          for (const size in sizes) {
+            if (sizes.hasOwnProperty(size)) {
+              const s = sizes[size];
+              if (s.breakpoints) {
+                if (s.breakpoints.find(b => b.toLowerCase() === self.breakpoint.toLowerCase())) {
+                  return size;
+                }
               }
             }
           }
         }
-      }
+      });
     }
   },
   props: {
@@ -43,5 +45,5 @@ export default {
       type: Object
     }
   }
-}
+};
 </script>

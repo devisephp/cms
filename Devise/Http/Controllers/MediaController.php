@@ -106,10 +106,23 @@ class MediaController extends Controller
     }
 
     /**
+     * Requests a file upload
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function details(Request $request, $path)
+    {
+        $sansStoragePath = str_replace('/storage', '', $path);
+        return $this->Repository->getFileData($sansStoragePath, false, true);
+    }
+
+    /**
      * Requests a preview of a generated media image
      *
      * @param Filesystem $filesystem
      * @param String $path Path of the source media file
+     * @return mixed
      */
     public function preview(Filesystem $filesystem, $path)
     {

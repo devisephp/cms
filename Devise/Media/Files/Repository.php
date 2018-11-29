@@ -2,6 +2,7 @@
 
 use Devise\Media\Categories\CategoryPaths;
 
+use Devise\Models\DvsField;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
@@ -69,7 +70,7 @@ class Repository
         return $data;
     }
 
-    public function getFileData($file, $addSearchableData = false)
+    public function getFileData($file, $addSearchableData = false, $addUsageData = false)
     {
         $fileData = array();
 
@@ -92,6 +93,20 @@ class Repository
         if (strpos($type, 'image') !== false)
         {
             $fileData['type'] = 'image';
+        }
+
+        if ($addUsageData)
+        {
+            $search = '%\\/storage' . str_replace('/', '\\\\\\/', $file) . '%';
+            $pages = DvsField::where('json_value', 'like', $search)
+                ->join('dvs_slice_instances', 'dvs_slice_instances.id', '=', 'dvs_fields.slice_instance_id')
+                ->join('dvs_page_versions', 'dvs_page_versions.id', '=', 'dvs_slice_instances.page_version_id')
+                ->join('dvs_pages', 'dvs_pages.id', '=', 'dvs_page_versions.page_id')
+                ->select("dvs_pages.id", 'dvs_pages.title', 'dvs_pages.slug')
+                ->groupBy('dvs_pages.id')
+                ->get();
+
+            $fileData['pages']  = $pages->toArray();
         }
 
         return $fileData;

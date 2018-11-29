@@ -11,6 +11,7 @@ use Devise\Http\Resources\Api\RouteResource;
 use Devise\Http\Resources\Api\PageResource;
 use Devise\Pages\PagesManager;
 use Devise\Pages\PagesRepository;
+use Devise\Sites\SitesRepository;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 
@@ -38,9 +39,10 @@ class PagesController extends Controller
      * @param  PagesRepository $PagesRepository
      * @param Framework $Framework
      */
-    public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, Framework $Framework)
+    public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, SiteRepository $SiteRepository, Framework $Framework)
     {
         $this->PagesRepository = $PagesRepository;
+        $this->SitesRepository = $SitesRepository;
         $this->PagesManager = $PagesManager;
         $this->SiteDetector = $SiteDetector;
 
@@ -146,11 +148,16 @@ class PagesController extends Controller
      */
     public function store(StorePage $request)
     {
-        $site = $this->SiteDetector->current();
+        if ($request->input('site_id')) {
+            $site = $this->SitesRepository->findById($request->input('site_id'));
+        } else {
+            $site = $this->SiteDetector->current();
+        }
 
         $defaultLanguage = $site->default_language;
 
         $input = $request->all();
+
         $input['site_id'] = $site->id;
         $input['language_id'] = $request->input('language_id', $defaultLanguage->id);
 

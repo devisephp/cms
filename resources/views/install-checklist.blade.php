@@ -9,8 +9,6 @@
 
     <title>Welcome to Devise</title>
 
-    <script src="{{mix('/manifest.js', '/devise')}}"></script>
-
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/devise.css', '/devise') }}"/>
     
   </head>

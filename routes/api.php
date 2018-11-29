@@ -16,6 +16,12 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
         Route::post('sites', 'SitesController@store');
 
         /**
+         * Languages
+         */
+        Route::get('languages', 'LanguagesController@all');
+        Route::post('languages', 'LanguagesController@store');
+
+        /**
          * Pages
          */
         Route::post('pages', 'PagesController@store');

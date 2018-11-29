@@ -96,11 +96,10 @@
                   </li>
                 </ul>
               </li>
-              <li class="dvs-flex">
-                <item-check :item="checklist.migrations" :size="15" class="dvs-mr-2"></item-check>
-                <a href="#nav-database-migration" class="scrollactive-item">Database Migration</a>
-              </li>
             </ul>
+          </li>
+          <li class="dvs-flex">
+            <a href="#nav-remove-laravel-route" class="scrollactive-item">Remove Laravel Routes</a>
           </li>
         </ul>
       </scrollactive>
@@ -280,24 +279,38 @@
           </template>
 
           <template slot="example">
-            <h3 class="dvs-mb-4">Create Your first Site</h3>
-            <form class="dvs-mb-8">
+            <h3 class="dvs-mb-4">Create Your first Site
+              <template v-if="checklist.user">(Already Created)</template>
+            </h3>
+            <form class="dvs-mb-8" :class="{'dvs-opacity-50': checklist.site}">
               <fieldset class="dvs-fieldset dvs-mb-4">
                 <label>Site Name</label>
-                <input type="text" v-model="newSite.name">
+                <input type="text" v-model="newSite.name" :disabled="checklist.site">
               </fieldset>
               <fieldset class="dvs-fieldset dvs-mb-4">
                 <label>Site's Actual Domain (See below)</label>
-                <input type="text" v-model="newSite.domain">
+                <input type="text" v-model="newSite.domain" :disabled="checklist.site">
               </fieldset>
-              <fieldset class="dvs-fieldset dvs-mb-6">
-                <label>Language</label>
-                <input type="text" v-model="newSite.language">
+              <fieldset class="dvs-fieldset dvs-mb-6" v-if="languages.count">
+                <label>Default Language</label>
+                <select v-model="newSite.selectedLanguage" :disabled="checklist.site">
+                  <option :value="null">Select a Language</option>
+                  <option
+                    v-for="language in languages"
+                    :key="language.id"
+                    :value="language.id"
+                  >{{ language.code }}</option>
+                </select>
+              </fieldset>
+              <fieldset class="dvs-fieldset dvs-mb-6" v-else>
+                <label>Default Language</label>
+                <input type="text" v-model="newSite.code" :disabled="checklist.site">
               </fieldset>
               <button
                 type="submit"
                 class="dvs-btn dvs-bg-green dvs-text-white"
                 @click.prevent="attemptCreateSite()"
+                :disabled="checklist.site"
               >Create Site</button>
             </form>
 
@@ -339,16 +352,22 @@
             <h3 class="dvs-mb-4">Create Your first Page</h3>
             <form class="dvs-mb-8">
               <fieldset class="dvs-fieldset dvs-mb-4">
-                <label>Page Name</label>
-                <input type="text" v-model="newPage.name">
+                <label>Page Title</label>
+                <input type="text" v-model="newPage.title">
               </fieldset>
               <fieldset class="dvs-fieldset dvs-mb-4">
                 <label>Layout</label>
                 <input type="text" v-model="newPage.layout">
               </fieldset>
-              <fieldset class="dvs-fieldset dvs-mb-6">
+              <fieldset class="dvs-fieldset dvs-mb-6" v-if="languages.count">
                 <label>Language</label>
-                <input type="text" v-model="newPage.language">
+                <select v-model="newPage.language_id" :disabled="checklist.page">
+                  <option
+                    v-for="language in languages"
+                    :key="language.id"
+                    :value="language.id"
+                  >{{ language.code }}</option>
+                </select>
               </fieldset>
               <fieldset class="dvs-fieldset dvs-mb-6">
                 <label>Slug</label>
@@ -407,7 +426,7 @@
           </template>
         </devise-installer-item>
 
-        <!-- ImageMagick -->
+        <!-- Image Optimization -->
         <devise-installer-item
           :item="checklist.image_optimization.jpegoptim || checklist.image_optimization.optipng || checklist.image_optimization.pngquant || checklist.image_optimization.svgo || checklist.image_optimization.gifsicle"
           id="nav-image-optimization"
@@ -446,6 +465,36 @@
               </pre>
           </template>
         </devise-installer-item>
+
+        <!-- Laravel Routes -->
+        <devise-installer-item
+          id="nav-remove-laravel-route"
+          title="Remove Laravel Routes (Optional)"
+        >
+          <template slot="instructions">
+            <p>Laravel ships with a default route for the homepage and if you ran the "make:auth" command above added some more. You most likely want to remove these.</p>
+            <help>
+              <strong>Important:</strong> Do NOT remove the Auth::routes(); line from web.php
+            </help>
+          </template>
+
+          <template slot="example">
+            <h3 class="dvs-mb-4">Where the routes are located:</h3>
+            <p>In '/routes/web.php' remove the following:</p>
+            <pre class="lang-bash" data-start="1">
+                <code>
+                  Route::get('/', function () {
+                      return view('welcome');
+                  });
+                </code>
+              </pre>
+            <pre class="lang-bash" data-start="1">
+                <code>
+                  Route::get('/home', 'HomeController@index')->name('home');
+                </code>
+              </pre>
+          </template>
+        </devise-installer-item>
       </template>
     </div>
 
@@ -470,11 +519,16 @@ export default {
       newSite: {
         name: '',
         domain: '',
-        language: 'en'
+        code: 'en',
+        selectedLanguage: null,
+        languages: [],
+        settings: {}
       },
       newPage: {
-        name: '',
-        layout: '',
+        site_id: 1,
+        language_id: 1,
+        title: 'Homepage',
+        layout: 'layouts.master',
         language: null,
         slug: '/'
       },
@@ -535,10 +589,18 @@ export default {
     };
   },
   mounted() {
+    this.getLanguages();
     this.startChecker();
   },
   methods: {
-    ...mapActions(['refreshChecklist', 'createUser', 'createSite', 'createPage']),
+    ...mapActions([
+      'refreshChecklist',
+      'createUser',
+      'createSite',
+      'createPage',
+      'createLanguage',
+      'getLanguages'
+    ]),
     startChecker() {
       this.refreshChecklist();
       setInterval(() => {
@@ -549,7 +611,19 @@ export default {
       this.createUser(this.newUser);
     },
     attemptCreateSite() {
-      this.createSite(this.newSite);
+      // If a language hasn't been created yet
+      if (!this.languages.count) {
+        this.createLanguage(this.newSite).then(response => {
+          this.newSite.languages = [];
+          this.newSite.languages.push({ id: response.data.data.id, default: 1 });
+          this.createSite(this.newSite);
+        });
+      } else {
+        // If a language was created but the site failed we will end up here
+        this.newSite.languages = [];
+        this.newSite.languages.push({ id: this.newSite.selectedLanguage, default: 1 });
+        this.createSite(this.newSite);
+      }
     },
     attemptCreatePage() {
       this.createPage(this.newPage);
@@ -557,7 +631,8 @@ export default {
   },
   computed: {
     ...mapState({
-      checklist: state => state.checklist
+      checklist: state => state.checklist,
+      languages: state => state.languages.data
     })
   },
   components: {
@@ -613,7 +688,7 @@ section {
   }
 
   ul {
-    padding-bottom: 2em;
+    padding-bottom: 1em;
 
     > li:first-child {
       margin-top: 0.5em;

@@ -28,6 +28,9 @@ const state = {
       svgo: false,
       gifsicle: false
     }
+  },
+  languages: {
+    data: []
   }
 };
 

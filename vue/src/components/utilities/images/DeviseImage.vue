@@ -13,22 +13,25 @@ export default {
       return this.devise[this.field].media[this.currentSize];
     },
     currentSize() {
-      let sizes = this.component.fields[this.field].sizes;
-      let self = this;
-      this.$nextTick(() => {
+      if (self.breakpoint) {
+        let sizes = this.component.fields[this.field].sizes;
+        let self = this;
+        let currentSize = null;
+
         if (Object.keys(sizes).length) {
           for (const size in sizes) {
             if (sizes.hasOwnProperty(size)) {
               const s = sizes[size];
               if (s.breakpoints) {
                 if (s.breakpoints.find(b => b.toLowerCase() === self.breakpoint.toLowerCase())) {
-                  return size;
+                  currentSize = size;
                 }
               }
             }
           }
         }
-      });
+        return currentSize;
+      }
     }
   },
   props: {

@@ -16,6 +16,43 @@ const actions = {
     });
   },
 
+  // Languages
+  getLanguages(context) {
+    return new Promise((resolve, reject) => {
+      window.axios
+        .get(context.state.api.baseUrl + 'languages/')
+        .then(function(response) {
+          context.commit('setLanguages', response.data);
+          resolve(response);
+        })
+        .catch(function(error) {
+          window.$bus.$emit('showError', error);
+        });
+    }).catch(function(error) {
+      window.$bus.$emit('showError', error);
+    });
+  },
+
+  createLanguage(context, language) {
+    return new Promise((resolve, reject) => {
+      window.axios
+        .post(context.state.api.baseUrl + 'languages/', language)
+        .then(function(response) {
+          window.$bus.$emit('showMessage', {
+            title: 'Success!',
+            message: 'Your new language has been added.'
+          });
+          context.commit('createLanguage', response.data);
+          resolve(response);
+        })
+        .catch(function(error) {
+          window.$bus.$emit('showError', error);
+        });
+    }).catch(function(error) {
+      window.$bus.$emit('showError', error);
+    });
+  },
+
   // Pages
   createPage(context, page) {
     return new Promise((resolve, reject) => {

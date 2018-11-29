@@ -27,7 +27,11 @@ class StorePage extends ApiRequest
      */
     public function rules()
     {
-        $site = $this->SiteDetector->current();
+        $siteId = $this->getSiteId();
+
+        if (!$siteId) {
+            return false;
+        }
 
         return [
             'title'        => 'required|min:3',
@@ -35,11 +39,28 @@ class StorePage extends ApiRequest
             'copy_page_id' => 'required_if:layout,null',
             'slug'         => [
                 'required',
-                Rule::unique('dvs_pages')->where(function ($query) use ($site) {
-                    return $query->where('site_id', $site->id)
+                Rule::unique('dvs_pages')->where(function ($query) use ($siteId) {
+                    return $query->where('site_id', $siteId)
                         ->whereNull('deleted_at');
                 })
             ]
         ];
+    }
+
+    private function getSiteId() {
+        $site = $this->SiteDetector->current();
+
+        if ($site) {
+            return $site->id;
+        }
+ 
+        if (!$site && $this->content) {
+            $requestData = json_decode($this->content);
+            if ($requestData && $requestData->site_id) {
+                return $requestData->site_id;
+            }
+        }
+
+        return false;
     }
 }

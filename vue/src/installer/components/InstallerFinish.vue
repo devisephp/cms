@@ -4,7 +4,6 @@
     <p>You are finished with the required elements of your Devise install. Click below to complete your install. If you ever want to come back simple delete the "DVS_MODE=active" from your .env file.</p>
     <button
       class="dvs-btn dvs-bg-white dvs-text-green"
-      :disabled="item"
       @click.prevent="attemptCompleteInstall()"
     >Complete Install</button>
   </div>

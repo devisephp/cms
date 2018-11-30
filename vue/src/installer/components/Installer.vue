@@ -99,7 +99,7 @@ export default {
     this.startChecker();
   },
   methods: {
-    ...mapActions(['refreshChecklist', 'createPage', 'createLanguage', 'getLanguages']),
+    ...mapActions(['refreshChecklist', 'getLanguages']),
     startChecker() {
       this.refreshChecklist();
       setInterval(() => {

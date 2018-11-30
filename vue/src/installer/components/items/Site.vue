@@ -84,7 +84,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['createSite']),
+    ...mapActions(['createSite', 'createLanguage']),
     attemptCreateSite() {
       // If a language hasn't been created yet
       if (!this.languages.count) {

@@ -10,6 +10,7 @@ use Devise\Observers\DvsFieldObserver;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Database;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -61,7 +62,7 @@ class DeviseServiceProvider extends ServiceProvider
 
     private function setSiteConfig()
     {
-        if (!$this->app->runningInConsole() && Database::connected())
+        if (!$this->app->runningInConsole() && Database::connected() && Schema::hasTable('dvs_sites'))
         {
             $siteDetector = App::make(SiteDetector::class);
             $site = $siteDetector->current();

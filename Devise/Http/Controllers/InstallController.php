@@ -6,8 +6,10 @@ use Devise\Http\Requests\ApiRequest;
 
 use Devise\Support\Database;
 use Devise\Support\Env;
+use Devise\Traits\HasPermissions;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Spatie\ImageOptimizer\OptimizerChain;
@@ -37,6 +39,7 @@ class InstallController extends Controller
             "user"               => $this->firstUserReady(),
             "site"               => $this->firstSiteReady(),
             "page"               => $this->firstPageReady(),
+            "slices"             => $this->slicesFolderRead(),
             "image_library"      => $this->imageLibraryAvailable(),
             "image_optimization" => $this->optimizersStatus()
         ];
@@ -71,12 +74,17 @@ class InstallController extends Controller
 
     private function firstUserReady()
     {
+        $webGuardProvider = config('auth.guards.web.provider');
+        $userModel = config("auth.providers.$webGuardProvider.model");
+
         return (
             Database::connected()
             &&
             Schema::hasTable('users')
             &&
             DB::table('users')->count() > 0
+            &&
+            in_array(HasPermissions::class, class_uses($userModel))
         );
     }
 
@@ -123,9 +131,16 @@ class InstallController extends Controller
     {
         $status = [];
         $optimizers = $this->OptimizerChain->getOptimizers();
-        foreach ($optimizers as $optimizer){
-            $status[ $optimizer->binaryName ] = $optimizer->binaryPath !== "";
+        foreach ($optimizers as $optimizer)
+        {
+            $status[$optimizer->binaryName] = $optimizer->binaryPath !== "";
         }
+
         return $status;
+    }
+
+    private function slicesFolderRead()
+    {
+        return File::isDirectory(resource_path('views/slices'));
     }
 }

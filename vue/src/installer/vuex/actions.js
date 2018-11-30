@@ -16,6 +16,26 @@ const actions = {
     });
   },
 
+  // Install Complete
+  completeInstall(context) {
+    return new Promise((resolve, reject) => {
+      window.axios
+        .post(context.state.api.baseUrl + 'install-complete/')
+        .then(function(response) {
+          resolve(response);
+        })
+        .catch(function(error) {
+          console.log(
+            'error in completing the install. You can add DVS_MODE=active to your .env to manually complete'
+          );
+        });
+    }).catch(function(error) {
+      console.log(
+        'error in completing the install.  You can add DVS_MODE=active to your .env to manually complete'
+      );
+    });
+  },
+
   // Languages
   getLanguages(context) {
     return new Promise((resolve, reject) => {
@@ -39,8 +59,7 @@ const actions = {
         .post(context.state.api.baseUrl + 'languages/', language)
         .then(function(response) {
           window.$bus.$emit('showMessage', {
-            title: 'Success!',
-            message: 'Your new language has been added.'
+            content: 'Your new language has been added.'
           });
           context.commit('createLanguage', response.data);
           resolve(response);
@@ -60,8 +79,7 @@ const actions = {
         .post(context.state.api.baseUrl + 'pages/', page)
         .then(function(response) {
           window.$bus.$emit('showMessage', {
-            title: 'Success!',
-            message: page.title + ' has been created.'
+            content: page.title + ' has been created.'
           });
           context.commit('createPage', response.data.data);
           resolve(response);
@@ -81,8 +99,7 @@ const actions = {
         .post(context.state.api.baseUrl + 'sites/', site)
         .then(function(response) {
           window.$bus.$emit('showMessage', {
-            title: 'Success!',
-            message: site.name + ' has been created.'
+            content: site.name + ' has been created.'
           });
           context.commit('createSite', response.data.data);
           resolve(response);

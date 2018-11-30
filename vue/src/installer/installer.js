@@ -30,6 +30,9 @@ window.$bus = new Vue();
 import Installer from './components/Installer';
 Vue.component('devise-installer', Installer);
 
+import InstallerFinish from './components/InstallerFinish';
+Vue.component('installer-finish', InstallerFinish);
+
 import Item from './components/Item';
 Vue.component('devise-installer-item', Item);
 

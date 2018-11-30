@@ -38,6 +38,6 @@ class SitesRepository
      */
     public function findById($id)
     {
-        return $this->Site->findOrFail($id);
+        return $this->Site->with(['languages'])->findOrFail($id);
     }
 }

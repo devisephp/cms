@@ -39,7 +39,7 @@ class PagesController extends Controller
      * @param  PagesRepository $PagesRepository
      * @param Framework $Framework
      */
-    public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, SiteRepository $SiteRepository, Framework $Framework)
+    public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, SitesRepository $SitesRepository, Framework $Framework)
     {
         $this->PagesRepository = $PagesRepository;
         $this->SitesRepository = $SitesRepository;

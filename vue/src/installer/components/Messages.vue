@@ -53,8 +53,13 @@ export default {
       return hash(message);
     },
     buildError(error) {
+      // API Error
       if (error.data && error.data.message) {
         return this.buildValidationErrorMessage(error.data);
+      }
+      // Laravel Error
+      else if (error.exception) {
+        return this.buildLaravelErrorMessage(error);
       }
 
       return '<p>There was an error with your request</p>';
@@ -73,6 +78,11 @@ export default {
 
         errorString += `</ul>`;
       }
+
+      return errorString;
+    },
+    buildLaravelErrorMessage(error) {
+      let errorString = '';
 
       return errorString;
     }

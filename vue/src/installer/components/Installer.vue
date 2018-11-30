@@ -1,5 +1,5 @@
 <template>
-  <div class="dvs-flex" :class="{'dvs-mt-16': finished}" :styles="bodyFinishedStyles">
+  <div class="dvs-flex">
     <installer-finish
       ref="finshline"
       :finished="finished"
@@ -7,16 +7,36 @@
       :style="finishedStyles"
     ></installer-finish>
 
-    <main-menu :checklist="checklist"></main-menu>
+    <main-menu :checklist="checklist" :style="bodyFinishedStyles"></main-menu>
 
-    <div id="content" class="dvs-absolute dvs-pin dvs-overflow-scroll">
+    <div id="content" class="dvs-absolute dvs-pin dvs-overflow-scroll" :style="bodyFinishedStyles">
       <section id="nav-welcome" name="nav-welcome">
         <div>
-          <h1 class="dvs-mb-8 dvs-font-light">Welcome to Devise</h1>
+          <div class="dvs-w-1/2 dvs-mb-4">
+            <devise-logo color="#222"/>
+          </div>
 
           <p
             class="dvs-text-xl dvs-mb-16"
-          >We are very excited that you are giving Devise 2 a spin. We are still in the early beta stages of this product so things may change but until then we encourage you to check out the project, submit any PR's or suggestions on Github.</p>
+          >We are very excited that you are giving Devise 2 a spin. We are still in the early beta stages of this product but we do believe we have settled on the final structure of things. We encourage you to send us any feedback via Github issues, submit any PR's or just let us know what you think of the project on Twitter @devisephp.</p>
+
+          <div class="dvs-mb-16 dvs-flex">
+            <a
+              href="https://devise.gitbook.io/cms/"
+              target="_blank"
+              class="dvs-btn dvs-bg-blue dvs-text-white dvs-mr-2"
+            >Documentation</a>
+            <a
+              href="https://devisephp.com"
+              target="_blank"
+              class="dvs-btn dvs-bg-blue dvs-text-white dvs-mr-2"
+            >Website</a>
+            <a
+              href="https://github.com/devisephp/cms"
+              target="_blank"
+              class="dvs-btn dvs-bg-blue dvs-text-white"
+            >Github</a>
+          </div>
 
           <div class="dvs-text-left dvs-w-full">
             <h2 class="dvs-mb-4">Installation</h2>
@@ -61,6 +81,7 @@ import { mapActions, mapState } from 'vuex';
 
 import Messages from './Messages';
 import MainMenu from './MainMenu.vue';
+import DeviseLogo from './../../components/utilities/DeviseLogo.vue';
 
 import Database from './items/Database.vue';
 import Migrations from './items/Migrations.vue';
@@ -107,14 +128,14 @@ export default {
         return { top: 0 };
       }
 
-      return { top: '-150px' };
+      return { top: '-200px' };
     },
     bodyFinishedStyles() {
       if (this.finished) {
-        return { paddingTop: '150px' };
+        return { marginTop: '200px' };
       }
 
-      return { paddingTop: '0' };
+      return { marginTop: '0' };
     }
   },
   components: {
@@ -128,7 +149,8 @@ export default {
     ImageOptimization,
     OptionalExtras,
     Messages,
-    MainMenu
+    MainMenu,
+    DeviseLogo
   }
 };
 </script>

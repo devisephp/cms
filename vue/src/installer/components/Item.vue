@@ -1,11 +1,15 @@
 <template>
   <section>
-    <div>
-      <h3 class="dvs-my-4">{{ title }}</h3>
-
-      <item-check :item="item"></item-check>
-
-      <slot name="instructions"/>
+    <div class="dvs-relative dvs-pl-16">
+      <item-check
+        v-if="item !== null"
+        :item="item"
+        class="dvs-absolute dvs-pin-t dvs-pin-l dvs-ml-6 dvs-mt-8"
+      ></item-check>
+      <div class="dvs-pl-8">
+        <h3 class="dvs-mb-4">{{ title }}</h3>
+        <slot name="instructions"/>
+      </div>
     </div>
 
     <div>
@@ -18,8 +22,8 @@
 export default {
   props: {
     item: {
-      required: true,
-      type: Boolean
+      type: Boolean,
+      default: null
     },
     title: {
       required: true,

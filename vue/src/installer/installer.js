@@ -53,9 +53,16 @@ Vue.component('alert-icon', AlertIcon);
 
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-okaidia.css';
+import 'prismjs/components/prism-clike.min.js';
+import 'prismjs/components/prism-markup-templating.min.js';
+import 'prismjs/components/prism-php.min.js';
 import 'prismjs/components/prism-ini.min.js';
 import 'prismjs/components/prism-javascript.min.js';
 import 'prismjs/components/prism-bash.min.js';
+
+// var loadComponents = require('prismjs/components/index.js');
+// loadComponents(['ini', 'javascript', 'bash', 'php']);
+
 import 'prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.js';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';

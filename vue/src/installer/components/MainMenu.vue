@@ -39,14 +39,21 @@
               <a href="#nav-page" class="scrollactive-item">First Page</a>
             </li>
             <li class="dvs-flex">
+              <item-check :item="checklist.slices" :size="15" class="dvs-mr-2"></item-check>
+              <a href="#nav-slices" class="scrollactive-item">Slices Directory</a>
+            </li>
+            <li class="dvs-flex">
               <item-check :item="checklist.image_library" :size="15" class="dvs-mr-2"></item-check>
               <a href="#nav-image-library" class="scrollactive-item">Image Library</a>
             </li>
           </ul>
         </li>
         <li>
-          <a href="#nav-required" class="scrollactive-item">Suggested</a>
+          <a href="#nav-suggested" class="scrollactive-item">Suggested</a>
           <ul class="dvs-list-reset dvs-ml-4">
+            <li class="dvs-flex">
+              <a href="#nav-remove-laravel-route" class="scrollactive-item">Remove Laravel Routes</a>
+            </li>
             <li>
               <a href="#nav-image-optimization" class="scrollactive-item">Image Optimization</a>
               <ul>
@@ -89,9 +96,6 @@
               </ul>
             </li>
           </ul>
-        </li>
-        <li class="dvs-flex">
-          <a href="#nav-remove-laravel-route" class="scrollactive-item">Remove Laravel Routes</a>
         </li>
       </ul>
     </scrollactive>

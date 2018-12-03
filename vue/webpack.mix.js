@@ -112,10 +112,10 @@ if (mix.inProduction()) {
     //   ],
     //   'js/devise-administration-vendor.js'
     // )
-    .version();
-  // .purgeCss({
-  //   folders: ['src'],
-  //   globs: [],
-  //   whitelistPatterns: [/mobile/, /tablet/, /desktop/, /largeDesktop/, /ultraWideDesktop/]
-  // });
+    .version()
+    .purgeCss({
+      folders: ['src'],
+      globs: [],
+      whitelistPatterns: [/mobile/, /tablet/, /desktop/, /largeDesktop/, /ultraWideDesktop/]
+    });
 }

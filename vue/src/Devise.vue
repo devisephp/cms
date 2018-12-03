@@ -3,17 +3,19 @@
     <portal-target name="app-root"></portal-target>
 
     <div id="devise-container" :class="[breakpoint, isPreviewFrame ? 'preview-frame' : '']">
-      
-      <administration v-if="isLoggedIn && !isPreviewFrame" />
+      <administration v-if="isLoggedIn && !isPreviewFrame"/>
 
       <div id="dvs-app-content">
         <!-- Desktop mode in editor or just viewing page -->
-        <div class="devise-content" v-if="typeof currentPage === 'undefined' || currentPage.previewMode === 'desktop' || isPreviewFrame">
+        <div
+          class="devise-content"
+          v-if="typeof currentPage === 'undefined' || currentPage.previewMode === 'desktop' || isPreviewFrame"
+        >
           <slot name="on-top"></slot>
           <slot name="static-content"></slot>
 
           <template v-if="typeof currentPage !== 'undefined' && currentPage.slices">
-            <slices :slices="currentPage.slices"></slices>
+            <slices :slices="currentPage.slices" :editor-mode="isLoggedIn && !isPreviewFrame"></slices>
           </template>
 
           <slot name="static-content-bottom"></slot>
@@ -22,116 +24,115 @@
 
         <div id="devise-iframe-editor" v-if="typeof currentPage !== 'undefined' && !isPreviewFrame">
           <!-- Preview mode in editor -->
-          <iframe v-if="currentPage.previewMode !== 'desktop' && isLoggedIn" :src="currentUrl" id="devise-responsive-preview" :class="[currentPage.previewMode]"/>
+          <iframe
+            v-if="currentPage.previewMode !== 'desktop' && isLoggedIn"
+            :src="currentUrl"
+            id="devise-responsive-preview"
+            :class="[currentPage.previewMode]"
+          />
         </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
 <script>
-import Slice from './Slice'
-import User from './components/menu/User'
-import SimpleBar from 'SimpleBar'
+import Slice from './Slice';
+import User from './components/menu/User';
+import SimpleBar from 'SimpleBar';
 
-import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue'
+import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue';
 
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'Devise',
-  data () {
+  data() {
     return {
       showLoadbar: false,
       loadbarPercentage: 0,
-      pageMode: false,
-    }
+      pageMode: false
+    };
   },
-  mounted () {
-    window.devise = this
-    devise.$bus = deviseSettings.$bus
+  mounted() {
+    window.devise = this;
+    devise.$bus = deviseSettings.$bus;
 
-    this.initDevise()
+    this.initDevise();
   },
   methods: {
-    ...mapActions('devise', [
-      'setBreakpoint'
-    ]),
-    initDevise () {
+    ...mapActions('devise', ['setBreakpoint']),
+    initDevise() {
       try {
         if (!this.isPreviewFrame) {
-          this.currentPage.previewMode = 'desktop'
-          this.page = deviseSettings.$page
-          this.$router.push({name: 'devise-page-editor'})
+          this.currentPage.previewMode = 'desktop';
+          this.page = deviseSettings.$page;
+          this.$router.push({ name: 'devise-page-editor' });
         } else {
-          this.page = window.parent.deviseSettings.$page
+          this.page = window.parent.deviseSettings.$page;
         }
       } catch (e) {
-        console.warn('Devise: deviseSettings.$page or window.parent.deviseSettings.$page not found. Nothing to render')
+        console.warn(
+          'Devise: deviseSettings.$page or window.parent.deviseSettings.$page not found. Nothing to render'
+        );
       }
-      
-      this.addWatchers()
-      this.setSizeAndBreakpoint()
-      this.setSizeAndBreakpoint()
 
-      let self = this
-      this.$nextTick(function () {
-        setTimeout(function () {
-          self.removeBlocker()
-          devise.$bus.$emit('devise-loaded')
-        }, 10)
-      })
+      this.addWatchers();
+      this.setSizeAndBreakpoint();
+      this.setSizeAndBreakpoint();
+
+      let self = this;
+      this.$nextTick(function() {
+        setTimeout(function() {
+          self.removeBlocker();
+          devise.$bus.$emit('devise-loaded');
+        }, 10);
+      });
     },
-    removeBlocker () {
-      let blocker = document.getElementById('devise-blocker')
+    removeBlocker() {
+      let blocker = document.getElementById('devise-blocker');
       if (blocker) {
-        blocker.classList.add('fade')
+        blocker.classList.add('fade');
       }
     },
-    addWatchers () {
-      window.onresize = this.setSizeAndBreakpoint
+    addWatchers() {
+      window.onresize = this.setSizeAndBreakpoint;
     },
-    setSizeAndBreakpoint () {
-      let width = window.innerWidth
-      let height = window.innerHeight
-      let breakpoint = this.findBreakpoint(width)
+    setSizeAndBreakpoint() {
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let breakpoint = this.findBreakpoint(width);
 
       this.setBreakpoint({
         breakpoint: breakpoint,
-        diminsions: {width: width, height: height}
-      })
+        diminsions: { width: width, height: height }
+      });
     },
-    findBreakpoint (width) {
+    findBreakpoint(width) {
       for (var breakpoint in this.deviseOptions.breakpoints) {
         if (this.deviseOptions.breakpoints.hasOwnProperty(breakpoint)) {
           if (width < this.deviseOptions.breakpoints[breakpoint]) {
-            return breakpoint
+            return breakpoint;
           }
         }
       }
-      return 'ultraWideDesktop'
+      return 'ultraWideDesktop';
     }
   },
   computed: {
-    ...mapGetters('devise', [
-      'breakpoint',
-      'currentUser',
-      'currentPage'
-    ]),
-    currentUrl () {
-      return window.location.href
+    ...mapGetters('devise', ['breakpoint', 'currentUser', 'currentPage']),
+    currentUrl() {
+      return window.location.href;
     },
-    isPreviewFrame () {
+    isPreviewFrame() {
       try {
-        return window.self !== window.top
+        return window.self !== window.top;
       } catch (e) {
-        return true
+        return true;
       }
     },
-    isLoggedIn () {
-      return this.currentUser
+    isLoggedIn() {
+      return this.currentUser;
     }
   },
   components: {
@@ -139,5 +140,5 @@ export default {
     Slice,
     User
   }
-}
+};
 </script>

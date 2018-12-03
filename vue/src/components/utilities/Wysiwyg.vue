@@ -60,53 +60,54 @@
 </template>
 
 <script>
-import mezr from "mezr";
+import mezr from 'mezr';
+var sanitizeHtml = require('sanitize-html');
 
-import Table from "trumbowyg/dist/plugins/table/trumbowyg.table.min.js";
+import Table from 'trumbowyg/dist/plugins/table/trumbowyg.table.min.js';
 
 // Import editor cs
-import "trumbowyg/dist/ui/icons.svg";
-import "trumbowyg/dist/ui/trumbowyg.css";
-import "trumbowyg/dist/plugins/table/ui/trumbowyg.table.css";
-import Trumbowyg from "vue-trumbowyg";
-import Strings from "./../../mixins/Strings";
+import 'trumbowyg/dist/ui/icons.svg';
+import 'trumbowyg/dist/ui/trumbowyg.css';
+import 'trumbowyg/dist/plugins/table/ui/trumbowyg.table.css';
+import Trumbowyg from 'vue-trumbowyg';
+import Strings from './../../mixins/Strings';
 
 export default {
-  name: "Wysiwyg",
+  name: 'Wysiwyg',
   data() {
     return {
       theEditor: null,
       imageToManage: null,
-      localValue: "",
+      localValue: '',
       scrollEvent: null,
       buttonPane: null,
       config: {
         btns: [
-          ["viewHTML"],
-          ["strong", "em", "del"],
-          ["unorderedList", "orderedList"],
-          ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull"],
-          ["deviseImage", "link"],
-          ["formatting"],
-          ["removeformat"],
-          ["table"],
-          ["floats"],
-          ["undo", "redo"]
+          ['viewHTML'],
+          ['strong', 'em', 'del'],
+          ['unorderedList', 'orderedList'],
+          ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+          ['deviseImage', 'link'],
+          ['formatting'],
+          ['removeformat'],
+          ['table'],
+          ['floats'],
+          ['undo', 'redo']
         ],
         autogrow: true,
         btnsDef: {
           deviseImage: {
             fn: this.launchMediaManager,
-            tag: "mediamanager",
-            title: "Media Manager",
-            text: "Media Manager",
+            tag: 'mediamanager',
+            title: 'Media Manager',
+            text: 'Media Manager',
             isSupported: function() {
               return true;
             },
-            key: "M",
-            param: "",
+            key: 'M',
+            param: '',
             forceCSS: true,
-            ico: "insert-image",
+            ico: 'insert-image',
             hasIcon: true
           }
         },
@@ -117,7 +118,7 @@ export default {
         table: {
           rows: 8,
           columns: 8,
-          styler: "table"
+          styler: 'table'
         }
       }
     };
@@ -127,24 +128,24 @@ export default {
     this.theEditor = this.$refs.theEditor;
 
     this.$nextTick(() => {
-      let fieldPanel = document.querySelector("#field-panel");
+      let fieldPanel = document.querySelector('#field-panel');
 
       if (fieldPanel) {
-        let container = fieldPanel.querySelector(".simplebar-scroll-content");
-        this.buttonPane = fieldPanel.querySelector(".trumbowyg-button-pane");
+        let container = fieldPanel.querySelector('.simplebar-scroll-content');
+        this.buttonPane = fieldPanel.querySelector('.trumbowyg-button-pane');
 
         if (container) {
-          container.addEventListener("scroll", () => {
+          container.addEventListener('scroll', () => {
             if (!this.checkInView()) {
-              this.buttonPane.style.position = "fixed";
-              this.buttonPane.style.maxWidth = "300px";
-              this.buttonPane.style.right = "3em";
-              this.buttonPane.style.borderRadius = "3px";
+              this.buttonPane.style.position = 'fixed';
+              this.buttonPane.style.maxWidth = '300px';
+              this.buttonPane.style.right = '3em';
+              this.buttonPane.style.borderRadius = '3px';
             } else {
-              this.buttonPane.style.position = "relative";
-              this.buttonPane.style.maxWidth = "none";
-              this.buttonPane.style.right = "auto";
-              this.buttonPane.style.borderRadius = "0";
+              this.buttonPane.style.position = 'relative';
+              this.buttonPane.style.maxWidth = 'none';
+              this.buttonPane.style.right = 'auto';
+              this.buttonPane.style.borderRadius = '0';
             }
           });
         }
@@ -153,67 +154,61 @@ export default {
   },
   methods: {
     launchMediaManager(event) {
-      devise.$bus.$emit("devise-launch-media-manager", {
+      devise.$bus.$emit('devise-launch-media-manager', {
         callback: this.mediaSelected
       });
     },
     mediaSelected(imagesAndSettings) {
-      if (typeof imagesAndSettings === "object") {
-        let html = this.theEditor.el.trumbowyg("html");
+      if (typeof imagesAndSettings === 'object') {
+        let html = this.theEditor.el.trumbowyg('html');
         this.theEditor.el.trumbowyg(
-          "html",
-          `${html}<img src="${
-            imagesAndSettings.images.orig_optimized
-          }" width="${imagesAndSettings.settings.w}" height="${
-            imagesAndSettings.settings.h
-          }">`
+          'html',
+          `${html}<img src="${imagesAndSettings.images.orig_optimized}" width="${
+            imagesAndSettings.settings.w
+          }" height="${imagesAndSettings.settings.h}">`
         );
       }
     },
     update() {
-      console.log("in update");
-      this.localValue = this.theEditor.el.trumbowyg("html");
-      this.$emit("input", this.localValue);
-      this.$emit("change", this.localValue);
+      this.localValue = sanitizeHtml(this.theEditor.el.trumbowyg('html'));
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
     },
     imageManager(image) {
       this.imageToManage = image;
       this.$nextTick(() => {
-        this.$refs.marginsetting.value = this.imageToManage.currentTarget.style.margin.slice(
-          0,
-          -2
-        );
+        this.$refs.marginsetting.value = this.imageToManage.currentTarget.style.margin.slice(0, -2);
       });
     },
     setImageFloat(direction) {
       this.imageToManage.currentTarget.style.float = direction;
-      this.localValue = this.theEditor.el.trumbowyg("html");
+      this.localValue = this.theEditor.el.trumbowyg('html');
       this.updateAndCloseImageEditor();
     },
     setImageMargin(evt) {
       this.imageToManage.currentTarget.style.margin = `${evt.target.value}px`;
     },
     doneEditingImageStyles() {
-      this.localValue = this.theEditor.el.trumbowyg("html");
+      this.localValue = this.theEditor.el.trumbowyg('html');
       this.updateAndCloseImageEditor();
     },
     removeImage() {
       let newHTML = this.theEditor.el
-        .trumbowyg("html")
-        .replace(this.imageToManage.currentTarget.outerHTML, "");
-      this.theEditor.el.trumbowyg("html", newHTML);
-      this.localValue = this.theEditor.el.trumbowyg("html");
+        .trumbowyg('html')
+        .replace(this.imageToManage.currentTarget.outerHTML, '');
+      this.theEditor.el.trumbowyg('html', newHTML);
+      this.localValue = this.theEditor.el.trumbowyg('html');
       this.updateAndCloseImageEditor();
     },
     updateAndCloseImageEditor() {
       this.imageToManage = null;
-      this.theEditor.el.trumbowyg("toggle");
-      this.theEditor.el.trumbowyg("toggle");
+      this.theEditor.el.trumbowyg('toggle');
+      this.theEditor.el.trumbowyg('toggle');
       this.update();
     },
     checkInView() {
-      let fieldPanel = document.querySelector("#field-panel");
-      let container = fieldPanel.querySelector(".simplebar-scroll-content");
+      let fieldPanel = document.querySelector('#field-panel');
+      let container = fieldPanel.querySelector('.simplebar-scroll-content');
       let contTop = container.scrollTop;
 
       return contTop < 100;
@@ -223,6 +218,6 @@ export default {
     Trumbowyg
   },
   mixins: [Strings],
-  props: ["id", "value"]
+  props: ['id', 'value']
 };
 </script>

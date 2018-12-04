@@ -10,92 +10,97 @@
         <div class="dvs-flex dvs-items-center">
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons"/>
           <span
-            class="dvs-cursor-pointer"
+            :class="{'dvs-cursor-pointer': sliceHasFields, 'dvs-opacity-75': !sliceHasFields}"
             @click="toggleSlice()"
             @mouseenter="markSlice(true, slice)"
             @mouseleave="markSlice(false, slice)"
           >{{ slice.metadata.label }}</span>
         </div>
         <div
-          class="dvs-cursor-pointer dvs-ml-2 dvs-relative dvs-p-2 dvs-rounded-sm dvs-flex dvs-items-center"
+          class="dvs-ml-2 dvs-relative dvs-p-2 dvs-rounded-sm dvs-flex dvs-items-center"
           @mouseenter="moreHovered = true"
           @mouseleave="moreHovered = false"
           :style="{backgroundColor: this.theme.panelCard.background}"
         >
           <more-icon w="18" h="18" style="transform:rotate(90deg)" :style="{color: 'white'}"/>
-          <div
-            class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm dvs-mt-8"
-            style="width:250px;transition:height 500ms, opacity 500ms"
-            :style="moreContainerStyles"
-          >
-            <div class="dvs-py-2 dvs-flex dvs-items-end dvs-flex-wrap">
-              <div class="dvs-w-1/3">
-                <div
-                  class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                  :style="{ borderColor: theme.panelIcons.color }"
-                  @click="jumpToSlice()"
-                >
-                  <locate-icon w="25" h="25" :style="theme.panelIcons"/>
-                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Find</div>
-                </div>
-              </div>
 
-              <div class="dvs-w-1/3">
-                <div
-                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                  :style="{ borderColor: theme.panelIcons.color }"
-                  @click="requestInsertSlice()"
-                >
-                  <add-icon w="25" h="25" :style="theme.panelIcons"/>
-                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Insert Slice</div>
+          <transition name="dvs-fade">
+            <div
+              class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm dvs-mt-8"
+              style="width:250px;transition:height 500ms, opacity 500ms"
+              :style="{backgroundColor: this.theme.panelCard.background}"
+              v-if="moreHovered"
+            >
+              <div class="dvs-py-2 dvs-flex dvs-items-end dvs-flex-wrap">
+                <div class="dvs-w-1/3">
+                  <div
+                    class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                    :style="{ borderColor: theme.panelIcons.color }"
+                    @click="jumpToSlice()"
+                  >
+                    <locate-icon w="25" h="25" :style="theme.panelIcons"/>
+                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Find</div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="dvs-w-1/3">
-                <div
-                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                  :style="{ borderColor: theme.panelIcons.color }"
-                  @click="copySlice(slice, false)"
-                >
-                  <copy-icon w="25" h="25" :style="theme.panelIcons"/>
-                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Duplicate</div>
+                <div class="dvs-w-1/3">
+                  <div
+                    class="dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                    :class="{'dvs-cursor-pointer': slice.metadata.has_child_slot, 'dvs-cursor-not-allowed dvs-opacity-50': !slice.metadata.has_child_slot}"
+                    :style="{ borderColor: theme.panelIcons.color }"
+                    @click="requestInsertSlice()"
+                  >
+                    <add-icon w="25" h="25" :style="theme.panelIcons"/>
+                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Insert Slice</div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="dvs-w-1/3">
-                <div
-                  class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                  :style="{ borderColor: theme.panelIcons.color }"
-                  @click="sliceSettings()"
-                >
-                  <cog-icon w="25" h="25" :style="theme.panelIcons"/>
-                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Settings</div>
+                <div class="dvs-w-1/3">
+                  <div
+                    class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                    :style="{ borderColor: theme.panelIcons.color }"
+                    @click="copySlice(slice, false)"
+                  >
+                    <copy-icon w="25" h="25" :style="theme.panelIcons"/>
+                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Duplicate</div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="dvs-w-1/3">
-                <div
-                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                  :style="{ borderColor: theme.panelIcons.color }"
-                  @click="requestEditSlice()"
-                >
-                  <create-icon w="25" h="25" :style="theme.panelIcons"/>
-                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Edit</div>
+                <div class="dvs-w-1/3">
+                  <div
+                    class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                    :style="{ borderColor: theme.panelIcons.color }"
+                    @click="sliceSettings()"
+                  >
+                    <cog-icon w="25" h="25" :style="theme.panelIcons"/>
+                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Settings</div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="dvs-w-1/3">
-                <div
-                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                  :style="{ borderColor: theme.panelIcons.color }"
-                  @click="removeSlice()"
-                >
-                  <remove-icon w="25" h="25" :style="theme.panelIcons"/>
-                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Remove</div>
+                <div class="dvs-w-1/3">
+                  <div
+                    class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                    :style="{ borderColor: theme.panelIcons.color }"
+                    @click="requestEditSlice()"
+                  >
+                    <create-icon w="25" h="25" :style="theme.panelIcons"/>
+                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Edit</div>
+                  </div>
+                </div>
+
+                <div class="dvs-w-1/3">
+                  <div
+                    class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                    :style="{ borderColor: theme.panelIcons.color }"
+                    @click="removeSlice()"
+                  >
+                    <remove-icon w="25" h="25" :style="theme.panelIcons"/>
+                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Remove</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </transition>
         </div>
       </div>
     </strong>
@@ -206,7 +211,7 @@
       >Be aware that these entries are model entries. That means they are managed in your database by another tool or by an admin section in your adminitration.</help>
     </div>
 
-    <div class="dvs-collapsed dvs-ml-4" v-show="sliceOpen">
+    <div class="dvs-collapsed dvs-ml-4" v-if="sliceOpen">
       <draggable
         v-model="slice.slices"
         element="ul"
@@ -268,10 +273,12 @@ export default {
 
     // Adding, Editing and Removing Slices
     requestInsertSlice() {
-      this.manageSlice = true;
-      this.$nextTick(function() {
-        this.$refs.manageslice.action = 'insert';
-      });
+      if (this.slice.metadata.has_child_slot) {
+        this.manageSlice = true;
+        this.$nextTick(function() {
+          this.$refs.manageslice.action = 'insert';
+        });
+      }
     },
     addSlice(slice, referringSlice) {
       if (typeof referringSlice === 'undefined') {
@@ -323,6 +330,7 @@ export default {
           this.slice.hasOwnProperty(potentialField) &&
           potentialField !== 'slices' &&
           potentialField !== 'metadata' &&
+          potentialField !== 'settings' &&
           typeof this.slice[potentialField] === 'object'
         ) {
           fields[potentialField] = this.slice[potentialField];
@@ -333,19 +341,8 @@ export default {
       }
       return fields;
     },
-    moreContainerStyles() {
-      if (this.moreHovered) {
-        return {
-          height: '150px',
-          opacity: 1,
-          backgroundColor: this.theme.panelCard.background
-        };
-      }
-      return {
-        height: '0',
-        opacity: 0,
-        backgroundColor: this.theme.panelCard.background
-      };
+    sliceHasFields() {
+      return Object.keys(this.theFields).length > 0;
     }
   },
   props: {

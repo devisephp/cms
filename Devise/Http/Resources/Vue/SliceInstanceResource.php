@@ -14,13 +14,14 @@ class SliceInstanceResource extends Resource
     {
         $data = [
             'metadata' => [
-                'instance_id' => $this->id,
-                'name'        => $this->component_name,
-                'label'       => $this->label,
-                'view'        => $this->view,
-                'type'        => $this->type,
-                'model_query' => $this->model_query,
-                'placeholder' => ($this->has_model_query) ? false : true,
+                'instance_id'    => $this->id,
+                'name'           => $this->component_name,
+                'label'          => $this->label,
+                'view'           => $this->view,
+                'type'           => $this->type,
+                'model_query'    => $this->model_query,
+                'has_child_slot' => $this->has_child_slot,
+                'placeholder'    => ($this->has_model_query) ? false : true,
             ],
             'settings' => $this->settings
         ];

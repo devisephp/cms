@@ -96,12 +96,7 @@ class Devise
         $js .= self::user();
         $js .= self::sites();
         $js .= self::lang();
-
-        if (Auth::user())
-        {
-            $js .= self::config();
-            $js .= self::interface();
-        }
+        $js .= self::config();
 
         if ($page)
         {
@@ -155,13 +150,14 @@ class Devise
 
     public static function config()
     {
-        $data = array_only(config('devise'), ['mothership', 'layouts']);
-        return 'Devise.prototype.$config = ' . json_encode($data) . ";\n";
-    }
+        $data['config'] = config('devise.layouts');
 
-    public static function interface()
-    {
-        return 'Devise.prototype.$interface = ' . json_encode(config('devise.interface')) . ";\n";
+        if (Auth::check())
+        {
+            $data['mothership'] = config('devise.mothership');
+        }
+
+        return 'Devise.prototype.$config = ' . json_encode($data) . ";\n";
     }
 
     public static function pageData($page)

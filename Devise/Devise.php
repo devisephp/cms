@@ -99,7 +99,7 @@ class Devise
 
         if (Auth::user())
         {
-            $js .= self::mothership();
+            $js .= self::config();
             $js .= self::interface();
         }
 
@@ -153,9 +153,10 @@ class Devise
         return 'Devise.prototype.$deviseComponents = {' . implode(',', self::$components) . "};\n";
     }
 
-    public static function mothership()
+    public static function config()
     {
-        return 'Devise.prototype.$mothership = ' . json_encode(config('devise.mothership')) . ";\n";
+        $data = array_only(config('devise'), ['mothership', 'layouts']);
+        return 'Devise.prototype.$config = ' . json_encode($data) . ";\n";
     }
 
     public static function interface()

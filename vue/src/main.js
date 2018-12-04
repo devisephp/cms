@@ -196,6 +196,10 @@ const DevisePlugin = {
     ) {
       store.commit('devise/setMothership', deviseSettings.$config.mothership);
     }
+
+    if (deviseSettings.$config && typeof deviseSettings.$config.layouts !== 'undefined') {
+      store.commit('devise/setLayouts', deviseSettings.$config.layouts);
+    }
   }
 };
 

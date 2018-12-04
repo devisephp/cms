@@ -35,7 +35,6 @@ export default {
     },
     formatValue(value) {
       if (this.settings.format) {
-        console.log('settings format?');
         return dayjs(value).format(this.settings.format);
       }
 

@@ -10,7 +10,9 @@
     <title>Welcome to Devise</title>
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/devise.css', '/devise') }}"/>
-    
+
+    {!! Devise::head() !!}
+        
   </head>
   <body class="dvs-bg-grey-lightest dvs-text-grey-darker dvs-overflow-hidden">
 

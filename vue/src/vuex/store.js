@@ -111,6 +111,7 @@ const state = {
   languages: {
     data: []
   },
+  layouts: [],
   meta: {
     data: []
   },

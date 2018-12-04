@@ -84,7 +84,7 @@
             <div class="dvs-cursor-pointer dvs-flex" @click="toggleVersionSettings(version)">
               <template v-if="!version.editName">
                 <div class="dvs-mr-2">
-                  <edit-icon :w="25" :h="25"/>
+                  <edit-icon w="25" h="25"/>
                 </div>
                 <div>
                   {{ version.name }}
@@ -102,7 +102,9 @@
 
               <fieldset class="dvs-fieldset dvs-mb-8">
                 <label>Layout</label>
-                <input type="text" v-model="localValue.versions[key].layout">
+                <select v-model="localValue.versions[key].layout">
+                  <option :value="layout" v-for="layout in layouts" :key="layout">{{ layout }}</option>
+                </select>
               </fieldset>
 
               <fieldset class="dvs-fieldset dvs-mb-8">
@@ -297,7 +299,7 @@ import CheckmarkIcon from 'vue-ionicons/dist/md-checkmark.vue';
 import CopyIcon from 'vue-ionicons/dist/ios-copy.vue';
 import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
 
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'PagesView',
@@ -487,6 +489,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', ['languages', 'mothershipApiKey']),
+    ...mapState('devise', ['layouts']),
     options() {
       return {
         width: '8000px',

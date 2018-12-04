@@ -31,9 +31,11 @@
           <label>Page Title</label>
           <input type="text" v-model="newPage.title" :disabled="item">
         </fieldset>
-        <fieldset class="dvs-fieldset dvs-mb-4">
+        <fieldset class="dvs-fieldset dvs-mb-8">
           <label>Layout</label>
-          <input type="text" v-model="newPage.layout" :disabled="item">
+          <select v-model="newPage.layout">
+            <option :value="layout" v-for="layout in layouts" :key="layout">{{ layout }}</option>
+          </select>
         </fieldset>
         <fieldset class="dvs-fieldset dvs-mb-6" v-if="languages.length">
           <label>Language</label>

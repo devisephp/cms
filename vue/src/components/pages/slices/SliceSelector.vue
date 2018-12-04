@@ -54,7 +54,6 @@ export default {
       this.directoryStack = pathString.split('.');
     },
     getDirectoryFiles(directories, directory) {
-      console.log(directories, directory);
       directory = directories.find(dir => dir.dirName === directory);
       return directory;
     },
@@ -99,11 +98,8 @@ export default {
       var directoryContents = this.slicesDirectories;
 
       this.directoryStack.forEach(dir => {
-        console.log('directoryContents', directoryContents);
         directoryContents = self.getDirectoryFiles(directoryContents['directories'], dir);
       });
-
-      console.log('end', directoryContents);
 
       return directoryContents;
     },

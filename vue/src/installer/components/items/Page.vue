@@ -10,7 +10,7 @@
         >Laravel's Blade System</a> and slices.
       </p>
       <p>
-        <strong>What a Layout Is:</strong> A layout blade file is a file that is intended to be used across many pages. This way you don't have to set the &lt;head&gt;, Javascript includes, style inclues, etc on every single page. Each page that is assigned that layout extends it placing it's content where you see fit. We have provided a boilerplate for you to the right. Copy the contents and save them to "/resources/views/layouts/master.blade.php". Then in the layout field enter dot-notation of that directory: "layouts.master".
+        <strong>What a Layout Is:</strong> A layout blade file is a file that is intended to be used across many pages. This way you don't have to set the &lt;head&gt;, Javascript includes, style inclues, etc on every single page. Each page that is assigned that layout extends it placing it's content where you see fit. We have provided a boilerplate for you to the right. Copy the contents and save them to "/resources/views/main.blade.php".
       </p>
 
       <p>
@@ -60,7 +60,7 @@
       <h3 class="dvs-mb-4">A solid boilerplate for your first layout file</h3>
       <p>
         Save the following to
-        <span class="dvs-font-mono">/resource/views/layouts/master.blade.php</span>
+        <span class="dvs-font-mono">/resource/views/main.blade.php</span>
       </p>
       <pre class="lang-html line-numbers">
               <code v-html="layoutTemplate"></code>
@@ -81,7 +81,7 @@ export default {
         site_id: 1,
         language_id: 1,
         title: 'Homepage',
-        layout: 'layouts.master',
+        layout: 'main',
         language: null,
         slug: '/'
       },

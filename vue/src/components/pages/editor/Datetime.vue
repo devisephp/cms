@@ -16,44 +16,57 @@
 
     <template slot="editor">
       <fieldset class="dvs-fieldset">
-        <input
-          ref="focusInput"
-          type="number"
-          v-model="localValue.text"
-          :maxlength="getMaxLength"
-          v-on:input="updateValue()"
-        >
+        <date-picker v-model="localValue.text" :settings="settings" @update="updateValue()"/>
       </fieldset>
     </template>
   </field-editor>
 </template>
 
 <script>
+import DatePicker from './../../utilities/DatePicker';
+
 export default {
-  name: 'NumberEditor',
+  name: 'DatetimeEditor',
   data() {
     return {
       localValue: {},
-      showEditor: false
+      showEditor: false,
+      settings: { date: true, time: false, format: 'YYYY' }
     };
   },
   mounted() {
     this.localValue = this.value;
+
+    this.setSettings();
   },
   methods: {
+    setSettings() {
+      if (this.options && this.options.settings) {
+        let settings = this.options.settings;
+        if (settings.date) {
+          this.settings.date = settings.date;
+        }
+
+        if (settings.time) {
+          this.settings.time = settings.time;
+        }
+
+        if (settings.format) {
+          this.settings.format = settings.format;
+        } else {
+          if (this.settings.date) {
+            this.format += 'dddd MMMM D YYYY';
+          }
+
+          if (this.settings.time) {
+            this.format += 'h:mm a';
+          }
+        }
+      }
+    },
     toggleEditor() {
       this.originalValue = Object.assign({}, this.value);
       this.showEditor = !this.showEditor;
-      this.focusForm();
-    },
-    focusForm() {
-      if (this.showEditor) {
-        this.$nextTick(() => {
-          setTimeout(() => {
-            this.$refs.focusInput.focus();
-          }, 200);
-        });
-      }
     },
     cancel() {
       this.localValue.text = this.originalValue.text;
@@ -76,7 +89,8 @@ export default {
   },
   props: ['value', 'options'],
   components: {
-    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field')
+    FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
+    DatePicker
   }
 };
 </script>

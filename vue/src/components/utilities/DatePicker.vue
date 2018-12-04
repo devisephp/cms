@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import flatPickr from "vue-flatpickr-component";
-import "flatpickr/dist/flatpickr.min.css";
-import dayjs from "dayjs";
+import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.min.css';
+import dayjs from 'dayjs';
 
 export default {
   data() {
@@ -30,22 +30,26 @@ export default {
   methods: {
     updateValue(value) {
       value = this.formatValue(value);
-      this.$emit("input", value);
-      this.$emit("update", value);
-      this.$refs.picker.fp.close();
+      this.$emit('input', value);
+      this.$emit('update', value);
     },
     formatValue(value) {
+      if (this.settings.format) {
+        console.log('settings format?');
+        return dayjs(value).format(this.settings.format);
+      }
+
       // 2018-04-27 13:34:00
       if (this.settings.date && this.settings.time) {
-        return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss');
       }
       // 2018-04-27
       if (this.settings.date && !this.settings.time) {
-        return dayjs(value).format("YYYY-MM-DD");
+        return dayjs(value).format('YYYY-MM-DD');
       }
       // 13:34:00
       if (!this.settings.date && this.settings.time) {
-        return dayjs(value).format("HH:mm:ss");
+        return dayjs(value).format('HH:mm:ss');
       }
 
       return null;
@@ -54,6 +58,6 @@ export default {
   components: {
     flatPickr
   },
-  props: ["value", "settings", "placeholder"]
+  props: ['value', 'settings', 'placeholder']
 };
 </script>

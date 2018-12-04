@@ -141,13 +141,12 @@ export default {
     },
     checkMediaSizesForRegeneration() {
       // If the current slice even has fields
-      console.log('check');
       if (typeof this.currentView.fields !== 'undefined') {
         for (var fieldName in this.currentView.fields) {
           const field = this.currentView.fields[fieldName];
 
           // If the field is an image
-          if (field.type === 'image') {
+          if (field.type === 'image' && this.devise[fieldName].url !== null) {
             // If sizes are defined on the image configuration and an image has already been selected
             if (
               typeof field.sizes !== 'undefined' &&
@@ -162,7 +161,7 @@ export default {
                   mediaRequest.sizes[sizeName] = field.sizes[sizeName];
                 }
               }
-              console.log(Object.keys(mediaRequest.sizes));
+
               // If there are any sizes needed
               if (Object.keys(mediaRequest.sizes).length > 0) {
                 // Build the request payload

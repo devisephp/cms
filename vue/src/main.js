@@ -1,35 +1,34 @@
-import Vue from 'vue'
-import VueTippy from 'vue-tippy'
-import Devise from './Devise'
-import Administration from './components/admin/Administration'
-import ActionBar from './components/utilities/ActionBar'
-import Sidebar from './components/utilities/Sidebar'
-import Help from './components/utilities/Help'
-import DeviseImg from './components/utilities/images/DeviseImage'
-import SliceEditor from './components/pages/slices/SliceEditor'
-import Slices from './Slices'
-import DeviseStore from './vuex/store'
-import PortalVue from 'portal-vue'
-import { DeviseBus } from './event-bus.js'
-import routes from './router/route.config.js'
-import alertConfirm from './directives/alert-confirm'
-import Tuck from './directives/tuck'
+import Vue from 'vue';
+import VueTippy from 'vue-tippy';
+import Devise from './Devise';
+import Administration from './components/admin/Administration';
+import ActionBar from './components/utilities/ActionBar';
+import Sidebar from './components/utilities/Sidebar';
+import Help from './components/utilities/Help';
+import DeviseImg from './components/utilities/images/DeviseImage';
+import SliceEditor from './components/pages/slices/SliceEditor';
+import Slices from './Slices';
+import DeviseStore from './vuex/store';
+import PortalVue from 'portal-vue';
+import { DeviseBus } from './event-bus.js';
+import routes from './router/route.config.js';
+import alertConfirm from './directives/alert-confirm';
+import Tuck from './directives/tuck';
 
-import EditPage from './components/pages/Editor'
+import EditPage from './components/pages/Editor';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 const DevisePlugin = {
-  install (Vue, { store, router, bus, options }) {
-
+  install(Vue, { store, router, bus, options }) {
     if (typeof store === 'undefined') {
-      throw new Error('Please provide a vuex store.')
+      throw new Error('Please provide a vuex store.');
     }
 
     if (typeof router === 'undefined') {
-      throw new Error('Please provide a vue router.')
+      throw new Error('Please provide a vue router.');
     }
 
     // Set the devise route to Edit Page for any application routes
@@ -37,97 +36,106 @@ const DevisePlugin = {
     // page editor even if you are navigating around the application routes.
     router.options.routes.map(route => {
       if (!route.hasOwnProperty('components')) {
-        route.components = {}
+        route.components = {};
       }
       if (!route.components.hasOwnProperty('devise')) {
-        route.components.devise = EditPage
+        route.components.devise = EditPage;
       }
-    })
+    });
 
     for (const route in routes) {
       if (routes.hasOwnProperty(route)) {
         const routeToCheck = routes[route];
-        var canAdd = true
+        var canAdd = true;
 
         for (const customRoute in router.options.routes) {
           if (router.options.routes.hasOwnProperty(customRoute)) {
             const routeToCheckAgainst = router.options.routes[customRoute];
             if (routeToCheckAgainst.name === routeToCheck.name) {
-              canAdd = false
+              canAdd = false;
             }
           }
         }
 
         if (canAdd) {
-          router.addRoutes([routeToCheck])
+          router.addRoutes([routeToCheck]);
         }
       }
     }
 
     if (typeof deviseSettings === 'undefined') {
-      window.deviseSettings = function () {};
+      window.deviseSettings = function() {};
     }
 
     // If the bus isn't set we'll use our own bus
     if (typeof bus === 'undefined') {
-      deviseSettings.__proto__.$bus = DeviseBus
+      deviseSettings.__proto__.$bus = DeviseBus;
     } else {
-      deviseSettings.__proto__.$bus = bus
+      deviseSettings.__proto__.$bus = bus;
     }
 
     // Tooltips
-    Vue.use(VueTippy)
+    Vue.use(VueTippy);
 
     // Portals to render items outside of their component
-    Vue.use(PortalVue)
+    Vue.use(PortalVue);
 
     // Register global components
-    Vue.component('Devise', Devise)
-    Vue.component('DeviseImg', DeviseImg)
-    Vue.component('Help', Help)
-    Vue.component('Slices', Slices)
-    Vue.component('SliceEditor', SliceEditor)
-    Vue.component('Administration', Administration)
-    Vue.component('ActionBar', ActionBar)
-    Vue.component('Sidebar', Sidebar)
+    Vue.component('Devise', Devise);
+    Vue.component('DeviseImg', DeviseImg);
+    Vue.component('Help', Help);
+    Vue.component('Slices', Slices);
+    Vue.component('SliceEditor', SliceEditor);
+    Vue.component('Administration', Administration);
+    Vue.component('ActionBar', ActionBar);
+    Vue.component('Sidebar', Sidebar);
 
     if (typeof store.state.adminMenu !== 'undefined') {
-      DeviseStore.state.adminMenu = Object.assign({}, store.state.adminMenu)
+      DeviseStore.state.adminMenu = Object.assign({}, store.state.adminMenu);
     }
 
     if (typeof store.state.settingsMenu !== 'undefined') {
-      DeviseStore.state.settingsMenu = Object.assign({}, store.state.settingsMenu)
+      DeviseStore.state.settingsMenu = Object.assign({}, store.state.settingsMenu);
     }
 
-    // Setup the currentPage and Sites arrays in the store b/c they are necessary in 
+    // Setup the currentPage and Sites arrays in the store b/c they are necessary in
     // some apps to be ready to go right away
-    DeviseStore.state.currentPage = Object.assign({}, DeviseStore.state.currentPage, deviseSettings.$page)
-    DeviseStore.state.sites = Object.assign({}, DeviseStore.state.sites, {data: deviseSettings.$sites})
+    DeviseStore.state.currentPage = Object.assign(
+      {},
+      DeviseStore.state.currentPage,
+      deviseSettings.$page
+    );
+    DeviseStore.state.sites = Object.assign({}, DeviseStore.state.sites, {
+      data: deviseSettings.$sites
+    });
 
     // Register devise vuex module and sync it with the store
-    store.registerModule('devise', DeviseStore)
+    store.registerModule('devise', DeviseStore);
 
     // Register alert / confirm directive
-    Vue.directive('devise-alert-confirm', alertConfirm)
+    Vue.directive('devise-alert-confirm', alertConfirm);
 
     // Register tuck directive
-    Vue.directive('tuck', Tuck)
+    Vue.directive('tuck', Tuck);
 
-    let deviseOptions = Object.assign({
-      breakpoints: {
-        mobile: 575,
-        tablet: 768,
-        desktop: 991,
-        largeDesktop: 1199
-      }
-    }, options)
+    let deviseOptions = Object.assign(
+      {
+        breakpoints: {
+          mobile: 575,
+          tablet: 768,
+          desktop: 991,
+          largeDesktop: 1199
+        }
+      },
+      options
+    );
 
     // enables passive event listeners by default for some events
     // require('default-passive-events');
 
     // We call Vue.mixin() here to inject functionality into all components.
     Vue.mixin({
-      data () {
+      data() {
         return {
           deviseOptions: deviseOptions,
           tippyConfiguration: {
@@ -140,55 +148,55 @@ const DevisePlugin = {
             theme: 'devise',
             trigger: 'mouseenter focus'
           }
-        }
+        };
       },
       methods: {
         // Convienience method to push things into the router from templates
-        goToPage (pageName, params) {
-          this.$router.push({name: pageName, params: params})
+        goToPage(pageName, params) {
+          this.$router.push({ name: pageName, params: params });
         },
-        href (url) {
-          window.open(url, '_self')
+        href(url) {
+          window.open(url, '_self');
         },
-        launchMediaManager (callbackObject, callbackProperty) {
+        launchMediaManager(callbackObject, callbackProperty) {
           deviseSettings.$bus.$emit('devise-launch-media-manager', {
-            callback: function (media) {
-              callbackObject[callbackProperty] = media.url
+            callback: function(media) {
+              callbackObject[callbackProperty] = media.url;
             }
-          })
+          });
         },
         can(permission) {
-          let toCheck = (!Array.isArray(permission)) ? [permission] : permission;
-          let allowed = deviseSettings.$user.permissions_list ? deviseSettings.$user.permissions_list : []
+          let toCheck = !Array.isArray(permission) ? [permission] : permission;
+          let allowed = deviseSettings.$user.permissions_list
+            ? deviseSettings.$user.permissions_list
+            : [];
           for (let i = 0; i < toCheck.length; i++) {
             let found = allowed.find(function(perm) {
               return perm === toCheck[i];
             });
 
-            if(found) return true;
+            if (found) return true;
           }
         }
       },
       computed: {
-        ...mapGetters('devise', [
-          'breakpoint',
-          'currentPage',
-          'currentUser',
-          'lang',
-          'theme'
-        ])
+        ...mapGetters('devise', ['breakpoint', 'currentPage', 'currentUser', 'lang', 'theme'])
       },
       // This sets a prop to be accepted by all components in a custom Vue
       // app that resides within Devise. Makes it a little easier to pass
       // down any data to custom child components
       props: ['devise', 'slices', 'models'],
       store: store
-    })
+    });
 
-    if (typeof deviseSettings.$mothership !== 'undefined' && deviseSettings.$mothership !== null) {
-      store.commit('devise/setMothership', deviseSettings.$mothership)
+    if (
+      deviseSettings.$config &&
+      typeof deviseSettings.$config.mothership !== 'undefined' &&
+      deviseSettings.$config.mothership !== null
+    ) {
+      store.commit('devise/setMothership', deviseSettings.$config.mothership);
     }
   }
-}
+};
 
-export default DevisePlugin
+export default DevisePlugin;

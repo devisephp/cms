@@ -1,109 +1,169 @@
 <template>
-
   <div>
     <div id="devise-admin-content" v-if="localValue.id">
       <action-bar>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="href(page.slug)">
-          Go To Page
-        </li>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="href(page.slug + '/#/devise/edit-page')">
-          Edit Page Content
-        </li>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="showCopy = true">
-          Copy This Page
-        </li>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="showTranslate = true">
-          Translate This Page
-        </li>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}">
-          Delete This Page
-        </li>
+        <li
+          class="dvs-btn dvs-btn-sm dvs-mb-2"
+          :style="theme.actionButton"
+          @click="href(page.slug)"
+        >Go To Page</li>
+        <li
+          class="dvs-btn dvs-btn-sm dvs-mb-2"
+          :style="theme.actionButton"
+          @click="href(page.slug + '/#/devise/edit-page')"
+        >Edit Page Content</li>
+        <li
+          class="dvs-btn dvs-btn-sm dvs-mb-2"
+          :style="theme.actionButton"
+          @click="showCopy = true"
+        >Copy This Page</li>
+        <li
+          class="dvs-btn dvs-btn-sm dvs-mb-2"
+          :style="theme.actionButton"
+          @click="showTranslate = true"
+        >Translate This Page</li>
+        <li
+          class="dvs-btn dvs-btn-sm dvs-mb-2"
+          :style="theme.actionButton"
+          v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}"
+        >Delete This Page</li>
       </action-bar>
 
       <template v-if="analytics.data">
-        <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panel.color}">{{ localValue.title }} Analytics</h3>
+        <h3
+          class="dvs-mb-8 dvs-pr-16"
+          :style="{color: theme.panel.color}"
+        >{{ localValue.title }} Analytics</h3>
         <div class="flex dvs-mb-8">
           <fieldset class="dvs-fieldset mr-8">
             <label>Analytics Start Date</label>
-            <date-picker v-model="analyticsDateRange.start" :settings="{date: true, time: false}" placeholder="Start Date" @update="retrieveAnalytics()" />
+            <date-picker
+              v-model="analyticsDateRange.start"
+              :settings="{date: true, time: false}"
+              placeholder="Start Date"
+              @update="retrieveAnalytics()"
+            />
           </fieldset>
           <fieldset class="dvs-fieldset">
             <label>Analytics End Date</label>
-            <date-picker v-model="analyticsDateRange.end" :settings="{date: true, time: false}" placeholder="End Date" @update="retrieveAnalytics()" />
+            <date-picker
+              v-model="analyticsDateRange.end"
+              :settings="{date: true, time: false}"
+              placeholder="End Date"
+              @update="retrieveAnalytics()"
+            />
           </fieldset>
         </div>
         <div class="dvs-mb-12" v-if="mothershipApiKey">
-          <line-chart class="dvs-mb-8" :chart-data="analytics.data" :options="options" :width="800" :height="200" />
+          <line-chart
+            class="dvs-mb-8"
+            :chart-data="analytics.data"
+            :options="options"
+            :width="800"
+            :height="200"
+          />
         </div>
       </template>
 
-      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panel.color}">{{ localValue.title }} Page Versions</h3>
+      <h3
+        class="dvs-mb-8 dvs-pr-16"
+        :style="{color: theme.panel.color}"
+      >{{ localValue.title }} Page Versions</h3>
 
-      <help class="dvs-mb-4">Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
+      <help
+        class="dvs-mb-8"
+      >Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
 
-      <div class="dvs-mb-8 dvs--m8">
-        <div v-for="(version, key) in localValue.versions" :key="key" class="dvs-flex-grow dvs-p-8 dvs-rounded-sm dvs-shadow-sm dvs-mb-8">
+      <div class="dvs-mb-16">
+        <div
+          v-for="(version, key) in localValue.versions"
+          :key="key"
+          class="dvs-flex-grow dvs-rounded-sm dvs-shadow-sm dvs-mb-4"
+        >
           <div class="dvs-text-xl dvs-font-bold dvs-mb-4 dvs-flex dvs-justify-between">
-            <div>
+            <div class="dvs-cursor-pointer dvs-flex" @click="toggleVersionSettings(version)">
               <template v-if="!version.editName">
-                {{ version.name }}
-                <div class="dvs-cursor-pointer" v-if="version.showSettings" @click="version.editName = !version.editName">
-                  <edit-icon />
+                <div class="dvs-mr-2">
+                  <edit-icon :w="25" :h="25"/>
+                </div>
+                <div>
+                  {{ version.name }}
+                  <template v-if="version.is_live">(Currently Live)</template>
                 </div>
               </template>
-              <fieldset class="dvs-fieldset">
-                <input v-show="version.editName" type="text" v-model="localValue.versions[key].name" />
-              </fieldset>
             </div>
           </div>
-          <div>
-            <div class="dvs-mb-4">
+          <div class="dvs-mb-16" v-show="version.showSettings">
+            <div>
+              <fieldset class="dvs-fieldset dvs-mb-8">
+                <label>Version Name</label>
+                <input type="text" v-model="localValue.versions[key].name">
+              </fieldset>
+
               <fieldset class="dvs-fieldset dvs-mb-8">
                 <label>Layout</label>
-                <input type="text" v-model="localValue.versions[key].layout" />
+                <input type="text" v-model="localValue.versions[key].layout">
               </fieldset>
 
               <fieldset class="dvs-fieldset dvs-mb-8">
                 <label>Start Date</label>
-                <date-picker v-model="localValue.versions[key].starts_at" :settings="{date: true, time: true}" placeholder="Start Date" title="The date in which this version will begin appearing." v-tippy="tippyConfiguration" />
+                <date-picker
+                  v-model="localValue.versions[key].starts_at"
+                  :settings="{date: true, time: true}"
+                  placeholder="Start Date"
+                  title="The date in which this version will begin appearing."
+                  v-tippy="tippyConfiguration"
+                />
               </fieldset>
 
               <fieldset class="dvs-fieldset dvs-mb-8">
                 <label>End Date</label>
-                <date-picker v-model="localValue.versions[key].ends_at" :settings="{date: true, time: true}" placeholder="End Date" title="The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it." v-tippy="tippyConfiguration" />
+                <date-picker
+                  v-model="localValue.versions[key].ends_at"
+                  :settings="{date: true, time: true}"
+                  placeholder="End Date"
+                  title="The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it."
+                  v-tippy="tippyConfiguration"
+                />
               </fieldset>
 
               <fieldset class="dvs-fieldset dvs-mb-8" v-if="localValue.ab_testing_enabled">
                 <label>A/B Testing Amount</label>
-                <input type="number" v-model.number="localValue.versions[key].ab_testing_amount" title="This is the weight in which a page will show up. The number can be any number you want and is divided by the total weights of all other page versions." v-tippy="tippyConfiguration">
+                <input
+                  type="number"
+                  v-model.number="localValue.versions[key].ab_testing_amount"
+                  title="This is the weight in which a page will show up. The number can be any number you want and is divided by the total weights of all other page versions."
+                  v-tippy="tippyConfiguration"
+                >
               </fieldset>
             </div>
 
             <div class="dvs-flex dvs-justify-start">
-              <button 
+              <button
                 class="dvs-btn dvs-mr-4 dvs-px-8"
-                @click="requestSaveVersion(version)" 
-                title="Save Version Settings" 
+                @click="requestSaveVersion(version)"
+                title="Save Version Settings"
                 v-tippy="tippyConfiguration"
                 :style="theme.actionButton"
-                >
-                <checkmark-icon w="30" h="30" />
+              >
+                <checkmark-icon w="30" h="30"/>
               </button>
-              <button 
-                class="dvs-btn dvs-mr-4 dvs-px-8" 
-                @click="requestCopyVersion(version)" 
-                title="Copy Version" 
+              <button
+                class="dvs-btn dvs-mr-4 dvs-px-8"
+                @click="requestCopyVersion(version)"
+                title="Copy Version"
                 v-tippy="tippyConfiguration"
                 :style="theme.actionButtonGhost"
-                >
-                <copy-icon w="30" h="30" />
+              >
+                <copy-icon w="30" h="30"/>
               </button>
-              <button 
-                class="dvs-btn dvs-mr-2 dvs-px-8" 
-                v-tippy="tippyConfiguration" 
+              <button
+                class="dvs-btn dvs-mr-2 dvs-px-8"
+                v-tippy="tippyConfiguration"
                 v-devise-alert-confirm="{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
-                :style="theme.actionButtonGhost">
-                <trash-icon w="30" h="30" />
+                :style="theme.actionButtonGhost"
+              >
+                <trash-icon w="30" h="30"/>
               </button>
             </div>
           </div>
@@ -137,7 +197,12 @@
 
         <fieldset class="dvs-fieldset">
           <h4 :style="{color: theme.panel.color}" class="dvs-mb-4">Page Specific Meta Tags</h4>
-          <meta-form v-model="localValue.meta" @request-create-meta="requestCreateMeta" @request-update-meta="requestUpdateMeta" @request-delete-meta="requestDeleteMeta" />
+          <meta-form
+            v-model="localValue.meta"
+            @request-create-meta="requestCreateMeta"
+            @request-update-meta="requestUpdateMeta"
+            @request-delete-meta="requestDeleteMeta"
+          />
         </fieldset>
 
         <div class="dvs-flex">
@@ -145,13 +210,14 @@
           <button @click="goToPage" class="dvs-btn dvs-mr-4" :style="theme.actionButtonGhost">Cancel</button>
         </div>
       </div>
-
     </div>
 
     <transition name="dvs-fade">
       <devise-modal @close="showCopy = false" class="dvs-z-50" v-if="showCopy">
         <h4 class="dvs-mb-4">Copy this page</h4>
-        <help class="dvs-mb-4">This will create a whole new page based on this page copying all settings and values associated with it.</help>
+        <help
+          class="dvs-mb-4"
+        >This will create a whole new page based on this page copying all settings and values associated with it.</help>
         <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page Title</label>
           <input type="text" v-model="pageToCopy.title" placeholder="Title of the Page">
@@ -162,7 +228,11 @@
           <input type="text" v-model="pageToCopy.slug" placeholder="Url of the Page">
         </fieldset>
 
-        <button class="dvs-btn" @click="requestCopyPage" :disabled="pageToCopy.title === null || pageToCopy.slug === null">Create</button>
+        <button
+          class="dvs-btn"
+          @click="requestCopyPage"
+          :disabled="pageToCopy.title === null || pageToCopy.slug === null"
+        >Create</button>
         <button class="dvs-btn" @click="showCopy = false">Cancel</button>
       </devise-modal>
     </transition>
@@ -170,7 +240,9 @@
     <transition name="dvs-fade">
       <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showTranslate">
         <h4 class="dvs-mb-4">Translate this page</h4>
-        <help class="dvs-mb-4">This will create a translated page associated with this page. While the pages are connected to allow users to switch between translations they do have their own settings and versions.</help>
+        <help
+          class="dvs-mb-4"
+        >This will create a translated page associated with this page. While the pages are connected to allow users to switch between translations they do have their own settings and versions.</help>
 
         <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Page Title</label>
@@ -181,44 +253,55 @@
           <label>Languages</label>
           <select v-model="translateLanguage">
             <option :value="null">Please select a language</option>
-            <option v-for="language in languages.data" :key="language.id" :value="language">{{ language.code }}</option>
+            <option
+              v-for="language in languages.data"
+              :key="language.id"
+              :value="language"
+            >{{ language.code }}</option>
           </select>
         </fieldset>
 
         <fieldset class="dvs-fieldset dvs-mb-4">
           <label>Slug</label>
           <div class="dvs-flex">
-            <input type="text" disabled="disabled" v-model="translateLanguage.code" class="dvs-max-w-3xs">
+            <input
+              type="text"
+              disabled="disabled"
+              v-model="translateLanguage.code"
+              class="dvs-max-w-3xs"
+            >
             <input type="text" v-model="pageToTranslate.slug" placeholder="Url of the Page">
           </div>
         </fieldset>
 
-        <button class="dvs-btn" @click="requestTranslatePage" :disabled="pageToTranslate.title === null || pageToTranslate.slug === null || translateLanguage === null">Translate</button>
+        <button
+          class="dvs-btn"
+          @click="requestTranslatePage"
+          :disabled="pageToTranslate.title === null || pageToTranslate.slug === null || translateLanguage === null"
+        >Translate</button>
         <button class="dvs-btn" @click="showTranslate = false">Cancel</button>
       </devise-modal>
     </transition>
-
   </div>
-
 </template>
 
 <script>
-import DatePicker from './../utilities/DatePicker'
-import DeviseModal from './../utilities/Modal'
-import MetaForm from './../meta/MetaForm'
+import DatePicker from './../utilities/DatePicker';
+import DeviseModal from './../utilities/Modal';
+import MetaForm from './../meta/MetaForm';
 
-import Dates from './../../mixins/Dates'
+import Dates from './../../mixins/Dates';
 
-import EditIcon from 'vue-ionicons/dist/md-create.vue'
-import CheckmarkIcon from 'vue-ionicons/dist/md-checkmark.vue'
-import CopyIcon from 'vue-ionicons/dist/ios-copy.vue'
-import TrashIcon from 'vue-ionicons/dist/md-trash.vue'
+import EditIcon from 'vue-ionicons/dist/md-create.vue';
+import CheckmarkIcon from 'vue-ionicons/dist/md-checkmark.vue';
+import CopyIcon from 'vue-ionicons/dist/ios-copy.vue';
+import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'PagesView',
-  data () {
+  data() {
     return {
       analytics: {},
       analyticsDateRange: {
@@ -241,36 +324,36 @@ export default {
       },
       colors: [
         {
-          background:'rgba(54, 162, 235, 0.5)',
+          background: 'rgba(54, 162, 235, 0.5)',
           border: 'rgba(54, 162, 235, 1)'
         },
         {
-          background:'rgba(75, 192, 192, 0.2)',
+          background: 'rgba(75, 192, 192, 0.2)',
           border: 'rgba(75, 192, 192, 1)'
         },
         {
-          background:'rgba(255, 206, 86, 0.2)',
+          background: 'rgba(255, 206, 86, 0.2)',
           border: 'rgba(255, 206, 86, 1)'
         },
         {
-          background:'rgba(255, 99, 132, 0.2)',
+          background: 'rgba(255, 99, 132, 0.2)',
           border: 'rgba(255,99,132,1)'
         },
         {
-          background:'rgba(153, 102, 255, 0.2)',
-          border: 'rgba(153, 102, 255, 1)',
+          background: 'rgba(153, 102, 255, 0.2)',
+          border: 'rgba(153, 102, 255, 1)'
         },
         {
-          background:'rgba(255, 159, 64, 0.2)',
+          background: 'rgba(255, 159, 64, 0.2)',
           border: 'rgba(255, 159, 64, 1)'
         }
       ]
-    }
+    };
   },
-  mounted () {
-    this.retrievePage()
-    this.retrieveAllLanguages()
-    this.setDefaultAnalytics()
+  mounted() {
+    this.retrievePage();
+    this.retrieveAllLanguages();
+    this.setDefaultAnalytics();
   },
   methods: {
     ...mapActions('devise', [
@@ -285,152 +368,153 @@ export default {
       'updatePage',
       'updatePageVersion'
     ]),
-    requestSavePage () {
-      this.updatePage({data: this.localValue})
+    requestSavePage() {
+      this.updatePage({ data: this.localValue });
     },
-    requestCopyPage () {
-      let self = this
-      this.copyPage({data: this.pageToCopy}).then(function () {
-        self.pageToCopy.title = null
-        self.pageToCopy.slug = null
-        self.showCopy = false
-      })
+    requestCopyPage() {
+      let self = this;
+      this.copyPage({ data: this.pageToCopy }).then(function() {
+        self.pageToCopy.title = null;
+        self.pageToCopy.slug = null;
+        self.showCopy = false;
+      });
     },
-    requestTranslatePage () {
-      let self = this
+    requestTranslatePage() {
+      let self = this;
 
       // set the language id
-      this.pageToTranslate.language_id = this.translateLanguage.id
+      this.pageToTranslate.language_id = this.translateLanguage.id;
 
       // Append the language code to the front of the slug
-      this.pageToTranslate.slug = '/' + this.translateLanguage.code + this.pageToTranslate.slug
+      this.pageToTranslate.slug = '/' + this.translateLanguage.code + this.pageToTranslate.slug;
 
-      this.translatePage({page: this.localValue, data: this.pageToTranslate}).then(function () {
-        self.pageToTranslate.title = null
-        self.pageToTranslate.slug = null
-        self.pageToTranslate.language_id = null
-        self.showTranslate = false
-      })
+      this.translatePage({ page: this.localValue, data: this.pageToTranslate }).then(function() {
+        self.pageToTranslate.title = null;
+        self.pageToTranslate.slug = null;
+        self.pageToTranslate.language_id = null;
+        self.showTranslate = false;
+      });
     },
-    requestSaveVersion (version) {
-      this.updatePageVersion({page: this.localValue, version: version})
+    requestSaveVersion(version) {
+      this.updatePageVersion({ page: this.localValue, version: version });
     },
-    requestCopyVersion (version) {
-      this.copyPageVersion({page: this.localValue, version: version})
+    requestCopyVersion(version) {
+      this.copyPageVersion({ page: this.localValue, version: version });
     },
-    requestDeleteVersion (version) {
-      this.deletePageVersion({page: this.localValue, version: version})
+    requestDeleteVersion(version) {
+      this.deletePageVersion({ page: this.localValue, version: version });
     },
-    requestCreateMeta (newMeta) {
-      this.localValue.meta.push(newMeta)
+    requestCreateMeta(newMeta) {
+      this.localValue.meta.push(newMeta);
     },
-    requestUpdateMeta (meta) {
-      let theMeta = this.localValue.meta.indexOf(meta)
-      theMeta = meta
-      meta.edit = false
+    requestUpdateMeta(meta) {
+      let theMeta = this.localValue.meta.indexOf(meta);
+      theMeta = meta;
+      meta.edit = false;
     },
-    requestDeleteMeta (meta) {
-      this.localValue.meta.splice(this.localValue.meta.indexOf(meta), 1)
+    requestDeleteMeta(meta) {
+      this.localValue.meta.splice(this.localValue.meta.indexOf(meta), 1);
     },
-    requestDeletePage () {
-      let self = this
-      this.deletePage(this.localValue).then(function () {
-        self.goToPage('devise-pages-index')
-      })
+    requestDeletePage() {
+      let self = this;
+      this.deletePage(this.localValue).then(function() {
+        self.goToPage('devise-pages-index');
+      });
     },
-    retrievePage () {
-      let self = this
-      this.getPage(this.$route.params.pageId).then(function (response) {
-        self.localValue = Object.assign({}, self.localValue, response.data.page)
+    retrievePage() {
+      let self = this;
+      this.getPage(this.$route.params.pageId).then(function(response) {
+        self.localValue = Object.assign({}, self.localValue, response.data.page);
 
         self.localValue.versions.map(version => {
-          self.$set(version, 'editName', false)
-        })
-        self.pageToTranslate.slug = self.localValue.slug
-        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
-        
-        self.retrieveAnalytics()
-      })
-    },
-    retrieveAllLanguages () {
-      let self = this
-      this.getLanguages().then(function () {
-        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
-      })
-    },
-    setDefaultAnalytics () {
-      var today = new Date()
-      var oneWeekAgo = new Date()
-      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
+          self.$set(version, 'editName', false);
+        });
+        self.pageToTranslate.slug = self.localValue.slug;
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
 
-      this.analyticsDateRange.end = this.formatDate(today)
-      this.analyticsDateRange.start = this.formatDate(oneWeekAgo)
+        self.retrieveAnalytics();
+      });
     },
-    retrieveAnalytics (version) {
-      let self = this
+    retrieveAllLanguages() {
+      let self = this;
+      this.getLanguages().then(function() {
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
+      });
+    },
+    setDefaultAnalytics() {
+      var today = new Date();
+      var oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+      this.analyticsDateRange.end = this.formatDate(today);
+      this.analyticsDateRange.start = this.formatDate(oneWeekAgo);
+    },
+    retrieveAnalytics(version) {
+      let self = this;
 
       if (this.mothershipApiKey) {
         if (typeof this.analyticsDateRange.start !== 'string' && this.analyticsDateRange.start[0]) {
-          this.analyticsDateRange.start = this.formatDate(new Date(this.analyticsDateRange.start[0]))
+          this.analyticsDateRange.start = this.formatDate(
+            new Date(this.analyticsDateRange.start[0])
+          );
         }
 
         if (typeof this.analyticsDateRange.end !== 'string' && this.analyticsDateRange.end[0]) {
-          this.analyticsDateRange.end = this.formatDate(new Date(this.analyticsDateRange.end[0]))
+          this.analyticsDateRange.end = this.formatDate(new Date(this.analyticsDateRange.end[0]));
         }
 
-        this.getPageAnalytics({slug: this.localValue.slug, dates: self.analyticsDateRange}).then(function (response) {
+        this.getPageAnalytics({ slug: this.localValue.slug, dates: self.analyticsDateRange }).then(
+          function(response) {
+            response.data.data.datasets.map(function(dataset, index) {
+              dataset.backgroundColor = [self.colors[index].background];
+              dataset.fontColor = self.theme.panel.color;
+              dataset.borderColor = [self.colors[index].border];
+              dataset.pointRadius = 4;
+              dataset.pointHoverRadius = 10;
+              dataset.fill = false;
 
-          response.data.data.datasets.map(function (dataset, index) {
-            dataset.backgroundColor = [self.colors[index].background]
-            dataset.fontColor = self.theme.panel.color
-            dataset.borderColor = [self.colors[index].border]
-            dataset.pointRadius = 4
-            dataset.pointHoverRadius = 10
-            dataset.fill = false
+              return dataset;
+            });
 
-            return dataset
-          })
-
-          self.$set(self, 'analytics', response.data)
-        })
+            self.$set(self, 'analytics', response.data);
+          }
+        );
       }
     },
-    openVersionSettings (version) {
-      this.$set(version, 'showSettings', true)
-    },
-    closeVersionSettings (version) {
-      this.$set(version, 'showSettings', false)
+    toggleVersionSettings(version) {
+      this.$set(version, 'showSettings', !version.showSettings);
     }
   },
   computed: {
-    ...mapGetters('devise', [
-      'languages',
-      'mothershipApiKey'
-    ]),
-    options () {
+    ...mapGetters('devise', ['languages', 'mothershipApiKey']),
+    options() {
       return {
         width: '8000px',
         legend: {
           labels: {
-              fontColor: this.theme.panel.color,
-              fontSize: 14
+            fontColor: this.theme.panel.color,
+            fontSize: 14
           }
         },
         scales: {
-            yAxes: [{
-                ticks: {
-                    fontColor: this.theme.panel.color,
-                    fontSize: 12
-                }
-            }],
-            xAxes: [{
-                ticks: {
-                    fontColor: this.theme.panel.color,
-                    fontSize: 12
-                }
-            }]
+          yAxes: [
+            {
+              ticks: {
+                fontColor: this.theme.panel.color,
+                fontSize: 12
+              }
+            }
+          ],
+          xAxes: [
+            {
+              ticks: {
+                fontColor: this.theme.panel.color,
+                fontSize: 12
+              }
+            }
+          ]
         }
-      }
+      };
     }
   },
   components: {
@@ -444,6 +528,5 @@ export default {
     MetaForm
   },
   mixins: [Dates]
-}
-
+};
 </script>

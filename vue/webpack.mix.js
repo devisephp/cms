@@ -115,7 +115,7 @@ if (mix.inProduction()) {
     .version()
     .purgeCss({
       folders: ['src'],
-      globs: [],
+      globs: [path.join(__dirname, 'node_modules/simplebar/**/*.js')],
       whitelistPatterns: [/mobile/, /tablet/, /desktop/, /largeDesktop/, /ultraWideDesktop/]
     });
 }

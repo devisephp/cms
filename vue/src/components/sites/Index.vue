@@ -39,7 +39,11 @@
               >{{ language.code }}</span>
             </div>
             <div class="dvs-flex dvs-justify-center">
-              <a class="dvs-btn dvs-mr-2" :href="site.domain" :style="theme.actionButtonGhost">Go</a>
+              <a
+                class="dvs-btn dvs-mr-2"
+                :href="`\/\/${site.domain}`"
+                :style="theme.actionButtonGhost"
+              >Go</a>
               <button
                 class="dvs-btn dvs-mr-2"
                 @click="showEditSite(site)"

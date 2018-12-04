@@ -1,25 +1,25 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-var routes = []
+var routes = [];
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: 'hash',
+  mode: 'abstract',
   history: true,
   transitionOnLoad: true,
   routes: routes
-})
+});
 
 router.beforeEach((to, from, next) => {
   // Set the page title
   if (typeof to.meta.title !== 'undefined') {
-    document.title = to.meta.title
+    document.title = to.meta.title;
   } else {
-    document.title = 'Welcome to Devise'
+    document.title = 'Welcome to Devise';
   }
-  next()
-})
+  next();
+});
 
-export default router
+export default router;

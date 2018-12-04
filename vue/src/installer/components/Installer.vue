@@ -7,7 +7,7 @@
       :style="finishedStyles"
     ></installer-finish>
 
-    <main-menu :checklist="checklist" :style="bodyFinishedStyles"></main-menu>
+    <main-menu v-if="checklist.database" :checklist="checklist" :style="bodyFinishedStyles"></main-menu>
 
     <div id="content" class="dvs-absolute dvs-pin dvs-overflow-scroll" :style="bodyFinishedStyles">
       <section id="nav-welcome" name="nav-welcome">
@@ -49,9 +49,9 @@
         <div></div>
       </section>
 
-      <section id="nav-required"></section>
+      <div id="nav-required"></div>
 
-      <template v-if="checklist">
+      <template v-if="checklist.database">
         <database :item="checklist.database"></database>
 
         <migrations :item="checklist.migrations"></migrations>
@@ -64,11 +64,15 @@
 
         <page :item="checklist.page"></page>
 
+        <slices :item="checklist.slices"></slices>
+
         <image-library :item="checklist.image_library"></image-library>
 
-        <image-optimization :checklist="checklist"></image-optimization>
+        <div id="nav-suggested"></div>
 
         <optional-extras></optional-extras>
+
+        <image-optimization :checklist="checklist"></image-optimization>
       </template>
     </div>
 
@@ -88,6 +92,7 @@ import Migrations from './items/Migrations.vue';
 import Auth from './items/Auth.vue';
 import User from './items/User.vue';
 import Site from './items/Site.vue';
+import Slices from './items/Slices.vue';
 import Page from './items/Page.vue';
 import ImageLibrary from './items/ImageLibrary.vue';
 import ImageOptimization from './items/ImageOptimization.vue';
@@ -99,7 +104,7 @@ export default {
     this.startChecker();
   },
   methods: {
-    ...mapActions(['refreshChecklist', 'createPage', 'createLanguage', 'getLanguages']),
+    ...mapActions(['refreshChecklist', 'getLanguages']),
     startChecker() {
       this.refreshChecklist();
       setInterval(() => {
@@ -144,6 +149,7 @@ export default {
     Migrations,
     User,
     Site,
+    Slices,
     Page,
     ImageLibrary,
     ImageOptimization,

@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import mutations from './mutations'
-import actions from './actions'
-import getters from './getters'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import mutations from './mutations';
+import actions from './actions';
+import getters from './getters';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // root state object.
 // each Vuex instance is just a single state tree.
@@ -32,13 +32,17 @@ const state = {
       icon: 'CreateIcon',
       routeName: 'devise-page-editor'
     },
-    ... typeof deviseSettings.$page === 'undefined' ? () => null : [{
-      icon: 'DocumentIcon',
-      routeName: 'devise-pages-view',
-      routeParams: {
-        pageId: deviseSettings.$page.id
-      }
-    }],
+    ...(typeof deviseSettings.$page === 'undefined'
+      ? () => null
+      : [
+          {
+            icon: 'DocumentIcon',
+            routeName: 'devise-pages-view',
+            routeParams: {
+              pageId: deviseSettings.$page.id
+            }
+          }
+        ]),
     {
       icon: 'ImageIcon',
       label: 'Settings',
@@ -53,37 +57,37 @@ const state = {
         {
           label: 'Pages',
           routeName: 'devise-pages-index',
-          permissions: 'manage pages',
+          permissions: 'manage pages'
         },
         {
           label: 'Users',
           routeName: 'devise-users-index',
-          permissions: 'manage users',
+          permissions: 'manage users'
         },
-        {
-          label: 'Mothership',
-          routeName: 'devise-mothership-index',
-          permissions: 'manage mothership',
-        },
+        // {
+        //   label: 'Mothership',
+        //   routeName: 'devise-mothership-index',
+        //   permissions: 'manage mothership',
+        // },
         {
           label: 'Global Meta',
           routeName: 'devise-meta-manage',
-          permissions: 'manage meta',
+          permissions: 'manage meta'
         },
         {
           label: 'Sites',
           routeName: 'devise-sites-index',
-          permissions: 'manage sites',
+          permissions: 'manage sites'
         },
         {
           label: 'Languages',
           routeName: 'devise-languages-manage',
-          permissions: 'manage languages',
+          permissions: 'manage languages'
         },
         {
           label: 'Redirects',
           routeName: 'devise-redirects-index',
-          permissions: 'manage redirects',
+          permissions: 'manage redirects'
         }
       ]
     }
@@ -143,7 +147,7 @@ const state = {
   users: {
     data: []
   }
-}
+};
 
 // A Vuex instance is created by combining the state, the actions,
 // and the mutations. Because the actions and mutations are just
@@ -159,4 +163,4 @@ export default {
   mutations,
   actions,
   getters
-}
+};

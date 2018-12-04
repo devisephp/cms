@@ -150,7 +150,7 @@ class Devise
 
     public static function config()
     {
-        $data['config'] = config('devise.layouts');
+        $data['layouts'] = config('devise.layouts');
 
         if (Auth::check())
         {

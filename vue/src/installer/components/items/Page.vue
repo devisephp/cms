@@ -152,7 +152,10 @@ export default {
   computed: {
     ...mapState({
       languages: state => state.languages.data
-    })
+    }),
+    layouts() {
+      return window.deviseSettings.$config.layouts;
+    }
   },
   components: {
     Item

@@ -7,6 +7,7 @@
         class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full"
         :style="{color: theme.panel.color}"
       >
+        {{ slice.metadata }}
         <div class="dvs-flex dvs-items-center">
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons"/>
           <span

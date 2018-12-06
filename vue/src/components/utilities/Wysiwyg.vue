@@ -170,7 +170,7 @@ export default {
       }
     },
     update() {
-      this.localValue = sanitizeHtml(this.theEditor.el.trumbowyg('html'));
+      this.localValue = this.theEditor.el.trumbowyg('html');
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
     },

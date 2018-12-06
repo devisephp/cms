@@ -167,6 +167,9 @@ trait IsDeviseComponent
 
         if (!$this->hasSliceSlot)
         {
+            if (!isset($sections['component'])){
+                throw new \Exception('Something is wrong with this template: ' . $this->view . '. Check that the @section(\'component\') and @endsection are both present');
+            }
             $this->hasSliceSlot = ((strpos($sections['component'], 'hasChildSlot: true') !== false) || (strpos($sections['component'], 'hasChildSlot:true') !== false));
         }
     }

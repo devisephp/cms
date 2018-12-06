@@ -1,1 +1,1157 @@
-webpackJsonp([9],{"+x/a":function(e,s,t){var a=t("VU/8")(t("Zlkm"),t("6PdP"),!1,null,null,null);e.exports=a.exports},"1bZM":function(e,s,t){var a=t("VU/8")(t("dMoT"),t("GEyl"),!1,null,null,null);e.exports=a.exports},"3/AE":function(e,s,t){"use strict";Object.defineProperty(s,"__esModule",{value:!0});var a=t("Dd8w"),o=t.n(a),n=t("+x/a"),l=t.n(n),r=t("NYxO");s.default={name:"UsersIndex",data:function(){return{modulesToLoad:1,showCreate:!1,newUser:{name:null,email:null,password:null,password_confirmation:null}}},mounted:function(){this.retrieveAllUsers()},methods:o()({},Object(r.b)("devise",["getUsers","createUser"]),{requestCreateUser:function(){var e=this;this.createUser(this.newUser).then(function(){e.newUser.name=null,e.newUser.email=null,e.newUser.password=null,e.newUser.password_confirmation=!1,e.showCreate=!1})},retrieveAllUsers:function(){var e=!(arguments.length>0&&void 0!==arguments[0])||arguments[0];this.getUsers().then(function(){e&&devise.$bus.$emit("incrementLoadbar",self.modulesToLoad)})},loadUser:function(e){this.$router.push({name:"devise-users-edit",params:{userId:e}})}}),computed:o()({},Object(r.c)("devise",["users"]),{createInvalid:function(){return null===this.newUser.name||null===this.newUser.email||null===this.newUser.password||null===this.newUser.password_confirmation||this.newUser.password!==this.newUser.password_confirmation}}),components:{DeviseModal:l.a}}},"6PdP":function(e,s){e.exports={render:function(){var e=this.$createElement,s=this._self._c||e;return s("div",{staticClass:"dvs-fixed dvs-pin"},[s("div",{staticClass:"dvs-blocker dvs-fixed dvs-pin",on:{click:this.close}}),this._v(" "),s("div",{staticClass:"dvs-absolute dvs-absolute-center dvs-z-50 dvs-min-w-2/3 dvs-max-h-screen"},[s("panel",{staticClass:"dvs-w-full",attrs:{"panel-style":this.theme.panel}},[s("div",{staticClass:"dvs-p-8"},[s("div",{on:{click:this.close}},[s("close-icon",{staticClass:"dvs-absolute dvs-pin-t dvs-pin-r dvs-m-6 dvs-cursor-pointer",style:{color:this.theme.panel.color},attrs:{w:"40",h:"40"}})],1),this._v(" "),this._t("default")],2)])],1)])},staticRenderFns:[]}},GEyl:function(e,s){e.exports={render:function(){var e=this.$createElement,s=this._self._c||e;return s("div",{staticClass:"ion",class:this.ionClass,attrs:{title:this.iconTitle,name:"ios-close-icon"}},[s("svg",{staticClass:"ion__svg",attrs:{width:this.w,height:this.h,viewBox:"0 0 512 512"}},[s("path",{attrs:{d:"M278.6 256l68.2-68.2c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-68.2-68.2c-6.2-6.2-16.4-6.2-22.6 0-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3l68.2 68.2-68.2 68.2c-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3 6.2 6.2 16.4 6.2 22.6 0l68.2-68.2 68.2 68.2c6.2 6.2 16.4 6.2 22.6 0 6.2-6.2 6.2-16.4 0-22.6L278.6 256z"}})])])},staticRenderFns:[]}},Gb8L:function(e,s,t){var a=t("VU/8")(t("JF/I"),t("QivV"),!1,null,null,null);e.exports=a.exports},"JF/I":function(e,s,t){"use strict";Object.defineProperty(s,"__esModule",{value:!0});var a=t("woOf"),o=t.n(a),n=t("Dd8w"),l=t.n(n),r=t("NYxO");s.default={name:"UsersView",data:function(){return{localValue:{},modulesToLoad:1,showPassword:!1}},mounted:function(){this.retrieveAllUsers()},methods:l()({},Object(r.b)("devise",["getUsers","deleteUser","updateUser"]),{requestSaveUser:function(){this.updateUser({user:this.user,data:this.localValue})},requestDeleteUser:function(){var e=this;this.deleteUser(this.user).then(function(){e.goToPage("devise-users-index")})},retrieveAllUsers:function(){var e=this;this.getUsers().then(function(){e.localValue=o()({},e.localValue,e.user),devise.$bus.$emit("incrementLoadbar",e.modulesToLoad)})}}),computed:l()({},Object(r.c)("devise",["user"]))}},QivV:function(e,s){e.exports={render:function(){var e=this,s=e.$createElement,t=e._self._c||s;return t("div",[t("div",{attrs:{id:"devise-admin-content"}},[t("action-bar",[t("li",{directives:[{name:"devise-alert-confirm",rawName:"v-devise-alert-confirm",value:{callback:e.requestDeleteUser,message:"Are you sure you want to delete this user?"},expression:"{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}"}],staticClass:"dvs-btn dvs-btn-sm dvs-mb-2",style:e.theme.actionButton},[e._v("\n        Delete This User\n      ")])]),e._v(" "),t("h3",{staticClass:"dvs-mb-8 dvs-pr-16",style:{color:e.theme.panel.color}},[e._v(e._s(e.localValue.name)+" Settings")]),e._v(" "),t("div",[t("form",[t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Name of User")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.localValue.name,expression:"localValue.name"}],attrs:{type:"text",autocomplete:"off",placeholder:"Name of the User"},domProps:{value:e.localValue.name},on:{input:function(s){s.target.composing||e.$set(e.localValue,"name",s.target.value)}}})]),e._v(" "),t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Email")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.localValue.email,expression:"localValue.email"}],attrs:{type:"text",autocomplete:"off",placeholder:"Email of the User"},domProps:{value:e.localValue.email},on:{input:function(s){s.target.composing||e.$set(e.localValue,"email",s.target.value)}}})]),e._v(" "),e.showPassword?e._e():t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Edit Password?")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.showPassword,expression:"showPassword"}],attrs:{type:"checkbox"},domProps:{checked:Array.isArray(e.showPassword)?e._i(e.showPassword,null)>-1:e.showPassword},on:{change:function(s){var t=e.showPassword,a=s.target,o=!!a.checked;if(Array.isArray(t)){var n=e._i(t,null);a.checked?n<0&&(e.showPassword=t.concat([null])):n>-1&&(e.showPassword=t.slice(0,n).concat(t.slice(n+1)))}else e.showPassword=o}}})]),e._v(" "),e.showPassword?[t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Password")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.localValue.password,expression:"localValue.password"}],attrs:{type:"password",autocomplete:"off"},domProps:{value:e.localValue.password},on:{input:function(s){s.target.composing||e.$set(e.localValue,"password",s.target.value)}}})]),e._v(" "),t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Password Confirm")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.localValue.password_confirmation,expression:"localValue.password_confirmation"}],attrs:{type:"password",autocomplete:"off"},domProps:{value:e.localValue.password_confirmation},on:{input:function(s){s.target.composing||e.$set(e.localValue,"password_confirmation",s.target.value)}}})])]:e._e()],2),e._v(" "),t("div",{staticClass:"dvs-flex"},[t("button",{staticClass:"dvs-btn dvs-mr-2",style:e.theme.actionButton,on:{click:e.requestSaveUser}},[e._v("Save")]),e._v(" "),t("button",{staticClass:"dvs-btn dvs-mr-4",style:e.theme.actionButtonGhost,on:{click:function(s){e.goToPage("devise-users-index")}}},[e._v("Cancel")])])])],1)])},staticRenderFns:[]}},Wfkm:function(e,s,t){var a=t("VU/8")(t("3/AE"),t("zM7+"),!1,null,null,null);e.exports=a.exports},Zlkm:function(e,s,t){"use strict";Object.defineProperty(s,"__esModule",{value:!0});var a=t("1bZM"),o=t.n(a),n=t("Px9n"),l=t.n(n);s.default={methods:{close:function(){this.$emit("close")}},components:{CloseIcon:o.a,Panel:l.a}}},dMoT:function(e,s,t){"use strict";Object.defineProperty(s,"__esModule",{value:!0});var a=t("MwzP");s.default={name:"ios-close-icon",mixins:[a.a],data:function(){return{iconTitle:this.title?this.title:"Ios Close Icon"}}}},"zM7+":function(e,s){e.exports={render:function(){var e=this,s=e.$createElement,t=e._self._c||s;return t("div",[t("div",{attrs:{id:"devise-admin-content"}},[t("action-bar",[t("li",{staticClass:"dvs-btn dvs-btn-sm dvs-mb-2",style:e.theme.actionButton,on:{click:function(s){s.preventDefault(),e.showCreate=!0}}},[e._v("\n        Create New User\n      ")])]),e._v(" "),t("h3",{staticClass:"dvs-mb-10",style:{color:e.theme.panel.color}},[e._v("Current Users")]),e._v(" "),e._l(e.users.data,function(s){return t("div",{key:s.id,staticClass:"dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center"},[t("div",{staticClass:"dvs-min-w-2/5 dvs-font-bold dvs-pr-8"},[e._v("\n        "+e._s(s.name)+"\n      ")]),e._v(" "),t("div",{staticClass:"dvs-w-2/5 dvs-pl-8 dvs-flex dvs-justify-end"},[t("button",{staticClass:"dvs-btn dvs-btn-xs",style:e.theme.actionButtonGhost,on:{click:function(t){e.loadUser(s.id)}}},[e._v("Manage")])])])})],2),e._v(" "),t("transition",{attrs:{name:"dvs-fade"}},[t("portal",{attrs:{to:"devise-root"}},[e.showCreate?t("devise-modal",{staticClass:"dvs-z-50",on:{close:function(s){e.showCreate=!1}}},[t("h3",{staticClass:"dvs-mb-4",style:{color:e.theme.panel.color}},[e._v("Create new user")]),e._v(" "),t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Name")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.newUser.name,expression:"newUser.name"}],attrs:{type:"text",placeholder:"Name of the User"},domProps:{value:e.newUser.name},on:{input:function(s){s.target.composing||e.$set(e.newUser,"name",s.target.value)}}})]),e._v(" "),t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Email")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.newUser.email,expression:"newUser.email"}],attrs:{type:"text",placeholder:"Email of the User"},domProps:{value:e.newUser.email},on:{input:function(s){s.target.composing||e.$set(e.newUser,"email",s.target.value)}}})]),e._v(" "),t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Password")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.newUser.password,expression:"newUser.password"}],attrs:{type:"password"},domProps:{value:e.newUser.password},on:{input:function(s){s.target.composing||e.$set(e.newUser,"password",s.target.value)}}})]),e._v(" "),t("fieldset",{staticClass:"dvs-fieldset dvs-mb-4"},[t("label",[e._v("Confirm Password")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.newUser.password_confirmation,expression:"newUser.password_confirmation"}],attrs:{type:"password"},domProps:{value:e.newUser.password_confirmation},on:{input:function(s){s.target.composing||e.$set(e.newUser,"password_confirmation",s.target.value)}}})]),e._v(" "),t("button",{staticClass:"dvs-btn",style:e.theme.actionButton,attrs:{disabled:e.createInvalid},on:{click:e.requestCreateUser}},[e._v("Create")]),e._v(" "),t("button",{staticClass:"dvs-btn",style:e.theme.actionButtonGhost,on:{click:function(s){e.showCreate=!1}}},[e._v("Cancel")])]):e._e()],1)],1)],1)},staticRenderFns:[]}}});
+webpackJsonp([9],{
+
+/***/ 1007:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Modal__ = __webpack_require__(689);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utilities_Modal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(5);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'UsersIndex',
+  data: function data() {
+    return {
+      modulesToLoad: 1,
+      showCreate: false,
+      newUser: {
+        name: null,
+        email: null,
+        password: null,
+        password_confirmation: null
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.retrieveAllUsers();
+  },
+
+  methods: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])('devise', ['getUsers', 'createUser']), {
+    requestCreateUser: function requestCreateUser() {
+      var self = this;
+      this.createUser(this.newUser).then(function () {
+        self.newUser.name = null;
+        self.newUser.email = null;
+        self.newUser.password = null;
+        self.newUser.password_confirmation = false;
+        self.showCreate = false;
+      });
+    },
+    retrieveAllUsers: function retrieveAllUsers() {
+      var loadbar = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      this.getUsers().then(function () {
+        if (loadbar) {
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
+        }
+      });
+    },
+    loadUser: function loadUser(id) {
+      this.$router.push({ name: 'devise-users-edit', params: { userId: id } });
+    }
+  }),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['users']), {
+    createInvalid: function createInvalid() {
+      return this.newUser.name === null || this.newUser.email === null || this.newUser.password === null || this.newUser.password_confirmation === null || this.newUser.password !== this.newUser.password_confirmation;
+    }
+  }),
+  components: {
+    DeviseModal: __WEBPACK_IMPORTED_MODULE_1__utilities_Modal___default.a
+  }
+});
+
+/***/ }),
+
+/***/ 1008:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        { attrs: { id: "devise-admin-content" } },
+        [
+          _c("action-bar", [
+            _c(
+              "li",
+              {
+                staticClass: "dvs-btn dvs-btn-sm dvs-mb-2",
+                style: _vm.theme.actionButton,
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.showCreate = true
+                  }
+                }
+              },
+              [_vm._v("\n        Create New User\n      ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "h3",
+            {
+              staticClass: "dvs-mb-10",
+              style: { color: _vm.theme.panel.color }
+            },
+            [_vm._v("Current Users")]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.users.data, function(user) {
+            return _c(
+              "div",
+              {
+                key: user.id,
+                staticClass:
+                  "dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center"
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "dvs-min-w-2/5 dvs-font-bold dvs-pr-8" },
+                  [_vm._v("\n        " + _vm._s(user.name) + "\n      ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dvs-w-2/5 dvs-pl-8 dvs-flex dvs-justify-end"
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "dvs-btn dvs-btn-xs",
+                        style: _vm.theme.actionButtonGhost,
+                        on: {
+                          click: function($event) {
+                            _vm.loadUser(user.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Manage")]
+                    )
+                  ]
+                )
+              ]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "transition",
+        { attrs: { name: "dvs-fade" } },
+        [
+          _c(
+            "portal",
+            { attrs: { to: "devise-root" } },
+            [
+              _vm.showCreate
+                ? _c(
+                    "devise-modal",
+                    {
+                      staticClass: "dvs-z-50",
+                      on: {
+                        close: function($event) {
+                          _vm.showCreate = false
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "h3",
+                        {
+                          staticClass: "dvs-mb-4",
+                          style: { color: _vm.theme.panel.color }
+                        },
+                        [_vm._v("Create new user")]
+                      ),
+                      _vm._v(" "),
+                      _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                        _c("label", [_vm._v("Name")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newUser.name,
+                              expression: "newUser.name"
+                            }
+                          ],
+                          attrs: {
+                            type: "text",
+                            placeholder: "Name of the User"
+                          },
+                          domProps: { value: _vm.newUser.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.newUser, "name", $event.target.value)
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                        _c("label", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newUser.email,
+                              expression: "newUser.email"
+                            }
+                          ],
+                          attrs: {
+                            type: "text",
+                            placeholder: "Email of the User"
+                          },
+                          domProps: { value: _vm.newUser.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.newUser,
+                                "email",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                        _c("label", [_vm._v("Password")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newUser.password,
+                              expression: "newUser.password"
+                            }
+                          ],
+                          attrs: { type: "password" },
+                          domProps: { value: _vm.newUser.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.newUser,
+                                "password",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                        _c("label", [_vm._v("Confirm Password")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newUser.password_confirmation,
+                              expression: "newUser.password_confirmation"
+                            }
+                          ],
+                          attrs: { type: "password" },
+                          domProps: {
+                            value: _vm.newUser.password_confirmation
+                          },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.newUser,
+                                "password_confirmation",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "dvs-btn",
+                          style: _vm.theme.actionButton,
+                          attrs: { disabled: _vm.createInvalid },
+                          on: { click: _vm.requestCreateUser }
+                        },
+                        [_vm._v("Create")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "dvs-btn",
+                          style: _vm.theme.actionButtonGhost,
+                          on: {
+                            click: function($event) {
+                              _vm.showCreate = false
+                            }
+                          }
+                        },
+                        [_vm._v("Cancel")]
+                      )
+                    ]
+                  )
+                : _vm._e()
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3feb7e8b", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 1009:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(5);
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'UsersView',
+  data: function data() {
+    return {
+      localValue: {},
+      modulesToLoad: 1,
+      showPassword: false
+    };
+  },
+  mounted: function mounted() {
+    this.retrieveAllUsers();
+  },
+
+  methods: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])('devise', ['getUsers', 'deleteUser', 'updateUser']), {
+    requestSaveUser: function requestSaveUser() {
+      this.updateUser({ user: this.user, data: this.localValue });
+    },
+    requestDeleteUser: function requestDeleteUser() {
+      var self = this;
+      this.deleteUser(this.user).then(function () {
+        self.goToPage('devise-users-index');
+      });
+    },
+    retrieveAllUsers: function retrieveAllUsers() {
+      var self = this;
+      this.getUsers().then(function () {
+        self.localValue = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, self.localValue, self.user);
+        devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
+      });
+    }
+  }),
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['user']))
+});
+
+/***/ }),
+
+/***/ 1010:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { attrs: { id: "devise-admin-content" } },
+      [
+        _c("action-bar", [
+          _c(
+            "li",
+            {
+              directives: [
+                {
+                  name: "devise-alert-confirm",
+                  rawName: "v-devise-alert-confirm",
+                  value: {
+                    callback: _vm.requestDeleteUser,
+                    message: "Are you sure you want to delete this user?"
+                  },
+                  expression:
+                    "{callback: requestDeleteUser, message: 'Are you sure you want to delete this user?'}"
+                }
+              ],
+              staticClass: "dvs-btn dvs-btn-sm dvs-mb-2",
+              style: _vm.theme.actionButton
+            },
+            [_vm._v("\n        Delete This User\n      ")]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "h3",
+          {
+            staticClass: "dvs-mb-8 dvs-pr-16",
+            style: { color: _vm.theme.panel.color }
+          },
+          [_vm._v(_vm._s(_vm.localValue.name) + " Settings")]
+        ),
+        _vm._v(" "),
+        _c("div", [
+          _c(
+            "form",
+            [
+              _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                _c("label", [_vm._v("Name of User")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.localValue.name,
+                      expression: "localValue.name"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    autocomplete: "off",
+                    placeholder: "Name of the User"
+                  },
+                  domProps: { value: _vm.localValue.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.localValue, "name", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                _c("label", [_vm._v("Email")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.localValue.email,
+                      expression: "localValue.email"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    autocomplete: "off",
+                    placeholder: "Email of the User"
+                  },
+                  domProps: { value: _vm.localValue.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.localValue, "email", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              !_vm.showPassword
+                ? _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                    _c("label", [_vm._v("Edit Password?")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.showPassword,
+                          expression: "showPassword"
+                        }
+                      ],
+                      attrs: { type: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.showPassword)
+                          ? _vm._i(_vm.showPassword, null) > -1
+                          : _vm.showPassword
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.showPassword,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.showPassword = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.showPassword = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.showPassword = $$c
+                          }
+                        }
+                      }
+                    })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showPassword
+                ? [
+                    _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                      _c("label", [_vm._v("Password")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.localValue.password,
+                            expression: "localValue.password"
+                          }
+                        ],
+                        attrs: { type: "password", autocomplete: "off" },
+                        domProps: { value: _vm.localValue.password },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.localValue,
+                              "password",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                      _c("label", [_vm._v("Password Confirm")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.localValue.password_confirmation,
+                            expression: "localValue.password_confirmation"
+                          }
+                        ],
+                        attrs: { type: "password", autocomplete: "off" },
+                        domProps: {
+                          value: _vm.localValue.password_confirmation
+                        },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.localValue,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "dvs-flex" }, [
+            _c(
+              "button",
+              {
+                staticClass: "dvs-btn dvs-mr-2",
+                style: _vm.theme.actionButton,
+                on: { click: _vm.requestSaveUser }
+              },
+              [_vm._v("Save")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "dvs-btn dvs-mr-4",
+                style: _vm.theme.actionButtonGhost,
+                on: {
+                  click: function($event) {
+                    _vm.goToPage("devise-users-index")
+                  }
+                }
+              },
+              [_vm._v("Cancel")]
+            )
+          ])
+        ])
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-001db13e", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 681:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(1007)
+/* template */
+var __vue_template__ = __webpack_require__(1008)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/users/Index.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3feb7e8b", Component.options)
+  } else {
+    hotAPI.reload("data-v-3feb7e8b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 682:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(1009)
+/* template */
+var __vue_template__ = __webpack_require__(1010)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/users/Edit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-001db13e", Component.options)
+  } else {
+    hotAPI.reload("data-v-001db13e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 685:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(686)
+/* template */
+var __vue_template__ = __webpack_require__(687)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/vue-ionicons/dist/ios-close.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4516aeae", Component.options)
+  } else {
+    hotAPI.reload("data-v-4516aeae", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 686:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ios-close-icon",
+  mixins: [__WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__["a" /* default */]],
+  data: function data() {
+    var iconTitle = this.title ? this.title : "Ios Close Icon";
+    return {
+      iconTitle: iconTitle
+    };
+  }
+});
+
+/***/ }),
+
+/***/ 687:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "ion",
+      class: _vm.ionClass,
+      attrs: { title: _vm.iconTitle, name: "ios-close-icon" }
+    },
+    [
+      _c(
+        "svg",
+        {
+          staticClass: "ion__svg",
+          attrs: { width: _vm.w, height: _vm.h, viewBox: "0 0 512 512" }
+        },
+        [
+          _c("path", {
+            attrs: {
+              d:
+                "M278.6 256l68.2-68.2c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-68.2-68.2c-6.2-6.2-16.4-6.2-22.6 0-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3l68.2 68.2-68.2 68.2c-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3 6.2 6.2 16.4 6.2 22.6 0l68.2-68.2 68.2 68.2c6.2 6.2 16.4 6.2 22.6 0 6.2-6.2 6.2-16.4 0-22.6L278.6 256z"
+            }
+          })
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4516aeae", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 689:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(690)
+/* template */
+var __vue_template__ = __webpack_require__(691)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/utilities/Modal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7cf19530", Component.options)
+  } else {
+    hotAPI.reload("data-v-7cf19530", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 690:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__ = __webpack_require__(685);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Panel__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    close: function close() {
+      this.$emit('close');
+    }
+  },
+  components: {
+    CloseIcon: __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue___default.a,
+    Panel: __WEBPACK_IMPORTED_MODULE_1__Panel___default.a
+  }
+});
+
+/***/ }),
+
+/***/ 691:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "dvs-fixed dvs-pin" }, [
+    _c("div", {
+      staticClass: "dvs-blocker dvs-fixed dvs-pin",
+      on: { click: _vm.close }
+    }),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "dvs-absolute dvs-absolute-center dvs-z-50 dvs-min-w-2/3 dvs-max-h-screen"
+      },
+      [
+        _c(
+          "panel",
+          {
+            staticClass: "dvs-w-full",
+            attrs: { "panel-style": _vm.theme.panel }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "dvs-p-8" },
+              [
+                _c(
+                  "div",
+                  { on: { click: _vm.close } },
+                  [
+                    _c("close-icon", {
+                      staticClass:
+                        "dvs-absolute dvs-pin-t dvs-pin-r dvs-m-6 dvs-cursor-pointer",
+                      style: { color: _vm.theme.panel.color },
+                      attrs: { w: "40", h: "40" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._t("default")
+              ],
+              2
+            )
+          ]
+        )
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7cf19530", module.exports)
+  }
+}
+
+/***/ })
+
+});

@@ -26,11 +26,15 @@ trait IsDeviseComponent
 
     public function getHasChildSlotAttribute()
     {
+        $this->getViewSections();
+
         return $this->hasSliceSlot;
     }
 
     public function getHasChildSlotStringAttribute()
     {
+        $this->getViewSections();
+
         return $this->hasSliceSlot ? 'true' : 'false';
     }
 
@@ -42,7 +46,7 @@ trait IsDeviseComponent
 
         $partial = $this->getComponentScript($sections['component']);
 
-        return "{name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\",has_child_slot:true," . $partial;
+        return "{name:\"" . $this->component_name . "\",view:\"" . $this->view . "\",template:\"" . $template . "\",has_child_slot:\"" . $this->hasSliceSlot . "\"," . $partial;
     }
 
     public function getComponentCodeAttribute()
@@ -83,7 +87,6 @@ trait IsDeviseComponent
 
     private function getViewSections()
     {
-        
         if(!$this->viewSections)
         {
             $view = View::make($this->view);
@@ -163,7 +166,7 @@ trait IsDeviseComponent
             throw new \Exception('Something is wrong with this template: ' . $this->view);
         }
 
-        $this->hasSliceSlot = (strpos($sections['template'], '<slices') !== false || strpos($sections['template'], '@slices') !== false);
+        $this->hasSliceSlot = (strpos($sections['template'], '<slices') !== false);
 
         if (!$this->hasSliceSlot)
         {

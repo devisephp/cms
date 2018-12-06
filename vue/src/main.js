@@ -63,7 +63,7 @@ const DevisePlugin = {
       }
     }
 
-    console.log(deviseSettings.$page.slices[2].metadata.label);
+    console.log(deviseSettings.$page.slices[2].metadata.has_child_slot);
 
     if (typeof deviseSettings === 'undefined') {
       window.deviseSettings = function() {};

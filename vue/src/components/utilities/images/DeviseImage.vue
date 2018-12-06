@@ -13,7 +13,7 @@ export default {
       return this.devise[this.field].media[this.currentSize];
     },
     currentSize() {
-      if (self.breakpoint) {
+      if (this.breakpoint) {
         let sizes = this.component.fields[this.field].sizes;
         let self = this;
         let currentSize = null;

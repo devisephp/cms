@@ -63,6 +63,8 @@ const DevisePlugin = {
       }
     }
 
+    console.log(deviseSettings.$page.slices[2].metadata.label);
+
     if (typeof deviseSettings === 'undefined') {
       window.deviseSettings = function() {};
     }

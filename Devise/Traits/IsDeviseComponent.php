@@ -163,7 +163,7 @@ trait IsDeviseComponent
             throw new \Exception('Something is wrong with this template: ' . $this->view);
         }
 
-        $this->hasSliceSlot = (strpos($sections['template'], '<slices') !== false);
+        $this->hasSliceSlot = (strpos($sections['template'], '<slices') !== false || strpos($sections['template'], '@slices') !== false);
 
         if (!$this->hasSliceSlot)
         {

@@ -13,6 +13,8 @@ class DvsPageVersion extends Model
 {
     use SoftDeletes;
 
+    private $childViews = [];
+
     protected $table = 'dvs_page_versions';
 
     protected $fillable = [
@@ -66,12 +68,12 @@ class DvsPageVersion extends Model
     public function registerComponents()
     {
         $user = Auth::user();
+
+        $this->iterateComponents($this->slices);
+
         if ($user && $user->hasPermission('access admin'))
         {
-            $this->iterateAvailableComponents();
-        } else
-        {
-            $this->iterateComponents($this->slices);
+            $this->iterateRemainingComponents();
         }
     }
 
@@ -79,24 +81,29 @@ class DvsPageVersion extends Model
     {
         foreach ($slices as $child)
         {
+            $this->childViews[] = $child->view;
             Devise::addComponent($child);
             $this->iterateComponents($child->slices);
         }
     }
 
-    private function iterateAvailableComponents()
+    private function iterateRemainingComponents()
     {
         $files = File::allFiles(resource_path('views/slices'));
-        foreach ($files as $file)
+        foreach ($files as $index => $file)
         {
             $fileName = $file->getFilename();
             if (strpos($fileName, '.blade.php') !== false)
             {
                 $viewname = str_replace('.blade.php', '', $fileName);
                 $path = $this->getDothPath($file->getRelativePath()) . '.' . $viewname;
-                $slice = new DvsSliceInstance();
-                $slice->view = 'slices.' . $path;
-                Devise::addComponent($slice);
+
+                if (!in_array($path, $this->childViews))
+                {
+                    $slice = new DvsSliceInstance();
+                    $slice->view = $path;
+                    Devise::addComponent($slice);
+                }
             }
         }
     }
@@ -105,7 +112,7 @@ class DvsPageVersion extends Model
     {
         $path = str_replace(resource_path('views/slices'), '', $path);
 
-        return str_replace('/', '.', $path);
+        return 'slices.' . str_replace('/', '.', $path);
     }
 
     private function getName($path)

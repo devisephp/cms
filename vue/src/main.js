@@ -74,6 +74,8 @@ const DevisePlugin = {
       deviseSettings.__proto__.$bus = bus;
     }
 
+    console.log('here');
+
     // Tooltips
     Vue.use(VueTippy);
 

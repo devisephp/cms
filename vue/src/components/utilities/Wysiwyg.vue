@@ -61,8 +61,6 @@
 
 <script>
 import mezr from 'mezr';
-var sanitizeHtml = require('sanitize-html');
-
 import Table from 'trumbowyg/dist/plugins/table/trumbowyg.table.min.js';
 
 // Import editor cs

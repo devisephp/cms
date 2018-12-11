@@ -42,9 +42,6 @@ class RoutesGenerator
                 $redirectsBySite = $redirects->groupBy('site_id');
 
                 $this->setRedirects($redirectsBySite, $domains);
-            } else
-            {
-                $this->Route->get('/devise', 'Devise\Http\Controllers\AdminController@show')->middleware(['web']);
             }
         }
     }

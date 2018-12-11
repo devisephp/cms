@@ -98,7 +98,7 @@ export default {
         target: null,
         color: null,
         checked: null,
-        enabled: true
+        enabled: false
       };
 
       let mergedData = Object.assign({}, defaultProperties, this.deviseForSlice[field]);

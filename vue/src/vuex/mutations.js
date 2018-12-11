@@ -80,7 +80,6 @@ export default {
   },
 
   setPreviewModeInCurrentPage(state, mode) {
-    console.log(mode, state.currentPage.previewMode);
     state.currentPage.previewMode = mode;
   },
 

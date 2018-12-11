@@ -400,7 +400,6 @@ const actions = {
   },
 
   getPagesList(context, filters) {
-    console.log('here');
     return new Promise((resolve, reject) => {
       let params = filters.hasOwnProperty('language_id')
         ? 'language_id=' + filters.language_id

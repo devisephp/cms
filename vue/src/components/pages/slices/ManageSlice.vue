@@ -165,7 +165,7 @@ export default {
       let component = this.componentFromView(this.insertSlice.slice.value);
       var finalSlice = {
         settings: {
-          enabled: true
+          enabled: false
         },
         metadata: {
           instance_id: 0,
@@ -198,7 +198,7 @@ export default {
         target: null,
         color: null,
         checked: null,
-        enabled: false
+        enabled: null
       });
     },
     setDefaults(slice, field, defaults) {

@@ -24,83 +24,81 @@
         >
           <more-icon w="18" h="18" style="transform:rotate(90deg)" :style="{color: 'white'}"/>
 
-          <transition name="dvs-fade">
-            <div
-              class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm dvs-mt-8"
-              style="width:250px;transition:height 500ms, opacity 500ms"
-              :style="{backgroundColor: this.theme.panelCard.background}"
-              v-if="moreHovered"
-            >
-              <div class="dvs-py-2 dvs-flex dvs-items-end dvs-flex-wrap">
-                <div class="dvs-w-1/3">
-                  <div
-                    class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                    :style="{ borderColor: theme.panelIcons.color }"
-                    @click="jumpToSlice()"
-                  >
-                    <locate-icon w="25" h="25" :style="theme.panelIcons"/>
-                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Find</div>
-                  </div>
+          <div
+            class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm dvs-mt-8"
+            style="width:250px;transition:height 500ms, opacity 500ms"
+            :style="{backgroundColor: this.theme.panelCard.background}"
+            v-if="moreHovered"
+          >
+            <div class="dvs-py-2 dvs-flex dvs-items-end dvs-flex-wrap">
+              <div class="dvs-w-1/3">
+                <div
+                  class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  :style="{ borderColor: theme.panelIcons.color }"
+                  @click="jumpToSlice()"
+                >
+                  <locate-icon w="25" h="25" :style="theme.panelIcons"/>
+                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Find</div>
                 </div>
+              </div>
 
-                <div class="dvs-w-1/3">
-                  <div
-                    class="dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                    :class="{'dvs-cursor-pointer': slice.metadata.has_child_slot, 'dvs-cursor-not-allowed dvs-opacity-50': !slice.metadata.has_child_slot}"
-                    :style="{ borderColor: theme.panelIcons.color }"
-                    @click="requestInsertSlice()"
-                  >
-                    <add-icon w="25" h="25" :style="theme.panelIcons"/>
-                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Insert Slice</div>
-                  </div>
+              <div class="dvs-w-1/3">
+                <div
+                  class="dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  :class="{'dvs-cursor-pointer': slice.metadata.has_child_slot, 'dvs-cursor-not-allowed dvs-opacity-50': !slice.metadata.has_child_slot}"
+                  :style="{ borderColor: theme.panelIcons.color }"
+                  @click="requestInsertSlice()"
+                >
+                  <add-icon w="25" h="25" :style="theme.panelIcons"/>
+                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Insert Slice</div>
                 </div>
+              </div>
 
-                <div class="dvs-w-1/3">
-                  <div
-                    class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                    :style="{ borderColor: theme.panelIcons.color }"
-                    @click="copySlice(slice, false)"
-                  >
-                    <copy-icon w="25" h="25" :style="theme.panelIcons"/>
-                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Duplicate</div>
-                  </div>
+              <div class="dvs-w-1/3">
+                <div
+                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  :style="{ borderColor: theme.panelIcons.color }"
+                  @click="copySlice(slice, false)"
+                >
+                  <copy-icon w="25" h="25" :style="theme.panelIcons"/>
+                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Duplicate</div>
                 </div>
+              </div>
 
-                <div class="dvs-w-1/3">
-                  <div
-                    class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                    :style="{ borderColor: theme.panelIcons.color }"
-                    @click="sliceSettings()"
-                  >
-                    <cog-icon w="25" h="25" :style="theme.panelIcons"/>
-                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Settings</div>
-                  </div>
+              <div class="dvs-w-1/3">
+                <div
+                  class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  :style="{ borderColor: theme.panelIcons.color }"
+                  @click="sliceSettings()"
+                >
+                  <cog-icon w="25" h="25" :style="theme.panelIcons"/>
+                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Settings</div>
                 </div>
+              </div>
 
-                <div class="dvs-w-1/3">
-                  <div
-                    class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                    :style="{ borderColor: theme.panelIcons.color }"
-                    @click="requestEditSlice()"
-                  >
-                    <create-icon w="25" h="25" :style="theme.panelIcons"/>
-                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Edit</div>
-                  </div>
+              <div class="dvs-w-1/3">
+                <div
+                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  :style="{ borderColor: theme.panelIcons.color }"
+                  @click="requestEditSlice()"
+                >
+                  <create-icon w="25" h="25" :style="theme.panelIcons"/>
+                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Edit</div>
                 </div>
+              </div>
 
-                <div class="dvs-w-1/3">
-                  <div
-                    class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                    :style="{ borderColor: theme.panelIcons.color }"
-                    @click="removeSlice()"
-                  >
-                    <remove-icon w="25" h="25" :style="theme.panelIcons"/>
-                    <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Remove</div>
-                  </div>
+              <div class="dvs-w-1/3">
+                <div
+                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  :style="{ borderColor: theme.panelIcons.color }"
+                  @click="removeSlice()"
+                >
+                  <remove-icon w="25" h="25" :style="theme.panelIcons"/>
+                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Remove</div>
                 </div>
               </div>
             </div>
-          </transition>
+          </div>
         </div>
       </div>
     </strong>
@@ -276,7 +274,9 @@ export default {
       if (this.slice.metadata.has_child_slot) {
         this.manageSlice = true;
         this.$nextTick(function() {
-          this.$refs.manageslice.action = 'insert';
+          if (this.$refs.manageSlice) {
+            this.$refs.manageslice.action = 'insert';
+          }
         });
       }
     },
@@ -290,7 +290,9 @@ export default {
     requestEditSlice() {
       this.manageSlice = true;
       this.$nextTick(function() {
-        this.$refs.manageslice.action = 'edit';
+        if (this.$refs.manageSlice) {
+          this.$refs.manageslice.action = 'edit';
+        }
       });
     },
     editSlice(slice, referringSlice) {

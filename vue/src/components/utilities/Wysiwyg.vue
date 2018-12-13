@@ -51,7 +51,7 @@
       ref="theEditor"
       v-model="localValue"
       :config="config"
-      :svg-path="'devise/icons/icons.svg'"
+      :svg-path="'/devise/icons/icons.svg'"
       @tbw-change="update"
       @tbw-paste="update"
       @tbw-blur="update"

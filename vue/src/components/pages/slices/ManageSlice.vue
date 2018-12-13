@@ -63,7 +63,10 @@
                 <query-builder v-model="insertSlice.data"></query-builder>
               </div>
 
-              <div>
+              <div
+                class="dvs-absolute dvs-z-10 dvs-pin-b dvs-pin-l dvs-pin-r dvs-p-8"
+                :style="theme.panelCard"
+              >
                 <button class="dvs-btn" :style="theme.actionButton" @click="addSlice">Insert</button>
                 <button
                   class="dvs-btn"

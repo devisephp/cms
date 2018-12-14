@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueTippy from 'vue-tippy';
-import VueLazyload from 'vue-lazyload';
 import Devise from './Devise';
 import Administration from './components/admin/Administration';
 import ActionBar from './components/utilities/ActionBar';
@@ -74,8 +73,6 @@ const DevisePlugin = {
     } else {
       deviseSettings.__proto__.$bus = bus;
     }
-
-    Vue.use(VueLazyload);
 
     // Tooltips
     Vue.use(VueTippy);

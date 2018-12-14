@@ -148,13 +148,13 @@
             <h3 class="dvs-mb-4">Images</h3>
 
             <h6 class="dvs-mb-4">Original Image</h6>
-            <img v-lazy="`/styled/preview/${source}?${encodedEdits}`" @loaded="addToImagesLoaded">
+            <img :src="`/styled/preview/${source}?${encodedEdits}`" @load="addToImagesLoaded">
             <hr class="my-4">
             <div v-for="(size, key) in sizes" :key="key" class="mb-8">
               <h6 class="dvs-mb-4">{{ key }} ({{ size.w }}x{{ size.h }})</h6>
               <img
-                v-lazy="`/styled/preview/${source}?${encodedEdits}${encodedSize(size)}`"
-                @loaded="addToImagesLoaded"
+                :src="`/styled/preview/${source}?${encodedEdits}${encodedSize(size)}`"
+                @load="addToImagesLoaded"
               >
             </div>
           </template>
@@ -186,7 +186,7 @@
             </div>
             <img
               v-if="customSize.w && customSize.h"
-              v-lazy="`/styled/preview/${source}?${encodedEdits}${encodedSize(customSize)}`"
+              :src="`/styled/preview/${source}?${encodedEdits}${encodedSize(customSize)}`"
               @load="addToImagesLoaded"
             >
           </template>
@@ -227,6 +227,7 @@ export default {
     };
   },
   mounted() {
+    this.imagesLoaded = 0;
     this.loadOriginalDimentions();
   },
   methods: {
@@ -256,7 +257,7 @@ export default {
 
       img.src = file;
     },
-    addToImagesLoaded() {
+    addToImagesLoaded(something) {
       this.imagesLoaded++;
     },
     setCustomSizeToOriginal() {
@@ -331,7 +332,7 @@ export default {
     },
     imagesRequiredToLoad() {
       if (this.sizes) {
-        return this.sizes.length + 1;
+        return Object.keys(this.sizes).length + 1;
       }
 
       return 1;

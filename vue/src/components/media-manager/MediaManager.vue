@@ -432,6 +432,8 @@ export default {
         edits.sizes = this.options.sizes;
       }
 
+      devise.$bus.$emit('showLoadScreen', 'Images being generated');
+
       this.generateImages({ original: this.selectedFile.url, settings: edits }).then(function(
         response
       ) {
@@ -441,6 +443,7 @@ export default {
         if (typeof self.callback !== 'undefined') {
           self.callback(response.data);
         }
+        devise.$bus.$emit('hideLoadScreen');
         return true;
       });
 

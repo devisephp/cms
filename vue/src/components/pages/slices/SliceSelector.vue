@@ -1,5 +1,5 @@
 <template>
-  <div class="dvs-relative">
+  <div class="dvs-relative dvs-mt-8 dvs-mb-8">
     <div class="dvs-fixed dvs-pin-t dvs-pin-l dvs-pin-r dvs-p-8 z-10" :style="theme.panelCard">
       <fieldset class="dvs-fieldset">
         <label>Filter</label>
@@ -13,7 +13,7 @@
         </div>
       </fieldset>
     </div>
-    <div class="dvs-flex dvs-pb-8">
+    <div class="dvs-flex dvs-pb-8 dvs-py-16">
       <div
         class="dvs-w-full dvs-flex dvs-flex-wrap dvs-items-stretch flex-grow dvs-justify-start dvs-my-4"
         v-if=" this.allDirectories.length > 0"
@@ -98,10 +98,6 @@ export default {
         if (files.length > 0) {
           return true;
         }
-      });
-
-      directories.forEach(directory => {
-        directory.files = this.filteredFiles(directory);
       });
 
       return directories;

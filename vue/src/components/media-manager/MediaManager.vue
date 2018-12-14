@@ -413,7 +413,7 @@ export default {
     selectSourceFile(file) {
       this.selectedFile = file;
 
-      if (this.options.type === 'file') {
+      if ((this.options && this.options.type === 'file') || (file && file.type === 'file')) {
         if (typeof this.target !== 'undefined') {
           this.target.value = this.selectedFile.url;
         }
@@ -421,8 +421,8 @@ export default {
           this.callback(this.selectedFile.url);
         }
 
-        this.$set(this, 'selectedFile', null);
         this.show = false;
+        this.$set(this, 'selectedFile', null);
       }
     },
     generateAndSetFile(edits) {

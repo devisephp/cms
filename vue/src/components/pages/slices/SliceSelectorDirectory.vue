@@ -1,6 +1,9 @@
 <template>
   <div class="dvs-mb-8 dvs-w-full">
-    <h3 class="dvs-capitalize dvs-ml-2 dvs-mb-2 dvs-border-b dvs-w-full dvs-pb-2">
+    <h3
+      class="dvs-capitalize dvs-ml-2 dvs-mb-2 dvs-border-b dvs-w-full dvs-pb-2"
+      :style="{color: theme.panel.color}"
+    >
       {{ this.name }}
       <small>({{ this.directory.path }})</small>
     </h3>

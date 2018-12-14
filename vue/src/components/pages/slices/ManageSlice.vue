@@ -6,7 +6,7 @@
         class="dvs-fixed dvs-absolute-center dvs-mx-8 dvs-mb-8 dvs-z-40 dvs-w-4/5"
         :panel-style="theme.panel"
       >
-        <div class="dvs-p-8">
+        <div class="dvs-p-8 dvs-pt-16">
           <!-- Choose the type of the slice -->
           <h3
             class="dvs-mb-8"
@@ -46,7 +46,6 @@
                   class="dvs-border-b dvs-pb-2 dvs-mb-6 dvs-mx-8"
                   :style="{borderColor: theme.actionButtonGhost.color, color: theme.actionButtonGhost.color}"
                 >Repeats from Database</h4>
-                {{ }}
                 <p
                   class="dvs-normal-case dvs-font-normal"
                 >Slices will repeat on the page based data you define in the next steps.</p>

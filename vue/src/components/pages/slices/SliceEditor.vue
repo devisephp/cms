@@ -344,7 +344,12 @@ export default {
       return fields;
     },
     sliceHasFieldsOrSlices() {
-      return Object.keys(this.theFields).length + this.slice.slices.length > 0;
+      let count = Object.keys(this.theFields).length;
+      if (this.slice.slices) {
+        count += this.slice.slices.length;
+      }
+
+      return count > 0;
     }
   },
   props: {

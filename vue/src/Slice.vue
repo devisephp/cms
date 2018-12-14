@@ -252,11 +252,11 @@ export default {
       ) {
         window.addEventListener('scroll', () => {
           if (this.checkVisible(this.$refs.component.$el)) {
-            if (typeof this.$refs.component.isVisible !== 'undefined') {
+            if (this.$refs.component && typeof this.$refs.component.isVisible !== 'undefined') {
               this.$refs.component.isVisible();
             }
           } else {
-            if (typeof this.$refs.component.isHidden !== 'undefined') {
+            if (this.$refs.component && typeof this.$refs.component.isHidden !== 'undefined') {
               this.$refs.component.isHidden();
             }
           }

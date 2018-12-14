@@ -165,6 +165,7 @@ export default {
     },
     buildSlice() {
       let component = this.componentFromView(this.insertSlice.slice.value);
+
       var finalSlice = {
         settings: {
           enabled: false
@@ -178,7 +179,7 @@ export default {
           name: component.name,
           type: this.insertSlice.type,
           view: component.view,
-          has_child_slot: false
+          has_child_slot: component.has_child_slot
         }
       };
       for (const field in component.fields) {

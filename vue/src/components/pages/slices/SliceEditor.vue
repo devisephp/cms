@@ -25,13 +25,13 @@
           <more-icon w="18" h="18" style="transform:rotate(90deg)" :style="{color: 'white'}"/>
 
           <div
-            class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm dvs-mt-8"
-            style="width:250px;transition:height 500ms, opacity 500ms"
+            class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm"
+            style="width:175px;"
             :style="{backgroundColor: this.theme.panelCard.background}"
             v-if="moreHovered"
           >
-            <div class="dvs-py-2 dvs-flex dvs-items-end dvs-flex-wrap">
-              <div class="dvs-w-1/3">
+            <div class="dvs-pt-2 dvs-flex dvs-items-end dvs-flex-wrap">
+              <div class="dvs-w-1/2">
                 <div
                   class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
                   :style="{ borderColor: theme.panelIcons.color }"
@@ -42,10 +42,10 @@
                 </div>
               </div>
 
-              <div class="dvs-w-1/3">
+              <div class="dvs-w-1/2">
                 <div
                   class="dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                  :class="{'dvs-cursor-pointer': slice.metadata.has_child_slot, 'dvs-cursor-not-allowed dvs-opacity-50': !slice.metadata.has_child_slot}"
+                  :class="{'dvs-cursor-pointer': hasChildSlot, 'dvs-cursor-not-allowed dvs-opacity-50': !hasChildSlot}"
                   :style="{ borderColor: theme.panelIcons.color }"
                   @click="requestInsertSlice()"
                 >
@@ -54,9 +54,9 @@
                 </div>
               </div>
 
-              <div class="dvs-w-1/3">
+              <div class="dvs-w-1/2">
                 <div
-                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
                   :style="{ borderColor: theme.panelIcons.color }"
                   @click="copySlice(slice, false)"
                 >
@@ -65,9 +65,9 @@
                 </div>
               </div>
 
-              <div class="dvs-w-1/3">
+              <div class="dvs-w-1/2">
                 <div
-                  class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
                   :style="{ borderColor: theme.panelIcons.color }"
                   @click="sliceSettings()"
                 >
@@ -76,9 +76,9 @@
                 </div>
               </div>
 
-              <div class="dvs-w-1/3">
+              <div class="dvs-w-1/2">
                 <div
-                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
                   :style="{ borderColor: theme.panelIcons.color }"
                   @click="requestEditSlice()"
                 >
@@ -87,7 +87,7 @@
                 </div>
               </div>
 
-              <div class="dvs-w-1/3">
+              <div class="dvs-w-1/2">
                 <div
                   class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
                   :style="{ borderColor: theme.panelIcons.color }"
@@ -350,6 +350,15 @@ export default {
       }
 
       return count > 0;
+    },
+    hasChildSlot() {
+      let component = this.component(this.slice.metadata.name);
+
+      if (component.has_child_slot) {
+        return true;
+      }
+
+      return false;
     }
   },
   props: {

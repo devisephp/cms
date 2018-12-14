@@ -10,7 +10,7 @@
         <div class="dvs-flex dvs-items-center">
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons"/>
           <span
-            :class="{'dvs-cursor-pointer': sliceHasFields, 'dvs-opacity-75': !sliceHasFields}"
+            :class="{'dvs-cursor-pointer': sliceHasFieldsOrSlices, 'dvs-opacity-75': !sliceHasFieldsOrSlices}"
             @click="toggleSlice()"
             @mouseenter="markSlice(true, slice)"
             @mouseleave="markSlice(false, slice)"
@@ -343,8 +343,8 @@ export default {
       }
       return fields;
     },
-    sliceHasFields() {
-      return Object.keys(this.theFields).length > 0;
+    sliceHasFieldsOrSlices() {
+      return Object.keys(this.theFields).length + this.slice.slices.length > 0;
     }
   },
   props: {

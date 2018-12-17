@@ -74,9 +74,9 @@ class MediaController extends Controller
      * @param Request $request
      * @return array
      */
-    public function searchable(Request $request)
+    public function search(Request $request)
     {
-        return $this->Repository->buildSearchableMediaItems();
+        return $this->Repository->buildSearchedItems($request->get('search'));
     }
 
     /**
@@ -114,7 +114,7 @@ class MediaController extends Controller
     public function details(Request $request, $path)
     {
         $sansStoragePath = str_replace('/storage', '', $path);
-        return $this->Repository->getFileData($sansStoragePath, false, true);
+        return $this->Repository->getFileData($sansStoragePath, true);
     }
 
     /**

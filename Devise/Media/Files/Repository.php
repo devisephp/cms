@@ -61,33 +61,17 @@ class Repository
             $data['media-items'] = $this->buildMediaItems($currentDirectory);
         }
 
-        if (in_array('searched-items', $include))
-        {
-            $data['searched-items'] = $this->buildSearchedItems($currentDirectory, array_get($input, 'search'));
-        }
-
 
         return $data;
     }
 
-    public function getFileData($file, $addSearchableData = false, $addUsageData = false)
+    public function getFileData($file, $addUsageData = false)
     {
         $fileData = array();
 
         $fileData['name'] = basename($file);
         $fileData['url'] = $this->Storage->url($file);
         $fileData['type'] = 'file';
-
-        if ($addSearchableData)
-        {
-            $pathParts = explode('/', $file);
-            array_shift($pathParts); // removing media dir
-
-            $fileData['search'] = implode(' ', $pathParts);
-
-            array_pop($pathParts); // removing file name
-            $fileData['directories'] = $pathParts;
-        }
 
         $type = $this->guesser->guess($this->Storage->path($file));
         if (strpos($type, 'image') !== false)
@@ -153,25 +137,29 @@ class Repository
     /**
      *
      */
-    public function buildSearchableMediaItems()
+    public function buildSearchedItems($searchFor)
     {
         $mediaDir = $this->CategoryPaths->serverPath('');
 
-        $files = $this->Storage->allFiles($mediaDir);
+        $allFiles = $this->Storage->allFiles($mediaDir);
 
-        return $this->buildMediaItemsFromFiles($files, true);
+        $searchFor = str_replace(' ', ')(?=.*', trim($searchFor));
+
+        $matchingFiles = preg_grep('/(?=.*' . $searchFor . ')/i', $allFiles);
+
+        return $this->buildMediaItemsFromFiles($matchingFiles);
     }
 
     /**
      *
      */
-    private function buildMediaItemsFromFiles($files, $addSearchableData = false)
+    private function buildMediaItemsFromFiles($files)
     {
         $newFilesArray = array();
         foreach ($files as $file)
         {
             if ($this->passesFilters($file))
-                $newFilesArray[] = $this->getFileData($file, $addSearchableData);
+                $newFilesArray[] = $this->getFileData($file);
         }
 
         return $newFilesArray;
@@ -193,18 +181,6 @@ class Repository
             return false;
 
         return true;
-    }
-
-    /**
-     *
-     */
-    private function buildSearchedItems($currentDirectory, $searchFor)
-    {
-        if (!$searchFor) return array();
-
-        $files = $this->Storage->search($currentDirectory, $searchFor);
-
-        return $this->buildMediaItemsFromFiles($files);
     }
 
     /**

@@ -76,7 +76,7 @@ class MediaController extends Controller
      */
     public function search(Request $request)
     {
-        return $this->Repository->buildSearchedItems($request->get('search'));
+        return $this->Repository->buildSearchedItems($request->get('q'));
     }
 
     /**

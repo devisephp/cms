@@ -56,7 +56,7 @@
             <div
               class="dvs-h-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter"
             >
-              <form @submit.prevent="requestSearch">
+              <form @submit.prevent="search">
                 <div class="mb-8 flex">
                   <fieldset class="dvs-fieldset mr-2">
                     <input type="text" placeholder="Search" v-model="searchTerms" class="mr-2">
@@ -64,7 +64,6 @@
                   <button
                     type="submit"
                     class="dvs-btn dvs-btn-sm"
-                    @click="requestSearch"
                     :style="theme.actionButton"
                   >Search</button>
                 </div>
@@ -353,7 +352,7 @@ export default {
       'generateImages',
       'getCurrentFiles',
       'getCurrentDirectories',
-      'getSearchableMedia',
+      'mediaSearch',
       'deleteFile',
       'createDirectory',
       'deleteDirectory'
@@ -485,35 +484,10 @@ export default {
         self.changeDirectories('');
       });
     },
-    requestSearch() {
-      if (this.searchTerms !== '') {
-        // If we don't have the searchable Media yet then let's go get it
-        // this means that the browser will require a refresh for this to be
-        // updated. We are fine with that for now
-        if (this.searchableMedia.data.length < 1) {
-          this.getSearchableMedia().then(() => {
-            this.search();
-          });
-
-          // Else lets go ahead with the search
-        } else {
-          this.search();
-        }
-      }
-    },
     search() {
-      let terms = this.searchTerms.split(' ');
-      let results = this.searchableMedia.data.filter(media => {
-        if (
-          terms.every(function(v) {
-            return media.search.toLowerCase().indexOf(v.toLowerCase()) >= 0;
-          })
-        ) {
-          return true;
-        }
+      this.mediaSearch(this.searchTerms).then(results => {
+        this.searchResults = results;
       });
-
-      this.searchResults = results.slice(0, this.searchResultsLimit);
     },
     closeSearch() {
       this.searchTerms = null;

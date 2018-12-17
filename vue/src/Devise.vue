@@ -77,9 +77,8 @@ export default {
         );
       }
 
+      this.setSizeAndBreakpoint();
       this.addWatchers();
-      this.setSizeAndBreakpoint();
-      this.setSizeAndBreakpoint();
 
       let self = this;
       this.$nextTick(function() {

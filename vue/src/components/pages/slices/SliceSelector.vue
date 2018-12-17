@@ -4,7 +4,7 @@
       <fieldset class="dvs-fieldset">
         <label>Filter</label>
         <div class="dvs-flex">
-          <input type="text" v-model="filter">
+          <input type="text" ref="filter" v-model="filter">
           <button
             class="dvs-btn dvs-ml-2 dvs-min-w-64"
             @click="filter=null"
@@ -46,6 +46,9 @@ export default {
       filter: null
     };
   },
+  mounted() {
+    this.$refs.filter.focus();
+  },
   methods: {
     getDirectoryFiles(directories, directory) {
       directory = directories.find(dir => dir.dirName === directory);
@@ -86,16 +89,31 @@ export default {
       return this.getDirectories(JSON.parse(JSON.stringify(this.slicesDirectories.directories)), 0);
     },
     filteredDirectories() {
-      let filter = this.filter.toLowerCase();
+      let filters = this.filter.toLowerCase().split(' ');
       let directories = this.getDirectories(
         JSON.parse(JSON.stringify(this.slicesDirectories.directories)),
         0
       ).filter(directory => {
-        if (directory.name.toLowerCase().includes(filter)) {
+        if (
+          filters.every(filter => {
+            // console.log(directory.path, filter, directory.path.toLowerCase().includes(filter));
+            return directory.path.toLowerCase().includes(filter);
+          })
+        ) {
           return true;
         }
-        let files = this.filteredFiles(directory);
-        if (files.length > 0) {
+
+        let files = directory.files;
+        files = files.filter(file => {
+          return filters.every(filter => {
+            // console.log(file.value.toLowerCase().includes(filter));
+            return file.value.toLowerCase().includes(filter);
+          });
+        });
+
+        if (files.length) {
+          // console.log(files);
+          directory.files = files;
           return true;
         }
       });

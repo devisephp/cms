@@ -59,7 +59,7 @@ class CopyPage extends ApiRequest
                 }
             } else
             {
-                if ($this->pageToBeCoppiedIsNotInDefaultLanguage())
+                if ($this->pageToBeCopiedIsNotInDefaultLanguage())
                 {
                     $validator->errors()->add('page_id', 'Only page in the default language can be copied.');
                 }
@@ -70,7 +70,7 @@ class CopyPage extends ApiRequest
     public function targetLanguageAreadyExists()
     {
         $languageId = request()->input('language_id');
-        $notDefaultLang = $this->pageToBeCoppiedIsNotInDefaultLanguage();
+        $notDefaultLang = $this->pageToBeCopiedIsNotInDefaultLanguage();
 
         $pageId = $this->route('page_id');
 
@@ -89,7 +89,7 @@ class CopyPage extends ApiRequest
         return $exists;
     }
 
-    public function pageToBeCoppiedIsNotInDefaultLanguage()
+    public function pageToBeCopiedIsNotInDefaultLanguage()
     {
         $pageId = $this->route('page_id');
 

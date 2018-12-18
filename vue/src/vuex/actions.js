@@ -124,13 +124,12 @@ const actions = {
     });
   },
 
-  getSearchableMedia(context) {
+  mediaSearch(context, query) {
     return new Promise((resolve, reject) => {
       window.axios
-        .get(context.state.api.baseUrl + 'searchable-media')
+        .get(context.state.api.baseUrl + 'media-search?q=' + query)
         .then(function(response) {
-          context.commit('setSearchableMedia', response.data);
-          resolve(response);
+          resolve(response.data);
         })
         .catch(function(error) {
           devise.$bus.$emit('showError', error);

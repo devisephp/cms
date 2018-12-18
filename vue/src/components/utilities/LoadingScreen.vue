@@ -7,7 +7,7 @@
           class="dvs-absolute dvs-absolute-center dvs-bg-white dvs-z-50 dvs-p-8 dvs-rounded dvs-shadow dvs-text-sm dvs-uppercase dvs-font-bold dvs-text-center"
         >
           <img src="/devise/images/loader.gif" class="dvs-mb-2">
-          <div>{{ message }}</div>
+          <div class="dvs-text-black">{{ message }}</div>
         </div>
       </div>
     </transition>
@@ -30,7 +30,7 @@ export default {
       setTimeout(() => {
         this.message = 'We had issues loading';
         this.show = false;
-      }, 10000);
+      }, 15000);
     });
 
     deviseSettings.$bus.$on('hideLoadScreen', () => {

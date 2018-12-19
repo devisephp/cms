@@ -19,6 +19,7 @@
     "default-passive-events": "^1.0.10",
     "faker": "^4.1.0",
     "gsap": "^2.0.1",
+    "js-cookie": "^2.2.0",
     "lodash.debounce": "^4.0.8",
     "lorem-ipsum": "^1.0.6",
     "mezr": "^0.6.2",

@@ -6,13 +6,19 @@ export default function(el, binding, vnode) {
   let noSize = binding.modifiers.nosize;
 
   breakpoint = breakpoint !== null ? breakpoint : 'desktop';
-  srcAttribute = srcAttribute !== null ? srcAttribute : 'src';
+  srcAttribute = srcAttribute ? srcAttribute : 'src';
 
   let theImageSize = () => {
     let sizes = image.sizes;
+
     for (const size in sizes) {
       if (sizes.hasOwnProperty(size)) {
         const sizeSettings = sizes[size];
+
+        // If breakpoints isn't set assume only one size and return it
+        if (!sizeSettings.breakpoints) {
+          return { size: size, settings: sizeSettings };
+        }
         if (sizeSettings.breakpoints.includes(breakpoint)) {
           return { size: size, settings: sizeSettings };
         }
@@ -27,12 +33,6 @@ export default function(el, binding, vnode) {
   let theImage = image.url;
   if (theSize) {
     theImage = image.media[theSize.size];
-  } else {
-    console.warn(
-      `Devise: An image's responsive match was not found. Breakpoint: ${breakpoint}, Field: ${
-        image.label
-      }`
-    );
   }
 
   if (background) {

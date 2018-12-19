@@ -10,89 +10,95 @@ use Illuminate\Validation\Rule;
 
 class CopyPage extends ApiRequest
 {
-  private $SiteDetector;
+    private $SiteDetector;
 
-  /**
-   * StorePage constructor.
-   * @param SiteDetector $SiteDetector
-   */
-  public function __construct(SiteDetector $SiteDetector)
-  {
-    $this->SiteDetector = $SiteDetector;
-    parent::__construct();
-  }
+    /**
+     * StorePage constructor.
+     * @param SiteDetector $SiteDetector
+     */
+    public function __construct(SiteDetector $SiteDetector)
+    {
+        $this->SiteDetector = $SiteDetector;
+        parent::__construct();
+    }
 
-  /**
-   * Get the validation rules that apply to the request.
-   *
-   * @return array
-   */
-  public function rules()
-  {
-    $site = $this->SiteDetector->current();
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $site = $this->SiteDetector->current();
 
-    return [
-      'title' => 'required',
-      'slug'  => [
-        'required',
-        Rule::unique('dvs_pages')->where(function ($query) use ($site) {
-          return $query->where('site_id', $site->id);
-        })
-      ]
-    ];
-  }
+        return [
+            'title' => 'required',
+            'slug'  => [
+                'required',
+                Rule::unique('dvs_pages')->where(function ($query) use ($site) {
+                    return $query->where('site_id', $site->id);
+                })
+            ]
+        ];
+    }
 
-  /**
-   * Configure the validator instance.
-   *
-   * @param  \Illuminate\Validation\Validator $validator
-   * @return void
-   */
-  public function withValidator($validator)
-  {
-    $validator->after(function ($validator) {
-      if (request()->has('language_id'))
-      {
-        if ($this->targetLanguageAreadyExists())
-        {
-          $validator->errors()->add('language_id', 'Page already has already been translated to this language');
-        }
-      } else
-      {
-        if ($this->pageToBeCoppiedIsNotInDefaultLanguage())
-        {
-          $validator->errors()->add('page_id', 'Only page in the default language can be copied.');
-        }
-      }
-    });
-  }
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if (request()->has('language_id'))
+            {
+                if ($this->targetLanguageAreadyExists())
+                {
+                    $validator->errors()->add('language_id', 'Page already has already been translated to this language');
+                }
+            } else
+            {
+                if ($this->pageToBeCopiedIsNotInDefaultLanguage())
+                {
+                    $validator->errors()->add('page_id', 'Only page in the default language can be copied.');
+                }
+            }
+        });
+    }
 
-  public function targetLanguageAreadyExists()
-  {
-    $languageId = request()->input('language_id');
+    public function targetLanguageAreadyExists()
+    {
+        $languageId = request()->input('language_id');
+        $notDefaultLang = $this->pageToBeCopiedIsNotInDefaultLanguage();
 
-    $pageId = $this->route('page_id');
+        $pageId = $this->route('page_id');
 
-    $exists = DB::table('dvs_pages')
-      ->where('language_id', $languageId)
-      ->where(function ($query) use ($pageId) {
-        $query->where('translated_from_page_id', $pageId)
-          ->orWhere('translated_from_page_id', 0);
-      })->first();
+        $exists = DB::table('dvs_pages')
+            ->where('language_id', $languageId)
+            ->where(function ($query) use ($pageId, $notDefaultLang) {
+                if ($notDefaultLang)
+                {
+                    $query->where('translated_from_page_id', $pageId);
+                } else
+                {
+                    $query->orWhere('translated_from_page_id', 0);
+                }
+            })->first();
 
-    return $exists;
-  }
+        return $exists;
+    }
 
-  public function pageToBeCoppiedIsNotInDefaultLanguage()
-  {
-    $pageId = $this->route('page_id');
+    public function pageToBeCopiedIsNotInDefaultLanguage()
+    {
+        $pageId = $this->route('page_id');
 
-    $page = DB::table('dvs_pages')
-      ->select('language_id')
-      ->find($pageId);
+        $page = DB::table('dvs_pages')
+            ->select('language_id')
+            ->find($pageId);
 
-    $site = $this->SiteDetector->current();
+        $site = $this->SiteDetector->current();
 
-    return ($site->default_language->id != $page->language_id);
-  }
+        return ($site->default_language->id != $page->language_id);
+    }
 }

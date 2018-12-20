@@ -144,8 +144,7 @@ class Repository
         $allFiles = $this->Storage->allFiles($mediaDir);
 
         $searchFor = str_replace(' ', ')(?=.*', trim($searchFor));
-
-        $matchingFiles = preg_grep('/(?=.*' . $searchFor . ')/i', $allFiles);
+        $matchingFiles = preg_grep('/(?=.*' . preg_quote($searchFor, "/") . ')/i', $allFiles);
 
         return $this->buildMediaItemsFromFiles($matchingFiles);
     }

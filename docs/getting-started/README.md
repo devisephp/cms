@@ -59,7 +59,7 @@ php artisan migrate
 
 At this point you should be able to visit your project through a browser and see the install screen. If you're using valet it should be the folder name will be the domain followed by a `.test` by default. With Homestead it's whatever you mapped the domain to.
 
-When you reach your site you should see something similar to what is below:
+When you reach your site you should see something similar to this:
 
 ![Installer Screen](https://github.com/devisephp/cms/raw/v2-dev/docs/imgs/installer.png "Installer Screen")
 
@@ -77,10 +77,10 @@ You will need some sort of web server running on your local machine. If you are 
 
 Valet provides a very quick way of getting a development environment running on your Mac. It's efficient, light on your battery and easy to update.
 
-(https://laravel.com/docs/5.7/valet)[Homestead]
+[Laravel Valet](https://laravel.com/docs/5.7/valet)
 
 ### Homestead
 
 A Windows or Mac solution that runs on a Vagrent box. It's a great solution but will eat your battery if you're running on a laptop. However, having a sandboxed environment can be awesome.
 
-(https://laravel.com/docs/5.7/homestead)[Homestead]
+[Laravel Homestead](https://laravel.com/docs/5.7/homestead)

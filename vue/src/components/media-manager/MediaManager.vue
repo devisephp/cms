@@ -32,6 +32,12 @@
           <div class="dvs-flex dvs-items-center">
             <fieldset class="dvs-fieldset dvs-mr-8">
               <div class="dvs-flex dvs-items-center">
+                <label class="dvs-mr-2 dvs-my-2">Remember Location?</label>
+                <input class="dvs-my-2" type="checkbox" v-model="cookieSettings">
+              </div>
+            </fieldset>
+            <fieldset class="dvs-fieldset dvs-mr-8">
+              <div class="dvs-flex dvs-items-center">
                 <label class="dvs-mr-2 dvs-my-2">Contact Sheet</label>
                 <input class="dvs-my-2" type="radio" value="contactSheet" v-model="mode">
               </div>
@@ -224,7 +230,6 @@
                     <img
                       :src="`/styled/preview/${file.url}?w=500&h=500`"
                       class="dvs-cursor-pointer dvs-mb-4"
-                      @click="selectSourceFile(file)"
                     >
                     <div class="dvs-flex">
                       <div
@@ -326,6 +331,8 @@ import CloseIcon from 'vue-ionicons/dist/ios-close.vue';
 import AttachIcon from 'vue-ionicons/dist/md-attach.vue';
 import LinkIcon from 'vue-ionicons/dist/ios-link.vue';
 
+let Cookies = require('js-cookie');
+
 export default {
   data() {
     return {
@@ -340,7 +347,8 @@ export default {
       selectedFile: null,
       searchResultsLimit: 100,
       currentlyOpenFile: null,
-      options: null
+      options: null,
+      cookieSettings: false
     };
   },
   mounted() {
@@ -366,7 +374,17 @@ export default {
         options
       }) {
         self.callback = callback;
-        (self.target = target), (self.options = options), self.changeDirectories('');
+        self.target = target;
+        self.options = options;
+
+        let cookieLocation = Cookies.get('devise-mediamanager-location');
+        if (cookieLocation) {
+          self.changeDirectories(cookieLocation);
+          this.cookieSettings = true;
+        } else {
+          self.changeDirectories('');
+        }
+
         self.show = true;
       });
     },
@@ -380,6 +398,10 @@ export default {
         self.getCurrentFiles(self.options).then(function() {
           self.getCurrentDirectories().then(function() {
             self.loaded = true;
+
+            if (self.cookieSettings) {
+              Cookies.set('devise-mediamanager-location', directory);
+            }
           });
         });
       });
@@ -507,6 +529,13 @@ export default {
       return {
         'X-CSRF-TOKEN': token.content
       };
+    }
+  },
+  watch: {
+    cookieSettings: newValue => {
+      if (!newValue) {
+        Cookies.remove('devise-mediamanager-location');
+      }
     }
   },
   components: {

@@ -33,24 +33,24 @@
             <div class="dvs-pt-2 dvs-flex dvs-items-end dvs-flex-wrap">
               <div class="dvs-w-1/2">
                 <div
-                  class="dvs-cursor-pointer dvs-ml-2 dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
-                  :style="{ borderColor: theme.panelIcons.color }"
-                  @click="jumpToSlice()"
-                >
-                  <locate-icon w="25" h="25" :style="theme.panelIcons"/>
-                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Find</div>
-                </div>
-              </div>
-
-              <div class="dvs-w-1/2">
-                <div
-                  class="dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  class="dvs-mr-2 dvs-ml-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
                   :class="{'dvs-cursor-pointer': hasChildSlot, 'dvs-cursor-not-allowed dvs-opacity-50': !hasChildSlot}"
                   :style="{ borderColor: theme.panelIcons.color }"
                   @click="requestInsertSlice()"
                 >
                   <add-icon w="25" h="25" :style="theme.panelIcons"/>
                   <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Insert Slice</div>
+                </div>
+              </div>
+
+              <div class="dvs-w-1/2">
+                <div
+                  class="dvs-cursor-pointer dvs-mr-2 dvs-items-center dvs-flex dvs-flex-col dvs-mb-2 dvs-border dvs-rounded-sm dvs-p-2"
+                  :style="{ borderColor: theme.panelIcons.color }"
+                  @click="jumpToSlice()"
+                >
+                  <locate-icon w="25" h="25" :style="theme.panelIcons"/>
+                  <div class="dvs-text-xs dvs-text-center dvs-leading-none dvs-pt-2">Find</div>
                 </div>
               </div>
 

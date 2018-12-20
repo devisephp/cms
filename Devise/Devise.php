@@ -48,22 +48,25 @@ class Devise
         $analytics = '';
         $detector = App::make(SiteDetector::class);
         $currentSite = $detector->current();
-        $settings = $currentSite->settings;
 
-        if (isset($settings->googleAnalytics) && $settings->googleAnalytics !== '')
-        {
-            $analytics = '
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-72597741-1"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag(\'js\', new Date());
+        if ($currentSite) {
+            $settings = $currentSite->settings;
 
-        gtag(\'config\', \'' . $settings->googleAnalytics . '\');
-      </script>
-      ';
+            if (isset($settings->googleAnalytics) && $settings->googleAnalytics !== '')
+            {
+                $analytics = '
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-72597741-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag(\'js\', new Date());
+
+            gtag(\'config\', \'' . $settings->googleAnalytics . '\');
+        </script>
+        ';
+            }
         }
-
+        
         return $analytics;
     }
 

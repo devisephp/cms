@@ -514,7 +514,8 @@ const actions = {
 
   updatePage(context, payload) {
     return new Promise((resolve, reject) => {
-      const data = sanitizePageData(payload.data);
+      // TODO - Sanitize data
+      // const data = commonUtils.sanitizePageData(payload.data);
       window.axios
         .put(context.state.api.baseUrl + 'pages/' + payload.data.id, payload.data)
         .then(function(response) {

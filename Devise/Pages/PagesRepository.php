@@ -4,6 +4,7 @@ use Devise\Languages\LanguageDetector;
 use Devise\Pages\Collections\CollectionsRepository;
 use Devise\Pages\Interpreter\ViewOpener;
 use Devise\Models\DvsPage;
+use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +24,11 @@ class PagesRepository
     private $Page;
 
     /**
+     * @var SiteDetector
+     */
+    private $SiteDetector;
+
+    /**
      * @var LanguageDetector
      */
     private $LanguageDetector;
@@ -34,9 +40,10 @@ class PagesRepository
      * @param LanguageDetector $LanguageDetector
      * @param Framework $Framework
      */
-    public function __construct(DvsPage $Page, LanguageDetector $LanguageDetector, Framework $Framework)
+    public function __construct(DvsPage $Page, SiteDetector $SiteDetector, LanguageDetector $LanguageDetector, Framework $Framework)
     {
         $this->Page = $Page;
+        $this->SiteDetector = $SiteDetector;
         $this->LanguageDetector = $LanguageDetector;
 
         $this->Config = $Framework->Config;
@@ -58,6 +65,8 @@ class PagesRepository
      */
     public function findByRouteName($name)
     {
+        $site = $this->SiteDetector->current();
+
         return $this->Page
             ->with([
                     'currentVersion.slices.slices.slices.slices',
@@ -69,6 +78,7 @@ class PagesRepository
                 ]
             )
             ->whereRouteName($name)
+            ->whereSiteId($site->id)
             ->firstOrFail();
     }
 

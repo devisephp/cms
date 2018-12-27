@@ -53,7 +53,7 @@ class CopyPage extends ApiRequest
         $validator->after(function ($validator) {
             if (request()->has('language_id'))
             {
-                if ($this->targetLanguageAreadyExists())
+                if ($this->targetLanguageAlreadyExists())
                 {
                     $validator->errors()->add('language_id', 'Page already has already been translated to this language');
                 }
@@ -67,22 +67,22 @@ class CopyPage extends ApiRequest
         });
     }
 
-    public function targetLanguageAreadyExists()
+    public function targetLanguageAlreadyExists()
     {
         $languageId = request()->input('language_id');
-        $notDefaultLang = $this->pageToBeCopiedIsNotInDefaultLanguage();
+        $origPageNotInDefaultLang = $this->pageToBeCopiedIsNotInDefaultLanguage();
 
         $pageId = $this->route('page_id');
 
         $exists = DB::table('dvs_pages')
             ->where('language_id', $languageId)
-            ->where(function ($query) use ($pageId, $notDefaultLang) {
-                if ($notDefaultLang)
-                {
-                    $query->where('translated_from_page_id', $pageId);
-                } else
+            ->where(function ($query) use ($pageId, $origPageNotInDefaultLang) {
+                if ($origPageNotInDefaultLang)
                 {
                     $query->orWhere('translated_from_page_id', 0);
+                } else
+                {
+                    $query->where('translated_from_page_id', $pageId);
                 }
             })->first();
 

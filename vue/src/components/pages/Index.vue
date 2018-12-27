@@ -2,55 +2,61 @@
 
   <div>
 
-    <div id="devise-admin-content">
+    <div id="devise-admin-content" class="dvs-flex">
       <action-bar>
         <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click="goToPage('devise-pages-create')">
           Create New Page
         </li>
       </action-bar>
 
-      <h2 class="dvs-mb-10">Current Site Pages</h2>
+      <div class="dvs-w-2/5 dvs-border-r dvs--my-10 dvs--ml-10 dvs-mr-8 dvs-p-8" :style="{borderColor:theme.panelCard.background, background:theme.panelCard.background}">
+        <button class="dvs-btn dvs-btn-zero dvs-btn-text dvs-mb-8" :style="{color: theme.actionButtonGhost.color}" @click="historyBack">Back</button>
 
-      <fieldset class="dvs-fieldset dvs-mb-8">
-        <label>Search Pages</label>
-        <input type="text" v-model.lazy="searchTerm" v-debounce="searchDelay">
+        <fieldset class="dvs-fieldset dvs-mb-8">
+          <label>Search Pages</label>
+          <input type="text" class="dvs-mb-4" v-model.lazy="searchTerm" v-debounce="searchDelay">
 
-        <div class="dvs-relative">
-          <ul class="dvs-list-reset dvs-bg-white dvs-text-black dvs-absolute dvs-shadow-lg">
-            <li v-for="(suggestion, key) in autosuggest.data" :key="key"
-                class="dvs-border-b dvs-border-grey-lighter dvs-p-4 dvs-cursor-pointer"
-                @click="loadPage(key)">
-              {{ suggestion }}
-            </li>
-          </ul>
-        </div>
-      </fieldset>
-
-      <div v-for="page in pages.data" :key="page.id"
-           class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
-          {{ page.title }}
-        </div>
-        <div class="dvs-min-w-1/5 dvs-text-sm dvs-px-8 dvs-font-mono">
-          {{ page.slug }}
-        </div>
-        <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
-          <button
-            class="dvs-btn dvs-btn-xs dvs-mr-2"
-            :style="theme.actionButtonGhost"
-            @click="loadPage(page.id)">Manage
-          </button>
-          <a
-            class="dvs-btn dvs-btn-xs"
-            :style="theme.actionButtonGhost"
-            :href="getSlug(page)">Go</a>
-        </div>
+          <div class="dvs-relative">
+            <ul class="dvs-list-reset dvs-bg-white dvs-text-black dvs-absolute dvs-shadow-lg">
+              <li v-for="(suggestion, key) in autosuggest.data" :key="key"
+                  class="dvs-border-b dvs-border-grey-lighter dvs-p-4 dvs-cursor-pointer dvs-text-sm hover:dvs-bg-grey-lighter"
+                  @click="loadPage(key)">
+                {{ suggestion }}
+              </li>
+            </ul>
+          </div>
+        </fieldset>
       </div>
 
-      <pagination class="mb-8" v-if="pages.data && pages.data.length" :meta="pages.meta"
-                  @changePage="changePage"></pagination>
+      <div :style="{color: theme.panel.color}">
+        <h2 class="dvs-mb-10" :style="{color:theme.panel.color}">Current Site Pages</h2>
 
+        <div v-for="page in pages.data" :key="page.id"
+            class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
+          <div class="dvs-min-w-2/5 dvs-font-light dvs-pr-8">
+            {{ page.title }}
+          </div>
+          <div class="dvs-min-w-1/5 dvs-text-xs dvs-px-8 dvs-font-mono">
+            {{ page.slug }}
+          </div>
+          <div class="dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end">
+            <button
+              class="dvs-btn dvs-btn-xs dvs-mr-2"
+              :style="theme.actionButtonGhost"
+              @click="loadPage(page.id)">Manage
+            </button>
+            <a
+              class="dvs-btn dvs-btn-xs"
+              :style="theme.actionButtonGhost"
+              :href="getSlug(page)">Go</a>
+          </div>
+        </div>
+
+        <pagination class="mb-8" v-if="pages.data && pages.data.length" :meta="pages.meta"
+                    @changePage="changePage"></pagination>
+      </div>
     </div>
+
   </div>
 
 </template>
@@ -59,6 +65,7 @@
   import debounce from 'v-debounce'
 
   import {mapActions, mapGetters} from 'vuex'
+  import AdministrationMixin from './../../mixins/Administration'
 
   export default {
     name: 'PagesIndex',
@@ -184,6 +191,7 @@
     },
     directives: {
       debounce
-    }
+    },
+    mixins: [AdministrationMixin]
   }
 </script>

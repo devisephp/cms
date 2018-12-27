@@ -1,14 +1,193 @@
 webpackJsonp([3],{
 
-/***/ 634:
+/***/ 106:
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+
+/***/ }),
+
+/***/ 33:
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+
+/***/ 645:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(692)
+var __vue_script__ = __webpack_require__(703)
 /* template */
-var __vue_template__ = __webpack_require__(693)
+var __vue_template__ = __webpack_require__(704)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,15 +227,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 640:
+/***/ 650:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(724)
+var __vue_script__ = __webpack_require__(726)
 /* template */
-var __vue_template__ = __webpack_require__(725)
+var __vue_template__ = __webpack_require__(727)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96,15 +275,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 647:
+/***/ 658:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(798)
+var __vue_script__ = __webpack_require__(774)
 /* template */
-var __vue_template__ = __webpack_require__(811)
+var __vue_template__ = __webpack_require__(787)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -144,15 +323,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 651:
+/***/ 662:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(818)
+var __vue_script__ = __webpack_require__(794)
 /* template */
-var __vue_template__ = __webpack_require__(819)
+var __vue_template__ = __webpack_require__(795)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -192,15 +371,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 675:
+/***/ 686:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(978)
+var __vue_script__ = __webpack_require__(895)
 /* template */
-var __vue_template__ = __webpack_require__(981)
+var __vue_template__ = __webpack_require__(898)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -240,15 +419,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 676:
+/***/ 687:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(982)
+var __vue_script__ = __webpack_require__(899)
 /* template */
-var __vue_template__ = __webpack_require__(983)
+var __vue_template__ = __webpack_require__(900)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -288,15 +467,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 677:
+/***/ 688:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(984)
+var __vue_script__ = __webpack_require__(901)
 /* template */
-var __vue_template__ = __webpack_require__(985)
+var __vue_template__ = __webpack_require__(902)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -336,15 +515,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 678:
+/***/ 689:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(986)
+var __vue_script__ = __webpack_require__(903)
 /* template */
-var __vue_template__ = __webpack_require__(990)
+var __vue_template__ = __webpack_require__(907)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -384,15 +563,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 685:
+/***/ 696:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(686)
+var __vue_script__ = __webpack_require__(697)
 /* template */
-var __vue_template__ = __webpack_require__(687)
+var __vue_template__ = __webpack_require__(698)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -432,12 +611,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 686:
+/***/ 697:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -464,7 +643,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 687:
+/***/ 698:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -509,15 +688,375 @@ if (false) {
 
 /***/ }),
 
-/***/ 689:
+/***/ 70:
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(selector) {
+		if (typeof memo[selector] === "undefined") {
+			memo[selector] = fn.call(this, selector);
+		}
+
+		return memo[selector]
+	};
+})(function (target) {
+	return document.querySelector(target)
+});
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(106);
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton) options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+	if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else {
+		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	options.attrs.type = "text/css";
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	options.attrs.type = "text/css";
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = options.transform(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+
+/***/ 700:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(690)
+var __vue_script__ = __webpack_require__(701)
 /* template */
-var __vue_template__ = __webpack_require__(691)
+var __vue_template__ = __webpack_require__(702)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -557,12 +1096,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 690:
+/***/ 701:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__ = __webpack_require__(685);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__ = __webpack_require__(696);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Panel__);
@@ -602,7 +1141,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 691:
+/***/ 702:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -670,12 +1209,12 @@ if (false) {
 
 /***/ }),
 
-/***/ 692:
+/***/ 703:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -702,7 +1241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 693:
+/***/ 704:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -747,15 +1286,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 694:
+/***/ 705:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(695)
+var __vue_script__ = __webpack_require__(706)
 /* template */
-var __vue_template__ = __webpack_require__(696)
+var __vue_template__ = __webpack_require__(707)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -795,12 +1334,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 695:
+/***/ 706:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -827,7 +1366,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 696:
+/***/ 707:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -872,12 +1411,12 @@ if (false) {
 
 /***/ }),
 
-/***/ 697:
+/***/ 708:
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(698));
+		module.exports = factory(__webpack_require__(709));
 	else if(typeof define === 'function' && define.amd)
 		define("VueFlatpickr", ["flatpickr"], factory);
 	else if(typeof exports === 'object')
@@ -1276,7 +1815,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ }),
 
-/***/ 698:
+/***/ 709:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* flatpickr v4.5.2, @license MIT */
@@ -3454,19 +3993,19 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(304)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(305)))
 
 /***/ }),
 
-/***/ 700:
+/***/ 711:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(701)
+var __vue_script__ = __webpack_require__(712)
 /* template */
-var __vue_template__ = __webpack_require__(704)
+var __vue_template__ = __webpack_require__(715)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -3506,16 +4045,16 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 701:
+/***/ 712:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_flatpickr_component__ = __webpack_require__(697);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_flatpickr_component__ = __webpack_require__(708);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_flatpickr_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_flatpickr_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_min_css__ = __webpack_require__(702);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_min_css__ = __webpack_require__(713);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dayjs__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dayjs__ = __webpack_require__(307);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dayjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_dayjs__);
 //
 //
@@ -3582,13 +4121,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 702:
+/***/ 713:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(703);
+var content = __webpack_require__(714);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -3614,10 +4153,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 703:
+/***/ 714:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(32)(false);
+exports = module.exports = __webpack_require__(33)(false);
 // imports
 
 
@@ -3629,7 +4168,7 @@ exports.push([module.i, ".flatpickr-calendar{background:transparent;opacity:0;di
 
 /***/ }),
 
-/***/ 704:
+/***/ 715:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -3661,10 +4200,10 @@ if (false) {
 
 /***/ }),
 
-/***/ 713:
+/***/ 717:
 /***/ (function(module, exports, __webpack_require__) {
 
-const debounce = __webpack_require__(753)
+const debounce = __webpack_require__(745)
 
 directive.debounce = debounce
 
@@ -3693,12 +4232,12 @@ module.exports = directive
 
 /***/ }),
 
-/***/ 724:
+/***/ 726:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -3725,7 +4264,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 725:
+/***/ 727:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -3782,15 +4321,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 750:
+/***/ 742:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(751)
+var __vue_script__ = __webpack_require__(743)
 /* template */
-var __vue_template__ = __webpack_require__(752)
+var __vue_template__ = __webpack_require__(744)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -3830,16 +4369,16 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 751:
+/***/ 743:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue__ = __webpack_require__(694);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue__ = __webpack_require__(705);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue__ = __webpack_require__(634);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue__ = __webpack_require__(645);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue__);
 
 //
@@ -3957,7 +4496,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 752:
+/***/ 744:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4067,9 +4606,14 @@ var render = function() {
         [_vm._v("Add New Meta")]
       ),
       _vm._v(" "),
-      _c("h3", { staticClass: "dvs-mb-8 dvs-pr-16" }, [
-        _vm._v("Existing Global Meta")
-      ]),
+      _c(
+        "h3",
+        {
+          staticClass: "dvs-mb-8 dvs-pr-16",
+          style: { color: _vm.theme.panel.color }
+        },
+        [_vm._v("Existing Global Meta")]
+      ),
       _vm._v(" "),
       _c("help", { staticClass: "dvs-mb-8" }, [
         _vm._v("You currently do not have any meta tags at this time.")
@@ -4321,7 +4865,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 753:
+/***/ 745:
 /***/ (function(module, exports) {
 
 module.exports = function debounce (fn, delay) {
@@ -4339,22 +4883,22 @@ module.exports = function debounce (fn, delay) {
 
 /***/ }),
 
-/***/ 798:
+/***/ 774:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Panel__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Panel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utilities_Panel__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_desktop_vue__ = __webpack_require__(799);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_desktop_vue__ = __webpack_require__(775);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_desktop_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_desktop_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_ionicons_dist_md_tablet_portrait_vue__ = __webpack_require__(802);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_ionicons_dist_md_tablet_portrait_vue__ = __webpack_require__(778);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_ionicons_dist_md_tablet_portrait_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_ionicons_dist_md_tablet_portrait_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_ionicons_dist_md_phone_portrait_vue__ = __webpack_require__(805);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_ionicons_dist_md_phone_portrait_vue__ = __webpack_require__(781);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_ionicons_dist_md_phone_portrait_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_ionicons_dist_md_phone_portrait_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_ionicons_dist_md_phone_landscape_vue__ = __webpack_require__(808);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_ionicons_dist_md_phone_landscape_vue__ = __webpack_require__(784);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_ionicons_dist_md_phone_landscape_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_ionicons_dist_md_phone_landscape_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_gsap__ = __webpack_require__(313);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vuex__ = __webpack_require__(5);
@@ -4446,15 +4990,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 799:
+/***/ 775:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(800)
+var __vue_script__ = __webpack_require__(776)
 /* template */
-var __vue_template__ = __webpack_require__(801)
+var __vue_template__ = __webpack_require__(777)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4494,12 +5038,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 800:
+/***/ 776:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -4526,7 +5070,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 801:
+/***/ 777:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4571,15 +5115,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 802:
+/***/ 778:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(803)
+var __vue_script__ = __webpack_require__(779)
 /* template */
-var __vue_template__ = __webpack_require__(804)
+var __vue_template__ = __webpack_require__(780)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4619,12 +5163,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 803:
+/***/ 779:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -4651,7 +5195,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 804:
+/***/ 780:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4696,15 +5240,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 805:
+/***/ 781:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(806)
+var __vue_script__ = __webpack_require__(782)
 /* template */
-var __vue_template__ = __webpack_require__(807)
+var __vue_template__ = __webpack_require__(783)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4744,12 +5288,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 806:
+/***/ 782:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -4776,7 +5320,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 807:
+/***/ 783:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4821,15 +5365,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 808:
+/***/ 784:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(809)
+var __vue_script__ = __webpack_require__(785)
 /* template */
-var __vue_template__ = __webpack_require__(810)
+var __vue_template__ = __webpack_require__(786)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4869,12 +5413,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 809:
+/***/ 785:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -4901,7 +5445,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 810:
+/***/ 786:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4946,7 +5490,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 811:
+/***/ 787:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -5098,17 +5642,17 @@ if (false) {
 
 /***/ }),
 
-/***/ 818:
+/***/ 794:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_color__ = __webpack_require__(305);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_color__ = __webpack_require__(306);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_color__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_Strings__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_Strings__ = __webpack_require__(120);
 
 //
 //
@@ -5177,7 +5721,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-var tinycolor = __webpack_require__(120);
+var tinycolor = __webpack_require__(121);
 
 
 
@@ -5268,7 +5812,7 @@ var tinycolor = __webpack_require__(120);
 
 /***/ }),
 
-/***/ 819:
+/***/ 795:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -5552,14 +6096,14 @@ if (false) {
 
 /***/ }),
 
-/***/ 978:
+/***/ 895:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_debounce__ = __webpack_require__(713);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_debounce__ = __webpack_require__(717);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_debounce___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_v_debounce__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(5);
 
@@ -5682,13 +6226,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   }),
   components: {
     DeviseModal: function DeviseModal() {
-      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 689));
+      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 700));
     },
     PageSearch: function PageSearch() {
-      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 774));
+      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 747));
     },
     Pagination: function Pagination() {
-      return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 733));
+      return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 735));
     }
   },
   directives: {
@@ -5698,7 +6242,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 981:
+/***/ 898:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -5995,12 +6539,12 @@ if (false) {
 
 /***/ }),
 
-/***/ 982:
+/***/ 899:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AnalyticTotals__ = __webpack_require__(318);
@@ -6088,7 +6632,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 983:
+/***/ 900:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6167,18 +6711,19 @@ if (false) {
 
 /***/ }),
 
-/***/ 984:
+/***/ 901:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_v_debounce__ = __webpack_require__(713);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_v_debounce__ = __webpack_require__(717);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_v_debounce___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_v_debounce__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_Administration__ = __webpack_require__(937);
 
 
 //
@@ -6238,6 +6783,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -6353,23 +6905,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   }),
   components: {
     DeviseModal: function DeviseModal() {
-      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 689));
+      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 700));
     },
     PageSearch: function PageSearch() {
-      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 774));
+      return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 747));
     },
     Pagination: function Pagination() {
-      return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 733));
+      return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 735));
     }
   },
   directives: {
     debounce: __WEBPACK_IMPORTED_MODULE_2_v_debounce___default.a
-  }
+  },
+  mixins: [__WEBPACK_IMPORTED_MODULE_4__mixins_Administration__["a" /* default */]]
 });
 
 /***/ }),
 
-/***/ 985:
+/***/ 902:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6379,7 +6932,7 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { attrs: { id: "devise-admin-content" } },
+      { staticClass: "dvs-flex", attrs: { id: "devise-admin-content" } },
       [
         _c("action-bar", [
           _c(
@@ -6397,133 +6950,175 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("h2", { staticClass: "dvs-mb-10" }, [_vm._v("Current Site Pages")]),
-        _vm._v(" "),
-        _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-8" }, [
-          _c("label", [_vm._v("Search Pages")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model.lazy",
-                value: _vm.searchTerm,
-                expression: "searchTerm",
-                modifiers: { lazy: true }
-              },
-              {
-                name: "debounce",
-                rawName: "v-debounce",
-                value: _vm.searchDelay,
-                expression: "searchDelay"
-              }
-            ],
-            attrs: { type: "text" },
-            domProps: { value: _vm.searchTerm },
-            on: {
-              change: function($event) {
-                _vm.searchTerm = $event.target.value
-              }
+        _c(
+          "div",
+          {
+            staticClass:
+              "dvs-w-2/5 dvs-border-r dvs--my-10 dvs--ml-10 dvs-mr-8 dvs-p-8",
+            style: {
+              borderColor: _vm.theme.panelCard.background,
+              background: _vm.theme.panelCard.background
             }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "dvs-relative" }, [
+          },
+          [
             _c(
-              "ul",
+              "button",
               {
-                staticClass:
-                  "dvs-list-reset dvs-bg-white dvs-text-black dvs-absolute dvs-shadow-lg"
+                staticClass: "dvs-btn dvs-btn-zero dvs-btn-text dvs-mb-8",
+                style: { color: _vm.theme.actionButtonGhost.color },
+                on: { click: _vm.historyBack }
               },
-              _vm._l(_vm.autosuggest.data, function(suggestion, key) {
-                return _c(
-                  "li",
-                  {
-                    key: key,
-                    staticClass:
-                      "dvs-border-b dvs-border-grey-lighter dvs-p-4 dvs-cursor-pointer",
-                    on: {
-                      click: function($event) {
-                        _vm.loadPage(key)
-                      }
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\n            " + _vm._s(suggestion) + "\n          "
-                    )
-                  ]
-                )
-              })
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm._l(_vm.pages.data, function(page) {
-          return _c(
-            "div",
-            {
-              key: page.id,
-              staticClass:
-                "dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center"
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "dvs-min-w-2/5 dvs-font-bold dvs-pr-8" },
-                [_vm._v("\n        " + _vm._s(page.title) + "\n      ")]
-              ),
+              [_vm._v("Back")]
+            ),
+            _vm._v(" "),
+            _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-8" }, [
+              _c("label", [_vm._v("Search Pages")]),
               _vm._v(" "),
-              _c(
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.lazy",
+                    value: _vm.searchTerm,
+                    expression: "searchTerm",
+                    modifiers: { lazy: true }
+                  },
+                  {
+                    name: "debounce",
+                    rawName: "v-debounce",
+                    value: _vm.searchDelay,
+                    expression: "searchDelay"
+                  }
+                ],
+                staticClass: "dvs-mb-4",
+                attrs: { type: "text" },
+                domProps: { value: _vm.searchTerm },
+                on: {
+                  change: function($event) {
+                    _vm.searchTerm = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "dvs-relative" }, [
+                _c(
+                  "ul",
+                  {
+                    staticClass:
+                      "dvs-list-reset dvs-bg-white dvs-text-black dvs-absolute dvs-shadow-lg"
+                  },
+                  _vm._l(_vm.autosuggest.data, function(suggestion, key) {
+                    return _c(
+                      "li",
+                      {
+                        key: key,
+                        staticClass:
+                          "dvs-border-b dvs-border-grey-lighter dvs-p-4 dvs-cursor-pointer dvs-text-sm hover:dvs-bg-grey-lighter",
+                        on: {
+                          click: function($event) {
+                            _vm.loadPage(key)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(suggestion) +
+                            "\n            "
+                        )
+                      ]
+                    )
+                  })
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { style: { color: _vm.theme.panel.color } },
+          [
+            _c(
+              "h2",
+              {
+                staticClass: "dvs-mb-10",
+                style: { color: _vm.theme.panel.color }
+              },
+              [_vm._v("Current Site Pages")]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.pages.data, function(page) {
+              return _c(
                 "div",
                 {
+                  key: page.id,
                   staticClass:
-                    "dvs-min-w-1/5 dvs-text-sm dvs-px-8 dvs-font-mono"
+                    "dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center"
                 },
-                [_vm._v("\n        " + _vm._s(page.slug) + "\n      ")]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end" },
                 [
                   _c(
-                    "button",
-                    {
-                      staticClass: "dvs-btn dvs-btn-xs dvs-mr-2",
-                      style: _vm.theme.actionButtonGhost,
-                      on: {
-                        click: function($event) {
-                          _vm.loadPage(page.id)
-                        }
-                      }
-                    },
-                    [_vm._v("Manage\n        ")]
+                    "div",
+                    { staticClass: "dvs-min-w-2/5 dvs-font-light dvs-pr-8" },
+                    [_vm._v("\n          " + _vm._s(page.title) + "\n        ")]
                   ),
                   _vm._v(" "),
                   _c(
-                    "a",
+                    "div",
                     {
-                      staticClass: "dvs-btn dvs-btn-xs",
-                      style: _vm.theme.actionButtonGhost,
-                      attrs: { href: _vm.getSlug(page) }
+                      staticClass:
+                        "dvs-min-w-1/5 dvs-text-xs dvs-px-8 dvs-font-mono"
                     },
-                    [_vm._v("Go")]
+                    [_vm._v("\n          " + _vm._s(page.slug) + "\n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "dvs-w-2/5 dvs-px-8 dvs-flex dvs-justify-end"
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "dvs-btn dvs-btn-xs dvs-mr-2",
+                          style: _vm.theme.actionButtonGhost,
+                          on: {
+                            click: function($event) {
+                              _vm.loadPage(page.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Manage\n          ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dvs-btn dvs-btn-xs",
+                          style: _vm.theme.actionButtonGhost,
+                          attrs: { href: _vm.getSlug(page) }
+                        },
+                        [_vm._v("Go")]
+                      )
+                    ]
                   )
                 ]
               )
-            ]
-          )
-        }),
-        _vm._v(" "),
-        _vm.pages.data && _vm.pages.data.length
-          ? _c("pagination", {
-              staticClass: "mb-8",
-              attrs: { meta: _vm.pages.meta },
-              on: { changePage: _vm.changePage }
-            })
-          : _vm._e()
+            }),
+            _vm._v(" "),
+            _vm.pages.data && _vm.pages.data.length
+              ? _c("pagination", {
+                  staticClass: "mb-8",
+                  attrs: { meta: _vm.pages.meta },
+                  on: { changePage: _vm.changePage }
+                })
+              : _vm._e()
+          ],
+          2
+        )
       ],
-      2
+      1
     )
   ])
 }
@@ -6539,31 +7134,32 @@ if (false) {
 
 /***/ }),
 
-/***/ 986:
+/***/ 903:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DatePicker__ = __webpack_require__(700);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DatePicker__ = __webpack_require__(711);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_DatePicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utilities_DatePicker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_Modal__ = __webpack_require__(689);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_Modal__ = __webpack_require__(700);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utilities_Modal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__meta_MetaForm__ = __webpack_require__(750);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__meta_MetaForm__ = __webpack_require__(742);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__meta_MetaForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__meta_MetaForm__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_Dates__ = __webpack_require__(307);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_md_create_vue__ = __webpack_require__(634);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_Dates__ = __webpack_require__(308);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_md_create_vue__ = __webpack_require__(645);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_md_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_md_create_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_checkmark_vue__ = __webpack_require__(987);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_checkmark_vue__ = __webpack_require__(904);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_checkmark_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_checkmark_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_ionicons_dist_ios_copy_vue__ = __webpack_require__(640);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_ionicons_dist_ios_copy_vue__ = __webpack_require__(650);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_ionicons_dist_ios_copy_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_vue_ionicons_dist_ios_copy_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_ionicons_dist_md_trash_vue__ = __webpack_require__(694);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_ionicons_dist_md_trash_vue__ = __webpack_require__(705);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_ionicons_dist_md_trash_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_vue_ionicons_dist_md_trash_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__mixins_Administration__ = __webpack_require__(937);
 
 
 //
@@ -6855,6 +7451,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -7068,24 +7698,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     EditIcon: __WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_md_create_vue___default.a,
     TrashIcon: __WEBPACK_IMPORTED_MODULE_9_vue_ionicons_dist_md_trash_vue___default.a,
     LineChart: function LineChart() {
-      return __webpack_require__.e/* import() */(13).then(__webpack_require__.bind(null, 712));
+      return __webpack_require__.e/* import() */(13).then(__webpack_require__.bind(null, 716));
     },
     MetaForm: __WEBPACK_IMPORTED_MODULE_4__meta_MetaForm___default.a
   },
-  mixins: [__WEBPACK_IMPORTED_MODULE_5__mixins_Dates__["a" /* default */]]
+  mixins: [__WEBPACK_IMPORTED_MODULE_5__mixins_Dates__["a" /* default */], __WEBPACK_IMPORTED_MODULE_11__mixins_Administration__["a" /* default */]]
 });
 
 /***/ }),
 
-/***/ 987:
+/***/ 904:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(988)
+var __vue_script__ = __webpack_require__(905)
 /* template */
-var __vue_template__ = __webpack_require__(989)
+var __vue_template__ = __webpack_require__(906)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -7125,12 +7755,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 988:
+/***/ 905:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
 //
 //
 //
@@ -7157,7 +7787,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 989:
+/***/ 906:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -7202,7 +7832,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 990:
+/***/ 907:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -7213,802 +7843,933 @@ var render = function() {
     "div",
     [
       _vm.localValue.id
-        ? _c(
-            "div",
-            { attrs: { id: "devise-admin-content" } },
-            [
-              _c("action-bar", [
+        ? _c("div", { attrs: { id: "devise-admin-content" } }, [
+            _c(
+              "div",
+              {
+                style: {
+                  borderColor: _vm.theme.panelCard.background,
+                  background: _vm.theme.panelCard.background
+                },
+                attrs: { id: "dvs-admin-sidebar" }
+              },
+              [
                 _c(
-                  "li",
+                  "scrollactive",
                   {
-                    staticClass: "dvs-btn dvs-btn-sm dvs-mb-2",
-                    style: _vm.theme.actionButton,
-                    on: {
-                      click: function($event) {
-                        _vm.href(_vm.page.slug)
-                      }
+                    attrs: {
+                      offset: 80,
+                      duration: 800,
+                      "bezier-easing-value": ".5,0,.35,1",
+                      "scroll-container-selector":
+                        "#dvs-admin-content-container .simplebar-scroll-content",
+                      id: "dvs-menu"
                     }
                   },
-                  [_vm._v("Go To Page")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "dvs-btn dvs-btn-sm dvs-mb-2",
-                    style: _vm.theme.actionButton,
-                    on: {
-                      click: function($event) {
-                        _vm.href(_vm.page.slug + "/#/devise/edit-page")
-                      }
-                    }
-                  },
-                  [_vm._v("Edit Page Content")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "dvs-btn dvs-btn-sm dvs-mb-2",
-                    style: _vm.theme.actionButton,
-                    on: {
-                      click: function($event) {
-                        _vm.showCopy = true
-                      }
-                    }
-                  },
-                  [_vm._v("Copy This Page")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "dvs-btn dvs-btn-sm dvs-mb-2",
-                    style: _vm.theme.actionButton,
-                    on: {
-                      click: function($event) {
-                        _vm.showTranslate = true
-                      }
-                    }
-                  },
-                  [_vm._v("Translate This Page")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    directives: [
-                      {
-                        name: "devise-alert-confirm",
-                        rawName: "v-devise-alert-confirm",
-                        value: {
-                          callback: _vm.requestDeletePage,
-                          message: "Are you sure you want to delete this page?"
-                        },
-                        expression:
-                          "{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}"
-                      }
-                    ],
-                    staticClass: "dvs-btn dvs-btn-sm dvs-mb-2",
-                    style: _vm.theme.actionButton
-                  },
-                  [_vm._v("Delete This Page")]
-                )
-              ]),
-              _vm._v(" "),
-              _vm.analytics.data
-                ? [
+                  [
                     _c(
-                      "h3",
+                      "button",
                       {
-                        staticClass: "dvs-mb-8 dvs-pr-16",
-                        style: { color: _vm.theme.panel.color }
+                        staticClass:
+                          "dvs-btn dvs-btn-zero dvs-btn-text dvs-mb-8",
+                        style: { color: _vm.theme.actionButtonGhost.color },
+                        on: { click: _vm.historyBack }
                       },
-                      [_vm._v(_vm._s(_vm.localValue.title) + " Analytics")]
+                      [_vm._v("Back")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "flex dvs-mb-8" }, [
-                      _c(
-                        "fieldset",
-                        { staticClass: "dvs-fieldset mr-8" },
-                        [
-                          _c("label", [_vm._v("Analytics Start Date")]),
-                          _vm._v(" "),
-                          _c("date-picker", {
-                            attrs: {
-                              settings: { date: true, time: false },
-                              placeholder: "Start Date"
-                            },
+                    _c(
+                      "h6",
+                      {
+                        staticClass: "dvs-mb-4",
+                        style: { color: _vm.theme.panel.color }
+                      },
+                      [_vm._v("Actions")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      {
+                        staticClass:
+                          "dvs-list-reset dvs-mb-10 dvs-text-sm dvs-font-thin"
+                      },
+                      [
+                        _c(
+                          "li",
+                          {
+                            staticClass: "dvs-mb-2",
                             on: {
-                              update: function($event) {
-                                _vm.retrieveAnalytics()
+                              click: function($event) {
+                                _vm.href(_vm.page.slug)
                               }
-                            },
-                            model: {
-                              value: _vm.analyticsDateRange.start,
-                              callback: function($$v) {
-                                _vm.$set(_vm.analyticsDateRange, "start", $$v)
-                              },
-                              expression: "analyticsDateRange.start"
                             }
-                          })
-                        ],
-                        1
+                          },
+                          [_vm._v("Go To Page")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          {
+                            staticClass: "dvs-mb-2",
+                            on: {
+                              click: function($event) {
+                                _vm.href(_vm.page.slug + "/#/devise/edit-page")
+                              }
+                            }
+                          },
+                          [_vm._v("Edit Page Content")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          {
+                            staticClass: "dvs-mb-2",
+                            on: {
+                              click: function($event) {
+                                _vm.showCopy = true
+                              }
+                            }
+                          },
+                          [_vm._v("Copy This Page")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          {
+                            staticClass: "dvs-mb-2",
+                            on: {
+                              click: function($event) {
+                                _vm.showTranslate = true
+                              }
+                            }
+                          },
+                          [_vm._v("Translate This Page")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          {
+                            directives: [
+                              {
+                                name: "devise-alert-confirm",
+                                rawName: "v-devise-alert-confirm",
+                                value: {
+                                  callback: _vm.requestDeletePage,
+                                  message:
+                                    "Are you sure you want to delete this page?"
+                                },
+                                expression:
+                                  "{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}"
+                              }
+                            ],
+                            staticClass: "dvs-mb-2"
+                          },
+                          [_vm._v("Delete This Page")]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "h6",
+                      {
+                        staticClass: "dvs-mb-4",
+                        style: { color: _vm.theme.panel.color }
+                      },
+                      [_vm._v("Sections")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      {
+                        staticClass:
+                          "dvs-list-reset dvs-mb-10 dvs-text-sm dvs-font-thin"
+                      },
+                      [
+                        _c("li", { staticClass: "dvs-mb-2" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "scrollactive-item",
+                              style: { color: _vm.theme.panel.color },
+                              attrs: { href: "#versions" }
+                            },
+                            [_vm._v("Versions of this Page")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "dvs-mb-2" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "scrollactive-item",
+                              style: { color: _vm.theme.panel.color },
+                              attrs: { href: "#settings" }
+                            },
+                            [_vm._v("Global Page Settings")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "dvs-mb-2" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "scrollactive-item",
+                              style: { color: _vm.theme.panel.color },
+                              attrs: { href: "#meta-tags" }
+                            },
+                            [_vm._v("Meta Tags")]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticStyle: { "padding-left": "250px" },
+                attrs: { id: "dvs-admin-main" }
+              },
+              [
+                _c(
+                  "h1",
+                  {
+                    staticClass: "dvs-mb-8 dvs-font-hairline",
+                    style: { color: _vm.theme.panel.color }
+                  },
+                  [_vm._v(_vm._s(_vm.localValue.title))]
+                ),
+                _vm._v(" "),
+                _vm.analytics.data
+                  ? [
+                      _c(
+                        "h3",
+                        {
+                          staticClass: "dvs-mb-8 dvs-pr-16",
+                          style: { color: _vm.theme.panel.color }
+                        },
+                        [_vm._v(_vm._s(_vm.localValue.title) + " Analytics")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "fieldset",
-                        { staticClass: "dvs-fieldset" },
-                        [
-                          _c("label", [_vm._v("Analytics End Date")]),
-                          _vm._v(" "),
-                          _c("date-picker", {
-                            attrs: {
-                              settings: { date: true, time: false },
-                              placeholder: "End Date"
-                            },
-                            on: {
-                              update: function($event) {
-                                _vm.retrieveAnalytics()
-                              }
-                            },
-                            model: {
-                              value: _vm.analyticsDateRange.end,
-                              callback: function($$v) {
-                                _vm.$set(_vm.analyticsDateRange, "end", $$v)
-                              },
-                              expression: "analyticsDateRange.end"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm.mothershipApiKey
-                      ? _c(
-                          "div",
-                          { staticClass: "dvs-mb-12" },
+                      _c("div", { staticClass: "flex dvs-mb-8" }, [
+                        _c(
+                          "fieldset",
+                          { staticClass: "dvs-fieldset mr-8" },
                           [
-                            _c("line-chart", {
-                              staticClass: "dvs-mb-8",
+                            _c("label", [_vm._v("Analytics Start Date")]),
+                            _vm._v(" "),
+                            _c("date-picker", {
                               attrs: {
-                                "chart-data": _vm.analytics.data,
-                                options: _vm.options,
-                                width: 800,
-                                height: 200
+                                settings: { date: true, time: false },
+                                placeholder: "Start Date"
+                              },
+                              on: {
+                                update: function($event) {
+                                  _vm.retrieveAnalytics()
+                                }
+                              },
+                              model: {
+                                value: _vm.analyticsDateRange.start,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.analyticsDateRange, "start", $$v)
+                                },
+                                expression: "analyticsDateRange.start"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "fieldset",
+                          { staticClass: "dvs-fieldset" },
+                          [
+                            _c("label", [_vm._v("Analytics End Date")]),
+                            _vm._v(" "),
+                            _c("date-picker", {
+                              attrs: {
+                                settings: { date: true, time: false },
+                                placeholder: "End Date"
+                              },
+                              on: {
+                                update: function($event) {
+                                  _vm.retrieveAnalytics()
+                                }
+                              },
+                              model: {
+                                value: _vm.analyticsDateRange.end,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.analyticsDateRange, "end", $$v)
+                                },
+                                expression: "analyticsDateRange.end"
                               }
                             })
                           ],
                           1
                         )
-                      : _vm._e()
-                  ]
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "h3",
-                {
-                  staticClass: "dvs-mb-8 dvs-pr-16",
-                  style: { color: _vm.theme.panel.color }
-                },
-                [_vm._v(_vm._s(_vm.localValue.title) + " Page Versions")]
-              ),
-              _vm._v(" "),
-              _c("help", { staticClass: "dvs-mb-8" }, [
-                _vm._v(
-                  "Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates"
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "dvs-mb-16" },
-                _vm._l(_vm.localValue.versions, function(version, key) {
-                  return _c(
-                    "div",
-                    {
-                      key: key,
-                      staticClass:
-                        "dvs-flex-grow dvs-rounded-sm dvs-shadow-sm dvs-mb-4"
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "dvs-text-xl dvs-font-bold dvs-mb-4 dvs-flex dvs-justify-between"
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "dvs-cursor-pointer dvs-flex",
-                              on: {
-                                click: function($event) {
-                                  _vm.toggleVersionSettings(version)
-                                }
-                              }
-                            },
-                            [
-                              !version.editName
-                                ? [
-                                    _c(
-                                      "div",
-                                      { staticClass: "dvs-mr-2" },
-                                      [
-                                        _c("edit-icon", {
-                                          attrs: { w: "25", h: "25" }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      [
-                                        _vm._v(
-                                          "\n                " +
-                                            _vm._s(version.name) +
-                                            "\n                "
-                                        ),
-                                        version.is_live
-                                          ? [_vm._v("(Currently Live)")]
-                                          : _vm._e()
-                                      ],
-                                      2
-                                    )
-                                  ]
-                                : _vm._e()
-                            ],
-                            2
-                          )
-                        ]
-                      ),
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: version.showSettings,
-                              expression: "version.showSettings"
-                            }
-                          ],
-                          staticClass: "dvs-mb-16"
-                        },
-                        [
-                          _c("div", [
+                      _vm.mothershipApiKey
+                        ? _c(
+                            "div",
+                            { staticClass: "dvs-mb-12" },
+                            [
+                              _c("line-chart", {
+                                staticClass: "dvs-mb-8",
+                                attrs: {
+                                  "chart-data": _vm.analytics.data,
+                                  options: _vm.options,
+                                  width: 800,
+                                  height: 200
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ]
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "h3",
+                  {
+                    staticClass: "dvs-mb-8 dvs-pr-16",
+                    style: { color: _vm.theme.panel.color },
+                    attrs: { id: "versions" }
+                  },
+                  [_vm._v(_vm._s(_vm.localValue.title) + " Page Versions")]
+                ),
+                _vm._v(" "),
+                _c("help", { staticClass: "dvs-mb-8" }, [
+                  _vm._v(
+                    "Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates"
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "dvs-mb-16" },
+                  _vm._l(_vm.localValue.versions, function(version, key) {
+                    return _c(
+                      "div",
+                      {
+                        key: key,
+                        staticClass:
+                          "dvs-flex-grow dvs-rounded-sm dvs-shadow-sm dvs-mb-4"
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "dvs-text-xl dvs-font-bold dvs-mb-4 dvs-flex dvs-justify-between"
+                          },
+                          [
                             _c(
-                              "fieldset",
-                              { staticClass: "dvs-fieldset dvs-mb-8" },
-                              [
-                                _c("label", [_vm._v("Version Name")]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.localValue.versions[key].name,
-                                      expression:
-                                        "localValue.versions[key].name"
-                                    }
-                                  ],
-                                  attrs: { type: "text" },
-                                  domProps: {
-                                    value: _vm.localValue.versions[key].name
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.localValue.versions[key],
-                                        "name",
-                                        $event.target.value
-                                      )
-                                    }
+                              "div",
+                              {
+                                staticClass: "dvs-cursor-pointer dvs-flex",
+                                on: {
+                                  click: function($event) {
+                                    _vm.toggleVersionSettings(version)
                                   }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "fieldset",
-                              { staticClass: "dvs-fieldset dvs-mb-8" },
+                                }
+                              },
                               [
-                                _c("label", [_vm._v("Layout")]),
-                                _vm._v(" "),
-                                _c(
-                                  "select",
-                                  {
+                                !version.editName
+                                  ? [
+                                      _c(
+                                        "div",
+                                        { staticClass: "dvs-mr-2" },
+                                        [
+                                          _c("edit-icon", {
+                                            attrs: { w: "25", h: "25" }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        [
+                                          _vm._v(
+                                            "\n                  " +
+                                              _vm._s(version.name) +
+                                              "\n                  "
+                                          ),
+                                          version.is_live
+                                            ? [_vm._v("(Currently Live)")]
+                                            : _vm._e()
+                                        ],
+                                        2
+                                      )
+                                    ]
+                                  : _vm._e()
+                              ],
+                              2
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: version.showSettings,
+                                expression: "version.showSettings"
+                              }
+                            ],
+                            staticClass: "dvs-mb-16"
+                          },
+                          [
+                            _c("div", [
+                              _c(
+                                "fieldset",
+                                { staticClass: "dvs-fieldset dvs-mb-8" },
+                                [
+                                  _c("label", [_vm._v("Version Name")]),
+                                  _vm._v(" "),
+                                  _c("input", {
                                     directives: [
                                       {
                                         name: "model",
                                         rawName: "v-model",
                                         value:
-                                          _vm.localValue.versions[key].layout,
+                                          _vm.localValue.versions[key].name,
                                         expression:
-                                          "localValue.versions[key].layout"
+                                          "localValue.versions[key].name"
                                       }
                                     ],
+                                    attrs: { type: "text" },
+                                    domProps: {
+                                      value: _vm.localValue.versions[key].name
+                                    },
                                     on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
                                         _vm.$set(
                                           _vm.localValue.versions[key],
-                                          "layout",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
+                                          "name",
+                                          $event.target.value
                                         )
                                       }
                                     }
-                                  },
-                                  _vm._l(_vm.layouts, function(layout) {
-                                    return _c(
-                                      "option",
-                                      {
-                                        key: layout,
-                                        domProps: { value: layout }
-                                      },
-                                      [_vm._v(_vm._s(layout))]
-                                    )
                                   })
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "fieldset",
-                              { staticClass: "dvs-fieldset dvs-mb-8" },
-                              [
-                                _c("label", [_vm._v("Start Date")]),
-                                _vm._v(" "),
-                                _c("date-picker", {
-                                  directives: [
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "fieldset",
+                                { staticClass: "dvs-fieldset dvs-mb-8" },
+                                [
+                                  _c("label", [_vm._v("Layout")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "select",
                                     {
-                                      name: "tippy",
-                                      rawName: "v-tippy",
-                                      value: _vm.tippyConfiguration,
-                                      expression: "tippyConfiguration"
-                                    }
-                                  ],
-                                  attrs: {
-                                    settings: { date: true, time: true },
-                                    placeholder: "Start Date",
-                                    title:
-                                      "The date in which this version will begin appearing."
-                                  },
-                                  model: {
-                                    value:
-                                      _vm.localValue.versions[key].starts_at,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.localValue.versions[key],
-                                        "starts_at",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "localValue.versions[key].starts_at"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "fieldset",
-                              { staticClass: "dvs-fieldset dvs-mb-8" },
-                              [
-                                _c("label", [_vm._v("End Date")]),
-                                _vm._v(" "),
-                                _c("date-picker", {
-                                  directives: [
-                                    {
-                                      name: "tippy",
-                                      rawName: "v-tippy",
-                                      value: _vm.tippyConfiguration,
-                                      expression: "tippyConfiguration"
-                                    }
-                                  ],
-                                  attrs: {
-                                    settings: { date: true, time: true },
-                                    placeholder: "End Date",
-                                    title:
-                                      "The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it."
-                                  },
-                                  model: {
-                                    value: _vm.localValue.versions[key].ends_at,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.localValue.versions[key],
-                                        "ends_at",
-                                        $$v
-                                      )
-                                    },
-                                    expression:
-                                      "localValue.versions[key].ends_at"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _vm.localValue.ab_testing_enabled
-                              ? _c(
-                                  "fieldset",
-                                  { staticClass: "dvs-fieldset dvs-mb-8" },
-                                  [
-                                    _c("label", [_vm._v("A/B Testing Amount")]),
-                                    _vm._v(" "),
-                                    _c("input", {
                                       directives: [
                                         {
                                           name: "model",
-                                          rawName: "v-model.number",
+                                          rawName: "v-model",
                                           value:
-                                            _vm.localValue.versions[key]
-                                              .ab_testing_amount,
+                                            _vm.localValue.versions[key].layout,
                                           expression:
-                                            "localValue.versions[key].ab_testing_amount",
-                                          modifiers: { number: true }
-                                        },
-                                        {
-                                          name: "tippy",
-                                          rawName: "v-tippy",
-                                          value: _vm.tippyConfiguration,
-                                          expression: "tippyConfiguration"
+                                            "localValue.versions[key].layout"
                                         }
                                       ],
-                                      attrs: {
-                                        type: "number",
-                                        title:
-                                          "This is the weight in which a page will show up. The number can be any number you want and is divided by the total weights of all other page versions."
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.localValue.versions[key]
-                                            .ab_testing_amount
-                                      },
                                       on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
                                           _vm.$set(
                                             _vm.localValue.versions[key],
-                                            "ab_testing_amount",
-                                            _vm._n($event.target.value)
+                                            "layout",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
                                           )
-                                        },
-                                        blur: function($event) {
-                                          _vm.$forceUpdate()
                                         }
                                       }
-                                    })
-                                  ]
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "dvs-flex dvs-justify-start" },
-                            [
-                              _c(
-                                "button",
-                                {
-                                  directives: [
-                                    {
-                                      name: "tippy",
-                                      rawName: "v-tippy",
-                                      value: _vm.tippyConfiguration,
-                                      expression: "tippyConfiguration"
-                                    }
-                                  ],
-                                  staticClass: "dvs-btn dvs-mr-4 dvs-px-8",
-                                  style: _vm.theme.actionButton,
-                                  attrs: { title: "Save Version Settings" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.requestSaveVersion(version)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("checkmark-icon", {
-                                    attrs: { w: "30", h: "30" }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  directives: [
-                                    {
-                                      name: "tippy",
-                                      rawName: "v-tippy",
-                                      value: _vm.tippyConfiguration,
-                                      expression: "tippyConfiguration"
-                                    }
-                                  ],
-                                  staticClass: "dvs-btn dvs-mr-4 dvs-px-8",
-                                  style: _vm.theme.actionButtonGhost,
-                                  attrs: { title: "Copy Version" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.requestCopyVersion(version)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("copy-icon", {
-                                    attrs: { w: "30", h: "30" }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  directives: [
-                                    {
-                                      name: "tippy",
-                                      rawName: "v-tippy",
-                                      value: _vm.tippyConfiguration,
-                                      expression: "tippyConfiguration"
                                     },
-                                    {
-                                      name: "devise-alert-confirm",
-                                      rawName: "v-devise-alert-confirm",
-                                      value: {
-                                        callback: _vm.requestDeleteVersion,
-                                        arguments: version,
-                                        message:
-                                          "Are you sure you want to delete this version?"
+                                    _vm._l(_vm.layouts, function(layout) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: layout,
+                                          domProps: { value: layout }
+                                        },
+                                        [_vm._v(_vm._s(layout))]
+                                      )
+                                    })
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "fieldset",
+                                { staticClass: "dvs-fieldset dvs-mb-8" },
+                                [
+                                  _c("label", [_vm._v("Start Date")]),
+                                  _vm._v(" "),
+                                  _c("date-picker", {
+                                    directives: [
+                                      {
+                                        name: "tippy",
+                                        rawName: "v-tippy",
+                                        value: _vm.tippyConfiguration,
+                                        expression: "tippyConfiguration"
+                                      }
+                                    ],
+                                    attrs: {
+                                      settings: { date: true, time: true },
+                                      placeholder: "Start Date",
+                                      title:
+                                        "The date in which this version will begin appearing."
+                                    },
+                                    model: {
+                                      value:
+                                        _vm.localValue.versions[key].starts_at,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.localValue.versions[key],
+                                          "starts_at",
+                                          $$v
+                                        )
                                       },
                                       expression:
-                                        "{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
+                                        "localValue.versions[key].starts_at"
                                     }
-                                  ],
-                                  staticClass: "dvs-btn dvs-mr-2 dvs-px-8",
-                                  style: _vm.theme.actionButtonGhost
-                                },
-                                [
-                                  _c("trash-icon", {
-                                    attrs: { w: "30", h: "30" }
                                   })
                                 ],
                                 1
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                })
-              ),
-              _vm._v(" "),
-              _c(
-                "h3",
-                {
-                  staticClass: "dvs-mb-8 dvs-pr-16",
-                  style: { color: _vm.theme.panel.color }
-                },
-                [_vm._v("Global Page Settings")]
-              ),
-              _vm._v(" "),
-              _c("help", { staticClass: "dvs-mb-8" }, [
-                _vm._v(
-                  "These settings effect all of the page versions of this page."
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "dvs-mb-12" }, [
-                _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
-                  _c("label", [_vm._v("Page Title")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.localValue.title,
-                        expression: "localValue.title"
-                      }
-                    ],
-                    attrs: { type: "text", placeholder: "Title of the Page" },
-                    domProps: { value: _vm.localValue.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.localValue, "title", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
-                  _c("label", [_vm._v("Slug")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.localValue.slug,
-                        expression: "localValue.slug"
-                      }
-                    ],
-                    attrs: { type: "text", placeholder: "Url of the Page" },
-                    domProps: { value: _vm.localValue.slug },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.localValue, "slug", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-8" }, [
-                  _c("label", [_vm._v("Canonical")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.localValue.canonical,
-                        expression: "localValue.canonical"
-                      }
-                    ],
-                    attrs: { type: "text", placeholder: "Canonical" },
-                    domProps: { value: _vm.localValue.canonical },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.localValue,
-                          "canonical",
-                          $event.target.value
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "fieldset",
+                                { staticClass: "dvs-fieldset dvs-mb-8" },
+                                [
+                                  _c("label", [_vm._v("End Date")]),
+                                  _vm._v(" "),
+                                  _c("date-picker", {
+                                    directives: [
+                                      {
+                                        name: "tippy",
+                                        rawName: "v-tippy",
+                                        value: _vm.tippyConfiguration,
+                                        expression: "tippyConfiguration"
+                                      }
+                                    ],
+                                    attrs: {
+                                      settings: { date: true, time: true },
+                                      placeholder: "End Date",
+                                      title:
+                                        "The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it."
+                                    },
+                                    model: {
+                                      value:
+                                        _vm.localValue.versions[key].ends_at,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.localValue.versions[key],
+                                          "ends_at",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "localValue.versions[key].ends_at"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _vm.localValue.ab_testing_enabled
+                                ? _c(
+                                    "fieldset",
+                                    { staticClass: "dvs-fieldset dvs-mb-8" },
+                                    [
+                                      _c("label", [
+                                        _vm._v("A/B Testing Amount")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model.number",
+                                            value:
+                                              _vm.localValue.versions[key]
+                                                .ab_testing_amount,
+                                            expression:
+                                              "localValue.versions[key].ab_testing_amount",
+                                            modifiers: { number: true }
+                                          },
+                                          {
+                                            name: "tippy",
+                                            rawName: "v-tippy",
+                                            value: _vm.tippyConfiguration,
+                                            expression: "tippyConfiguration"
+                                          }
+                                        ],
+                                        attrs: {
+                                          type: "number",
+                                          title:
+                                            "This is the weight in which a page will show up. The number can be any number you want and is divided by the total weights of all other page versions."
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.localValue.versions[key]
+                                              .ab_testing_amount
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.localValue.versions[key],
+                                              "ab_testing_amount",
+                                              _vm._n($event.target.value)
+                                            )
+                                          },
+                                          blur: function($event) {
+                                            _vm.$forceUpdate()
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "dvs-flex dvs-justify-start" },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "tippy",
+                                        rawName: "v-tippy",
+                                        value: _vm.tippyConfiguration,
+                                        expression: "tippyConfiguration"
+                                      }
+                                    ],
+                                    staticClass: "dvs-btn dvs-mr-4 dvs-px-8",
+                                    style: _vm.theme.actionButton,
+                                    attrs: { title: "Save Version Settings" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.requestSaveVersion(version)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("checkmark-icon", {
+                                      attrs: { w: "30", h: "30" }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "tippy",
+                                        rawName: "v-tippy",
+                                        value: _vm.tippyConfiguration,
+                                        expression: "tippyConfiguration"
+                                      }
+                                    ],
+                                    staticClass: "dvs-btn dvs-mr-4 dvs-px-8",
+                                    style: _vm.theme.actionButtonGhost,
+                                    attrs: { title: "Copy Version" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.requestCopyVersion(version)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("copy-icon", {
+                                      attrs: { w: "30", h: "30" }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "tippy",
+                                        rawName: "v-tippy",
+                                        value: _vm.tippyConfiguration,
+                                        expression: "tippyConfiguration"
+                                      },
+                                      {
+                                        name: "devise-alert-confirm",
+                                        rawName: "v-devise-alert-confirm",
+                                        value: {
+                                          callback: _vm.requestDeleteVersion,
+                                          arguments: version,
+                                          message:
+                                            "Are you sure you want to delete this version?"
+                                        },
+                                        expression:
+                                          "{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
+                                      }
+                                    ],
+                                    staticClass: "dvs-btn dvs-mr-2 dvs-px-8",
+                                    style: _vm.theme.actionButtonGhost
+                                  },
+                                  [
+                                    _c("trash-icon", {
+                                      attrs: { w: "30", h: "30" }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            )
+                          ]
                         )
-                      }
-                    }
+                      ]
+                    )
                   })
-                ]),
-                _vm._v(" "),
-                _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-8" }, [
-                  _c("label", [_vm._v("A/B Testing Enabled")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.localValue.ab_testing_enabled,
-                        expression: "localValue.ab_testing_enabled"
-                      }
-                    ],
-                    attrs: { type: "checkbox" },
-                    domProps: {
-                      checked: Array.isArray(_vm.localValue.ab_testing_enabled)
-                        ? _vm._i(_vm.localValue.ab_testing_enabled, null) > -1
-                        : _vm.localValue.ab_testing_enabled
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.localValue.ab_testing_enabled,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = null,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 &&
-                              _vm.$set(
-                                _vm.localValue,
-                                "ab_testing_enabled",
-                                $$a.concat([$$v])
-                              )
-                          } else {
-                            $$i > -1 &&
-                              _vm.$set(
-                                _vm.localValue,
-                                "ab_testing_enabled",
-                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                              )
-                          }
-                        } else {
-                          _vm.$set(_vm.localValue, "ab_testing_enabled", $$c)
-                        }
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c(
-                  "fieldset",
-                  { staticClass: "dvs-fieldset" },
-                  [
-                    _c(
-                      "h4",
-                      {
-                        staticClass: "dvs-mb-4",
-                        style: { color: _vm.theme.panel.color }
-                      },
-                      [_vm._v("Page Specific Meta Tags")]
-                    ),
-                    _vm._v(" "),
-                    _c("meta-form", {
-                      on: {
-                        "request-create-meta": _vm.requestCreateMeta,
-                        "request-update-meta": _vm.requestUpdateMeta,
-                        "request-delete-meta": _vm.requestDeleteMeta
-                      },
-                      model: {
-                        value: _vm.localValue.meta,
-                        callback: function($$v) {
-                          _vm.$set(_vm.localValue, "meta", $$v)
-                        },
-                        expression: "localValue.meta"
-                      }
-                    })
-                  ],
-                  1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "dvs-flex" }, [
+                _c(
+                  "h3",
+                  {
+                    staticClass: "dvs-mb-8 dvs-pr-16",
+                    style: { color: _vm.theme.panel.color },
+                    attrs: { id: "settings" }
+                  },
+                  [_vm._v("Global Page Settings")]
+                ),
+                _vm._v(" "),
+                _c("help", { staticClass: "dvs-mb-8" }, [
+                  _vm._v(
+                    "These settings effect all of the page versions of this page."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "dvs-mb-12" }, [
+                  _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                    _c("label", [_vm._v("Page Title")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.localValue.title,
+                          expression: "localValue.title"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Title of the Page" },
+                      domProps: { value: _vm.localValue.title },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.localValue, "title", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-4" }, [
+                    _c("label", [_vm._v("Slug")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.localValue.slug,
+                          expression: "localValue.slug"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Url of the Page" },
+                      domProps: { value: _vm.localValue.slug },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.localValue, "slug", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-8" }, [
+                    _c("label", [_vm._v("Canonical")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.localValue.canonical,
+                          expression: "localValue.canonical"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Canonical" },
+                      domProps: { value: _vm.localValue.canonical },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.localValue,
+                            "canonical",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("fieldset", { staticClass: "dvs-fieldset dvs-mb-8" }, [
+                    _c("label", [_vm._v("A/B Testing Enabled")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.localValue.ab_testing_enabled,
+                          expression: "localValue.ab_testing_enabled"
+                        }
+                      ],
+                      attrs: { type: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(
+                          _vm.localValue.ab_testing_enabled
+                        )
+                          ? _vm._i(_vm.localValue.ab_testing_enabled, null) > -1
+                          : _vm.localValue.ab_testing_enabled
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.localValue.ab_testing_enabled,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.localValue,
+                                  "ab_testing_enabled",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.localValue,
+                                  "ab_testing_enabled",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.localValue, "ab_testing_enabled", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
                   _c(
-                    "button",
+                    "h3",
                     {
-                      staticClass: "dvs-btn dvs-mr-2",
-                      style: _vm.theme.actionButton,
-                      on: { click: _vm.requestSavePage }
+                      staticClass: "dvs-mb-4",
+                      style: { color: _vm.theme.panel.color },
+                      attrs: { id: "meta-tags" }
                     },
-                    [_vm._v("Save")]
+                    [_vm._v("Page Specific Meta Tags")]
                   ),
                   _vm._v(" "),
                   _c(
-                    "button",
-                    {
-                      staticClass: "dvs-btn dvs-mr-4",
-                      style: _vm.theme.actionButtonGhost,
-                      on: { click: _vm.goToPage }
-                    },
-                    [_vm._v("Cancel")]
-                  )
+                    "fieldset",
+                    { staticClass: "dvs-fieldset" },
+                    [
+                      _c("meta-form", {
+                        on: {
+                          "request-create-meta": _vm.requestCreateMeta,
+                          "request-update-meta": _vm.requestUpdateMeta,
+                          "request-delete-meta": _vm.requestDeleteMeta
+                        },
+                        model: {
+                          value: _vm.localValue.meta,
+                          callback: function($$v) {
+                            _vm.$set(_vm.localValue, "meta", $$v)
+                          },
+                          expression: "localValue.meta"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dvs-flex" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "dvs-btn dvs-mr-2",
+                        style: _vm.theme.actionButton,
+                        on: { click: _vm.requestSavePage }
+                      },
+                      [_vm._v("Save")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "dvs-btn dvs-mr-4",
+                        style: _vm.theme.actionButtonGhost,
+                        on: { click: _vm.goToPage }
+                      },
+                      [_vm._v("Cancel")]
+                    )
+                  ])
                 ])
-              ])
-            ],
-            2
-          )
+              ],
+              2
+            )
+          ])
         : _vm._e(),
       _vm._v(" "),
       _c(
@@ -8327,6 +9088,20 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-38f60040", module.exports)
   }
 }
+
+/***/ }),
+
+/***/ 937:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  methods: {
+    historyBack: function historyBack() {
+      this.$router.go(-1);
+    }
+  }
+});
 
 /***/ })
 

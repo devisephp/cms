@@ -230,6 +230,7 @@
       removeScope (key) {
         this.$delete(this.filters.scopes, key)
         this.requestRefreshRecords()
+        this.updateValue()
       }
     },
     computed: {

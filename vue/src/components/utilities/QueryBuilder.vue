@@ -23,6 +23,9 @@
         @input="update"
       />
     </div>
+    
+
+    <button @click="save" class="dvs-btn" :style="theme.actionButton">Save</button>
   </div>
 </template>
 

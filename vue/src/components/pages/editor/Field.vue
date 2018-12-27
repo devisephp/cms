@@ -1,14 +1,14 @@
 <template>
   <div
-    class="dvs-relative dvs-ml-8 dvs-px-1 dvs-py-1 dvs-rounded-sm dvs-text-xs dvs-cursor-pointer"
+    class="dvs-relative dvs-px-1 dvs-py-1 dvs-rounded-sm dvs-text-xs dvs-cursor-pointer"
     :style="theme.panelSidebar"
   >
     <div class="dvs-flex dvs-justify-between dvs-items-center">
       <div class="dvs-large-label dvs-flex dvs-items-center dvs-mr-2 dvs-font-bold dvs-w-full">
         <div
           class="dvs-rounded-full dvs-mr-2 dvs-w-2 dvs-h-2 dvs-mr-2"
-          @click="localValue.enabled = !localValue.enabled"
-          :class="{'dvs-bg-green': localValue.enabled, 'dvs-bg-white': !localValue.enabled, 'dvs-invisible': !localValue.enabler}"
+          @click="value.enabled = !value.enabled"
+          :class="{'dvs-bg-green': value.enabled, 'dvs-bg-white': !value.enabled, 'dvs-invisible': !value.enabler}"
         ></div>
         <div
           class="dvs-flex dvs-items-center dvs-justify-start dvs-w-full"
@@ -16,8 +16,8 @@
         >
           <!-- Swatch -->
           <div
-            v-if="options.swatch && localValue.color"
-            :style="`background-color:${localValue.color}`"
+            v-if="options.swatch && value.color"
+            :style="`background-color:${value.color}`"
             class="dvs-rounded-sm dvs-mr-2"
             style="width:10px; height:10px;"
           ></div>
@@ -40,13 +40,13 @@
         >
           <div class="dvs-p-8">
             <h6 class="dvs-text-base dvs-mb-2" :style="{color: theme.panel.color}">
-              <span>{{ localValue.label }}</span>
+              <span>{{ value.label }}</span>
               <br>
-              <small class="dvs-text-xs" v-if="localValue.instructions">
+              <small class="dvs-text-xs" v-if="value.instructions">
                 Hint from Developer:
                 <span
                   class="dvs-italic dvs-font-normal"
-                >{{ localValue.instructions }}</span>
+                >{{ value.instructions }}</span>
               </small>
             </h6>
 
@@ -65,9 +65,9 @@
                   :style="theme.actionButtonGhost"
                 >Cancel</button>
               </div>
-              <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="localValue.enabler">
+              <div class="dvs-flex dvs-items-center dvs-justify-between" v-if="value.enabler">
                 <label class="dvs-mr-2">Field Enabled</label>
-                <toggle v-model="localValue.enabled" :id="randomString(8)"></toggle>
+                <toggle v-model="value.enabled" :id="randomString(8)"></toggle>
               </div>
             </div>
           </div>
@@ -83,16 +83,8 @@ import Strings from './../../../mixins/Strings';
 
 export default {
   name: 'FieldEditor',
-  data() {
-    return {
-      localValue: {}
-    };
-  },
   mounted() {
     let self = this;
-    this.$nextTick(function() {
-      self.localValue = self.value;
-    });
   },
   methods: {
     toggleShowEditor() {

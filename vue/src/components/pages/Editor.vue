@@ -85,6 +85,19 @@ export default {
       createSlice: false
     };
   },
+  mounted() {
+    setTimeout(() => {
+      this.$watch(
+        'currentPage',
+        function(newValue, oldValue) {
+          window.onbeforeunload = () => {
+            return 'Changes you made may not be saved';
+          };
+        },
+        { deep: true }
+      );
+    }, 1000);
+  },
   methods: {
     ...mapActions('devise', ['savePage']),
     requestSavePage() {

@@ -1,289 +1,322 @@
 <template>
   <div>
     <div id="devise-admin-content" v-if="localValue.id">
-      <action-bar>
-        <li
-          class="dvs-btn dvs-btn-sm dvs-mb-2"
-          :style="theme.actionButton"
-          @click="href(page.slug)"
-        >Go To Page</li>
-        <li
-          class="dvs-btn dvs-btn-sm dvs-mb-2"
-          :style="theme.actionButton"
-          @click="href(page.slug + '/#/devise/edit-page')"
-        >Edit Page Content</li>
-        <li
-          class="dvs-btn dvs-btn-sm dvs-mb-2"
-          :style="theme.actionButton"
-          @click="showCopy = true"
-        >Copy This Page</li>
-        <li
-          class="dvs-btn dvs-btn-sm dvs-mb-2"
-          :style="theme.actionButton"
-          @click="showTranslate = true"
-        >Translate This Page</li>
-        <li
-          class="dvs-btn dvs-btn-sm dvs-mb-2"
-          :style="theme.actionButton"
-          v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}"
-        >Delete This Page</li>
-      </action-bar>
+      <div 
+        id="dvs-admin-sidebar"
+        :style="{
+          borderColor:theme.panelCard.background, 
+          background:theme.panelCard.background
+        }">
+        <scrollactive
+          :offset="80"
+          :duration="800"
+          bezier-easing-value=".5,0,.35,1"
+          scroll-container-selector="#dvs-admin-content-container .simplebar-scroll-content"
+          id="dvs-menu"
+        >
+          <button class="dvs-btn dvs-btn-zero dvs-btn-text dvs-mb-8" :style="{color: theme.actionButtonGhost.color}" @click="historyBack">Back</button>
 
-      <template v-if="analytics.data">
+          <h6 :style="{color: theme.panel.color}" class="dvs-mb-4">Actions</h6>
+          <ul class="dvs-list-reset dvs-mb-10 dvs-text-sm dvs-font-thin">
+            <li
+              class="dvs-mb-2"
+              @click="href(page.slug)"
+            >Go To Page</li>
+            <li
+              class="dvs-mb-2"
+              @click="href(page.slug + '/#/devise/edit-page')"
+            >Edit Page Content</li>
+            <li
+              class="dvs-mb-2"
+              @click="showCopy = true"
+            >Copy This Page</li>
+            <li
+              class="dvs-mb-2"
+              @click="showTranslate = true"
+            >Translate This Page</li>
+            <li
+              class="dvs-mb-2"
+              v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}"
+            >Delete This Page</li>
+          </ul>
+
+          <h6 :style="{color: theme.panel.color}" class="dvs-mb-4">Sections</h6>
+          <ul class="dvs-list-reset dvs-mb-10 dvs-text-sm dvs-font-thin">
+            <li class="dvs-mb-2">
+              <a href="#versions" class="scrollactive-item" :style="{color:theme.panel.color}">Versions of this Page</a>
+            </li>
+            <li class="dvs-mb-2">
+              <a href="#settings" class="scrollactive-item" :style="{color:theme.panel.color}">Global Page Settings</a>
+            </li>
+            <li class="dvs-mb-2">
+              <a href="#meta-tags" class="scrollactive-item" :style="{color:theme.panel.color}">Meta Tags</a>
+            </li>
+          </ul>
+
+        </scrollactive>
+      </div>
+
+      <div id="dvs-admin-main" style="padding-left:250px;">
+        <h1 :style="{color: theme.panel.color}" class="dvs-mb-8 dvs-font-hairline">{{ localValue.title }}</h1>
+
+        <template v-if="analytics.data">
+          <h3
+            class="dvs-mb-8 dvs-pr-16"
+            :style="{color: theme.panel.color}"
+          >{{ localValue.title }} Analytics</h3>
+          <div class="flex dvs-mb-8">
+            <fieldset class="dvs-fieldset mr-8">
+              <label>Analytics Start Date</label>
+              <date-picker
+                v-model="analyticsDateRange.start"
+                :settings="{date: true, time: false}"
+                placeholder="Start Date"
+                @update="retrieveAnalytics()"
+              />
+            </fieldset>
+            <fieldset class="dvs-fieldset">
+              <label>Analytics End Date</label>
+              <date-picker
+                v-model="analyticsDateRange.end"
+                :settings="{date: true, time: false}"
+                placeholder="End Date"
+                @update="retrieveAnalytics()"
+              />
+            </fieldset>
+          </div>
+          <div class="dvs-mb-12" v-if="mothershipApiKey">
+            <line-chart
+              class="dvs-mb-8"
+              :chart-data="analytics.data"
+              :options="options"
+              :width="800"
+              :height="200"
+            />
+          </div>
+        </template>
+
         <h3
           class="dvs-mb-8 dvs-pr-16"
           :style="{color: theme.panel.color}"
-        >{{ localValue.title }} Analytics</h3>
-        <div class="flex dvs-mb-8">
-          <fieldset class="dvs-fieldset mr-8">
-            <label>Analytics Start Date</label>
-            <date-picker
-              v-model="analyticsDateRange.start"
-              :settings="{date: true, time: false}"
-              placeholder="Start Date"
-              @update="retrieveAnalytics()"
-            />
-          </fieldset>
-          <fieldset class="dvs-fieldset">
-            <label>Analytics End Date</label>
-            <date-picker
-              v-model="analyticsDateRange.end"
-              :settings="{date: true, time: false}"
-              placeholder="End Date"
-              @update="retrieveAnalytics()"
-            />
-          </fieldset>
-        </div>
-        <div class="dvs-mb-12" v-if="mothershipApiKey">
-          <line-chart
-            class="dvs-mb-8"
-            :chart-data="analytics.data"
-            :options="options"
-            :width="800"
-            :height="200"
-          />
-        </div>
-      </template>
+          id="versions"
+        >{{ localValue.title }} Page Versions</h3>
 
-      <h3
-        class="dvs-mb-8 dvs-pr-16"
-        :style="{color: theme.panel.color}"
-      >{{ localValue.title }} Page Versions</h3>
+        <help
+          class="dvs-mb-8"
+        >Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
 
-      <help
-        class="dvs-mb-8"
-      >Page versions allow your team to create alternate versions of a page for devlopment, historical purposes, and for A/B testing which allow you to run two pages at once to test user success rates</help>
-
-      <div class="dvs-mb-16">
-        <div
-          v-for="(version, key) in localValue.versions"
-          :key="key"
-          class="dvs-flex-grow dvs-rounded-sm dvs-shadow-sm dvs-mb-4"
-        >
-          <div class="dvs-text-xl dvs-font-bold dvs-mb-4 dvs-flex dvs-justify-between">
-            <div class="dvs-cursor-pointer dvs-flex" @click="toggleVersionSettings(version)">
-              <template v-if="!version.editName">
-                <div class="dvs-mr-2">
-                  <edit-icon w="25" h="25"/>
-                </div>
-                <div>
-                  {{ version.name }}
-                  <template v-if="version.is_live">(Currently Live)</template>
-                </div>
-              </template>
+        <div class="dvs-mb-16">
+          <div
+            v-for="(version, key) in localValue.versions"
+            :key="key"
+            class="dvs-flex-grow dvs-rounded-sm dvs-shadow-sm dvs-mb-4"
+          >
+            <div class="dvs-text-xl dvs-font-bold dvs-mb-4 dvs-flex dvs-justify-between">
+              <div class="dvs-cursor-pointer dvs-flex" @click="toggleVersionSettings(version)">
+                <template v-if="!version.editName">
+                  <div class="dvs-mr-2">
+                    <edit-icon w="25" h="25"/>
+                  </div>
+                  <div>
+                    {{ version.name }}
+                    <template v-if="version.is_live">(Currently Live)</template>
+                  </div>
+                </template>
+              </div>
             </div>
-          </div>
-          <div class="dvs-mb-16" v-show="version.showSettings">
-            <div>
-              <fieldset class="dvs-fieldset dvs-mb-8">
-                <label>Version Name</label>
-                <input type="text" v-model="localValue.versions[key].name">
-              </fieldset>
+            <div class="dvs-mb-16" v-show="version.showSettings">
+              <div>
+                <fieldset class="dvs-fieldset dvs-mb-8">
+                  <label>Version Name</label>
+                  <input type="text" v-model="localValue.versions[key].name">
+                </fieldset>
 
-              <fieldset class="dvs-fieldset dvs-mb-8">
-                <label>Layout</label>
-                <select v-model="localValue.versions[key].layout">
-                  <option :value="layout" v-for="layout in layouts" :key="layout">{{ layout }}</option>
-                </select>
-              </fieldset>
+                <fieldset class="dvs-fieldset dvs-mb-8">
+                  <label>Layout</label>
+                  <select v-model="localValue.versions[key].layout">
+                    <option :value="layout" v-for="layout in layouts" :key="layout">{{ layout }}</option>
+                  </select>
+                </fieldset>
 
-              <fieldset class="dvs-fieldset dvs-mb-8">
-                <label>Start Date</label>
-                <date-picker
-                  v-model="localValue.versions[key].starts_at"
-                  :settings="{date: true, time: true}"
-                  placeholder="Start Date"
-                  title="The date in which this version will begin appearing."
+                <fieldset class="dvs-fieldset dvs-mb-8">
+                  <label>Start Date</label>
+                  <date-picker
+                    v-model="localValue.versions[key].starts_at"
+                    :settings="{date: true, time: true}"
+                    placeholder="Start Date"
+                    title="The date in which this version will begin appearing."
+                    v-tippy="tippyConfiguration"
+                  />
+                </fieldset>
+
+                <fieldset class="dvs-fieldset dvs-mb-8">
+                  <label>End Date</label>
+                  <date-picker
+                    v-model="localValue.versions[key].ends_at"
+                    :settings="{date: true, time: true}"
+                    placeholder="End Date"
+                    title="The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it."
+                    v-tippy="tippyConfiguration"
+                  />
+                </fieldset>
+
+                <fieldset class="dvs-fieldset dvs-mb-8" v-if="localValue.ab_testing_enabled">
+                  <label>A/B Testing Amount</label>
+                  <input
+                    type="number"
+                    v-model.number="localValue.versions[key].ab_testing_amount"
+                    title="This is the weight in which a page will show up. The number can be any number you want and is divided by the total weights of all other page versions."
+                    v-tippy="tippyConfiguration"
+                  >
+                </fieldset>
+              </div>
+
+              <div class="dvs-flex dvs-justify-start">
+                <button
+                  class="dvs-btn dvs-mr-4 dvs-px-8"
+                  @click="requestSaveVersion(version)"
+                  title="Save Version Settings"
                   v-tippy="tippyConfiguration"
-                />
-              </fieldset>
-
-              <fieldset class="dvs-fieldset dvs-mb-8">
-                <label>End Date</label>
-                <date-picker
-                  v-model="localValue.versions[key].ends_at"
-                  :settings="{date: true, time: true}"
-                  placeholder="End Date"
-                  title="The date when this page version will stop appearing. This page will either fall back to another page version or produce a 404: Page Not Found if a user attempts to load it."
-                  v-tippy="tippyConfiguration"
-                />
-              </fieldset>
-
-              <fieldset class="dvs-fieldset dvs-mb-8" v-if="localValue.ab_testing_enabled">
-                <label>A/B Testing Amount</label>
-                <input
-                  type="number"
-                  v-model.number="localValue.versions[key].ab_testing_amount"
-                  title="This is the weight in which a page will show up. The number can be any number you want and is divided by the total weights of all other page versions."
-                  v-tippy="tippyConfiguration"
+                  :style="theme.actionButton"
                 >
-              </fieldset>
-            </div>
-
-            <div class="dvs-flex dvs-justify-start">
-              <button
-                class="dvs-btn dvs-mr-4 dvs-px-8"
-                @click="requestSaveVersion(version)"
-                title="Save Version Settings"
-                v-tippy="tippyConfiguration"
-                :style="theme.actionButton"
-              >
-                <checkmark-icon w="30" h="30"/>
-              </button>
-              <button
-                class="dvs-btn dvs-mr-4 dvs-px-8"
-                @click="requestCopyVersion(version)"
-                title="Copy Version"
-                v-tippy="tippyConfiguration"
-                :style="theme.actionButtonGhost"
-              >
-                <copy-icon w="30" h="30"/>
-              </button>
-              <button
-                class="dvs-btn dvs-mr-2 dvs-px-8"
-                v-tippy="tippyConfiguration"
-                v-devise-alert-confirm="{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
-                :style="theme.actionButtonGhost"
-              >
-                <trash-icon w="30" h="30"/>
-              </button>
+                  <checkmark-icon w="30" h="30"/>
+                </button>
+                <button
+                  class="dvs-btn dvs-mr-4 dvs-px-8"
+                  @click="requestCopyVersion(version)"
+                  title="Copy Version"
+                  v-tippy="tippyConfiguration"
+                  :style="theme.actionButtonGhost"
+                >
+                  <copy-icon w="30" h="30"/>
+                </button>
+                <button
+                  class="dvs-btn dvs-mr-2 dvs-px-8"
+                  v-tippy="tippyConfiguration"
+                  v-devise-alert-confirm="{callback: requestDeleteVersion, arguments:version, message: 'Are you sure you want to delete this version?'}"
+                  :style="theme.actionButtonGhost"
+                >
+                  <trash-icon w="30" h="30"/>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panel.color}">Global Page Settings</h3>
+        <h3 class="dvs-mb-8 dvs-pr-16" id="settings" :style="{color: theme.panel.color}">Global Page Settings</h3>
 
-      <help class="dvs-mb-8">These settings effect all of the page versions of this page.</help>
+        <help class="dvs-mb-8">These settings effect all of the page versions of this page.</help>
 
-      <div class="dvs-mb-12">
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Page Title</label>
-          <input type="text" v-model="localValue.title" placeholder="Title of the Page">
-        </fieldset>
+        <div class="dvs-mb-12">
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Page Title</label>
+            <input type="text" v-model="localValue.title" placeholder="Title of the Page">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Slug</label>
-          <input type="text" v-model="localValue.slug" placeholder="Url of the Page">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Slug</label>
+            <input type="text" v-model="localValue.slug" placeholder="Url of the Page">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-8">
-          <label>Canonical</label>
-          <input type="text" v-model="localValue.canonical" placeholder="Canonical">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-8">
+            <label>Canonical</label>
+            <input type="text" v-model="localValue.canonical" placeholder="Canonical">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-8">
-          <label>A/B Testing Enabled</label>
-          <input type="checkbox" v-model="localValue.ab_testing_enabled">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-8">
+            <label>A/B Testing Enabled</label>
+            <input type="checkbox" v-model="localValue.ab_testing_enabled">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset">
-          <h4 :style="{color: theme.panel.color}" class="dvs-mb-4">Page Specific Meta Tags</h4>
-          <meta-form
-            v-model="localValue.meta"
-            @request-create-meta="requestCreateMeta"
-            @request-update-meta="requestUpdateMeta"
-            @request-delete-meta="requestDeleteMeta"
-          />
-        </fieldset>
+          <h3 id="meta-tags" :style="{color: theme.panel.color}" class="dvs-mb-4">Page Specific Meta Tags</h3>
+          
+          <fieldset class="dvs-fieldset">
+            <meta-form
+              v-model="localValue.meta"
+              @request-create-meta="requestCreateMeta"
+              @request-update-meta="requestUpdateMeta"
+              @request-delete-meta="requestDeleteMeta"
+            />
+          </fieldset>
 
-        <div class="dvs-flex">
-          <button @click="requestSavePage" class="dvs-btn dvs-mr-2" :style="theme.actionButton">Save</button>
-          <button @click="goToPage" class="dvs-btn dvs-mr-4" :style="theme.actionButtonGhost">Cancel</button>
+          <div class="dvs-flex">
+            <button @click="requestSavePage" class="dvs-btn dvs-mr-2" :style="theme.actionButton">Save</button>
+            <button @click="goToPage" class="dvs-btn dvs-mr-4" :style="theme.actionButtonGhost">Cancel</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <transition name="dvs-fade">
-      <devise-modal @close="showCopy = false" class="dvs-z-50" v-if="showCopy">
-        <h4 class="dvs-mb-4">Copy this page</h4>
-        <help
-          class="dvs-mb-4"
-        >This will create a whole new page based on this page copying all settings and values associated with it.</help>
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Page Title</label>
-          <input type="text" v-model="pageToCopy.title" placeholder="Title of the Page">
-        </fieldset>
+      <transition name="dvs-fade">
+        <devise-modal @close="showCopy = false" class="dvs-z-50" v-if="showCopy">
+          <h4 class="dvs-mb-4">Copy this page</h4>
+          <help
+            class="dvs-mb-4"
+          >This will create a whole new page based on this page copying all settings and values associated with it.</help>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Page Title</label>
+            <input type="text" v-model="pageToCopy.title" placeholder="Title of the Page">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Slug</label>
-          <input type="text" v-model="pageToCopy.slug" placeholder="Url of the Page">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Slug</label>
+            <input type="text" v-model="pageToCopy.slug" placeholder="Url of the Page">
+          </fieldset>
 
-        <button
-          class="dvs-btn"
-          @click="requestCopyPage"
-          :disabled="pageToCopy.title === null || pageToCopy.slug === null"
-        >Create</button>
-        <button class="dvs-btn" @click="showCopy = false">Cancel</button>
-      </devise-modal>
-    </transition>
+          <button
+            class="dvs-btn"
+            @click="requestCopyPage"
+            :disabled="pageToCopy.title === null || pageToCopy.slug === null"
+          >Create</button>
+          <button class="dvs-btn" @click="showCopy = false">Cancel</button>
+        </devise-modal>
+      </transition>
 
-    <transition name="dvs-fade">
-      <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showTranslate">
-        <h4 class="dvs-mb-4">Translate this page</h4>
-        <help
-          class="dvs-mb-4"
-        >This will create a translated page associated with this page. While the pages are connected to allow users to switch between translations they do have their own settings and versions.</help>
+      <transition name="dvs-fade">
+        <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showTranslate">
+          <h4 class="dvs-mb-4">Translate this page</h4>
+          <help
+            class="dvs-mb-4"
+          >This will create a translated page associated with this page. While the pages are connected to allow users to switch between translations they do have their own settings and versions.</help>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Page Title</label>
-          <input type="text" v-model="pageToTranslate.title" placeholder="Title of the Page">
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Page Title</label>
+            <input type="text" v-model="pageToTranslate.title" placeholder="Title of the Page">
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Languages</label>
-          <select v-model="translateLanguage">
-            <option :value="null">Please select a language</option>
-            <option
-              v-for="language in languages.data"
-              :key="language.id"
-              :value="language"
-            >{{ language.code }}</option>
-          </select>
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Languages</label>
+            <select v-model="translateLanguage">
+              <option :value="null">Please select a language</option>
+              <option
+                v-for="language in languages.data"
+                :key="language.id"
+                :value="language"
+              >{{ language.code }}</option>
+            </select>
+          </fieldset>
 
-        <fieldset class="dvs-fieldset dvs-mb-4">
-          <label>Slug</label>
-          <div class="dvs-flex">
-            <input
-              type="text"
-              disabled="disabled"
-              v-model="translateLanguage.code"
-              class="dvs-max-w-3xs"
-            >
-            <input type="text" v-model="pageToTranslate.slug" placeholder="Url of the Page">
-          </div>
-        </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Slug</label>
+            <div class="dvs-flex">
+              <input
+                type="text"
+                disabled="disabled"
+                v-model="translateLanguage.code"
+                class="dvs-max-w-3xs"
+              >
+              <input type="text" v-model="pageToTranslate.slug" placeholder="Url of the Page">
+            </div>
+          </fieldset>
 
-        <button
-          class="dvs-btn"
-          @click="requestTranslatePage"
-          :disabled="pageToTranslate.title === null || pageToTranslate.slug === null || translateLanguage === null"
-        >Translate</button>
-        <button class="dvs-btn" @click="showTranslate = false">Cancel</button>
-      </devise-modal>
-    </transition>
+          <button
+            class="dvs-btn"
+            @click="requestTranslatePage"
+            :disabled="pageToTranslate.title === null || pageToTranslate.slug === null || translateLanguage === null"
+          >Translate</button>
+          <button class="dvs-btn" @click="showTranslate = false">Cancel</button>
+        </devise-modal>
+      </transition>
   </div>
 </template>
 
@@ -300,6 +333,7 @@ import CopyIcon from 'vue-ionicons/dist/ios-copy.vue';
 import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
 
 import { mapActions, mapGetters, mapState } from 'vuex';
+import AdministrationMixin from './../../mixins/Administration'
 
 export default {
   name: 'PagesView',
@@ -530,6 +564,6 @@ export default {
     LineChart: () => import(/* webpackChunkName: "js/devise-charts" */ './analytics/Line'),
     MetaForm
   },
-  mixins: [Dates]
+  mixins: [Dates, AdministrationMixin]
 };
 </script>

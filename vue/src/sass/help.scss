@@ -1,7 +1,5 @@
-.help {
-  @apply dvs-p-4 dvs-text-base dvs-border-l-4;
-
-  &.danger {
+.dvs-help {
+  &.dvs-danger {
     @apply dvs-bg-red dvs-text-white;
   }
 }

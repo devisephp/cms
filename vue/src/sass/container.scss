@@ -116,13 +116,24 @@
 }
 
 #devise-admin-content {
-  @apply dvs-opacity-100 dvs-text-base dvs-px-9 dvs-pt-10 dvs-pb-20;
+  @apply dvs-opacity-100 dvs-text-base dvs-px-9 dvs-pt-10 dvs-pb-20 dvs-relative;
 
   transition: opacity 0.3s;
+
 
   &.bottom-padding-16 {
     padding-bottom:20em;
   }
+}
+
+#dvs-admin-sidebar {
+  @apply dvs-border-r dvs--ml-10 dvs-p-8 dvs-fixed dvs-pin-t dvs-pin-b dvs-mt-8;
+
+  width:250px;
+
+  .scrollactive-item.is-active { 
+    @apply font-bold
+  } 
 }
 
 .devise-admin-action-bar {

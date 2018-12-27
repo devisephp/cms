@@ -32,7 +32,12 @@ export default function(el, binding, vnode) {
   // set that instead
   let theImage = image.url;
   if (theSize) {
-    theImage = image.media[theSize.size];
+    // In the case where sizes are set but the url is manual
+    // (or maybe the image media wasn't generated) this will ensure
+    // the url is at least present from the media property
+    if (image.media[theSize.size]) {
+      theImage = image.media[theSize.size];
+    }
   }
 
   if (background) {

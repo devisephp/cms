@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
 #devise-admin {
-  h1,h2,h3,h4,h5,h6 { @apply dvs-font-light}
+  h1,h2,h3,h4,h5,h6 { @apply dvs-font-sans dvs-font-light}
 
   h1 { @apply dvs-text-4xl }
   h2 { @apply dvs-text-3xl }

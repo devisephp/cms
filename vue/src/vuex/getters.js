@@ -146,12 +146,12 @@ const getters = {
     let defaultColors = {
       // Used by the admin panels
       panel: {
-        background: `linear-gradient(135deg, #2C3858 , #182039)`,
-        color: '#F3F3F3',
+        background: `radial-gradient(ellipse at top, #2C3858 , #182039)`,
+        color: '#cdc9f1',
         secondaryColor: '#979797'
       },
       panelCard: {
-        background: `#182039`,
+        background: `#12182d`,
         color: '#eee'
       },
       panelSidebar: {
@@ -186,9 +186,7 @@ const getters = {
       help: {
         color: '#EB8F89',
         borderColor: '#EB8F89',
-        backgroundColor: tinycolor('#EB8F89')
-          .lighten(25)
-          .toString()
+        backgroundColor: '#ffe5e4'
       },
       chartColor1: { color: 'rgba(54, 162, 235, 1)' },
       chartColor2: { color: 'rgba(75, 192, 192, 1)' },
@@ -210,7 +208,7 @@ const getters = {
 
         if (sc.panelTop && sc.panelBottom) {
           colors.panel = {
-            background: `linear-gradient(135deg, ${sc.panelTop.color}, ${sc.panelBottom.color})`,
+            background: `radial-gradient(ellipse at top, ${sc.panelTop.color}, ${sc.panelBottom.color})`,
             color: sc.panelText.color,
             secondaryColor: '#979797'
           };
@@ -275,9 +273,7 @@ const getters = {
 
         if (sc.helpBackground && sc.helpText) {
           colors.help = {
-            background: tinycolor(sc.helpBackground.color)
-              .lighten(25)
-              .toString(),
+            background: sc.helpBackground.color,
             border: `1px solid ${sc.helpBackground.color}`,
             color: sc.helpText.color
           };

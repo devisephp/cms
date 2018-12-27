@@ -21,7 +21,7 @@
 
     <button class="dvs-btn dvs-mb-11" :disabled="isInvalid" :style="theme.actionButton" @click="requestCreateMeta">Add New Meta</button>
 
-    <h3 class="dvs-mb-8 dvs-pr-16">Existing Global Meta</h3>
+    <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panel.color}">Existing Global Meta</h3>
 
     <help class="dvs-mb-8">You currently do not have any meta tags at this time.</help>
 

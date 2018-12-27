@@ -36,6 +36,7 @@
     "vue-flatpickr-component": "^6.2.0",
     "vue-ionicons": "^2.2.1",
     "vue-router": "^3.0.1",
+    "vue-scrollactive": "^0.8.0",
     "vue-tippy": "^2.0.8",
     "vue-trumbowyg": "^3.4.0",
     "vue-upload-component": "^2.8.15",

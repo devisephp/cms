@@ -3,7 +3,7 @@
     <h3 class="dvs-mb-6" :style="{color: theme.panel.color}">{{ currentMenu.label }}</h3>
     <ul class="dvs-list-reset">
       <transition-group name="dvs-fade">
-        <li class="dvs-mb-4" v-for="(menuItem, key) in currentMenu.menu" :key="key">
+        <li class="dvs-mb-4" v-for="(menuItem, key) in currentMenu.menu" :key="menuItem.id">
           <div
             :style="{color: theme.panel.color}"
             @click="goToPage(menuItem.routeName, menuItem.parameters)"

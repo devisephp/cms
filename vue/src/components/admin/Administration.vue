@@ -34,7 +34,7 @@
           </form>
         </div>
 
-        <div class="dvs-max-h-screen dvs-flex-grow" ref="admin-route-wrapper" data-simplebar>
+        <div class="dvs-max-h-screen dvs-flex-grow" id="dvs-admin-content-container" ref="admin-route-wrapper" data-simplebar>
           <transition name="dvs-fade" mode="out-in">
             <router-view name="devise"></router-view>
           </transition>

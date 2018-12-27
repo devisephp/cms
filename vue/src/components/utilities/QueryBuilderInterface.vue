@@ -34,7 +34,7 @@
           :value="newData.name"
           @input="newData.name = slugify($event.target.value)"
         >
-        <div class="dvs-absolute dvs-mt-2 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4" @click="addData">
+        <div class="dvs-absolute dvs-mt-2 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4" :style="{color:theme.actionButtonGhost.color}" @click="addData">
           <add-icon class="dvs-cursor-pointer" w="25" h="25"/>
         </div>
       </div>

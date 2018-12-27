@@ -13,26 +13,28 @@
     <div class="dvs-flex dvs-w-full">
       <div class="dvs-w-1/4 dvs-pr-8">
       
-        <h6 class="dvs-mb-2">Panel</h6>
-        <color-editor v-model="localValue.panelTop" :options="{label: 'Panel Top Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <h6 class="dvs-mb-2" :style="{color: theme.panel.color}">Panel</h6>
+        <color-editor v-model="localValue.panelTop" @input="colorCheck" :options="{label: 'Panel Top Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelBottom" :options="{label: 'Panel Bottom Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelText" :options="{label: 'Panel Text Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelAction" :options="{label: 'Panel Action Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelSidebarBackground" :options="{label: 'Panel Sidebar Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelSidebarText" :options="{label: 'Panel Sidebar Icon Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.panelSidebarAction" :options="{label: 'Panel Sidebar Action Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.panelCardBackground" :options="{label: 'Panel Card Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
+        <color-editor v-model="localValue.panelCardText" :options="{label: 'Panel Card Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
 
-        <h6 class="dvs-mb-2 dvs-mt-8">Buttons</h6>
+        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.panel.color}">Buttons</h6>
         <color-editor v-model="localValue.buttonsActionText" :options="{label: 'Action Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.buttonsActionBackground" :options="{label: 'Action Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.buttonsSecondaryText" :options="{label: 'Secondary Button Text', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.buttonsSecondaryBackground" :options="{label: 'Secondary Button Background', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         
-        <h6 class="dvs-mb-2 dvs-mt-8">Help Blocks</h6>
+        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.panel.color}">Help Blocks</h6>
         <color-editor v-model="localValue.helpBackground" :options="{label: 'Background Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.helpText" :options="{label: 'Text Color', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
 
-        <h6 class="dvs-mb-2 dvs-mt-8">Chart Colors</h6>
+        <h6 class="dvs-mb-2 dvs-mt-8" :style="{color: theme.panel.color}">Chart Colors</h6>
         <color-editor v-model="localValue.chartColor1" :options="{label: 'Chart Color 1', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.chartColor2" :options="{label: 'Chart Color 2', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
         <color-editor v-model="localValue.chartColor3" :options="{label: 'Chart Color 3', hidePreview: true, swatch: true}" class="dvs-mb-4"></color-editor>
@@ -43,7 +45,7 @@
 
       <div class="dvs-w-3/4 dvs-mb-8">
 
-        <h3 class="dvs-mb-4">Mini-Preview of the Editor</h3>
+        <h3 class="dvs-mb-4" :style="{color: theme.panel.color}">Mini-Preview of the Editor</h3>
         <div class="dvs-bg-grey-light dvs-rounded dvs-w-full dvs-overflow-hidden dvs-p-1 dvs-flex dvs-flex-col dvs-items-stretch dvs-mb-12" style="min-height:400px">
           
           <div class="dvs-bg-white dvs-m-4 dvs-rounded dvs-px-4 dvs-py-1 dvs-text-sm" style="height:30px;">
@@ -54,7 +56,7 @@
             <div 
               class="dvs-absolute dvs-pin-t dvs-pin-l z-10 dvs-text-center dvs-rounded dvs-mt-8 dvs-ml-8 dvs-shadow dvs-min-w-64 dvs-flex dvs-items-stretch"
               :style="`
-                background-image: linear-gradient(135deg, ${localValue.panelTop.color} 0%, ${localValue.panelBottom.color} 100%);
+                background-image: radial-gradient(ellipse at top, ${localValue.panelTop.color} 0%, ${localValue.panelBottom.color} 100%);
                 color: ${localValue.panelText.color}  
               `">
 
@@ -222,6 +224,8 @@ export default {
         panelSidebarBackground: {color: null},
         panelSidebarText: {color: null},
         panelSidebarAction: {color: null},
+        panelCardBackground: {color: null},
+        panelCardText: {color: null},
         buttonsActionText: {color: null},
         buttonsActionBackground: {color: null},
         buttonsSecondaryText: {color: null},
@@ -239,17 +243,19 @@ export default {
         Default: {
           panelTop: {color: 'rgb(44, 56, 88)'},
           panelBottom: {color: 'rgb(24, 32, 57)'},
-          panelText: {color: 'rgb(243, 243, 243)'},
+          panelText: {color: '#A7A9E2'},
           panelAction: {color: 'rgb(101, 139, 239)'},
           panelSidebarBackground: {color: '#182039'},
           panelSidebarText: {color: 'rgb(243, 243, 243)'},
           panelSidebarAction: {color: 'rgb(101, 139, 239)'},
+          panelCardBackground: {color: '#12182d'},
+          panelCardText: {color: '#eeeeee'},
           buttonsActionText: {color: 'rgb(243, 243, 243)'},
-          buttonsActionBackground: {color: 'rgb(235, 143, 137)'},
+          buttonsActionBackground: {color: '#FF8889'},
           buttonsSecondaryText: {color: 'rgb(243, 243, 243)'},
           buttonsSecondaryBackground: {color: 'rgb(24, 32, 57)'},
-          helpBackground: {color: '#FDF6F6'},
-          helpText: {color: 'rgb(235, 143, 137)'},
+          helpBackground: {color: '#ffe5e4'},
+          helpText: {color: '#FF8889'},
           chartColor1: {color: 'rgba(54, 162, 235, 1)'},
           chartColor2: {color: 'rgba(75, 192, 192, 1)'},
           chartColor3: {color: 'rgba(255, 206, 86, 1)'},
@@ -298,6 +304,9 @@ export default {
     })
   },
   methods: {
+    colorCheck (color) {
+      console.log(color)
+    },
     applyStyles (styles) {
       for(var propt in styles){
         if (typeof this.localValue[propt] !== 'undefined') {

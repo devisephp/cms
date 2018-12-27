@@ -81,6 +81,10 @@ const DevisePlugin = {
     // Portals to render items outside of their component
     Vue.use(PortalVue);
 
+    // For administration sidebars
+    var VueScrollactive = require('vue-scrollactive');
+    Vue.use(VueScrollactive);
+
     // Register global components
     Vue.component('Devise', Devise);
     Vue.component('Help', Help);

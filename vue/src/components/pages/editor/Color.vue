@@ -1,5 +1,5 @@
 <template>
-  <field-editor :options="options" v-model="localValue" ref="field" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
+  <field-editor :options="options" v-model="value" ref="field" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
     <template slot="preview">
       <span v-if="color === null || color === ''" class="dvs-italic">
         Currently No Value
@@ -10,8 +10,7 @@
       </div>
     </template>
     <template slot="editor">
-      <input type="hidden" v-model="localValue.color" :maxlength="getMaxLength" v-on:input="updateValue()">
-      <sketch-picker v-model="color" @input="updateColor(color)" @ok="selectColor(color)" @cancel="cancel" />
+      <sketch-picker v-model="editorColor" @cancel="cancel" />
     </template>
   </field-editor>
 </template>
@@ -24,60 +23,18 @@ export default {
   name: 'ColorEditor',
   data () {
     return {
-      localValue: {},
-      originalValue: null,
-      color: null,
       showEditor: false
     }
-  },
-  mounted () {
-    this.originalValue = Object.assign({}, this.value)
-    this.localValue = this.value
-    
-
-    this.setDefault()
   },
   methods: {
     toggleEditor () {
       this.showEditor = !this.showEditor
     },
     cancel () {
-      this.localValue.color = this.originalValue.color
-      this.updateValue()
       this.toggleEditor()
-    },
-    setDefault () {
-      if (this.localValue.color === null) {
-        if (this.options.default) {
-          this.color = this.convertColor(this.options.default)
-        } else {
-          this.color = this.convertColor('#000000')
-        }
-      } else {
-        if (this.localValue.color !== null) {
-          this.color = this.convertColor(this.localValue.color)
-        } else {
-          this.color = this.convertColor('#000000')
-        }
-      }
     },
     convertColor (color) {
       return tinycolor(color).toRgb()
-    },
-    updateColor (color) {
-      this.color = color.rgba
-      this.localValue.color = `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`
-    },
-    selectColor (color) {
-      this.color = color.hex
-      this.localValue.color = `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`
-      this.updateValue()
-
-      this.$refs.field.showEditor = false
-    },
-    updateValue () {
-      this.$emit('input', this.localValue)
-      this.$emit('change', this.localValue)
     }
   },
   computed: {
@@ -86,6 +43,25 @@ export default {
         return this.settings.maxlength
       }
       return ''
+    },
+    editorColor: {
+      get () {
+        return this.color.color
+      },
+      set (color) {
+        this.color = color
+      }
+    },
+    color: {
+      get () {
+        return this.value
+      },
+      set (color) {
+        console.log('here')
+        let valueObj = Object.assign({}, this.value,  {color: `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`})
+        this.$emit('input', valueObj)
+        this.$emit('change', valueObj)
+      }
     }
   },
   props: ['value', 'options'],

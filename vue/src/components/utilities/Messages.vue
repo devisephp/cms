@@ -7,7 +7,7 @@
         </div>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="(error, key) in messageErrors" :key="key" :style="`border-bottom-color:${theme.panel.color}`">
+            <li v-for="error in messageErrors" :key="error.id" :style="`border-bottom-color:${theme.panel.color}`">
               <h6 :style="`color:${theme.panel.color}`">{{ error.title }}</h6>
               <p :style="`color:${theme.panel.color}`">{{ error.message }}</p>
               <p :style="`color:${theme.panel.color}`" class="dvs-text-sm" v-if="error.code">Error Code: {{ error.code }}</p>
@@ -21,7 +21,7 @@
         <i @click="closeMessages()" class="cursor-pointer ion-icon ion-android-close"></i>
         <ul>
           <transition-group name="list" tag="div">
-            <li v-for="(message, key) in messages" :key="key" :style="`border-bottom-color:${theme.panel.color}`">
+            <li v-for="message in messages" :key="message.id" :style="`border-bottom-color:${theme.panel.color}`">
               <h6 class="dvs-text-base" :style="`color:${theme.panel.color}`">{{ message.title }}</h6>
               <p :style="`color:${theme.panel.color}`">{{ message.message }}</p>
             </li>
@@ -71,6 +71,7 @@ export default {
           if (error.response.data.errors.hasOwnProperty(property)) {
             let e = error.response.data.errors[property]
             self.appendError({
+              id: this.genUniqueKey(error),
               code: error.response.status,
               title: error.response.statusText,
               message: e[0]
@@ -84,6 +85,7 @@ export default {
         error.response.data.message !== null
       ) {
         self.appendError({
+          id: this.genUniqueKey(error),
           code: error.response.status,
           title: error.response.data.exception,
           message: error.response.data.message
@@ -93,12 +95,14 @@ export default {
         error.data !== null
       ) {
         self.appendError({
+          id: this.genUniqueKey(error),
           code: error.status,
           title: error.data.error,
           message: error.data.message
         })
       } else if (typeof error === 'string') {
         self.appendError({
+          id: this.genUniqueKey(error),
           code: '',
           title: 'Uh-Oh!',
           message: error
@@ -108,12 +112,14 @@ export default {
         error.message !== null
       ) {
         self.appendError({
+          id: this.genUniqueKey(error),
           code: '',
           title: 'Uh-Oh!',
           message: error.message
         })
       } else {
         self.appendError({
+          id: this.genUniqueKey(error),
           code: error.status,
           title: 'Unable to reach server',
           message: 'Please check your internet connection'
@@ -126,6 +132,7 @@ export default {
 
       if (!existingError) {
         let error = {
+          id: this.genUniqueKey(payload),
           code: payload.code,
           title: payload.title,
           message: payload.message,
@@ -151,6 +158,7 @@ export default {
 
       if (!existingMessage) {
         let message = {
+          id: this.genUniqueKey(payload),
           title: payload.title,
           message: payload.message,
           active: true

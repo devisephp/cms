@@ -39,6 +39,10 @@
     @apply dvs-py-2 dvs-px-3 dvs-text-2xs;
   }
 
+  &.dvs-btn-zero {
+    @apply dvs-p-0;
+  }
+
   &.dvs-btn-lg {
     @apply dvs-py-6 dvs-px-4 dvs-text-lg;
   }

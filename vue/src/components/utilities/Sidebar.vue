@@ -4,7 +4,7 @@
     style="width:300px;"
     :panel-style="theme.panel"
   >
-    <div data-simplebar>
+    <div  data-simplebar-auto-hide="true">
       <sidebar-header
         :title="title"
         :backPage="backPage"

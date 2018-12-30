@@ -6,11 +6,10 @@
       </span>
       <div class="dvs-flex dvs-items-center" v-else>
         <div class="dvs-w-4 dvs-h-4 dvs-rounded-full dvs-mr-4" :style="{'background-color': color}"></div>
-        <div class="dvs-font-bold">{{ color }}</div>
       </div>
     </template>
     <template slot="editor">
-      <sketch-picker v-model="editorColor" @cancel="cancel" />
+      <sketch-picker v-model="color" @cancel="cancel" />
     </template>
   </field-editor>
 </template>
@@ -35,6 +34,11 @@ export default {
     },
     convertColor (color) {
       return tinycolor(color).toRgb()
+    },
+    update(value) {
+      console.log(value)
+      this.$emit('input', value)
+      this.$emit('change', value)
     }
   },
   computed: {
@@ -44,23 +48,15 @@ export default {
       }
       return ''
     },
-    editorColor: {
-      get () {
-        return this.color.color
-      },
-      set (color) {
-        this.color = color
-      }
-    },
     color: {
       get () {
-        return this.value
+        console.log(this.value)
+        return tinycolor(this.value.color).toHex()
       },
       set (color) {
-        console.log('here')
-        let valueObj = Object.assign({}, this.value,  {color: `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`})
-        this.$emit('input', valueObj)
-        this.$emit('change', valueObj)
+        let valueObj = Object.assign(this.value,  {color: `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`})
+              this.$emit('input', valueObj)
+      this.$emit('change', valueObj)
       }
     }
   },

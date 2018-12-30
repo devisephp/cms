@@ -13,9 +13,6 @@
             v-if="insertSlice.type === null"
             :style="{color: theme.panel.color}"
           >Choose Type of New Slice</h3>
-          <!-- Slice Settings -->
-          <h3 class="dvs-mb-8 dvs-text-white" v-else>Slice Settings</h3>
-
           <transition name="dvs-fade">
             <!-- Choose the type of the slice -->
             <div
@@ -52,7 +49,7 @@
               </div>
             </div>
 
-            <!-- Slice Settings -->
+            <!-- Slice Selector -->
             <div v-else>
               <fieldset class="dvs-fieldset dvs-mb-4">
                 <slice-selector v-model="insertSlice.slice"/>

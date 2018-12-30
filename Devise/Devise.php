@@ -97,7 +97,6 @@ class Devise
     {
         $js = 'function Devise(){}';
         $js .= self::user();
-        $js .= self::sites();
         $js .= self::lang();
         $js .= self::config();
 
@@ -107,6 +106,10 @@ class Devise
         }
 
         $js .= self::components();
+
+        if (Auth::user()) {
+            $js .= self::sites();
+        }
 
         $js .= 'var deviseSettings = new Devise()';
 

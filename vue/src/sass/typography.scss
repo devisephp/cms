@@ -13,28 +13,32 @@
   p, ol, ul, blockquote, pre, code {
     line-height: 1.4em;
   }
-}
 
-a {
-  @apply dvs-no-underline dvs-text-blue;
+  a {
+    @apply dvs-no-underline dvs-text-blue;
 
-  &:hover {
-    @apply dvs-underline;
+    &:hover {
+      @apply dvs-underline;
+    }
   }
-}
 
-p {
-  @apply dvs-pb-4 dvs-leading-normal;
+  p {
+    @apply dvs-pb-4 dvs-leading-normal;
 
-  &:last-child {
-    @apply dvs-pb-0;
+    &:last-child {
+      @apply dvs-pb-0;
+    }
   }
+
+  small {
+    @apply dvs-text-xs;
+  }
+
+  .strikethrough {
+    text-decoration:dvs-line-through;
+  }
+
 }
 
-small {
-  @apply dvs-text-xs;
-}
 
-.strikethrough {
-  text-decoration:dvs-line-through;
-}
+

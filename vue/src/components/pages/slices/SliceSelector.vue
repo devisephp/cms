@@ -13,7 +13,8 @@
         </div>
       </fieldset>
     </div>
-    <div class="dvs-flex dvs-pb-8 dvs-py-16">
+    <div class="dvs-flex dvs-pb-8 dvs-py-8 dvs-max-h-screen dvs-overflow-y" data-simplebar>
+      
       <div
         class="dvs-w-full dvs-flex dvs-flex-wrap dvs-items-stretch flex-grow dvs-justify-start dvs-my-4"
         v-if=" this.allDirectories.length > 0"

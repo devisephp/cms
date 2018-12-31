@@ -8,7 +8,9 @@
         <div v-html="clipString(localValue.text, 200, false)"></div>
       </template>
       <template slot="editor">
-        <wysiwyg ref="editor" v-model="localValue.text"></wysiwyg>
+        <div style="max-height:80vh" data-simplebar>
+          <wysiwyg ref="editor" v-model="localValue.text"></wysiwyg>
+        </div>
       </template>
     </field-editor>
   </div>

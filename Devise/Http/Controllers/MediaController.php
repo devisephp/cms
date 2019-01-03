@@ -114,6 +114,7 @@ class MediaController extends Controller
     public function details(Request $request, $path)
     {
         $sansStoragePath = str_replace('/storage', '', $path);
+
         return $this->Repository->getFileData($sansStoragePath, true);
     }
 
@@ -146,7 +147,9 @@ class MediaController extends Controller
                 $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
 
                 return $server->getImageResponse($sourceDirectory . $path, request()->all());
-            } catch (\Exception $e){}
+            } catch (\Exception $e)
+            {
+            }
         }
 
         return Image::make(base_path('vendor/devisephp/cms/resources/images/file-icon.gif'))->response();
@@ -154,6 +157,8 @@ class MediaController extends Controller
 
     public function reGenerateAll(ApiRequest $request, $instanceId, $fieldType)
     {
+        set_time_limit(0);
+
         $instance = DvsSliceInstance::findOrFail($instanceId);
         $allFields = DvsField::join('dvs_slice_instances', 'dvs_slice_instances.id', '=', 'dvs_fields.slice_instance_id')
             ->where('dvs_slice_instances.view', $instance->view)
@@ -161,28 +166,41 @@ class MediaController extends Controller
             ->select('dvs_fields.*')
             ->get();
 
+        $allSizes = $request->get('allSizes');
+
         foreach ($allFields as $field)
         {
             $value = (array)$field->value;
             $settings = (isset($field->value->settings)) ? (array)$field->value->settings : [];
-            $settings['sizes'] = $request->get('sizes')['sizes'];
-            $allSizes = $request->get('allSizes');
+            $requestedSizes = $request->get('sizes')['sizes'];
 
             if (isset($field->value->media) && isset($field->value->media->original))
             {
-                $originalImage = (string)$field->value->media->original;
-                $imagesAndSettings = $this->getImagesToMakeAndSettings($field->value->media->original, $settings);
+                $newSizes = $this->onlyNewSizes($requestedSizes, $field->value);
+                if (!$newSizes)
+                {
+                    $settings['sizes'] = $newSizes;
+                    $originalImage = (string)$field->value->media->original;
+                    $imagesAndSettings = $this->getImagesToMakeAndSettings($settings);
 
-                $result = $this->generateAll($originalImage, $imagesAndSettings);
+                    try
+                    {
+                        $result = $this->generateAll($originalImage, $imagesAndSettings);
+                    } catch (\Exception $e)
+                    {
+                        $result = false;
+                    }
 
-                if ($result) {
-                    
-                    $value['url'] = $result['images']['orig_optimized'];
-                    $currentMedia = (array)$value['media'];
-                    $value['media'] = array_merge($currentMedia, $result['images']);
-                    $value['sizes'] = $allSizes;
-                    $field->json_value = json_encode($value);
-                    $field->save();
+                    if ($result)
+                    {
+                        $value['url'] = $result['images']['orig_optimized'];
+                        $currentMedia = (array)$value['media'];
+                        $value['media'] = array_merge($currentMedia, $result['images']);
+                        $value['sizes'] = $allSizes;
+
+                        $field->json_value = json_encode($value);
+                        $field->save();
+                    }
                 }
             }
         }
@@ -191,7 +209,7 @@ class MediaController extends Controller
     public function generate(ApiRequest $request)
     {
         $originalImage = $request->get('original');
-        $imagesAndSettings = $this->getImagesToMakeAndSettings($originalImage, $request->get('settings'));
+        $imagesAndSettings = $this->getImagesToMakeAndSettings($request->get('settings'));
 
         return $this->generateAll($originalImage, $imagesAndSettings);
     }
@@ -206,7 +224,8 @@ class MediaController extends Controller
         $original = str_replace("storage/", '', $original);
         $sourceImage = storage_path($sourceDirectory . $original);
 
-        if (!file_exists($sourceImage)) {
+        if (!file_exists($sourceImage))
+        {
             return false;
         }
 
@@ -293,7 +312,7 @@ class MediaController extends Controller
         return md5(json_encode($settings));
     }
 
-    private function getImagesToMakeAndSettings($original, $settings)
+    private function getImagesToMakeAndSettings($settings)
     {
         $sizes = array_get($settings, 'sizes', []);
 
@@ -305,5 +324,36 @@ class MediaController extends Controller
         }
 
         return ['images' => $imagesToMake, 'settings' => $settings];
+    }
+
+    private function onlyNewSizes($requestedSizes, $value)
+    {
+        if (isset($value->sizes))
+        {
+            $sizes = (array)$value->sizes;
+            foreach ($requestedSizes as $sizeName => $requestedSize)
+            {
+                $skipSizeByRemoving = false;
+
+                if (isset($sizes[$sizeName]) &&
+                    isset($sizes[$sizeName]->w) &&
+                    isset($sizes[$sizeName]->h) &&
+                    isset($requestedSize['w']) &&
+                    isset($requestedSize['h']))
+                {
+                    // all properties were found to compare
+                    if ($sizes[$sizeName]->w == $requestedSize['w'] && $sizes[$sizeName]->h == $requestedSize['h'])
+                    {
+                        $skipSizeByRemoving = true;
+                    }
+                }
+
+                if ($skipSizeByRemoving) unset($requestedSizes[$sizeName]);
+            }
+
+            return $requestedSizes;
+        }
+
+        return $requestedSizes;
     }
 }

@@ -22,6 +22,11 @@ export default {
     state.layouts = payload;
   },
 
+  // Media Regeneration
+  addToMediaRegenerationRequests(state, payload) {
+    state.mediaRegenerationRequests.push(payload);
+  },
+
   // Media manager
   setCurrentDirectory(state, directory) {
     state.currentDirectory = directory;

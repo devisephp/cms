@@ -112,6 +112,7 @@ const state = {
     data: []
   },
   layouts: [],
+  mediaRegenerationRequests: [],
   meta: {
     data: []
   },

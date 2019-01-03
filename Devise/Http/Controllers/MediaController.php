@@ -211,7 +211,9 @@ class MediaController extends Controller
         }
 
         $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $original));
-        $this->Storage->makeDirectory($destinationDirectory);
+        if (!is_dir($destinationDirectory)) {
+            $this->Storage->makeDirectory($destinationDirectory);
+        }
 
         foreach ($imagesAndSettings['images'] as $sizeLabel => $sizeSettings)
         {

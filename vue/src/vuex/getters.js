@@ -53,6 +53,15 @@ const getters = {
     return deviseSettings.$lang;
   },
 
+  // Media Regeneration
+  mediaAlreadyRequested: state => newRequest => {
+    return state.mediaRegenerationRequests.find(request => {
+      return (
+        request.component === newRequest.component && request.fieldName === newRequest.fieldName
+      );
+    });
+  },
+
   // Media manager
 
   files: state => {
@@ -208,7 +217,9 @@ const getters = {
 
         if (sc.panelTop && sc.panelBottom) {
           colors.panel = {
-            background: `radial-gradient(ellipse at top, ${sc.panelTop.color}, ${sc.panelBottom.color})`,
+            background: `radial-gradient(ellipse at top, ${sc.panelTop.color}, ${
+              sc.panelBottom.color
+            })`,
             color: sc.panelText.color,
             secondaryColor: '#979797'
           };

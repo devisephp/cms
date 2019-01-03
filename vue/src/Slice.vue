@@ -147,45 +147,52 @@ export default {
             // If sizes are defined on the image configuration and an image has already been selected
             if (
               typeof field.sizes !== 'undefined' &&
-              typeof this.devise[fieldName].media === 'object'
+              typeof this.devise[fieldName].media === 'object' &&
+              !this.mediaAlreadyRequested({
+                component: this.devise.metadata.name,
+                fieldName: fieldName
+              })
             ) {
-              // Build the sizes needed
-              let mediaRequest = { sizes: {} };
-
-              // Check if all the sizes in the configuration are present in the media property
-              for (var sizeName in field.sizes) {
-                if (typeof this.devise[fieldName].media[sizeName] === 'undefined') {
-                  mediaRequest.sizes[sizeName] = field.sizes[sizeName];
-                }
-              }
-
-              // Check to see if any of the sizes have changed
-              for (var sizeName in field.sizes) {
-                let storedSize = this.devise[fieldName].sizes[sizeName];
-                let fieldSize = field.sizes[sizeName];
-                if (!storedSize || storedSize.w !== fieldSize.w || storedSize.h !== fieldSize.h) {
-                  mediaRequest.sizes[sizeName] = fieldSize;
-                }
-              }
-
-              // If there are any sizes needed
-              if (Object.keys(mediaRequest.sizes).length > 0) {
-                // Build the request payload
-                let payload = {
-                  allSizes: field.sizes,
-                  sizes: mediaRequest,
-                  instanceId: this.devise.metadata.instance_id,
-                  fieldName: fieldName
-                };
-                console.log(payload);
-                this.requestRegnerateSliceMedia(payload);
-              }
+              this.determineMediaRegenerationNeeds(field, fieldName);
             }
           }
         }
       }
     },
-    requestRegnerateSliceMedia(payload) {
+    determineMediaRegenerationNeeds(field, fieldName) {
+      // Build the sizes needed
+      let mediaRequest = { sizes: {} };
+
+      // Check if all the sizes in the configuration are present in the media property
+      for (var sizeName in field.sizes) {
+        if (typeof this.devise[fieldName].media[sizeName] === 'undefined') {
+          mediaRequest.sizes[sizeName] = field.sizes[sizeName];
+        }
+      }
+
+      // Check to see if any of the sizes have changed
+      for (var sizeName in field.sizes) {
+        let storedSize = this.devise[fieldName].sizes[sizeName];
+        let fieldSize = field.sizes[sizeName];
+        if (!storedSize || storedSize.w !== fieldSize.w || storedSize.h !== fieldSize.h) {
+          mediaRequest.sizes[sizeName] = fieldSize;
+        }
+      }
+
+      // If there are any sizes needed
+      if (Object.keys(mediaRequest.sizes).length > 0) {
+        // Build the request payload
+        let payload = {
+          allSizes: field.sizes,
+          sizes: mediaRequest,
+          instanceId: this.devise.metadata.instance_id,
+          fieldName: fieldName,
+          component: this.devise.metadata.name
+        };
+        this.makeMediaRegenerationRequest(payload);
+      }
+    },
+    makeMediaRegenerationRequest(payload) {
       this.regenerateMedia(payload).then(function() {
         devise.$bus.$emit('showMessage', {
           title: 'New Images Generated',
@@ -196,7 +203,6 @@ export default {
         });
       });
     },
-    attemptRegenerateSlice(payload) {},
     attemptJumpToSlice(slice) {
       if (this.devise.metadata && slice.metadata) {
         if (this.devise.metadata.instance_id === slice.metadata.instance_id) {
@@ -283,7 +289,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('devise', ['component', 'sliceConfig', 'breakpoint']),
+    ...mapGetters('devise', ['component', 'sliceConfig', 'breakpoint', 'mediaAlreadyRequested']),
     deviseForSlice() {
       if (this.devise.config) {
         return this.devise.config;

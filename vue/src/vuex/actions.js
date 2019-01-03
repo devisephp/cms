@@ -102,6 +102,8 @@ const actions = {
   },
 
   regenerateMedia(context, payload) {
+    context.commit('addToMediaRegenerationRequests', payload);
+
     return new Promise((resolve, reject) => {
       window.axios
         .put(

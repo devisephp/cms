@@ -177,7 +177,7 @@ class MediaController extends Controller
             if (isset($field->value->media) && isset($field->value->media->original))
             {
                 $newSizes = $this->onlyNewSizes($requestedSizes, $field->value);
-                if (!$newSizes)
+                if ($newSizes)
                 {
                     $settings['sizes'] = $newSizes;
                     $originalImage = (string)$field->value->media->original;

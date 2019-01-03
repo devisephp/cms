@@ -174,13 +174,18 @@ class MediaController extends Controller
             $settings = (isset($field->value->settings)) ? (array)$field->value->settings : [];
             $requestedSizes = $request->get('sizes')['sizes'];
 
-            if (isset($field->value->media) && isset($field->value->media->original))
+            if ((isset($field->value->media) && isset($field->value->media->original)) || $field->value->url)
             {
-                $newSizes = $this->onlyNewSizes($requestedSizes, $field->value);
+                if(isset($field->value->media) && isset($field->value->media->original)){
+                    $newSizes = $this->onlyNewSizes($requestedSizes, $field->value);
+                } else {
+                    $newSizes = $requestedSizes;
+                }
+
                 if ($newSizes)
                 {
                     $settings['sizes'] = $newSizes;
-                    $originalImage = (string)$field->value->media->original;
+                    $originalImage = ((isset($field->value->media) && isset($field->value->media->original))) ? (string)$field->value->media->original : (string)$field->value->url;
                     $imagesAndSettings = $this->getImagesToMakeAndSettings($settings);
 
                     try

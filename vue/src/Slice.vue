@@ -141,6 +141,7 @@ export default {
     },
     checkMediaSizesForRegeneration() {
       // If the current slice even has fields
+      console.log(this.currentView);
       if (typeof this.currentView.fields !== 'undefined') {
         for (var fieldName in this.currentView.fields) {
           const field = this.currentView.fields[fieldName];
@@ -162,28 +163,44 @@ export default {
                 }
               }
 
+              // Check to see if any of the sizes have changed
+              for (var sizeName in field.sizes) {
+                let storedSize = this.devise[fieldName].sizes[sizeName];
+                let fieldSize = field.sizes[sizeName];
+                console.log(this.devise[fieldName], fieldSize);
+                if (!storedSize || storedSize.w !== fieldSize.w || storedSize.h !== fieldSize.h) {
+                  mediaRequest.sizes[sizeName] = fieldSize;
+                }
+              }
+
               // If there are any sizes needed
               if (Object.keys(mediaRequest.sizes).length > 0) {
                 // Build the request payload
                 let payload = {
+                  allSizes: field.sizes,
                   sizes: mediaRequest,
                   instanceId: this.devise.metadata.instance_id,
                   fieldName: fieldName
                 };
-
-                this.regenerateMedia(payload).then(function() {
-                  devise.$bus.$emit('showMessage', {
-                    title: 'New Images Generated',
-                    message:
-                      'Pro tip: Some new sizes were generated for a slice you were working on. You may need to refresh.'
-                  });
-                });
+                this.requestRegnerateSliceMedia(payload);
               }
             }
           }
         }
       }
     },
+    requestRegnerateSliceMedia(payload) {
+      this.regenerateMedia(payload).then(function() {
+        devise.$bus.$emit('showMessage', {
+          title: 'New Images Generated',
+          message:
+            'Pro tip: Some new sizes were generated for a slice you were working on (Field: ' +
+            payload.fieldName +
+            ') You may need to refresh.'
+        });
+      });
+    },
+    attemptRegenerateSlice(payload) {},
     attemptJumpToSlice(slice) {
       if (this.devise.metadata && slice.metadata) {
         if (this.devise.metadata.instance_id === slice.metadata.instance_id) {

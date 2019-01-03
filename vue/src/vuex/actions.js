@@ -110,7 +110,7 @@ const actions = {
             payload.instanceId +
             '/' +
             payload.fieldName,
-          payload.sizes
+          payload
         )
         .then(function(response) {
           context.commit('setFiles', response.data);

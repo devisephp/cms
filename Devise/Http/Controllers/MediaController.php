@@ -165,7 +165,9 @@ class MediaController extends Controller
         {
             $value = (array)$field->value;
             $settings = (isset($field->value->settings)) ? (array)$field->value->settings : [];
-            $settings['sizes'] = $request->get('sizes');
+            $settings['sizes'] = $request->get('sizes')['sizes'];
+            // dd($settings['sizes']);
+            $allSizes = $request->get('allSizes');
 
             if (isset($field->value->media) && isset($field->value->media->original))
             {
@@ -173,11 +175,16 @@ class MediaController extends Controller
                 $imagesAndSettings = $this->getImagesToMakeAndSettings($field->value->media->original, $settings);
 
                 $result = $this->generateAll($originalImage, $imagesAndSettings);
-                $value['url'] = $result['images']['orig_optimized'];
-                $currentMedia = (array)$value['media'];
-                $value['media'] = array_merge($currentMedia, $result['images']);
-                $field->json_value = json_encode($value);
-                $field->save();
+
+                if ($result) {
+                    
+                    $value['url'] = $result['images']['orig_optimized'];
+                    $currentMedia = (array)$value['media'];
+                    $value['media'] = array_merge($currentMedia, $result['images']);
+                    $value['sizes'] = $allSizes;
+                    $field->json_value = json_encode($value);
+                    $field->save();
+                }
             }
         }
     }
@@ -196,10 +203,13 @@ class MediaController extends Controller
         $finalImageUrls = ['original' => $original];
 
         $site = $this->SiteDetector->current();
-        $sourceDirectory = 'app/public/';
+        $sourceDirectory = 'app/public';
         $original = str_replace("storage/", '', $original);
         $sourceImage = storage_path($sourceDirectory . $original);
 
+        if (!file_exists($sourceImage)) {
+            return false;
+        }
 
         $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $original));
         $this->Storage->makeDirectory($destinationDirectory);

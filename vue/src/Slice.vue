@@ -58,10 +58,7 @@ export default {
     }
 
     this.addListeners();
-
-    if (this.editorMode) {
-      this.checkMediaSizesForRegeneration();
-    }
+    this.checkMediaSizesForRegeneration();
   },
   methods: {
     ...mapActions('devise', ['regenerateMedia']),
@@ -141,7 +138,6 @@ export default {
     },
     checkMediaSizesForRegeneration() {
       // If the current slice even has fields
-      console.log(this.currentView);
       if (typeof this.currentView.fields !== 'undefined') {
         for (var fieldName in this.currentView.fields) {
           const field = this.currentView.fields[fieldName];
@@ -167,7 +163,6 @@ export default {
               for (var sizeName in field.sizes) {
                 let storedSize = this.devise[fieldName].sizes[sizeName];
                 let fieldSize = field.sizes[sizeName];
-                console.log(this.devise[fieldName], fieldSize);
                 if (!storedSize || storedSize.w !== fieldSize.w || storedSize.h !== fieldSize.h) {
                   mediaRequest.sizes[sizeName] = fieldSize;
                 }
@@ -182,6 +177,7 @@ export default {
                   instanceId: this.devise.metadata.instance_id,
                   fieldName: fieldName
                 };
+                console.log(payload);
                 this.requestRegnerateSliceMedia(payload);
               }
             }

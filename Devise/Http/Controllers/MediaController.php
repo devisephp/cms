@@ -166,7 +166,6 @@ class MediaController extends Controller
             $value = (array)$field->value;
             $settings = (isset($field->value->settings)) ? (array)$field->value->settings : [];
             $settings['sizes'] = $request->get('sizes')['sizes'];
-            // dd($settings['sizes']);
             $allSizes = $request->get('allSizes');
 
             if (isset($field->value->media) && isset($field->value->media->original))

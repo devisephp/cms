@@ -247,7 +247,7 @@ class MediaController extends Controller
 
             $finalImageUrls[$sizeLabel] = $destinationImageUrl;
 
-            $finalSettings = array_merge($imagesAndSettings['settings'], $sizeSettings);
+            $finalSettings = array_merge(['fit'=>'crop'], $imagesAndSettings['settings'], $sizeSettings);
 
             // TODO: Can we catch memory timeouts here a little better?
             $finalImages[] = \GlideImage::create($sourceImage)

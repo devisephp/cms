@@ -170,15 +170,17 @@ class MediaController extends Controller
 
         foreach ($allFields as $field)
         {
-            $value = (array)$field->value;
+            $value = array_merge(['media' => []], (array)$field->value);
             $settings = (isset($field->value->settings)) ? (array)$field->value->settings : [];
             $requestedSizes = $request->get('sizes')['sizes'];
 
             if ((isset($field->value->media) && isset($field->value->media->original)) || $field->value->url)
             {
-                if(isset($field->value->media) && isset($field->value->media->original)){
+                if (isset($field->value->media) && isset($field->value->media->original))
+                {
                     $newSizes = $this->onlyNewSizes($requestedSizes, $field->value);
-                } else {
+                } else
+                {
                     $newSizes = $requestedSizes;
                 }
 
@@ -235,7 +237,8 @@ class MediaController extends Controller
         }
 
         $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $original));
-        if (!is_dir($destinationDirectory)) {
+        if (!is_dir($destinationDirectory))
+        {
             $this->Storage->makeDirectory($destinationDirectory);
         }
 
@@ -247,7 +250,7 @@ class MediaController extends Controller
 
             $finalImageUrls[$sizeLabel] = $destinationImageUrl;
 
-            $finalSettings = array_merge($imagesAndSettings['settings'], $sizeSettings);
+            $finalSettings = array_merge(['fit' => 'crop'], $imagesAndSettings['settings'], $sizeSettings);
 
             // TODO: Can we catch memory timeouts here a little better?
             $finalImages[] = \GlideImage::create($sourceImage)

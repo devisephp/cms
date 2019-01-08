@@ -162,7 +162,6 @@ export default {
     },
     buildSlice() {
       let component = this.componentFromView(this.insertSlice.slice.value);
-      console.log(component);
       var finalSlice = {
         settings: {
           enabled: false

@@ -22,7 +22,12 @@
           @mouseleave="moreHovered = false"
           :style="{backgroundColor: this.theme.panelCard.background}"
         >
-          <more-icon w="18" h="18" style="transform:rotate(90deg)" :style="{color: 'white'}"/>
+          <more-icon
+            w="18"
+            h="18"
+            style="transform:rotate(90deg); height:18px;"
+            :style="{color: 'white'}"
+          />
 
           <div
             class="dvs-overflow-hidden dvs-absolute dvs-z-10 dvs-pin-t dvs-pin-r dvs-rounded-sm"

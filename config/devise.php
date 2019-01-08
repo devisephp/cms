@@ -10,7 +10,7 @@ return [
     | Array of available layouts for pages
     |
     */
-    'layouts' => ['main'],
+    'layouts' => ['Main' => 'main'],
 
     /*
     |--------------------------------------------------------------------------

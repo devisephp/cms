@@ -41,6 +41,13 @@
             <span v-if="localValue.languages.length < 1">No Languages</span>
           </fieldset>
 
+          <fieldset class="dvs-fieldset dvs-mb-4" v-if="languages.data && languages.data.length > 0 && localValue.languages">
+            <label>Default Layout</label>
+            <select v-model="localValue.settings.defaultLayout">
+              <option v-for="(path, name) in layouts" :value="path">{{ name }}</option>
+            </select>
+          </fieldset>
+
           <query-builder-interface v-model="localValue.model_queries" />
 
           <fieldset class="dvs-fieldset dvs-mb-10">
@@ -78,6 +85,7 @@ export default {
         languages: [],
         model_queries: null,
         settings: {
+          defaultLayout: '',
           colors: {},
           googleAnalytics: ''
         }
@@ -178,6 +186,9 @@ export default {
         var match = self.localValue.languages.filter(l => l.id === language.id)
         return match.length === 0
       })
+    },
+    layouts() {
+      return deviseSettings.$config.layouts
     }
   },
   mixins: [Strings],

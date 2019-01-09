@@ -20,6 +20,7 @@ class PageResource extends Resource
             'id'                 => $this->id,
             'title'              => $this->title,
             'slug'               => $this->slug,
+            'meta_title'         => $this->meta_title,
             'canonical'          => $this->canonical,
             'ab_testing_enabled' => $this->ab_testing_enabled,
             'is_live'            => ($this->liveVersion) ? true : false,

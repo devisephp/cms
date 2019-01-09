@@ -44,7 +44,8 @@ class Devise
         $detector = App::make(SiteDetector::class);
         $currentSite = $detector->current();
 
-        if ($currentSite) {
+        if ($currentSite)
+        {
             $settings = $currentSite->settings;
 
             if (isset($settings->googleAnalytics) && $settings->googleAnalytics !== '')
@@ -61,27 +62,33 @@ class Devise
         ';
             }
         }
-        
+
         return $analytics;
     }
 
     public static function meta($page = null)
     {
         $meta = '';
-        if ($page && $page->canonical != null)
+        if ($page)
         {
-            $meta .= '<link rel="canonical" href="' . $page->canonical . '">';
-        }
+            $meta .= '<title>' . (($page->meta_title) ?: $page->title) . '</title>';
 
-        $globalMeta = DvsPageMeta::where('page_id', 0)->get();
-
-        if ($page && $page->metas)
-        {
-            $page->metas = $page->metas->merge($globalMeta);
-
-            foreach ($page->metas as $m)
+            if ($page->canonical != null)
             {
-                $meta .= '<meta ' . $m->attribute_name . '="' . $m->attribute_value . '" content="' . $m->content . '">';
+                $meta .= '<link rel="canonical" href="' . $page->canonical . '">';
+            }
+
+            $globalMeta = DvsPageMeta::where('page_id', 0)
+                ->where('site_id', $page->site_id)->get();
+
+            if ($page->metas)
+            {
+                $page->metas = $page->metas->merge($globalMeta);
+
+                foreach ($page->metas as $m)
+                {
+                    $meta .= '<meta ' . $m->attribute_name . '="' . $m->attribute_value . '" content="' . $m->content . '">';
+                }
             }
         }
 
@@ -102,7 +109,8 @@ class Devise
 
         $js .= self::components();
 
-        if (Auth::user()) {
+        if (Auth::user())
+        {
             $js .= self::sites();
         }
 

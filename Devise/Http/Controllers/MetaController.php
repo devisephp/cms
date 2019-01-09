@@ -12,68 +12,68 @@ use Illuminate\Routing\Controller;
 
 class MetaController extends Controller
 {
-  /**
-   * @var DvsPageMeta
-   */
-  private $DvsPageMeta;
+    /**
+     * @var DvsPageMeta
+     */
+    private $DvsPageMeta;
 
 
-  /**
-   * MetasController constructor.
-   * @param DvsPageMeta $DvsPageMeta
-   */
-  public function __construct(DvsPageMeta $DvsPageMeta)
-  {
-    $this->DvsPageMeta = $DvsPageMeta;
-  }
+    /**
+     * MetasController constructor.
+     * @param DvsPageMeta $DvsPageMeta
+     */
+    public function __construct(DvsPageMeta $DvsPageMeta)
+    {
+        $this->DvsPageMeta = $DvsPageMeta;
+    }
 
-  public function all(ApiRequest $request)
-  {
-    $all = $this->DvsPageMeta
-      ->where('page_id', 0)
-      ->get();
+    public function all(ApiRequest $request)
+    {
+        $all = $this->DvsPageMeta
+            ->where('page_id', 0)
+            ->get();
 
-    return MetaResource::collection($all);
-  }
+        return MetaResource::collection($all);
+    }
 
-  /**
-   * @param SaveMeta $request
-   * @return MetaResource
-   */
-  public function store(SaveMeta $request)
-  {
-    $new = $this->DvsPageMeta
-      ->createFromRequest($request);
+    /**
+     * @param SaveMeta $request
+     * @return MetaResource
+     */
+    public function store(SaveMeta $request)
+    {
+        $new = $this->DvsPageMeta
+            ->createFromRequest($request);
 
-    return new MetaResource($new);
-  }
+        return new MetaResource($new);
+    }
 
-  /**
-   * @param SaveMeta $request
-   * @param $id
-   * @return MetaResource
-   */
-  public function update(SaveMeta $request, $id)
-  {
-    $slice = $this->DvsPageMeta
-      ->where('page_id', 0)
-      ->findOrFail($id);
+    /**
+     * @param SaveMeta $request
+     * @param $id
+     * @return MetaResource
+     */
+    public function update(SaveMeta $request, $id)
+    {
+        $slice = $this->DvsPageMeta
+            ->where('page_id', 0)
+            ->findOrFail($id);
 
-    $slice->updateFromRequest($request);
+        $slice->updateFromRequest($request);
 
-    return new MetaResource($slice);
-  }
+        return new MetaResource($slice);
+    }
 
-  /**
-   * @param DeleteMeta $request
-   * @param $id
-   */
-  public function delete(DeleteMeta $request, $id)
-  {
-    $slice = $this->DvsPageMeta
-      ->where('page_id', 0)
-      ->findOrFail($id);
+    /**
+     * @param DeleteMeta $request
+     * @param $id
+     */
+    public function delete(DeleteMeta $request, $id)
+    {
+        $slice = $this->DvsPageMeta
+            ->where('page_id', 0)
+            ->findOrFail($id);
 
-    $slice->delete();
-  }
+        $slice->delete();
+    }
 }

@@ -18,7 +18,7 @@ class LanguageResource extends Resource
       'id'         => $this->id,
       'code'       => $this->code,
       'name'       => $this->name,
-      'default'    => $this->whenPivotLoaded('dvs_site_element', function () {
+      'default'    => $this->whenPivotLoaded('dvs_site_language', function () {
         return $this->pivot->default;
       }),
       'created_at' => $this->created_at->format('Y-m-d H:i:s'),

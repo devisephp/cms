@@ -21,9 +21,9 @@
 
     <button class="dvs-btn dvs-mb-11" :disabled="isInvalid" :style="theme.actionButton" @click="requestCreateMeta">Add New Meta</button>
 
-    <h3 class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panel.color}">Existing Global Meta</h3>
+    <h3 v-if="globalForm" class="dvs-mb-8 dvs-pr-16" :style="{color: theme.panel.color}">Existing Global Meta</h3>
 
-    <help class="dvs-mb-8">You currently do not have any meta tags at this time.</help>
+    <help v-if="value.length == 0" class="dvs-mb-8">You currently do not have any meta tags at this time.</help>
 
     <div class="dvs-mb-8 dvs-flex dvs-flex-col">
       <div v-for="(meta, key) in value" :key="key" class="dvs-flex dvs-justify-between dvs-items-center dvs-mb-2">
@@ -70,11 +70,15 @@ export default {
   data () {
     return {
       newMeta: {
+        site_id: 0,
         attribute_name: null,
         attribute_value: null,
         content: null
       }
     }
+  },
+  mounted() {
+    this.newMeta.site_id = deviseSettings.$page.site_id;
   },
   methods: {
     requestCreateMeta () {
@@ -107,7 +111,13 @@ export default {
              this.newMeta.content !== null
     }
   },
-  props: ['value'],
+  props: {
+    value: {},
+    globalForm: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: {
     TrashIcon,
     EditIcon

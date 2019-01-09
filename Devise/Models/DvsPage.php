@@ -23,6 +23,7 @@ class DvsPage extends Model
         'route_name',
         'title',
         'slug',
+        'meta_title',
         'canonical',
         'head',
         'footer',

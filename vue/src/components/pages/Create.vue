@@ -26,7 +26,9 @@
 
           <fieldset class="dvs-fieldset dvs-mb-4" v-if="!newPage.copy_page">
               <label>Layout</label>
-              <input type="text" v-model="newPage.layout" placeholder="Layout template">
+              <select v-model="newPage.layout">
+                <option v-for="(path, name) in layouts" :value="path">{{ name }}</option>
+              </select>
           </fieldset>
 
           <fieldset class="dvs-fieldset dvs-mb-4">
@@ -72,7 +74,7 @@
     data() {
       return {
         newPage: {
-          layout: null,
+          layout: '',
           language_id: null,
           translated_from_page_id: 0,
           title: null,
@@ -86,6 +88,11 @@
           copy_page_id: 0,
           copy_page_title: 'Search Page'
         }
+      }
+    },
+    mounted() {
+      if(deviseSettings.$page.site.settings.hasOwnProperty('defaultLayout')){
+        this.newPage.layout = deviseSettings.$page.site.settings.defaultLayout;
       }
     },
     methods: {
@@ -124,6 +131,9 @@
           (this.newPage.layout === null && !this.newPage.copy_page && this.newPage.copy_page_id === 0) ||
           this.newPage.language_id === null ||
           this.newPage.slug === null
+      },
+      layouts() {
+        return deviseSettings.$config.layouts
       }
     },
     components: {

@@ -2,6 +2,7 @@
 
 use Devise\Models\DvsLanguage;
 use Devise\Models\DvsPage;
+use Devise\Sites\SiteDetector;
 use Illuminate\Support\Str;
 use Devise\Support\Framework;
 use Devise\Pages\Fields\FieldsRepository;
@@ -81,6 +82,8 @@ class PagesManager
      * @param Framework $Framework
      * @param RoutesGenerator $RoutesGenerator
      * @param DvsLanguage $Language
+     * @param PageMetaManager $PageMetaManager
+     * @param SiteDetector $SiteDetector
      */
     public function __construct(
         DvsPage $Page,
@@ -91,7 +94,8 @@ class PagesManager
         Framework $Framework,
         RoutesGenerator $RoutesGenerator,
         DvsLanguage $Language,
-        PageMetaManager $PageMetaManager
+        PageMetaManager $PageMetaManager,
+        SiteDetector $SiteDetector
     )
     {
         $this->Page = $Page;
@@ -104,6 +108,7 @@ class PagesManager
         $this->RoutesGenerator = $RoutesGenerator;
         $this->Language = $Language;
         $this->PageMetaManager = $PageMetaManager;
+        $this->SiteDetector = $SiteDetector;
         $this->now = new \DateTime;
     }
 
@@ -158,7 +163,7 @@ class PagesManager
             $this->FieldManager->saveSliceInstanceFields($page->currentVersion->id, $input['slices']);
         }
 
-        $this->PageMetaManager->savePageMeta($page->id, array_get($input, 'meta', []));
+        $this->PageMetaManager->savePageMeta($page, array_get($input, 'meta', []));
 
         return $page;
     }
@@ -188,26 +193,37 @@ class PagesManager
      */
     public function copyPage($fromPageId, $input)
     {
+        $input['meta_title'] = $input['title'];
+        $startsAt = date('Y-m-d H:i:s');
         $fromPage = $this->Page->findOrFail($fromPageId);
+
 
         // we'll use the current live version to copy
         $fromPageVersion = $fromPage->getLiveVersion();
 
         if (array_get($input, 'language_id', false))
         {
+            // we are translating the page
             $this->setTranslatedFromPageId($fromPage, $input);
             $this->setTranslatedFromRouteName($fromPage, $input);
+
         } else
         {
             // inject default language id
             $input['language_id'] = $fromPage->language_id;
         }
 
+        if (!array_get($input, 'site_id', false))
+        {
+            $site = $this->SiteDetector->current();
+            $input['site_id'] = $site->id;
+        }
+
         $toPage = $this->createPageFromInput($input);
 
         if (!$toPage) return false;
 
-        $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage);
+        $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage, $startsAt);
 
 
         return $toPage;

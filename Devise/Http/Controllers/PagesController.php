@@ -160,6 +160,7 @@ class PagesController extends Controller
 
         $input['site_id'] = $site->id;
         $input['language_id'] = $request->input('language_id', $defaultLanguage->id);
+        $input['meta_title'] = $input['title'];
 
         $page = $this->PagesManager->createNewPage($input);
 

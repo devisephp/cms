@@ -163,7 +163,7 @@ class PagesManager
             $this->FieldManager->saveSliceInstanceFields($page->currentVersion->id, $input['slices']);
         }
 
-        $this->PageMetaManager->savePageMeta($page->id, array_get($input, 'meta', []));
+        $this->PageMetaManager->savePageMeta($page, array_get($input, 'meta', []));
 
         return $page;
     }
@@ -193,8 +193,10 @@ class PagesManager
      */
     public function copyPage($fromPageId, $input)
     {
+        $input['meta_title'] = $input['title'];
         $startsAt = date('Y-m-d H:i:s');
         $fromPage = $this->Page->findOrFail($fromPageId);
+
 
         // we'll use the current live version to copy
         $fromPageVersion = $fromPage->getLiveVersion();

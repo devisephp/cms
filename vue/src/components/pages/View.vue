@@ -209,13 +209,18 @@
 
         <div class="dvs-mb-12">
           <fieldset class="dvs-fieldset dvs-mb-4">
-            <label>Page Title</label>
+            <label>Title</label>
             <input type="text" v-model="localValue.title" placeholder="Title of the Page">
           </fieldset>
 
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Slug</label>
             <input type="text" v-model="localValue.slug" placeholder="Url of the Page">
+          </fieldset>
+
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Meta Title</label>
+            <input type="text" v-model="localValue.meta_title" placeholder="Meta title of the Page">
           </fieldset>
 
           <fieldset class="dvs-fieldset dvs-mb-8">
@@ -233,6 +238,7 @@
           <fieldset class="dvs-fieldset">
             <meta-form
               v-model="localValue.meta"
+              :global-form="false"
               @request-create-meta="requestCreateMeta"
               @request-update-meta="requestUpdateMeta"
               @request-delete-meta="requestDeleteMeta"

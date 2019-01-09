@@ -4,11 +4,11 @@ namespace Devise\Models;
 
 class DvsPageMeta extends Model
 {
-  public $fillable = ['attribute_name','attribute_value','content'];
+    public $fillable = ['site_id', 'attribute_name', 'attribute_value', 'content'];
 
-  protected $table = 'dvs_page_meta';
+    protected $table = 'dvs_page_meta';
 
-  protected $attributes = [
-    'page_id' => 0
-  ];
+    protected $attributes = [
+        'page_id' => 0
+    ];
 }

@@ -14,10 +14,8 @@
       </div>
     </div>
     <div class="dvs-flex dvs-items-stretch dvs-h-full">
-      <div class="dvs-min-w-1/3" data-simplebar>
-        <div
-          class="dvs-h-full dvs-p-8 dvs-bg-grey-lightest dvs-flex dvs-flex-col dvs-justify-between dvs-border-r dvs-border-lighter"
-        >
+      <div class="dvs-min-w-1/3 dvs-border-r dvs-border-lighter dvs-bg-grey-light" data-simplebar>
+        <div class="dvs-h-full dvs-p-8 dvs-flex dvs-flex-col dvs-justify-between">
           <h3 class="dvs-mb-4">Image Edits</h3>
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Crop / Fitting</label>
@@ -37,6 +35,34 @@
               <option value="crop-bottom-left">Crop Bottom Left</option>
               <option value="crop-bottom-right">Crop Bottom Right</option>
             </select>
+          </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Quality</label>
+            <div class="dvs-flex">
+              <input
+                type="range"
+                @dblclick="edits.q = null"
+                v-model="edits.q"
+                min="0"
+                max="100"
+                step="5"
+              >
+              <div class="dvs-font-bold dvs-text-xs dvs-pl-2">{{ edits.q }}</div>
+            </div>
+          </fieldset>
+          <fieldset class="dvs-fieldset dvs-mb-4">
+            <label>Sharpen</label>
+            <div class="dvs-flex">
+              <input
+                type="range"
+                @dblclick="edits.sharp = null"
+                v-model="edits.sharp"
+                min="0"
+                max="100"
+                step="1"
+              >
+              <div class="dvs-font-bold dvs-text-xs dvs-pl-2">{{ edits.sharp }}</div>
+            </div>
           </fieldset>
           <fieldset class="dvs-fieldset dvs-mb-4" v-if="edits.fit === 'fill'">
             <label>Background Color</label>
@@ -111,20 +137,7 @@
               <div class="dvs-font-bold dvs-text-xs dvs-pl-2">{{ edits.gam }}</div>
             </div>
           </fieldset>
-          <fieldset class="dvs-fieldset dvs-mb-4">
-            <label>Sharpen</label>
-            <div class="dvs-flex">
-              <input
-                type="range"
-                @dblclick="edits.sharp = null"
-                v-model="edits.sharp"
-                min="0"
-                max="100"
-                step="1"
-              >
-              <div class="dvs-font-bold dvs-text-xs dvs-pl-2">{{ edits.sharp }}</div>
-            </div>
-          </fieldset>
+
           <fieldset class="dvs-fieldset dvs-mb-4">
             <label>Pixelate</label>
             <div class="dvs-flex">
@@ -148,7 +161,7 @@
             <h3 class="dvs-mb-4">Images</h3>
 
             <h6 class="dvs-mb-4">Original Image</h6>
-            <img :src="`/styled/preview/${source}?${encodedEdits}`" @load="addToImagesLoaded">
+            <img :src="`/styled/preview/${source}`" @load="addToImagesLoaded">
             <hr class="my-4">
             <div v-for="(size, key) in sizes" :key="key" class="mb-8">
               <h6 class="dvs-mb-4">{{ key }} ({{ size.w }}x{{ size.h }})</h6>
@@ -205,13 +218,14 @@ export default {
     return {
       imagesLoaded: 0,
       edits: {
+        q: 90,
         or: null,
         flip: null,
         fit: 'crop',
         bri: null,
         con: null,
         gam: null,
-        sharp: null,
+        sharp: 5,
         pixel: null,
         filt: null,
         bg: null

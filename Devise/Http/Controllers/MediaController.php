@@ -142,7 +142,8 @@ class MediaController extends Controller
                     'source'                 => $filesystem->getDriver(),
                     'cache'                  => $filesystem->getDriver(),
                     'group_cache_in_folders' => false,
-                    'base_url'               => '/styled/preview/'
+                    'base_url'               => '/styled/preview/',
+                    'driver'                 => $this->Config->get('devise.media.driver')
                 ]);
                 $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
 
@@ -250,7 +251,7 @@ class MediaController extends Controller
 
             $finalImageUrls[$sizeLabel] = $destinationImageUrl;
 
-            $finalSettings = array_merge(['fit' => 'crop'], $imagesAndSettings['settings'], $sizeSettings);
+            $finalSettings = array_merge(['fit' => 'crop', 'q' => 100], $imagesAndSettings['settings'], $sizeSettings);
 
             // TODO: Can we catch memory timeouts here a little better?
             $finalImages[] = \GlideImage::create($sourceImage)

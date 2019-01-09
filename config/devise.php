@@ -37,6 +37,7 @@ return [
         'disk'                    => env('DVS_FILESYSTEM_DISK', 'public'),
         'cached-images-directory' => 'styled',
         'source-directory'        => 'media',
+        'driver'                  => env('DVS_MEDIA_DRIVER', 'gd'),
     ],
 
     /*

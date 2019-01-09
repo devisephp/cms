@@ -311,6 +311,10 @@ export default {
         styles.backgroundColor = backgroundColor;
       }
 
+      if (this.breakpoint === 'mobile' || this.breakpoint === 'tablet') {
+        return styles;
+      }
+
       if (typeof margin !== 'undefined') {
         if (typeof margin.top !== 'undefined') {
           styles.marginTop = `${margin.top}px`;

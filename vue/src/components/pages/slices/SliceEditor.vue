@@ -123,9 +123,8 @@
         v-for="(field, key) in sliceConfig(slice).fields"
         class="dvs-fieldset dvs-mb-1"
         :key="key"
-        v-if="theFields[key]"
       >
-        <div>
+        <div v-if="theFields[key]">
           <color-editor
             v-model="theFields[key]"
             :options="field"

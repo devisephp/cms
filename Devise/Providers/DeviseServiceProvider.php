@@ -115,7 +115,7 @@ class DeviseServiceProvider extends ServiceProvider
     private function setCustomDirectives()
     {
         Blade::directive('slices', function ($expression) {
-            return "<?php echo '<slices :slices=\"slices\"/>' ?>";
+            return "<?php echo '<slices :slices=\"slices\"></slices>' ?>";
         });
     }
 

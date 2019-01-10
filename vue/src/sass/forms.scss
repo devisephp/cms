@@ -84,3 +84,16 @@
     }
   }
 }
+
+#dvs-slice-manager-margins-padding {
+  input {
+    @apply dvs-p-2 dvs-text-center dvs-rounded-sm;
+
+    width: 34px;
+    font-size: 11px;
+
+    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+      @apply dvs-appearance-none dvs-m-0;
+    }
+  }
+}

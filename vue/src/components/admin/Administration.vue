@@ -34,7 +34,12 @@
           </form>
         </div>
 
-        <div class="dvs-max-h-screen dvs-flex-grow" id="dvs-admin-content-container" ref="admin-route-wrapper" data-simplebar>
+        <div
+          class="dvs-max-h-screen dvs-flex-grow"
+          id="dvs-admin-content-container"
+          ref="admin-route-wrapper"
+          data-simplebar
+        >
           <transition name="dvs-fade" mode="out-in">
             <router-view name="devise"></router-view>
           </transition>
@@ -134,7 +139,8 @@ export default {
       import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-power.vue'),
     SaveIcon: () =>
       import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-save.vue'),
-    SliceSettings: () => import(/* webpackChunkName: "js/devise-pages" */ './../../SliceSettings')
+    SliceSettings: () =>
+      import(/* webpackChunkName: "js/devise-pages" */ './../slices/SliceSettings')
   }
 };
 </script>

@@ -1,14 +1,14 @@
 webpackJsonp([12],{
 
-/***/ 684:
+/***/ 685:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(891)
+var __vue_script__ = __webpack_require__(893)
 /* template */
-var __vue_template__ = __webpack_require__(892)
+var __vue_template__ = __webpack_require__(894)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 891:
+/***/ 893:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67,8 +67,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-//
-//
 //
 //
 //
@@ -128,7 +126,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 892:
+/***/ 894:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -145,31 +143,24 @@ var render = function() {
     _c(
       "ul",
       { staticClass: "dvs-list-reset" },
-      [
-        _c(
-          "transition-group",
-          { attrs: { name: "dvs-fade" } },
-          _vm._l(_vm.currentMenu.menu, function(menuItem, key) {
-            return _c("li", { key: key, staticClass: "dvs-mb-4" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "dvs-block dvs-mb-4 dvs-switch-sm dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer",
-                  style: { color: _vm.theme.panel.color },
-                  on: {
-                    click: function($event) {
-                      _vm.goToPage(menuItem.routeName, menuItem.parameters)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(menuItem.label))]
-              )
-            ])
-          })
-        )
-      ],
-      1
+      _vm._l(_vm.currentMenu.menu, function(menuItem) {
+        return _c("li", { staticClass: "dvs-mb-4" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "dvs-block dvs-mb-4 dvs-switch-sm dvs-flex dvs-justify-between dvs-items-center dvs-cursor-pointer",
+              style: { color: _vm.theme.panel.color },
+              on: {
+                click: function($event) {
+                  _vm.goToPage(menuItem.routeName, menuItem.parameters)
+                }
+              }
+            },
+            [_vm._v(_vm._s(menuItem.label))]
+          )
+        ])
+      })
     )
   ])
 }

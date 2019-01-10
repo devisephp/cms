@@ -6,7 +6,7 @@ import ActionBar from './components/utilities/ActionBar';
 import Sidebar from './components/utilities/Sidebar';
 import Help from './components/utilities/Help';
 import SliceEditor from './components/pages/slices/SliceEditor';
-import Slices from './Slices';
+import Slices from './components/slices/Slices';
 import DeviseStore from './vuex/store';
 import PortalVue from 'portal-vue';
 import { DeviseBus } from './event-bus.js';

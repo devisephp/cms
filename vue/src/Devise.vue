@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import Slice from './Slice';
 import User from './components/menu/User';
 import SimpleBar from 'SimpleBar';
 
@@ -136,7 +135,6 @@ export default {
   },
   components: {
     SettingsIcon,
-    Slice,
     User
   }
 };

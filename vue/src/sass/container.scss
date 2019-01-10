@@ -134,6 +134,14 @@
   .scrollactive-item.is-active { 
     @apply dvs-font-bold
   } 
+
+  ul {
+    @apply dvs-list-reset dvs-mb-10 dvs-text-sm dvs-font-thin;
+
+    li {
+      @apply dvs-mb-2;
+    }
+  }
 }
 
 .devise-admin-action-bar {

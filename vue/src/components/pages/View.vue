@@ -1,12 +1,13 @@
 <template>
   <div>
     <div id="devise-admin-content" v-if="localValue.id">
-      <div 
+      <div
         id="dvs-admin-sidebar"
         :style="{
           borderColor:theme.panelCard.background, 
           background:theme.panelCard.background
-        }">
+        }"
+      >
         <scrollactive
           :offset="80"
           :duration="800"
@@ -14,28 +15,19 @@
           scroll-container-selector="#dvs-admin-content-container .simplebar-scroll-content"
           id="dvs-menu"
         >
-          <button class="dvs-btn dvs-btn-zero dvs-btn-text dvs-mb-8" :style="{color: theme.actionButtonGhost.color}" @click="historyBack">Back</button>
+          <button
+            class="dvs-btn dvs-btn-zero dvs-btn-text dvs-mb-8"
+            :style="{color: theme.actionButtonGhost.color}"
+            @click="historyBack"
+          >Back</button>
 
           <h6 :style="{color: theme.panel.color}" class="dvs-mb-4">Actions</h6>
-          <ul class="dvs-list-reset dvs-mb-10 dvs-text-sm dvs-font-thin">
+          <ul>
+            <li @click="href(page.slug)">Go To Page</li>
+            <li @click="href(page.slug + '/#/devise/edit-page')">Edit Page Content</li>
+            <li @click="showCopy = true">Copy This Page</li>
+            <li @click="showTranslate = true">Translate This Page</li>
             <li
-              class="dvs-mb-2"
-              @click="href(page.slug)"
-            >Go To Page</li>
-            <li
-              class="dvs-mb-2"
-              @click="href(page.slug + '/#/devise/edit-page')"
-            >Edit Page Content</li>
-            <li
-              class="dvs-mb-2"
-              @click="showCopy = true"
-            >Copy This Page</li>
-            <li
-              class="dvs-mb-2"
-              @click="showTranslate = true"
-            >Translate This Page</li>
-            <li
-              class="dvs-mb-2"
               v-devise-alert-confirm="{callback: requestDeletePage, message: 'Are you sure you want to delete this page?'}"
             >Delete This Page</li>
           </ul>
@@ -43,21 +35,35 @@
           <h6 :style="{color: theme.panel.color}" class="dvs-mb-4">Sections</h6>
           <ul class="dvs-list-reset dvs-mb-10 dvs-text-sm dvs-font-thin">
             <li class="dvs-mb-2">
-              <a href="#versions" class="scrollactive-item" :style="{color:theme.panel.color}">Versions of this Page</a>
+              <a
+                href="#versions"
+                class="scrollactive-item"
+                :style="{color:theme.panel.color}"
+              >Versions of this Page</a>
             </li>
             <li class="dvs-mb-2">
-              <a href="#settings" class="scrollactive-item" :style="{color:theme.panel.color}">Global Page Settings</a>
+              <a
+                href="#settings"
+                class="scrollactive-item"
+                :style="{color:theme.panel.color}"
+              >Global Page Settings</a>
             </li>
             <li class="dvs-mb-2">
-              <a href="#meta-tags" class="scrollactive-item" :style="{color:theme.panel.color}">Meta Tags</a>
+              <a
+                href="#meta-tags"
+                class="scrollactive-item"
+                :style="{color:theme.panel.color}"
+              >Meta Tags</a>
             </li>
           </ul>
-
         </scrollactive>
       </div>
 
       <div id="dvs-admin-main" style="padding-left:250px;">
-        <h1 :style="{color: theme.panel.color}" class="dvs-mb-8 dvs-font-hairline">{{ localValue.title }}</h1>
+        <h1
+          :style="{color: theme.panel.color}"
+          class="dvs-mb-8 dvs-font-hairline"
+        >{{ localValue.title }}</h1>
 
         <template v-if="analytics.data">
           <h3
@@ -203,7 +209,11 @@
           </div>
         </div>
 
-        <h3 class="dvs-mb-8 dvs-pr-16" id="settings" :style="{color: theme.panel.color}">Global Page Settings</h3>
+        <h3
+          class="dvs-mb-8 dvs-pr-16"
+          id="settings"
+          :style="{color: theme.panel.color}"
+        >Global Page Settings</h3>
 
         <help class="dvs-mb-8">These settings effect all of the page versions of this page.</help>
 
@@ -233,8 +243,12 @@
             <input type="checkbox" v-model="localValue.ab_testing_enabled">
           </fieldset>
 
-          <h3 id="meta-tags" :style="{color: theme.panel.color}" class="dvs-mb-4">Page Specific Meta Tags</h3>
-          
+          <h3
+            id="meta-tags"
+            :style="{color: theme.panel.color}"
+            class="dvs-mb-4"
+          >Page Specific Meta Tags</h3>
+
           <fieldset class="dvs-fieldset">
             <meta-form
               v-model="localValue.meta"
@@ -246,83 +260,91 @@
           </fieldset>
 
           <div class="dvs-flex">
-            <button @click="requestSavePage" class="dvs-btn dvs-mr-2" :style="theme.actionButton">Save</button>
-            <button @click="goToPage" class="dvs-btn dvs-mr-4" :style="theme.actionButtonGhost">Cancel</button>
+            <button
+              @click="requestSavePage"
+              class="dvs-btn dvs-mr-2"
+              :style="theme.actionButton"
+            >Save</button>
+            <button
+              @click="goToPage"
+              class="dvs-btn dvs-mr-4"
+              :style="theme.actionButtonGhost"
+            >Cancel</button>
           </div>
         </div>
       </div>
     </div>
 
-      <transition name="dvs-fade">
-        <devise-modal @close="showCopy = false" class="dvs-z-50" v-if="showCopy">
-          <h4 class="dvs-mb-4">Copy this page</h4>
-          <help
-            class="dvs-mb-4"
-          >This will create a whole new page based on this page copying all settings and values associated with it.</help>
-          <fieldset class="dvs-fieldset dvs-mb-4">
-            <label>Page Title</label>
-            <input type="text" v-model="pageToCopy.title" placeholder="Title of the Page">
-          </fieldset>
+    <transition name="dvs-fade">
+      <devise-modal @close="showCopy = false" class="dvs-z-50" v-if="showCopy">
+        <h4 class="dvs-mb-4">Copy this page</h4>
+        <help
+          class="dvs-mb-4"
+        >This will create a whole new page based on this page copying all settings and values associated with it.</help>
+        <fieldset class="dvs-fieldset dvs-mb-4">
+          <label>Page Title</label>
+          <input type="text" v-model="pageToCopy.title" placeholder="Title of the Page">
+        </fieldset>
 
-          <fieldset class="dvs-fieldset dvs-mb-4">
-            <label>Slug</label>
-            <input type="text" v-model="pageToCopy.slug" placeholder="Url of the Page">
-          </fieldset>
+        <fieldset class="dvs-fieldset dvs-mb-4">
+          <label>Slug</label>
+          <input type="text" v-model="pageToCopy.slug" placeholder="Url of the Page">
+        </fieldset>
 
-          <button
-            class="dvs-btn"
-            @click="requestCopyPage"
-            :disabled="pageToCopy.title === null || pageToCopy.slug === null"
-          >Create</button>
-          <button class="dvs-btn" @click="showCopy = false">Cancel</button>
-        </devise-modal>
-      </transition>
+        <button
+          class="dvs-btn"
+          @click="requestCopyPage"
+          :disabled="pageToCopy.title === null || pageToCopy.slug === null"
+        >Create</button>
+        <button class="dvs-btn" @click="showCopy = false">Cancel</button>
+      </devise-modal>
+    </transition>
 
-      <transition name="dvs-fade">
-        <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showTranslate">
-          <h4 class="dvs-mb-4">Translate this page</h4>
-          <help
-            class="dvs-mb-4"
-          >This will create a translated page associated with this page. While the pages are connected to allow users to switch between translations they do have their own settings and versions.</help>
+    <transition name="dvs-fade">
+      <devise-modal @close="showTranslate = false" class="dvs-z-50" v-if="showTranslate">
+        <h4 class="dvs-mb-4">Translate this page</h4>
+        <help
+          class="dvs-mb-4"
+        >This will create a translated page associated with this page. While the pages are connected to allow users to switch between translations they do have their own settings and versions.</help>
 
-          <fieldset class="dvs-fieldset dvs-mb-4">
-            <label>Page Title</label>
-            <input type="text" v-model="pageToTranslate.title" placeholder="Title of the Page">
-          </fieldset>
+        <fieldset class="dvs-fieldset dvs-mb-4">
+          <label>Page Title</label>
+          <input type="text" v-model="pageToTranslate.title" placeholder="Title of the Page">
+        </fieldset>
 
-          <fieldset class="dvs-fieldset dvs-mb-4">
-            <label>Languages</label>
-            <select v-model="translateLanguage">
-              <option :value="null">Please select a language</option>
-              <option
-                v-for="language in languages.data"
-                :key="language.id"
-                :value="language"
-              >{{ language.code }}</option>
-            </select>
-          </fieldset>
+        <fieldset class="dvs-fieldset dvs-mb-4">
+          <label>Languages</label>
+          <select v-model="translateLanguage">
+            <option :value="null">Please select a language</option>
+            <option
+              v-for="language in languages.data"
+              :key="language.id"
+              :value="language"
+            >{{ language.code }}</option>
+          </select>
+        </fieldset>
 
-          <fieldset class="dvs-fieldset dvs-mb-4">
-            <label>Slug</label>
-            <div class="dvs-flex">
-              <input
-                type="text"
-                disabled="disabled"
-                v-model="translateLanguage.code"
-                class="dvs-max-w-3xs"
-              >
-              <input type="text" v-model="pageToTranslate.slug" placeholder="Url of the Page">
-            </div>
-          </fieldset>
+        <fieldset class="dvs-fieldset dvs-mb-4">
+          <label>Slug</label>
+          <div class="dvs-flex">
+            <input
+              type="text"
+              disabled="disabled"
+              v-model="translateLanguage.code"
+              class="dvs-max-w-3xs"
+            >
+            <input type="text" v-model="pageToTranslate.slug" placeholder="Url of the Page">
+          </div>
+        </fieldset>
 
-          <button
-            class="dvs-btn"
-            @click="requestTranslatePage"
-            :disabled="pageToTranslate.title === null || pageToTranslate.slug === null || translateLanguage === null"
-          >Translate</button>
-          <button class="dvs-btn" @click="showTranslate = false">Cancel</button>
-        </devise-modal>
-      </transition>
+        <button
+          class="dvs-btn"
+          @click="requestTranslatePage"
+          :disabled="pageToTranslate.title === null || pageToTranslate.slug === null || translateLanguage === null"
+        >Translate</button>
+        <button class="dvs-btn" @click="showTranslate = false">Cancel</button>
+      </devise-modal>
+    </transition>
   </div>
 </template>
 
@@ -339,7 +361,7 @@ import CopyIcon from 'vue-ionicons/dist/ios-copy.vue';
 import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
 
 import { mapActions, mapGetters, mapState } from 'vuex';
-import AdministrationMixin from './../../mixins/Administration'
+import AdministrationMixin from './../../mixins/Administration';
 
 export default {
   name: 'PagesView',

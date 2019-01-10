@@ -1,14 +1,14 @@
 webpackJsonp([10],{
 
-/***/ 645:
+/***/ 646:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(703)
+var __vue_script__ = __webpack_require__(704)
 /* template */
-var __vue_template__ = __webpack_require__(704)
+var __vue_template__ = __webpack_require__(705)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,15 +48,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 685:
+/***/ 686:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(893)
+var __vue_script__ = __webpack_require__(895)
 /* template */
-var __vue_template__ = __webpack_require__(894)
+var __vue_template__ = __webpack_require__(896)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96,7 +96,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 703:
+/***/ 704:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -128,7 +128,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 704:
+/***/ 705:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -173,15 +173,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 705:
+/***/ 706:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(706)
+var __vue_script__ = __webpack_require__(707)
 /* template */
-var __vue_template__ = __webpack_require__(707)
+var __vue_template__ = __webpack_require__(708)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -221,7 +221,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 706:
+/***/ 707:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -253,7 +253,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 707:
+/***/ 708:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -298,15 +298,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 742:
+/***/ 743:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(743)
+var __vue_script__ = __webpack_require__(744)
 /* template */
-var __vue_template__ = __webpack_require__(744)
+var __vue_template__ = __webpack_require__(745)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -346,16 +346,16 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 743:
+/***/ 744:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue__ = __webpack_require__(705);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue__ = __webpack_require__(706);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue__ = __webpack_require__(645);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue__ = __webpack_require__(646);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue__);
 
 //
@@ -430,11 +430,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newMeta: {
+        site_id: 0,
         attribute_name: null,
         attribute_value: null,
         content: null
       }
     };
+  },
+  mounted: function mounted() {
+    this.newMeta.site_id = deviseSettings.$page.site_id;
   },
 
   methods: {
@@ -464,7 +468,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return this.newMeta.attribute_name !== null || this.newMeta.attribute_value !== null || this.newMeta.content !== null;
     }
   },
-  props: ['value'],
+  props: {
+    value: {},
+    globalForm: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: {
     TrashIcon: __WEBPACK_IMPORTED_MODULE_1_vue_ionicons_dist_md_trash_vue___default.a,
     EditIcon: __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_create_vue___default.a
@@ -473,7 +483,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 744:
+/***/ 745:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -583,18 +593,22 @@ var render = function() {
         [_vm._v("Add New Meta")]
       ),
       _vm._v(" "),
-      _c(
-        "h3",
-        {
-          staticClass: "dvs-mb-8 dvs-pr-16",
-          style: { color: _vm.theme.panel.color }
-        },
-        [_vm._v("Existing Global Meta")]
-      ),
+      _vm.globalForm
+        ? _c(
+            "h3",
+            {
+              staticClass: "dvs-mb-8 dvs-pr-16",
+              style: { color: _vm.theme.panel.color }
+            },
+            [_vm._v("Existing Global Meta")]
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c("help", { staticClass: "dvs-mb-8" }, [
-        _vm._v("You currently do not have any meta tags at this time.")
-      ]),
+      _vm.value.length == 0
+        ? _c("help", { staticClass: "dvs-mb-8" }, [
+            _vm._v("You currently do not have any meta tags at this time.")
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "div",
@@ -842,7 +856,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 893:
+/***/ 895:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -852,7 +866,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MetaForm__ = __webpack_require__(742);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MetaForm__ = __webpack_require__(743);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MetaForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__MetaForm__);
 
 
@@ -920,7 +934,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 894:
+/***/ 896:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

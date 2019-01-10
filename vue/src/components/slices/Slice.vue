@@ -23,7 +23,7 @@ import mezr from 'mezr';
 import Slice from './Slice';
 import { mapGetters, mapActions } from 'vuex';
 
-import Strings from './mixins/Strings';
+import Strings from './../../mixins/Strings';
 import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue';
 
 export default {
@@ -286,35 +286,8 @@ export default {
       var rect = elm.getBoundingClientRect();
       var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
       return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-    }
-  },
-  computed: {
-    ...mapGetters('devise', ['component', 'sliceConfig', 'breakpoint', 'mediaAlreadyRequested']),
-    deviseForSlice() {
-      if (this.devise.config) {
-        return this.devise.config;
-      }
-      return this.devise;
     },
-    styles() {
-      var styles = {};
-
-      if (typeof this.deviseForSlice.settings === 'undefined') {
-        this.$set(this.deviseForSlice, 'settings', {});
-      }
-
-      let backgroundColor = this.deviseForSlice.settings.backgroundColor;
-      let margin = this.deviseForSlice.settings.margin;
-      let padding = this.deviseForSlice.settings.padding;
-
-      if (typeof backgroundColor !== 'undefined') {
-        styles.backgroundColor = backgroundColor;
-      }
-
-      if (this.breakpoint === 'mobile' || this.breakpoint === 'tablet') {
-        return styles;
-      }
-
+    buildStyles(styles, margin, padding) {
       if (typeof margin !== 'undefined') {
         if (typeof margin.top !== 'undefined') {
           styles.marginTop = `${margin.top}px`;
@@ -346,6 +319,38 @@ export default {
       }
 
       return styles;
+    }
+  },
+  computed: {
+    ...mapGetters('devise', ['component', 'sliceConfig', 'breakpoint', 'mediaAlreadyRequested']),
+    deviseForSlice() {
+      if (this.devise.config) {
+        return this.devise.config;
+      }
+      return this.devise;
+    },
+    styles() {
+      var styles = {};
+
+      if (typeof this.deviseForSlice.settings === 'undefined') {
+        this.$set(this.deviseForSlice, 'settings', {});
+      }
+
+      let backgroundColor = this.deviseForSlice.settings.backgroundColor;
+      let margin = this.deviseForSlice.settings.margin;
+      let mobileMargin = this.deviseForSlice.settings.mobile_margin;
+      let padding = this.deviseForSlice.settings.padding;
+      let mobilePadding = this.deviseForSlice.settings.mobile_padding;
+
+      if (typeof backgroundColor !== 'undefined') {
+        styles.backgroundColor = backgroundColor;
+      }
+
+      if (this.breakpoint === 'mobile') {
+        return this.buildStyles(styles, mobileMargin, mobilePadding);
+      }
+
+      return this.buildStyles(styles, margin, padding);
     },
     currentView() {
       if (this.devise.config) {

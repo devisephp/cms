@@ -225,7 +225,7 @@
         <template v-for="s in slice.slices">
           <slice-editor
             :key="s.metadata.instance_id"
-            :slice="s"
+            :devise="s"
             :child="true"
             @addSlice="addSlice"
             @editSlice="editSlice"
@@ -381,7 +381,7 @@ export default {
       for (const field in this.theFields) {
         if (this.theFields.hasOwnProperty(field)) {
           const f = this.theFields[field];
-          if (f.editorLabel) {
+          if (f.editorLabel && f[acceptedFieldTypes[f.type]]) {
             let label = f[acceptedFieldTypes[f.type]].toLowerCase();
             if (label) {
               return `<div class="dvs-capitalize">${label}</div><div class="dvs-text-xs dvs-opacity-25 dvs-uppercase">${

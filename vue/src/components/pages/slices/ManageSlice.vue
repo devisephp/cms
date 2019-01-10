@@ -164,7 +164,7 @@ export default {
       let component = this.componentFromView(this.insertSlice.slice.value);
       var finalSlice = {
         settings: {
-          enabled: false
+          enabled: true
         },
         metadata: {
           instance_id: 0,

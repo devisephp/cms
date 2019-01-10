@@ -7,14 +7,15 @@
         class="dvs-flex dvs-items-center dvs-justify-between dvs-w-full"
         :style="{color: theme.panel.color}"
       >
-        <div class="dvs-flex dvs-items-center">
+        <div class="dvs-flex dvs-items-start">
           <menu-icon w="18" h="18" class="dvs-mr-2 handle" :style="theme.panelIcons"/>
           <span
             :class="{'dvs-cursor-pointer': sliceHasFieldsOrSlices, 'dvs-opacity-75': !sliceHasFieldsOrSlices}"
             @click="toggleSlice()"
             @mouseenter="markSlice(true, slice)"
             @mouseleave="markSlice(false, slice)"
-          >{{ slice.metadata.label }}</span>
+            v-html="editorLabel"
+          ></span>
         </div>
         <div
           class="dvs-ml-2 dvs-relative dvs-p-2 dvs-rounded-sm dvs-flex dvs-items-center"
@@ -329,6 +330,9 @@ export default {
   },
   computed: {
     ...mapGetters('devise', ['component', 'fieldConfig', 'sliceConfig']),
+    slice() {
+      return this.devise;
+    },
     theFields() {
       var fields = {};
       for (var potentialField in this.slice) {
@@ -363,10 +367,36 @@ export default {
       }
 
       return false;
+    },
+    editorLabel() {
+      let acceptedFieldTypes = {
+        text: 'text',
+        number: 'text',
+        datetime: 'text',
+        image: 'url',
+        link: 'text',
+        select: 'value'
+      };
+
+      for (const field in this.theFields) {
+        if (this.theFields.hasOwnProperty(field)) {
+          const f = this.theFields[field];
+          if (f.editorLabel) {
+            let label = f[acceptedFieldTypes[f.type]].toLowerCase();
+            if (label) {
+              return `<div class="dvs-capitalize">${label}</div><div class="dvs-text-xs dvs-opacity-25 dvs-uppercase">${
+                this.slice.metadata.label
+              }</div>`;
+            }
+          }
+        }
+      }
+      return `<div class="dvs-capitalize">${
+        this.slice.metadata.label
+      }</div><div class="dvs-text-xs dvs-opacity-25 dvs-uppercase">&nbsp;</div>`;
     }
   },
   props: {
-    slice: {},
     child: {
       default: false
     }

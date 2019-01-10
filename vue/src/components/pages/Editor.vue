@@ -25,7 +25,7 @@
           <slice-editor
             @opened="openSlice(slice)"
             :key="slice.id"
-            :slice="slice"
+            :devise="slice"
             @addSlice="addSlice"
             @editSlice="editSlice"
             @removeSlice="removeSlice"

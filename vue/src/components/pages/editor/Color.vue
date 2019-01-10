@@ -54,7 +54,6 @@ export default {
     },
     color: {
       get() {
-        console.log(this.value);
         return tinycolor(this.value.color).toHex();
       },
       set(color) {

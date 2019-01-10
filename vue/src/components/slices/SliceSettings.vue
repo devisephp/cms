@@ -102,6 +102,11 @@ export default {
           this.backgroundColor = tinycolor('#fff').toRgb();
         }
       });
+
+      deviseSettings.$bus.$on('devise-close-sidebar', () => {
+        console.log('here');
+        this.closeEditor();
+      });
     },
     closeEditor() {
       this.showEditor = false;
@@ -129,8 +134,6 @@ export default {
       if (typeof this.slice.settings.padding === 'undefined') {
         this.$set(this.slice.settings, 'padding', {});
       }
-      console.log(payload.type, this.slice.settings[payload.type], payload.position, payload.value);
-
       this.$set(this.slice.settings[payload.type], payload.position, payload.value);
     },
     setMobileMarginPadding(payload) {

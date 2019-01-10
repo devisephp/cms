@@ -383,6 +383,11 @@ export default {
           const f = this.theFields[field];
           if (f.editorLabel && f[acceptedFieldTypes[f.type]]) {
             let label = f[acceptedFieldTypes[f.type]].toLowerCase();
+
+            if (f.type === 'image') {
+              label = `<div class="dvs-rounded dvs-bg-cover" style="background-image: url('${label}'); height:100px; width:200px;"></div>`;
+            }
+
             if (label) {
               return `<div class="dvs-capitalize">${label}</div><div class="dvs-text-xs dvs-opacity-25 dvs-uppercase">${
                 this.slice.metadata.label

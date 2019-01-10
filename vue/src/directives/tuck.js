@@ -1,14 +1,12 @@
-import Vue from "vue";
-import { TweenMax, TimelineLite, CSSPlugin } from "gsap";
+import Vue from 'vue';
+import { TweenMax, TimelineLite, CSSPlugin } from 'gsap';
 const plugins = [CSSPlugin];
 
 export default {
   inserted: function(el) {
     let offset = 5;
 
-    let style = window.getComputedStyle
-      ? getComputedStyle(el, null)
-      : el.currentStyle;
+    let style = window.getComputedStyle ? getComputedStyle(el, null) : el.currentStyle;
 
     let marginLeft = parseInt(style.marginLeft) || 0;
     let marginRight = parseInt(style.marginRight) || 0;
@@ -21,8 +19,8 @@ export default {
     var elWidth = el.offsetWidth;
     var elHeight = el.offsetHeight;
 
-    var blocker = document.createElement("div");
-    blocker.classList.add("dvs-blocker");
+    var blocker = document.createElement('div');
+    blocker.classList.add('dvs-blocker');
     document.body.appendChild(blocker);
 
     function calculateTuckX() {
@@ -59,6 +57,8 @@ export default {
         .to(blocker, 0, {
           top: `${window.innerHeight}px`
         });
+
+      deviseSettings.$bus.$emit('devise-close-sidebar');
     }
 
     function show() {
@@ -70,7 +70,7 @@ export default {
       TweenMax.to(el, 1, {
         top: `${elY}px`,
         left: `${elX}px`,
-        width: "auto",
+        width: 'auto',
         ease: Elastic.easeOut.config(0.5, 0.5)
       });
 
@@ -88,7 +88,7 @@ export default {
       hide();
     }, 1500);
 
-    el.addEventListener("mouseenter", show);
-    blocker.addEventListener("click", hide);
+    el.addEventListener('mouseenter', show);
+    blocker.addEventListener('click', hide);
   }
 };

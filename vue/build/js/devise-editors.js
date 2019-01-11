@@ -3995,8 +3995,12 @@ var tinycolor = __webpack_require__(120);
   name: 'ColorEditor',
   data: function data() {
     return {
-      showEditor: false
+      showEditor: false,
+      originalValue: null
     };
+  },
+  mounted: function mounted() {
+    this.originalValue = this.value.color;
   },
 
   methods: {
@@ -4004,6 +4008,8 @@ var tinycolor = __webpack_require__(120);
       this.showEditor = !this.showEditor;
     },
     cancel: function cancel() {
+      var rgba = this.convertColor(this.originalValue);
+      this.color = { rgba: rgba };
       this.toggleEditor();
     },
     convertColor: function convertColor(color) {
@@ -4026,6 +4032,7 @@ var tinycolor = __webpack_require__(120);
         return tinycolor(this.value.color).toHex();
       },
       set: function set(color) {
+        console.log(color);
         var valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, { color: null });
         if (color !== null) {
           valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, {
@@ -4739,12 +4746,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return 'This field is not enabled. Edit the field and toggle the enable switch to turn it on.';
     },
     resetValue: function resetValue() {
-      this.localValue.enabled = false;
       this.showErase = false;
       this.$emit('resetvalue');
     }
   },
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['fieldConfig'])),
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['fieldConfig']), Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["d" /* mapState */])('devise', ['devMode']), {
+    devLabel: function devLabel() {
+      if (this.devMode) {
+        //TO DO - NEED THE INSTANCE ID OF THE FIELD
+        // return ``;
+      }
+    }
+  }),
   props: ['value', 'options', 'showEditor', 'noReset'],
   mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_Strings__["a" /* default */]],
   components: {
@@ -4815,7 +4828,13 @@ var render = function() {
                         style: "background-color:" + _vm.value.color
                       })
                     : _vm._e(),
-                  _vm._v("\n        " + _vm._s(_vm.options.label) + "\n      ")
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.devLabel) +
+                      " " +
+                      _vm._s(_vm.options.label) +
+                      "\n      "
+                  )
                 ]
               )
             ]

@@ -17,6 +17,7 @@ class FieldResource extends Resource
     public function toArray($request)
     {
         $value = $this->value;
+        $value->id = $this->id;
         if (isset($value->type))
         {
             if (isset($value->routeName)

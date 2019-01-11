@@ -21,7 +21,7 @@
             class="dvs-rounded-sm dvs-mr-2"
             style="width:10px; height:10px;"
           ></div>
-          {{ options.label }}
+          {{devLabel}} {{ options.label }}
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import Strings from './../../../mixins/Strings';
 
 export default {
@@ -120,13 +120,19 @@ export default {
       return 'This field is not enabled. Edit the field and toggle the enable switch to turn it on.';
     },
     resetValue() {
-      this.localValue.enabled = false;
       this.showErase = false;
       this.$emit('resetvalue');
     }
   },
   computed: {
-    ...mapGetters('devise', ['fieldConfig'])
+    ...mapGetters('devise', ['fieldConfig']),
+    ...mapState('devise', ['devMode']),
+    devLabel() {
+      if (this.devMode) {
+        //TO DO - NEED THE INSTANCE ID OF THE FIELD
+        // return ``;
+      }
+    }
   },
   props: ['value', 'options', 'showEditor', 'noReset'],
   mixins: [Strings],

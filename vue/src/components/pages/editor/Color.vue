@@ -28,14 +28,20 @@ export default {
   name: 'ColorEditor',
   data() {
     return {
-      showEditor: false
+      showEditor: false,
+      originalValue: null
     };
+  },
+  mounted() {
+    this.originalValue = this.value.color;
   },
   methods: {
     toggleEditor() {
       this.showEditor = !this.showEditor;
     },
     cancel() {
+      let rgba = this.convertColor(this.originalValue);
+      this.color = { rgba: rgba };
       this.toggleEditor();
     },
     convertColor(color) {
@@ -58,6 +64,7 @@ export default {
         return tinycolor(this.value.color).toHex();
       },
       set(color) {
+        console.log(color);
         let valueObj = Object.assign(this.value, { color: null });
         if (color !== null) {
           valueObj = Object.assign(this.value, {

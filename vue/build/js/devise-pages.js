@@ -8157,7 +8157,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$set(version, 'showSettings', !version.showSettings);
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["c" /* mapGetters */])('devise', ['languages', 'mothershipApiKey']), Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["e" /* mapState */])('devise', ['layouts']), {
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["c" /* mapGetters */])('devise', ['languages', 'mothershipApiKey']), Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["d" /* mapState */])('devise', ['layouts']), {
     options: function options() {
       return {
         width: '8000px',

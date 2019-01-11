@@ -1114,8 +1114,12 @@ var tinycolor = __webpack_require__(120);
   name: 'ColorEditor',
   data: function data() {
     return {
-      showEditor: false
+      showEditor: false,
+      originalValue: null
     };
+  },
+  mounted: function mounted() {
+    this.originalValue = this.value.color;
   },
 
   methods: {
@@ -1123,6 +1127,8 @@ var tinycolor = __webpack_require__(120);
       this.showEditor = !this.showEditor;
     },
     cancel: function cancel() {
+      var rgba = this.convertColor(this.originalValue);
+      this.color = { rgba: rgba };
       this.toggleEditor();
     },
     convertColor: function convertColor(color) {
@@ -1145,6 +1151,7 @@ var tinycolor = __webpack_require__(120);
         return tinycolor(this.value.color).toHex();
       },
       set: function set(color) {
+        console.log(color);
         var valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, { color: null });
         if (color !== null) {
           valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, {

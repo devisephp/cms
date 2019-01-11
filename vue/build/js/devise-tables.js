@@ -2905,6 +2905,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5077,9 +5101,7 @@ var render = function() {
                             "div",
                             { staticClass: "dvs-flex" },
                             [
-                              _c("div", [
-                                _vm._v(" " + _vm._s(column.label) + " ")
-                              ]),
+                              _c("div", [_vm._v(_vm._s(column.label))]),
                               _vm._v(" "),
                               _c("column-controls", {
                                 ref: column.key,
@@ -5281,7 +5303,7 @@ var render = function() {
                     style: _vm.theme.actionButtonGhost
                   },
                   [
-                    _vm._v("\n          " + _vm._s(key) + "\n          "),
+                    _vm._v("\n        " + _vm._s(key) + "\n        "),
                     _c(
                       "div",
                       {

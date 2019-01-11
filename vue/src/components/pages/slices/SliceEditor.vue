@@ -239,7 +239,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'SliceEditor',
@@ -330,6 +330,7 @@ export default {
   },
   computed: {
     ...mapGetters('devise', ['component', 'fieldConfig', 'sliceConfig']),
+    ...mapState('devise', ['devMode']),
     slice() {
       return this.devise;
     },
@@ -378,27 +379,35 @@ export default {
         select: 'value'
       };
 
+      let devMode = '';
+      if (this.devMode) {
+        devMode = `<div class="dvs-text-sm dvs-uppercase dvs-opacity-75">Instance Id: ${
+          this.slice.metadata.instance_id
+        }</div>`;
+      }
+
       for (const field in this.theFields) {
         if (this.theFields.hasOwnProperty(field)) {
           const f = this.theFields[field];
+
           if (f.editorLabel && f[acceptedFieldTypes[f.type]]) {
             let label = f[acceptedFieldTypes[f.type]];
 
             if (f.type === 'image') {
               label = `<div class="dvs-rounded dvs-bg-cover" style="background-image: url('${label}'); height:100px; width:200px;"></div>`;
             } else {
-              label = label.toLowerCase();
+              label = `${label.toLowerCase()}`;
             }
 
             if (label) {
-              return `<div class="dvs-capitalize">${label}</div><div class="dvs-text-xs dvs-opacity-25 dvs-uppercase">${
+              return `${devMode}<div class="dvs-capitalize">${label}</div><div class="dvs-text-xs dvs-opacity-25 dvs-uppercase">${
                 this.slice.metadata.label
               }</div>`;
             }
           }
         }
       }
-      return `<div class="dvs-capitalize">${
+      return `${devMode}<div class="dvs-capitalize">${
         this.slice.metadata.label
       }</div><div class="dvs-text-xs dvs-opacity-25 dvs-uppercase">&nbsp;</div>`;
     }

@@ -1,5 +1,5 @@
 <template>
-  <label class="dvs-toggle" :for="id">
+  <label :class="{'dvs-toggle': !mini, 'dvs-mini-toggle': mini}" :for="id">
     <input type="checkbox" v-model="localValue" :id="id" @change="updateValue">
     <div class="dvs-toggle-slider"></div>
   </label>
@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "DeviseToggle",
+  name: 'DeviseToggle',
   data() {
     return {
       localValue: true
@@ -19,8 +19,8 @@ export default {
   methods: {
     updateValue: function() {
       // Emit the number value through the input event
-      this.$emit("input", this.localValue);
-      this.$emit("change", this.localValue);
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
     }
   },
   watch: {
@@ -28,6 +28,6 @@ export default {
       this.localValue = this.value;
     }
   },
-  props: ["value", "id"]
+  props: ['value', 'id', 'mini']
 };
 </script>

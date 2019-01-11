@@ -85,6 +85,44 @@
   }
 }
 
+.dvs-mini-toggle {
+  @apply dvs-inline-block dvs-relative;
+
+  height: 10px;
+  width: 16px;
+
+  input {
+    @apply dvs-hidden;
+
+    &:checked + .dvs-toggle-slider {
+      background-color: #66bb6a;
+
+      &:before {
+        transform: translateX(6px);
+      }
+    }
+  }
+
+  .dvs-toggle-slider {
+    @apply dvs-cursor-pointer dvs-absolute dvs-pin;
+
+    background-color: #ccc;
+    transition: .4s;
+
+    &:before {
+      @apply dvs-absolute;
+
+      content: "";
+      background-color: #fff;
+      bottom: 2px;
+      left: 2px;
+      height: 6px;
+      width: 6px;
+      transition: .4s;
+    }
+  }
+}
+
 #dvs-slice-manager-margins-padding {
   input {
     @apply dvs-p-2 dvs-text-center dvs-rounded-sm;

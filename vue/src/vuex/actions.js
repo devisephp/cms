@@ -14,6 +14,18 @@ const actions = {
   },
 
   /*
+   * Devmode
+   */
+  setDevMode(context, data) {
+    return new Promise((resolve, reject) => {
+      context.commit('setDevMode', data);
+      resolve(data);
+    }).catch(function(error) {
+      devise.$bus.$emit('showError', error);
+    });
+  },
+
+  /*
    * Languages
    */
   getLanguages(context) {

@@ -113,7 +113,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     }
   },
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["e" /* mapState */])('devise', ['adminMenu']), {
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["d" /* mapState */])('devise', ['adminMenu']), {
     currentMenu: function currentMenu() {
       return this.findMenu(this.adminMenu);
     }

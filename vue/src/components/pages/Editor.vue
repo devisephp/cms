@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="dvs-absolute dvs-pin-t dvs-pin-r">
-      <toggle @change="toggleDevMode" :id="randomString(8)"></toggle>
+    <div class="dvs-absolute dvs-pin-t dvs-pin-r dvs-mt-4 dvs-mr-4">
+      <toggle :mini="true" @change="setDevMode" :id="randomString(8)"></toggle>
     </div>
 
     <div class="dvs-p-8">
@@ -105,8 +105,7 @@ export default {
     }, 1000);
   },
   methods: {
-    ...mapActions('devise', ['savePage']),
-    ...mapMutations('devise', ['setDevMode']),
+    ...mapActions('devise', ['savePage', 'setDevMode']),
     requestSavePage() {
       this.saving = true;
       this.savePage(this.currentPage).then(() => {
@@ -198,9 +197,6 @@ export default {
     selectVersion(version) {
       // pass version_id through the url
       // location.href=
-    },
-    toggleDevMode(value) {
-      this.setDevMode(value);
     }
   },
   computed: {

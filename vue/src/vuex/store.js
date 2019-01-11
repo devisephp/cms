@@ -101,7 +101,6 @@ const state = {
   },
   // DevMode
   devMode: false,
-  test: 1,
   // Mothership
   changes: [],
   // Media Manager

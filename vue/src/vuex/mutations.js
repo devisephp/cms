@@ -5,8 +5,7 @@ export default {
   },
 
   setDevMode(state, payload) {
-    state.test++;
-    state.devMode = true;
+    state.devMode = payload;
   },
 
   // Languages

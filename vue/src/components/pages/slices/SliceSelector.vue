@@ -14,7 +14,6 @@
       </fieldset>
     </div>
     <div class="dvs-flex dvs-pb-8 dvs-py-8 dvs-max-h-screen dvs-overflow-y" data-simplebar>
-      
       <div
         class="dvs-w-full dvs-flex dvs-flex-wrap dvs-items-stretch flex-grow dvs-justify-start dvs-my-4"
         v-if=" this.allDirectories.length > 0"
@@ -26,6 +25,7 @@
           :value="value"
           @input="update"
         ></slice-selector-directory>
+        <div class="dvs-h-32">&nbsp;</div>
       </div>
       <div
         class="dvs-cursor-pointer dvs-w-1/3 dvs-flex dvs-flex-col dvs-justify-between dvs-align-items dvs-p-2 dvs-rounded-sm"

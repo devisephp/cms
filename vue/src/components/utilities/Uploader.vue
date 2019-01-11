@@ -28,7 +28,21 @@
     </div>
 
     <div v-show="uploadingFiles.length" class="dvs-w-full">
-      <table class="dvs-w-full dvs-mb-4 dvs-border-collapse">
+      <button
+        v-show="!$refs.upload || !$refs.upload.active"
+        @click.prevent="$refs.upload.active = true"
+        type="button"
+        class="dvs-btn dvs-mb-4"
+        :style="theme.actionButton"
+      >Start upload</button>
+      <button
+        v-show="$refs.upload && $refs.upload.active"
+        @click.prevent="$refs.upload.active = false"
+        type="button"
+        class="dvs-btn dvs-mb-4"
+        :style="theme.actionButtonGhost"
+      >Stop upload</button>
+      <table class="dvs-w-full dvs-border-collapse">
         <tr class="dvs-border-b-2">
           <th class="dvs-p-2 dvs-text-xs dvs-uppercase dvs-text-left">Queued Files for Upload</th>
         </tr>
@@ -61,27 +75,13 @@
           </td>
         </tr>
       </table>
-      <button
-        v-show="!$refs.upload || !$refs.upload.active"
-        @click.prevent="$refs.upload.active = true"
-        type="button"
-        class="dvs-btn"
-        :style="theme.actionButton"
-      >Start upload</button>
-      <button
-        v-show="$refs.upload && $refs.upload.active"
-        @click.prevent="$refs.upload.active = false"
-        type="button"
-        class="dvs-btn"
-        :style="theme.actionButtonGhost"
-      >Stop upload</button>
     </div>
   </div>
 </template>
 
 <script>
-const VueUpload = require("vue-upload-component");
-import CloseIcon from "vue-ionicons/dist/ios-close.vue";
+const VueUpload = require('vue-upload-component');
+import CloseIcon from 'vue-ionicons/dist/ios-close.vue';
 
 export default {
   data() {
@@ -105,11 +105,11 @@ export default {
             this.removeFileFromQueue(newFile);
 
             if (this.uploadingFiles.length < 1) {
-              deviseSettings.$bus.$emit("showMessage", {
-                title: "Upload Complete",
-                message: "Your upload has been successfully completed"
+              deviseSettings.$bus.$emit('showMessage', {
+                title: 'Upload Complete',
+                message: 'Your upload has been successfully completed'
               });
-              this.$emit("all-files-uploaded", newFile);
+              this.$emit('all-files-uploaded', newFile);
             }
           }
         }
@@ -124,15 +124,15 @@ export default {
      */
     inputFilter: function(newFile, oldFile, prevent) {
       // Create a blob field
-      newFile.blob = "";
+      newFile.blob = '';
       let URL = window.URL || window.webkitURL;
       if (URL && URL.createObjectURL) {
         newFile.blob = URL.createObjectURL(newFile.file);
       }
 
       // Thumbnails
-      newFile.thumb = "";
-      if (newFile.blob && newFile.type.substr(0, 6) === "image/") {
+      newFile.thumb = '';
+      if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
         newFile.thumb = newFile.blob;
       }
     },
@@ -144,7 +144,7 @@ export default {
     uploadHeaders() {
       let token = document.head.querySelector('meta[name="csrf-token"]');
       return {
-        "X-CSRF-TOKEN": token.content
+        'X-CSRF-TOKEN': token.content
       };
     }
   },

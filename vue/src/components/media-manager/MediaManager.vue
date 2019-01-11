@@ -164,15 +164,15 @@
             </div>
 
             <!-- Files -->
-            <ul class="dvs-list-reset dvs-flex dvs-justify-center dvs-flex-wrap dvs-p-4" v-else>
+            <ul class="dvs-list-reset dvs-flex dvs-justify-center dvs-flex-wrap" v-else>
               <li
                 v-for="file in currentFiles"
                 :key="file.id"
-                class="dvs-relative dvs-bg-white dvs-card dvs-mt-2"
+                class="dvs-relative dvs-bg-white dvs-card"
                 :class="{
                   'dvs-cursor-pointer': !file.on,
-                  'dvs-border-b dvs-border-lighter dvs-p-2 dvs-mx-4': mode === 'thumbnails',
-                  'dvs-p-0 dvs-mb-4': mode !== 'thumbnails',
+                  'dvs-border-b dvs-border-lighter dvs-p-0 dvs-mx-0 w-1/2': mode === 'thumbnails',
+                  'dvs-p-0 dvs-mb-4 dvs-mt-2': mode !== 'thumbnails',
                   'dvs-mx-2': mode === 'contactSheet',
                   'dvs-w-full': mode === 'list'
                 }"
@@ -204,15 +204,10 @@
 
                   <!-- Thumbnails Mode -->
                   <div
-                    class="dvs-grid-preview dvs-font-bold dvs-relative"
-                    :style="`background-size:cover;background-image:url('${`/styled/preview/${file.url}?w=200&h=200`}')`"
+                    class="dvs-grid-preview dvs-relative"
+                    :style="`background-size:cover;background-image:url('${`/styled/preview/${file.url}?w=600&h=300&q=100&sharp=2`}')`"
                     v-else-if="mode === 'thumbnails'"
-                  >
-                    <div
-                      class="dvs-text-center dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-text-white dvs-p-4"
-                      style="text-shadow:2px 2px 2px rgba(0,0,0,0.5);background-color:rgba(0,0,0,0.4)"
-                    >{{ file.name }}</div>
-                  </div>
+                  ></div>
 
                   <!-- List Mode -->
                   <div class="dvs-w-full dvs-flex dvs-items-center" v-else>
@@ -240,11 +235,20 @@
                         <trash-icon h="20" w="20"/>
                       </div>
                       <a
+                        class="dvs-mr-4"
                         href="file.url"
                         target="_blank"
                         :style="{color: theme.actionButton.background}"
                       >
                         <link-icon h="20" w="20"/>
+                      </a>
+                      <a
+                        :href="file.url"
+                        target="_blank"
+                        :style="{color: theme.actionButton.background}"
+                        download
+                      >
+                        <download-icon h="20" w="20"/>
                       </a>
                     </div>
                   </div>
@@ -264,16 +268,6 @@
                         :style="theme.actionButton"
                       >Select</button>
                     </p>
-
-                    <fieldset class="dvs-fieldset dvs-mb-4">
-                      <a
-                        class="dvs-btn"
-                        :href="file.url"
-                        target="_blank"
-                        :style="theme.actionButtonGhost"
-                        download
-                      >Click to download</a>
-                    </fieldset>
 
                     <template v-if="isActive(file)">
                       <h6 class="dvs-my-2 dvs-text-sm">Appears On</h6>
@@ -330,6 +324,7 @@ import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
 import CloseIcon from 'vue-ionicons/dist/ios-close.vue';
 import AttachIcon from 'vue-ionicons/dist/md-attach.vue';
 import LinkIcon from 'vue-ionicons/dist/ios-link.vue';
+import DownloadIcon from 'vue-ionicons/dist/ios-cloud-download.vue';
 
 let Cookies = require('js-cookie');
 
@@ -380,9 +375,14 @@ export default {
         let cookieLocation = Cookies.get('devise-mediamanager-location');
         if (cookieLocation) {
           self.changeDirectories(cookieLocation);
-          this.cookieSettings = true;
+          self.cookieSettings = true;
         } else {
           self.changeDirectories('');
+        }
+
+        let cookieMode = Cookies.get('devise-mediamanager-mode');
+        if (cookieMode) {
+          self.mode = cookieMode;
         }
 
         self.show = true;
@@ -535,6 +535,12 @@ export default {
     cookieSettings: newValue => {
       if (!newValue) {
         Cookies.remove('devise-mediamanager-location');
+        Cookies.remove('devise-mediamanager-mode');
+      }
+    },
+    mode: function(newValue) {
+      if (this.cookieSettings) {
+        Cookies.set('devise-mediamanager-mode', newValue);
       }
     }
   },
@@ -543,6 +549,7 @@ export default {
     Breadcrumbs,
     MediaEditor,
     AttachIcon,
+    DownloadIcon,
     FolderIcon,
     LinkIcon,
     TrashIcon,

@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 106:
+/***/ 105:
 /***/ (function(module, exports) {
 
 
@@ -96,7 +96,7 @@ module.exports = function (css) {
 
 /***/ }),
 
-/***/ 33:
+/***/ 38:
 /***/ (function(module, exports) {
 
 /*
@@ -323,15 +323,63 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ 663:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(796)
+/* template */
+var __vue_template__ = __webpack_require__(800)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/slices/SliceSettings.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7895a3d7", Component.options)
+  } else {
+    hotAPI.reload("data-v-7895a3d7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ 687:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(897)
+var __vue_script__ = __webpack_require__(900)
 /* template */
-var __vue_template__ = __webpack_require__(900)
+var __vue_template__ = __webpack_require__(903)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -377,9 +425,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(901)
+var __vue_script__ = __webpack_require__(904)
 /* template */
-var __vue_template__ = __webpack_require__(902)
+var __vue_template__ = __webpack_require__(905)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -425,9 +473,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(903)
+var __vue_script__ = __webpack_require__(906)
 /* template */
-var __vue_template__ = __webpack_require__(904)
+var __vue_template__ = __webpack_require__(907)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -473,9 +521,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(905)
+var __vue_script__ = __webpack_require__(908)
 /* template */
-var __vue_template__ = __webpack_require__(909)
+var __vue_template__ = __webpack_require__(912)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -686,7 +734,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(106);
+var	fixUrls = __webpack_require__(105);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1055,7 +1103,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__ = __webpack_require__(697);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Panel__);
 //
 //
@@ -4108,7 +4156,7 @@ if(false) {
 /***/ 715:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(33)(false);
+exports = module.exports = __webpack_require__(38)(false);
 // imports
 
 
@@ -4870,7 +4918,7 @@ module.exports = function debounce (fn, delay) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Panel__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Panel__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Panel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utilities_Panel__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_desktop_vue__ = __webpack_require__(777);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_desktop_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_ionicons_dist_md_desktop_vue__);
@@ -4880,7 +4928,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_ionicons_dist_md_phone_portrait_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_ionicons_dist_md_phone_portrait_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_ionicons_dist_md_phone_landscape_vue__ = __webpack_require__(786);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_ionicons_dist_md_phone_landscape_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_ionicons_dist_md_phone_landscape_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_gsap__ = __webpack_require__(313);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_gsap__ = __webpack_require__(312);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vuex__ = __webpack_require__(5);
 
 //
@@ -5622,7 +5670,872 @@ if (false) {
 
 /***/ }),
 
-/***/ 897:
+/***/ 796:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_Strings__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SliceSettingsSection__ = __webpack_require__(797);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SliceSettingsSection___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__SliceSettingsSection__);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var tinycolor = __webpack_require__(120);
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SliceSettings',
+  data: function data() {
+    return {
+      showEditor: false,
+      backgroundColor: null,
+      slice: {},
+      controlStyles: {
+        right: null,
+        top: null
+      },
+      showType: 'desktop'
+    };
+  },
+  created: function created() {
+    this.backgroundColor = tinycolor('#fff').toRgb();
+  },
+  mounted: function mounted() {
+    var self = this;
+
+    this.addListeners();
+  },
+
+  methods: {
+    addListeners: function addListeners() {
+      var _this = this;
+
+      deviseSettings.$bus.$on('open-slice-settings', function (slice) {
+        _this.showEditor = true;
+        Vue.set(_this, 'slice', slice);
+        if (_this.slice.settings.backgroundColor) {
+          _this.backgroundColor = tinycolor(_this.slice.settings.backgroundColor).toRgb();
+        } else {
+          _this.backgroundColor = tinycolor('#fff').toRgb();
+        }
+      });
+
+      deviseSettings.$bus.$on('devise-close-sidebar', function () {
+        console.log('here');
+        _this.closeEditor();
+      });
+    },
+    closeEditor: function closeEditor() {
+      this.showEditor = false;
+      this.showType = 'desktop';
+      Vue.set(this, 'slice', {});
+    },
+    resetStyles: function resetStyles() {
+      this.$set(this.slice, 'settings', {});
+      this.backgroundColor = tinycolor('#fff').toRgb();
+    },
+    setMarginPadding: function setMarginPadding(payload) {
+      if (payload.responsiveMode === 'desktop') {
+        this.setDesktopMarginPadding(payload);
+      }
+
+      if (payload.responsiveMode === 'mobile') {
+        this.setMobileMarginPadding(payload);
+      }
+    },
+    setDesktopMarginPadding: function setDesktopMarginPadding(payload) {
+      if (typeof this.slice.settings.margin === 'undefined') {
+        this.$set(this.slice.settings, 'margin', {});
+      }
+
+      if (typeof this.slice.settings.padding === 'undefined') {
+        this.$set(this.slice.settings, 'padding', {});
+      }
+      this.$set(this.slice.settings[payload.type], payload.position, payload.value);
+    },
+    setMobileMarginPadding: function setMobileMarginPadding(payload) {
+      if (typeof this.slice.settings.mobile_margin === 'undefined') {
+        this.$set(this.slice.settings, 'mobile_margin', {});
+      }
+
+      if (typeof this.slice.settings.mobile_padding === 'undefined') {
+        this.$set(this.slice.settings, 'mobile_padding', {});
+      }
+
+      this.$set(this.slice.settings['mobile_' + payload.type], payload.position, payload.value);
+    },
+    setBackground: function setBackground(color) {
+      this.$set(this.slice.settings, 'backgroundColor', 'rgba(' + color.rgba.r + ',' + color.rgba.g + ',' + color.rgba.b + ',' + color.rgba.a + ')');
+    }
+  },
+  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['component', 'sliceConfig'])),
+  mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_Strings__["a" /* default */]],
+  components: {
+    SliceSettingsSection: __WEBPACK_IMPORTED_MODULE_3__SliceSettingsSection___default.a
+  }
+});
+
+/***/ }),
+
+/***/ 797:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(798)
+/* template */
+var __vue_template__ = __webpack_require__(799)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/slices/SliceSettingsSection.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a1f44e84", Component.options)
+  } else {
+    hotAPI.reload("data-v-a1f44e84", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 798:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_color__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_color__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      showBackgroundColor: false
+    };
+  },
+
+  props: ['value', 'responsiveMode', 'backgroundColor'],
+  computed: {
+    bg: {
+      get: function get() {
+        return this.backgroundColor;
+      },
+      set: function set(color) {
+        this.$emit('setbackground', color);
+      }
+    }
+  },
+  methods: {
+    setMargin: function setMargin(position, event) {
+      var value = event.target.value;
+      this.$emit('setmarginpadding', {
+        responsiveMode: this.responsiveMode,
+        type: 'margin',
+        position: position,
+        value: value
+      });
+    },
+    setPadding: function setPadding(position, event) {
+      var value = event.target.value;
+      this.$emit('setmarginpadding', {
+        responsiveMode: this.responsiveMode,
+        type: 'padding',
+        position: position,
+        value: value
+      });
+    },
+    getStyle: function getStyle(type, position) {
+      if (type === 'margin' || type === 'padding') {
+        var prefix = '';
+        if (this.responsiveMode !== 'desktop') {
+          prefix = this.responsiveMode + '_';
+        }
+
+        if (typeof this.value[prefix + type] !== 'undefined') {
+          if (typeof this.value[prefix + type][position] !== 'undefined') {
+            return this.value[prefix + type][position];
+          }
+        }
+        return 0;
+      }
+    },
+    resetStyles: function resetStyles() {
+      this.$emit('resetstyles', this.responsiveMode);
+    }
+  },
+  components: {
+    'sketch-picker': __WEBPACK_IMPORTED_MODULE_0_vue_color__["Sketch"]
+  }
+});
+
+/***/ }),
+
+/***/ 799:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "h3",
+      {
+        staticClass: "dvs-uppercase dvs-mb-2",
+        style: { color: _vm.theme.panelCard.color }
+      },
+      [_vm._v(_vm._s(_vm.responsiveMode))]
+    ),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "dvs-flex dvs-justify-center dvs-my-4",
+        attrs: { id: "dvs-slice-manager-margins-padding" }
+      },
+      [
+        _c("div", { style: _vm.theme.panelCard }, [
+          _c("div", { staticClass: "dvs-flex dvs-p-2 dvs-pb-0" }, [
+            _c("div", { staticClass: "dvs-text-xs dvs-uppercase dvs-w-1/3" }, [
+              _vm._v("Margin")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "dvs-w-1/3 dvs-text-center" }, [
+              _c("input", {
+                attrs: { type: "number" },
+                domProps: { value: _vm.getStyle("margin", "top") },
+                on: {
+                  keyup: function($event) {
+                    _vm.setMargin("top", $event)
+                  },
+                  click: function($event) {
+                    _vm.setMargin("top", $event)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "dvs-flex dvs-items-center dvs-px-2" }, [
+            _c("div", [
+              _c("input", {
+                attrs: { type: "number" },
+                domProps: { value: _vm.getStyle("margin", "left") },
+                on: {
+                  keyup: function($event) {
+                    _vm.setMargin("left", $event)
+                  },
+                  click: function($event) {
+                    _vm.setMargin("left", $event)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "dvs-p-2" }, [
+              _c("div", { style: _vm.theme.actionButton }, [
+                _c("div", { staticClass: "dvs-flex dvs-p-2 dvs-pb-0" }, [
+                  _c(
+                    "div",
+                    { staticClass: "dvs-text-xs dvs-uppercase dvs-w-1/3" },
+                    [_vm._v("Padding")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dvs-w-1/3 dvs-text-center" }, [
+                    _c("input", {
+                      attrs: { type: "number" },
+                      domProps: { value: _vm.getStyle("padding", "top") },
+                      on: {
+                        keyup: function($event) {
+                          _vm.setPadding("top", $event)
+                        },
+                        click: function($event) {
+                          _vm.setPadding("top", $event)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "dvs-flex dvs-items-center dvs-px-2" },
+                  [
+                    _c("div", [
+                      _c("input", {
+                        attrs: { type: "number" },
+                        domProps: { value: _vm.getStyle("padding", "left") },
+                        on: {
+                          keyup: function($event) {
+                            _vm.setPadding("left", $event)
+                          },
+                          click: function($event) {
+                            _vm.setPadding("left", $event)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("input", {
+                        attrs: { type: "number" },
+                        domProps: { value: _vm.getStyle("padding", "right") },
+                        on: {
+                          keyup: function($event) {
+                            _vm.setPadding("right", $event)
+                          },
+                          click: function($event) {
+                            _vm.setPadding("right", $event)
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dvs-flex dvs-justify-center dvs-p-2 dvs-pt-0"
+                  },
+                  [
+                    _c("div", { staticClass: "dvs-text-center" }, [
+                      _c("input", {
+                        attrs: { type: "number" },
+                        domProps: { value: _vm.getStyle("padding", "bottom") },
+                        on: {
+                          keyup: function($event) {
+                            _vm.setPadding("bottom", $event)
+                          },
+                          click: function($event) {
+                            _vm.setPadding("bottom", $event)
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("input", {
+                attrs: { type: "number" },
+                domProps: { value: _vm.getStyle("margin", "right") },
+                on: {
+                  keyup: function($event) {
+                    _vm.setMargin("right", $event)
+                  },
+                  click: function($event) {
+                    _vm.setMargin("right", $event)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "dvs-flex dvs-justify-center dvs-p-2 dvs-pt-0" },
+            [
+              _c("div", { staticClass: "dvs-text-center" }, [
+                _c("input", {
+                  attrs: { type: "number" },
+                  domProps: { value: _vm.getStyle("margin", "bottom") },
+                  on: {
+                    keyup: function($event) {
+                      _vm.setMargin("bottom", $event)
+                    },
+                    click: function($event) {
+                      _vm.setMargin("bottom", $event)
+                    }
+                  }
+                })
+              ])
+            ]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showBackgroundColor,
+            expression: "showBackgroundColor"
+          }
+        ]
+      },
+      [
+        _c("sketch-picker", {
+          model: {
+            value: _vm.bg,
+            callback: function($$v) {
+              _vm.bg = $$v
+            },
+            expression: "bg"
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.showBackgroundColor,
+            expression: "!showBackgroundColor"
+          }
+        ],
+        staticClass: "dvs-btn",
+        style: _vm.theme.actionButton,
+        on: {
+          click: function($event) {
+            _vm.showBackgroundColor = true
+          }
+        }
+      },
+      [_vm._v("Set Background Color")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "dvs-btn dvs-mt-8 dvs-rounded-full dvs-w-full",
+        style: _vm.theme.actionButtonGhost,
+        on: { click: _vm.resetStyles }
+      },
+      [_vm._v("Reset")]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("fieldset", { staticClass: "dvs-fieldset" }, [
+      _c("label", [_vm._v("Margins and Padding")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "dvs-p-2" }, [
+      _c("div", { staticClass: "dvs-bg-white dvs-w-24 dvs-h-24" }, [
+        _vm._v(" ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("fieldset", { staticClass: "dvs-fieldset dvs-mt-8" }, [
+      _c("label", [_vm._v("Background Color")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "dvs-mb-4 dvs-text-xs" }, [
+        _vm._v("Note: Background color effects all responsive sizes")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a1f44e84", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 800:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "dvs-fixed dvs-z-9999",
+      staticStyle: { top: "30px", right: "30px" }
+    },
+    [
+      _vm.showEditor
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "dvs-z-50 dvs-min-w-96 dvs-z-50 dvs-rounded dvs-shadow-lg dvs-flex dvs-items-stretch",
+              style: _vm.theme.panel
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "dvs-pin-l dvs-z-10",
+                  style: {
+                    position: "relative",
+                    bottom: "auto",
+                    width: "175px",
+                    margin: 0,
+                    borderColor: _vm.theme.panelCard.background,
+                    background: _vm.theme.panelCard.background
+                  },
+                  attrs: { id: "dvs-admin-sidebar" }
+                },
+                [
+                  _c("ul", [
+                    _c(
+                      "li",
+                      {
+                        staticClass: "dvs-cursor-pointer",
+                        on: {
+                          click: function($event) {
+                            _vm.showType = "desktop"
+                          }
+                        }
+                      },
+                      [_vm._v("Desktop")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      {
+                        staticClass: "dvs-cursor-pointer",
+                        on: {
+                          click: function($event) {
+                            _vm.showType = "mobile"
+                          }
+                        }
+                      },
+                      [_vm._v("Mobile")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "dvs-absolute dvs-pin-l dvs-pin-r dvs-pin-b dvs-p-4"
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "dvs-btn dvs-w-full dvs-mb-2",
+                          style: _vm.theme.actionButton,
+                          on: { click: _vm.closeEditor }
+                        },
+                        [_vm._v("Done")]
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dvs-p-8" }, [
+                _c(
+                  "div",
+                  {
+                    staticStyle: { height: "calc(100vh - 150px)" },
+                    attrs: { "data-simplebar": "" }
+                  },
+                  [
+                    _c("div", { staticClass: "dvs-pl-8" }, [
+                      _c(
+                        "div",
+                        [
+                          _vm.showType === "desktop"
+                            ? _c("slice-settings-section", {
+                                attrs: {
+                                  value: _vm.slice.settings,
+                                  backgroundColor: _vm.backgroundColor,
+                                  "responsive-mode": "desktop"
+                                },
+                                on: {
+                                  resetstyles: _vm.resetStyles,
+                                  setmarginpadding: _vm.setMarginPadding,
+                                  setbackground: _vm.setBackground
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.showType === "mobile"
+                            ? _c("slice-settings-section", {
+                                attrs: {
+                                  value: _vm.slice.settings,
+                                  backgroundColor: _vm.backgroundColor,
+                                  "responsive-mode": "mobile"
+                                },
+                                on: {
+                                  resetstyles: _vm.resetStyles,
+                                  setmarginpadding: _vm.setMarginPadding,
+                                  setbackground: _vm.setBackground
+                                }
+                              })
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ]
+          )
+        : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7895a3d7", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 900:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5778,7 +6691,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 900:
+/***/ 903:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6090,7 +7003,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 901:
+/***/ 904:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6183,7 +7096,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 902:
+/***/ 905:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6262,7 +7175,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 903:
+/***/ 906:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6473,7 +7386,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 904:
+/***/ 907:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6685,7 +7598,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 905:
+/***/ 908:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6703,7 +7616,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_Dates__ = __webpack_require__(308);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_md_create_vue__ = __webpack_require__(646);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_md_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_md_create_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_checkmark_vue__ = __webpack_require__(906);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_checkmark_vue__ = __webpack_require__(909);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_checkmark_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_checkmark_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_ionicons_dist_ios_copy_vue__ = __webpack_require__(651);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_ionicons_dist_ios_copy_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_vue_ionicons_dist_ios_copy_vue__);
@@ -7286,15 +8199,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 906:
+/***/ 909:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(907)
+var __vue_script__ = __webpack_require__(910)
 /* template */
-var __vue_template__ = __webpack_require__(908)
+var __vue_template__ = __webpack_require__(911)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -7334,7 +8247,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 907:
+/***/ 910:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7366,7 +8279,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 908:
+/***/ 911:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -7411,7 +8324,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 909:
+/***/ 912:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -8686,916 +9599,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-38f60040", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 942:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(943)
-/* template */
-var __vue_template__ = __webpack_require__(944)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/components/slices/SliceSettings.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7895a3d7", Component.options)
-  } else {
-    hotAPI.reload("data-v-7895a3d7", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 943:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_Strings__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SliceSettingsSection__ = __webpack_require__(947);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SliceSettingsSection___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__SliceSettingsSection__);
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var tinycolor = __webpack_require__(121);
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'SliceSettings',
-  data: function data() {
-    return {
-      showEditor: false,
-      backgroundColor: null,
-      slice: {},
-      controlStyles: {
-        right: null,
-        top: null
-      },
-      showType: 'desktop'
-    };
-  },
-  created: function created() {
-    this.backgroundColor = tinycolor('#fff').toRgb();
-  },
-  mounted: function mounted() {
-    var self = this;
-
-    this.addListeners();
-  },
-
-  methods: {
-    addListeners: function addListeners() {
-      var _this = this;
-
-      deviseSettings.$bus.$on('open-slice-settings', function (slice) {
-        _this.showEditor = true;
-        Vue.set(_this, 'slice', slice);
-        if (_this.slice.settings.backgroundColor) {
-          _this.backgroundColor = tinycolor(_this.slice.settings.backgroundColor).toRgb();
-        } else {
-          _this.backgroundColor = tinycolor('#fff').toRgb();
-        }
-      });
-    },
-    closeEditor: function closeEditor() {
-      this.showEditor = false;
-      this.showType = 'desktop';
-      Vue.set(this, 'slice', {});
-    },
-    resetStyles: function resetStyles() {
-      this.$set(this.slice, 'settings', {});
-      this.backgroundColor = tinycolor('#fff').toRgb();
-    },
-    setMarginPadding: function setMarginPadding(payload) {
-      if (payload.responsiveMode === 'desktop') {
-        this.setDesktopMarginPadding(payload);
-      }
-
-      if (payload.responsiveMode === 'mobile') {
-        this.setMobileMarginPadding(payload);
-      }
-    },
-    setDesktopMarginPadding: function setDesktopMarginPadding(payload) {
-      if (typeof this.slice.settings.margin === 'undefined') {
-        this.$set(this.slice.settings, 'margin', {});
-      }
-
-      if (typeof this.slice.settings.padding === 'undefined') {
-        this.$set(this.slice.settings, 'padding', {});
-      }
-      console.log(payload.type, this.slice.settings[payload.type], payload.position, payload.value);
-
-      this.$set(this.slice.settings[payload.type], payload.position, payload.value);
-    },
-    setMobileMarginPadding: function setMobileMarginPadding(payload) {
-      if (typeof this.slice.settings.mobile_margin === 'undefined') {
-        this.$set(this.slice.settings, 'mobile_margin', {});
-      }
-
-      if (typeof this.slice.settings.mobile_padding === 'undefined') {
-        this.$set(this.slice.settings, 'mobile_padding', {});
-      }
-
-      this.$set(this.slice.settings['mobile_' + payload.type], payload.position, payload.value);
-    },
-    setBackground: function setBackground(color) {
-      this.$set(this.slice.settings, 'backgroundColor', 'rgba(' + color.rgba.r + ',' + color.rgba.g + ',' + color.rgba.b + ',' + color.rgba.a + ')');
-    }
-  },
-  computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['component', 'sliceConfig'])),
-  mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_Strings__["a" /* default */]],
-  components: {
-    SliceSettingsSection: __WEBPACK_IMPORTED_MODULE_3__SliceSettingsSection___default.a
-  }
-});
-
-/***/ }),
-
-/***/ 944:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "dvs-fixed dvs-z-9999",
-      staticStyle: { top: "30px", right: "30px" }
-    },
-    [
-      _vm.showEditor
-        ? _c(
-            "div",
-            {
-              staticClass:
-                "dvs-z-50 dvs-min-w-96 dvs-z-50 dvs-rounded dvs-shadow-lg dvs-flex dvs-items-stretch",
-              style: _vm.theme.panel
-            },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "dvs-pin-l dvs-z-10",
-                  style: {
-                    position: "relative",
-                    bottom: "auto",
-                    width: "175px",
-                    margin: 0,
-                    borderColor: _vm.theme.panelCard.background,
-                    background: _vm.theme.panelCard.background
-                  },
-                  attrs: { id: "dvs-admin-sidebar" }
-                },
-                [
-                  _c("ul", [
-                    _c(
-                      "li",
-                      {
-                        staticClass: "dvs-cursor-pointer",
-                        on: {
-                          click: function($event) {
-                            _vm.showType = "desktop"
-                          }
-                        }
-                      },
-                      [_vm._v("Desktop")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      {
-                        staticClass: "dvs-cursor-pointer",
-                        on: {
-                          click: function($event) {
-                            _vm.showType = "mobile"
-                          }
-                        }
-                      },
-                      [_vm._v("Mobile")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "dvs-absolute dvs-pin-l dvs-pin-r dvs-pin-b dvs-p-4"
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "dvs-btn dvs-w-full dvs-mb-2",
-                          style: _vm.theme.actionButton,
-                          on: { click: _vm.closeEditor }
-                        },
-                        [_vm._v("Done")]
-                      )
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "dvs-p-8" }, [
-                _c(
-                  "div",
-                  {
-                    staticStyle: { height: "calc(100vh - 150px)" },
-                    attrs: { "data-simplebar": "" }
-                  },
-                  [
-                    _c("div", { staticClass: "dvs-pl-8" }, [
-                      _c(
-                        "div",
-                        [
-                          _vm.showType === "desktop"
-                            ? _c("slice-settings-section", {
-                                attrs: {
-                                  value: _vm.slice.settings,
-                                  backgroundColor: _vm.backgroundColor,
-                                  "responsive-mode": "desktop"
-                                },
-                                on: {
-                                  resetstyles: _vm.resetStyles,
-                                  setmarginpadding: _vm.setMarginPadding,
-                                  setbackground: _vm.setBackground
-                                }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.showType === "mobile"
-                            ? _c("slice-settings-section", {
-                                attrs: {
-                                  value: _vm.slice.settings,
-                                  backgroundColor: _vm.backgroundColor,
-                                  "responsive-mode": "mobile"
-                                },
-                                on: {
-                                  resetstyles: _vm.resetStyles,
-                                  setmarginpadding: _vm.setMarginPadding,
-                                  setbackground: _vm.setBackground
-                                }
-                              })
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ])
-                  ]
-                )
-              ])
-            ]
-          )
-        : _vm._e()
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7895a3d7", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 947:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(948)
-/* template */
-var __vue_template__ = __webpack_require__(949)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/components/slices/SliceSettingsSection.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-a1f44e84", Component.options)
-  } else {
-    hotAPI.reload("data-v-a1f44e84", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 948:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_color__ = __webpack_require__(306);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_color___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_color__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      showBackgroundColor: false
-    };
-  },
-
-  props: ['value', 'responsiveMode', 'backgroundColor'],
-  computed: {
-    bg: {
-      get: function get() {
-        return this.backgroundColor;
-      },
-      set: function set(color) {
-        this.$emit('setbackground', color);
-      }
-    }
-  },
-  methods: {
-    setMargin: function setMargin(position, event) {
-      var value = event.target.value;
-      this.$emit('setmarginpadding', {
-        responsiveMode: this.responsiveMode,
-        type: 'margin',
-        position: position,
-        value: value
-      });
-    },
-    setPadding: function setPadding(position, event) {
-      var value = event.target.value;
-      this.$emit('setmarginpadding', {
-        responsiveMode: this.responsiveMode,
-        type: 'padding',
-        position: position,
-        value: value
-      });
-    },
-    getStyle: function getStyle(type, position) {
-      if (type === 'margin' || type === 'padding') {
-        var prefix = '';
-        if (this.responsiveMode !== 'desktop') {
-          prefix = this.responsiveMode + '_';
-        }
-
-        if (typeof this.value[prefix + type] !== 'undefined') {
-          if (typeof this.value[prefix + type][position] !== 'undefined') {
-            return this.value[prefix + type][position];
-          }
-        }
-        return 0;
-      }
-    },
-    resetStyles: function resetStyles() {
-      this.$emit('resetstyles', this.responsiveMode);
-    }
-  },
-  components: {
-    'sketch-picker': __WEBPACK_IMPORTED_MODULE_0_vue_color__["Sketch"]
-  }
-});
-
-/***/ }),
-
-/***/ 949:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "h3",
-      {
-        staticClass: "dvs-uppercase dvs-mb-2",
-        style: { color: _vm.theme.panelCard.color }
-      },
-      [_vm._v(_vm._s(_vm.responsiveMode))]
-    ),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "dvs-flex dvs-justify-center dvs-my-4",
-        attrs: { id: "dvs-slice-manager-margins-padding" }
-      },
-      [
-        _c("div", { style: _vm.theme.panelCard }, [
-          _c("div", { staticClass: "dvs-flex dvs-p-2 dvs-pb-0" }, [
-            _c("div", { staticClass: "dvs-text-xs dvs-uppercase dvs-w-1/3" }, [
-              _vm._v("Margin")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "dvs-w-1/3 dvs-text-center" }, [
-              _c("input", {
-                attrs: { type: "number" },
-                domProps: { value: _vm.getStyle("margin", "top") },
-                on: {
-                  keyup: function($event) {
-                    _vm.setMargin("top", $event)
-                  },
-                  click: function($event) {
-                    _vm.setMargin("top", $event)
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dvs-flex dvs-items-center dvs-px-2" }, [
-            _c("div", [
-              _c("input", {
-                attrs: { type: "number" },
-                domProps: { value: _vm.getStyle("margin", "left") },
-                on: {
-                  keyup: function($event) {
-                    _vm.setMargin("left", $event)
-                  },
-                  click: function($event) {
-                    _vm.setMargin("left", $event)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "dvs-p-2" }, [
-              _c("div", { style: _vm.theme.actionButton }, [
-                _c("div", { staticClass: "dvs-flex dvs-p-2 dvs-pb-0" }, [
-                  _c(
-                    "div",
-                    { staticClass: "dvs-text-xs dvs-uppercase dvs-w-1/3" },
-                    [_vm._v("Padding")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "dvs-w-1/3 dvs-text-center" }, [
-                    _c("input", {
-                      attrs: { type: "number" },
-                      domProps: { value: _vm.getStyle("padding", "top") },
-                      on: {
-                        keyup: function($event) {
-                          _vm.setPadding("top", $event)
-                        },
-                        click: function($event) {
-                          _vm.setPadding("top", $event)
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "dvs-flex dvs-items-center dvs-px-2" },
-                  [
-                    _c("div", [
-                      _c("input", {
-                        attrs: { type: "number" },
-                        domProps: { value: _vm.getStyle("padding", "left") },
-                        on: {
-                          keyup: function($event) {
-                            _vm.setPadding("left", $event)
-                          },
-                          click: function($event) {
-                            _vm.setPadding("left", $event)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c("input", {
-                        attrs: { type: "number" },
-                        domProps: { value: _vm.getStyle("padding", "right") },
-                        on: {
-                          keyup: function($event) {
-                            _vm.setPadding("right", $event)
-                          },
-                          click: function($event) {
-                            _vm.setPadding("right", $event)
-                          }
-                        }
-                      })
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "dvs-flex dvs-justify-center dvs-p-2 dvs-pt-0"
-                  },
-                  [
-                    _c("div", { staticClass: "dvs-text-center" }, [
-                      _c("input", {
-                        attrs: { type: "number" },
-                        domProps: { value: _vm.getStyle("padding", "bottom") },
-                        on: {
-                          keyup: function($event) {
-                            _vm.setPadding("bottom", $event)
-                          },
-                          click: function($event) {
-                            _vm.setPadding("bottom", $event)
-                          }
-                        }
-                      })
-                    ])
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("input", {
-                attrs: { type: "number" },
-                domProps: { value: _vm.getStyle("margin", "right") },
-                on: {
-                  keyup: function($event) {
-                    _vm.setMargin("right", $event)
-                  },
-                  click: function($event) {
-                    _vm.setMargin("right", $event)
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "dvs-flex dvs-justify-center dvs-p-2 dvs-pt-0" },
-            [
-              _c("div", { staticClass: "dvs-text-center" }, [
-                _c("input", {
-                  attrs: { type: "number" },
-                  domProps: { value: _vm.getStyle("margin", "bottom") },
-                  on: {
-                    keyup: function($event) {
-                      _vm.setMargin("bottom", $event)
-                    },
-                    click: function($event) {
-                      _vm.setMargin("bottom", $event)
-                    }
-                  }
-                })
-              ])
-            ]
-          )
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.showBackgroundColor,
-            expression: "showBackgroundColor"
-          }
-        ]
-      },
-      [
-        _c("sketch-picker", {
-          model: {
-            value: _vm.bg,
-            callback: function($$v) {
-              _vm.bg = $$v
-            },
-            expression: "bg"
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: !_vm.showBackgroundColor,
-            expression: "!showBackgroundColor"
-          }
-        ],
-        staticClass: "dvs-btn",
-        style: _vm.theme.actionButton,
-        on: {
-          click: function($event) {
-            _vm.showBackgroundColor = true
-          }
-        }
-      },
-      [_vm._v("Set Background Color")]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "dvs-btn dvs-mt-8 dvs-rounded-full dvs-w-full",
-        style: _vm.theme.actionButtonGhost,
-        on: { click: _vm.resetStyles }
-      },
-      [_vm._v("Reset")]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("fieldset", { staticClass: "dvs-fieldset" }, [
-      _c("label", [_vm._v("Margins and Padding")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dvs-p-2" }, [
-      _c("div", { staticClass: "dvs-bg-white dvs-w-24 dvs-h-24" }, [
-        _vm._v(" ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("fieldset", { staticClass: "dvs-fieldset dvs-mt-8" }, [
-      _c("label", [_vm._v("Background Color")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "dvs-mb-4 dvs-text-xs" }, [
-        _vm._v("Note: Background color effects all responsive sizes")
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-a1f44e84", module.exports)
   }
 }
 

@@ -6,9 +6,9 @@ webpackJsonp([9],{
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(926)
+var __vue_script__ = __webpack_require__(929)
 /* template */
-var __vue_template__ = __webpack_require__(927)
+var __vue_template__ = __webpack_require__(930)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -54,9 +54,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(928)
+var __vue_script__ = __webpack_require__(931)
 /* template */
-var __vue_template__ = __webpack_require__(929)
+var __vue_template__ = __webpack_require__(932)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -276,7 +276,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__ = __webpack_require__(697);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_ionicons_dist_ios_close_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Panel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Panel__);
 //
 //
@@ -382,7 +382,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 926:
+/***/ 929:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -508,7 +508,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 927:
+/***/ 930:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -789,7 +789,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 928:
+/***/ 931:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -894,7 +894,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 929:
+/***/ 932:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

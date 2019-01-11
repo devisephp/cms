@@ -769,7 +769,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-var tinycolor = __webpack_require__(121);
+var tinycolor = __webpack_require__(120);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1688,6 +1688,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_ionicons_dist_md_attach_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_vue_ionicons_dist_md_attach_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vue_ionicons_dist_ios_link_vue__ = __webpack_require__(771);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vue_ionicons_dist_ios_link_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_vue_ionicons_dist_ios_link_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vue_ionicons_dist_ios_cloud_download_vue__ = __webpack_require__(941);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vue_ionicons_dist_ios_cloud_download_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_vue_ionicons_dist_ios_cloud_download_vue__);
 
 //
 //
@@ -2002,12 +2004,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -2062,9 +2059,14 @@ var Cookies = __webpack_require__(774);
         var cookieLocation = Cookies.get('devise-mediamanager-location');
         if (cookieLocation) {
           self.changeDirectories(cookieLocation);
-          this.cookieSettings = true;
+          self.cookieSettings = true;
         } else {
           self.changeDirectories('');
+        }
+
+        var cookieMode = Cookies.get('devise-mediamanager-mode');
+        if (cookieMode) {
+          self.mode = cookieMode;
         }
 
         self.show = true;
@@ -2215,6 +2217,12 @@ var Cookies = __webpack_require__(774);
     cookieSettings: function cookieSettings(newValue) {
       if (!newValue) {
         Cookies.remove('devise-mediamanager-location');
+        Cookies.remove('devise-mediamanager-mode');
+      }
+    },
+    mode: function mode(newValue) {
+      if (this.cookieSettings) {
+        Cookies.set('devise-mediamanager-mode', newValue);
       }
     }
   },
@@ -2223,6 +2231,7 @@ var Cookies = __webpack_require__(774);
     Breadcrumbs: __WEBPACK_IMPORTED_MODULE_5__Breadcrumbs___default.a,
     MediaEditor: __WEBPACK_IMPORTED_MODULE_4__MediaEditor___default.a,
     AttachIcon: __WEBPACK_IMPORTED_MODULE_9_vue_ionicons_dist_md_attach_vue___default.a,
+    DownloadIcon: __WEBPACK_IMPORTED_MODULE_11_vue_ionicons_dist_ios_cloud_download_vue___default.a,
     FolderIcon: __WEBPACK_IMPORTED_MODULE_6_vue_ionicons_dist_ios_folder_vue___default.a,
     LinkIcon: __WEBPACK_IMPORTED_MODULE_10_vue_ionicons_dist_ios_link_vue___default.a,
     TrashIcon: __WEBPACK_IMPORTED_MODULE_7_vue_ionicons_dist_md_trash_vue___default.a,
@@ -2396,11 +2405,11 @@ var VueUpload = __webpack_require__(760);
             this.removeFileFromQueue(newFile);
 
             if (this.uploadingFiles.length < 1) {
-              deviseSettings.$bus.$emit("showMessage", {
-                title: "Upload Complete",
-                message: "Your upload has been successfully completed"
+              deviseSettings.$bus.$emit('showMessage', {
+                title: 'Upload Complete',
+                message: 'Your upload has been successfully completed'
               });
-              this.$emit("all-files-uploaded", newFile);
+              this.$emit('all-files-uploaded', newFile);
             }
           }
         }
@@ -2415,15 +2424,15 @@ var VueUpload = __webpack_require__(760);
      */
     inputFilter: function inputFilter(newFile, oldFile, prevent) {
       // Create a blob field
-      newFile.blob = "";
+      newFile.blob = '';
       var URL = window.URL || window.webkitURL;
       if (URL && URL.createObjectURL) {
         newFile.blob = URL.createObjectURL(newFile.file);
       }
 
       // Thumbnails
-      newFile.thumb = "";
-      if (newFile.blob && newFile.type.substr(0, 6) === "image/") {
+      newFile.thumb = '';
+      if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
         newFile.thumb = newFile.blob;
       }
     },
@@ -2435,7 +2444,7 @@ var VueUpload = __webpack_require__(760);
     uploadHeaders: function uploadHeaders() {
       var token = document.head.querySelector('meta[name="csrf-token"]');
       return {
-        "X-CSRF-TOKEN": token.content
+        'X-CSRF-TOKEN': token.content
       };
     }
   },
@@ -4624,8 +4633,56 @@ var render = function() {
       },
       [
         _c(
+          "button",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.$refs.upload || !_vm.$refs.upload.active,
+                expression: "!$refs.upload || !$refs.upload.active"
+              }
+            ],
+            staticClass: "dvs-btn dvs-mb-4",
+            style: _vm.theme.actionButton,
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.$refs.upload.active = true
+              }
+            }
+          },
+          [_vm._v("Start upload")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$refs.upload && _vm.$refs.upload.active,
+                expression: "$refs.upload && $refs.upload.active"
+              }
+            ],
+            staticClass: "dvs-btn dvs-mb-4",
+            style: _vm.theme.actionButtonGhost,
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.$refs.upload.active = false
+              }
+            }
+          },
+          [_vm._v("Stop upload")]
+        ),
+        _vm._v(" "),
+        _c(
           "table",
-          { staticClass: "dvs-w-full dvs-mb-4 dvs-border-collapse" },
+          { staticClass: "dvs-w-full dvs-border-collapse" },
           [
             _vm._m(1),
             _vm._v(" "),
@@ -4693,54 +4750,6 @@ var render = function() {
             })
           ],
           2
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: !_vm.$refs.upload || !_vm.$refs.upload.active,
-                expression: "!$refs.upload || !$refs.upload.active"
-              }
-            ],
-            staticClass: "dvs-btn",
-            style: _vm.theme.actionButton,
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.$refs.upload.active = true
-              }
-            }
-          },
-          [_vm._v("Start upload")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$refs.upload && _vm.$refs.upload.active,
-                expression: "$refs.upload && $refs.upload.active"
-              }
-            ],
-            staticClass: "dvs-btn",
-            style: _vm.theme.actionButtonGhost,
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.$refs.upload.active = false
-              }
-            }
-          },
-          [_vm._v("Stop upload")]
         )
       ]
     )
@@ -6109,7 +6118,7 @@ var render = function() {
                                   "ul",
                                   {
                                     staticClass:
-                                      "dvs-list-reset dvs-flex dvs-justify-center dvs-flex-wrap dvs-p-4"
+                                      "dvs-list-reset dvs-flex dvs-justify-center dvs-flex-wrap"
                                   },
                                   _vm._l(_vm.currentFiles, function(file) {
                                     return _c(
@@ -6117,12 +6126,12 @@ var render = function() {
                                       {
                                         key: file.id,
                                         staticClass:
-                                          "dvs-relative dvs-bg-white dvs-card dvs-mt-2",
+                                          "dvs-relative dvs-bg-white dvs-card",
                                         class: {
                                           "dvs-cursor-pointer": !file.on,
-                                          "dvs-border-b dvs-border-lighter dvs-p-2 dvs-mx-4":
+                                          "dvs-border-b dvs-border-lighter dvs-p-0 dvs-mx-0 w-1/2":
                                             _vm.mode === "thumbnails",
-                                          "dvs-p-0 dvs-mb-4":
+                                          "dvs-p-0 dvs-mb-4 dvs-mt-2":
                                             _vm.mode !== "thumbnails",
                                           "dvs-mx-2":
                                             _vm.mode === "contactSheet",
@@ -6206,39 +6215,16 @@ var render = function() {
                                                       ]
                                                     )
                                                   : _vm.mode === "thumbnails"
-                                                  ? _c(
-                                                      "div",
-                                                      {
-                                                        staticClass:
-                                                          "dvs-grid-preview dvs-font-bold dvs-relative",
-                                                        style:
-                                                          "background-size:cover;background-image:url('" +
-                                                          ("/styled/preview/" +
-                                                            file.url +
-                                                            "?w=200&h=200") +
-                                                          "')"
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "dvs-text-center dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-text-white dvs-p-4",
-                                                            staticStyle: {
-                                                              "text-shadow":
-                                                                "2px 2px 2px rgba(0,0,0,0.5)",
-                                                              "background-color":
-                                                                "rgba(0,0,0,0.4)"
-                                                            }
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              _vm._s(file.name)
-                                                            )
-                                                          ]
-                                                        )
-                                                      ]
-                                                    )
+                                                  ? _c("div", {
+                                                      staticClass:
+                                                        "dvs-grid-preview dvs-relative",
+                                                      style:
+                                                        "background-size:cover;background-image:url('" +
+                                                        ("/styled/preview/" +
+                                                          file.url +
+                                                          "?w=600&h=300&q=100&sharp=2") +
+                                                        "')"
+                                                    })
                                                   : _c(
                                                       "div",
                                                       {
@@ -6349,6 +6335,8 @@ var render = function() {
                                                         _c(
                                                           "a",
                                                           {
+                                                            staticClass:
+                                                              "dvs-mr-4",
                                                             style: {
                                                               color:
                                                                 _vm.theme
@@ -6367,6 +6355,35 @@ var render = function() {
                                                                 w: "20"
                                                               }
                                                             })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            style: {
+                                                              color:
+                                                                _vm.theme
+                                                                  .actionButton
+                                                                  .background
+                                                            },
+                                                            attrs: {
+                                                              href: file.url,
+                                                              target: "_blank",
+                                                              download: ""
+                                                            }
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "download-icon",
+                                                              {
+                                                                attrs: {
+                                                                  h: "20",
+                                                                  w: "20"
+                                                                }
+                                                              }
+                                                            )
                                                           ],
                                                           1
                                                         )
@@ -6452,36 +6469,6 @@ var render = function() {
                                                           )
                                                         ])
                                                       : _vm._e(),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "fieldset",
-                                                      {
-                                                        staticClass:
-                                                          "dvs-fieldset dvs-mb-4"
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "a",
-                                                          {
-                                                            staticClass:
-                                                              "dvs-btn",
-                                                            style:
-                                                              _vm.theme
-                                                                .actionButtonGhost,
-                                                            attrs: {
-                                                              href: file.url,
-                                                              target: "_blank",
-                                                              download: ""
-                                                            }
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "Click to download"
-                                                            )
-                                                          ]
-                                                        )
-                                                      ]
-                                                    ),
                                                     _vm._v(" "),
                                                     _vm.isActive(file)
                                                       ? [
@@ -6623,6 +6610,131 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-7ff398c4", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 941:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(942)
+/* template */
+var __vue_template__ = __webpack_require__(943)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/vue-ionicons/dist/ios-cloud-download.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3476635a", Component.options)
+  } else {
+    hotAPI.reload("data-v-3476635a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 942:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__ = __webpack_require__(26);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ios-cloud-download-icon",
+  mixins: [__WEBPACK_IMPORTED_MODULE_0__ionicons_mixin__["a" /* default */]],
+  data: function data() {
+    var iconTitle = this.title ? this.title : "Ios Cloud Download Icon";
+    return {
+      iconTitle: iconTitle
+    };
+  }
+});
+
+/***/ }),
+
+/***/ 943:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "ion",
+      class: _vm.ionClass,
+      attrs: { title: _vm.iconTitle, name: "ios-cloud-download-icon" }
+    },
+    [
+      _c(
+        "svg",
+        {
+          staticClass: "ion__svg",
+          attrs: { width: _vm.w, height: _vm.h, viewBox: "0 0 512 512" }
+        },
+        [
+          _c("path", {
+            attrs: {
+              d:
+                "M437.1 165.8C429 90.6 365.4 32 288 32c-51.2 0-96.3 25.6-123.4 64.7-8.3-3.4-17.4-5.3-26.9-5.3-39.1 0-70.8 34.4-71.4 73.4C26.4 177.5 0 216.5 0 257.5 0 307.7 40.7 352 90.9 352H243V211c0-7.2 5.8-13 13-13s13 5.8 13 13v141h152.1c50.2 0 90.9-44.3 90.9-94.5 0-44.7-32.3-84.1-74.9-91.7zM243 435.9l-47.9-47.2c-5.1-5-13.3-5-18.4.1-5 5.1-5 13.3.1 18.4l70 69c2.5 2.4 5.8 3.7 9.1 3.7 1.7 0 3.4-.3 5-1 1.5-.6 2.9-1.6 4.1-2.7l70-69c5.1-5 5.2-13.3.1-18.4-5-5.1-13.3-5.2-18.4-.1L269 435.9V352h-26v83.9z"
+            }
+          })
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3476635a", module.exports)
   }
 }
 

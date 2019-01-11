@@ -70,13 +70,13 @@ var reactiveProp = __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["e" /* mixins */].r
 
 /***/ }),
 
-/***/ 869:
+/***/ 872:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(870)
+var __vue_script__ = __webpack_require__(873)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -118,7 +118,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 870:
+/***/ 873:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -140,13 +140,13 @@ var reactiveProp = __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["e" /* mixins */].r
 
 /***/ }),
 
-/***/ 871:
+/***/ 874:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(872)
+var __vue_script__ = __webpack_require__(875)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -188,7 +188,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 872:
+/***/ 875:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

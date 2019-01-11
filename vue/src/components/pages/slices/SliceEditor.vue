@@ -382,10 +382,12 @@ export default {
         if (this.theFields.hasOwnProperty(field)) {
           const f = this.theFields[field];
           if (f.editorLabel && f[acceptedFieldTypes[f.type]]) {
-            let label = f[acceptedFieldTypes[f.type]].toLowerCase();
+            let label = f[acceptedFieldTypes[f.type]];
 
             if (f.type === 'image') {
               label = `<div class="dvs-rounded dvs-bg-cover" style="background-image: url('${label}'); height:100px; width:200px;"></div>`;
+            } else {
+              label = label.toLowerCase();
             }
 
             if (label) {

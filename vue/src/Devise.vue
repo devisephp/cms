@@ -53,6 +53,9 @@ export default {
       pageMode: false
     };
   },
+  created() {
+    this.setSizeAndBreakpoint();
+  },
   mounted() {
     window.devise = this;
     devise.$bus = deviseSettings.$bus;
@@ -76,7 +79,6 @@ export default {
         );
       }
 
-      this.setSizeAndBreakpoint();
       this.addWatchers();
 
       let self = this;

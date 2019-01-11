@@ -20,9 +20,8 @@
 
   .dvs-grid-preview {
 
-    @apply dvs-bg-cover dvs-overflow-hidden dvs-bg-center dvs-rounded-sm;
+    @apply dvs-bg-cover dvs-overflow-hidden dvs-bg-center dvs-w-full;
 
-    width:200px;
-    height:200px;
+    height:300px;
   }
 }

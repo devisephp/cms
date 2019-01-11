@@ -5,6 +5,7 @@
     :showEditor="showEditor"
     @toggleShowEditor="toggleEditor"
     @cancel="cancel"
+    @resetvalue="resetValue"
   >
     <template slot="preview">
       <span
@@ -116,6 +117,15 @@ export default {
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue() {
+      this.localValue.enabled = false;
+      this.localValue.url = '';
+      this.localValue.alt = null;
+      this.localValue.media = [];
+      this.localValue.settings = {};
+      this.localValue.enabled = false;
+      this.updateValue();
     },
     launchMediaManager(event) {
       this.options.type = 'image';

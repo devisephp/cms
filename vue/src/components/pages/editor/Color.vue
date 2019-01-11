@@ -6,6 +6,7 @@
     :showEditor="showEditor"
     @toggleShowEditor="toggleEditor"
     @cancel="cancel"
+    @resetvalue="resetValue"
   >
     <template slot="preview">
       <span v-if="color === null || color === ''" class="dvs-italic">Currently No Value</span>
@@ -40,9 +41,9 @@ export default {
     convertColor(color) {
       return tinycolor(color).toRgb();
     },
-    update(value) {
-      this.$emit('input', value);
-      this.$emit('change', value);
+    resetValue() {
+      this.localValue.enabled = false;
+      this.color = null;
     }
   },
   computed: {
@@ -57,9 +58,12 @@ export default {
         return tinycolor(this.value.color).toHex();
       },
       set(color) {
-        let valueObj = Object.assign(this.value, {
-          color: `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`
-        });
+        let valueObj = Object.assign(this.value, { color: null });
+        if (color !== null) {
+          valueObj = Object.assign(this.value, {
+            color: `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})`
+          });
+        }
         this.$emit('input', valueObj);
         this.$emit('change', valueObj);
       }

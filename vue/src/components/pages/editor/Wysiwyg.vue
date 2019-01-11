@@ -1,10 +1,18 @@
 <template>
   <div>
-    <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
+    <field-editor
+      :options="options"
+      v-model="localValue"
+      :showEditor="showEditor"
+      @toggleShowEditor="toggleEditor"
+      @cancel="cancel"
+      @resetvalue="resetValue"
+    >
       <template slot="preview">
-        <span v-if="localValue.text === null || localValue.text === ''" class="dvs-italic">
-          Currently No Value
-        </span>
+        <span
+          v-if="localValue.text === null || localValue.text === ''"
+          class="dvs-italic"
+        >Currently No Value</span>
         <div v-html="clipString(localValue.text, 200, false)"></div>
       </template>
       <template slot="editor">
@@ -17,36 +25,40 @@
 </template>
 
 <script>
-import Strings from './../../../mixins/Strings'
+import Strings from './../../../mixins/Strings';
 
 export default {
   name: 'WysiwygEditor',
-  data () {
+  data() {
     return {
       localValue: {},
       originalValue: null,
       showEditor: false
-    }
+    };
   },
-  mounted () {
-    this.originalValue = Object.assign({}, this.value)
-    this.localValue = this.value
+  mounted() {
+    this.originalValue = Object.assign({}, this.value);
+    this.localValue = this.value;
   },
   methods: {
-    toggleEditor () {
-      this.showEditor = !this.showEditor
+    toggleEditor() {
+      this.showEditor = !this.showEditor;
     },
-    cancel () {
-      this.localValue.text = this.originalValue.text
-      this.$emit('input', this.originalValue)
-      this.$emit('change', this.originalValue)
+    cancel() {
+      this.localValue.text = this.originalValue.text;
+      this.$emit('input', this.originalValue);
+      this.$emit('change', this.originalValue);
 
-      this.toggleEditor()
+      this.toggleEditor();
     },
-    update (event) {
-      this.localValue.text = event.target.value
-      this.$emit('input', this.localValue)
-      this.$emit('change', this.localValue)
+    update(event) {
+      this.localValue.text = event.target.value;
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
+    },
+    resetValue() {
+      this.localValue.enabled = false;
+      this.$refs.editor.empty();
     }
   },
   props: ['value', 'options', 'namekey'],
@@ -56,5 +68,5 @@ export default {
     FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
     Wysiwyg: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Wysiwyg')
   }
-}
+};
 </script>

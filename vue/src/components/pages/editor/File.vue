@@ -1,34 +1,46 @@
 <template>
-  <field-editor :options="options" v-model="localValue" :showEditor="showEditor" @toggleShowEditor="toggleEditor" @cancel="cancel">
-
+  <field-editor
+    :options="options"
+    v-model="localValue"
+    :showEditor="showEditor"
+    @toggleShowEditor="toggleEditor"
+    @cancel="cancel"
+    @resetvalue="resetValue"
+  >
     <template slot="preview">
-      <span v-if="localValue.url === null || localValue.url === ''" class="dvs-italic">
-        Currently No Value
-      </span>
-      <img :src="localValue.url" class="dvs-max-w-2xs" :alt="localValue.url"><br>
+      <span
+        v-if="localValue.url === null || localValue.url === ''"
+        class="dvs-italic"
+      >Currently No Value</span>
+      <img :src="localValue.url" class="dvs-max-w-2xs" :alt="localValue.url">
+      <br>
     </template>
 
     <template slot="editor">
       <fieldset class="dvs-fieldset">
         <div class="dvs-flex dvs-items-center">
-          <input type="text" v-model="localValue.url" :maxlength="getMaxLength" v-on:input="updateValue()">
+          <input
+            type="text"
+            v-model="localValue.url"
+            :maxlength="getMaxLength"
+            v-on:input="updateValue()"
+          >
           <div @click="launchMediaManager($event)">
-            <document-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px" />
+            <document-icon class="dvs-ml-4 dvs-cursor-pointer" w="30px" h="30px"/>
           </div>
         </div>
       </fieldset>
     </template>
-
   </field-editor>
 </template>
 
 <script>
-import DocumentIcon from 'vue-ionicons/dist/ios-document.vue'
-import CreateIcon from 'vue-ionicons/dist/ios-create.vue'
+import DocumentIcon from 'vue-ionicons/dist/ios-document.vue';
+import CreateIcon from 'vue-ionicons/dist/ios-create.vue';
 
 export default {
   name: 'FileEditor',
-  data () {
+  data() {
     return {
       localValue: {
         url: '',
@@ -38,51 +50,56 @@ export default {
       },
       originalValue: null,
       showEditor: false
-    }
+    };
   },
-  mounted () {
-    this.originalValue = Object.assign({}, this.value)
-    this.localValue = this.value
+  mounted() {
+    this.originalValue = Object.assign({}, this.value);
+    this.localValue = this.value;
   },
   methods: {
-    toggleEditor () {
-      this.showEditor = !this.showEditor
+    toggleEditor() {
+      this.showEditor = !this.showEditor;
     },
-    cancel () {
-      this.localValue.url = this.originalValue.url
-      this.localValue.alt = this.originalValue.alt
-      this.updateValue()
-      this.toggleEditor()
+    cancel() {
+      this.localValue.url = this.originalValue.url;
+      this.localValue.alt = this.originalValue.alt;
+      this.updateValue();
+      this.toggleEditor();
     },
-    updateValue () {
+    updateValue() {
       // Emit the number value through the input event
-      this.$emit('input', this.localValue)
-      this.$emit('change', this.localValue)
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
     },
-    launchMediaManager (event) {
+    launchMediaManager(event) {
       devise.$bus.$emit('devise-launch-media-manager', {
         callback: this.mediaSelected,
         options: this.options
-      })
+      });
     },
-    mediaSelected (imagesAndSettings) {
+    mediaSelected(imagesAndSettings) {
       if (typeof imagesAndSettings === 'object') {
-        this.localValue.url = imagesAndSettings.images.orig_optimized
-        this.localValue.media = imagesAndSettings.images
-        this.$set(this.localValue, 'settings', imagesAndSettings.settings)
+        this.localValue.url = imagesAndSettings.images.orig_optimized;
+        this.localValue.media = imagesAndSettings.images;
+        this.$set(this.localValue, 'settings', imagesAndSettings.settings);
       } else {
-        this.localValue.url = imagesAndSettings
+        this.localValue.url = imagesAndSettings;
       }
 
-      this.updateValue()
+      this.updateValue();
+    },
+    resetValue() {
+      this.localValue.enabled = false;
+      this.localValue.url = '';
+      this.updateValue();
     }
   },
   computed: {
-    getMaxLength: function () {
+    getMaxLength: function() {
       if (typeof this.settings !== 'undefined' && typeof this.settings.maxlength !== 'undefined') {
-        return this.settings.maxlength
+        return this.settings.maxlength;
       }
-      return ''
+      return '';
     }
   },
   props: ['value', 'options'],
@@ -91,5 +108,5 @@ export default {
     FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
     DocumentIcon
   }
-}
+};
 </script>

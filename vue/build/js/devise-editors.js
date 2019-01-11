@@ -3826,7 +3826,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      localDateTime: this.value,
+      localDateTime: null,
       config: {
         noCalendar: !this.settings.date,
         enableTime: this.settings.time,
@@ -3863,6 +3863,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       return null;
+    },
+    resetPicker: function resetPicker() {
+      this.localDateTime = null;
     }
   },
   components: {
@@ -3983,6 +3986,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 var tinycolor = __webpack_require__(120);
 
@@ -4005,9 +4009,9 @@ var tinycolor = __webpack_require__(120);
     convertColor: function convertColor(color) {
       return tinycolor(color).toRgb();
     },
-    update: function update(value) {
-      this.$emit('input', value);
-      this.$emit('change', value);
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.color = null;
     }
   },
   computed: {
@@ -4022,9 +4026,12 @@ var tinycolor = __webpack_require__(120);
         return tinycolor(this.value.color).toHex();
       },
       set: function set(color) {
-        var valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, {
-          color: 'rgba(' + color.rgba.r + ',' + color.rgba.g + ',' + color.rgba.b + ',' + color.rgba.a + ')'
-        });
+        var valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, { color: null });
+        if (color !== null) {
+          valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, {
+            color: 'rgba(' + color.rgba.r + ',' + color.rgba.g + ',' + color.rgba.b + ',' + color.rgba.a + ')'
+          });
+        }
         this.$emit('input', valueObj);
         this.$emit('change', valueObj);
       }
@@ -4053,7 +4060,11 @@ var render = function() {
     {
       ref: "field",
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.value,
         callback: function($$v) {
@@ -4348,6 +4359,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4391,6 +4416,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue: function resetValue() {
+      this.localValue.text = null;
+      this.localValue.enabled = false;
+      this.updateValue();
     }
   },
   computed: {
@@ -4423,7 +4453,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -4436,7 +4470,7 @@ var render = function() {
       _c("template", { slot: "preview" }, [
         _vm.localValue.text === null || _vm.localValue.text === ""
           ? _c("span", { staticClass: "dvs-italic" }, [
-              _vm._v("\n      Currently No Value\n    ")
+              _vm._v("Currently No Value")
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -4500,6 +4534,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_Strings__ = __webpack_require__(119);
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4655,18 +4695,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FieldEditor',
+  data: function data() {
+    return {
+      showErase: false
+    };
+  },
   mounted: function mounted() {
     var self = this;
   },
 
   methods: {
     toggleShowEditor: function toggleShowEditor() {
+      this.showErase = false;
       this.$emit('toggleShowEditor');
     },
     cancel: function cancel() {
@@ -4677,10 +4737,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return 'This field is enabled';
       }
       return 'This field is not enabled. Edit the field and toggle the enable switch to turn it on.';
+    },
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.showErase = false;
+      this.$emit('resetvalue');
     }
   },
   computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])('devise', ['fieldConfig'])),
-  props: ['value', 'options', 'showEditor'],
+  props: ['value', 'options', 'showEditor', 'noReset'],
   mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_Strings__["a" /* default */]],
   components: {
     Panel: function Panel() {
@@ -4816,7 +4881,7 @@ var render = function() {
                           "div",
                           {
                             staticClass:
-                              "dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between"
+                              "dvs-flex dvs-items-center dvs-mt-4 dvs-mb-4 dvs-justify-between"
                           },
                           [
                             _c(
@@ -4872,7 +4937,49 @@ var render = function() {
                                 )
                               : _vm._e()
                           ]
-                        )
+                        ),
+                        _vm._v(" "),
+                        !_vm.showErase && !_vm.noReset
+                          ? _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-uppercase dvs-text-center dvs-text-xs dvs-p-2 dvs-opacity-50 hover:dvs-opacity-100 dvs-cursor-pointer",
+                                staticStyle: { height: "30px" },
+                                style: {
+                                  backgroundColor:
+                                    _vm.theme.panelCard.background
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.showErase = true
+                                  }
+                                }
+                              },
+                              [_vm._v("reset")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.showErase
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "dvs--mb-8 dvs--ml-8 dvs--mr-8",
+                                style: _vm.theme.actionButton
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "dvs-btn dvs-w-full",
+                                    style: _vm.theme.actionButton,
+                                    on: { click: _vm.resetValue }
+                                  },
+                                  [_vm._v("Reset Value to Nothing")]
+                                )
+                              ]
+                            )
+                          : _vm._e()
                       ],
                       2
                     )
@@ -4909,7 +5016,11 @@ var render = function() {
   return _c(
     "field-editor",
     {
-      attrs: { options: _vm.options, showEditor: _vm.showEditor },
+      attrs: {
+        "no-reset": true,
+        options: _vm.options,
+        showEditor: _vm.showEditor
+      },
       on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
       model: {
         value: _vm.localValue,
@@ -4923,7 +5034,7 @@ var render = function() {
       _c("template", { slot: "preview" }, [
         _vm.localValue.checked === null || _vm.localValue.checked === ""
           ? _c("span", { staticClass: "dvs-italic" }, [
-              _vm._v("\n      Currently No Value\n    ")
+              _vm._v("Currently No Value")
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -4999,6 +5110,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -5006,14 +5118,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   name: 'DatetimeEditor',
   data: function data() {
     return {
-      localValue: {},
       showEditor: false,
-      settings: { date: true, time: false, format: 'YYYY' }
+      settings: { date: true, time: false },
+      originalValue: {}
     };
   },
   mounted: function mounted() {
-    this.localValue = this.value;
-
     this.setSettings();
   },
 
@@ -5031,14 +5141,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         if (settings.format) {
           this.settings.format = settings.format;
-        } else {
-          if (this.settings.date) {
-            this.format += 'dddd MMMM D YYYY';
-          }
-
-          if (this.settings.time) {
-            this.format += 'h:mm a';
-          }
         }
       }
     },
@@ -5048,17 +5150,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     cancel: function cancel() {
       this.localValue.text = this.originalValue.text;
-      this.updateValue();
       this.toggleEditor();
     },
-
-    updateValue: function updateValue() {
-      // Emit the number value through the input event
-      this.$emit('input', this.localValue);
-      this.$emit('change', this.localValue);
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.$refs.datepicker.resetPicker();
+      this.localValue = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.localValue, { text: null });
     }
   },
   computed: {
+    localValue: {
+      set: function set(value) {
+        console.log(value);
+        this.$emit('input', value);
+        this.$emit('change', value);
+      },
+      get: function get() {
+        return this.value;
+      }
+    },
     getMaxLength: function getMaxLength() {
       if (typeof this.settings !== 'undefined' && typeof this.settings.maxlength !== 'undefined') {
         return this.settings.maxlength;
@@ -5088,7 +5198,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -5114,12 +5228,8 @@ var render = function() {
           { staticClass: "dvs-fieldset" },
           [
             _c("date-picker", {
+              ref: "datepicker",
               attrs: { settings: _vm.settings },
-              on: {
-                update: function($event) {
-                  _vm.updateValue()
-                }
-              },
               model: {
                 value: _vm.localValue.text,
                 callback: function($$v) {
@@ -5163,6 +5273,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_ionicons_dist_ios_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_ionicons_dist_ios_create_vue__);
 
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5240,6 +5362,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.localValue.url = imagesAndSettings;
       }
 
+      this.updateValue();
+    },
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.localValue.url = '';
       this.updateValue();
     }
   },
@@ -5405,7 +5532,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -5418,7 +5549,7 @@ var render = function() {
       _c("template", { slot: "preview" }, [
         _vm.localValue.url === null || _vm.localValue.url === ""
           ? _c("span", { staticClass: "dvs-italic" }, [
-              _vm._v("\n      Currently No Value\n    ")
+              _vm._v("Currently No Value")
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -5426,6 +5557,7 @@ var render = function() {
           staticClass: "dvs-max-w-2xs",
           attrs: { src: _vm.localValue.url, alt: _vm.localValue.url }
         }),
+        _vm._v(" "),
         _c("br")
       ]),
       _vm._v(" "),
@@ -5591,6 +5723,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -5631,6 +5764,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.localValue.url = '';
+      this.localValue.alt = null;
+      this.localValue.media = [];
+      this.localValue.settings = {};
+      this.localValue.enabled = false;
+      this.updateValue();
     },
     launchMediaManager: function launchMediaManager(event) {
       this.options.type = 'image';
@@ -5697,7 +5839,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -5995,6 +6141,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6075,6 +6251,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.localValue.href = null;
+      this.localValue.url = null;
+      this.localValue.mode = null;
+      this.localValue.text = null;
+      this.localValue.routeName = null;
+      this.updateValue();
     }
   }),
   computed: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('devise', ['pagesList'])),
@@ -6099,7 +6284,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -6112,7 +6301,7 @@ var render = function() {
       _c("template", { slot: "preview" }, [
         _vm.localValue.text === null || _vm.localValue.text === ""
           ? _c("span", { staticClass: "dvs-italic" }, [
-              _vm._v("\n      Currently No Value\n    ")
+              _vm._v("Currently No Value")
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -6191,7 +6380,7 @@ var render = function() {
                   }
                 }
               }),
-              _vm._v("\n      URL\n      ")
+              _vm._v("\n        URL\n      ")
             ])
           ]),
           _vm._v(" "),
@@ -6218,7 +6407,7 @@ var render = function() {
                   }
                 }
               }),
-              _vm._v("\n      Page\n      ")
+              _vm._v("\n        Page\n      ")
             ])
           ]),
           _vm._v(" "),
@@ -6432,6 +6621,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NumberEditor',
@@ -6472,6 +6662,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.localValue.text = null;
+      this.updateValue();
     }
   },
   computed: {
@@ -6503,7 +6698,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -6597,6 +6796,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6642,15 +6849,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     updateValue: function updateValue() {
-      this.localValue.label = this.label;
+      this.localValue.label = this.getLabel(this.localValue.value);
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
-    }
-  },
-  computed: {
-    label: function label() {
-      return this.options.options[this.localValue.value];
+    },
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.localValue.label = null;
+      this.localValue.value = null;
+      this.updateValue();
+    },
+    getLabel: function getLabel(value) {
+      if (value !== null) {
+        return this.options.options[value];
+      }
+      return 'Select';
     }
   },
   props: ['value', 'options'],
@@ -6675,7 +6889,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -6688,7 +6906,7 @@ var render = function() {
       _c("template", { slot: "preview" }, [
         _vm.localValue.value === null || _vm.localValue.value === ""
           ? _c("span", { staticClass: "dvs-italic" }, [
-              _vm._v("\n      Currently No Value\n    ")
+              _vm._v("Currently No Value")
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -6712,24 +6930,26 @@ var render = function() {
               ],
               ref: "focusInput",
               on: {
-                input: function($event) {
-                  _vm.updateValue()
-                },
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.localValue,
-                    "value",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                }
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.localValue,
+                      "value",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                  function($event) {
+                    _vm.updateValue()
+                  }
+                ]
               }
             },
             [
@@ -6772,6 +6992,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_Strings__ = __webpack_require__(119);
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6834,6 +7066,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue: function resetValue() {
+      this.localValue.text = null;
+      this.localValue.enabled = false;
+      this.updateValue();
     }
   },
   computed: {
@@ -6866,7 +7103,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -6879,7 +7120,7 @@ var render = function() {
       _c("template", { slot: "preview" }, [
         _vm.localValue.text === null || _vm.localValue.text === ""
           ? _c("span", { staticClass: "dvs-italic" }, [
-              _vm._v("\n      Currently No Value\n    ")
+              _vm._v("Currently No Value")
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -6961,6 +7202,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6993,6 +7242,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.localValue.text = event.target.value;
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.$refs.editor.empty();
     }
   },
   props: ['value', 'options', 'namekey'],
@@ -7026,7 +7279,11 @@ var render = function() {
         "field-editor",
         {
           attrs: { options: _vm.options, showEditor: _vm.showEditor },
-          on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+          on: {
+            toggleShowEditor: _vm.toggleEditor,
+            cancel: _vm.cancel,
+            resetvalue: _vm.resetValue
+          },
           model: {
             value: _vm.localValue,
             callback: function($$v) {
@@ -7039,7 +7296,7 @@ var render = function() {
           _c("template", { slot: "preview" }, [
             _vm.localValue.text === null || _vm.localValue.text === ""
               ? _c("span", { staticClass: "dvs-italic" }, [
-                  _vm._v("\n        Currently No Value\n      ")
+                  _vm._v("Currently No Value")
                 ])
               : _vm._e(),
             _vm._v(" "),

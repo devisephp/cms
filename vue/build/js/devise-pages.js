@@ -4074,7 +4074,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      localDateTime: this.value,
+      localDateTime: null,
       config: {
         noCalendar: !this.settings.date,
         enableTime: this.settings.time,
@@ -4111,6 +4111,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       return null;
+    },
+    resetPicker: function resetPicker() {
+      this.localDateTime = null;
     }
   },
   components: {
@@ -5791,7 +5794,6 @@ var tinycolor = __webpack_require__(120);
       });
 
       deviseSettings.$bus.$on('devise-close-sidebar', function () {
-        console.log('here');
         _this.closeEditor();
       });
     },
@@ -8155,7 +8157,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$set(version, 'showSettings', !version.showSettings);
     }
   }),
-  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["c" /* mapGetters */])('devise', ['languages', 'mothershipApiKey']), Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["d" /* mapState */])('devise', ['layouts']), {
+  computed: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["c" /* mapGetters */])('devise', ['languages', 'mothershipApiKey']), Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["e" /* mapState */])('devise', ['layouts']), {
     options: function options() {
       return {
         width: '8000px',

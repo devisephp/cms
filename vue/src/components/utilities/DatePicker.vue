@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 export default {
   data() {
     return {
-      localDateTime: this.value,
+      localDateTime: null,
       config: {
         noCalendar: !this.settings.date,
         enableTime: this.settings.time,
@@ -52,6 +52,9 @@ export default {
       }
 
       return null;
+    },
+    resetPicker() {
+      this.localDateTime = null;
     }
   },
   components: {

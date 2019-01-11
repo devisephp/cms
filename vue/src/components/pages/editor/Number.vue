@@ -5,6 +5,7 @@
     :showEditor="showEditor"
     @toggleShowEditor="toggleEditor"
     @cancel="cancel"
+    @resetvalue="resetValue"
   >
     <template slot="preview">
       <span
@@ -64,6 +65,11 @@ export default {
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue() {
+      this.localValue.enabled = false;
+      this.localValue.text = null;
+      this.updateValue();
     }
   },
   computed: {

@@ -8,8 +8,6 @@ export default function(el, binding, vnode) {
   breakpoint = breakpoint !== null ? breakpoint : 'desktop';
   srcAttribute = srcAttribute ? srcAttribute : 'src';
 
-  console.log(breakpoint);
-
   let theImageSize = () => {
     let sizes = image.sizes;
 

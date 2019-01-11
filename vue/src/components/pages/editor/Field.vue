@@ -52,7 +52,7 @@
 
             <slot name="editor"></slot>
 
-            <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-justify-between">
+            <div class="dvs-flex dvs-items-center dvs-mt-4 dvs-mb-4 dvs-justify-between">
               <div class="dvs-flex dvs-items-center">
                 <button
                   class="dvs-btn dvs-mr-2"
@@ -70,6 +70,20 @@
                 <toggle v-model="value.enabled" :id="randomString(8)"></toggle>
               </div>
             </div>
+            <div
+              @click="showErase = true"
+              v-if="!showErase && !noReset"
+              class="dvs-absolute dvs-pin-b dvs-pin-l dvs-pin-r dvs-uppercase dvs-text-center dvs-text-xs dvs-p-2 dvs-opacity-50 hover:dvs-opacity-100 dvs-cursor-pointer"
+              style="height:30px;"
+              :style="{backgroundColor: theme.panelCard.background}"
+            >reset</div>
+            <div v-if="showErase" class="dvs--mb-8 dvs--ml-8 dvs--mr-8" :style="theme.actionButton">
+              <button
+                class="dvs-btn dvs-w-full"
+                :style="theme.actionButton"
+                @click="resetValue"
+              >Reset Value to Nothing</button>
+            </div>
           </div>
         </panel>
       </portal>
@@ -83,11 +97,17 @@ import Strings from './../../../mixins/Strings';
 
 export default {
   name: 'FieldEditor',
+  data() {
+    return {
+      showErase: false
+    };
+  },
   mounted() {
     let self = this;
   },
   methods: {
     toggleShowEditor() {
+      this.showErase = false;
       this.$emit('toggleShowEditor');
     },
     cancel() {
@@ -98,12 +118,17 @@ export default {
         return 'This field is enabled';
       }
       return 'This field is not enabled. Edit the field and toggle the enable switch to turn it on.';
+    },
+    resetValue() {
+      this.localValue.enabled = false;
+      this.showErase = false;
+      this.$emit('resetvalue');
     }
   },
   computed: {
     ...mapGetters('devise', ['fieldConfig'])
   },
-  props: ['value', 'options', 'showEditor'],
+  props: ['value', 'options', 'showEditor', 'noReset'],
   mixins: [Strings],
   components: {
     Panel: () => import(/* webpackChunkName: "js/devise-utilities" */ './../../utilities/Panel'),

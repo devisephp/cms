@@ -5,6 +5,7 @@
     :showEditor="showEditor"
     @toggleShowEditor="toggleEditor"
     @cancel="cancel"
+    @resetvalue="resetValue"
   >
     <template slot="preview">
       <span
@@ -16,7 +17,7 @@
 
     <template slot="editor">
       <fieldset class="dvs-fieldset">
-        <date-picker v-model="localValue.text" :settings="settings" @update="updateValue()"/>
+        <date-picker ref="datepicker" v-model="localValue.text" :settings="settings"/>
       </fieldset>
     </template>
   </field-editor>
@@ -29,14 +30,12 @@ export default {
   name: 'DatetimeEditor',
   data() {
     return {
-      localValue: {},
       showEditor: false,
-      settings: { date: true, time: false, format: 'YYYY' }
+      settings: { date: true, time: false },
+      originalValue: {}
     };
   },
   mounted() {
-    this.localValue = this.value;
-
     this.setSettings();
   },
   methods: {
@@ -53,14 +52,6 @@ export default {
 
         if (settings.format) {
           this.settings.format = settings.format;
-        } else {
-          if (this.settings.date) {
-            this.format += 'dddd MMMM D YYYY';
-          }
-
-          if (this.settings.time) {
-            this.format += 'h:mm a';
-          }
         }
       }
     },
@@ -70,16 +61,25 @@ export default {
     },
     cancel() {
       this.localValue.text = this.originalValue.text;
-      this.updateValue();
       this.toggleEditor();
     },
-    updateValue: function() {
-      // Emit the number value through the input event
-      this.$emit('input', this.localValue);
-      this.$emit('change', this.localValue);
+    resetValue() {
+      this.localValue.enabled = false;
+      this.$refs.datepicker.resetPicker();
+      this.localValue = Object.assign(this.localValue, { text: null });
     }
   },
   computed: {
+    localValue: {
+      set: function(value) {
+        console.log(value);
+        this.$emit('input', value);
+        this.$emit('change', value);
+      },
+      get: function() {
+        return this.value;
+      }
+    },
     getMaxLength: function() {
       if (typeof this.settings !== 'undefined' && typeof this.settings.maxlength !== 'undefined') {
         return this.settings.maxlength;

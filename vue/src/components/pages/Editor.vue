@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="dvs-absolute dvs-pin-t dvs-pin-r">
+      <toggle @change="toggleDevMode" :id="randomString(8)"></toggle>
+    </div>
+
     <div class="dvs-p-8">
       <fieldset class="dvs-fieldset">
         <label>Page Version</label>
@@ -70,8 +74,10 @@
 <script>
 import draggable from 'vuedraggable';
 
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+import Strings from './../../mixins/Strings';
 
+import Toggle from './../utilities/Toggle';
 import ManageSlice from './slices/ManageSlice';
 import AnalyticTotals from './AnalyticTotals';
 import AddIcon from 'vue-ionicons/dist/ios-add.vue';
@@ -100,6 +106,7 @@ export default {
   },
   methods: {
     ...mapActions('devise', ['savePage']),
+    ...mapMutations('devise', ['setDevMode']),
     requestSavePage() {
       this.saving = true;
       this.savePage(this.currentPage).then(() => {
@@ -191,17 +198,22 @@ export default {
     selectVersion(version) {
       // pass version_id through the url
       // location.href=
+    },
+    toggleDevMode(value) {
+      this.setDevMode(value);
     }
   },
   computed: {
     ...mapGetters('devise', ['currentPage', 'sliceConfig'])
   },
+  mixins: [Strings],
   components: {
     AddIcon,
     AnalyticTotals,
     draggable,
     ManageSlice,
-    RefreshIcon
+    RefreshIcon,
+    Toggle
   }
 };
 </script>

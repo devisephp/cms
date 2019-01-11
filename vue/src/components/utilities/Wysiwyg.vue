@@ -172,6 +172,18 @@ export default {
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
     },
+    setHtml(html) {
+      this.localValue = html;
+      this.theEditor.el.trumbowyg('html', html);
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
+    },
+    empty() {
+      this.localValue = '';
+      this.theEditor.el.trumbowyg('empty');
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
+    },
     imageManager(image) {
       this.imageToManage = image;
       this.$nextTick(() => {

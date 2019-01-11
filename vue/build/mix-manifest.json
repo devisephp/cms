@@ -15,5 +15,6 @@
     "/js/devise-charts.js": "/js/devise-charts.js",
     "/js/devise.js": "/js/devise.js",
     "/js/devise-installer.js": "/js/devise-installer.js",
-    "/css/devise.css": "/css/devise.css"
+    "/css/devise.css": "/css/devise.css",
+    "/devise-admin-vendors.js": "/devise-admin-vendors.js"
 }

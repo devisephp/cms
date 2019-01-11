@@ -104,7 +104,6 @@ export default {
       });
 
       deviseSettings.$bus.$on('devise-close-sidebar', () => {
-        console.log('here');
         this.closeEditor();
       });
     },

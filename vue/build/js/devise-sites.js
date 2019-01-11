@@ -1105,6 +1105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 var tinycolor = __webpack_require__(120);
 
@@ -1127,9 +1128,9 @@ var tinycolor = __webpack_require__(120);
     convertColor: function convertColor(color) {
       return tinycolor(color).toRgb();
     },
-    update: function update(value) {
-      this.$emit('input', value);
-      this.$emit('change', value);
+    resetValue: function resetValue() {
+      this.localValue.enabled = false;
+      this.color = null;
     }
   },
   computed: {
@@ -1144,9 +1145,12 @@ var tinycolor = __webpack_require__(120);
         return tinycolor(this.value.color).toHex();
       },
       set: function set(color) {
-        var valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, {
-          color: 'rgba(' + color.rgba.r + ',' + color.rgba.g + ',' + color.rgba.b + ',' + color.rgba.a + ')'
-        });
+        var valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, { color: null });
+        if (color !== null) {
+          valueObj = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()(this.value, {
+            color: 'rgba(' + color.rgba.r + ',' + color.rgba.g + ',' + color.rgba.b + ',' + color.rgba.a + ')'
+          });
+        }
         this.$emit('input', valueObj);
         this.$emit('change', valueObj);
       }
@@ -1175,7 +1179,11 @@ var render = function() {
     {
       ref: "field",
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.value,
         callback: function($$v) {
@@ -1464,6 +1472,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1507,6 +1529,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // Emit the number value through the input event
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
+    },
+    resetValue: function resetValue() {
+      this.localValue.text = null;
+      this.localValue.enabled = false;
+      this.updateValue();
     }
   },
   computed: {
@@ -1539,7 +1566,11 @@ var render = function() {
     "field-editor",
     {
       attrs: { options: _vm.options, showEditor: _vm.showEditor },
-      on: { toggleShowEditor: _vm.toggleEditor, cancel: _vm.cancel },
+      on: {
+        toggleShowEditor: _vm.toggleEditor,
+        cancel: _vm.cancel,
+        resetvalue: _vm.resetValue
+      },
       model: {
         value: _vm.localValue,
         callback: function($$v) {
@@ -1552,7 +1583,7 @@ var render = function() {
       _c("template", { slot: "preview" }, [
         _vm.localValue.text === null || _vm.localValue.text === ""
           ? _c("span", { staticClass: "dvs-italic" }, [
-              _vm._v("\n      Currently No Value\n    ")
+              _vm._v("Currently No Value")
             ])
           : _vm._e(),
         _vm._v(" "),

@@ -99,6 +99,9 @@ const state = {
       height: null
     }
   },
+  // DevMode
+  devMode: false,
+  test: 1,
   // Mothership
   changes: [],
   // Media Manager

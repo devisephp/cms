@@ -3555,54 +3555,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ }),
 
-/***/ 711:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(725)
-/* template */
-var __vue_template__ = __webpack_require__(726)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/components/utilities/Toggle.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d55e5cae", Component.options)
-  } else {
-    hotAPI.reload("data-v-d55e5cae", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
 /***/ 712:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3680,7 +3632,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      localDateTime: this.value,
+      localDateTime: null,
       config: {
         noCalendar: !this.settings.date,
         enableTime: this.settings.time,
@@ -3717,6 +3669,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       return null;
+    },
+    resetPicker: function resetPicker() {
+      this.localDateTime = null;
     }
   },
   components: {
@@ -3983,111 +3938,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-af9cf930", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 725:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "DeviseToggle",
-  data: function data() {
-    return {
-      localValue: true
-    };
-  },
-  mounted: function mounted() {
-    this.localValue = this.value;
-  },
-
-  methods: {
-    updateValue: function updateValue() {
-      // Emit the number value through the input event
-      this.$emit("input", this.localValue);
-      this.$emit("change", this.localValue);
-    }
-  },
-  watch: {
-    value: function value(newValue) {
-      this.localValue = this.value;
-    }
-  },
-  props: ["value", "id"]
-});
-
-/***/ }),
-
-/***/ 726:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("label", { staticClass: "dvs-toggle", attrs: { for: _vm.id } }, [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.localValue,
-          expression: "localValue"
-        }
-      ],
-      attrs: { type: "checkbox", id: _vm.id },
-      domProps: {
-        checked: Array.isArray(_vm.localValue)
-          ? _vm._i(_vm.localValue, null) > -1
-          : _vm.localValue
-      },
-      on: {
-        change: [
-          function($event) {
-            var $$a = _vm.localValue,
-              $$el = $event.target,
-              $$c = $$el.checked ? true : false
-            if (Array.isArray($$a)) {
-              var $$v = null,
-                $$i = _vm._i($$a, $$v)
-              if ($$el.checked) {
-                $$i < 0 && (_vm.localValue = $$a.concat([$$v]))
-              } else {
-                $$i > -1 &&
-                  (_vm.localValue = $$a
-                    .slice(0, $$i)
-                    .concat($$a.slice($$i + 1)))
-              }
-            } else {
-              _vm.localValue = $$c
-            }
-          },
-          _vm.updateValue
-        ]
-      }
-    }),
-    _vm._v(" "),
-    _c("div", { staticClass: "dvs-toggle-slider" })
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-d55e5cae", module.exports)
   }
 }
 
@@ -5251,6 +5101,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     update: function update() {
       this.localValue = this.theEditor.el.trumbowyg('html');
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
+    },
+    setHtml: function setHtml(html) {
+      this.localValue = html;
+      this.theEditor.el.trumbowyg('html', html);
+      this.$emit('input', this.localValue);
+      this.$emit('change', this.localValue);
+    },
+    empty: function empty() {
+      this.localValue = '';
+      this.theEditor.el.trumbowyg('empty');
       this.$emit('input', this.localValue);
       this.$emit('change', this.localValue);
     },

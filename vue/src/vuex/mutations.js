@@ -4,6 +4,11 @@ export default {
     state.breakpoint = payload;
   },
 
+  setDevMode(state, payload) {
+    state.test++;
+    state.devMode = true;
+  },
+
   // Languages
   setLanguages(state, payload) {
     state.languages = payload;

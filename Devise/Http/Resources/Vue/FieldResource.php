@@ -17,37 +17,41 @@ class FieldResource extends Resource
     public function toArray($request)
     {
         $value = $this->value;
-        $value->id = $this->id;
-        if (isset($value->type))
+
+        if ($value)
         {
-            if (isset($value->routeName)
-                && ($value->type == 'link')
-                && Route::has($value->routeName))
+            $value->id = $this->id;
+
+            if (isset($value->type))
             {
-                $value->href = route($value->routeName);
-            } else
-            {
-                if (!isset($value->href))
+                if (isset($value->routeName)
+                    && ($value->type == 'link')
+                    && Route::has($value->routeName))
                 {
-                    $value->href = $value->url;
+                    $value->href = route($value->routeName);
+                } else
+                {
+                    if (!isset($value->href))
+                    {
+                        $value->href = $value->url;
+                    }
+                }
+            }
+
+            if (isset($value->type) && isset($value->url) && ($value->type == 'image' || $value->type == 'file'))
+            {
+                $storage = Framework::storage();
+
+                if ($this->isMediaRelativePath($value->url))
+                {
+                    $url = $storage->url(trim($value->url, '/'));
+                    if ($url)
+                    {
+                        $value->url = $url;
+                    }
                 }
             }
         }
-
-        if (isset($value->type) && isset($value->url) && ($value->type == 'image' || $value->type == 'file'))
-        {
-            $storage = Framework::storage();
-
-            if ($this->isMediaRelativePath($value->url))
-            {
-                $url = $storage->url(trim($value->url, '/'));
-                if ($url)
-                {
-                    $value->url = $url;
-                }
-            }
-        }
-
 
         return $value;
     }

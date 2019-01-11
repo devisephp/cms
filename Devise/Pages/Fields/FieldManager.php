@@ -153,7 +153,7 @@ class FieldManager
 
             foreach ($slice as $fieldKey => $fieldValue)
             {
-                if ($fieldKey != 'metadata' && $fieldKey != 'slices')
+                if ($fieldKey != 'metadata' && $fieldKey != 'slices' && $fieldKey != 'settings')
                 {
                     $field = $this->DvsField
                         ->firstOrNew(['slice_instance_id' => $sliceInstanceId, 'key' => $fieldKey]);

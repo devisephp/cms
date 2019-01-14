@@ -319,13 +319,6 @@ import Uploader from './../utilities/Uploader';
 import MediaEditor from './MediaEditor';
 import Breadcrumbs from './Breadcrumbs';
 
-import FolderIcon from 'vue-ionicons/dist/ios-folder.vue';
-import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
-import CloseIcon from 'vue-ionicons/dist/ios-close.vue';
-import AttachIcon from 'vue-ionicons/dist/md-attach.vue';
-import LinkIcon from 'vue-ionicons/dist/ios-link.vue';
-import DownloadIcon from 'vue-ionicons/dist/ios-cloud-download.vue';
-
 let Cookies = require('js-cookie');
 
 export default {
@@ -548,12 +541,18 @@ export default {
     Loadbar,
     Breadcrumbs,
     MediaEditor,
-    AttachIcon,
-    DownloadIcon,
-    FolderIcon,
-    LinkIcon,
-    TrashIcon,
-    CloseIcon,
+    FolderIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-folder.vue'),
+    TrashIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-trash.vue'),
+    CloseIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-close.vue'),
+    AttachIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-attach.vue'),
+    LinkIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-link.vue'),
+    DownloadIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-cloud-download.vue'),
     Uploader
   }
 };

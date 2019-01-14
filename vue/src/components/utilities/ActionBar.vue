@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import FlashIcon from "vue-ionicons/dist/ios-flash.vue";
-
 export default {
   data() {
     return {
@@ -32,7 +30,8 @@ export default {
     };
   },
   components: {
-    FlashIcon
+    FlashIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-flash.vue')
   }
 };
 </script>

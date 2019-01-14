@@ -81,7 +81,6 @@
 
 <script>
 const VueUpload = require('vue-upload-component');
-import CloseIcon from 'vue-ionicons/dist/ios-close.vue';
 
 export default {
   data() {
@@ -149,7 +148,8 @@ export default {
     }
   },
   components: {
-    CloseIcon,
+    CloseIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-close.vue'),
     VueUpload
   },
   props: {

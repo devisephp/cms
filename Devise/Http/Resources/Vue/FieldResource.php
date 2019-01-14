@@ -20,7 +20,7 @@ class FieldResource extends Resource
 
         if ($value)
         {
-            $value->id = $this->id;
+            // $value->id = $this->id;
 
             if (isset($value->type))
             {

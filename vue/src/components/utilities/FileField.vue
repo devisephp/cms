@@ -43,9 +43,6 @@
 </template>
 
 <script>
-import DocumentIcon from 'vue-ionicons/dist/ios-document.vue';
-import SearchIcon from 'vue-ionicons/dist/ios-search.vue';
-
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -97,8 +94,10 @@ export default {
   },
   props: ['value'],
   components: {
-    DocumentIcon,
-    SearchIcon
+    DocumentIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-document.vue'),
+    SearchIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-search.vue')
   }
 };
 </script>

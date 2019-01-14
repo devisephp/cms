@@ -107,8 +107,6 @@ import Strings from './../../../mixins/Strings';
 import Toggle from './../Toggle';
 import ToggleColumns from './ToggleColumns';
 
-import CloseIcon from 'vue-ionicons/dist/ios-close.vue';
-
 import { mapActions } from 'vuex';
 
 export default {
@@ -296,7 +294,8 @@ export default {
   },
   mixins: [Strings],
   components: {
-    CloseIcon,
+    CloseIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-close.vue'),
     ColumnControls,
     ToggleColumns,
     Pagination,

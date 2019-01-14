@@ -34,7 +34,11 @@
           :value="newData.name"
           @input="newData.name = slugify($event.target.value)"
         >
-        <div class="dvs-absolute dvs-mt-2 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4" :style="{color:theme.actionButtonGhost.color}" @click="addData">
+        <div
+          class="dvs-absolute dvs-mt-2 dvs-pin-t dvs-pin-r dvs-pin-b dvs-mr-4"
+          :style="{color:theme.actionButtonGhost.color}"
+          @click="addData"
+        >
           <add-icon class="dvs-cursor-pointer" w="25" h="25"/>
         </div>
       </div>
@@ -60,18 +64,14 @@
 </template>
 
 <script>
-var qs = require("qs");
+var qs = require('qs');
 
-import DeviseModal from "./Modal";
-import QueryBuilder from "./QueryBuilder";
-import Strings from "./../../mixins/Strings";
-
-import TrashIcon from "vue-ionicons/dist/md-trash.vue";
-import AddIcon from "vue-ionicons/dist/ios-add-circle.vue";
-import EditIcon from "vue-ionicons/dist/md-create.vue";
+import DeviseModal from './Modal';
+import QueryBuilder from './QueryBuilder';
+import Strings from './../../mixins/Strings';
 
 export default {
-  name: "QueryBuilderInterface",
+  name: 'QueryBuilderInterface',
   data() {
     return {
       showAddData: false,
@@ -90,24 +90,20 @@ export default {
   },
   methods: {
     addData() {
-      if (this.newData.name !== null && this.newData.name !== "") {
+      if (this.newData.name !== null && this.newData.name !== '') {
         this.showAddData = true;
         this.newData.model = null;
         this.newData.modelQuery = null;
       } else {
-        devise.$bus.$emit("showError", "You must provide a variable name");
+        devise.$bus.$emit('showError', 'You must provide a variable name');
       }
     },
     addNewData() {
       if (this.modelQueries === null) {
-        this.$set(this.localValue, "model_queries", {});
+        this.$set(this.localValue, 'model_queries', {});
       }
 
-      this.$set(
-        this.modelQueries,
-        this.newData.name,
-        `class=${this.newData.modelQuery}`
-      );
+      this.$set(this.modelQueries, this.newData.name, `class=${this.newData.modelQuery}`);
       this.showAddData = false;
 
       this.newData = {
@@ -127,11 +123,7 @@ export default {
     },
     saveEditData() {
       this.showEditData = false;
-      this.$set(
-        this.modelQueries,
-        this.newData.name,
-        `class=${this.newData.modelQuery}`
-      );
+      this.$set(this.modelQueries, this.newData.name, `class=${this.newData.modelQuery}`);
 
       this.editData = {
         key: null,
@@ -155,7 +147,7 @@ export default {
         return this.value;
       },
       set(newValue) {
-        this.$emit("input", newValue);
+        this.$emit('input', newValue);
       }
     }
   },
@@ -165,8 +157,14 @@ export default {
     EditIcon,
     DeviseModal,
     QueryBuilder,
-    TrashIcon
+    TrashIcon,
+    AddIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-add-circle.vue'),
+    EditIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-create.vue'),
+    TrashIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-trash.vue')
   },
-  props: ["value"]
+  props: ['value']
 };
 </script>

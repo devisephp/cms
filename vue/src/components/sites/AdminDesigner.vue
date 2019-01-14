@@ -279,18 +279,6 @@
 </template>
 
 <script>
-import ColorEditor from './../pages/editor/Color';
-import TextEditor from './../pages/editor/Text';
-import LineChart from './../pages/analytics/Line';
-
-import CogIcon from 'vue-ionicons/dist/md-cog.vue';
-import CubeIcon from 'vue-ionicons/dist/md-cube.vue';
-import DocumentIcon from 'vue-ionicons/dist/md-document.vue';
-import MenuIcon from 'vue-ionicons/dist/ios-menu.vue';
-import PowerIcon from 'vue-ionicons/dist/ios-power.vue';
-import ImagesIcon from 'vue-ionicons/dist/ios-images.vue';
-import ArrowRoundBackIcon from 'vue-ionicons/dist/ios-arrow-round-back.vue';
-
 var lineData = {
   data: {
     labels: ['May 16', 'May 17', 'May 18', 'May 19', 'May 20', 'May 21', 'May 22', 'May 23'],
@@ -468,17 +456,23 @@ export default {
     }
   },
   components: {
-    ArrowRoundBackIcon,
-    ColorEditor,
-    ImagesIcon,
-    LineChart,
-    PowerIcon,
-    TextEditor,
-    MenuIcon,
-    DocumentIcon,
-    CogIcon,
-    CubeIcon,
-    PowerIcon
+    ColorEditor: () =>
+      import(/* webpackChunkName: "js/devise-editors" */ './../pages/editor/Color'),
+    TextEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './../pages/editor/Text'),
+    LineChart: () => import(/* webpackChunkName: "js/devise-charts" */ './../pages/analytics/Line'),
+    CogIcon: () => import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-cog.vue'),
+    CubeIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-cube.vue'),
+    DocumentIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-document.vue'),
+    MenuIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-menu.vue'),
+    PowerIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-power.vue'),
+    ImagesIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-images.vue'),
+    ArrowRoundBackIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-arrow-round-back.vue')
   },
   props: ['value', 'domain']
 };

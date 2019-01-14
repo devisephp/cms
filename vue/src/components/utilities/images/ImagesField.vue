@@ -71,9 +71,6 @@
 </template>
 
 <script>
-import ImagesIcon from 'vue-ionicons/dist/ios-images.vue';
-import SearchIcon from 'vue-ionicons/dist/ios-search.vue';
-
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -132,8 +129,10 @@ export default {
     }
   },
   components: {
-    ImagesIcon,
-    SearchIcon
+    ImagesIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-images.vue'),
+    SearchIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-search.vue')
   }
 };
 </script>

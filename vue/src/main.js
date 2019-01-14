@@ -1,11 +1,7 @@
 import Vue from 'vue';
 import VueTippy from 'vue-tippy';
 import Devise from './Devise';
-import Administration from './components/admin/Administration';
-import ActionBar from './components/utilities/ActionBar';
-import Sidebar from './components/utilities/Sidebar';
 import Help from './components/utilities/Help';
-import SliceEditor from './components/pages/slices/SliceEditor';
 import Slices from './components/slices/Slices';
 import DeviseStore from './vuex/store';
 import PortalVue from 'portal-vue';
@@ -16,7 +12,8 @@ import Tuck from './directives/tuck';
 import Image from './directives/image';
 import Link from './directives/link';
 
-import EditPage from './components/pages/Editor';
+const EditPage = () =>
+  import(/* webpackChunkName: "js/devise-pages" */ './components/pages/Editor.vue');
 
 Vue.config.productionTip = false;
 
@@ -89,10 +86,7 @@ const DevisePlugin = {
     Vue.component('Devise', Devise);
     Vue.component('Help', Help);
     Vue.component('Slices', Slices);
-    Vue.component('SliceEditor', SliceEditor);
-    Vue.component('Administration', Administration);
-    Vue.component('ActionBar', ActionBar);
-    Vue.component('Sidebar', Sidebar);
+    // Vue.component('Sidebar', Sidebar);
 
     if (typeof store.state.adminMenu !== 'undefined') {
       DeviseStore.state.adminMenu = Object.assign({}, store.state.adminMenu);

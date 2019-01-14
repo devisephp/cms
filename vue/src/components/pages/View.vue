@@ -349,19 +349,10 @@
 </template>
 
 <script>
-import DatePicker from './../utilities/DatePicker';
-import DeviseModal from './../utilities/Modal';
-import MetaForm from './../meta/MetaForm';
-
-import Dates from './../../mixins/Dates';
-
-import EditIcon from 'vue-ionicons/dist/md-create.vue';
-import CheckmarkIcon from 'vue-ionicons/dist/md-checkmark.vue';
-import CopyIcon from 'vue-ionicons/dist/ios-copy.vue';
-import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
-
 import { mapActions, mapGetters, mapState } from 'vuex';
+
 import AdministrationMixin from './../../mixins/Administration';
+import Dates from './../../mixins/Dates';
 
 export default {
   name: 'PagesView',
@@ -583,14 +574,19 @@ export default {
     }
   },
   components: {
-    CopyIcon,
-    CheckmarkIcon,
-    DatePicker,
-    DeviseModal,
-    EditIcon,
-    TrashIcon,
+    DatePicker: () =>
+      import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/DatePicker'),
+    DeviseModal: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Modal'),
+    TrashIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-trash.vue'),
+    CopyIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-copy.vue'),
+    EditIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-create.vue'),
+    CheckmarkIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-checkmark.vue'),
     LineChart: () => import(/* webpackChunkName: "js/devise-charts" */ './analytics/Line'),
-    MetaForm
+    MetaForm: () => import(/* webpackChunkName: "js/devise-meta" */ './../meta/MetaForm')
   },
   mixins: [Dates, AdministrationMixin]
 };

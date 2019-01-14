@@ -109,8 +109,6 @@
 </template>
 
 <script>
-import DeviseModal from './../utilities/Modal';
-
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -233,7 +231,7 @@ export default {
     }
   },
   components: {
-    DeviseModal
+    DeviseModal: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Modal')
   }
 };
 </script>

@@ -1,21 +1,28 @@
 <template>
-
   <div>
     <div id="devise-admin-content">
       <action-bar>
-        <li class="dvs-btn dvs-btn-sm dvs-mb-2" :style="theme.actionButton" @click.prevent="showCreate = true">
-          Create New User
-        </li>
+        <li
+          class="dvs-btn dvs-btn-sm dvs-mb-2"
+          :style="theme.actionButton"
+          @click.prevent="showCreate = true"
+        >Create New User</li>
       </action-bar>
 
       <h3 class="dvs-mb-10" :style="{color: theme.panel.color}">Current Users</h3>
 
-      <div v-for="user in users.data" :key="user.id" class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center">
-        <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">
-          {{ user.name }}
-        </div>
+      <div
+        v-for="user in users.data"
+        :key="user.id"
+        class="dvs-mb-6 dvs-flex dvs-justify-between dvs-items-center"
+      >
+        <div class="dvs-min-w-2/5 dvs-font-bold dvs-pr-8">{{ user.name }}</div>
         <div class="dvs-w-2/5 dvs-pl-8 dvs-flex dvs-justify-end">
-          <button class="dvs-btn dvs-btn-xs" @click="loadUser(user.id)" :style="theme.actionButtonGhost">Manage</button>
+          <button
+            class="dvs-btn dvs-btn-xs"
+            @click="loadUser(user.id)"
+            :style="theme.actionButtonGhost"
+          >Manage</button>
         </div>
       </div>
     </div>
@@ -45,23 +52,29 @@
             <input type="password" v-model="newUser.password_confirmation">
           </fieldset>
 
-          <button class="dvs-btn" @click="requestCreateUser" :disabled="createInvalid" :style="theme.actionButton">Create</button>
-          <button class="dvs-btn" @click="showCreate = false" :style="theme.actionButtonGhost">Cancel</button>
+          <button
+            class="dvs-btn"
+            @click="requestCreateUser"
+            :disabled="createInvalid"
+            :style="theme.actionButton"
+          >Create</button>
+          <button
+            class="dvs-btn"
+            @click="showCreate = false"
+            :style="theme.actionButtonGhost"
+          >Cancel</button>
         </devise-modal>
       </portal>
     </transition>
   </div>
-
 </template>
 
 <script>
-import DeviseModal from './../utilities/Modal'
-
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'UsersIndex',
-  data () {
+  data() {
     return {
       modulesToLoad: 1,
       showCreate: false,
@@ -71,51 +84,50 @@ export default {
         password: null,
         password_confirmation: null
       }
-    }
+    };
   },
-  mounted () {
-    this.retrieveAllUsers()
+  mounted() {
+    this.retrieveAllUsers();
   },
   methods: {
-    ...mapActions('devise', [
-      'getUsers',
-      'createUser'
-    ]),
-    requestCreateUser () {
-      let self = this
-      this.createUser(this.newUser).then(function () {
-        self.newUser.name = null
-        self.newUser.email = null
-        self.newUser.password = null
-        self.newUser.password_confirmation = false
-        self.showCreate = false
-      })
+    ...mapActions('devise', ['getUsers', 'createUser']),
+    requestCreateUser() {
+      let self = this;
+      this.createUser(this.newUser).then(function() {
+        self.newUser.name = null;
+        self.newUser.email = null;
+        self.newUser.password = null;
+        self.newUser.password_confirmation = false;
+        self.showCreate = false;
+      });
     },
-    retrieveAllUsers (loadbar = true) {
-      this.getUsers().then(function () {
+    retrieveAllUsers(loadbar = true) {
+      this.getUsers().then(function() {
         if (loadbar) {
-          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad)
+          devise.$bus.$emit('incrementLoadbar', self.modulesToLoad);
         }
-      })
+      });
     },
-    loadUser (id) {
-      this.$router.push({name: 'devise-users-edit', params: { userId: id }})
+    loadUser(id) {
+      this.$router.push({ name: 'devise-users-edit', params: { userId: id } });
     }
   },
   computed: {
-    ...mapGetters('devise', [
-      'users'
-    ]),
-    createInvalid () {
-      return this.newUser.name === null ||
-             this.newUser.email === null ||
-             this.newUser.password === null ||
-             this.newUser.password_confirmation === null ||
-             this.newUser.password !== this.newUser.password_confirmation
+    ...mapGetters('devise', ['users']),
+    createInvalid() {
+      return (
+        this.newUser.name === null ||
+        this.newUser.email === null ||
+        this.newUser.password === null ||
+        this.newUser.password_confirmation === null ||
+        this.newUser.password !== this.newUser.password_confirmation
+      );
     }
   },
   components: {
-    DeviseModal
+    ActionBar: () =>
+      import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/ActionBar.vue'),
+    DeviseModal: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Modal')
   }
-}
+};
 </script>

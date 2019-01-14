@@ -35,9 +35,6 @@
 </template>
 
 <script>
-import DocumentIcon from 'vue-ionicons/dist/ios-document.vue';
-import CreateIcon from 'vue-ionicons/dist/ios-create.vue';
-
 export default {
   name: 'FileEditor',
   data() {
@@ -104,9 +101,11 @@ export default {
   },
   props: ['value', 'options'],
   components: {
-    CreateIcon,
+    CreateIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-create.vue'),
     FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
-    DocumentIcon
+    DocumentIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-document.vue')
   }
 };
 </script>

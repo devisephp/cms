@@ -24,7 +24,6 @@ import Slice from './Slice';
 import { mapGetters, mapActions } from 'vuex';
 
 import Strings from './../../mixins/Strings';
-import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue';
 
 export default {
   name: 'DeviseSlice',
@@ -363,7 +362,8 @@ export default {
   mixins: [Strings],
   components: {
     Slice,
-    SettingsIcon,
+    SettingsIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-settings.vue'),
     'sketch-picker': Sketch
   }
 };

@@ -72,17 +72,8 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
-
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import Strings from './../../mixins/Strings';
-
-import Toggle from './../utilities/Toggle';
-import ManageSlice from './slices/ManageSlice';
-import AnalyticTotals from './AnalyticTotals';
-import AddIcon from 'vue-ionicons/dist/ios-add.vue';
-import RefreshIcon from 'vue-ionicons/dist/ios-refresh.vue';
-
 export default {
   name: 'PageEditor',
   data() {
@@ -204,12 +195,16 @@ export default {
   },
   mixins: [Strings],
   components: {
-    AddIcon,
-    AnalyticTotals,
-    draggable,
-    ManageSlice,
-    RefreshIcon,
-    Toggle
+    AddIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-add.vue'),
+    RefreshIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-refresh.vue'),
+    AnalyticTotals: () => import(/* webpackChunkName: "js/devise-pages" */ './AnalyticTotals'),
+    draggable: () =>
+      import(/* webpackChunkName: "js/devise-modules-unsure-where-to-put" */ 'vuedraggable'),
+    ManageSlice: () => import(/* webpackChunkName: "js/devise-editors" */ './slices/ManageSlice'),
+    SliceEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './slices/SliceEditor'),
+    Toggle: () => import(/* webpackChunkName: "js/devise-utilities" */ './../utilities/Toggle')
   }
 };
 </script>

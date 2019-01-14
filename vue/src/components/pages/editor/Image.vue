@@ -79,9 +79,6 @@
 </template>
 
 <script>
-import ImagesIcon from 'vue-ionicons/dist/ios-images.vue';
-import CreateIcon from 'vue-ionicons/dist/ios-create.vue';
-
 export default {
   name: 'ImageEditor',
   data() {
@@ -172,9 +169,11 @@ export default {
   },
   props: ['value', 'options'],
   components: {
-    CreateIcon,
+    CreateIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-create.vue'),
     FieldEditor: () => import(/* webpackChunkName: "js/devise-editors" */ './Field'),
-    ImagesIcon
+    ImagesIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-images.vue')
   }
 };
 </script>

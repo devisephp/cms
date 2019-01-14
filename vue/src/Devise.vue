@@ -40,8 +40,6 @@
 import User from './components/menu/User';
 import SimpleBar from 'SimpleBar';
 
-import SettingsIcon from 'vue-ionicons/dist/ios-settings.vue';
-
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
@@ -136,7 +134,10 @@ export default {
     }
   },
   components: {
-    SettingsIcon,
+    Administration: () =>
+      import(/* webpackChunkName: "js/devise-administration" */ './components/admin/Administration.vue'),
+    SettingsIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/ios-settings.vue'),
     User
   }
 };

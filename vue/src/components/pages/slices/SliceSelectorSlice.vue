@@ -20,8 +20,6 @@
 
 <script>
 import SliceDiagram from './SliceDiagram';
-import InformationCircleIcon from 'vue-ionicons/dist/md-information-circle.vue';
-import CubeIcon from 'vue-ionicons/dist/md-cube.vue';
 
 import { mapGetters } from 'vuex';
 
@@ -64,8 +62,10 @@ export default {
     }
   },
   components: {
-    CubeIcon,
-    InformationCircleIcon,
+    CubeIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-cube.vue'),
+    InformationCircleIcon: () =>
+      import(/* webpackChunkName: "js/devise-icons" */ 'vue-ionicons/dist/md-information-circle.vue'),
     SliceDiagram
   }
 };

@@ -2,7 +2,7 @@
   <div class="dvs-p-8">
     <h3 class="dvs-mb-6" :style="{color: theme.panel.color}">{{ currentMenu.label }}</h3>
     <ul class="dvs-list-reset">
-      <li class="dvs-mb-4" v-for="menuItem in currentMenu.menu">
+      <li class="dvs-mb-4" v-for="menuItem in currentMenu.menu" :key="menuItem.id">
         <div
           :style="{color: theme.panel.color}"
           @click="goToPage(menuItem.routeName, menuItem.parameters)"
@@ -15,7 +15,6 @@
 
 <script>
 import Administration from './Administration';
-import Sidebar from './../utilities/Sidebar';
 import { mapState } from 'vuex';
 
 export default {
@@ -49,8 +48,8 @@ export default {
     }
   },
   components: {
-    Administration,
-    Sidebar
+    Administration: () =>
+      import(/* webpackChunkName: "js/devise-administration" */ './/Administration.vue')
   }
 };
 </script>

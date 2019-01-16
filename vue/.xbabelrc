@@ -11,5 +11,5 @@
     ],
     "stage-2"
   ],
-  "plugins": ["transform-vue-jsx", "transform-runtime", "syntax-dynamic-import"]
+  "plugins": ["syntax-dynamic-import"]
 }

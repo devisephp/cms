@@ -1,5 +1,3 @@
-import { WSAETIMEDOUT } from 'constants';
-
 var tinycolor = require('tinycolor2');
 
 const getters = {
@@ -141,7 +139,9 @@ const getters = {
   },
 
   siteById: state => id => {
-    return state.sites.data.find(site => site.id === id);
+    if (state.sites.data) {
+      return state.sites.data.find(site => site.id === id);
+    }
   },
 
   theme: (state, getters, rootState) => {

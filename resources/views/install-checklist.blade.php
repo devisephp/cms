@@ -38,6 +38,8 @@
     </div>
 
     
+    <script src="{{mix('/js/manifest.js', '/devise')}}"></script>
+    <script src="{{mix('/js/devise-administration-vendor.js', '/devise')}}"></script>
     <script src="{{mix('/js/devise-installer.js', '/devise')}}"></script>
 
   </body>

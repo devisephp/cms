@@ -135,11 +135,12 @@ Text is represented by `T` and can have any number of the following settings tra
 Left Align Default
 
 > `c` Center Text
+>
 > `r` Right Align Text
-
-Example: Center aligned text
-
-`['{Tc}']`
+>
+> Example: Center aligned text
+>
+> `['{Tc}']`
 
 ##### Size
 

@@ -1,0 +1,37 @@
+{
+  "name": "lorem-ipsum",
+  "version": "1.0.6",
+  "description": "Generates passages of lorem ipsum text suitable for use as placeholder copy in web pages, graphics, and more. Works in the browser, NodeJS, and React Native.",
+  "author": "Nickolas Kenyeres <nkenyeres@gmail.com> (http://knicklabs.github.com)",
+  "license": "MIT",
+  "main": "./lib/generator",
+  "dependencies": {
+    "minimist": "~1.2.0"
+  },
+  "devDependencies": {
+    "alea": "0.0.9",
+    "mocha": "^5.2.0"
+  },
+  "optionalDependencies": {},
+  "bin": {
+    "lorem-ipsum": "bin/lorem-ipsum.bin.js"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/knicklabs/node-lorem-ipsum.git"
+  },
+  "keywords": [
+    "lorem",
+    "ipsum",
+    "placeholder",
+    "text",
+    "dummy",
+    "filler"
+  ],
+  "engine": {
+    "node": ">=0.4"
+  }
+}

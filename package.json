@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "prod": "npm run production",
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "dependencies": {
+    "devisephp-interface": "^2.0.0",
+    "laravel-mix": "^4.0.14"
+  }
+}

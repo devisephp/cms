@@ -1,7 +1,5 @@
 /vendor
 .DS_Store
 /.idea
-/vue/node_modules
-/vue/build/hot
 npm-debug.log
 /vue/src/installer/node_modules

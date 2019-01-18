@@ -88,7 +88,7 @@ class DeviseServiceProvider extends ServiceProvider
     private function setPublishables()
     {
         $this->publishes([
-            __DIR__ . '/../../vue/build' => public_path('devise'),
+            __DIR__ . '/../../build' => public_path('devise'),
         ], 'dvs-assets');
 
         $this->publishes([
@@ -116,14 +116,14 @@ class DeviseServiceProvider extends ServiceProvider
     {
         Blade::directive('slices', function ($expression) {
             return "<?php echo '<slices :slices=\"slices\"></slices>' ?>";
-        });
-    }
+});
+}
 
-    private function setObservers()
-    {
-        if (Database::connected())
-        {
-            DvsField::observe(DvsFieldObserver::class);
-        }
-    }
+private function setObservers()
+{
+if (Database::connected())
+{
+DvsField::observe(DvsFieldObserver::class);
+}
+}
 }

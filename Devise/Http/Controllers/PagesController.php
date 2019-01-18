@@ -133,11 +133,15 @@ class PagesController extends Controller
      */
     public function suggestList(ApiRequest $request)
     {
+        $siteId = null;
         $term = $request->input('term');
 
-        $site = $this->SiteDetector->current();
+        if (!$request->has('multi-site') || $request->get('multi-site', 0))
+        {
+            $siteId = $this->SiteDetector->current();
+        }
 
-        return $this->PagesRepository->getPagesList($term, $site->id);
+        return $this->PagesRepository->getPagesList($term, $siteId);
     }
 
     /**
@@ -148,9 +152,11 @@ class PagesController extends Controller
      */
     public function store(StorePage $request)
     {
-        if ($request->input('site_id')) {
+        if ($request->input('site_id'))
+        {
             $site = $this->SitesRepository->findById($request->input('site_id'));
-        } else {
+        } else
+        {
             $site = $this->SiteDetector->current();
         }
 

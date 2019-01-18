@@ -136,9 +136,9 @@ class PagesController extends Controller
         $siteId = null;
         $term = $request->input('term');
 
-        if (!$request->has('multi-site') || $request->get('multi-site', 0))
+        if (!$request->has('multi-site') || !$request->get('multi-site', 0))
         {
-            $siteId = $this->SiteDetector->current();
+            $siteId = $this->SiteDetector->current()->id;
         }
 
         return $this->PagesRepository->getPagesList($term, $siteId);

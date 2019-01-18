@@ -228,7 +228,9 @@ class PagesRepository
      */
     public function getPagesList($searchTerm = null, $siteId = null)
     {
-        $pages = $this->Page->join('dvs_languages', 'dvs_languages.id', '=', 'dvs_pages.language_id');
+        $pages = $this->Page
+            ->join('dvs_languages', 'dvs_languages.id', '=', 'dvs_pages.language_id')
+            ->join('dvs_sites', 'dvs_sites.id', '=', 'dvs_pages.site_id');
 
         if ($siteId != null)
             $pages = $pages->where('site_id', $siteId);
@@ -236,8 +238,19 @@ class PagesRepository
         if ($searchTerm != null)
             $pages = $pages->where('title', 'LIKE', '%' . $searchTerm . '%');
 
-        return $pages->select(DB::raw("CONCAT(title,' (',dvs_languages.code, ')') AS name"), 'dvs_pages.id')
-            ->pluck('name', 'id');
+        $pages = $pages->select('dvs_pages.id', 'dvs_pages.title', 'dvs_sites.name', 'dvs_languages.code')
+            ->orderBy('dvs_pages.site_id')
+            ->get();
+
+        $results = [];
+        foreach ($pages as $page)
+        {
+            $name = (!$siteId) ? $page->name . ': ' : '';
+            $name .= $page->title . ' (' . $page->code . ')';
+            $results[$page->id] = $name;
+        }
+
+        return $results;
     }
 
 

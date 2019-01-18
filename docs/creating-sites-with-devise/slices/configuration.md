@@ -139,12 +139,15 @@ Left Align Default
 ##### Size
 
 `l` Large
+
 `xl` Extra Large
+
 `s` Small
 
 ##### Styles
 
 `b` Bold
+
 `i` Italic
 
 ##### Number of Words
@@ -158,6 +161,7 @@ Image is represented by `I` and can have any number of the following settings tr
 ##### Sizes
 
 `s` Small
+
 `l` Large
 
 #### Video
@@ -167,6 +171,7 @@ Video is represented by `V` and can have any number of the following settings tr
 ##### Sizes
 
 `s` Small
+
 `l` Large
 
 #### Blank
@@ -183,4 +188,5 @@ Blanks are represented by `B` and can have any number of the following settings 
 ##### Sizes
 
 `s` Small
+
 `l` Large

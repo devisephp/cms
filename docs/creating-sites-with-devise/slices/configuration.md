@@ -133,16 +133,19 @@ Text is represented by `T` and can have any number of the following settings tra
 ##### Alignment
 
 Left Align Default
-`c` Center Text
-`r` Right Align Text
+
+> `c` Center Text
+> `r` Right Align Text
+
+Example: Center aligned text
+
+`['{Tc}']`
 
 ##### Size
 
-`l` Large
-
-`xl` Extra Large
-
-`s` Small
+> `l` Large
+> `xl` Extra Large
+> `s` Small
 
 ##### Styles
 

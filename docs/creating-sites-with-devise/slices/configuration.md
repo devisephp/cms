@@ -122,7 +122,9 @@ You can also put multiple elements on a single row by seperating them with a com
 
 `['{I, I, I}', '{Tlg~2, Tlg~2, Tlg~2}', '{Tsm~10, Tsm~10, Tsm~10}']`
 
-This would give you a three column version of the Image on top of Title on top of Copy.
+This would produce the following:
+
+![Card Layout](https://github.com/devisephp/cms/raw/v2-dev/docs/imgs/card-layout.png)
 
 ### Preview Element Types
 
@@ -131,8 +133,6 @@ This would give you a three column version of the Image on top of Title on top o
 Text is represented by `T` and can have any number of the following settings trailing it:
 
 ##### Alignment
-
-Left Align Default
 
 > `c` Center Text
 >
@@ -145,18 +145,32 @@ Left Align Default
 ##### Size
 
 > `l` Large
+>
 > `xl` Extra Large
+>
 > `s` Small
+>
+> Example: Extra large center aligned text
+>
+> `['{Txlc}']`
 
 ##### Styles
 
-`b` Bold
-
-`i` Italic
+> `b` Bold
+>
+> `i` Italic
+>
+> Example: Bold AND italic text
+>
+> `['{Tbi}']`
 
 ##### Number of Words
 
-`~10` This would generate 10 words
+> `~10` This would generate 10 words
+>
+> Example: Bold extra large text with 5 words
+>
+> `['{Tbxl~5}']`
 
 #### Image
 
@@ -164,9 +178,13 @@ Image is represented by `I` and can have any number of the following settings tr
 
 ##### Sizes
 
-`s` Small
-
-`l` Large
+> `s` Small
+>
+> `xs` Extra Small
+>
+> Example: Large image
+>
+> `['{Il}']`
 
 #### Video
 
@@ -174,9 +192,25 @@ Video is represented by `V` and can have any number of the following settings tr
 
 ##### Sizes
 
-`s` Small
+> `s` Small
+>
+> `xs` Extra Small
 
-`l` Large
+#### Forms
+
+Forms are represented by `F` and can have any number of the following settings trailing it. Sizes determine the number of form fields that will appear. Two fields and a submit button appear by default.
+
+##### Sizes
+
+> `xs` Just the submit buttons
+>
+> `s` One form field and submit
+>
+> `l` Three form fields and submit
+>
+> Example: One form field and submit
+>
+> `['{Fs}']`
 
 #### Blank
 
@@ -185,12 +219,20 @@ Blanks are represented by `B` and can have any number of the following settings 
 1. They can fill empty space so you can push things over on a row
 2. By adding a `bg` you can represent arbitrary blocks.
 
+> Example: A thin card-style layout
+>
+> `['{B, I, B}30', '{B, Txl~2, B}20', '{B, Txs~30, B}']`
+
 ##### Fill
 
-`bg` Fills the blank area to make it.... not blank.
+> `bg` Fills the blank area to make it.... not blank.
+>
+> Example: Three filled in blocks that are 50 pixels high
+>
+> `['{Bbg, Bbgs, Bbg}50']`
 
 ##### Sizes
 
-`s` Small
-
-`l` Large
+> `s` Small
+>
+> `xs` Extra Small

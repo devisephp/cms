@@ -124,7 +124,7 @@ You can also put multiple elements on a single row by seperating them with a com
 
 This would produce the following:
 
-![Card Layout](https://github.com/devisephp/cms/raw/v2-dev/docs/imgs/card-layout.png)
+![Card Layout](https://github.com/devisephp/cms/raw/v2-dev/docs/imgs/thin-card.png)
 
 ### Preview Element Types
 

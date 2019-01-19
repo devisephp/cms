@@ -124,7 +124,7 @@ You can also put multiple elements on a single row by seperating them with a com
 
 This would produce the following:
 
-![['{I, I, I}', '{Tlg~2, Tlg~2, Tlg~2}', '{Tsm~10, Tsm~10, Tsm~10}']](https://github.com/devisephp/cms/raw/v2-dev/docs/imgs/thin-card.png)
+![](https://github.com/devisephp/cms/raw/v2-dev/docs/imgs/thin-card.png)
 
 ### Preview Element Types
 

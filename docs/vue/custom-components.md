@@ -96,7 +96,7 @@ export default {
 </script>
 ```
 
-But sometimes you want the user to _preview_ the change before they save. No problem. Just listen for the `devise-slice-changed` event.
+But sometimes you want the user to _preview_ the change before they save. No problem. Just listen for the `devise-slice-changed` event. However, anytime a field is edited the slider would be reloaded. So, we set a custom property (any property name that you like will work) and check for that property being `true` in the callback when the event is fired.
 
 ```javascript
 @section('template')
@@ -119,13 +119,16 @@ But sometimes you want the user to _preview_ the change before they save. No pro
           type: 'checkbox',
           default: {
             value: false
-          }
+          },
+          reloadSlider:true
         }
       },
       mounted: function () {
         var self = this
-        deviseSettings.$bus.$on('devise-slice-changed', function () {
-          self.$refs.slider.rebuild()
+        deviseSettings.$bus.$on('devise-field-edited', function (field) {
+          if (field.reloadSlider) {
+            self.$refs.slider.rebuild();
+          }
         })
       }
     }

@@ -6,6 +6,10 @@ Devise is a package designed to harness the power of Laravel and make it easier 
 
 [Learn More](http://devisephp.com)
 
+## Notes about documentation
+
+Throughout the documentation we will reference yarn commands. However, you can usually interchange these with npm commands. We just happen to prefer yarn.
+
 ## Contributing
 
 <!-- TODO: Provide link to the contribution page -->

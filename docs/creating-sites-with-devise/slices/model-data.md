@@ -10,9 +10,7 @@ For this example we need to talk about your slice as if it was already created. 
 
 ![Card Layout Example](https://github.com/devisephp/cms/raw/v2-dev/docs/imgs/card-example.jpg "Card Layout Example")
 
-Now, maybe this slice get's added to a slice that uses flexbox to show all the users in the database. (Think company about page) So, in the template editor the content manager chooses add slice, then selects the model type, selects the "User" model, and then hits "Done" when all the users come back in the table.
-
-Now, in your slice's template section we haven't defined any variables. What Devise does is loop over the results of the model for you and set the value of each to the ```devise``` JavaScript variable. So your card might look like this:
+Now, maybe this slice get's added to a slice that uses flexbox to show all the users in the database. Let's imagine that your slice looks like the following:
 
 ```
 @section('template')
@@ -24,17 +22,51 @@ Now, in your slice's template section we haven't defined any variables. What Dev
 @endsection
 ```
 
+In the template editor the content manager chooses add slice, then selects "Model Type", selects the "User" model, and then hits "Done" when all the users come back in the table.
+
+What Devise does is loop over the results of the model and sets the value of each to the `devise` JavaScript variable. This results in Devise drawing out 10 cards if there are 10 users in the database. You can apply filters to the query so that only the users with a "G" in their first name appear.
+
+## Setting up a Model for Devise Query Builder
+
+Using the previous example we would need to add these two public variables to the User.php model:
+
+```
+    // Properties available in the slice
+    public $slice = [
+        'id',
+        'first_name',
+        'last_name',
+        'email'
+    ];
+
+    // Properties users can filter and sort by
+    public $tableColumns = [
+        [
+            "key"    => 'first_name',
+            "label"  => 'First Name',
+            "sort"   => 'first_name',
+            "search" => 'first_name'
+        ],
+        [
+            "key"    => 'last_name',
+            "label"  => 'Last Name',
+            "sort"   => 'last_name',
+            "search" => 'last_name'
+        ]
+    ];
+```
+
 ## Template Slice query
 
 By setting a template slice query you provide a variable that is available to all slices in the page. This is useful for scenarios like:
 
-* Who is the current user?
-* What is the current product?
-* What are all the cities?
+- Who is the current user?
+- What is the current product?
+- What are all the cities?
 
 Anything where the entire page might need information from the db, not just a single slice.
 
-To add a variable to the template you would click 'Add Variable' at the bottom of the template editor. Provide the variable name you want to add, set the data, and viola! Then, in your template you can access that data through the ```models``` variable. See below for an example:
+To add a variable to the template you would click 'Add Variable' at the bottom of the template editor. Provide the variable name you want to add, set the data, and viola! Then, in your template you can access that data through the `models` variable. See below for an example:
 
 ```
 @section('template')
@@ -48,4 +80,4 @@ To add a variable to the template you would click 'Add Variable' at the bottom o
   </div>
 ```
 
-What you should note about both of these examples is that the last property of the object reference is the field name in the database. So, above, we are referencing the ```image``` field of the products database.
+What you should note about both of these examples is that the last property of the object reference is the field name in the database. So, above, we are referencing the `image` field of the products database.

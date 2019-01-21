@@ -8,79 +8,30 @@ Well, you are here! Thank you for taking the time to check out Devise, we think 
 
 2. A _slightly_ more complex installation will allow you to completely customize Devise's administration, add new controls, and change... well.. essentially anything you want.
 
-## Required Steps for Any Installation
+# Getting your Development Environment Ready
 
-#### Create your project
+If you're new to Laravel or PHP take a look below. We have some suggestions and resources that will get you up and running in no time.
 
-Get started by installing a fresh copy of Laravel by using composer on your local machine
+## Development Environments
 
-```
-composer create-project --prefer-dist laravel/laravel project-folder-name
-```
+You need to ensure you have an appropriate environment to work in. Most Laravel developers lean on one of three options:
 
-#### Install Devise
+- [Valet](https://laravel.com/docs/5.6/valet) (Mac OS Only)
+- [Homestead](https://laravel.com/docs/5.6/homestead) (Windows, Mac, Linux)
+- [Artisan](https://laravel.com/docs/5.6/installation)
 
-After composer has done it's thing install the Devise Package as a dependency
+If you're on a Mac then you should note that the primary difference (for us anyway) is that [Homestead](https://laravel.com/docs/5.6/homestead) uses virtual machines via Vagrant. This is fine for desktop machines but if you're out an about on a laptop you may want to look at [Valet](https://laravel.com/docs/5.6/valet) due to battery performance. Honestly, both of the first two options are amazing solutions we use every day.
 
-```
-composer require devisephp/cms
-```
+We don't have much experience using Laravel's built-in artisan server (option 3) but if you have PHP installed... maybe give it a go. Just keep in mind you'll need a Laravel supported database also running for Devise
 
-#### Publish assets
+## Installing Laravel
 
-Publish the Devise assets. This includes the base Devise JavaScript and CSS needed to run
+We'd highly suggest that you install the [Laravel Installer](https://laravel.com/docs/5.6/installation). Once that's installed you can do a simple command like:
 
-```
-php artisan vendor:publish --tag dvs-assets
-```
+`laravel new deviseproject`
 
-#### Edit your .env
+This will create a new Laravel application directory.
 
-Next we need to connect to the database. Edit the .env file in the root of your project and point it at your database focusing on the following entries:
+## Congratulations!
 
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=projectdatabasename
-DB_USERNAME=root
-DB_PASSWORD=sUp3r371teP@ssw0rd
-```
-
-#### Migrate your database
-
-Your database will need to be populated with some base tables for Devise to run. Run the following command from the root of your project:
-
-```
-php artisan migrate
-```
-
-#### Visit the site
-
-At this point you should be able to visit your project through a browser and see the install screen. If you're using valet it should be the folder name will be the domain followed by a `.test` by default. With Homestead it's whatever you mapped the domain to.
-
-When you reach your site you should see something similar to this:
-
-![Installer Screen](https://github.com/devisephp/cms/raw/v2-dev/docs/imgs/installer.png "Installer Screen")
-
-The Devise installer is a guided install that updates every few seconds. Additionally, it provides forms to create new users, sites, etc. There are two main sections to the installer:
-
-1. Required - Once these are complete you can move forward
-
-2. Suggested - We would highly suggest knocking these out as well. These will help clean up some routes and also provide some additional features for Devise.
-
-## A note on viewing your installation
-
-You will need some sort of web server running on your local machine. If you are new to this might we suggest using one of Laravel's two amazing solutions:
-
-### Valet
-
-Valet provides a very quick way of getting a development environment running on your Mac. It's efficient, light on your battery and easy to update.
-
-[Laravel Valet](https://laravel.com/docs/5.7/valet)
-
-### Homestead
-
-A Windows or Mac solution that runs on a Vagrent box. It's a great solution but will eat your battery if you're running on a laptop. However, having a sandboxed environment can be awesome.
-
-[Laravel Homestead](https://laravel.com/docs/5.7/homestead)
+If you're seeing the Laravel welcome screen you can move on to the [Devise Installation Instructions](installation.md)

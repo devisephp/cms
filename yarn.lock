@@ -2089,10 +2089,10 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
 
-devisephp-interface@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/devisephp-interface/-/devisephp-interface-2.0.0.tgz#4dad534a190069f8459a5bb0a9ec6032dc2c95c9"
-  integrity sha512-whDxERVazOog3MDalXyXnbdUYzvM8aN2wRn3ml0jYTxOlQIIWCqBRo4rJpflSKv9318s6q39iaLaqsq7bi5KoA==
+devisephp-interface@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/devisephp-interface/-/devisephp-interface-2.0.2.tgz#22d2b963d22b2376a7bfc27df753be0724048fce"
+  integrity sha512-tyYwPnzBdrcyj2MROx7Uivmml2LApMEewzLG1RegQNozrJRiiXI7uLh04ObGt5mENJpoa1c9yqGQ6Rhl2oa/tQ==
   dependencies:
     axios "^0.18.0"
     chart.js "^2.7.2"
@@ -2112,7 +2112,7 @@ devisephp-interface@^2.0.0:
     text-clipper "^1.2.2"
     tinycolor2 "^1.4.1"
     v-debounce "^0.1.2"
-    vue "^2.5.2"
+    vue "^2.5.*"
     vue-chartjs "^3.4.0"
     vue-color "^2.4.4"
     vue-flatpickr-component "^6.2.0"
@@ -6264,7 +6264,7 @@ vue-upload-component@^2.8.15:
   resolved "https://registry.yarnpkg.com/vue-upload-component/-/vue-upload-component-2.8.19.tgz#3638c3fed036410b7919590b0c712a0d2c72580e"
   integrity sha512-l6x/EL2eFbBiFFSfZsx1RB7H8lm89agVfijXX+eIjMT8BUiNk3kglD+pXSUzBOr5yUQb7rPydmIYROgr7R3sMQ==
 
-vue@^2.5.2:
+vue@^2.5.*:
   version "2.5.22"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.22.tgz#3bf88041af08b8539c37b268b70ca79245e9cc30"
   integrity sha512-pxY3ZHlXNJMFQbkjEgGVMaMMkSV1ONpz+4qB55kZuJzyJOhn6MSy/YZdzhdnumegNzVTL/Dn3Pp4UrVBYt1j/g==

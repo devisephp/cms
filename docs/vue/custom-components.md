@@ -125,8 +125,8 @@ But sometimes you want the user to _preview_ the change before they save. No pro
       },
       mounted: function () {
         var self = this
-        deviseSettings.$bus.$on('devise-field-edited', function (field) {
-          if (field.reloadSlider) {
+        deviseSettings.$bus.$on('devise-field-edited', function (payload) {
+          if (payload.field.reloadSlider) {
             self.$refs.slider.rebuild();
           }
         })

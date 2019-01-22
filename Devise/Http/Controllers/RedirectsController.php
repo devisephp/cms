@@ -38,7 +38,11 @@ class RedirectsController extends Controller
      */
     public function all(ApiRequest $request)
     {
+        $site = $this->SiteDetector
+            ->current();
+
         $all = $this->DvsRedirect
+            ->where('site_id', $site->id)
             ->get();
 
         return RedirectResource::collection($all);

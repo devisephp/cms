@@ -22,8 +22,7 @@ class SliceInstanceResource extends Resource
                 'model_query'    => $this->model_query,
                 'has_child_slot' => $this->has_child_slot,
                 'placeholder'    => ($this->has_model_query) ? false : true,
-            ],
-            'settings' => $this->settings
+            ]
         ];
 
         if ($this->has_model_query)
@@ -35,6 +34,9 @@ class SliceInstanceResource extends Resource
         }
 
         $this->setFieldValues($data);
+
+        // setting this last because of some legacy code
+        $data['settings'] = $this->settings;
 
         return $data;
     }

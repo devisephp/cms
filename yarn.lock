@@ -2089,10 +2089,10 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
 
-devisephp-interface@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/devisephp-interface/-/devisephp-interface-2.0.2.tgz#22d2b963d22b2376a7bfc27df753be0724048fce"
-  integrity sha512-tyYwPnzBdrcyj2MROx7Uivmml2LApMEewzLG1RegQNozrJRiiXI7uLh04ObGt5mENJpoa1c9yqGQ6Rhl2oa/tQ==
+devisephp-interface@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/devisephp-interface/-/devisephp-interface-2.0.3.tgz#c1f6e5c1784c201d20669177d7b089187bb5984f"
+  integrity sha512-dxlK71mrGFGehaqRZFRZePLMwAa2I9v8MJaNZhSJqo1TUqjg0ouzrjkAtrtHu5K84leTAeqPjvMokNeMJE2ihQ==
   dependencies:
     axios "^0.18.0"
     chart.js "^2.7.2"

@@ -57,7 +57,7 @@ class LanguageDetector
         {
             $locale = $this->LocaleDetector->universal();
             $this->LocaleDetector->update($locale);
-            $language = $this->Language->where('code', $locale)->first();
+            $language = $site->languages->where('code', $locale)->first();
         }
 
         // nothing worked so lets load the default

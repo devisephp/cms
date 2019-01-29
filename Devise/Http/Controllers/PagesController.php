@@ -61,23 +61,12 @@ class PagesController extends Controller
     {
         $page = $this->PagesRepository->findByRouteName($this->Route->currentRouteName());
 
-        $localized = $this->PagesRepository->findLocalizedPage($page);
+        if (!$page->currentVersion) abort(404);
 
-        if ($localized)
-        {
-            $route = $this->Route->getCurrentRoute();
-            $params = $route ? $route->parameters() : [];
+        $page->currentVersion->registerComponents();
+        $page->load('site');
 
-            return $this->Redirect->route($localized->route_name, $params);
-        } else
-        {
-            if (!$page->currentVersion) abort(404);
-
-            $page->currentVersion->registerComponents();
-            $page->load('site');
-
-            return $this->View->make($page->currentVersion->layout, ['page' => $page]);
-        }
+        return $this->View->make($page->currentVersion->layout, ['page' => $page]);
     }
 
     public function single(ApiRequest $request, $pageId)

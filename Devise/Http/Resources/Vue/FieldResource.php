@@ -25,19 +25,16 @@ class FieldResource extends Resource
                 $value->id = $this->id;
             }
 
-            if (isset($value->type))
+            if (isset($value->type) && $value->type == 'link')
             {
                 if (isset($value->routeName)
                     && ($value->type == 'link')
                     && Route::has($value->routeName))
                 {
                     $value->href = route($value->routeName);
-                } else
+                } else if (!isset($value->href))
                 {
-                    if (!isset($value->href))
-                    {
-                        $value->href = $value->url;
-                    }
+                    $value->href = $value->url;
                 }
             }
 

@@ -320,7 +320,7 @@ class MediaController extends Controller
 
     private function getHashNameAppend($settings)
     {
-        return md5(json_encode($settings));
+        return md5(json_encode($settings)) . time();
     }
 
     private function getImagesToMakeAndSettings($settings)

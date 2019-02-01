@@ -2089,10 +2089,10 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
 
-devisephp-interface@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/devisephp-interface/-/devisephp-interface-2.0.3.tgz#c1f6e5c1784c201d20669177d7b089187bb5984f"
-  integrity sha512-dxlK71mrGFGehaqRZFRZePLMwAa2I9v8MJaNZhSJqo1TUqjg0ouzrjkAtrtHu5K84leTAeqPjvMokNeMJE2ihQ==
+devisephp-interface@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/devisephp-interface/-/devisephp-interface-2.0.4.tgz#b0a226a1a51739933f2f2ff16503130e2626ed24"
+  integrity sha512-u1OdcWqPV4W1Jz2dtNfNVQ5lt+w/T9mjgvN5ExlsFW1aR1L0JMQ3AZkTN/+gTMEVcE3Cvcj5fyGBNouEDkdkvg==
   dependencies:
     axios "^0.18.0"
     chart.js "^2.7.2"
@@ -2100,7 +2100,6 @@ devisephp-interface@^2.0.3:
     default-passive-events "^1.0.10"
     faker "^4.1.0"
     gsap "^2.0.1"
-    jquery "^3.3.1"
     js-cookie "^2.2.0"
     lodash.debounce "^4.0.8"
     lorem-ipsum "^1.0.6"
@@ -2112,7 +2111,6 @@ devisephp-interface@^2.0.3:
     text-clipper "^1.2.2"
     tinycolor2 "^1.4.1"
     v-debounce "^0.1.2"
-    vue "^2.5.*"
     vue-chartjs "^3.4.0"
     vue-color "^2.4.4"
     vue-flatpickr-component "^6.2.0"
@@ -3507,11 +3505,6 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
-
-jquery@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
-  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
 
 js-cookie@^2.2.0:
   version "2.2.0"
@@ -6263,11 +6256,6 @@ vue-upload-component@^2.8.15:
   version "2.8.19"
   resolved "https://registry.yarnpkg.com/vue-upload-component/-/vue-upload-component-2.8.19.tgz#3638c3fed036410b7919590b0c712a0d2c72580e"
   integrity sha512-l6x/EL2eFbBiFFSfZsx1RB7H8lm89agVfijXX+eIjMT8BUiNk3kglD+pXSUzBOr5yUQb7rPydmIYROgr7R3sMQ==
-
-vue@^2.5.*:
-  version "2.5.22"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.22.tgz#3bf88041af08b8539c37b268b70ca79245e9cc30"
-  integrity sha512-pxY3ZHlXNJMFQbkjEgGVMaMMkSV1ONpz+4qB55kZuJzyJOhn6MSy/YZdzhdnumegNzVTL/Dn3Pp4UrVBYt1j/g==
 
 vuedraggable@^2.16.0:
   version "2.17.0"

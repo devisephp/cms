@@ -47,7 +47,7 @@ class LocaleDetector
         {
             $locale = $locale ?: $this->segment();
 
-            if (env('DVS_DETECT_LANGUAGE_HEADER', true))
+            if (env('DVS_DETECT_LANGUAGE_HEADER', false))
             {
                 $locale = $locale ?: $this->header();
             }

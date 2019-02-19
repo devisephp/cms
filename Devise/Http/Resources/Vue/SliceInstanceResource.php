@@ -60,37 +60,17 @@ class SliceInstanceResource extends Resource
         {
             if (is_a($records, $input['class']))
             {
-                $all[] = $this->getModelSliceData($records);
+                $all[] = $records->getSliceData($this);
             } else
             {
                 foreach ($records as $record)
                 {
-                    $all[] = $this->getModelSliceData($record);
+                    $all[] = $record->getSliceData($this);
                 }
             }
         }
 
         $data['slices'] = $all;
-    }
-
-    private function getModelSliceData($record)
-    {
-        $data['metadata'] = [
-            'instance_id' => 0,
-            'name'        => $this->component_name,
-            'label'       => $this->label,
-            'view'        => $this->view,
-            'model_query' => $this->model_query,
-            'placeholder' => false,
-        ];
-
-        // slice should be a property of the model. it's an array of fields that will end up in the slice
-        foreach ($record->slice as $field)
-        {
-            $data[$field] = $record->$field;
-        }
-
-        return $data;
     }
 
     private function setFieldValues(&$data)

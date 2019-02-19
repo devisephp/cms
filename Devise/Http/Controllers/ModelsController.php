@@ -6,6 +6,7 @@ use Devise\Http\Requests\ApiRequest;
 use Devise\Models\Repository as ModelRepository;
 
 use Devise\Traits\Filterable;
+use Devise\Traits\Sliceable;
 use Devise\Traits\Sortable;
 use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Database\Eloquent\Model;
@@ -88,7 +89,7 @@ class ModelsController extends Controller
                     $index += 2; // Skip class keyword and whitespace
                     $class = $namespace . '\\' . $tokens[$index][1];
                     $traits = class_uses($class);
-                    if (is_subclass_of($class, Model::class) && in_array(Filterable::class, $traits) && in_array(Sortable::class, $traits))
+                    if (is_subclass_of($class, Model::class) && in_array(Sliceable::class, $traits))
                     {
                         $model = App::make($class);
 

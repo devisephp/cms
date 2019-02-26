@@ -14,16 +14,12 @@ class SiteResource extends Resource
      */
     public function toArray($request)
     {
-        $scheme = (request()->serure) ? 'https' : 'http';
-
         return [
             'id'        => $this->id,
             'name'      => $this->name,
             'current'   => $this->current,
             'url'       => $this->url,
-            'data'      => $this->data,
             'domain'    => $this->domain,
-            'settings'  => $this->settings,
             'languages' => LanguageResource::collection($this->languages)
         ];
     }

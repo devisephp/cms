@@ -140,7 +140,10 @@ class RoutesGenerator
      */
     protected function findDvsPageRoutes()
     {
-        $pages = $this->DB->table('dvs_pages')->select('slug', 'route_name', 'middleware', 'site_id')->get();
+        $pages = $this->DB->table('dvs_pages')
+            ->select('slug', 'route_name', 'middleware', 'site_id')
+            ->whereNull('deleted_at')
+            ->get();
 
         foreach ($pages as $page)
         {

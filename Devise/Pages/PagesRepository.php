@@ -71,10 +71,15 @@ class PagesRepository
             ->with([
                     'currentVersion.slices.slices.slices.slices',
                     'currentVersion.slices.fields',
+                    'currentVersion.slices.slices.fields',
+                    'currentVersion.slices.slices.slices.fields',
+                    'currentVersion.slices.slices.slices.slices.fields',
                     'versions.page.currentVersion',
-                    'translatedFromPage',
-                    'localizedPages',
-                    'metas'
+                    'translatedFromPage.language',
+                    'localizedPages.language',
+                    'metas',
+                    'language',
+                    'site.languages'
                 ]
             )
             ->whereRouteName($name)

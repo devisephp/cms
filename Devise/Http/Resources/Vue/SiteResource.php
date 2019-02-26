@@ -19,7 +19,9 @@ class SiteResource extends Resource
             'name'      => $this->name,
             'current'   => $this->current,
             'url'       => $this->url,
+            'data'      => $this->data,
             'domain'    => $this->domain,
+            'settings'  => $this->settings,
             'languages' => LanguageResource::collection($this->languages)
         ];
     }

@@ -165,8 +165,8 @@ trait IsDeviseComponent
         if (!isset($sections['template'])) {
             throw new \Exception('Something is wrong with this template: ' . $this->view);
         }
-
-        $this->hasSliceSlot = (strpos($sections['template'], '<slices') !== false);
+        preg_match('/(slices:\s*?true)/', $sections['component'], $slicesEnabledProperty);
+        $this->hasSliceSlot = (strpos($sections['template'], '<slices') !== false || count($slicesEnabledProperty) > 0 );
 
         if (!$this->hasSliceSlot)
         {

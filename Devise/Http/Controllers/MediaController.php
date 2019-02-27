@@ -175,7 +175,7 @@ class MediaController extends Controller
             $settings = (isset($field->value->settings)) ? (array)$field->value->settings : [];
             $requestedSizes = $request->get('sizes')['sizes'];
 
-            if ((isset($field->value->media) && isset($field->value->media->original)) || $field->value->url)
+            if ((isset($field->value->media) && isset($field->value->media->original)) || (isset($field->value->url) && $field->value->url))
             {
                 if (isset($field->value->media) && isset($field->value->media->original))
                 {

@@ -8,6 +8,8 @@ class DvsField extends Model
 
     protected $fillable = ['slice_instance_id', 'key', 'json_value', 'content_requested'];
 
+    protected $touches = ['sliceInstance'];
+
     public function sliceInstance()
     {
         return $this->belongsTo(DvsSliceInstance::class, 'slice_instance_id');

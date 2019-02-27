@@ -25,6 +25,8 @@ class PagesController extends Controller
 
     private $SiteDetector;
 
+    private $SitesRepository;
+
     private $Redirect;
 
     private $View;
@@ -37,6 +39,9 @@ class PagesController extends Controller
      * Creates a new DvsPagesController instance.
      *
      * @param  PagesRepository $PagesRepository
+     * @param PagesManager $PagesManager
+     * @param SiteDetector $SiteDetector
+     * @param SitesRepository $SitesRepository
      * @param Framework $Framework
      */
     public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, SitesRepository $SitesRepository, Framework $Framework)
@@ -64,6 +69,7 @@ class PagesController extends Controller
         if (!$page->currentVersion) abort(404);
 
         $page->currentVersion->registerComponents();
+        $page->load('site');
 
         return $this->View->make($page->currentVersion->layout, ['page' => $page]);
     }

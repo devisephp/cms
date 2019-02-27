@@ -3,33 +3,35 @@
 namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
+use Devise\Http\Requests\Redirects\ExecuteRedirect;
 use Devise\Http\Requests\Redirects\SaveRedirect;
 use Devise\Http\Requests\Redirects\DeleteRedirect;
 use Devise\Http\Resources\Api\RedirectResource;
 use Devise\Models\DvsRedirect;
 
 use Devise\Sites\SiteDetector;
+use Devise\Support\Framework;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 
 class RedirectsController extends Controller
 {
-    /**
-     * @var DvsRedirect
-     */
     private $DvsRedirect;
-    /**
-     * @var SiteDetector
-     */
+
     private $SiteDetector;
+
+    private $Route;
 
     /**
      * RedirectsController constructor.
      * @param DvsRedirect $DvsRedirect
      */
-    public function __construct(DvsRedirect $DvsRedirect, SiteDetector $SiteDetector)
+    public function __construct(DvsRedirect $DvsRedirect, SiteDetector $SiteDetector, Framework $Framework)
     {
         $this->DvsRedirect = $DvsRedirect;
         $this->SiteDetector = $SiteDetector;
+        $this->Route = $Framework->Route;
     }
 
     /**
@@ -49,6 +51,22 @@ class RedirectsController extends Controller
     }
 
     /**
+     * @param ApiRequest $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function show(ExecuteRedirect $request)
+    {
+        $name = $this->Route->currentRouteName();
+        $parts = explode('-', $name);
+        $id = last($parts);
+
+        $redirect = $this->DvsRedirect
+            ->findOrFail($id);
+
+        return redirect($request->newUrl($redirect), $redirect->type);
+    }
+
+    /**
      * @param SaveRedirect $request
      * @return RedirectResource
      */
@@ -61,6 +79,8 @@ class RedirectsController extends Controller
         $redirect->fill($request->only($redirect->fillable));
         $redirect->site_id = $site->id;
         $redirect->save();
+
+        $this->refreshRouteCache();
 
         return new RedirectResource($redirect);
     }
@@ -78,6 +98,8 @@ class RedirectsController extends Controller
         $redirect->fill($request->only($redirect->fillable));
         $redirect->save();
 
+        $this->refreshRouteCache();
+
         return new RedirectResource($redirect);
     }
 
@@ -91,5 +113,15 @@ class RedirectsController extends Controller
             ->findOrFail($id);
 
         $redirect->delete();
+
+        $this->refreshRouteCache();
+    }
+
+    private function refreshRouteCache()
+    {
+        if (App::routesAreCached())
+        {
+            Artisan::call('route:cache');
+        }
     }
 }

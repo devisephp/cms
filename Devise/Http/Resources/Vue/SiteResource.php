@@ -22,7 +22,7 @@ class SiteResource extends Resource
             'data'      => $this->data,
             'domain'    => $this->domain,
             'settings'  => $this->settings,
-            'languages' => LanguageResource::collection($this->languages)
+            'languages' => LanguageResource::collection($this->whenLoaded('languages'))
         ];
     }
 }

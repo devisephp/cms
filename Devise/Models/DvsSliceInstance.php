@@ -12,6 +12,8 @@ class DvsSliceInstance extends Model
 
     protected $table = 'dvs_slice_instances';
 
+    protected $touches = ['pageVersion'];
+
     public function pageVersion()
     {
         return $this->belongsTo(DvsPageVersion::class, 'page_version_id');

@@ -6,7 +6,12 @@ use Devise\Console\Commands\CleanStyledMedia;
 use Devise\Devise;
 
 use Devise\Models\DvsField;
+use Devise\Models\DvsLanguage;
+use Devise\Models\DvsPage;
+use Devise\Models\DvsPageMeta;
+use Devise\Models\DvsSite;
 use Devise\Observers\DvsFieldObserver;
+use Devise\Observers\ModelCacheFlushObserver;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Database;
 use Illuminate\Support\Facades\App;
@@ -116,14 +121,22 @@ class DeviseServiceProvider extends ServiceProvider
     {
         Blade::directive('slices', function ($expression) {
             return "<?php echo '<slices :slices=\"slices\"></slices>' ?>";
-});
-}
+        });
+    }
 
-private function setObservers()
-{
-if (Database::connected())
-{
-DvsField::observe(DvsFieldObserver::class);
-}
-}
+    private function setObservers()
+    {
+        if (Database::connected())
+        {
+            DvsField::observe(DvsFieldObserver::class);
+        }
+
+        if (config('devise.cache_enabled'))
+        {
+            DvsPage::observe(ModelCacheFlushObserver::class);
+            DvsLanguage::observe(ModelCacheFlushObserver::class);
+            DvsPageMeta::observe(ModelCacheFlushObserver::class);
+            DvsSite::observe(ModelCacheFlushObserver::class);
+        }
+    }
 }

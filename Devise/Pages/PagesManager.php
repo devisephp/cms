@@ -3,6 +3,8 @@
 use Devise\Models\DvsLanguage;
 use Devise\Models\DvsPage;
 use Devise\Sites\SiteDetector;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Devise\Support\Framework;
 use Devise\Pages\Fields\FieldsRepository;
@@ -140,6 +142,8 @@ class PagesManager
 
         $page->load('versions');
 
+        $this->refreshRouteCache();
+
         return $page;
     }
 
@@ -165,6 +169,8 @@ class PagesManager
 
         $this->PageMetaManager->savePageMeta($page, array_get($input, 'meta', []));
 
+        $this->refreshRouteCache();
+
         return $page;
     }
 
@@ -180,6 +186,7 @@ class PagesManager
 
         $page->versions()->delete();
 
+        $this->refreshRouteCache();
 
         return $page->delete();
     }
@@ -225,6 +232,7 @@ class PagesManager
 
         $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $toPage, $startsAt);
 
+        $this->refreshRouteCache();
 
         return $toPage;
     }
@@ -348,5 +356,13 @@ class PagesManager
         }
 
         return json_encode(true);
+    }
+
+    private function refreshRouteCache()
+    {
+        if (App::routesAreCached())
+        {
+            Artisan::call('route:cache');
+        }
     }
 }

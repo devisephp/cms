@@ -51,6 +51,7 @@ class PagesRepository
         $this->File = $Framework->File;
         $this->Request = $Framework->Request;
         $this->Cookie = $Framework->Cookie;
+        $this->Cache = $Framework->Cache;
         $this->Route = $Framework->Route;
 
         $this->now = new \DateTime;
@@ -67,24 +68,40 @@ class PagesRepository
     {
         $site = $this->SiteDetector->current();
 
-        return $this->Page
-            ->with([
-                    'currentVersion.slices.slices.slices.slices',
-                    'currentVersion.slices.fields',
-                    'currentVersion.slices.slices.fields',
-                    'currentVersion.slices.slices.slices.fields',
-                    'currentVersion.slices.slices.slices.slices.fields',
-                    'versions.page.currentVersion',
-                    'translatedFromPage.language',
-                    'localizedPages.language',
-                    'metas',
-                    'language',
-                    'site.languages'
-                ]
-            )
-            ->whereRouteName($name)
-            ->whereSiteId($site->id)
-            ->firstOrFail();
+        $with = [
+            'currentVersion.slices.slices.slices.slices',
+            'currentVersion.slices.fields',
+            'currentVersion.slices.slices.fields',
+            'currentVersion.slices.slices.slices.fields',
+            'currentVersion.slices.slices.slices.slices.fields',
+            'versions.page.currentVersion',
+            'translatedFromPage.language',
+            'localizedPages.language',
+            'metas',
+            'language',
+            'site.languages'
+        ];
+
+        if ($this->Config->get('devise.cache_enabled'))
+        {
+            $page = $this->Cache
+                ->rememberForever('devise.page.' . $name . '.' . $site->id, function () use ($with, $name, $site) {
+                    return $this->Page
+                        ->with($with)
+                        ->whereRouteName($name)
+                        ->whereSiteId($site->id)
+                        ->firstOrFail();
+                });
+        } else
+        {
+            $page = $this->Page
+                ->with($with)
+                ->whereRouteName($name)
+                ->whereSiteId($site->id)
+                ->firstOrFail();
+        }
+
+        return $page;
     }
 
     /**

@@ -2,26 +2,75 @@
 
 namespace Devise\Models;
 
+use Devise\Languages\LanguageDetector;
+use Devise\Sites\SiteDetector;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 
 class Repository
 {
-    public function runQuery($input)
+    private static $queries = [];
+
+    private $SiteDetector;
+
+    private $LanguageDetector;
+
+    /**
+     *
+     */
+    public function __construct(SiteDetector $SiteDetector, LanguageDetector $LanguageDetector)
     {
-        $classPath = array_get($input, 'class');
+        $this->SiteDetector = $SiteDetector;
+        $this->LanguageDetector = $LanguageDetector;
+    }
+
+    public function runQuery($paramsString)
+    {
+        parse_str($paramsString, $params);
+
+        if (!array_key_exists($paramsString, self::$queries))
+        {
+            if ($this->shouldCacheData($params))
+            {
+                $key = $this->getCacheKey($paramsString);
+                self::$queries[$paramsString] = Cache::rememberForever($key, function () use ($params) {
+                    return $this->getRecords($params);
+                });
+            } else
+            {
+                self::$queries[$paramsString] = $this->getRecords($params);
+            }
+        }
+
+        return self::$queries[$paramsString];
+    }
+
+    private function getCacheKey($seed)
+    {
+        $site = $this->SiteDetector->current();
+        $lang = $this->LanguageDetector->current();
+
+        return $site->id . '.' . $lang->id . '.' . md5($seed);
+    }
+
+    private function getRecords($params)
+    {
+        $classPath = array_get($params, 'class');
 
         if ($classPath)
         {
-            $scopes = array_get($input, 'scopes', []);
-            $filters = array_get($input, 'filters');
-            $paginated = array_get($input, 'paginated', false);
-            $single = array_get($input, 'single', false);
-            $sort = array_get($input, 'sort');
-            $limit = array_get($input, 'limit', 25);
+            $scopes = array_get($params, 'scopes', []);
+            $filters = array_get($params, 'filters');
+            $paginated = array_get($params, 'paginated', false);
+            $single = array_get($params, 'single', false);
+            $sort = array_get($params, 'sort');
+            $limit = array_get($params, 'limit', 25);
 
-            try {
+            try
+            {
                 $model = App::make($classPath);
-            } catch (\Exception $e) {
+            } catch (\Exception $e)
+            {
                 return [];
             }
 
@@ -58,5 +107,19 @@ class Repository
         }
 
         abort(401, 'Class parameter not found in query.');
+    }
+
+    private function shouldCacheData($params)
+    {
+        if (isset($params['cache']))
+        {
+            $cache = filter_var($params['cache'], FILTER_VALIDATE_BOOLEAN);
+            if ($cache && config('devise.cache_enabled'))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

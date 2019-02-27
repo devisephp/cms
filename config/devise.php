@@ -17,6 +17,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Domain Overwrites
+    |--------------------------------------------------------------------------
+    |
+    | Allows the overwriting of the dvs_site domains with local or staging domains
+    | The ID if the dvs_sites entry should be the key of each domain item
+    |
+    */
+    'domains'       => [
+        1 => 'localdomain.test', // or env('SITE_X_DOMAIN'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Layouts
     |--------------------------------------------------------------------------
     |

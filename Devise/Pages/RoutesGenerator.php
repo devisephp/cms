@@ -52,7 +52,7 @@ class RoutesGenerator
         {
             if ($siteId > 0)
             {
-                $overwrite = env('SITE_' . $siteId . '_DOMAIN');
+                $overwrite = config('devise.domains.' . $siteId);
                 $domain = (!$overwrite) ? $domains[$siteId] : $overwrite;
                 $this->Route->group(['domain' => $domain], function () use ($routes) {
 

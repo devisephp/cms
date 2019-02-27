@@ -3,59 +3,61 @@
 namespace Devise\Sites;
 
 use Devise\Models\DvsSite;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 
 class SiteDetector
 {
-  protected static $site;
+    protected static $site;
 
-  protected static $allSites;
+    protected static $allSites;
 
-  public function all()
-  {
-    if (self::$allSites)
+    public function all()
     {
-      return self::$allSites;
-    }
-
-    $all = DvsSite::with('languages')->get();
-    self::$allSites = $all;
-    return $all;
-  }
-
-  public function current()
-  {
-    if (self::$site)
-    {
-      return self::$site;
-    }
-
-    $domain = preg_replace('#^https?://#', '', Request::root());
-
-    if (env('APP_ENV') !== 'production')
-    {
-      // let's try env params
-      $allSites = $this->all();
-      foreach ($allSites as $site)
-      {
-        if ($domain === env('SITE_' . $site->id . '_DOMAIN'))
+        if (self::$allSites)
         {
-          self::$site = $site;
-
-          return $site;
+            return self::$allSites;
         }
-      }
+
+        $all = DvsSite::with('languages')->get();
+        self::$allSites = $all;
+
+        return $all;
     }
 
-    $site = DvsSite::with('languages')
-      ->where('domain', $domain)
-      ->first();
-
-    if ($site)
+    public function current()
     {
-      self::$site = $site;
+        if (self::$site)
+        {
+            return self::$site;
+        }
 
-      return $site;
+        $domain = preg_replace('#^https?://#', '', Request::root());
+
+        if (App::environment() !== 'production')
+        {
+            // let's try env params
+            $allSites = $this->all();
+            foreach ($allSites as $site)
+            {
+                if ($domain === config('devise.domains.' . $site->id))
+                {
+                    self::$site = $site;
+
+                    return $site;
+                }
+            }
+        }
+
+        $site = DvsSite::with('languages')
+            ->where('domain', $domain)
+            ->firstOrFail();
+
+        if ($site)
+        {
+            self::$site = $site;
+
+            return $site;
+        }
     }
-  }
 }

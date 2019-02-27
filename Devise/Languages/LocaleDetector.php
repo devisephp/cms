@@ -47,11 +47,6 @@ class LocaleDetector
         {
             $locale = $locale ?: $this->segment();
 
-            if (env('DVS_DETECT_LANGUAGE_HEADER', false))
-            {
-                $locale = $locale ?: $this->header();
-            }
-
             if (!$locale || $locale === '' || $locale === 'un')
             {
                 $locale = $this->universal();

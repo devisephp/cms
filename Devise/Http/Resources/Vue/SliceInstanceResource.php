@@ -6,6 +6,7 @@ use Devise\Models\Repository as ModelRepository;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\App;
 
 class SliceInstanceResource extends Resource
@@ -57,7 +58,7 @@ class SliceInstanceResource extends Resource
         $all = [];
         if ($records)
         {
-            if ($records instanceof Collection)
+            if ($records instanceof Collection || $records instanceof LengthAwarePaginator)
             {
                 foreach ($records as $record)
                 {

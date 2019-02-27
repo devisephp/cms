@@ -4,6 +4,7 @@ namespace Devise\Http\Resources\Vue;
 
 use Devise\Models\Repository as ModelRepository;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Facades\App;
 
@@ -48,25 +49,23 @@ class SliceInstanceResource extends Resource
 
     private function setModelSlices(&$data)
     {
-        parse_str($this->model_query, $input);
-
         $repository = App::make(ModelRepository::class);
 
         $records = $repository
-            ->runQuery($input);
+            ->runQuery($this->model_query);
 
         $all = [];
         if ($records)
         {
-            if (is_a($records, $input['class']))
-            {
-                $all[] = $records->getSliceData($this);
-            } else
+            if ($records instanceof Collection)
             {
                 foreach ($records as $record)
                 {
                     $all[] = $record->getSliceData($this);
                 }
+            } else
+            {
+                $all[] = $records->getSliceData($this);
             }
         }
 

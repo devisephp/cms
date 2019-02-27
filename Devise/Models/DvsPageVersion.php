@@ -26,11 +26,10 @@ class DvsPageVersion extends Model
         'preview_hash'
     ];
 
+    protected $touches = ['page'];
+
     /**
-     * Accessor on this model to get value
-     * for the latestVersion of this field
      *
-     * @return  FieldValue
      */
     public function getValuesAttribute()
     {

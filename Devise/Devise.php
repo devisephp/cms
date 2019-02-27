@@ -11,6 +11,7 @@ use Devise\Support\Database;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 
 use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization;
@@ -21,6 +22,7 @@ use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization
 class Devise
 {
     private static $components = [];
+    private static $mothershipEnabled = null;
 
     public static function head($page = null)
     {
@@ -78,14 +80,9 @@ class Devise
                 $meta .= '<link rel="canonical" href="' . $page->canonical . '">';
             }
 
-            $globalMeta = DvsPageMeta::where('page_id', 0)
-                ->where('site_id', $page->site_id)->get();
-
-            if ($page->metas)
+            if ($allMeta = $page->all_meta)
             {
-                $page->metas = $page->metas->merge($globalMeta);
-
-                foreach ($page->metas as $m)
+                foreach ($allMeta as $m)
                 {
                     $meta .= '<meta ' . $m->attribute_name . '="' . $m->attribute_value . '" content="' . $m->content . '">';
                 }
@@ -192,8 +189,16 @@ class Devise
 
     public static function mothershipEnabled()
     {
-        if (!app()->runningInConsole() && Database::connected() && Schema::hasTable('dvs_releases') && config('devise.mothership.api-key')) return true;
+        if (self::$mothershipEnabled === null)
+        {
+            if (!app()->runningInConsole() && Database::connected() && Schema::hasTable('dvs_releases') && config('devise.mothership.api-key'))
+            {
+                self::$mothershipEnabled = true;
+            }
 
-        return false;
+            self::$mothershipEnabled = false;
+        }
+
+        return self::$mothershipEnabled;
     }
 }

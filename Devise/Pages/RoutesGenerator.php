@@ -27,7 +27,7 @@ class RoutesGenerator
      */
     public function loadRoutes()
     {
-        if (!app()->runningInConsole() && Schema::hasTable('dvs_pages'))
+        if ($this->pagesTableAvailable())
         {
             $routes = $this->findDvsPageRoutes();
 
@@ -105,19 +105,22 @@ class RoutesGenerator
 
                     foreach ($routes as $route)
                     {
-                        $this->Route->get($route->from_url, function (ExecuteRedirect $request) use ($route) {
-                            return redirect($request->newUrl($route), $route->type);
-                        });
+                        $this->Route->get($route->from_url, [
+                            'uses' => 'Devise\Http\Controllers\RedirectsController@show',
+                            'as'   => 'dvs-redirect-' . $route->id
+                        ]);
                     }
+
 
                 });
             } else
             {
                 foreach ($routes as $route)
                 {
-                    $this->Route->get($route->from_url, function (ExecuteRedirect $request) use ($route) {
-                        return redirect($request->newUrl($route), $route->type);
-                    });
+                    $this->Route->get($route->from_url, [
+                        'uses' => 'Devise\Http\Controllers\RedirectsController@show',
+                        'as'   => 'dvs-redirect-' . $route->id
+                    ]);
                 }
             }
         }
@@ -158,5 +161,18 @@ class RoutesGenerator
         }
 
         return $pages;
+    }
+
+    private function pagesTableAvailable()
+    {
+        try
+        {
+            return Schema::hasTable('dvs_pages');
+        } catch (\Exception $e)
+        {
+
+        }
+
+        return false;
     }
 }

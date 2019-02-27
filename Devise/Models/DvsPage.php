@@ -9,6 +9,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -33,7 +34,6 @@ class DvsPage extends Model
     ];
 
     protected $table = 'dvs_pages';
-
 
     public function versions()
     {
@@ -143,7 +143,7 @@ class DvsPage extends Model
             $this->Cookie->queue('dvs-ab-testing-' . $this->id, $liveVersion->id);
         }
 
-        return $this->liveVersionById($liveVersion->id);
+        return $this->versionById($liveVersion->id);
     }
 
     public function localizedPages()
@@ -241,5 +241,15 @@ class DvsPage extends Model
         }
 
         return false;
+    }
+
+    public function getAllMetaAttribute()
+    {
+        $globalMeta = Cache::rememberForever('', function () {
+            return DvsPageMeta::where('page_id', 0)
+                ->where('site_id', $this->site_id)->get();
+        });
+
+        return $this->metas->merge($globalMeta);
     }
 }

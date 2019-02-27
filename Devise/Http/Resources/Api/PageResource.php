@@ -16,7 +16,7 @@ class PageResource extends Resource
      */
     public function toArray($request)
     {
-        $data = [
+            $data = [
             'id'                 => $this->id,
             'title'              => $this->title,
             'slug'               => $this->slug,

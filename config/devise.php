@@ -4,16 +4,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Layouts
-    |--------------------------------------------------------------------------
-    |
-    | Array of available layouts for pages
-    |
-    */
-    'layouts' => ['Main' => 'main'],
-
-    /*
-    |--------------------------------------------------------------------------
     | General
     |--------------------------------------------------------------------------
     |
@@ -21,7 +11,20 @@ return [
     |
     */
 
-    'mode'      => env('DVS_MODE', 'install'),
+    'mode' => env('DVS_MODE', 'install'),
+
+    'cache_enabled' => env('DVS_CACHE_ENABLED', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Layouts
+    |--------------------------------------------------------------------------
+    |
+    | Array of available layouts for pages
+    |
+    */
+
+    'layouts' => ['Main' => 'main'],
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +36,7 @@ return [
     |
     */
 
-    'media'      => [
+    'media'       => [
         'disk'                    => env('DVS_FILESYSTEM_DISK', 'public'),
         'cached-images-directory' => 'styled',
         'source-directory'        => 'media',
@@ -48,7 +51,7 @@ return [
     | Configuration for mothership
     |
     */
-    'mothership' => [
+    'mothership'  => [
         'url'     => env('MOTHERSHIP_URL', 'https://mothership.app/'),
         'api-key' => env('MOTHERSHIP_API_KEY', null)
     ],

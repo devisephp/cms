@@ -77,14 +77,10 @@ class DvsSite extends Model
         {
             $repository = App::make(ModelRepository::class);
 
-            foreach ($queries as $name => $config)
+            foreach ($queries as $name => $params)
             {
-                parse_str($config, $input);
-
-                $records = $repository
-                    ->runQuery($input);
-
-                $data[$name] = $records;
+                $data[$name] = $repository
+                    ->runQuery($params);
             }
         }
 

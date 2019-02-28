@@ -69,7 +69,6 @@ class PagesController extends Controller
         if (!$page->currentVersion) abort(404);
 
         $page->currentVersion->registerComponents();
-        $page->load('site');
 
         return $this->View->make($page->currentVersion->layout, ['page' => $page]);
     }

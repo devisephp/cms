@@ -75,6 +75,7 @@ class PagesRepository
             'currentVersion.slices.slices.slices.fields',
             'currentVersion.slices.slices.slices.slices.fields',
             'versions.page.currentVersion',
+            'versions.page.liveVersion',
             'translatedFromPage.language',
             'localizedPages.language',
             'metas',

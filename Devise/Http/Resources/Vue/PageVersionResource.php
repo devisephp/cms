@@ -18,7 +18,7 @@ class PageVersionResource extends Resource
             'id'      => $this->id,
             'name'    => $this->name,
             'layout'  => $this->layout,
-            'is_live' => ($this->page->currentVersion) ? ($this->page->currentVersion->id == $this->id) : false,
+            'is_live' => ($this->page->liveVersion) ? ($this->page->liveVersion->id == $this->id) : false,
             'current' => ($this->page->currentVersion) ? ($this->page->currentVersion->id == $this->id) : false
         ];
     }

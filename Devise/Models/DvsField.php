@@ -2,6 +2,9 @@
 
 namespace Devise\Models;
 
+use Devise\Support\Framework;
+use Illuminate\Support\Facades\Route;
+
 class DvsField extends Model
 {
     protected $table = 'dvs_fields';
@@ -21,7 +24,57 @@ class DvsField extends Model
 
         $value = json_decode($json);
 
-        return ($value) ? $this->simplify($value) : new \stdClass();
+        if ($value)
+        {
+            $this->insertId($value);
+            $this->insertHrefForLinks($value);
+            $this->updateImageUrlsToStorage($value);
+
+            return $this->simplify($value);
+        }
+
+        return new \stdClass();
+    }
+
+    private function insertId(&$value)
+    {
+        if (is_object($value))
+        {
+            $value->id = $this->id;
+        }
+    }
+
+    private function insertHrefForLinks(&$value)
+    {
+        if (isset($value->type) && $value->type == 'link')
+        {
+            if (isset($value->routeName)
+                && ($value->type == 'link')
+                && Route::has($value->routeName))
+            {
+                $value->href = route($value->routeName);
+            } else if (!isset($value->href))
+            {
+                $value->href = $value->url;
+            }
+        }
+    }
+
+    private function updateImageUrlsToStorage(&$value)
+    {
+        if (isset($value->type) && isset($value->url) && ($value->type == 'image' || $value->type == 'file'))
+        {
+            $storage = Framework::storage();
+
+            if ($this->isMediaRelativePath($value->url))
+            {
+                $url = $storage->url(trim($value->url, '/'));
+                if ($url)
+                {
+                    $value->url = $url;
+                }
+            }
+        }
     }
 
     public function simplify($value)
@@ -76,7 +129,7 @@ class DvsField extends Model
                 $allowed = ['text', 'enabled'];
                 break;
             case 'link':
-                $allowed = ['text', 'url', 'target', 'mode', 'routeName', 'enabled'];
+                $allowed = ['href', 'text', 'url', 'target', 'mode', 'routeName', 'enabled'];
                 break;
             case 'file':
                 $allowed = ['url', 'enabled'];
@@ -121,5 +174,12 @@ class DvsField extends Model
             'enabled',
             'type'
         ];
+    }
+
+    private function isMediaRelativePath($path)
+    {
+        $folder = config('devise.media.source-directory');
+
+        return (strpos($path, $folder) === 0 || strpos($path, $folder) === 1);
     }
 }

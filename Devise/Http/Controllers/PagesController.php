@@ -78,7 +78,11 @@ class PagesController extends Controller
     {
         $page = $this->PagesRepository->findById($pageId);
 
-        return Devise::dataAsArray($page);
+        $resource = new PageResource($page);
+
+        return [
+            'page' => $resource->toArray(request())
+        ];
     }
 
     /**

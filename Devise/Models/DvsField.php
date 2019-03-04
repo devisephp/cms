@@ -129,7 +129,7 @@ class DvsField extends Model
                 $allowed = ['text', 'enabled'];
                 break;
             case 'link':
-                $allowed = ['href', 'text', 'url', 'target', 'mode', 'routeName', 'enabled'];
+                $allowed = ['href', 'text', 'url', 'target', 'mode', 'routeName', 'enabled', 'rel'];
                 break;
             case 'file':
                 $allowed = ['url', 'enabled'];
@@ -172,7 +172,8 @@ class DvsField extends Model
             'color',
             'value',
             'enabled',
-            'type'
+            'type',
+            'rel'
         ];
     }
 

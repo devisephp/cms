@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use League\Glide\ServerFactory;
 use League\Glide\Responses\LaravelResponseFactory;
@@ -293,7 +294,7 @@ class MediaController extends Controller
         $destinationImage = storage_path('app/public/' . $destinationDirectory . '/' . $originalImageName);
         $destinationPathParts = pathinfo($destinationImage);
 
-        return $destinationPathParts['dirname'] . '/' . $destinationPathParts['filename'] . $append . '.' . strtolower($destinationPathParts['extension']);
+        return $destinationPathParts['dirname'] . '/' . Str::slug($destinationPathParts['filename']) . $append . '.' . strtolower($destinationPathParts['extension']);
     }
 
     private function buildDestinationImageUrl($file, $originalImageName, $append)
@@ -302,7 +303,7 @@ class MediaController extends Controller
         $destinationUrl = '/' . dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $file)) . '/' . $originalImageName;
         $destinationUrlParts = pathinfo($destinationUrl);
 
-        return $this->Storage->url($destinationUrlParts['dirname'] . '/' . $destinationUrlParts['filename'] . $append . '.' . strtolower($destinationUrlParts['extension']));
+        return $this->Storage->url($destinationUrlParts['dirname'] . '/' . Str::slug($destinationUrlParts['filename']) . $append . '.' . strtolower($destinationUrlParts['extension']));
     }
 
     private function getNameAppend($settings)

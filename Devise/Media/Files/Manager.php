@@ -3,6 +3,7 @@
 use Devise\Media\Categories\CategoryPaths;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
+use Illuminate\Support\Str;
 
 /**
  * Class Manager
@@ -38,7 +39,11 @@ class Manager
 
         $serverPath = $this->CategoryPaths->serverPath($categoryPath);
 
-        $this->Storage->putFileAs($serverPath, $file, $file->getClientOriginalName());
+        $originalName = $file->getClientOriginalName();
+        $name = Str::slug(pathinfo($originalName, PATHINFO_FILENAME));
+        $ext = pathinfo($originalName, PATHINFO_EXTENSION);
+
+        $this->Storage->putFileAs($serverPath, $file, $name . '.' . $ext);
     }
 
     /**

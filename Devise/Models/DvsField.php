@@ -2,7 +2,9 @@
 
 namespace Devise\Models;
 
+use Devise\Media\Files\ImageAlts;
 use Devise\Support\Framework;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 class DvsField extends Model
@@ -29,6 +31,7 @@ class DvsField extends Model
             $this->insertId($value);
             $this->insertHrefForLinks($value);
             $this->updateImageUrlsToStorage($value);
+            $this->updateImageAlt($value);
 
             return $this->simplify($value);
         }
@@ -77,6 +80,16 @@ class DvsField extends Model
         }
     }
 
+    private function updateImageAlt(&$value)
+    {
+        if (isset($value->type) && $value->type == 'image' && isset($value->media) && isset($value->media->original))
+        {
+            $imageAlts = App::make(ImageAlts::class);
+
+            $value->alt = $imageAlts->get($value->media->original);
+        }
+    }
+
     public function simplify($value)
     {
         $value = is_object($value) ? (array)$value : $value;
@@ -119,7 +132,7 @@ class DvsField extends Model
         switch ($fieldType)
         {
             case 'image':
-                $allowed = ['url', 'media', 'sizes', 'mode', 'settings', 'enabled'];
+                $allowed = ['url', 'media', 'sizes', 'mode', 'settings', 'alt', 'enabled'];
                 break;
             case 'text':
             case 'textarea':
@@ -129,7 +142,7 @@ class DvsField extends Model
                 $allowed = ['text', 'enabled'];
                 break;
             case 'link':
-                $allowed = ['href', 'text', 'url', 'target', 'mode', 'routeName', 'enabled', 'rel'];
+                $allowed = ['href', 'text', 'url', 'target', 'mode', 'routeName', 'rel', 'enabled'];
                 break;
             case 'file':
                 $allowed = ['url', 'enabled'];

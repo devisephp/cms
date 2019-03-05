@@ -69,6 +69,11 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
             Route::delete('media-directories', 'MediaDirectoriesController@remove');
 
             /**
+             * Media Alts
+             */
+            Route::post('media/alts', 'MediaAltsController@store');
+
+            /**
              * Meta
              */
             Route::get('meta', 'MetaController@all');

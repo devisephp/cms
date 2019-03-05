@@ -1,6 +1,7 @@
 <?php namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
+use Devise\Media\Files\ImageAlts;
 use Devise\Media\Files\Manager;
 use Devise\Media\Files\Repository;
 
@@ -30,11 +31,12 @@ use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 class MediaController extends Controller
 {
     use ValidatesRequests;
-    /**
-     * @var Manager
-     */
+
     protected $FileManager;
+
     protected $Repository;
+
+    protected $ImageAlts;
 
     /**
      * Construct a new response handler
@@ -42,14 +44,16 @@ class MediaController extends Controller
      * @param Manager $FileManager
      * @param null $Redirect
      */
-    public function __construct(Manager $FileManager, Repository $Repository, SiteDetector $SiteDetector, OptimizerChain $OptimizerChain, Framework $Framework)
+    public function __construct(Manager $FileManager, Repository $Repository, SiteDetector $SiteDetector, OptimizerChain $OptimizerChain, ImageAlts $ImageAlts, Framework $Framework)
     {
         $this->FileManager = $FileManager;
         $this->Repository = $Repository;
         $this->SiteDetector = $SiteDetector;
+        $this->OptimizerChain = $OptimizerChain;
+        $this->ImageAlts = $ImageAlts;
+
         $this->Config = $Framework->Config;
         $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
-        $this->OptimizerChain = $OptimizerChain;
 
         $this->guesser = MimeTypeGuesser::getInstance();
     }
@@ -226,6 +230,7 @@ class MediaController extends Controller
     {
         $finalImages = [];
         $finalImageUrls = ['original' => $original];
+        $imageAlt = $this->ImageAlts->get($original);
 
         $site = $this->SiteDetector->current();
         $sourceDirectory = 'app/public';
@@ -269,7 +274,8 @@ class MediaController extends Controller
 
         return [
             'images'   => $finalImageUrls,
-            'settings' => $imagesAndSettings['settings']
+            'settings' => $imagesAndSettings['settings'],
+            'alt'      => $imageAlt
         ];
     }
 

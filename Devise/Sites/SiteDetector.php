@@ -32,26 +32,12 @@ class SiteDetector
             return self::$site;
         }
 
-        $domain = preg_replace('#^https?://#', '', Request::root());
+        $requested = preg_replace('#^https?://#', '', Request::root());
 
-        if (App::environment() !== 'production')
-        {
-            // let's try env params
-            $allSites = $this->all();
-            foreach ($allSites as $site)
-            {
-                if ($domain === config('devise.domains.' . $site->id))
-                {
-                    self::$site = $site;
-
-                    return $site;
-                }
-            }
-        }
 
         $site = DvsSite::with('languages')
-            ->where('domain', $domain)
-            ->firstOrFail();
+            ->where('domain', $requested)
+            ->first();
 
         if ($site)
         {
@@ -59,5 +45,19 @@ class SiteDetector
 
             return $site;
         }
+
+        // let's try overwrites
+        $domains = config('devise.domains');
+        foreach ($domains as $id => $domain)
+        {
+            $all = explode(',', $domain);
+            foreach ($all as $d){
+                if($d == $requested){
+                    return DvsSite::findOrFail($id);
+                }
+            }
+        }
+
+        abort(404);
     }
 }

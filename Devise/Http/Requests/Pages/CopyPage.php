@@ -84,7 +84,9 @@ class CopyPage extends ApiRequest
                 {
                     $query->where('translated_from_page_id', $pageId);
                 }
-            })->first();
+            })
+            ->whereNull('deleted_at')
+            ->first();
 
         return $exists;
     }

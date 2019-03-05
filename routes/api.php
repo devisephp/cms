@@ -116,10 +116,13 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
             /**
              * Page Versions
              */
+            Route::get('page-versions', 'PageVersionsController@index');
             Route::post('page-versions', 'PageVersionsController@copy');
             Route::put('page-versions/{page_version_id}', 'PageVersionsController@update');
             Route::put('page-versions/{page_version_id}/toggle-share', 'PageVersionsController@toggleSharing');
             Route::delete('page-versions/{page_version_id}', 'PageVersionsController@delete');
+
+            Route::post('page-versions/{page_version_id}/slices', 'PageVersionsSlicesController@store');
 
             /**
              * Redirects

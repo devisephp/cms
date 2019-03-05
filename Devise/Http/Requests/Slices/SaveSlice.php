@@ -8,20 +8,15 @@ use Devise\Http\Requests\ApiRequest;
 class SaveSlice extends ApiRequest
 {
 
-  /**
-   * Get the validation rules that apply to the request.
-   *
-   * @return array
-   */
-  public function rules()
-  {
-    return [
-      'name' => 'required',
-      'view' => [
-        'filled',
-        new ViewExists,
-        'unique:dvs_slices,view'
-      ]
-    ];
-  }
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'copy_slice_id' => 'required'
+        ];
+    }
 }

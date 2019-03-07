@@ -55,7 +55,7 @@ class ModelsController extends Controller
     public function query(ApiRequest $request)
     {
         return $this->ModelRepository
-            ->runQuery($request->all());
+            ->runQuery($request->getQueryString());
     }
 
     private function findAllModels()

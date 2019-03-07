@@ -25,15 +25,18 @@ class Repository
 
     private $guesser;
 
+    private $ImageAlts;
+
     protected $Storage;
 
     /**
      *
      */
-    public function __construct(SiteDetector $SiteDetector, CategoryPaths $CategoryPaths, Framework $Framework)
+    public function __construct(SiteDetector $SiteDetector, CategoryPaths $CategoryPaths, ImageAlts $ImageAlts, Framework $Framework)
     {
         $this->SiteDetector = $SiteDetector;
         $this->CategoryPaths = $CategoryPaths;
+        $this->ImageAlts = $ImageAlts;
 
         $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
 
@@ -72,6 +75,7 @@ class Repository
         $fileData['name'] = basename($file);
         $fileData['url'] = $this->Storage->url($file);
         $fileData['type'] = 'file';
+        $fileData['alt'] = $this->ImageAlts->get($fileData['url']);
 
         $type = $this->guesser->guess($this->Storage->path($file));
         if (strpos($type, 'image') !== false)
@@ -90,7 +94,7 @@ class Repository
                 ->groupBy('dvs_pages.id')
                 ->get();
 
-            $fileData['pages']  = $pages->toArray();
+            $fileData['pages'] = $pages->toArray();
         }
 
         return $fileData;

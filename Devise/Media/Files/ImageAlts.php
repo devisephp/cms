@@ -39,17 +39,21 @@ class ImageAlts
         $path = $this->Config
             ->get('devise.media.image-alts-directory');
 
-        $all = $this->Storage
-            ->allFiles($path);
-
         $keyVal = [];
 
-        foreach ($all as $altFile)
+        if ($path)
         {
-            $alt = $this->Storage->get($altFile);
-            $filePath = rtrim($altFile, '.txt');
-            $filePath = str_replace('alts/', '/storage/media/', $filePath);
-            $keyVal[$filePath] = $alt;
+            $all = $this->Storage
+                ->allFiles($path);
+
+            foreach ($all as $altFile)
+            {
+                $alt = $this->Storage->get($altFile);
+                $filePath = rtrim($altFile, '.txt');
+                $filePath = str_replace('alts/', '/storage/media/', $filePath);
+                $keyVal[$filePath] = $alt;
+            }
+
         }
 
         $this->Cache

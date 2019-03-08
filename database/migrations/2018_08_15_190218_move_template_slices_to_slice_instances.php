@@ -51,7 +51,6 @@ class MoveTemplateSlicesToSliceInstances extends Migration
             $table->dropColumn('type');
             $table->dropColumn('label');
             $table->dropColumn('model_query');
-            $table->dropColumn('config');
         });
     }
 }

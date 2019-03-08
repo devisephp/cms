@@ -29,12 +29,6 @@ class CreateDvsChanges extends Migration
      */
     public function down()
     {
-        Schema::create('dvs_changes', function(Blueprint $table){
-          $table->increments('id');
-          $table->unsignedInteger('release_id');
-          $table->unsignedInteger('user_id');
-          $table->text('change');
-          $table->timestamps();
-        });
+        Schema::drop('dvs_changes');
     }
 }

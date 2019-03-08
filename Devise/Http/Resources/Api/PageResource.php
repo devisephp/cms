@@ -16,7 +16,7 @@ class PageResource extends Resource
      */
     public function toArray($request)
     {
-            $data = [
+        $data = [
             'id'                 => $this->id,
             'title'              => $this->title,
             'slug'               => $this->slug,
@@ -24,6 +24,9 @@ class PageResource extends Resource
             'canonical'          => $this->canonical,
             'ab_testing_enabled' => $this->ab_testing_enabled,
             'is_live'            => ($this->liveVersion) ? true : false,
+            'head'               => $this->head,
+            'footer'             => $this->footer,
+            'middleware'         => $this->middleware,
 
             // Relationships
             'versions'           => PageVersionResource::collection($this->whenLoaded('versions')),

@@ -126,10 +126,7 @@ class FieldManager
 
         $this->iterateSliceInstances($pageVersionId, $slices, 0, $index, $instanceIds);
 
-        $this->DvsSliceInstance
-            ->whereNotIn('id', $instanceIds)
-            ->where('page_version_id', $pageVersionId)
-            ->delete();
+        $this->deleteOldSlicesAndFields($pageVersionId, $instanceIds);
     }
 
     private function iterateSliceInstances($pageVersionId, $slices, $parentId = 0, &$index = 0, &$instanceIds = [])
@@ -171,6 +168,20 @@ class FieldManager
             {
                 $this->iterateSliceInstances($pageVersionId, $slice['slices'], $sliceInstanceId, $index, $instanceIds);
             }
+        }
+    }
+
+    private function deleteOldSlicesAndFields($pageVersionId, $ignoreIds = [])
+    {
+        $slices = $this->DvsSliceInstance
+            ->whereNotIn('id', $ignoreIds)
+            ->where('page_version_id', $pageVersionId)
+            ->get();
+
+        foreach ($slices as $slice)
+        {
+            $slice->fields()->delete();
+            $slice->delete();
         }
     }
 }

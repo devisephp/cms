@@ -11,9 +11,8 @@ return [
     |
     */
 
-    'mode' => env('DVS_MODE', 'install'),
-
-    'cache_enabled' => env('DVS_CACHE_ENABLED', false),
+    'mode'                      => env('DVS_MODE', 'install'),
+    'cache_enabled'             => env('DVS_CACHE_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +23,8 @@ return [
     | The ID if the dvs_sites entry should be the key of each domain item
     |
     */
-    'domains'       => [
+    'domain_overwrites_enabled' => env('DVS_DOMAIN_OVERWRITES_ENABLED', false),
+    'domains'                   => [
         1 => 'localdomain.test', // or env('SITE_X_DOMAIN'),
     ],
 
@@ -53,6 +53,7 @@ return [
         'disk'                    => env('DVS_FILESYSTEM_DISK', 'public'),
         'cached-images-directory' => 'styled',
         'source-directory'        => 'media',
+        'image-alts-directory'    => 'alts',
         'driver'                  => env('DVS_MEDIA_DRIVER', 'gd'), // imagick or gd
     ],
 

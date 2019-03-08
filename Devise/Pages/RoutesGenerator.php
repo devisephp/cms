@@ -46,18 +46,24 @@ class RoutesGenerator
         }
     }
 
-    private function setPageRoutes($routesBySite, $domains)
+    private function setPageRoutes($routesBySite, $siteDomains)
     {
         foreach ($routesBySite as $siteId => $routes)
         {
             if ($siteId > 0)
             {
-                $overwrite = config('devise.domains.' . $siteId);
-                $domainSettings = (!$overwrite) ? $domains[$siteId] : $overwrite;
-                $domains = explode(',', $domainSettings);
+                $domainSettings = $siteDomains[$siteId];
+
+                if (config('devise.domain_overwrites_enabled', false))
+                {
+                    $overwrites = config('devise.domains.' . $siteId, null);
+                    if ($overwrites)
+                    {
+                        $domainSettings = $overwrites;
+                    }
+                }
 
                 $callback = function () use ($routes) {
-
                     foreach ($routes as $route)
                     {
                         $uses = ['as' => $route->route_name, 'uses' => $route->uses];
@@ -72,14 +78,14 @@ class RoutesGenerator
 
                         $this->Route->get($route->slug, $uses);
                     }
-
                 };
 
+                $domains = explode(',', $domainSettings);
                 foreach ($domains as $domain)
                 {
                     $this->Route->domain($domain)->group($callback);
                 }
-                
+
             } else
             {
 

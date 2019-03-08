@@ -46,14 +46,19 @@ class SiteDetector
             return $site;
         }
 
-        // let's try overwrites
-        $domains = config('devise.domains');
-        foreach ($domains as $id => $domain)
+        if (config('devise.domain_overwrites_enabled', false))
         {
-            $all = explode(',', $domain);
-            foreach ($all as $d){
-                if($d == $requested){
-                    return DvsSite::findOrFail($id);
+            // let's try overwrites
+            $domains = config('devise.domains');
+            foreach ($domains as $id => $domain)
+            {
+                $all = explode(',', $domain);
+                foreach ($all as $d)
+                {
+                    if ($d == $requested)
+                    {
+                        return DvsSite::findOrFail($id);
+                    }
                 }
             }
         }

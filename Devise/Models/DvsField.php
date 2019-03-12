@@ -52,11 +52,12 @@ class DvsField extends Model
         if (isset($value->type) && $value->type == 'link')
         {
             if (isset($value->routeName)
-                && ($value->type == 'link')
+                && $value->type == 'link'
+                && $value->mode == 'page'
                 && Route::has($value->routeName))
             {
                 $value->href = route($value->routeName);
-            } else if (!isset($value->href))
+            } else
             {
                 $value->href = $value->url;
             }

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 
+use Illuminate\Support\Facades\Session;
 use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization;
 
 /**
@@ -98,6 +99,7 @@ class Devise
         $js .= self::user();
         $js .= self::lang();
         $js .= self::config();
+        $js .= self::messages();
 
         if ($page)
         {
@@ -152,6 +154,34 @@ class Devise
     public static function components()
     {
         return 'Devise.prototype.$deviseComponents = {' . implode(',', self::$components) . "};\n";
+    }
+
+    public static function messages()
+    {
+        $messages = [];
+
+        $all = Session::all();
+        foreach ($all as $key => $value)
+        {
+            if ($key == 'errors')
+            {
+                $errors = $value;
+
+                if ($errors && $errors->any())
+                {
+                    $messages['errors'] = $errors->getBag('default')->toArray();
+                }
+            }
+            if ($key === 'dvs-messages')
+            {
+                foreach ($value as $messageKey => $message)
+                {
+                    $messages[$messageKey] = $message;
+                }
+            }
+        }
+
+        return 'Devise.prototype.$messages = ' . json_encode($messages) . ";\n";
     }
 
     public static function config()

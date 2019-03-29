@@ -40,7 +40,7 @@ class PageVersionsController extends Controller
 
         $pages = $pages->where('dvs_pages.title', 'LIKE', '%' . $request->get('term') . '%');
 
-        $pages = $pages->select('dvs_page_versions.id', 'dvs_pages.title', 'dvs_sites.name as site_name', 'dvs_languages.code', 'dvs_page_versions.name')
+        $pages = $pages->select('dvs_page_versions.id', 'dvs_pages.title', 'dvs_pages.site_id', 'dvs_sites.name as site_name', 'dvs_languages.code', 'dvs_page_versions.name')
             ->orderBy('dvs_pages.site_id')
             ->take(10)
             ->get();
@@ -51,6 +51,7 @@ class PageVersionsController extends Controller
             $results[$page->id] = [
                 'id'           => $page->id,
                 'site'         => $page->site_name,
+                'site_id'      => $page->site_id,
                 'title'        => $page->title,
                 'version_name' => $page->name,
                 'language'     => $page->code

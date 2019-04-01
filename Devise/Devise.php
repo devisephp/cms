@@ -241,6 +241,6 @@ class Devise
     {
         $user = Auth::user();
 
-        return $user->hasPermission('access admin');
+        return ($user && $user->hasPermission('access admin'));
     }
 }

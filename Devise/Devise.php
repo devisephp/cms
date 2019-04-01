@@ -108,7 +108,7 @@ class Devise
 
         $js .= self::components();
 
-        if (Auth::user())
+        if (self::shouldRenderAdmin())
         {
             $js .= self::sites();
         }
@@ -188,7 +188,7 @@ class Devise
     {
         $data['layouts'] = config('devise.layouts');
 
-        if (Auth::check())
+        if (self::shouldRenderAdmin())
         {
             $data['mothership'] = config('devise.mothership');
         }
@@ -214,7 +214,12 @@ class Devise
 
     public static function user()
     {
-        return 'Devise.prototype.$user = ' . json_encode(Auth::user()) . ";\n";
+        if (self::shouldRenderAdmin())
+        {
+            return 'Devise.prototype.$user = ' . json_encode(Auth::user()) . ";\n";
+        }
+
+        return "Devise.prototype.\$user = null;\n";
     }
 
     public static function mothershipEnabled()
@@ -230,5 +235,12 @@ class Devise
         }
 
         return self::$mothershipEnabled;
+    }
+
+    public static function shouldRenderAdmin()
+    {
+        $user = Auth::user();
+
+        return $user->hasPermission('access admin');
     }
 }

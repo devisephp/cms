@@ -85,6 +85,7 @@ return [
         'example@email.com' => [
             'access admin',
             'manage pages',
+            'manage slices',
             'manage users',
             'manage mothership',
             'manage settings',
@@ -97,6 +98,7 @@ return [
         'default' => [
             'access admin',
             'manage pages',
+            'manage slices',
             'manage users',
             'manage mothership',
             'manage settings',

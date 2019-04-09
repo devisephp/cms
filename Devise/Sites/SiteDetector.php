@@ -14,10 +14,9 @@ class SiteDetector
 
     public function all()
     {
-        if (self::$allSites)
-        {
-            return self::$allSites;
-        }
+        if (config('devise.mode') === 'install') return null;
+
+        if (self::$allSites) return self::$allSites;
 
         $all = DvsSite::with('languages')->get();
         self::$allSites = $all;
@@ -27,10 +26,9 @@ class SiteDetector
 
     public function current()
     {
-        if (self::$site)
-        {
-            return self::$site;
-        }
+        if (config('devise.mode') === 'install') return null;
+
+        if (self::$site) return self::$site;
 
         $requested = preg_replace('#^https?://#', '', Request::root());
 

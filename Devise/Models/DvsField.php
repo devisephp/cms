@@ -57,6 +57,13 @@ class DvsField extends Model
                 && Route::has($value->routeName))
             {
                 $value->href = route($value->routeName);
+            } else if (isset($value->mode)
+                // legacy fix
+                && $value->mode == 'url'
+                && $value->url == ''
+                && $value->href)
+            {
+                $value->url = $value->href;
             } else
             {
                 $value->href = $value->url;

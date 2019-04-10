@@ -187,6 +187,7 @@ class Devise
     public static function config()
     {
         $data['layouts'] = config('devise.layouts');
+        $data['mode'] = config('devise.mode');
 
         if (self::shouldRenderAdmin())
         {

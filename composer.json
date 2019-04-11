@@ -22,7 +22,10 @@
     "autoload": {
         "psr-0": {
             "Devise\\": "Devise/"
-        }
+        },
+        "files": [
+            "Devise/Support/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {

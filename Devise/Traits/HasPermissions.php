@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\App;
  */
 trait HasPermissions
 {
-    protected $appends = [
-        'permissions_list'
-    ];
-
     public function getPermissionsListAttribute()
     {
         $detector = App::make(SiteDetector::class);

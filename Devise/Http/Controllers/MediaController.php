@@ -177,14 +177,16 @@ class MediaController extends Controller
         foreach ($allFields as $field)
         {
             $value = array_merge(['media' => []], (array)$field->value);
-            $settings = (isset($field->value->settings)) ? (array)$field->value->settings : [];
+            $settings = (isset($field->value['settings'])) ? (array)$field->value['settings'] : [];
             $requestedSizes = $request->get('sizes')['sizes'];
 
-            if ((isset($field->value->media) && isset($field->value->media->original)) || (isset($field->value->url) && $field->value->url))
+            if ((isset($field->value['media']) && isset($field->value['media']->original)) || (isset($field->value['url']) && $field->value['url']))
             {
-                if (isset($field->value->media) && isset($field->value->media->original))
+                if (isset($field->value['media']) && isset($field->value['media']->original))
                 {
-                    $newSizes = $this->onlyNewSizes($requestedSizes, $field->value);
+                    $tmpValObj = new \stdClass();
+                    $tmpValObj->sizes = $field->value['sizes'];
+                    $newSizes = $this->onlyNewSizes($requestedSizes, $tmpValObj);
                 } else
                 {
                     $newSizes = $requestedSizes;
@@ -193,7 +195,7 @@ class MediaController extends Controller
                 if ($newSizes)
                 {
                     $settings['sizes'] = $newSizes;
-                    $originalImage = ((isset($field->value->media) && isset($field->value->media->original))) ? (string)$field->value->media->original : (string)$field->value->url;
+                    $originalImage = ((isset($field->value['media']) && isset($field->value['media']->original))) ? (string)$field->value['media']->original : (string)$field->value['url'];
                     $imagesAndSettings = $this->getImagesToMakeAndSettings($settings);
 
                     try

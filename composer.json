@@ -32,6 +32,9 @@
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "@php artisan vendor:publish --tag=dvs-assets"
+        ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=dvs-assets"
         ]

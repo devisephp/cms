@@ -1,6 +1,6 @@
 {
     "name": "devisephp/cms",
-    "description": "Content Management System riding on top of the Laravel Framework",
+    "description": "Content Management System using the Laravel Framework",
     "keywords": ["cms", "devise", "devisephp", "laravel", "content management system"],
     "license": "MIT",
     "authors": [
@@ -30,14 +30,5 @@
                 "Devise\\Providers\\DeviseServiceProvider"
             ]
         }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "@php artisan vendor:publish --tag=dvs-assets"
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=dvs-assets"
-        ]
-    },
-    "minimum-stability": "stable"
+    }
 }

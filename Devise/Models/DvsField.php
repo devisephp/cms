@@ -61,7 +61,7 @@ class DvsField extends Model
                 // legacy fix
                 && $value->mode == 'url'
                 && $value->url == ''
-                && $value->href)
+                && isset($value->href))
             {
                 $value->url = $value->href;
             } else

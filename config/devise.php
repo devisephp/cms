@@ -25,7 +25,7 @@ return [
     */
     'domain_overwrites_enabled' => env('DVS_DOMAIN_OVERWRITES_ENABLED', false),
     'domains'                   => [
-        1 => 'localdomain.test', // or env('SITE_X_DOMAIN'),
+        1 => env('SITE_1_DOMAIN', 'localdomain.test'),
     ],
 
     /*

@@ -22,7 +22,7 @@ trait HasPermissions
 
         $all = (isset($config[$this->email])) ? $config[$this->email] : [];
 
-        if (isset($config[$site->domain]))
+        if ($site && isset($config[$site->domain]))
         {
             $all = (isset($config[$site->domain][$this->email])) ? $config[$site->domain][$this->email] : $all;
         }

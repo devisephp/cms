@@ -105,7 +105,8 @@ return [
             'manage meta',
             'manage sites',
             'manage languages',
-            'manage redirects'
+            'manage redirects',
+            'manage media'
         ]
     ]
 ];

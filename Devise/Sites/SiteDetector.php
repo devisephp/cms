@@ -14,7 +14,7 @@ class SiteDetector
 
     public function all()
     {
-        if (config('devise.mode') === 'install') return null;
+        if (config('devise.mode') === 'install') return collect([]);
 
         if (self::$allSites) return self::$allSites;
 

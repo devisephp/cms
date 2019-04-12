@@ -24,5 +24,5 @@ if (config('devise.mode') !== 'install')
 
         return view('devise::install-checklist', $data);
 
-    })->where('any', '^((?!api).)*$');
+    })->where('any', '^((?!api).)*$')->middleware('web');
 }

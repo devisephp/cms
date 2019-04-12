@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="/devise/css/prism-line-numbers.css">
     <link rel="stylesheet" href="/devise/css/themes/prism-okaidia.css">
 
-    <script src="/devise/styles.js"></script>
+    <link href=/devise/css/chunk-vendors.css rel=stylesheet>
+    <link href=/devise/css/main.css rel=stylesheet>
+    <link href=/devise/css/styles.css rel=stylesheet>
   </head>
 
   <body>
@@ -34,26 +36,8 @@
         </div>
     </div>
 
-    <script rel="prefetch" src="{{vuemix('/js/chunk-vendors.js', '/app')}}"></script>
-    <script rel="prefetch" src="{{vuemix('/js/app.js', '/app')}}"></script>
-
-    <noscript id="deferred-styles">
-      <link rel="stylesheet" href="{{vuemix('/css/global.css', '/app')}}">
-      <link rel="stylesheet" href="{{vuemix('/css/app.css', '/app')}}">
-    </noscript>
-
-    <script>
-      var loadDeferredStyles = function() {
-        var addStylesNode = document.getElementById("deferred-styles");
-        var replacement = document.createElement("div");
-        replacement.innerHTML = addStylesNode.textContent;
-        document.body.appendChild(replacement)
-        addStylesNode.parentElement.removeChild(addStylesNode);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-          webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
-      else window.addEventListener('load', loadDeferredStyles);
-    </script>
+    
+    <script rel="prefetch" src="{{vuemix('js/chunk-vendors.js', '/devise')}}"></script>
+    <script rel="prefetch" src="{{vuemix('js/main.js', '/devise')}}"></script>
   </body>
 </html>

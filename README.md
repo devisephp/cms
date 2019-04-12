@@ -37,7 +37,7 @@ Now you can visit your site at ```http://my-devise-project.test``` and finish th
 
 If you followed the wizard exactly you will be presented with that first test slice that you created. It's pretty boring but serves as a good boilerplate for other slices. Take a look at your design. See what repeats, what can be used in multiple places. Those natural lines help define which slices you should probably create.
 
-For guidance on slice creation take a look at how we build the (Devise Marketing)[https://github.com/devisephp/marketing] site and, of course, the [documentation](https://devise.gitbook.io/cms/).
+For guidance on slice creation take a look at how we build the [Devise Marketing](https://github.com/devisephp/marketing) site and, of course, the [documentation](https://devise.gitbook.io/cms/).
 
 ## Contributing
 

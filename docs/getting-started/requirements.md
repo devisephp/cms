@@ -19,7 +19,6 @@
 ## Software Requirements
 
 - Composer (https://getcomposer.org/doc/00-intro.md#locally)[Installation]
-- Laravel >= 5.7
 
 ## Programming Requirements
 

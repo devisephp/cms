@@ -1,22 +1,31 @@
-## Advanced Integration with VueJS
+# Advanced Integration with VueJS
 
-Let's suppose that you want to add on a new administration section in Devise or build in your own VueJS components so that Laravel Mix and Webpack can do their thing and optimize your build? Well, we've set it up so that you can do that fairly easily.
+Let's suppose that you want to add on a new administration section in Devise or build in your own VueJS components so that Webpack can do it's thing and optimize your build? Well, we've set it up so that you can do that very easily. This Guide assumes you've setup a [base install of Devise](installation.md).
 
-### General Requirements
+## What we're going to setup
 
-These requirements are not completely set in stone. It's just how we've been able to get the most dependable results from Webpack and Laravel Mix in our build routine. Laravel Mix 2.x _will_ work but getting the package sizes down was a struggle for us.
+Devise comes in two parts:
+1. The PHP API that ties into Laravel
+2. The VueJS frontend that gives you and your content managers a way to interact with that API
 
-- Webpack 4
-- Laravel Mix
+What we're going to do here is setup a way for you to recompile the frontend piece with your own Javascript. This is where Devise really shines because it leverages the power of Vue CLI and Webpack to make your bundles as small as possible. So let's get started. Again, this Guide will assume you've setup a [base install of Devise](installation.md).
 
-### Get the Devise Interface Source
+## Setup Vue CLI
 
-`yarn add devisephp-interface`
+[Vue CLI](https://cli.vuejs.org/) is an _amazing_ utility that will do our compiling for us. Go ahead and follow their [install guide](https://cli.vuejs.org/guide/installation.html) and once you're done you should be able to run ```vue ui``` from your command line and see the UI.
 
-or
+## Create a new Vue Project
 
-`npm install devise-interface`
+On the root of your Laravel project create a new Vue project by clicking the "Create" button. We like to name our projects something like "projectname-interface". 
 
-> For the rest of this document we will reference yarn only but typically you can use npm commands if you prefer
+## Add Devisephp-interface
 
-### Update
+Once in your project click on the "dependencies" tab and add ```devisephp-interface``` as a dependency. 
+
+## Modify vue.config.js
+
+TODO
+
+## Modify your layouts
+
+TODO

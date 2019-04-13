@@ -5,6 +5,7 @@ Let's suppose that you want to add on a new administration section in Devise or 
 ## What we're going to setup
 
 Devise comes in two parts:
+
 1. The PHP API that ties into Laravel
 2. The VueJS frontend that gives you and your content managers a way to interact with that API
 

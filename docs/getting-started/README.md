@@ -6,7 +6,7 @@ Well, you are here! Thank you for taking the time to check out Devise, we think 
 
 1. A [simple install](installation.md) which allows you to use the base features of Devise by including the CSS and pre-compiled JavaScript file. It's quick, easy, and will be ready to go in no time.
 
-2. A _slightly_ more [complex installation](advanced-integration.md) will allow you to completely customize Devise's administration, add new controls, and change... well.. essentially anything you want.
+2. A _slightly_ more [advanced integration](advanced-integration.md) will allow you to completely customize Devise's administration, add new controls, and change... well.. essentially anything you want. If this is something you desire go ahead and get a base install of Devise going and then move on to the more [advanced integration](advanced-integration.md).
 
 # Getting your Development Environment Ready
 

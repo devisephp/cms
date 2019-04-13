@@ -6,16 +6,16 @@ Let's suppose that you want to add on a new administration section in Devise or 
 
 Devise comes in two parts:
 
-1. The PHP API that ties into Laravel
-2. The VueJS frontend that gives you and your content managers a way to interact with that API
+1. The PHP API that ties into Laravel ([Devise CMS](https://github.com/devisephp/cms))
+2. The VueJS frontend that gives you and your content managers a way to interact with that API ([Devise Interface](https://github.com/devisephp/interface))
 
-What we're going to do here is setup a way for you to recompile the frontend piece with your own Javascript. This is where Devise really shines because it leverages the power of Vue CLI and Webpack to make your bundles as small as possible. So let's get started. Again, this Guide will assume you've setup a [base install of Devise](installation.md).
+What we're going to do here is setup a way for you to recompile the frontend piece with your own Javascript. This is where Devise really shines because it leverages the power of Vue CLI and Webpack to make your bundles as small as possible, chunked out so they are lazy loaded, and compile CSS frameworks like [TailwindCSS](https://tailwindcss.com). So let's get started. Again, this Guide will assume you've setup a [base install of Devise](installation.md) so if you haven't done those steps get those knocked out and then come back here .
 
-## Setup Vue CLI
+## Prerequisites: Setup Vue CLI
 
 [Vue CLI](https://cli.vuejs.org/) is an _amazing_ utility that will do our compiling for us. Go ahead and follow their [install guide](https://cli.vuejs.org/guide/installation.html) and once you're done you should be able to run ```vue ui``` from your command line and see the UI.
 
-## Create a new Vue Project
+## Create a new Vue project
 
 On the root of your Laravel project create a new Vue project by clicking the "Create" button. We like to name our projects something like "projectname-interface". During the creation you've got a few options but you're going to want to include, at minimum:
 
@@ -27,18 +27,26 @@ Typically, we also include our SASS (or LESS) and eslint in our configuration so
 
 ## Add dependencies and install Devise Interface
 
-Once in your project click on the "dependencies" tab and add the following as dependencies
+Once in your project click on the "dependencies" tab and add the following as dependencies.
 
-```devisephp-interface```
-```vuex-router-sync```
-```axios```
+* devisephp-interface
+* vuex-router-sync
+* axios
+
+Or add them via the command line with:
+
+```yarn add devisephp-interface vuex-router-sync axios```
 
 ## Add other dev dependencies
 
-```
-tailwindcss
-webpack-assets-manifest
-```
+Again, you can add them with the "dev-dependencies" UI in Vue CLI
+
+* tailwindcss
+* webpack-assets-manifest
+
+Or via the command line:
+
+```yarn add -D tailwindcss webpack-assets-manifest```
 
 ## Initialize TailwindCSS
 

@@ -45,6 +45,12 @@ class SitesController extends Controller
         $new = $this->DvsSite
             ->createFromRequest($request);
 
+        if ($request->get('devdomain', false))
+        {
+            $this->setEnvironmentValue('DVS_DOMAIN_OVERWRITES_ENABLED', 'true');
+            $this->setEnvironmentValue('SITE_1_DOMAIN', $request->get('devdomain'));
+        }
+
         $syncdata = $this->getLanguageSyncData($request->input('languages', []));
 
         $new->languages()->sync($syncdata);
@@ -95,5 +101,25 @@ class SitesController extends Controller
         return $languages->map(function ($language) {
             return ['default' => $language['default']];
         });
+    }
+
+    private function setEnvironmentValue($envKey, $envValue)
+    {
+        $envFile = app()->environmentFilePath();
+        $str = file_get_contents($envFile);
+
+        $oldValue = env($envKey);
+
+        if ($oldValue)
+        {
+            $str = str_replace("{$envKey}={$oldValue}", "{$envKey}={$envValue}\n", $str);
+        } else
+        {
+            $str .= "\n{$envKey}={$envValue}";
+        }
+
+        $fp = fopen($envFile, 'w');
+        fwrite($fp, $str);
+        fclose($fp);
     }
 }

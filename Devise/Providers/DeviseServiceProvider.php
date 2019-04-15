@@ -99,6 +99,10 @@ class DeviseServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/devise.php' => config_path('devise.php'),
         ], 'dvs-config');
+
+        $this->publishes([
+            __DIR__ . '/../../resources/views/main-layout.blade.php' => resource_path('views/layouts/main.blade.php'),
+        ], 'dvs-layouts');
     }
 
     private function setRoutes()

@@ -27,6 +27,8 @@ class PagesController extends Controller
 
     private $SitesRepository;
 
+    private $Artisan;
+
     private $Redirect;
 
     private $View;
@@ -51,6 +53,7 @@ class PagesController extends Controller
         $this->PagesManager = $PagesManager;
         $this->SiteDetector = $SiteDetector;
 
+        $this->Artisan = $Framework->Artisan;
         $this->Redirect = $Framework->Redirect;
         $this->View = $Framework->View;
         $this->Request = $Framework->Request;
@@ -166,6 +169,13 @@ class PagesController extends Controller
         $input['meta_title'] = $input['title'];
 
         $page = $this->PagesManager->createNewPage($input);
+
+        if ($request->get('publish_layout', false))
+        {
+            $this->Artisan->call('vendor:publish', [
+                '--tag' => 'dvs-layouts', '--force' => 1
+            ]);
+        }
 
         return new PageResource($page);
     }

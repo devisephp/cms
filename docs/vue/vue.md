@@ -1,4 +1,4 @@
-# Vue Integration / Customizing Devise
+# Custom Components
 
 > Note: This documentation is written with the assumption that you have some experience with VueJS. If you've never worked with Vue before you'll be fine. We suggest you take a look at the following documents to get your feet wet and then come back. We've chosen these pages in the documentation because they are the most applicable when talking about Vue and Devise.
 >

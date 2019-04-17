@@ -6,14 +6,14 @@ Let's suppose that you want to add on a new administration section in Devise or 
 
 Devise comes in two parts:
 
-1. The PHP API that ties into Laravel ([Devise CMS](https://github.com/devisephp/cms))
-2. The VueJS frontend that gives you and your content managers a way to interact with that API ([Devise Interface](https://github.com/devisephp/interface))
+1. The PHP API that ties into Laravel \([Devise CMS](https://github.com/devisephp/cms)\)
+2. The VueJS frontend that gives you and your content managers a way to interact with that API \([Devise Interface](https://github.com/devisephp/interface)\)
 
 What we're going to do here is setup a way for you to recompile the frontend piece with your own Javascript. This is where Devise really shines because it leverages the power of Vue CLI and Webpack to make your bundles as small as possible, chunked out so they are lazy loaded, and compile CSS frameworks like [TailwindCSS](https://tailwindcss.com). So let's get started. Again, this Guide will assume you've setup a [base install of Devise](installation.md) so if you haven't done those steps get those knocked out and then come back here .
 
 ## Prerequisites: Setup Vue CLI
 
-[Vue CLI](https://cli.vuejs.org/) is an _amazing_ utility that will do our compiling for us. Go ahead and follow their [install guide](https://cli.vuejs.org/guide/installation.html) and once you're done you should be able to run ```vue ui``` from your command line and see the UI.
+[Vue CLI](https://cli.vuejs.org/) is an _amazing_ utility that will do our compiling for us. Go ahead and follow their [install guide](https://cli.vuejs.org/guide/installation.html) and once you're done you should be able to run `vue ui` from your command line and see the UI.
 
 ## Create a new Vue project
 
@@ -23,7 +23,7 @@ On the root of your Laravel project create a new Vue project by clicking the "Cr
 * Vuex
 * Babel
 
-Typically, we also include our SASS (or LESS) and eslint in our configuration so that we can enjoy the benefits of hot module reloading and linting.
+Typically, we also include our SASS \(or LESS\) and eslint in our configuration so that we can enjoy the benefits of hot module reloading and linting.
 
 ## Add dependencies and install Devise Interface
 
@@ -35,7 +35,7 @@ Once in your project click on the "dependencies" tab and add the following as de
 
 Or add them via the command line with:
 
-```yarn add devisephp-interface vuex-router-sync axios```
+`yarn add devisephp-interface vuex-router-sync axios`
 
 ## Add other dev dependencies
 
@@ -46,19 +46,19 @@ Again, you can add them with the "dev-dependencies" UI in Vue CLI
 
 Or via the command line:
 
-```yarn add -D tailwindcss webpack-assets-manifest```
+`yarn add -D tailwindcss webpack-assets-manifest`
 
 ## Initialize TailwindCSS
 
 From the root of your interface directory:
 
-```yarn tailwind init tailwind.js```
+`yarn tailwind init tailwind.js`
 
 ## Create vue.config.js
 
 Inside your new vue-cli project create a vue.config.js file and place the following:
 
-``` javascript
+```javascript
 // eslint-disable-next-line import/no-extraneous-dependencies
 const webpack = require('webpack');
 // Creates a manifest file
@@ -114,9 +114,9 @@ module.exports = {
 
 ## Create an event bus
 
-In your interface src directory next to your main.js file create ```event-bus.js``` and put in the following:
+In your interface src directory next to your main.js file create `event-bus.js` and put in the following:
 
-``` javascript
+```javascript
 import Vue from 'vue';
 
 export default new Vue();
@@ -124,9 +124,9 @@ export default new Vue();
 
 ## Modify your main.js file
 
-Your main.js file is the "entry" to your application. It's where everything starts. Here we are going to initialize VueJS and add Devise Interface as a plugin. 
+Your main.js file is the "entry" to your application. It's where everything starts. Here we are going to initialize VueJS and add Devise Interface as a plugin.
 
-``` javascript
+```javascript
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -200,7 +200,7 @@ const app = new Vue({
 
 In your interface folder's ```src``` directory modify router.js to be the following:
 
-``` javascript
+```javascript
 /* eslint-disable implicit-arrow-linebreak */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -222,7 +222,7 @@ export default router;
 
 We're almost there! We need to modify the layout of our blade file to accommodate for hot module reloading. If you followed the basic installation it will be located in ```/resources/views/layouts/main.blade.php```. It needs to look something like the following:
 
-``` html
+```markup
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
   <head>
@@ -271,14 +271,15 @@ Vue CLI has a default setting in the "Output Directory" of the parameters in the
 
 ## Build!
 
-You did great! Head to the Tasks tab on the Vue CLI UI, click "Build", and then the "Run" button. If you have no errors you should see a bunch of new files in ```/public/app``` (or wherever you configured your output to be in your vue.config.js). 
+You did great! Head to the Tasks tab on the Vue CLI UI, click "Build", and then the "Run" button. If you have no errors you should see a bunch of new files in `/public/app` \(or wherever you configured your output to be in your vue.config.js\).
 
-When you visit your site if you only see a white screen make sure you have logged in at ```http://your-project.test/login``` and logged in. 
+When you visit your site if you only see a white screen make sure you have logged in at `http://your-project.test/login` and logged in.
 
 ## Troubleshooting
 
-First, there are many ways to accomplish what we are doing here and every project is going to have individual needs. If you need a little guidance on how to set things up take a look at the [DevisePHP Marketing Source](https://github.com/devisephp/marketing). That project is a great baseline to refer to. Of course, feel free to submit an issue and we can try and give you a hand. 
+First, there are many ways to accomplish what we are doing here and every project is going to have individual needs. If you need a little guidance on how to set things up take a look at the [DevisePHP Marketing Source](https://github.com/devisephp/marketing). That project is a great baseline to refer to. Of course, feel free to submit an issue and we can try and give you a hand.
 
 ### Common Issues
 
 * Before anything else take a look on the "output" tab on the build screen and really read the error. Typically, I'll forget to add a dependency or publish my tailwind.js config file. 
+

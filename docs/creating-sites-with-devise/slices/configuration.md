@@ -1,12 +1,12 @@
-# Slice Configuration
+# Configuration
 
 We've been over a bunch of fields that you can drop into your templates and how to configure them in the component section. But in addition to what you've seen there are a few other options you can pass through to give content managers a little more information and control:
 
 ## Defaults
 
-By setting the default property you provide a value before one has been set (or if it has been set to null).
+By setting the default property you provide a value before one has been set \(or if it has been set to null\).
 
-```
+```text
 @section('component')
   <script>
     let module = {
@@ -28,9 +28,9 @@ By setting the default property you provide a value before one has been set (or 
 
 ## Enabler
 
-If you set the `enabler` property on a field it will add an "enabled" checkbox on the field editor and set it to false by default (Unless you set it's default to true - see above)
+If you set the `enabler` property on a field it will add an "enabled" checkbox on the field editor and set it to false by default \(Unless you set it's default to true - see above\)
 
-```
+```text
 @section('template')
   <div v-if="devise.someImage.enabled">
     <img :src="devise.someImage.url" :alt="devise.someImage.alt" class="w-full">
@@ -56,7 +56,7 @@ If you set the `enabler` property on a field it will add an "enabled" checkbox o
 
 Instructions give a little context to your content manager. It can also serve as some good sudo-documentation at times when you need to remember that image size you cut 3 months ago.
 
-```
+```text
 @section('component')
   <script>
     let module = {
@@ -76,7 +76,7 @@ Instructions give a little context to your content manager. It can also serve as
 
 On the editor sidebar it's not very helpful when you see a huge list of slices, often which repeat. To help the user understand where they are it's helpful to provide an `editorLabel` property to the field that you feel best represents the slice when it's populated. Devise uses the slice name until that field is populated and then replaces it with the contents of that field when the user hydrates that instance. Title fields and even images can serve as great editor labels.
 
-```
+```text
 @section('component')
   <script>
     let module = {
@@ -102,7 +102,7 @@ The markup is an array of strings that represent a full row. of the drawing. The
 
 If you had an image above a title with a paragraph below it you might have markup like this:
 
-```
+```text
 @section('component')
   <script>
     let module = {
@@ -132,7 +132,7 @@ This would produce the following:
 
 Text is represented by `T` and can have any number of the following settings trailing it:
 
-##### Alignment
+**Alignment**
 
 > `c` Center Text
 >
@@ -142,7 +142,7 @@ Text is represented by `T` and can have any number of the following settings tra
 >
 > `['{Tc}']`
 
-##### Size
+**Size**
 
 > `l` Large
 >
@@ -154,7 +154,7 @@ Text is represented by `T` and can have any number of the following settings tra
 >
 > `['{Txlc}']`
 
-##### Styles
+**Styles**
 
 > `b` Bold
 >
@@ -164,7 +164,7 @@ Text is represented by `T` and can have any number of the following settings tra
 >
 > `['{Tbi}']`
 
-##### Number of Words
+**Number of Words**
 
 > `~10` This would generate 10 words
 >
@@ -176,7 +176,7 @@ Text is represented by `T` and can have any number of the following settings tra
 
 Image is represented by `I` and can have any number of the following settings trailing it. Note that the default height of an image is 100px.
 
-##### Sizes
+**Sizes**
 
 > `s` Small
 >
@@ -190,7 +190,7 @@ Image is represented by `I` and can have any number of the following settings tr
 
 Video is represented by `V` and can have any number of the following settings trailing it. Note that the default height of a video is 100px.
 
-##### Sizes
+**Sizes**
 
 > `s` Small
 >
@@ -200,7 +200,7 @@ Video is represented by `V` and can have any number of the following settings tr
 
 Forms are represented by `F` and can have any number of the following settings trailing it. Sizes determine the number of form fields that will appear. Two fields and a submit button appear by default.
 
-##### Sizes
+**Sizes**
 
 > `xs` Just the submit buttons
 >
@@ -223,7 +223,7 @@ Blanks are represented by `B` and can have any number of the following settings 
 >
 > `['{B, I, B}30', '{B, Txl~2, B}20', '{B, Txs~30, B}']`
 
-##### Fill
+**Fill**
 
 > `bg` Fills the blank area to make it.... not blank.
 >
@@ -231,8 +231,9 @@ Blanks are represented by `B` and can have any number of the following settings 
 >
 > `['{Bbg, Bbgs, Bbg}50']`
 
-##### Sizes
+**Sizes**
 
 > `s` Small
 >
 > `xs` Extra Small
+

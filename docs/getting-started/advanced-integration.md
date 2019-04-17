@@ -190,15 +190,15 @@ const app = new Vue({
   },
   methods: {
     appLoaded() {
-      window.bus.$on('devise-loaded', () => { });
+      window.deviseSettings.$bus.$on('devise-loaded', () => { });
     },
   },
 });
 ```
 
-## Modify routes.js
+## Modify router.js
 
-In the your interface folder's ```src``` directory modify routes.js to be the following:
+In your interface folder's ```src``` directory modify router.js to be the following:
 
 ``` javascript
 /* eslint-disable implicit-arrow-linebreak */
@@ -220,7 +220,7 @@ export default router;
 
 ## Modify your layout
 
-We're almost there! We need to modify the layout of our blade file to accommodate for hot module reloading. If you followed the basic installation it will be located in ```/resources/views/main.blade.php```. It needs to look something like the following:
+We're almost there! We need to modify the layout of our blade file to accommodate for hot module reloading. If you followed the basic installation it will be located in ```/resources/views/layouts/main.blade.php```. It needs to look something like the following:
 
 ``` html
 <!doctype html>

@@ -5,6 +5,7 @@
   * [Requirements](getting-started/requirements.md)
   * [Installation](getting-started/installation.md)
   * [Advanced Integration with VueJS](getting-started/advanced-integration.md)
+  * [Advanced Integration Continued: Suggested CSS Setup](getting-started/advanced-integration-continued-suggested-css-setup.md)
 * [Creating Sites With Devise](creating-sites-with-devise/README.md)
   * [Slices](creating-sites-with-devise/slices/README.md)
     * [Devise Fields](creating-sites-with-devise/slices/fields.md)

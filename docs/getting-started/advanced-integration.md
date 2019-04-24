@@ -58,6 +58,10 @@ From the root of your interface directory:
 
 Inside your new vue-cli project create a vue.config.js file and place the following:
 
+{% hint style="warning" %}
+Be sure to change the developmentUrl to your development domain
+{% endhint %}
+
 ```javascript
 // eslint-disable-next-line import/no-extraneous-dependencies
 const webpack = require('webpack');
@@ -69,7 +73,7 @@ const WebpackAssetsManifest = require('webpack-assets-manifest');
 const publicDirectory = 'app';
 
 // Development url should match your Laravel Valet url
-const developmentUrl = 'http://project-name.test:8080';
+const developmentUrl = 'http://project-name.test';
 
 const developmentPort = '8080';
 

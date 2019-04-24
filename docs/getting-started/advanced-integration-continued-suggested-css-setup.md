@@ -180,7 +180,35 @@ Devise uses [TailwindCSS](https://tailwindcss.com) under the hood for its own CS
 
 ```
 
-Now you an use Tailwind like so on your slices and components:
+### Remove PostCSS config from package.json
+
+If your package.json file includes the following be sure to remove it.
+
+```text
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+```
+
+### Create a postcss.config.js in your Vue CLI app
+
+In your Vue CLI app add or edit `postcss.config.js` to contain:
+
+```javascript
+const tailwind = require('tailwindcss');
+const autoprefixer = require('autoprefixer');
+
+module.exports = {
+  plugins: [tailwind('./tailwind.js'), autoprefixer()],
+};
+```
+
+### Build and test
+
+Try building your app from the Vue CLI UI. You should see your CSS in   
+`` Now you an use Tailwind like so on your slices and components:
 
 ```markup
 <div class="p-8 bg-pink font-bold font-sans text-xl">
@@ -190,10 +218,10 @@ Now you an use Tailwind like so on your slices and components:
 
 ## Purging the fat
 
-When using something like tailwind you may want to cut any styles that are not being used. Add `@fullhuman/postcss-purgecss` to your dev-dependencies and add `.postcssrc.js` to the root of you Vue CLI project and add the following contents:
+When using something like tailwind you may want to cut any styles that are not being used. Add `@fullhuman/postcss-purgecss` to your dev-dependencies and edit `postcss.config.js` in the root of your Vue CLI project and add the following contents:
 
 {% code-tabs %}
-{% code-tabs-item title="/project-app/.postcssrc.js" %}
+{% code-tabs-item title="/project-app/postcss.config.js" %}
 ```javascript
 const purgecss = require("@fullhuman/postcss-purgecss");
 const glob = require('glob-all');

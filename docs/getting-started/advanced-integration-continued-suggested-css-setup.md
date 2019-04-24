@@ -194,7 +194,7 @@ If your package.json file includes the following be sure to remove it.
 
 ### Create a postcss.config.js in your Vue CLI app
 
-In your Vue CLI app add or edit `postcss.config.js` to contain:
+Add `autoprefixer` to your dev dependencies and in your Vue CLI app add or edit `postcss.config.js` to contain:
 
 ```javascript
 const tailwind = require('tailwindcss');
@@ -218,12 +218,14 @@ Try building your app from the Vue CLI UI. You should see your CSS in
 
 ## Purging the fat
 
-When using something like tailwind you may want to cut any styles that are not being used. Add `@fullhuman/postcss-purgecss` to your dev-dependencies and edit `postcss.config.js` in the root of your Vue CLI project and add the following contents:
+When using something like tailwind you may want to cut any styles that are not being used. Add `@fullhuman/postcss-purgecss` , and `glob-all` to your dev-dependencies and edit `postcss.config.js` in the root of your Vue CLI project and add the following contents:
 
 {% code-tabs %}
 {% code-tabs-item title="/project-app/postcss.config.js" %}
 ```javascript
-const purgecss = require("@fullhuman/postcss-purgecss");
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
+const purgecss = require('@fullhuman/postcss-purgecss');
 const glob = require('glob-all');
 const path = require('path');
 
@@ -231,32 +233,32 @@ module.exports = {
   plugins: [
     require('tailwindcss')('./tailwind.js'),
     require('autoprefixer')(),
-    process.env.NODE_ENV === "production" ? purgecss({
+    process.env.NODE_ENV === 'production' ? purgecss({
       content: [
-        "./src/**/*.vue",
-        "./../resources/**/*.blade.php"
+        './src/**/*.vue',
+        './../resources/**/*.blade.php',
       ],
       extractors: [
         {
           extractor: class {
-            static extract (content) {
+            static extract(content) {
               return content.match(/[a-zA-Z0-9-:_/]+/g) || [];
             }
           },
           extensions: ['vue', 'html', 'php'],
         },
       ],
-      
+
       // Example of when you have a package dependency that may have styles
       // that you don't want to cut out. Purge will scan these files and prevent
       // them from being purged.
       paths: glob.sync([
-        path.join(__dirname, "node_modules/tiny-slider/**/*.js"),
-        path.join(__dirname, "node_modules/tiny-slider/**/*.css"),
+        path.join(__dirname, 'node_modules/tiny-slider/**/*.js'),
+        path.join(__dirname, 'node_modules/tiny-slider/**/*.css'),
       ]),
-      
-      // Leave mobile, tablet, desktop, largeDesktop, and ultraWideDesktop as 
-      // Those are Devise breakpoints. In this example "/tns-*/" is just an 
+
+      // Leave mobile, tablet, desktop, largeDesktop, and ultraWideDesktop as
+      // Those are Devise breakpoints. In this example "/tns-*/" is just an
       // example for tinyslider and can be removed
       whitelistPatterns: [
         /mobile/,
@@ -265,8 +267,8 @@ module.exports = {
         /largeDesktop/,
         /ultraWideDesktop/,
         /tns-*/,
-      ]
-    }) : ""
+      ],
+    }) : '',
   ],
 };
 

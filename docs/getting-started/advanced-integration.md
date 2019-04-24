@@ -265,6 +265,34 @@ We're almost there! We need to modify the layout of our blade file to accommodat
 </html>
 ```
 
+## Update package.json script
+
+Update the `scripts` section of package.json with the following:
+
+{% code-tabs %}
+{% code-tabs-item title="/project-app/package.json" %}
+```javascript
+  "scripts": {
+    "serve": "npm link devisephp-interface && cp ./hmr/hot ../public/app/ && vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
+## Create HOT file
+
+Create a directory in your Vue CLI project root called `hmr` and a file within it called `hot` with the following contents:
+
+{% code-tabs %}
+{% code-tabs-item title="/project-app/hmr/hot" %}
+```javascript
+http://localhost:8080/
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
 ## Clear the output directory setting
 
 Vue CLI has a default setting in the "Output Directory" of the parameters in the build script. To change this click on "Tasks", then "Build", then "Parameters" and clear the "Output Directory" setting so that nothing is in it.

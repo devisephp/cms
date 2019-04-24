@@ -54,7 +54,7 @@ To split out our styles we're going to need to do a little hacky bit here with V
 module.exports = {
   app: {
     // Styles coming from style tags in your components 
-if you wish to do that
+    // if you wish to do that
     entry: 'src/main.js',
     template: 'public/index.html',
     filename: 'index.html',

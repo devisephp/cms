@@ -29,8 +29,7 @@ class LanguagesController extends Controller
 
   public function all(ApiRequest $request)
   {
-    $all = $this->DvsLanguage
-      ->get();
+    $all = $this->DvsLanguage->get();
 
     return LanguageResource::collection($all);
   }

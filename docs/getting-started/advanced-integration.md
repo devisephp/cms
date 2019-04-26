@@ -58,6 +58,10 @@ From the root of your interface directory:
 
 Inside your new vue-cli project create a vue.config.js file and place the following:
 
+{% hint style="warning" %}
+Be sure to change the developmentUrl to your development domain
+{% endhint %}
+
 ```javascript
 // eslint-disable-next-line import/no-extraneous-dependencies
 const webpack = require('webpack');
@@ -69,7 +73,7 @@ const WebpackAssetsManifest = require('webpack-assets-manifest');
 const publicDirectory = 'app';
 
 // Development url should match your Laravel Valet url
-const developmentUrl = 'http://project-name.test:8080';
+const developmentUrl = 'http://project-name.test';
 
 const developmentPort = '8080';
 
@@ -198,7 +202,7 @@ const app = new Vue({
 
 ## Modify router.js
 
-In your interface folder's ```src``` directory modify router.js to be the following:
+In your interface folder's `src` directory modify router.js to be the following:
 
 ```javascript
 /* eslint-disable implicit-arrow-linebreak */
@@ -220,7 +224,7 @@ export default router;
 
 ## Modify your layout
 
-We're almost there! We need to modify the layout of our blade file to accommodate for hot module reloading. If you followed the basic installation it will be located in ```/resources/views/layouts/main.blade.php```. It needs to look something like the following:
+We're almost there! We need to modify the layout of our blade file to accommodate for hot module reloading. If you followed the basic installation it will be located in `/resources/views/layouts/main.blade.php`. It needs to look something like the following:
 
 ```markup
 <!doctype html>
@@ -264,6 +268,34 @@ We're almost there! We need to modify the layout of our blade file to accommodat
   </body>
 </html>
 ```
+
+## Update package.json script
+
+Update the `scripts` section of package.json with the following:
+
+{% code-tabs %}
+{% code-tabs-item title="/project-app/package.json" %}
+```javascript
+  "scripts": {
+    "serve": "npm link devisephp-interface && cp ./hmr/hot ../public/app/ && vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
+## Create HOT file
+
+Create a directory in your Vue CLI project root called `hmr` and a file within it called `hot` with the following contents:
+
+{% code-tabs %}
+{% code-tabs-item title="/project-app/hmr/hot" %}
+```javascript
+http://localhost:8080/
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
 ## Clear the output directory setting
 

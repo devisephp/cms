@@ -10,12 +10,14 @@ if (config('devise.mode') !== 'install')
     /**
      * Media
      */
-    Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/styled/preview/{path}', 'Devise\Http\Controllers\MediaController@preview')
+        ->where('path', '.*')->middleware(['web', 'auth']);
 
-        Route::get('/styled/preview/{path}', 'Devise\Http\Controllers\MediaController@preview')->where('path', '.*');
+    Route::get('/storage/styled/{path}', 'Devise\Http\Controllers\MediaController@show')
+        ->where('path', '.*')->middleware('web');
 
-    });
-} else {
+} else
+{
     Route::get('{any}', function () {
 
         $data = [

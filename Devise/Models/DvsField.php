@@ -39,6 +39,13 @@ class DvsField extends Model
         return new \stdClass();
     }
 
+    public function getOriginalImageAttribute()
+    {
+        $value = $this->value;
+
+        return ((isset($value['media']) && isset($value['media']->original))) ? (string)$value['media']->original : (string)$value['url'];
+    }
+
     private function insertId(&$value)
     {
         if (is_object($value))

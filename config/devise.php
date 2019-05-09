@@ -50,11 +50,19 @@ return [
     */
 
     'media'       => [
+        'security'                => [
+            'key' => null
+        ],
         'disk'                    => env('DVS_FILESYSTEM_DISK', 'public'),
         'cached-images-directory' => 'styled',
         'source-directory'        => 'media',
         'image-alts-directory'    => 'alts',
         'driver'                  => env('DVS_MEDIA_DRIVER', 'gd'), // imagick or gd
+        'settings'                => [
+            'q'     => 80,
+            'fit'   => 'crop',
+            'sharp' => 5
+        ]
     ],
 
     /*

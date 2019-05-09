@@ -104,7 +104,7 @@ class MediaController extends Controller
      *
      * @param Request $request
      */
-    public function remove(Request $request, $mediaRoute)
+    public function remove($mediaRoute)
     {
         $mediaRoute = str_replace('storage', '', $mediaRoute);
         if ($this->Storage->get($mediaRoute))
@@ -119,7 +119,7 @@ class MediaController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function details(Request $request, $path)
+    public function details($path)
     {
         $sansStoragePath = str_replace('/storage', '', $path);
 
@@ -129,13 +129,10 @@ class MediaController extends Controller
     /**
      * Requests a preview of a generated media image
      *
-     * @param Filesystem $filesystem
-     * @param String $path Path of the source media file
-     * @return mixed
      */
-    public function preview(ApiRequest $request, Filesystem $filesystem, $path)
+    public function preview(Filesystem $filesystem, $path)
     {
-        return $this->show($request, $filesystem, $path);
+        return $this->getImage($filesystem, str_replace('/storage/media/', '', $path));
     }
 
     public function show(ApiRequest $request, Filesystem $filesystem, $path)
@@ -144,26 +141,7 @@ class MediaController extends Controller
 
         $this->validateSignature($request, '/storage/media/' . $path);
 
-        $path = str_replace("storage/", '', $path);
-
-        $type = $this->guesser->guess($this->Storage->path('/media/' . $path));
-
-        if (strpos($type, 'image') !== false)
-        {
-            try
-            {
-                $server = $this->initGlideServer($filesystem);
-
-                $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
-
-                return $server->getImageResponse($sourceDirectory . $path, request()->all());
-
-            } catch (\Exception $e)
-            {
-            }
-        }
-
-        return Image::make(base_path('vendor/devisephp/cms/resources/images/file-icon.gif'))->response();
+        return $this->getImage($filesystem, $path);
     }
 
     public function reGenerateAllSignedUrls(ApiRequest $request, $instanceId, $fieldType)
@@ -181,7 +159,7 @@ class MediaController extends Controller
         foreach ($allFields as $field)
         {
             $value = array_merge(['media' => []], (array)$field->value);
-            $settings = (isset($field->value['settings'])) ? (array)$field->value['settings'] : [];
+            $settings = (isset($field->value['settings'])) ? (array)$field->value['settings'] : $this->Config->get('devise.media.settings');
 
             if ($originalImage = $field->original_image)
             {
@@ -240,6 +218,28 @@ class MediaController extends Controller
         return $newMediaUrls;
     }
 
+    private function getImage(Filesystem $filesystem, $path)
+    {
+        $type = $this->guesser->guess($this->Storage->path('/media/' . $path));
+
+        if (strpos($type, 'image') !== false)
+        {
+            try
+            {
+                $server = $this->initGlideServer($filesystem);
+
+                $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
+
+                return $server->getImageResponse($sourceDirectory . $path, request()->all());
+
+            } catch (\Exception $e)
+            {
+            }
+        }
+
+        return Image::make(base_path('vendor/devisephp/cms/resources/images/file-icon.gif'))->response();
+    }
+
     private function initGlideServer(Filesystem $filesystem)
     {
         return ServerFactory::create([
@@ -254,7 +254,7 @@ class MediaController extends Controller
 
     private function validateSignature(ApiRequest $request, $path)
     {
-        $signkey = 'Tx2X965JKm3uVu%Cf+%G74UkMrzw?7wnjEVnP2-7k4gpUwhwKDUpwxCRRukh4xWK=cnGK8=cpC%T*e4CwC#TVN%hF_4=zWVpM+T_cAX8c8_EvcthCm3xf961wsVCTl6x';
+        $signkey = $this->Config->get('devise.media.security.key');
 
         SignatureFactory::create($signkey)
             ->validateRequest($path, $request->all());
@@ -262,7 +262,7 @@ class MediaController extends Controller
 
     private function generateSignedUrl($path, $params)
     {
-        $signkey = 'Tx2X965JKm3uVu%Cf+%G74UkMrzw?7wnjEVnP2-7k4gpUwhwKDUpwxCRRukh4xWK=cnGK8=cpC%T*e4CwC#TVN%hF_4=zWVpM+T_cAX8c8_EvcthCm3xf961wsVCTl6x';
+        $signkey = $this->Config->get('devise.media.security.key');
 
         $fileName = pathinfo($path);
 

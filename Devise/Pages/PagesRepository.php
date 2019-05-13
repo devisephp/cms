@@ -249,7 +249,7 @@ class PagesRepository
      * @param  string $searchTerm
      * @return array
      */
-    public function getPagesList($searchTerm = null, $siteId = null)
+    public function getPagesList($searchTerm = null, $siteId = null, $limit = null)
     {
         $pages = $this->Page
             ->join('dvs_languages', 'dvs_languages.id', '=', 'dvs_pages.language_id')
@@ -262,8 +262,12 @@ class PagesRepository
             $pages = $pages->where('title', 'LIKE', '%' . $searchTerm . '%');
 
         $pages = $pages->select('dvs_pages.id', 'dvs_pages.title', 'dvs_sites.name', 'dvs_languages.code')
-            ->orderBy('dvs_pages.site_id')
-            ->get();
+            ->orderBy('dvs_pages.site_id');
+
+        if ($limit != null)
+            $pages = $pages->take($limit);
+
+        $pages = $pages->get();
 
         $results = [];
         foreach ($pages as $page)

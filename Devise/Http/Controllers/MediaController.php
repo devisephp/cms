@@ -20,6 +20,8 @@ use League\Glide\Responses\LaravelResponseFactory;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 
+use League\Glide\Signatures\SignatureFactory;
+use League\Glide\Urls\UrlBuilderFactory;
 use Spatie\ImageOptimizer\OptimizerChain;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
@@ -53,6 +55,7 @@ class MediaController extends Controller
         $this->OptimizerChain = $OptimizerChain;
         $this->ImageAlts = $ImageAlts;
 
+        $this->Auth = $Framework->Auth;
         $this->Config = $Framework->Config;
         $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
 
@@ -101,7 +104,7 @@ class MediaController extends Controller
      *
      * @param Request $request
      */
-    public function remove(Request $request, $mediaRoute)
+    public function remove($mediaRoute)
     {
         $mediaRoute = str_replace('storage', '', $mediaRoute);
         if ($this->Storage->get($mediaRoute))
@@ -116,7 +119,7 @@ class MediaController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function details(Request $request, $path)
+    public function details($path)
     {
         $sansStoragePath = str_replace('/storage', '', $path);
 
@@ -126,45 +129,23 @@ class MediaController extends Controller
     /**
      * Requests a preview of a generated media image
      *
-     * @param Filesystem $filesystem
-     * @param String $path Path of the source media file
-     * @return mixed
      */
     public function preview(Filesystem $filesystem, $path)
     {
-        $path = str_replace("storage/", '', $path);
-
-        $type = $this->guesser->guess($this->Storage->path($path));
-
-        if (strpos($type, 'image') !== false)
-        {
-            try
-            {
-                $path = str_replace("media/", '', $path);
-
-                $server = ServerFactory::create([
-                    'response'               => new LaravelResponseFactory(app('request')),
-                    'source'                 => $filesystem->getDriver(),
-                    'cache'                  => $filesystem->getDriver(),
-                    'group_cache_in_folders' => false,
-                    'base_url'               => '/styled/preview/',
-                    'driver'                 => $this->Config->get('devise.media.driver')
-                ]);
-                $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
-
-                return $server->getImageResponse($sourceDirectory . $path, request()->all());
-            } catch (\Exception $e)
-            {
-            }
-        }
-
-        return Image::make(base_path('vendor/devisephp/cms/resources/images/file-icon.gif'))->response();
+        return $this->getImage($filesystem, str_replace('/storage/media/', '', $path));
     }
 
-    public function reGenerateAll(ApiRequest $request, $instanceId, $fieldType)
+    public function show(ApiRequest $request, Filesystem $filesystem, $path)
     {
-        set_time_limit(0);
+        if (!$request->has('s')) return $this->tryLegacyStorageFile($path);
 
+        $this->validateSignature($request, '/storage/media/' . $path);
+
+        return $this->getImage($filesystem, $path);
+    }
+
+    public function reGenerateAllSignedUrls(ApiRequest $request, $instanceId, $fieldType)
+    {
         $instance = DvsSliceInstance::findOrFail($instanceId);
         $allFields = DvsField::join('dvs_slice_instances', 'dvs_slice_instances.id', '=', 'dvs_fields.slice_instance_id')
             ->where('dvs_slice_instances.view', $instance->view)
@@ -173,44 +154,25 @@ class MediaController extends Controller
             ->get();
 
         $allSizes = $request->get('allSizes');
+        $requestedSizes = $request->get('sizes')['sizes'];
 
         foreach ($allFields as $field)
         {
             $value = array_merge(['media' => []], (array)$field->value);
-            $settings = (isset($field->value['settings'])) ? (array)$field->value['settings'] : [];
-            $requestedSizes = $request->get('sizes')['sizes'];
+            $settings = (isset($field->value['settings'])) ? (array)$field->value['settings'] : $this->Config->get('devise.media.settings');
 
-            if ((isset($field->value['media']) && isset($field->value['media']->original)) || (isset($field->value['url']) && $field->value['url']))
+            if ($originalImage = $field->original_image)
             {
-                if (isset($field->value['media']) && isset($field->value['media']->original))
-                {
-                    $tmpValObj = new \stdClass();
-                    $tmpValObj->sizes = $field->value['sizes'];
-                    $newSizes = $this->onlyNewSizes($requestedSizes, $tmpValObj);
-                } else
-                {
-                    $newSizes = $requestedSizes;
-                }
+                $newSizes = $this->onlyNewSizes($requestedSizes, $field->value['sizes'] ?? []);
 
                 if ($newSizes)
                 {
-                    $settings['sizes'] = $newSizes;
-                    $originalImage = ((isset($field->value['media']) && isset($field->value['media']->original))) ? (string)$field->value['media']->original : (string)$field->value['url'];
-                    $imagesAndSettings = $this->getImagesToMakeAndSettings($settings);
+                    $newMediaUrls = $this->getNewMediaSignedURls($originalImage, $settings, $newSizes);
 
-                    try
+                    if ($newMediaUrls)
                     {
-                        $result = $this->generateAll($originalImage, $imagesAndSettings);
-                    } catch (\Exception $e)
-                    {
-                        $result = false;
-                    }
-
-                    if ($result)
-                    {
-                        $value['url'] = $result['images']['orig_optimized'];
-                        $currentMedia = (array)$value['media'];
-                        $value['media'] = array_merge($currentMedia, $result['images']);
+                        $value['url'] = $originalImage;
+                        $value['media'] = array_merge((array)$value['media'], $newMediaUrls);
                         $value['sizes'] = $allSizes;
 
                         $field->json_value = json_encode($value);
@@ -219,159 +181,129 @@ class MediaController extends Controller
                 }
             }
         }
+
     }
 
-    public function generate(ApiRequest $request)
+    public function generateSignedUrls(ApiRequest $request)
     {
-        $originalImage = $request->get('original');
-        $imagesAndSettings = $this->getImagesToMakeAndSettings($request->get('settings'));
+        $originalPath = $request->get('original');
+        $settings = $request->get('settings');
+        $sizes = $settings['sizes'];
+        unset($settings['sizes']);
 
-        return $this->generateAll($originalImage, $imagesAndSettings);
-    }
-
-    public function generateAll($original, $imagesAndSettings)
-    {
-        $finalImages = [];
-        $finalImageUrls = ['original' => $original];
-        $imageAlt = $this->ImageAlts->get($original);
-
-        $site = $this->SiteDetector->current();
-        $sourceDirectory = 'app/public';
-        $original = str_replace("storage/", '', $original);
-        $sourceImage = storage_path($sourceDirectory . $original);
-
-        if (!file_exists($sourceImage))
-        {
-            return false;
-        }
-
-        $destinationDirectory = dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $original));
-        if (!is_dir($destinationDirectory))
-        {
-            $this->Storage->makeDirectory($destinationDirectory);
-        }
-
-        foreach ($imagesAndSettings['images'] as $sizeLabel => $sizeSettings)
-        {
-            $append = $this->getNameAppend($sizeSettings);
-            $destinationImage = $this->buildDestinationImagePath($destinationDirectory, basename($original), $append);
-            $destinationImageUrl = $this->buildDestinationImageUrl($original, basename($original), $append);
-
-            $finalImageUrls[$sizeLabel] = $destinationImageUrl;
-
-            $finalSettings = array_merge(['fit' => 'crop', 'q' => 100], $imagesAndSettings['settings'], $sizeSettings);
-
-            // TODO: Can we catch memory timeouts here a little better?
-            $finalImages[] = \GlideImage::create($sourceImage)
-                ->modify($finalSettings)
-                ->save($destinationImage);
-
-        }
-
-        $this->optimizeImages($finalImages);
-
-        if (isset($imagesAndSettings['settings']['sizes']))
-        {
-            unset($imagesAndSettings['settings']['sizes']);
-        }
+        $newMediaUrls = $this->getNewMediaSignedURls($originalPath, $settings, $sizes);
 
         return [
-            'images'   => $finalImageUrls,
-            'settings' => $imagesAndSettings['settings'],
-            'alt'      => $imageAlt
+            'images'   => $newMediaUrls,
+            'settings' => $settings,
+            'alt'      => $this->ImageAlts->get($originalPath)
         ];
     }
 
-    private function optimizeImages($images)
+    public function getNewMediaSignedURls($originalPath, $settings, $sizes)
     {
-        $optimize = function ($image) {
-            $this->OptimizerChain->optimize($image);
-        };
+        $newMediaUrls = [
+            'original'       => $originalPath,
+            'orig_optimized' => $this->generateSignedUrl($originalPath, $settings)
+        ];
 
-        array_map($optimize, $images);
-    }
-
-    private function buildDestinationImagePath($destinationDirectory, $originalImageName, $append)
-    {
-        $destinationImage = storage_path('app/public/' . $destinationDirectory . '/' . $originalImageName);
-        $destinationPathParts = pathinfo($destinationImage);
-
-        return $destinationPathParts['dirname'] . '/' . Str::slug($destinationPathParts['filename']) . $append . '.' . strtolower($destinationPathParts['extension']);
-    }
-
-    private function buildDestinationImageUrl($file, $originalImageName, $append)
-    {
-        $site = $this->SiteDetector->current();
-        $destinationUrl = '/' . dirname($this->Config->get('devise.media.cached-images-directory') . '/' . $site->domain . str_replace("media/", '', $file)) . '/' . $originalImageName;
-        $destinationUrlParts = pathinfo($destinationUrl);
-
-        return $this->Storage->url($destinationUrlParts['dirname'] . '/' . Str::slug($destinationUrlParts['filename']) . $append . '.' . strtolower($destinationUrlParts['extension']));
-    }
-
-    private function getNameAppend($settings)
-    {
-        $sizeAppend = $this->getSizeNameAppend($settings);
-        $hashAppend = $this->getHashNameAppend($settings);
-
-        return $sizeAppend . '-' . $hashAppend;
-    }
-
-    private function getSizeNameAppend($image)
-    {
-        $sizeAppend = '';
-        if (isset($image['w']))
+        foreach ($sizes as $name => $size)
         {
-            $sizeAppend = '-' . $image['w'] . '-' . $image['h'];
+            unset($size['breakpoints']);
+
+            $sizeSettings = array_merge($settings, $size);
+            $newMediaUrls[$name] = $this->generateSignedUrl($originalPath, $sizeSettings);
         }
 
-        return $sizeAppend;
+        return $newMediaUrls;
     }
 
-    private function getHashNameAppend($settings)
+    private function getImage(Filesystem $filesystem, $path)
     {
-        return md5(json_encode($settings)) . time();
-    }
+        $type = $this->guesser->guess($this->Storage->path('/media/' . $path));
 
-    private function getImagesToMakeAndSettings($settings)
-    {
-        $sizes = array_get($settings, 'sizes', []);
-
-        $imagesToMake['orig_optimized'] = $settings;
-
-        foreach ($sizes as $sizeLabel => $size)
+        if (strpos($type, 'image') !== false)
         {
-            $imagesToMake[$sizeLabel] = ['w' => $size['w'], 'h' => $size['h']];
-        }
-
-        return ['images' => $imagesToMake, 'settings' => $settings];
-    }
-
-    private function onlyNewSizes($requestedSizes, $value)
-    {
-        if (isset($value->sizes))
-        {
-            $sizes = (array)$value->sizes;
-            foreach ($requestedSizes as $sizeName => $requestedSize)
+            try
             {
-                $skipSizeByRemoving = false;
+                $server = $this->initGlideServer($filesystem);
 
-                if (isset($sizes[$sizeName]) &&
-                    isset($sizes[$sizeName]->w) &&
-                    isset($sizes[$sizeName]->h) &&
-                    isset($requestedSize['w']) &&
-                    isset($requestedSize['h']))
-                {
-                    // all properties were found to compare
-                    if ($sizes[$sizeName]->w == $requestedSize['w'] && $sizes[$sizeName]->h == $requestedSize['h'])
-                    {
-                        $skipSizeByRemoving = true;
-                    }
-                }
+                $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
 
-                if ($skipSizeByRemoving) unset($requestedSizes[$sizeName]);
+                return $server->getImageResponse($sourceDirectory . $path, request()->all());
+
+            } catch (\Exception $e)
+            {
             }
+        }
 
-            return $requestedSizes;
+        return Image::make(base_path('vendor/devisephp/cms/resources/images/file-icon.gif'))->response();
+    }
+
+    private function initGlideServer(Filesystem $filesystem)
+    {
+        return ServerFactory::create([
+            'response'               => new LaravelResponseFactory(app('request')),
+            'source'                 => $filesystem->getDriver(),
+            'cache'                  => storage_path('app/glide'),
+            'group_cache_in_folders' => false,
+            'base_url'               => '/styled/preview/',
+            'driver'                 => $this->Config->get('devise.media.driver')
+        ]);
+    }
+
+    private function validateSignature(ApiRequest $request, $path)
+    {
+        $signkey = $this->Config->get('devise.media.security.key');
+
+        SignatureFactory::create($signkey)
+            ->validateRequest($path, $request->all());
+    }
+
+    private function generateSignedUrl($path, $params)
+    {
+        $signkey = $this->Config->get('devise.media.security.key');
+
+        $fileName = pathinfo($path);
+
+        if (!isset($fileName['dirname']) && !isset($fileName['basename'])) abort(400, 'Unable to parse given image path ' . $path);
+
+        $urlBuilder = UrlBuilderFactory::create($fileName['dirname'] . '/', $signkey);
+
+        $url = $urlBuilder->getUrl($fileName['basename'], $params);
+
+        return '/storage/styled' . str_replace('/storage/media', '', $url);
+    }
+
+    private function tryLegacyStorageFile($path)
+    {
+        if ($this->Storage->exists('/styled/' . $path))
+        {
+            return Image::make($this->Storage->path('/styled/' . $path))->response();
+        }
+
+        abort(404, $path . ' not found');
+    }
+
+    private function onlyNewSizes($requestedSizes, $sizes)
+    {
+        $sizes = (array)$sizes;
+        foreach ($requestedSizes as $sizeName => $requestedSize)
+        {
+            $skipSizeByRemoving = false;
+            if (isset($sizes[$sizeName]) &&
+                isset($sizes[$sizeName]->w) &&
+                isset($sizes[$sizeName]->h) &&
+                isset($requestedSize['w']) &&
+                isset($requestedSize['h']))
+            {
+                // all properties were found to compare
+                if ($sizes[$sizeName]->w == $requestedSize['w'] && $sizes[$sizeName]->h == $requestedSize['h'])
+                {
+                    $skipSizeByRemoving = true;
+                }
+            }
+            if ($skipSizeByRemoving) unset($requestedSizes[$sizeName]);
         }
 
         return $requestedSizes;

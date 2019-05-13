@@ -37,7 +37,7 @@
     </div>
 
     
-    <script rel="prefetch" src="{{vuemix('js/chunk-vendors.js', '/devise')}}"></script>
-    <script rel="prefetch" src="{{vuemix('js/main.js', '/devise')}}"></script>
+    <script rel="prefetch" src="/devise/js/chunk-vendors.js"></script>
+    <script rel="prefetch" src="devise/js/main.js"></script>
   </body>
 </html>

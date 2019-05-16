@@ -51,7 +51,7 @@ return [
 
     'media'       => [
         'security'                => [
-            'key' => null
+            'key' => env('APP_KEY'),
         ],
         'disk'                    => env('DVS_FILESYSTEM_DISK', 'public'),
         'cached-images-directory' => 'styled',

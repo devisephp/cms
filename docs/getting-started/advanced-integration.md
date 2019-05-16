@@ -277,7 +277,7 @@ Update the `scripts` section of package.json with the following:
 {% code-tabs-item title="/project-app/package.json" %}
 ```javascript
   "scripts": {
-    "serve": "npm link devisephp-interface && cp ./hmr/hot ../public/app/ && vue-cli-service serve",
+    "serve": "cp ./hmr/hot ../public/app/ && vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -297,7 +297,13 @@ http://localhost:8080/
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-## Clear the output directory setting
+## Last Minute things before you build or serve
+
+### Create the public/app directory
+
+In the root of your project in the public directory \(Laravel's public directory\) make sure you create an app directory called... you guessed it.... `app`
+
+### Clear the output directory setting
 
 Vue CLI has a default setting in the "Output Directory" of the parameters in the build script. To change this click on "Tasks", then "Build", then "Parameters" and clear the "Output Directory" setting so that nothing is in it.
 

@@ -31,7 +31,7 @@ So, create `src/sass/essentials.scss` and `src/sass/global.scss` and maybe drop 
 
 ### Create styles folder and add two files inside it
 
-Create two files inside the root of your CLI project \(ex: `project-name/project-app/`\) and name them the same as your main SCSS files. In this example we're going to create `essentials.js` and `global.js`
+Create a `styles` folder inside the root of your CLI project \(ex: `project-name/project-app/styles`\), add two javascript files and name them the same as your main SCSS files. In this example we're going to create `essentials.js` and `global.js`
 
 Place the following inside each of the files and change the contents appropriately.
 
@@ -43,6 +43,28 @@ import '../sass/essentials.scss';
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
+
+At this point you should have a structure like so:
+
+```text
+/project-name
+   ....
+   /project-app
+
+      /src
+        /scss
+          /essentials
+            some-styles-we-want-in-the-head.scss
+          /globals
+            some-styles-we-are-ok-deferring.scss
+          essentials.scss
+          globals.scss
+        /styles
+          essentials.js
+          globals.js
+      buildpages.js (next step)
+   ...
+```
 
 ### Create buildpages.js
 

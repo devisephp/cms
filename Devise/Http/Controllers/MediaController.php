@@ -257,21 +257,21 @@ class MediaController extends Controller
 
     private function validateSignature(ApiRequest $request, $path)
     {
-        $signkey = $this->Config->get('devise.media.security.key');
+        $signKey = $this->getKey();
 
-        SignatureFactory::create($signkey)
+        SignatureFactory::create($signKey)
             ->validateRequest($path, $request->all());
     }
 
     private function generateSignedUrl($path, $params)
     {
-        $signkey = $this->Config->get('devise.media.security.key');
+        $signKey = $this->getKey();
 
         $fileName = pathinfo($path);
 
         if (!isset($fileName['dirname']) && !isset($fileName['basename'])) abort(400, 'Unable to parse given image path ' . $path);
 
-        $urlBuilder = UrlBuilderFactory::create($fileName['dirname'] . '/', $signkey);
+        $urlBuilder = UrlBuilderFactory::create($fileName['dirname'] . '/', $signKey);
 
         $url = $urlBuilder->getUrl($fileName['basename'], $params);
 
@@ -310,5 +310,16 @@ class MediaController extends Controller
         }
 
         return $requestedSizes;
+    }
+
+    private function getKey()
+    {
+        $key = $this->Config->get('devise.media.security.key');
+        if (Str::startsWith($key, 'base64:'))
+        {
+            return substr($key, 7);
+        }
+
+        return $key;
     }
 }

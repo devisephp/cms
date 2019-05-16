@@ -83,8 +83,8 @@ module.exports = {
     title: 'App',
   },
   global: {
-    // Styles generated from global.scss THROUGH globals.js
-    entry: 'src/styles/global.js',
+    // Styles generated from globals.scss THROUGH globals.js
+    entry: 'src/styles/globals.js',
     template: 'public/index.html',
     filename: 'index.html',
     title: 'App',

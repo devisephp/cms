@@ -188,8 +188,11 @@ class MediaController extends Controller
     {
         $originalPath = $request->get('original');
         $settings = $request->get('settings');
-        $sizes = $settings['sizes'];
-        unset($settings['sizes']);
+        $sizes = [];
+        if (isset($settings['sizes'])) {
+            $sizes = $settings['sizes'];
+            unset($settings['sizes']);
+        }
 
         $newMediaUrls = $this->getNewMediaSignedURls($originalPath, $settings, $sizes);
 

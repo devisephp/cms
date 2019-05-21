@@ -5,25 +5,16 @@ use Devise\Media\Files\ImageAlts;
 use Devise\Media\Files\Manager;
 use Devise\Media\Files\Repository;
 
+use Devise\Media\Glide;
 use Devise\Models\DvsField;
 use Devise\Models\DvsSliceInstance;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use League\Glide\ServerFactory;
-use League\Glide\Responses\LaravelResponseFactory;
 
-use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
-
-use League\Glide\Signatures\SignatureFactory;
-use League\Glide\Urls\UrlBuilderFactory;
-use Spatie\ImageOptimizer\OptimizerChain;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
 /**
  * Class ResponseHandler handles controller part of media manager
@@ -41,25 +32,30 @@ class MediaController extends Controller
 
     protected $ImageAlts;
 
+    protected $Glide;
+
+    protected $Config;
+
+    protected $Storage;
+
     /**
      * Construct a new response handler
      *
      * @param Manager $FileManager
-     * @param null $Redirect
+     * @param Repository $Repository
+     * @param ImageAlts $ImageAlts
+     * @param Glide $Glide
+     * @param Framework $Framework
      */
-    public function __construct(Manager $FileManager, Repository $Repository, SiteDetector $SiteDetector, OptimizerChain $OptimizerChain, ImageAlts $ImageAlts, Framework $Framework)
+    public function __construct(Manager $FileManager, Repository $Repository, ImageAlts $ImageAlts, Glide $Glide, Framework $Framework)
     {
         $this->FileManager = $FileManager;
         $this->Repository = $Repository;
-        $this->SiteDetector = $SiteDetector;
-        $this->OptimizerChain = $OptimizerChain;
         $this->ImageAlts = $ImageAlts;
+        $this->Glide = $Glide;
 
-        $this->Auth = $Framework->Auth;
         $this->Config = $Framework->Config;
         $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
-
-        $this->guesser = MimeTypeGuesser::getInstance();
     }
 
     /**
@@ -92,10 +88,12 @@ class MediaController extends Controller
      *
      * @param Request $request
      * @return mixed
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
         $this->validate($request, ['file' => 'required|file']);
+
         $this->FileManager->saveUploadedFile($request->all());
     }
 
@@ -130,18 +128,21 @@ class MediaController extends Controller
      * Requests a preview of a generated media image
      *
      */
-    public function preview(Filesystem $filesystem, $path)
+    public function preview($path)
     {
-        return $this->getImage($filesystem, str_replace('/storage/media/', '', $path));
+        return $this->Glide
+            ->getImageResponse(str_replace('/storage/media/', '', $path));
     }
 
-    public function show(ApiRequest $request, Filesystem $filesystem, $path)
+    public function show(ApiRequest $request, $path)
     {
         if (!$request->has('s')) return $this->tryLegacyStorageFile($path);
 
-        $this->validateSignature($request, '/storage/media/' . $path);
+        $this->Glide
+            ->validateSignature('/storage/media/' . $path, $request->all());
 
-        return $this->getImage($filesystem, $path);
+        return $this->Glide
+            ->getImageResponse($path);
     }
 
     public function reGenerateAllSignedUrls(ApiRequest $request, $instanceId, $fieldType)
@@ -158,7 +159,9 @@ class MediaController extends Controller
 
         foreach ($allFields as $field)
         {
+            $field->shouldMutateJson = false;
             $value = array_merge(['media' => []], (array)$field->value);
+
             $settings = (isset($field->value['settings'])) ? (array)$field->value['settings'] : $this->Config->get('devise.media.settings');
 
             if ($originalImage = $field->original_image)
@@ -181,7 +184,6 @@ class MediaController extends Controller
                 }
             }
         }
-
     }
 
     public function generateSignedUrls(ApiRequest $request)
@@ -204,7 +206,7 @@ class MediaController extends Controller
     {
         $newMediaUrls = [
             'original'       => $originalPath,
-            'orig_optimized' => $this->generateSignedUrl($originalPath, $settings)
+            'orig_optimized' => $this->Glide->generateSignedUrl($originalPath, $settings)
         ];
 
         foreach ($sizes as $name => $size)
@@ -212,67 +214,10 @@ class MediaController extends Controller
             unset($size['breakpoints']);
 
             $sizeSettings = array_merge($settings, $size);
-            $newMediaUrls[$name] = $this->generateSignedUrl($originalPath, $sizeSettings);
+            $newMediaUrls[$name] = $this->Glide->generateSignedUrl($originalPath, $sizeSettings);
         }
 
         return $newMediaUrls;
-    }
-
-    private function getImage(Filesystem $filesystem, $path)
-    {
-        $type = $this->guesser->guess($this->Storage->path('/media/' . $path));
-
-        if (strpos($type, 'image') !== false)
-        {
-            try
-            {
-                $server = $this->initGlideServer($filesystem);
-
-                $sourceDirectory = 'public/' . $this->Config->get('devise.media.source-directory') . '/';
-
-                return $server->getImageResponse($sourceDirectory . $path, request()->all());
-
-            } catch (\Exception $e)
-            {
-            }
-        }
-
-        return Image::make(base_path('vendor/devisephp/cms/resources/images/file-icon.gif'))->response();
-    }
-
-    private function initGlideServer(Filesystem $filesystem)
-    {
-        return ServerFactory::create([
-            'response'               => new LaravelResponseFactory(app('request')),
-            'source'                 => $filesystem->getDriver(),
-            'cache'                  => storage_path('app/glide'),
-            'group_cache_in_folders' => false,
-            'base_url'               => '/styled/preview/',
-            'driver'                 => $this->Config->get('devise.media.driver')
-        ]);
-    }
-
-    private function validateSignature(ApiRequest $request, $path)
-    {
-        $signKey = $this->getKey();
-
-        SignatureFactory::create($signKey)
-            ->validateRequest($path, $request->all());
-    }
-
-    private function generateSignedUrl($path, $params)
-    {
-        $signKey = $this->getKey();
-
-        $fileName = pathinfo($path);
-
-        if (!isset($fileName['dirname']) && !isset($fileName['basename'])) abort(400, 'Unable to parse given image path ' . $path);
-
-        $urlBuilder = UrlBuilderFactory::create($fileName['dirname'] . '/', $signKey);
-
-        $url = $urlBuilder->getUrl($fileName['basename'], $params);
-
-        return '/storage/styled' . str_replace('/storage/media', '', $url);
     }
 
     private function tryLegacyStorageFile($path)
@@ -307,16 +252,5 @@ class MediaController extends Controller
         }
 
         return $requestedSizes;
-    }
-
-    private function getKey()
-    {
-        $key = $this->Config->get('devise.media.security.key');
-        if (Str::startsWith($key, 'base64:'))
-        {
-            return substr($key, 7);
-        }
-
-        return $key;
     }
 }

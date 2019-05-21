@@ -73,11 +73,11 @@ class Repository
         $fileData = array();
 
         $fileData['name'] = basename($file);
-        $fileData['url'] = $this->Storage->url($file);
+        $fileData['url'] = '/storage/' . $file;
         $fileData['type'] = 'file';
         $fileData['alt'] = $this->ImageAlts->get($fileData['url']);
 
-        $type = $this->guesser->guess($this->Storage->path($file));
+        $type = $this->Storage->mimeType($file);
         if (strpos($type, 'image') !== false)
         {
             $fileData['type'] = 'image';

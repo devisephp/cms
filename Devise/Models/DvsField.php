@@ -2,18 +2,21 @@
 
 namespace Devise\Models;
 
-use Devise\Media\Files\ImageAlts;
-use Devise\Support\Framework;
-use Illuminate\Support\Facades\App;
+use Devise\Traits\HasJsonImage;
+
 use Illuminate\Support\Facades\Route;
 
 class DvsField extends Model
 {
+    use HasJsonImage;
+
     protected $table = 'dvs_fields';
 
     protected $fillable = ['slice_instance_id', 'key', 'json_value', 'content_requested'];
 
     protected $touches = ['sliceInstance'];
+
+    public $shouldMutateJson = true;
 
     public function sliceInstance()
     {
@@ -28,12 +31,18 @@ class DvsField extends Model
 
         if ($value)
         {
-            $this->insertId($value);
-            $this->insertHrefForLinks($value);
-            $this->updateImageUrlsToStorage($value);
-            $this->updateImageAlt($value);
+            if ($this->shouldMutateJson)
+            {
+                $this->insertId($value);
+                $this->insertHrefForLinks($value);
+                $this->updateImageUrlsToStorage($value);
+                $this->updateImageAlt($value);
 
-            return $this->simplify($value);
+                return $this->simplify($value);
+            } else
+            {
+                return (array)$value;
+            }
         }
 
         return new \stdClass();
@@ -75,33 +84,6 @@ class DvsField extends Model
             {
                 $value->href = $value->url;
             }
-        }
-    }
-
-    private function updateImageUrlsToStorage(&$value)
-    {
-        if (isset($value->type) && isset($value->url) && ($value->type == 'image' || $value->type == 'file'))
-        {
-            $storage = Framework::storage();
-
-            if ($this->isMediaRelativePath($value->url))
-            {
-                $url = $storage->url(trim($value->url, '/'));
-                if ($url)
-                {
-                    $value->url = $url;
-                }
-            }
-        }
-    }
-
-    private function updateImageAlt(&$value)
-    {
-        if (isset($value->type) && $value->type == 'image' && isset($value->media) && isset($value->media->original))
-        {
-            $imageAlts = App::make(ImageAlts::class);
-
-            $value->alt = $imageAlts->get($value->media->original);
         }
     }
 
@@ -203,12 +185,5 @@ class DvsField extends Model
             'type',
             'rel'
         ];
-    }
-
-    private function isMediaRelativePath($path)
-    {
-        $folder = config('devise.media.source-directory');
-
-        return (strpos($path, $folder) === 0 || strpos($path, $folder) === 1);
     }
 }

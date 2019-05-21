@@ -59,7 +59,7 @@ class Glide
         {
             $image = $this->server->getImageResponse($path, request()->all());
 
-            if (!$this->Cache->has('dvs.image.styled.' . request()->get('s')))
+            if (request()->has('s') && !$this->Cache->has('dvs.image.styled.' . request()->get('s')))
             {
                 $cachePath = $this->server->getCachePath($path, request()->all());
                 $cacheUrl = $this->Storage->url($cachePath);

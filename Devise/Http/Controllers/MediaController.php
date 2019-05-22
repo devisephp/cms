@@ -130,6 +130,15 @@ class MediaController extends Controller
      */
     public function preview($path)
     {
+        if (strpos($path, 'http') !== false && strpos($path, '/' . config('devise.media.source-directory')) !== false)
+        {
+            $path = strstr($path, config('devise.media.source-directory') . '/');
+            $path = str_replace(config('devise.media.source-directory') . '/', '', $path);
+        }
+
+        $path = str_replace('/storage/media/', '', $path);
+        $path = str_replace('storage/media/', '', $path);
+
         return $this->Glide
             ->getImageResponse(str_replace('/storage/media/', '', $path));
     }
@@ -143,6 +152,35 @@ class MediaController extends Controller
 
         return $this->Glide
             ->getImageResponse($path);
+    }
+
+    public function generateSignedUrls(ApiRequest $request)
+    {
+        $originalPath = $request->get('original');
+        if (filter_var($originalPath, FILTER_VALIDATE_URL) && strpos($originalPath, '/' . config('devise.media.source-directory')) !== false)
+        {
+            $parts = parse_url($originalPath);
+            if (isset($parts['path']))
+            {
+                $originalPath = '/storage' . $parts['path'];
+            }
+        }
+
+        $settings = $request->get('settings');
+        $sizes = [];
+        if (isset($settings['sizes']))
+        {
+            $sizes = $settings['sizes'];
+            unset($settings['sizes']);
+        }
+
+        $newMediaUrls = $this->getNewMediaSignedURls($originalPath, $settings, $sizes);
+
+        return [
+            'images'   => $newMediaUrls,
+            'settings' => $settings,
+            'alt'      => $this->ImageAlts->get($originalPath)
+        ];
     }
 
     public function reGenerateAllSignedUrls(ApiRequest $request, $instanceId, $fieldType)
@@ -186,29 +224,10 @@ class MediaController extends Controller
         }
     }
 
-    public function generateSignedUrls(ApiRequest $request)
-    {
-        $originalPath = $request->get('original');
-        $settings = $request->get('settings');
-        $sizes = [];
-        if (isset($settings['sizes'])) {
-            $sizes = $settings['sizes'];
-            unset($settings['sizes']);
-        }
-
-        $newMediaUrls = $this->getNewMediaSignedURls($originalPath, $settings, $sizes);
-
-        return [
-            'images'   => $newMediaUrls,
-            'settings' => $settings,
-            'alt'      => $this->ImageAlts->get($originalPath)
-        ];
-    }
-
-    public function getNewMediaSignedURls($originalPath, $settings, $sizes)
+    private function getNewMediaSignedURls($originalPath, $settings, $sizes)
     {
         $newMediaUrls = [
-            'original'       => $originalPath,
+            'original'       => $this->Glide->generateSignedUrl($originalPath, []),
             'orig_optimized' => $this->Glide->generateSignedUrl($originalPath, $settings)
         ];
 

@@ -175,7 +175,7 @@ class Repository
     {
         if (isset($this->input['type']))
         {
-            $type = $this->guesser->guess($this->Storage->path($file));
+            $type = $this->Storage->mimeType($file);
             if (strpos($type, $this->input['type']) === false)
                 return false;
         }

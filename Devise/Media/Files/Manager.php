@@ -43,7 +43,7 @@ class Manager
         $name = Str::slug(pathinfo($originalName, PATHINFO_FILENAME));
         $ext = pathinfo($originalName, PATHINFO_EXTENSION);
 
-        $this->Storage->putFileAs($serverPath, $file, $name . '.' . $ext);
+        $this->Storage->putFileAs($serverPath, $file, $name . '.' . $ext, ['visibility' => 'public']);
     }
 
     /**

@@ -135,6 +135,11 @@ class MediaController extends Controller
             $path = strstr($path, config('devise.media.source-directory') . '/');
             $path = str_replace(config('devise.media.source-directory') . '/', '', $path);
         }
+        
+        if(strpos($path, '/styled/') !== false)
+        {
+            $path = str_replace('/styled/', '/media/', $path);
+        }
 
         $path = str_replace('/storage/media/', '', $path);
         $path = str_replace('storage/media/', '', $path);

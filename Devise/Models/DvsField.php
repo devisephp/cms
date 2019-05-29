@@ -52,7 +52,15 @@ class DvsField extends Model
     {
         $value = $this->value;
 
-        return ((isset($value['media']) && isset($value['media']->original))) ? (string)$value['media']->original : (string)$value['url'];
+        if (isset($value['media']) && isset($value['media']->original))
+        {
+            return (string)$value['media']->original;
+        }
+
+        if (isset($value['url']))
+        {
+            return (string)$value['url'];
+        }
     }
 
     private function insertId(&$value)

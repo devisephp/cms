@@ -1,4 +1,4 @@
-# Creating Sites With Devise
+# Creating Sites
 
 ## Multisites in Devise
 

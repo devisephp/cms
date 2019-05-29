@@ -1,59 +1,5 @@
 # Creating our first page
 
-## Create your first template layout
-
-Now, this can go all sorts of ways but for the most part Devise works essentially the same as Laravel's blade system. In fact, it uses blade files for your layouts and slices. More on layouts and slices in the "How Devise Works" section but for now let's just create a simple layout in `/resources/views/master.blade.php`.
-
-```text
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-  <head>
-    @isset($page)
-    {!! Devise::head($page) !!}
-    @else
-    {!! Devise::head() !!}
-    @endif
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>Welcome to Devise</title>
-  </head>
-  <body class="text-grey-darker">
-
-    <div id="app">
-      <devise>
-
-        <div slot="on-top"></div>
-
-        <div slot="static-content">
-          @yield('content')
-        </div>
-
-        <!-- <div slot="static-content-bottom">
-          @yield('content')
-        </div> -->
-
-        <div slot="on-bottom"></div>
-
-      </devise>
-    </div>
-
-    <script src="{{mix('/manifest.js', './devise')}}"></script>
-    <script src="{{mix('/js/devise.js', './devise')}}"></script>
-
-  </body>
-</html>
-```
-
-Let's break this down:
-
-1. First, the head contains a `Devise::head()` call that tries to pass the $page variable if it's set. Devise sets this when a client loads a page registered with Devise. This head function renders a bunch of stuff automagically: Devise information, meta tags, and Google's Tag Manager if you're using Mothership.
-2. The app is registered on the main wrapping `<div id="app">` and should wrap everything along with an inner `<devise>` tag. The three nodes within are slots that are rendered in that order. The top and bottom slots are perfect for global navigation and / or footers and are not required but can be useful. The static-content slot renders above any slices and the static-content-bottom slot renders below any dynamic slices.
-3. Then we include the devise manifest and javascript at the bottom.
-
 ## Create your first slice
 
 Slices are rendered between the static content sections by Devise. These slices can be singles, repeatables \(driven by the content manager manually\), or driven by custom models \(repeat based on the number of records you hand it\).

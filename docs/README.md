@@ -1,4 +1,4 @@
-# Devise Documentation
+# Devise Development Documentation
 
 ## What is Devise?
 

@@ -1,96 +1,10 @@
 # Configuration
 
-We've been over a bunch of fields that you can drop into your templates and how to configure them in the component section. But in addition to what you've seen there are a few other options you can pass through to give content managers a little more information and control:
+In addition to fields there are a few other properties you can set in your slice to give content managers a little more information about that slice. 
 
-## Defaults
+## Description
 
-By setting the default property you provide a value before one has been set \(or if it has been set to null\).
-
-```text
-@section('component')
-  <script>
-    let module = {
-      config: {
-        someImage: {
-          type: 'image',
-          label: 'The Image'
-          default: {
-            enabled: true,
-            url: '/imgs/default/image-hero.jpg',
-            alt: 'We should do this for SEO reasons Jim'
-          }
-        }
-      }
-    }
-  </script>
-@endsection
-```
-
-## Enabler
-
-If you set the `enabler` property on a field it will add an "enabled" checkbox on the field editor and set it to false by default \(Unless you set it's default to true - see above\)
-
-```text
-@section('template')
-  <div v-if="devise.someImage.enabled">
-    <img :src="devise.someImage.url" :alt="devise.someImage.alt" class="w-full">
-  </div>
-@endsection
-
-@section('component')
-  <script>
-    let module = {
-      config: {
-        someImage: {
-          type: 'image',
-          label: 'The Image',
-          enabler: true
-        }
-      }
-    }
-  </script>
-@endsection
-```
-
-## Instructions
-
-Instructions give a little context to your content manager. It can also serve as some good sudo-documentation at times when you need to remember that image size you cut 3 months ago.
-
-```text
-@section('component')
-  <script>
-    let module = {
-      config: {
-        someImage: {
-          type: 'image',
-          label: 'The Image',
-          instructions: '650px x 650px'
-        }
-      }
-    }
-  </script>
-@endsection
-```
-
-## Editor Label
-
-On the editor sidebar it's not very helpful when you see a huge list of slices, often which repeat. To help the user understand where they are it's helpful to provide an `editorLabel` property to the field that you feel best represents the slice when it's populated. Devise uses the slice name until that field is populated and then replaces it with the contents of that field when the user hydrates that instance. Title fields and even images can serve as great editor labels.
-
-```text
-@section('component')
-  <script>
-    let module = {
-      config: {
-        someImage: {
-          type: 'text',
-          label: 'Title',
-          editorLabel: true
-        }
-      }
-    }
-  </script>
-@endsection
-```
+Descriptions appear in the slice selector when adding them to a page and give the content manager a little more context about what they are about to select.
 
 ## Previews
 
@@ -105,8 +19,8 @@ If you had an image above a title with a paragraph below it you might have marku
 ```text
 @section('component')
   <script>
-    let module = {
-      config: {
+    var component = {
+      fields: {
         preview: ['{I}20', '{Tlg~3}', '{Tsm~20}']
         someImage: {
           type: 'image',
@@ -118,9 +32,9 @@ If you had an image above a title with a paragraph below it you might have marku
 @endsection
 ```
 
-You can also put multiple elements on a single row by seperating them with a comma like-a-so:
+You can also put multiple elements on a single row by separating them with a comma like-a-so:
 
-`['{I, I, I}', '{Tlg~2, Tlg~2, Tlg~2}', '{Tsm~10, Tsm~10, Tsm~10}']`
+`['{B, I, B}', '{B, Tlg~2, B}', '{B, Tsm~10, B}']`
 
 This would produce the following:
 

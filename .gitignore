@@ -5,3 +5,4 @@
 npm-debug.log
 /vue/src/installer/node_modules
 /.vscode
+composer.lock

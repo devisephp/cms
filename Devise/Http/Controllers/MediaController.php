@@ -172,6 +172,11 @@ class MediaController extends Controller
             }
         }
 
+        if (strpos($originalPath, '/storage/styled') === 0)
+        {
+            $originalPath = str_replace('/storage/styled', '/storage/' . config('devise.media.source-directory'), $originalPath);
+        }
+
         $settings = $request->get('settings');
         $sizes = [];
         if (isset($settings['sizes']))

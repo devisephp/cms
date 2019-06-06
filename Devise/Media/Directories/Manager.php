@@ -1,4 +1,4 @@
-<?php namespace Devise\Media\Categories;
+<?php namespace Devise\Media\Directories;
 
 use Devise\Support\Framework;
 
@@ -6,16 +6,21 @@ use Devise\Support\Framework;
  * Class Manager manages categories. A category is basically
  * a directory inside of the /media folder.
  *
- * @package Devise\Media\Categories
+ * @property  Storage
+ * @package Devise\Media\Directories
  */
 class Manager
 {
     protected $CategoryPaths;
 
+    protected $Storage;
+
+    protected static $permittedDirectories = '*';
+
     /**
      *
      */
-    public function __construct(CategoryPaths $CategoryPaths, Framework $Framework)
+    public function __construct(DirectoryPaths $CategoryPaths, Framework $Framework)
     {
         $this->CategoryPaths = $CategoryPaths;
 
@@ -56,6 +61,39 @@ class Manager
             $serverPath = $this->CategoryPaths->serverPath($localPath);
 
             return $this->Storage->deleteDirectory($serverPath);
+        }
+
+        return false;
+    }
+
+    public static function getPermittedDirectories()
+    {
+        return self::$permittedDirectories;
+    }
+
+    public static function setPermittedDirectories($dir = [])
+    {
+        if ($dir)
+            self::$permittedDirectories = $dir;
+    }
+
+    public static function dirPermitted($dir)
+    {
+        $base = config('devise.media.source-directory');
+        $permittedList = self::getPermittedDirectories();
+
+        if ($permittedList === '*') return true;
+
+        if (is_array($permittedList))
+        {
+            foreach ($permittedList as $permitted)
+            {
+                $permittedPath = $base . '/' . trim($permitted, '/');
+                if (strpos($dir, $permittedPath) === 0)
+                {
+                    return true;
+                }
+            }
         }
 
         return false;

@@ -1,4 +1,4 @@
-<?php namespace Devise\Media\Categories;
+<?php namespace Devise\Media\Directories;
 
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
@@ -8,9 +8,9 @@ use Devise\Support\Framework;
  * and also finds server paths and browser urls to the configured
  * root media directory where all our media files are stored at.
  *
- * @package Devise\Media\Categories
+ * @package Devise\Media\Directories
  */
-class CategoryPaths
+class DirectoryPaths
 {
     /**
      * Create a new category path

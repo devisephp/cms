@@ -1,11 +1,11 @@
 <?php namespace Devise\Media\Files;
 
-use Devise\Media\Categories\CategoryPaths;
+use Devise\Media\Directories\DirectoryPaths;
 
 use Devise\Models\DvsField;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
+use Devise\Media\Directories\Manager as DirectoriesManager;
 
 /**
  * Class Repository builds a complex array of data around the file structure
@@ -23,8 +23,6 @@ class Repository
 
     private $input;
 
-    private $guesser;
-
     private $ImageAlts;
 
     protected $Storage;
@@ -32,15 +30,13 @@ class Repository
     /**
      *
      */
-    public function __construct(SiteDetector $SiteDetector, CategoryPaths $CategoryPaths, ImageAlts $ImageAlts, Framework $Framework)
+    public function __construct(SiteDetector $SiteDetector, DirectoryPaths $CategoryPaths, ImageAlts $ImageAlts, Framework $Framework)
     {
         $this->SiteDetector = $SiteDetector;
         $this->CategoryPaths = $CategoryPaths;
         $this->ImageAlts = $ImageAlts;
 
         $this->Storage = $Framework->storage->disk(config('devise.media.disk'));
-
-        $this->guesser = MimeTypeGuesser::getInstance();
     }
 
     /**
@@ -110,16 +106,19 @@ class Repository
         $categories = array();
         foreach ($dirs as $dir)
         {
-            $dirArr = explode('/', $dir);
-            $dirName = end($dirArr);
+            if (DirectoriesManager::dirPermitted($dir))
+            {
+                $dirArr = explode('/', $dir);
+                $dirName = end($dirArr);
 
-            $path = str_replace($this->CategoryPaths->basePath() . '/', '', $dir);
+                $path = str_replace($this->CategoryPaths->basePath() . '/', '', $dir);
 
-            $path = implode('.', explode('/', $path));
-            $categories[] = array(
-                'name' => $dirName,
-                'path' => $path
-            );
+                $path = implode('.', explode('/', $path));
+                $categories[] = array(
+                    'name' => $dirName,
+                    'path' => $path
+                );
+            }
         }
 
         // sort categories alphabetically...
@@ -141,9 +140,9 @@ class Repository
     /**
      *
      */
-    public function buildSearchedItems($searchFor)
+    public function buildSearchedItems($searchFor, $path = '')
     {
-        $mediaDir = $this->CategoryPaths->serverPath('');
+        $mediaDir = $this->CategoryPaths->serverPath($path);
 
         $allFiles = $this->Storage->allFiles($mediaDir);
 
@@ -183,7 +182,7 @@ class Repository
         if (strpos($file, 'DS_Store') !== false)
             return false;
 
-        return true;
+        return DirectoriesManager::dirPermitted($file);
     }
 
     /**

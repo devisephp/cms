@@ -4,7 +4,6 @@ namespace Devise\Providers;
 
 use Devise\Console\Commands\CleanStyledMedia;
 use Devise\Devise;
-
 use Devise\Models\DvsField;
 use Devise\Models\DvsLanguage;
 use Devise\Models\DvsPage;
@@ -14,6 +13,7 @@ use Devise\Observers\DvsFieldObserver;
 use Devise\Observers\ModelCacheFlushObserver;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Database;
+
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;

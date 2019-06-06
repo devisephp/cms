@@ -1,6 +1,6 @@
 <?php namespace Devise\Media\Files;
 
-use Devise\Media\Categories\CategoryPaths;
+use Devise\Media\Directories\DirectoryPaths;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 use Illuminate\Support\Str;
@@ -18,10 +18,10 @@ class Manager
     protected $Storage;
 
     /**
-     * @param CategoryPaths $CategoryPaths
+     * @param DirectoryPaths $CategoryPaths
      * @param SiteDetector $SiteDetector
      */
-    public function __construct(CategoryPaths $CategoryPaths, SiteDetector $SiteDetector, Framework $Framework)
+    public function __construct(DirectoryPaths $CategoryPaths, SiteDetector $SiteDetector, Framework $Framework)
     {
         $this->CategoryPaths = $CategoryPaths;
         $this->SiteDetector = $SiteDetector;

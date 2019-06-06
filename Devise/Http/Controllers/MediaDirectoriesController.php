@@ -1,7 +1,6 @@
 <?php namespace Devise\Http\Controllers;
 
-use Devise\Media\Categories\CategoryAlreadyExistsException;
-use Devise\Media\Categories\Manager;
+use Devise\Media\Directories\Manager;
 
 use Devise\Media\Files\Repository;
 use Devise\Support\Framework;
@@ -12,55 +11,58 @@ use Illuminate\Http\Request;
  * of managing categories. These methods are likely
  * referenced in dvs_pages table
  *
- * @package Devise\Media\Categories
+ * @package Devise\Media\Directories
  */
 class MediaDirectoriesController
 {
-  /**
-   * @var Manager
-   */
-  protected $Manager;
+    /**
+     * @var Manager
+     */
+    protected $Manager;
 
-  /**
-   * Construct a new response handler for categories
-   *
-   * @param Manager $Manager
-   */
-  public function __construct(Manager $Manager, Repository $Repository, Framework $Framework)
-  {
-    $this->Manager = $Manager;
-    $this->Repository = $Repository;
-    $this->Redirect = $Framework->Redirect;
-  }
+    /**
+     * Construct a new response handler for categories
+     *
+     * @param Manager $Manager
+     */
+    public function __construct(Manager $Manager, Repository $Repository, Framework $Framework)
+    {
+        $this->Manager = $Manager;
+        $this->Repository = $Repository;
+        $this->Redirect = $Framework->Redirect;
+    }
 
-  public function all(Request $request, $folderPath = '')
-  {
-    $input = $request->all();
-    $input['category'] = $folderPath;
-    $results = $this->Repository->getIndex($input, ['categories']);
+    public function all(Request $request, $folderPath = '')
+    {
+        $input = $request->all();
 
-    return $results['categories'];
-  }
+        $input['category'] = $folderPath;
 
-  /**
-   * Request a category be stored
-   *
-   * @param Request $request
-   * @return mixed
-   */
-  public function store(Request $request)
-  {
-    $this->Manager->storeNewCategory($request->all());
-  }
+        $results = $this->Repository->getIndex($input, ['categories']);
 
-  /**
-   * Request a category be destroyed
-   *
-   * @param Request $request
-   * @return mixed
-   */
-  public function remove(Request $request)
-  {
-    $this->Manager->destroyCategory($request->all());
-  }
+        return $results['categories'];
+    }
+
+    /**
+     * Request a category be stored
+     *
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
+    public function store(Request $request)
+    {
+        $this->Manager->storeNewCategory($request->all());
+    }
+
+    /**
+     * Request a category be destroyed
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function remove(Request $request)
+    {
+        $this->Manager->destroyCategory($request->all());
+    }
 }

@@ -3,11 +3,12 @@
 use Devise\Http\Requests\ApiRequest;
 use Devise\Media\Files\ImageAlts;
 use Devise\Media\Files\Manager;
+use Devise\Media\Directories\Manager as CategoriesManager;
 use Devise\Media\Files\Repository;
-
 use Devise\Media\Glide;
 use Devise\Models\DvsField;
 use Devise\Models\DvsSliceInstance;
+
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -135,8 +136,8 @@ class MediaController extends Controller
             $path = strstr($path, config('devise.media.source-directory') . '/');
             $path = str_replace(config('devise.media.source-directory') . '/', '', $path);
         }
-        
-        if(strpos($path, '/styled/') !== false)
+
+        if (strpos($path, '/styled/') !== false)
         {
             $path = str_replace('/styled/', '/media/', $path);
         }

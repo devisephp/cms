@@ -46,6 +46,11 @@ class DvsPageVersion extends Model
         $this->attributes['ends_at'] = $value ? date('Y-m-d H:i:s', strtotime($value)) : null;
     }
 
+    public function setAbTestingAmountAttribute($value)
+    {
+        $this->attributes['ab_testing_amount'] = $value ?: 0;
+    }
+
     /**
      *
      */

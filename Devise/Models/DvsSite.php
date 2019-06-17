@@ -2,6 +2,7 @@
 
 namespace Devise\Models;
 
+use Devise\ModelQueries;
 use Devise\Models\Repository as ModelRepository;
 use Devise\Sites\SiteDetector;
 
@@ -75,12 +76,9 @@ class DvsSite extends Model
         $queries = $this->model_queries;
         if ($queries)
         {
-            $repository = App::make(ModelRepository::class);
-
-            foreach ($queries as $name => $params)
+            foreach ($queries as $name => $query)
             {
-                $data[$name] = $repository
-                    ->runQuery($params);
+                $data[$name] = ModelQueries::runQuery($query);
             }
         }
 

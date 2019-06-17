@@ -4,17 +4,14 @@ namespace Devise;
 
 use Devise\Http\Resources\Vue\PageResource;
 use Devise\Http\Resources\Vue\SiteResource;
-use Devise\Http\Resources\Vue\TemplateResource;
-use Devise\Models\DvsPageMeta;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Database;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
-
 use Illuminate\Support\Facades\Session;
+
 use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization;
 
 /**

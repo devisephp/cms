@@ -3,16 +3,18 @@
 namespace Devise\Http\Resources\Vue;
 
 use Devise\ModelQueries;
-use Devise\Models\Repository as ModelRepository;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\App;
 
 class SliceInstanceResource extends Resource
 {
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
     public function toArray($request)
     {
         $data = [
@@ -44,11 +46,17 @@ class SliceInstanceResource extends Resource
         return $data;
     }
 
+    /**
+     * @param $data
+     */
     private function setChildSlices(&$data)
     {
         $data['slices'] = SliceInstanceResource::collection($this->slices);
     }
 
+    /**
+     * @param $data
+     */
     private function setModelSlices(&$data)
     {
         $records = ModelQueries::runQuery($this->model_query);
@@ -71,6 +79,9 @@ class SliceInstanceResource extends Resource
         $data['slices'] = $all;
     }
 
+    /**
+     * @param $data
+     */
     private function setFieldValues(&$data)
     {
         if ($this->fields->count())

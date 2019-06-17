@@ -2,42 +2,36 @@
 
 namespace Devise;
 
-use Devise\Http\Resources\Vue\PageResource;
-use Devise\Http\Resources\Vue\SiteResource;
-use Devise\Http\Resources\Vue\TemplateResource;
-use Devise\Models\DvsPageMeta;
-use Devise\Sites\SiteDetector;
-use Devise\Support\Database;
-
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Support\Facades\Session;
-use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization;
-
-/**
- * @todo refactor to a facade pattern
- */
 class ModelQueries
 {
     private static $queries = [];
 
+    /**
+     * @return array
+     */
     public static function all()
     {
         return self::$queries;
     }
 
-    public static function set($name, $description, $class, $method, $params = [])
+    /**
+     * @param $key
+     * @param $description
+     * @param $class
+     * @param $method
+     * @param array $params
+     */
+    public static function set($key, $description, $class, $method, $params = [])
     {
-        if (isset(self::$queries[$name]))
+        if (isset(self::$queries[$key]))
         {
-            abort('ModelQuery name already exists. Please use a different name.', 500);
+            abort('ModelQuery key (' . $key . ') already registered. Please use a different name.', 500);
         }
 
-        self::$queries[$name] = [
-            'key'         => $name,
+        self::$queries[$key] = [
+            'key'         => $key,
             'description' => $description,
             'class'       => $class,
             'method'      => $method,
@@ -45,6 +39,10 @@ class ModelQueries
         ];
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public static function runQuery($query)
     {
         if (!isset(self::$queries[$query->key]))

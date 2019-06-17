@@ -12,6 +12,6 @@ class ModelQueriesController extends Controller
 
     public function index(ApiRequest $request)
     {
-        return ModelQueries::all();
+        return array_values(ModelQueries::all());
     }
 }

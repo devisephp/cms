@@ -27,7 +27,7 @@ class ModelQueries
     {
         if (isset(self::$queries[$key]))
         {
-            abort('ModelQuery key (' . $key . ') already registered. Please use a different name.', 500);
+            abort(500, 'ModelQuery key (' . $key . ') already registered. Please use a different name.');
         }
 
         self::$queries[$key] = [
@@ -47,7 +47,7 @@ class ModelQueries
     {
         if (!isset(self::$queries[$query->key]))
         {
-            abort('ModelQuery ' . $query->key . ' does not exists.', 500);
+            abort(500, 'ModelQuery "' . $query->key . '" has not been registered.');
         }
 
         $data = self::$queries[$query->key];

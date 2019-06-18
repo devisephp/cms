@@ -2,6 +2,7 @@
 
 namespace Devise\Models;
 
+use Devise\Devise;
 use Devise\Models\Repository as ModelRepository;
 use Devise\Traits\Filterable;
 use Devise\Traits\Sortable;
@@ -63,10 +64,10 @@ class DvsPage extends Model
 
     public function livePageVersionByDate()
     {
-        $now = new DateTime;
+        $now = Devise::currentDateTime();
 
         return $this->hasOne(DvsPageVersion::class, 'page_id')
-            ->where('starts_at', '<', $now)
+            ->where('starts_at', '<=', $now)
             ->where(function ($query) use ($now) {
                 $query->where('ends_at', '>', $now);
                 $query->orWhereNull('ends_at');
@@ -76,11 +77,11 @@ class DvsPage extends Model
 
     public function abEnabledLiveVersions()
     {
-        $now = new DateTime;
+        $now = Devise::currentDateTime();
 
         return $this->hasMany(DvsPageVersion::class, 'page_id')
             ->where('ab_testing_amount', '>', 0)
-            ->where('starts_at', '<', $now)
+            ->where('starts_at', '<=', $now)
             ->where(function ($query) use ($now) {
                 $query->where('ends_at', '>', $now);
                 $query->orWhereNull('ends_at');
@@ -210,10 +211,10 @@ class DvsPage extends Model
 
     public function getLiveVersion($now = null)
     {
-        $now = $now ?: new DateTime;
+        $now = $now ?: Devise::currentDateTime();
 
         return $this->versions()
-            ->where('starts_at', '<', $now)
+            ->where('starts_at', '<=', $now)
             ->where(function ($query) use ($now) {
                 $query->where('ends_at', '>', $now);
                 $query->orWhereNull('ends_at');

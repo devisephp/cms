@@ -192,6 +192,7 @@ class Devise
         if (self::userAvailable())
         {
             $data['mothership'] = config('devise.mothership');
+            $data['additionalSiteSettings'] = config('devise.additionalSiteSettings');
         }
 
         return 'Devise.prototype.$config = ' . json_encode($data) . ";\n";

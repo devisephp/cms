@@ -56,7 +56,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
             Route::post('media', 'MediaController@store');
             Route::delete('media/{media_route}', 'MediaController@remove')->where(['media_route' => '.*']);
 
-            Route::post('media-styles', 'MediaController@generateSignedUrls');
+            Route::get('media-styles', 'MediaController@generateSignedUrls');
             Route::put('media-styles/{instance_id}/{field_type}', 'MediaController@reGenerateAllSignedUrls');
 
             Route::get('media-details/{path}', 'MediaController@details')->where('path', '.*');

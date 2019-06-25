@@ -162,30 +162,141 @@ class MediaController extends Controller
 
     public function generateSignedUrls(ApiRequest $request)
     {
-        $originalPath = $request->get('original');
-        if (filter_var($originalPath, FILTER_VALIDATE_URL) && strpos($originalPath, '/' . config('devise.media.source-directory')) !== false)
+
+        $data = json_decode("{
+  \"sizes\":{
+     \"original\":{
+        \"url\":\"/storage/media/atlantis-new-arieal-300dpi.jpg\",
+        \"w\":4000,
+        \"h\":2250,
+        \"q\":80,
+        \"fit\":\"crop\",
+        \"sharp\":5,
+        \"breakpoints\":[
+           \"desktop\",
+           \"largeDesktop\",
+           \"ultraWideDesktop\"
+        ]
+     },
+     \"large\":{
+        \"url\":\"/storage/media/atlantis-new-arieal-300dpi.jpg\",
+        \"w\":480,
+        \"h\":480,
+        \"breakpoints\":[
+           \"desktop\",
+           \"largeDesktop\",
+           \"ultraWideDesktop\"
+        ]
+     },
+     \"small\":{
+        \"url\":\"/storage/media/atlantis-new-arieal-300dpi.jpg\",
+        \"w\":360,
+        \"h\":360,
+        \"q\":80,
+        \"fit\":\"crop\",
+        \"sharp\":5,
+        \"breakpoints\":[
+           \"tablet\",
+           \"mobile\"
+        ]
+     }
+  }
+}");
+        /*
+{
+  "sizes":{
+     "original":{
+        "url":"/storage/media/atlantis-new-arieal-300dpi.jpg",
+        "w":4000,
+        "h":2250,
+        "q":80,
+        "fit":"crop",
+        "sharp":5,
+        "breakpoints":[
+           "desktop",
+           "largeDesktop",
+           "ultraWideDesktop"
+        ]
+     },
+     "large":{
+        "url":"/storage/media/atlantis-new-arieal-300dpi.jpg",
+        "w":480,
+        "h":480,
+        "q":80,
+        "fit":"crop",
+        "sharp":5,
+        "breakpoints":[
+           "desktop",
+           "largeDesktop",
+           "ultraWideDesktop"
+        ]
+     },
+     "small":{
+        "url":"/storage/media/atlantis-new-arieal-300dpi.jpg",
+        "w":360,
+        "h":360,
+        "q":80,
+        "fit":"crop",
+        "sharp":5,
+        "breakpoints":[
+           "tablet",
+           "mobile"
+        ]
+     }
+  }
+}
+
+{
+   "images":{
+      "optimized":"\/storage\/styled\/atlantis-new-arieal-300dpi.jpg?q=80&fit=crop&sharp=5&w=4000&h=2250&s=4038fd16b549d76e87f6c63f5576dee0",
+      "large":"\/storage\/styled\/atlantis-new-arieal-300dpi.jpg?q=80&fit=crop&sharp=5&w=480&h=480&s=361e7e7a3420ac93dcd897e310cb60b9",
+      "small":"\/storage\/styled\/atlantis-new-arieal-300dpi.jpg?q=80&fit=crop&sharp=5&w=360&h=360&s=3908119c94df3f26ad237fb17dd13476"
+   },
+   "settings":{ // going away
+      "q":80,
+      "fit":"crop",
+      "sharp":5,
+      "w":4000,
+      "h":2250
+   },
+   "alt":"Drone shot of property"
+}
+         */
+        $sizes = $data['sizes'];
+//        $sizes = $request->get('sizes');
+
+        $originalSettings = $sizes['original'];
+
+        foreach ($sizes as $sizeSettings)
         {
-            $parts = parse_url($originalPath);
-            if (isset($parts['path']))
+            $settings = array_merge($originalSettings, $sizeSettings);
+            $imagePath = $settings['url'];
+
+            if (filter_var($imagePath, FILTER_VALIDATE_URL) && strpos($imagePath, '/' . config('devise.media.source-directory')) !== false)
             {
-                $originalPath = '/storage' . $parts['path'];
+                $parts = parse_url($imagePath);
+                if (isset($parts['path']))
+                {
+                    $imagePath = '/storage' . $parts['path'];
+                }
             }
-        }
 
-        if (strpos($originalPath, '/storage/styled') === 0)
-        {
-            $originalPath = str_replace('/storage/styled', '/storage/' . config('devise.media.source-directory'), $originalPath);
-        }
+            if (strpos($imagePath, '/storage/styled') === 0)
+            {
+                $imagePath = str_replace('/storage/styled', '/storage/' . config('devise.media.source-directory'), $imagePath);
+            }
 
-        $settings = $request->get('settings');
-        $sizes = [];
-        if (isset($settings['sizes']))
-        {
-            $sizes = $settings['sizes'];
-            unset($settings['sizes']);
-        }
+            $settings = $request->get('settings');
+            $sizes = [];
+            if (isset($settings['sizes']))
+            {
+                $sizes = $settings['sizes'];
+                unset($settings['sizes']);
+            }
 
-        $newMediaUrls = $this->getNewMediaSignedURls($originalPath, $settings, $sizes);
+            $newMediaUrls = $this->getNewMediaSignedURls($imagePath, $settings, $sizes);
+
+        }
 
         return [
             'images'   => $newMediaUrls,
@@ -235,11 +346,11 @@ class MediaController extends Controller
         }
     }
 
-    private function getNewMediaSignedURls($originalPath, $settings, $sizes)
+    private function getNewMediaSignedURls($imagePath, $settings, $sizes)
     {
         $newMediaUrls = [
-            'original'       => $this->Glide->generateSignedUrl($originalPath, []),
-            'orig_optimized' => $this->Glide->generateSignedUrl($originalPath, $settings)
+            'original'       => $this->Glide->generateSignedUrl($imagePath, []),
+            'orig_optimized' => $this->Glide->generateSignedUrl($imagePath, $settings)
         ];
 
         foreach ($sizes as $name => $size)
@@ -247,7 +358,7 @@ class MediaController extends Controller
             unset($size['breakpoints']);
 
             $sizeSettings = array_merge($settings, $size);
-            $newMediaUrls[$name] = $this->Glide->generateSignedUrl($originalPath, $sizeSettings);
+            $newMediaUrls[$name] = $this->Glide->generateSignedUrl($imagePath, $sizeSettings);
         }
 
         return $newMediaUrls;

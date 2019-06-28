@@ -58,7 +58,7 @@ return [
         'source-directory'        => 'media',
         'image-alts-directory'    => 'alts',
         'driver'                  => env('DVS_MEDIA_DRIVER', 'gd'), // imagick or gd
-        'settings'                => [
+        'default-settings'                => [
             'q'     => 80,
             'fit'   => 'crop',
             'sharp' => 5

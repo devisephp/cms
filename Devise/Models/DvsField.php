@@ -52,6 +52,11 @@ class DvsField extends Model
     {
         $value = $this->value;
 
+        if (isset($value['defaultImage']))
+        {
+            return (string)$value['defaultImage'];
+        }
+
         if (isset($value['media']) && isset($value['media']->original))
         {
             return (string)$value['media']->original;

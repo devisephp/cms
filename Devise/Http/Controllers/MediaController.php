@@ -13,6 +13,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Illuminate\Support\Arr;
 use Intervention\Image\Facades\Image;
 
 use Devise\Support\Framework;
@@ -165,13 +166,13 @@ class MediaController extends Controller
 
         $data = json_decode("{
   \"sizes\":{
-     \"original\":{
+     \"default\":{
         \"url\":\"/storage/media/atlantis-new-arieal-300dpi.jpg\",
         \"w\":4000,
         \"h\":2250,
         \"q\":80,
         \"fit\":\"crop\",
-        \"sharp\":5,
+        \"sharp\":1,
         \"breakpoints\":[
            \"desktop\",
            \"largeDesktop\",
@@ -205,13 +206,13 @@ class MediaController extends Controller
         /*
 {
   "sizes":{
-     "original":{
+     "default":{
         "url":"/storage/media/atlantis-new-arieal-300dpi.jpg",
         "w":4000,
         "h":2250,
         "q":80,
         "fit":"crop",
-        "sharp":5,
+        "sharp":1,
         "breakpoints":[
            "desktop",
            "largeDesktop",
@@ -262,106 +263,79 @@ class MediaController extends Controller
    "alt":"Drone shot of property"
 }
          */
-        $sizes = $data['sizes'];
+        $sizes = $data->sizes;
 //        $sizes = $request->get('sizes');
 
-        $originalSettings = $sizes['original'];
-
-        foreach ($sizes as $sizeSettings)
+        $altUrl = null;
+        $newMediaUrls = [];
+        foreach ($sizes as $name => $sizeSettings)
         {
-            $settings = array_merge($originalSettings, $sizeSettings);
-            $imagePath = $settings['url'];
+            $settings = (array)$sizeSettings;
 
-            if (filter_var($imagePath, FILTER_VALIDATE_URL) && strpos($imagePath, '/' . config('devise.media.source-directory')) !== false)
-            {
-                $parts = parse_url($imagePath);
-                if (isset($parts['path']))
-                {
-                    $imagePath = '/storage' . $parts['path'];
-                }
-            }
+            $imagePath = $this->alterInvalidPaths($settings['url']);
 
-            if (strpos($imagePath, '/storage/styled') === 0)
-            {
-                $imagePath = str_replace('/storage/styled', '/storage/' . config('devise.media.source-directory'), $imagePath);
-            }
+            $settings = Arr::except($settings, ['url', 'breakpoints']);
 
-            $settings = $request->get('settings');
-            $sizes = [];
-            if (isset($settings['sizes']))
-            {
-                $sizes = $settings['sizes'];
-                unset($settings['sizes']);
-            }
+            $newMediaUrls[$name] = $this->Glide->generateSignedUrl($imagePath, $settings);
 
-            $newMediaUrls = $this->getNewMediaSignedURls($imagePath, $settings, $sizes);
-
+            if (!$altUrl) $altUrl = $settings['url'];
         }
 
         return [
-            'images'   => $newMediaUrls,
-            'settings' => $settings,
-            'alt'      => $this->ImageAlts->get($originalPath)
+            'media'        => $newMediaUrls,
+            'defaultImage' => $request->get('defaultImage'),
+            'alt'          => $this->ImageAlts->get($request->get('defaultImage'))
         ];
     }
 
-    public function reGenerateAllSignedUrls(ApiRequest $request, $instanceId, $fieldType)
+    public function reGenerateAllSignedUrls(ApiRequest $request, $instanceId, $fieldKey)
     {
-        $instance = DvsSliceInstance::findOrFail($instanceId);
-        $allFields = DvsField::join('dvs_slice_instances', 'dvs_slice_instances.id', '=', 'dvs_fields.slice_instance_id')
-            ->where('dvs_slice_instances.view', $instance->view)
-            ->where('dvs_fields.key', $fieldType)
-            ->select('dvs_fields.*')
-            ->get();
-
-        $allSizes = $request->get('allSizes');
-        $requestedSizes = $request->get('sizes')['sizes'];
-
-        foreach ($allFields as $field)
+        $instance = DvsSliceInstance::find($instanceId);
+        if ($instance)
         {
-            $field->shouldMutateJson = false;
-            $value = array_merge(['media' => []], (array)$field->value);
+            $allFields = DvsField::join('dvs_slice_instances', 'dvs_slice_instances.id', '=', 'dvs_fields.slice_instance_id')
+                ->where('dvs_slice_instances.view', $instance->view)
+                ->where('dvs_fields.key', $fieldKey)
+                ->select('dvs_fields.*')
+                ->get();
 
-            $settings = (isset($field->value['settings'])) ? (array)$field->value['settings'] : $this->Config->get('devise.media.settings');
-
-            if ($originalImage = $field->original_image)
+            $requestedSizes = $request->get('sizes')['sizes'];
+            foreach ($allFields as $field)
             {
-                $newSizes = $this->onlyNewSizes($requestedSizes, $field->value['sizes'] ?? []);
+                $field->shouldMutateJson = false;
+                $value = array_merge(['media' => []], (array)$field->value);
 
-                if ($newSizes)
+                $defaultImage = $field->original_image;
+                $defaultSettings = config('devise.media.default-settings');
+
+                $allSizes = array_keys((array)$value['media']);
+                foreach ($requestedSizes as $name => $settings)
                 {
-                    $newMediaUrls = $this->getNewMediaSignedURls($originalImage, $settings, $newSizes);
-
-                    if ($newMediaUrls)
+                    $newSize = !in_array($name, $allSizes);
+                    if (!$newSize)
                     {
-                        $value['url'] = $originalImage;
-                        $value['media'] = array_merge((array)$value['media'], $newMediaUrls);
-                        $value['sizes'] = $allSizes;
+                        $parts = parse_url($value['media']->$name);
+                        $path = $parts['path'] ?? [];
+                        parse_str($parts['query'], $params);
 
-                        $field->json_value = json_encode($value);
-                        $field->save();
+                        if ($this->sizeHasChanged($settings, $params))
+                        {
+                            $params['w'] = $settings['w'];
+                            $params['h'] = $settings['h'];
+                            $value['media']->$name = $this->Glide->generateSignedUrl($path, $params);
+                        }
+                    } else
+                    {
+                        $defaultSettings['w'] = $settings['w'];
+                        $defaultSettings['h'] = $settings['h'];
+                        $value['media']->$name = $this->Glide->generateSignedUrl($defaultImage, $defaultSettings);
                     }
                 }
+
+                $field->value = json_encode($value);
+                $field->save();
             }
         }
-    }
-
-    private function getNewMediaSignedURls($imagePath, $settings, $sizes)
-    {
-        $newMediaUrls = [
-            'original'       => $this->Glide->generateSignedUrl($imagePath, []),
-            'orig_optimized' => $this->Glide->generateSignedUrl($imagePath, $settings)
-        ];
-
-        foreach ($sizes as $name => $size)
-        {
-            unset($size['breakpoints']);
-
-            $sizeSettings = array_merge($settings, $size);
-            $newMediaUrls[$name] = $this->Glide->generateSignedUrl($imagePath, $sizeSettings);
-        }
-
-        return $newMediaUrls;
     }
 
     private function tryLegacyStorageFile($path)
@@ -374,27 +348,38 @@ class MediaController extends Controller
         abort(404, $path . ' not found');
     }
 
-    private function onlyNewSizes($requestedSizes, $sizes)
+    private function sizeHasChanged($requestedSize, $currentSize)
     {
-        $sizes = (array)$sizes;
-        foreach ($requestedSizes as $sizeName => $requestedSize)
+        if (!$this->hasWidthAndHeight($requestedSize) || !$this->hasWidthAndHeight($requestedSize)) return true;
+
+        if ($currentSize['w'] != $requestedSize['w'] || $currentSize['h'] != $requestedSize['h']) return true;
+
+        return false;
+    }
+
+    private function alterInvalidPaths($path)
+    {
+        if (filter_var($path, FILTER_VALIDATE_URL) && strpos($path, '/' . config('devise.media.source-directory')) !== false)
         {
-            $skipSizeByRemoving = false;
-            if (isset($sizes[$sizeName]) &&
-                isset($sizes[$sizeName]->w) &&
-                isset($sizes[$sizeName]->h) &&
-                isset($requestedSize['w']) &&
-                isset($requestedSize['h']))
+            $parts = parse_url($path);
+            if (isset($parts['path']))
             {
-                // all properties were found to compare
-                if ($sizes[$sizeName]->w == $requestedSize['w'] && $sizes[$sizeName]->h == $requestedSize['h'])
-                {
-                    $skipSizeByRemoving = true;
-                }
+                $path = '/storage' . $parts['path'];
             }
-            if ($skipSizeByRemoving) unset($requestedSizes[$sizeName]);
         }
 
-        return $requestedSizes;
+        if (strpos($path, '/storage/styled') === 0)
+        {
+            $path = str_replace('/storage/styled', '/storage/' . config('devise.media.source-directory'), $path);
+        }
+
+        return $path;
+    }
+
+    private function hasWidthAndHeight($settings)
+    {
+        $required = ['w', 'h'];
+
+        return count(array_intersect_key(array_flip($required), $settings)) === count($required);
     }
 }

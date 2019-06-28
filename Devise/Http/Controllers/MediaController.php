@@ -266,7 +266,6 @@ class MediaController extends Controller
         $sizes = $data->sizes;
 //        $sizes = $request->get('sizes');
 
-        $altUrl = null;
         $newMediaUrls = [];
         foreach ($sizes as $name => $sizeSettings)
         {
@@ -277,8 +276,6 @@ class MediaController extends Controller
             $settings = Arr::except($settings, ['url', 'breakpoints']);
 
             $newMediaUrls[$name] = $this->Glide->generateSignedUrl($imagePath, $settings);
-
-            if (!$altUrl) $altUrl = $settings['url'];
         }
 
         return [

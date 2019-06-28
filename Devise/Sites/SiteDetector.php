@@ -60,7 +60,5 @@ class SiteDetector
                 }
             }
         }
-
-        abort(404);
     }
 }

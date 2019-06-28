@@ -167,6 +167,12 @@ class PagesManager
             $this->FieldManager->saveSliceInstanceFields($page->currentVersion->id, $input['slices']);
         }
 
+        if (isset($input['settings']))
+        {
+            $page->currentVersion->settings = $input['settings'];
+            $page->save();
+        }
+
         $this->PageMetaManager->savePageMeta($page, array_get($input, 'meta', []));
 
         $this->refreshRouteCache();

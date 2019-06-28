@@ -45,6 +45,10 @@ class PageResource extends Resource
         {
             $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
         }
+        if ($this->currentVersion && $this->currentVersion->slices->count())
+        {
+            $data['settings'] = $this->currentVersion->settings;
+        }
 
         return $data;
     }

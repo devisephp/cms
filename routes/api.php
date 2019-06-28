@@ -141,6 +141,11 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
             Route::delete('sites/{sites_id}', 'SitesController@delete');
 
             /**
+             * Sites Languages
+             */
+            Route::get('sites/{site_id}/languages', 'SitesLanguagesController@index');
+
+            /**
              * Slices
              */
             Route::get('slices-directories', 'SlicesController@allDirectories');

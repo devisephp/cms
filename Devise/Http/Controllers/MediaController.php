@@ -174,6 +174,8 @@ class MediaController extends Controller
 
             $settings = Arr::except($settings, ['url', 'breakpoints']);
 
+            $this->alterForCropping($settings);
+
             $newMediaUrls[$name] = $this->Glide->generateSignedUrl($imagePath, $settings);
         }
 
@@ -228,7 +230,7 @@ class MediaController extends Controller
                     }
                 }
 
-                $field->value = json_encode($value);
+                $field->json_value = json_encode($value);
                 $field->save();
             }
         }
@@ -277,5 +279,14 @@ class MediaController extends Controller
         $required = ['w', 'h'];
 
         return count(array_intersect_key(array_flip($required), $settings)) === count($required);
+    }
+
+    private function alterForCropping(&$settings)
+    {
+        //crop=100,100,915,155
+        if (isset($settings['crop']))
+        {
+            $settings['crop'] = $settings['w'] . ',' . $settings['h'] . ',' . $settings['x'] . ',' . $settings['y'];
+        }
     }
 }

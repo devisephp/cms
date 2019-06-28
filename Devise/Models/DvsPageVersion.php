@@ -23,14 +23,21 @@ class DvsPageVersion extends Model
         'starts_at',
         'ends_at',
         'ab_testing_amount',
-        'preview_hash'
+        'settings'
     ];
 
     protected $touches = ['page'];
 
-    /**
-     *
-     */
+    public function getSettingsAttribute($value)
+    {
+        return ($value) ? json_decode($value) : new \stdClass();
+    }
+
+    public function setSettingsAttribute($value)
+    {
+        $this->attributes['settings'] = ($value) ? json_encode($value) : '{}';
+    }
+
     public function getValuesAttribute()
     {
         return json_decode($this->value);

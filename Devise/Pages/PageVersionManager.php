@@ -52,7 +52,7 @@ class PageVersionManager
      * @param null $endsAt
      * @return DvsPageVersion
      */
-    public function createNewPageVersion($pageId, $name, $layout, $startsAt = null, $endsAt = null)
+    public function createNewPageVersion($pageId, $name, $layout, $startsAt = null, $endsAt = null, $settings = '{}')
     {
         $version = $this->DvsPageVersion->newInstance();
         $version->layout = $layout;
@@ -60,7 +60,7 @@ class PageVersionManager
         $version->name = $name;
         $version->starts_at = $startsAt;
         $version->ends_at = $endsAt;
-        $version->preview_hash = null;
+        $version->settings = $settings;
         $version->save();
 
         return $version;
@@ -74,10 +74,10 @@ class PageVersionManager
      * @param $toPage
      * @return DvsPageVersion
      */
-    public function copyPageVersionToAnotherPage($fromVersion, $toPage, $startsAt = null)
+    public function copyPageVersionToAnotherPage($fromVersion, $toPage, $startsAt = null, $settings = '{}')
     {
         // create a new page version
-        $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $fromVersion->layout, $startsAt);
+        $newVersion = $this->createNewPageVersion($toPage->id, $fromVersion->name, $fromVersion->layout, $startsAt, $settings);
 
         $this->SlicesManager
             ->copySlicesAndFieldsFromVersionToVersion($fromVersion, $newVersion);
@@ -98,7 +98,7 @@ class PageVersionManager
         $oldVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
 
         // create a new page version
-        $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name, $oldVersion->layout);
+        $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name, $oldVersion->layout, null, $oldVersion->settings);
 
         // copy all existing fields from oldVersion to newVersion
         $this->SlicesManager
@@ -145,24 +145,6 @@ class PageVersionManager
         }
 
         $pageVersion->delete();
-    }
-
-    /**
-     * Toggle "preview_hash" value between hashed string and null.
-     * The value determines whether preview url is publicly available.
-     *
-     * @param  integer $pageVersionId
-     * @return boolean
-     */
-    public function togglePageVersionPreviewShare($pageVersionId)
-    {
-        $pageVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
-
-        $previewHashValue = is_null($pageVersion->preview_hash) ? $this->Hash->make($pageVersion->id) : null;
-
-        $pageVersion->update(array('preview_hash' => $previewHashValue));
-
-        return $pageVersion;
     }
 
 }

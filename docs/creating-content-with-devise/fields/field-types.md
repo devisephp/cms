@@ -194,12 +194,14 @@ Responsive images can be accessed via the media property. Example: `devise.someI
             large: {
               w: 1200,
               h: 600,
-              breakpoints: ['desktop', 'large-desktop']
+              breakpoints: ['desktop', 'large-desktop'],
+              warning: true // Default warning about background images
             },
             medium: {
               w: 800,
               h: 400,
-              breakpoints: ['tablet']
+              breakpoints: ['tablet'],
+              warning: '<p>Hey, this image may be cropped</p>' // Custom warning
             },
             small: {
               w: 500,

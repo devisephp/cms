@@ -88,6 +88,11 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
             Route::get('models/settings', 'ModelsController@settings');
             Route::get('models/query', 'ModelsController@query');
 
+             /**
+             * Models
+             */
+            Route::get('model-queries', 'ModelQueriesController@index');
+
             /**
              * Mothership
              */

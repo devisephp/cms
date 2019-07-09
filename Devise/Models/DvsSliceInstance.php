@@ -30,11 +30,6 @@ class DvsSliceInstance extends Model
         return $this->hasMany(DvsField::class, 'slice_instance_id');
     }
 
-    public function setModelQueryAttribute($value)
-    {
-        $this->attributes['model_query'] = $value ?: '';
-    }
-
     public function setSettingsAttribute($value)
     {
         $this->attributes['settings'] = ($value) ? json_encode($value) : "";
@@ -45,6 +40,16 @@ class DvsSliceInstance extends Model
         $json = $value ?: '{}';
 
         return json_decode($json);
+    }
+
+    public function setModelQueryAttribute($value)
+    {
+        $this->attributes['model_query'] = ($value) ? json_encode($value) : "";
+    }
+
+    public function getModelQueryAttribute($value)
+    {
+        return $value ? json_decode($value) : null;
     }
 
     public function getTypeAttribute()

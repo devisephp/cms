@@ -19,6 +19,7 @@ class PageVersionResource extends Resource
             'name'              => $this->name,
             'layout'            => $this->layout,
             'starts_at'         => $this->starts_at,
+            'settings'          => $this->settings,
             'ends_at'           => $this->ends_at,
             'ab_testing_amount' => $this->ab_testing_amount,
             'is_live'           => ($this->page->currentVersion) ? ($this->page->currentVersion->id == $this->id) : false,

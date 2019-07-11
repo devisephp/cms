@@ -192,6 +192,7 @@ class Devise
         {
             $data['mothership'] = config('devise.mothership');
             $data['additionalSiteSettings'] = config('devise.additionalSiteSettings');
+            $data['additionalPageSettings'] = config('devise.additionalPageSettings');
         }
 
         return 'Devise.prototype.$config = ' . json_encode($data) . ";\n";

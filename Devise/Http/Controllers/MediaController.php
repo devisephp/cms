@@ -218,15 +218,22 @@ class MediaController extends Controller
 
                         if ($this->sizeHasChanged($settings, $params))
                         {
+                            if (isset($params['s'])) unset($params['s']);
+
                             $params['w'] = $settings['w'];
                             $params['h'] = $settings['h'];
-                            $value['media']->$name = $this->Glide->generateSignedUrl($path, $params);
+
+                            $value['media']->$name = $this->Glide->generateSignedUrl($this->alterInvalidPaths($path), $params);
+                            $value['sizes']->$name->w = $settings['w'];
+                            $value['sizes']->$name->h = $settings['h'];
                         }
                     } else
                     {
                         $defaultSettings['w'] = $settings['w'];
                         $defaultSettings['h'] = $settings['h'];
                         $value['media']->$name = $this->Glide->generateSignedUrl($defaultImage, $defaultSettings);
+                        $value['sizes']->$name->w = $settings['w'];
+                        $value['sizes']->$name->h = $settings['h'];
                     }
                 }
 

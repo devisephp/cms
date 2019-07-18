@@ -210,11 +210,21 @@ class MediaController extends Controller
                 foreach ($requestedSizes as $name => $settings)
                 {
                     $newSize = !in_array($name, $allSizes);
+
+                    if (!isset($value['sizes']->$name)) $value['sizes']->$name = new \stdClass();
+
                     if (!$newSize)
                     {
                         $parts = parse_url($value['media']->$name);
                         $path = $parts['path'] ?? [];
-                        parse_str($parts['query'], $params);
+
+                        if (isset($parts['query']))
+                        {
+                            parse_str($parts['query'], $params);
+                        } else
+                        {
+                            $params = ['w' => 0, 'h' => 0];
+                        }
 
                         if ($this->sizeHasChanged($settings, $params))
                         {

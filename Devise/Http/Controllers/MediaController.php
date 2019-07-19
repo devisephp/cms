@@ -197,7 +197,7 @@ class MediaController extends Controller
                 ->select('dvs_fields.*')
                 ->get();
 
-            $requestedSizes = $request->get('sizes')['sizes'];
+            $allSizes = $request->get('allSizes');
             foreach ($allFields as $field)
             {
                 $field->shouldMutateJson = false;
@@ -206,12 +206,12 @@ class MediaController extends Controller
                 $defaultImage = $field->original_image;
                 $defaultSettings = config('devise.media.default-settings');
 
-                $allSizes = array_keys((array)$value['media']);
+                $storedSizeNames = array_keys((array)$value['media']);
                 $value['media'] = is_array($value['media']) ? new \stdClass() : $value['media'];
 
-                foreach ($requestedSizes as $name => $settings)
+                foreach ($allSizes as $name => $settings)
                 {
-                    $newSize = !in_array($name, $allSizes);
+                    $newSize = !in_array($name, $storedSizeNames);
 
                     if (!$newSize)
                     {
@@ -238,12 +238,15 @@ class MediaController extends Controller
 
                             $value['media']->$name = $this->Glide->generateSignedUrl($this->alterInvalidPaths($path), $params);
                         }
-                    } else if ($defaultImage) {
+                    } else if ($defaultImage)
+                    {
                         $defaultSettings['w'] = $settings['w'];
                         $defaultSettings['h'] = $settings['h'];
                         $value['media']->$name = $this->Glide->generateSignedUrl($defaultImage, $defaultSettings);
                     }
                 }
+
+                $value['media'] = array_intersect_key($value['media'], $allSizes);
 
                 $field->json_value = json_encode($value);
                 $field->save();

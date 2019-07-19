@@ -223,10 +223,13 @@ class MediaController extends Controller
                             parse_str($parts['query'], $params);
                         } else
                         {
+                            // likely a legacy image if it's missing the url query
+                            $path = $defaultImage;
+                            // forcing sizeHasChanged to return true
                             $params = ['w' => 0, 'h' => 0];
                         }
 
-                        if ($this->sizeHasChanged($settings, $params))
+                        if ($path && $this->sizeHasChanged($settings, $params))
                         {
                             if (isset($params['s'])) unset($params['s']);
 

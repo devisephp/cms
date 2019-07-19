@@ -207,11 +207,11 @@ class MediaController extends Controller
                 $defaultSettings = config('devise.media.default-settings');
 
                 $allSizes = array_keys((array)$value['media']);
+                $value['media'] = is_array($value['media']) ? new \stdClass() : $value['media'];
+
                 foreach ($requestedSizes as $name => $settings)
                 {
                     $newSize = !in_array($name, $allSizes);
-
-                    if (!isset($value['sizes']->$name)) $value['sizes']->$name = new \stdClass();
 
                     if (!$newSize)
                     {
@@ -234,16 +234,11 @@ class MediaController extends Controller
                             $params['h'] = $settings['h'];
 
                             $value['media']->$name = $this->Glide->generateSignedUrl($this->alterInvalidPaths($path), $params);
-                            $value['sizes']->$name->w = $settings['w'];
-                            $value['sizes']->$name->h = $settings['h'];
                         }
-                    } else
-                    {
+                    } else if ($defaultImage) {
                         $defaultSettings['w'] = $settings['w'];
                         $defaultSettings['h'] = $settings['h'];
                         $value['media']->$name = $this->Glide->generateSignedUrl($defaultImage, $defaultSettings);
-                        $value['sizes']->$name->w = $settings['w'];
-                        $value['sizes']->$name->h = $settings['h'];
                     }
                 }
 

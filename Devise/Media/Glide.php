@@ -106,8 +106,9 @@ class Glide
 
         $fileName = pathinfo($path);
 
-        if (!isset($fileName['dirname']) && !isset($fileName['basename'])) abort(400, 'Unable to parse given image path ' . $path);
-
+        
+        if (!isset($fileName['dirname']) || !isset($fileName['basename'])) abort(400, 'Unable to parse given image path ' . $path);
+        
         $urlBuilder = $this->UrlBuilderFactory
             ->create($fileName['dirname'] . '/', $signKey);
 

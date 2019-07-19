@@ -197,7 +197,7 @@ class MediaController extends Controller
                 ->select('dvs_fields.*')
                 ->get();
 
-            $allSizes = $request->get('allSizes');
+            $allSizes = (array)$request->get('allSizes');
             foreach ($allFields as $field)
             {
                 $field->shouldMutateJson = false;
@@ -246,7 +246,7 @@ class MediaController extends Controller
                     }
                 }
 
-                $value['media'] = array_intersect_key($value['media'], $allSizes);
+                $value['media'] = array_intersect_key((array)$value['media'], $allSizes);
 
                 $field->json_value = json_encode($value);
                 $field->save();
@@ -304,7 +304,7 @@ class MediaController extends Controller
         //crop=100,100,915,155
         if (isset($settings['crop']))
         {
-            $settings['crop'] = $settings['w'] . ',' . $settings['h'] . ',' . $settings['x'] . ',' . $settings['y'];
+            $settings['crop'] = $settings['crop']['w'] . ',' . $settings['crop']['h'] . ',' . $settings['crop']['x'] . ',' . $settings['crop']['y'];
         }
     }
 }

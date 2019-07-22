@@ -203,53 +203,56 @@ class MediaController extends Controller
                 $field->shouldMutateJson = false;
                 $value = array_merge(['media' => []], (array)$field->value);
 
-                $defaultImage = $field->original_image;
-                $defaultSettings = config('devise.media.default-settings');
-
-                $storedSizeNames = array_keys((array)$value['media']);
-                $value['media'] = is_array($value['media']) ? new \stdClass() : $value['media'];
-
-                foreach ($allSizes as $name => $settings)
+                if (isset($value['mode']) && $value['mode'] === 'media')
                 {
-                    $newSize = !in_array($name, $storedSizeNames);
+                    $defaultImage = $field->original_image;
+                    $defaultSettings = config('devise.media.default-settings');
 
-                    if (!$newSize)
+                    $storedSizeNames = array_keys((array)$value['media']);
+                    $value['media'] = is_array($value['media']) ? new \stdClass() : $value['media'];
+
+                    foreach ($allSizes as $name => $settings)
                     {
-                        $parts = parse_url($value['media']->$name);
-                        $path = $parts['path'] ?? [];
+                        $newSize = !in_array($name, $storedSizeNames);
 
-                        if (isset($parts['query']))
+                        if (!$newSize)
                         {
-                            parse_str($parts['query'], $params);
-                        } else
+                            $parts = parse_url($value['media']->$name);
+                            $path = $parts['path'] ?? [];
+
+                            if (isset($parts['query']))
+                            {
+                                parse_str($parts['query'], $params);
+                            } else
+                            {
+                                // likely a legacy image if it's missing the url query
+                                $path = $defaultImage;
+                                // forcing sizeHasChanged to return true
+                                $params = ['w' => 0, 'h' => 0];
+                            }
+
+                            if ($path && $this->sizeHasChanged($settings, $params))
+                            {
+                                if (isset($params['s'])) unset($params['s']);
+
+                                $params['w'] = $settings['w'];
+                                $params['h'] = $settings['h'];
+
+                                $value['media']->$name = $this->Glide->generateSignedUrl($this->alterInvalidPaths($path), $params);
+                            }
+                        } else if ($defaultImage)
                         {
-                            // likely a legacy image if it's missing the url query
-                            $path = $defaultImage;
-                            // forcing sizeHasChanged to return true
-                            $params = ['w' => 0, 'h' => 0];
+                            $defaultSettings['w'] = $settings['w'];
+                            $defaultSettings['h'] = $settings['h'];
+                            $value['media']->$name = $this->Glide->generateSignedUrl($defaultImage, $defaultSettings);
                         }
-
-                        if ($path && $this->sizeHasChanged($settings, $params))
-                        {
-                            if (isset($params['s'])) unset($params['s']);
-
-                            $params['w'] = $settings['w'];
-                            $params['h'] = $settings['h'];
-
-                            $value['media']->$name = $this->Glide->generateSignedUrl($this->alterInvalidPaths($path), $params);
-                        }
-                    } else if ($defaultImage)
-                    {
-                        $defaultSettings['w'] = $settings['w'];
-                        $defaultSettings['h'] = $settings['h'];
-                        $value['media']->$name = $this->Glide->generateSignedUrl($defaultImage, $defaultSettings);
                     }
+
+                    $value['media'] = array_intersect_key((array)$value['media'], $allSizes);
+
+                    $field->json_value = json_encode($value);
+                    $field->save();
                 }
-
-                $value['media'] = array_intersect_key((array)$value['media'], $allSizes);
-
-                $field->json_value = json_encode($value);
-                $field->save();
             }
         }
     }

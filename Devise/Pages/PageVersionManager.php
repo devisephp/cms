@@ -98,7 +98,7 @@ class PageVersionManager
         $oldVersion = $this->DvsPageVersion->findOrFail($pageVersionId);
 
         // create a new page version
-        $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name, $oldVersion->layout, null, $oldVersion->settings);
+        $newVersion = $this->createNewPageVersion($oldVersion->page_id, $name, $oldVersion->layout, null, null, $oldVersion->settings);
 
         // copy all existing fields from oldVersion to newVersion
         $this->SlicesManager

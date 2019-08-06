@@ -8,7 +8,7 @@ use Monolog\Logger as MonologLogger;
 use Monolog\Handler\StreamHandler;
 use Devise\Mothership\Logs\Payload\EncodedPayload;
 
-class LogsLogger extends AbstractLogger
+class Client extends AbstractLogger
 {
     private $config;
     private $levelFactory;
@@ -59,7 +59,7 @@ class LogsLogger extends AbstractLogger
 
     public function scope(array $config)
     {
-        return new LogsLogger($this->extend($config));
+        return new Client($this->extend($config));
     }
 
     public function extend(array $config)

@@ -1,6 +1,5 @@
 <?php namespace Devise\Mothership\Logs;
 
-use Devise\Mothership\Logs\Utilities;
 use Devise\Mothership\Logs\Payload\Notifier;
 use Psr\Log\LogLevel;
 
@@ -78,7 +77,7 @@ class Defaults
         $this->data['allowExec'] = true;
         $this->data['messageLevel'] = "warning";
         $this->data['exceptionLevel'] = "error";
-        $this->data['endpoint'] = 'http://mothership.test/api/v1/logs/';
+        $this->data['endpoint'] = 'https://mothership.app/api/v1/logs/';
         $this->data['captureErrorStacktraces'] = true;
         $this->data['checkIgnore'] = null;
         $this->data['custom'] = null;

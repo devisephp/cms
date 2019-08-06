@@ -1,6 +1,6 @@
 <?php namespace Devise\Mothership\Logs\Handlers;
 
-use Devise\Mothership\Logs\LogsLogger;
+use Devise\Mothership\Logs\Client;
 
 abstract class AbstractHandler
 {
@@ -10,7 +10,7 @@ abstract class AbstractHandler
     
     protected $previousHandler = null;
     
-    public function __construct(LogsLogger $logger)
+    public function __construct(Client $logger)
     {
         $this->logger = $logger;
     }

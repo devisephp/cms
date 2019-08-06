@@ -6,12 +6,12 @@ use Devise\Mothership\Logs\Handlers\ErrorHandler;
 use Devise\Mothership\Logs\Handlers\ExceptionHandler;
 use Illuminate\Support\Facades\App;
 
-class Logs
+class Logger
 {
     /**
-     * @var LogsLogger
+     * @var Client
      */
-    private static $logger = null;
+    private static $client = null;
     private static $fatalHandler = null;
     private static $errorHandler = null;
     private static $exceptionHandler = null;
@@ -56,16 +56,25 @@ class Logs
         return self::log(Level::EMERGENCY, $toLog, $extra);
     }
 
+    public static function flushAndWait()
+    {
+        if (is_null(self::$client))
+        {
+            return;
+        }
+        self::$client->flushAndWait();
+    }
+
     private static function init(
-        $configOrLogger,
+        $configOrClient,
         $handleException = true,
         $handleError = true,
         $handleFatal = true
     )
     {
-        $setupHandlers = is_null(self::$logger);
+        $setupHandlers = is_null(self::$client);
 
-        self::setLogger($configOrLogger);
+        self::setLogger($configOrClient);
 
         if ($setupHandlers)
         {
@@ -85,22 +94,21 @@ class Logs
         }
     }
 
-    private static function setLogger($configOrLogger)
+    private static function setLogger($configOrClient)
     {
-        if ($configOrLogger instanceof LogsLogger)
+        if ($configOrClient instanceof Client)
         {
-            $logger = $configOrLogger;
+            $client = $configOrClient;
         }
 
-        // Replacing the logger rather than configuring the existing logger breaks BC
-        if (self::$logger && !isset($logger))
+        if (self::$client && !isset($client))
         {
-            self::$logger->configure($configOrLogger);
+            self::$client->configure($configOrClient);
 
             return;
         }
 
-        self::$logger = isset($logger) ? $logger : new LogsLogger($configOrLogger);
+        self::$client = isset($client) ? $client : new Client($configOrClient);
     }
 
     private static function enable()
@@ -125,44 +133,44 @@ class Logs
 
     private static function logger()
     {
-        return self::$logger;
+        return self::$client;
     }
 
     private static function scope($config)
     {
-        if (is_null(self::$logger))
+        if (is_null(self::$client))
         {
-            return new LogsLogger($config);
+            return new Client($config);
         }
 
-        return self::$logger->scope($config);
+        return self::$client->scope($config);
     }
 
     private static function log($level, $toLog, $extra = array(), $isUncaught = false)
     {
-        if (is_null(self::$logger))
+        if (is_null(self::$client))
         {
             self::init(['access_token' => config('devise.mothership.api-key'), 'environment' => App::environment()]);
         }
 
-        return self::$logger->log($level, $toLog, (array)$extra, $isUncaught);
+        return self::$client->log($level, $toLog, (array)$extra, $isUncaught);
     }
 
     private static function setupExceptionHandling()
     {
-        self::$exceptionHandler = new ExceptionHandler(self::$logger);
+        self::$exceptionHandler = new ExceptionHandler(self::$client);
         self::$exceptionHandler->register();
     }
 
     private static function setupErrorHandling()
     {
-        self::$errorHandler = new ErrorHandler(self::$logger);
+        self::$errorHandler = new ErrorHandler(self::$client);
         self::$errorHandler->register();
     }
 
     private static function setupFatalHandling()
     {
-        self::$fatalHandler = new FatalHandler(self::$logger);
+        self::$fatalHandler = new FatalHandler(self::$client);
         self::$fatalHandler->register();
     }
 
@@ -173,54 +181,45 @@ class Logs
 
     private static function setupBatchHandling()
     {
-        register_shutdown_function('Devise\Mothership\Logs\Logs::flushAndWait');
+        register_shutdown_function('Devise\Mothership\Logs\Logger::flushAndWait');
     }
 
     private static function flush()
     {
-        if (is_null(self::$logger))
+        if (is_null(self::$client))
         {
             return;
         }
-        self::$logger->flush();
-    }
-
-    private static function flushAndWait()
-    {
-        if (is_null(self::$logger))
-        {
-            return;
-        }
-        self::$logger->flushAndWait();
+        self::$client->flush();
     }
 
     private static function addCustom($key, $value)
     {
-        self::$logger->addCustom($key, $value);
+        self::$client->addCustom($key, $value);
     }
 
     private static function removeCustom($key)
     {
-        self::$logger->removeCustom($key);
+        self::$client->removeCustom($key);
     }
 
     private static function getCustom()
     {
-        self::$logger->getCustom();
+        self::$client->getCustom();
     }
 
     private static function configure($config)
     {
-        self::$logger->configure($config);
+        self::$client->configure($config);
     }
 
     /**
-     * Destroys the currently stored $logger allowing for a fresh configuration.
+     * Destroys the currently stored $client allowing for a fresh configuration.
      * This is especially used in testing scenarios.
      */
     private static function destroy()
     {
-        self::$logger = null;
+        self::$client = null;
     }
 
     // @codingStandardsIgnoreStart

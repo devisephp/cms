@@ -190,7 +190,6 @@ class Devise
 
         if (self::userAvailable())
         {
-            $data['mothership'] = config('devise.mothership');
             $data['additionalSiteSettings'] = config('devise.additionalSiteSettings');
             $data['additionalPageSettings'] = config('devise.additionalPageSettings');
         }

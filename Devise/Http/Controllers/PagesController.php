@@ -67,7 +67,9 @@ class PagesController extends Controller
      */
     public function show(ApiRequest $request)
     {
-        $page = $this->PagesRepository->findByRouteName($this->Route->currentRouteName());
+        $routeName = str_replace($request->getHost(), '', $this->Route->currentRouteName());
+
+        $page = $this->PagesRepository->findByRouteName($routeName);
 
         if (!$page->currentVersion) abort(404);
 

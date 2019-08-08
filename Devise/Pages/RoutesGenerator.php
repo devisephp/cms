@@ -53,37 +53,38 @@ class RoutesGenerator
             if ($siteId > 0)
             {
                 $domainSettings = $siteDomains[$siteId];
+                $overwritesFound = false;
 
                 if (config('devise.domain_overwrites_enabled', false))
                 {
                     $overwrites = config('devise.domains.' . $siteId, null);
                     if ($overwrites)
                     {
+                        $overwritesFound = true;
                         $domainSettings = $overwrites;
                     }
                 }
 
-                $callback = function () use ($routes) {
-                    foreach ($routes as $route)
-                    {
-                        $uses = ['as' => $route->route_name, 'uses' => $route->uses];
-
-                        if ($route->middleware)
-                        {
-                            $uses['middleware'] = explode('|', $route->middleware);
-                        } else
-                        {
-                            $uses['middleware'] = 'web';
-                        }
-
-                        $this->Route->get($route->slug, $uses);
-                    }
-                };
-
                 $domains = explode(',', $domainSettings);
                 foreach ($domains as $domain)
                 {
-                    $this->Route->domain($domain)->group($callback);
+                    $this->Route->domain($domain)->group(function () use ($domain, $routes, $overwritesFound) {
+                        foreach ($routes as $route)
+                        {
+                            $name = !$overwritesFound ? $route->route_name : $domain . $route->route_name;
+                            $uses = ['as' => $name, 'uses' => $route->uses];
+
+                            if ($route->middleware)
+                            {
+                                $uses['middleware'] = explode('|', $route->middleware);
+                            } else
+                            {
+                                $uses['middleware'] = 'web';
+                            }
+
+                            $this->Route->get($route->slug, $uses);
+                        }
+                    });
                 }
 
             } else

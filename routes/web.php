@@ -16,6 +16,10 @@ if (config('devise.mode') !== 'install')
     Route::get('/storage/styled/{path}', 'Devise\Http\Controllers\MediaController@show')
         ->where('path', '.*')->middleware('web');
 
+    Route::get('sitemap.xml', 'Devise\Http\Controllers\SeoController@sitemap');
+
+    Route::get('sitemap.json', 'Devise\Http\Controllers\SeoController@sitemapJson');
+
 } else
 {
     Route::get('{any}', function () {

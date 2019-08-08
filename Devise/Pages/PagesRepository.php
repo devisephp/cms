@@ -377,4 +377,28 @@ class PagesRepository
 
         return $page;
     }
+
+    public function getPublishedPages()
+    {
+        $now = date('Y-m-d H:i:s');
+        $site = $this->SiteDetector->current();
+
+        return $this->Page
+            ->join('dvs_page_versions', 'dvs_page_versions.page_id', '=', 'dvs_pages.id')
+            ->join('dvs_pages as translated_from_page', 'translated_from_page.id', '=', 'dvs_pages.translated_from_page_id', 'left')
+            ->where('dvs_pages.slug', 'not like', '%{%')
+            ->whereNull('dvs_pages.deleted_at')
+            ->whereNull('dvs_page_versions.deleted_at')
+            ->where('starts_at', '<', $now)
+            ->where(function ($query) use ($now) {
+                $query->where('ends_at', '>', $now);
+                $query->orWhereNull('ends_at');
+            })
+            ->where('dvs_pages.site_id', $site->id)
+            ->where('dvs_pages.language_id', 1)
+            ->select('dvs_pages.*')
+            ->orderBy('dvs_pages.slug')
+            ->groupBy('dvs_pages.id')
+            ->get();
+    }
 }

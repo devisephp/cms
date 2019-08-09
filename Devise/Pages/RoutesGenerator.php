@@ -1,16 +1,24 @@
 <?php namespace Devise\Pages;
 
 use Devise\Http\Requests\Redirects\ExecuteRedirect;
+use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 
 class RoutesGenerator
 {
     /**
+     * @var SiteDetector
+     */
+    private $SiteDetector;
+
+    /**
      * [__construct description]
      */
-    public function __construct(Framework $Framework)
+    public function __construct(SiteDetector $SiteDetector, Framework $Framework)
     {
+        $this->SiteDetector = $SiteDetector;
         $this->View = $Framework->View;
         $this->Config = $Framework->Config;
         $this->File = $Framework->File;
@@ -48,31 +56,37 @@ class RoutesGenerator
 
     private function setPageRoutes($routesBySite, $siteDomains)
     {
+        $overwritesEnabled = config('devise.domain_overwrites_enabled', false);
+
+        if($overwritesEnabled)
+            $currentDomain = Request::getHost();
+
         foreach ($routesBySite as $siteId => $routes)
         {
             if ($siteId > 0)
             {
                 $domainSettings = $siteDomains[$siteId];
-                $overwritesFound = false;
 
-                if (config('devise.domain_overwrites_enabled', false))
+                if ($overwritesEnabled)
                 {
                     $overwrites = config('devise.domains.' . $siteId, null);
                     if ($overwrites)
                     {
-                        $overwritesFound = true;
+                        if(strpos($overwrites, $currentDomain) !== false) {
+                            $overwrites = $currentDomain;
+                        }
                         $domainSettings = $overwrites;
                     }
                 }
 
                 $domains = explode(',', $domainSettings);
+                
                 foreach ($domains as $domain)
                 {
-                    $this->Route->domain($domain)->group(function () use ($domain, $routes, $overwritesFound) {
+                    $this->Route->domain($domain)->group(function () use ($routes) {
                         foreach ($routes as $route)
                         {
-                            $name = !$overwritesFound ? $route->route_name : $domain . $route->route_name;
-                            $uses = ['as' => $name, 'uses' => $route->uses];
+                            $uses = ['as' => $route->route_name, 'uses' => $route->uses];
 
                             if ($route->middleware)
                             {

@@ -39,20 +39,13 @@ class SeoController
 
     public function sitemapJson(ApiRequest $request)
     {
-        $site = $this->SiteDetector
-            ->current();
-
-        $currentDomain = $request->getHost();
-
-        $prefix = ($site->domain == $currentDomain) ? '' : $currentDomain;
-        
         $pages = $this->PagesRepository
             ->getPublishedPages();
 
-        return $pages->map(function ($page, $key) use ($prefix) {
-            if (Route::getRoutes()->hasNamedRoute($prefix . $page->route_name))
+        return $pages->map(function ($page, $key) {
+            if (Route::getRoutes()->hasNamedRoute($page->route_name))
             {
-                return route($prefix . $page->route_name);
+                return route($page->route_name);
             }
         });
     }

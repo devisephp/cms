@@ -22,6 +22,11 @@ If you are developing locally on something like Laravel Valet be sure to add the
 SITE_2_DOMAIN=mynewsite.test
 ```
 
+
+#### Notes on Multiple site overwrites
+
+Route caching will not work with multiple domain overwrites 
+
 #### Notes on Laravel Valet
 
 In your park folder make sure you setup a symlink to your projects main folder and name your link the domain you set above. For example:

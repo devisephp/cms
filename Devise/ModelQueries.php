@@ -17,24 +17,23 @@ class ModelQueries
     }
 
     /**
-     * @param $key
      * @param $description
-     * @param $class
-     * @param $method
+     * @param $classAndMethod
      * @param array $params
+     * @param array $views
      */
-    public static function set($key, $description, $class, $method, $params = [], $views = [])
+    public static function set($description, $classAndMethod, $params = [], $views = [])
     {
-        if (isset(self::$queries[$key]))
+        if (isset(self::$queries[$classAndMethod]))
         {
-            abort(500, 'ModelQuery key (' . $key . ') already registered. Please use a different name.');
+            abort(500, 'ModelQuery key (' . $classAndMethod . ') already registered. Please use a different name.');
         }
 
-        self::$queries[$key] = [
-            'key'         => $key,
+        list($class, $method) = explode('@', $classAndMethod);
+
+        self::$queries[$classAndMethod] = [
+            'key'         => $classAndMethod,
             'description' => $description,
-            'class'       => $class,
-            'method'      => $method,
             'params'      => $params,
             'views'       => $views
         ];
@@ -51,11 +50,12 @@ class ModelQueries
             abort(500, 'ModelQuery "' . $query->key . '" has not been registered.');
         }
 
-        $data = self::$queries[$query->key];
+        list($className, $methodName) = explode('@', $query->key);
 
-        $class = App::make($data['class']);
+        $class = App::make($className);
+
         $params = isset($query->params) ? $query->params : [];
 
-        return call_user_func_array([$class, $data['method']], $params);
+        return call_user_func_array([$class, $methodName], $params);
     }
 }

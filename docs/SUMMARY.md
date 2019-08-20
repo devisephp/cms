@@ -23,7 +23,7 @@
 * [Vue Integration / Customizing Devise](vue/README.md)
   * [User Permissions](vue/user-permissions.md)
   * [Customizing the Login](vue/customizing-the-login.md)
-  * [Custom Administration Sections](vue/vue-1.md)
+  * [Custom Administration Sections](vue/customizing-the-admin-styles.md)
 * [Developers / Contributing](developers-contributing.md)
 * [License](license.md)
 

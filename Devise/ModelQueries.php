@@ -23,7 +23,7 @@ class ModelQueries
      * @param $method
      * @param array $params
      */
-    public static function set($key, $description, $class, $method, $params = [])
+    public static function set($key, $description, $class, $method, $params = [], $views = [])
     {
         if (isset(self::$queries[$key]))
         {
@@ -35,7 +35,8 @@ class ModelQueries
             'description' => $description,
             'class'       => $class,
             'method'      => $method,
-            'params'      => $params
+            'params'      => $params,
+            'views'       => $views
         ];
     }
 

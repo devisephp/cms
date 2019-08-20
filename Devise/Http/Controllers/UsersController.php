@@ -32,9 +32,14 @@ class UsersController extends Controller
 
   public function all(ApiRequest $request)
   {
-    $all = $this->User
-      ->get();
+    $all = $this->User;
+      
+    if ($request->has('name')) {
+      $name = $request->input('name');
+      $all = $all->where('name', 'like', '%' . $name . '%')->limit(10);
+    }
 
+    $all = $all->get();
     return UserResource::collection($all);
   }
 

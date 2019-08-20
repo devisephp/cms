@@ -29,11 +29,15 @@ class SitesController extends Controller
 
     public function all(ApiRequest $request)
     {
-        $all = $this->DvsSite
-            ->with('languages')
-            ->get();
 
-        return SiteResource::collection($all);
+        $query = $this->DvsSite->with('languages');
+            
+        if ($request->has('name')) {
+            $name = $request->input('name');
+            $query = $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        return SiteResource::collection($query->get());
     }
 
     /**

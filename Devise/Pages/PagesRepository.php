@@ -249,11 +249,14 @@ class PagesRepository
      * @param  string $searchTerm
      * @return array
      */
-    public function getPagesList($searchTerm = null, $siteId = null, $limit = null)
+    public function searchPages($searchTerm = null, $siteId = null, $list = false, $limit = null)
     {
         $pages = $this->Page
             ->join('dvs_languages', 'dvs_languages.id', '=', 'dvs_pages.language_id')
             ->join('dvs_sites', 'dvs_sites.id', '=', 'dvs_pages.site_id');
+
+        if (!$list)
+            $pages = $pages->with('versions');
 
         if ($siteId != null)
             $pages = $pages->where('site_id', $siteId);
@@ -261,13 +264,18 @@ class PagesRepository
         if ($searchTerm != null)
             $pages = $pages->where('title', 'LIKE', '%' . $searchTerm . '%');
 
-        $pages = $pages->select('dvs_pages.id', 'dvs_pages.title', 'dvs_sites.name', 'dvs_languages.code')
-            ->orderBy('dvs_pages.site_id');
+        if ($list) {
+            $pages = $pages->select('dvs_pages.id', 'dvs_pages.title', 'dvs_sites.name', 'dvs_languages.code')
+                ->orderBy('dvs_pages.site_id');
+        }
 
         if ($limit != null)
             $pages = $pages->take($limit);
 
-        $pages = $pages->get();
+        $pages = $pages->select('dvs_pages.*')->get();
+
+        if (!$list)
+            return $pages;
 
         $results = [];
         foreach ($pages as $page)

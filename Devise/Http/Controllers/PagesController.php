@@ -131,17 +131,18 @@ class PagesController extends Controller
      * Request the page listing
      *
      */
-    public function suggestList(ApiRequest $request)
+    public function search(ApiRequest $request)
     {
         $siteId = null;
         $term = $request->input('term');
+        $list = $request->input('list');
 
         if (!$request->has('multi-site') || !$request->get('multi-site', 0))
         {
             $siteId = $this->SiteDetector->current()->id;
         }
-
-        return $this->PagesRepository->getPagesList($term, $siteId, 20);
+        $pages = $this->PagesRepository->searchPages($term, $siteId, $list, 20);
+        return PageResource::collection($pages);
     }
 
     /**

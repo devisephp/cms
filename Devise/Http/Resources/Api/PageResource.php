@@ -40,6 +40,8 @@ class PageResource extends Resource
         if ($this->currentVersion && $this->currentVersion->slices->count())
         {
             $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
+
+            $data['version_last_updated_at'] = $this->currentVersion->updated_at->format('Y-m-d H:i:s');
         }
 
         return $data;

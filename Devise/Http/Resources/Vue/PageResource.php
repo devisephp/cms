@@ -41,13 +41,16 @@ class PageResource extends Resource
         }
 
         // Relationships
-        if ($this->currentVersion && $this->currentVersion->slices->count())
+        if ($this->currentVersion)
         {
-            $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
-        }
-        if ($this->currentVersion && $this->currentVersion->slices->count())
-        {
+            if ($this->currentVersion->slices->count())
+            {
+                $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
+            }
+
             $data['settings'] = $this->currentVersion->settings;
+
+            $data['version_last_updated_at'] = $this->currentVersion->updated_at->format('Y-m-d H:i:s');
         }
 
         return $data;

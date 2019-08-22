@@ -160,6 +160,8 @@ class PagesManager
             ->with('versions', 'currentVersion')
             ->findOrFail($id);
 
+        $this->checkIfVersionHasBeenUpdated($input, $page->currentVersion);
+
         $page->updateFromArray($input);
 
         if (isset($input['slices']))
@@ -170,7 +172,7 @@ class PagesManager
         if (isset($input['settings']))
         {
             $page->currentVersion->settings = $input['settings'];
-            $page->save();
+            $page->currentVersion->save();
         }
 
         $this->PageMetaManager->savePageMeta($page, array_get($input, 'meta', []));
@@ -369,6 +371,16 @@ class PagesManager
         if (App::routesAreCached())
         {
             Artisan::call('route:cache');
+        }
+    }
+
+    private function checkIfVersionHasBeenUpdated($requestData, $currentVersion)
+    {
+        $ignore = (!isset($requestData['force']) || $requestData['force'] === false || $requestData['force'] === 0) ? false : true;
+
+        if (!$ignore && $requestData['version_last_updated_at'] !== $currentVersion->updated_at->format('Y-m-d H:i:s'))
+        {
+            abort(480, 'The page being saved is outdated. Please refresh your page before making changes.');
         }
     }
 }

@@ -29,8 +29,6 @@ class ModelQueries
             abort(500, 'ModelQuery key (' . $classAndMethod . ') already registered. Please use a different name.');
         }
 
-        list($class, $method) = explode('@', $classAndMethod);
-
         self::$queries[$classAndMethod] = [
             'key'         => $classAndMethod,
             'description' => $description,

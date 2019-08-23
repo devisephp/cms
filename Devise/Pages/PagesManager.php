@@ -179,6 +179,8 @@ class PagesManager
 
         $this->refreshRouteCache();
 
+        $page->load('versions', 'currentVersion');
+
         return $page;
     }
 

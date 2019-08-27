@@ -5,6 +5,7 @@ namespace Devise\Http\Resources\Vue;
 use Devise\ModelQueries;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -64,7 +65,7 @@ class SliceInstanceResource extends Resource
         $all = [];
         if ($records)
         {
-            if ($records instanceof Collection || $records instanceof LengthAwarePaginator)
+            if ($records instanceof Collection || $records instanceof SupportCollection || $records instanceof LengthAwarePaginator)
             {
                 foreach ($records as $record)
                 {

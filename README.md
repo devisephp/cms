@@ -1,228 +1,56 @@
-Devise
-======
+# Devise
 
-[![Latest Stable Version](https://poser.pugx.org/devisephp/cms/v/stable.svg)](https://packagist.org/packages/devisephp/cms)
-[![Total Downloads](https://poser.pugx.org/devisephp/cms/downloads.svg)](https://packagist.org/packages/devisephp/cms)
-[![Latest Unstable Version](https://poser.pugx.org/devisephp/cms/v/unstable.svg)](https://packagist.org/packages/devisephp/cms)
-[![License](https://poser.pugx.org/devisephp/cms/license.svg)](https://packagist.org/packages/devisephp/cms)
+## What is Devise?
+Devise is a content management solution that allows developers use a combination of VueJS and Laravel Blade documents to create page "slices" that are just parts of what make up a webpage. Those slices can then be implemented in any order and configuration by content managers throughout their site without the need for a developer. This allows developers to work with their clients and designers in a very iterative way to grow their site incrementally, add new features with ease, and test different page layouts to find the one that is most successful.
 
-![alt text][logo]
+## Get Started
+Installation to get started with Devise is very easy for a basic installation. For more advanced customization please refer to the [documentation](https://devise.gitbook.io/cms/).
 
+<<<<<<< HEAD
 ## About
+=======
+### Basic installation steps
+>>>>>>> v2-dev
 
-Devise is a content management system with rich application development in mind. With full-featured front-end content management Devise supports manipulating images, videos, WYSIWYG editing, maps, audio, "simple" controls such as checkboxes, selects, etc, all by placing simple attribute tags in your html markup.
+While you can develop in any PHP 7.1 environment this assumes you are using [Laravel Valet](https://laravel.com/docs/5.8/valet) and have [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) composer setup correctly.
 
-Furthermore, Devise supports localized content, page versions, no-nonsense html & blade templates, easy to understand permissions, user and group controls, and much much more.
-
-For developers looking to construct a bigger application Devise is a fantastic solution to execute your classes and present data from them right into your templates. No more fussing with controllers or trying to figure out where your logic should go. You focus on your HTML, CSS, and JS and the PHP classes that does your application specific code.
-
-### How To Get Started
-
-There are two ways to get started using Devise. You can either [install on an existing project](http://devisephp.com/docs/installation/#installing-devise-on-an-existing-project) or you can download a clean, build-ready [bootstrap project](https://github.com/devisephp/bootstrap/).
-
-### Full Documentation
-
-Full documentation can be found at [http://devisephp.com/docs](http://devisephp.com/docs)
-
-### General Install
-
-Once you are up and running you can install from either the browser or CLI.
-
-#### Install From Browser
-
-Installing from a browser is very easy. Just go to your domain (http://new-domain.com:8000 in this example - 8000 is the port Homestead listens on) and you will be redirected to the installer
-
-1. Click get started on the welcome screen.
-
-2. Select or set the appropriate environment. This is really up to you and simply sets the name of the environment you are installing to. For instance: If you are working on your own computer you probably want to select "local" and if you're working on the final server you probably want to select "production"
-
-3. Provide the appropriate database settings. If the user you provide has CREATE DATABASE privileges then Devise will create the database for you.
-
-4. Provide the administrators email, username, and password. The password must be at least 8 characters in length.
-
-After clicking next Devise installs it's migrations and seeds into your database and forwards you to the administration screen.
-
-#### Install From Command Line
-
-From the root of your project: ```php artisan devise:install``` and follow the prompts which are very similar to the steps above.
-
-### Testing
-
-Devise has functional and acceptance tests. We have over 500 functional tests.
-
-To run unit tests
+#### Create a new Laravel Project
 
 ```
-phpunit
+composer create-project --prefer-dist laravel/laravel my-devise-project
 ```
 
-To run acceptance tests you will have to bring up a basic devise Laravel application configured to resolve at `http://devisetest.app`. We recommend using https://github.com/devisephp/example but you are welcome to install Devise on any base Laravel 5. In addition to your webserver you will also need to configure a mysql database `devisetest` with user `root` and password `secret`. You can change all of these Codeception settings locally in the [tests/acceptance.suite.yml](https://github.com/devisephp/cms/blob/master/tests/acceptance.suite.yml) config file. Once you have a test server up and running, you may now run codeception acceptance tests with the following command:
+#### Install Devise
 
 ```
-codecept run acceptance
+cd my-devise-project
+composer require devisephp/cms
 ```
 
-If you would like to run tests inside of firefox instead of phantomjs you will need to first fire up selenium on your local machine with a GUI. To do that, just run this following command...
+#### Publish Assets
 
 ```
-java -jar tests/bootstrap/selenium-server-standalone-2.45.0.jar
+php artisan vendor:publish --tag=dvs-assets
 ```
 
-### Upgrading from 1.3 -> 1.4
+#### Finish Install Wizard
 
-Add the following to your applications ```config/app.php``` file:
+Now you can visit your site at ```http://my-devise-project.test``` and finish the install wizard. The wizard will update automatically as you complete various tasks. When creating your first user you will be logged in as that user and once complete will see the editor on the left side of the screen.
 
-```
-    /*
-	    |--------------------------------------------------------------------------
-	    | Application Environment
-	    |--------------------------------------------------------------------------
-	    |
-	    | This value determines the "environment" your application is currently
-	    | running in. This may determine how you prefer to configure various
-	    | services your application utilizes. Set this in your ".env" file.
-	    |
-	    */
+#### What Now?
 
-	    'env' => env('APP_ENV', 'production'),
-```
+If you followed the wizard exactly you will be presented with that first test slice that you created. It's pretty boring but serves as a good boilerplate for other slices. Take a look at your design. See what repeats, what can be used in multiple places. Those natural lines help define which slices you should probably create.
 
-As well as update your service providers
+For guidance on slice creation take a look at how we build the [Devise Marketing](https://github.com/devisephp/marketing) site and, of course, the [documentation](https://devise.gitbook.io/cms/).
 
-```
-'providers' => [
+## Contributing
 
-        /*
-         * Laravel Framework Service Providers...
-         */
-        Illuminate\Auth\AuthServiceProvider::class,
-        Illuminate\Broadcasting\BroadcastServiceProvider::class,
-        Illuminate\Bus\BusServiceProvider::class,
-        Illuminate\Cache\CacheServiceProvider::class,
-        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Cookie\CookieServiceProvider::class,
-        Illuminate\Database\DatabaseServiceProvider::class,
-        Illuminate\Encryption\EncryptionServiceProvider::class,
-        Illuminate\Filesystem\FilesystemServiceProvider::class,
-        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
-        Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Mail\MailServiceProvider::class,
-        Illuminate\Pagination\PaginationServiceProvider::class,
-        Illuminate\Pipeline\PipelineServiceProvider::class,
-        Illuminate\Queue\QueueServiceProvider::class,
-        Illuminate\Redis\RedisServiceProvider::class,
-        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
-        Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
-        Illuminate\Validation\ValidationServiceProvider::class,
-        Illuminate\View\ViewServiceProvider::class,
-
-        /*
-         * Devise Service Provider...
-         */
-        Devise\DeviseServiceProvider::class,
-
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-
-    ],
-```
-
-and your facades:
-
-```
-	'aliases' => [
-
-        'App' => Illuminate\Support\Facades\App::class,
-        'Artisan' => Illuminate\Support\Facades\Artisan::class,
-        'Auth' => Illuminate\Support\Facades\Auth::class,
-        'Blade' => Illuminate\Support\Facades\Blade::class,
-        'Cache' => Illuminate\Support\Facades\Cache::class,
-        'Config' => Illuminate\Support\Facades\Config::class,
-        'Cookie' => Illuminate\Support\Facades\Cookie::class,
-        'Crypt' => Illuminate\Support\Facades\Crypt::class,
-        'DB' => Illuminate\Support\Facades\DB::class,
-        'Eloquent' => Illuminate\Database\Eloquent\Model::class,
-        'Event' => Illuminate\Support\Facades\Event::class,
-        'File' => Illuminate\Support\Facades\File::class,
-        'Gate' => Illuminate\Support\Facades\Gate::class,
-        'Hash' => Illuminate\Support\Facades\Hash::class,
-        'Input' => Illuminate\Support\Facades\Input::class,
-        'Lang' => Illuminate\Support\Facades\Lang::class,
-        'Log' => Illuminate\Support\Facades\Log::class,
-        'Mail' => Illuminate\Support\Facades\Mail::class,
-        'Password' => Illuminate\Support\Facades\Password::class,
-        'Queue' => Illuminate\Support\Facades\Queue::class,
-        'Redirect' => Illuminate\Support\Facades\Redirect::class,
-        'Redis' => Illuminate\Support\Facades\Redis::class,
-        'Request' => Illuminate\Support\Facades\Request::class,
-        'Response' => Illuminate\Support\Facades\Response::class,
-        'Route' => Illuminate\Support\Facades\Route::class,
-        'Schema' => Illuminate\Support\Facades\Schema::class,
-        'Session' => Illuminate\Support\Facades\Session::class,
-        'Storage' => Illuminate\Support\Facades\Storage::class,
-        'URL' => Illuminate\Support\Facades\URL::class,
-        'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View' => Illuminate\Support\Facades\View::class,
-
-        /**
-         * Devise Aliases
-         */
-        'Sort'            => Devise\Support\Sortable\SortableFacade::class,
-        'DeviseUser'      => Devise\Users\DeviseUser::class,
-        'RuleManager'     => Devise\Users\Permissions\RuleManagerFacade::class,
-        'Form'            => Collective\Html\FormFacade::class,
-        'HTML'            => Collective\Html\HtmlFacade::class,
-    ],
-```
-
-Update your middleware to utilize the new Devise Middleware for route permissions. We replaced the default values in the array but you can simply add the 'devise.permissions' to the stack if you like.
-
-This file can be found in app/Http/Kernel.php
-
-```
-    /**
-     * The application's route middleware.
-     *
-     * @var array
-     */
-    protected $routeMiddleware = [
-        'devise.permissions' => \Devise\Pages\Http\Middleware\Permissions::class,
-    ];
-```
-
-### Upgrading from 1.4 -> 1.5
-
-After composer has completed
-
-```
-    php artisan devise:upgrade
-```
-
-Update any dsv_pages seeds that reference 'before' or 'after' fields. Change 'before' to 'middleware'. Remove 'after' field.
-
-If any 'before' values include 'isDeveloper', 'isAdministrator', 'ifNotLoggedInGoToLogin', 'ifLoggedInGoToDash', or 'canUseDeviseEditor' please prefix each rule with 'devise.permissions:'.
-
-Example
-
-```
-    'isAdministrator|isDeveloper'
-```
-
-Should change to
-
-```
-    'devise.permissions:isAdministrator|devise.permissions:isDeveloper'
-```
-
-
+<<<<<<< HEAD
 ### License
+=======
+We welcome pull requests and issues with open arms. However, please take a quick look at our contribution guidelines so that you can quick get up and running building Devise in the appropriate environment and so that your issues get resolved as quickly as possible.
+>>>>>>> v2-dev
 
-Devise is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+## License
 
-[logo]: https://raw.githubusercontent.com/devisephp/cms/master/project-banner.png "Devise Logo"
+Devise is available under the [MIT license](http://opensource.org/licenses/MIT).

@@ -1,6 +1,6 @@
 {
     "name": "devisephp/cms",
-    "description": "Content Management System riding on top of the Laravel Framework",
+    "description": "Content Management System using the Laravel Framework",
     "keywords": ["cms", "devise", "devisephp", "laravel", "content management system"],
     "license": "MIT",
     "authors": [
@@ -10,43 +10,28 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
-        "masterminds/html5": "1.*",
-        "zencoder/zencoder-php": "*",
-        "ext-imagick": "*",
-        "symfony/console": "*",
-        "laravelcollective/html": "*",
-        "doctrine/dbal": "~2.3",
-        "league/commonmark": "~0.7"
-    },
-    "require-dev": {
-        "mockery/mockery": "0.9.3",
-        "phpunit/phpunit": "*",
-        "mikey179/vfsStream": "*",
-        "codeception/codeception": "*",
-        "symfony/dom-crawler": "~3.0",
-        "symfony/css-selector": "~3.0"
+        "php": "^7.1.3",
+        "doctrine/dbal": "^2.7",
+        "guzzlehttp/guzzle": "~6.0",
+        "kg-bot/laravel-localization-to-vue": "^1.5",
+        "laravel/framework": "5.8.*",
+        "league/glide-laravel": "^1.0",
+        "spatie/laravel-glide": "^3.2",
+        "spatie/laravel-image-optimizer": "^1.3"
     },
     "autoload": {
-        "classmap": [
-            "src/models",
-            "src/seeds",
-            "src/migrations"
-        ],
         "psr-0": {
-            "Devise\\": "src/"
-        }
-    },
-    "scripts": {
-        "docs" : "vendor/bin/sami.php update sami.php",
-        "acceptance": "tests/bootstrap/acceptance.sh",
-        "post-install-cmd": [
-            "PhantomInstaller\\Installer::installPhantomJS"
-        ],
-        "post-update-cmd": [
-            "PhantomInstaller\\Installer::installPhantomJS"
+            "Devise\\": "Devise/"
+        },
+        "files": [
+            "Devise/Support/helpers.php"
         ]
     },
-    "minimum-stability": "stable"
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Devise\\Providers\\DeviseServiceProvider"
+            ]
+        }
+    }
 }

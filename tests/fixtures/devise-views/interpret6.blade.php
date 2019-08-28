@@ -1,1 +1,0 @@
-<div data-devise-create-model="DvsPage, The Page Creator"></div>

@@ -1,9 +1,0 @@
-{{#if page.availableLanguages}}
-	<select id="dvs-language-selector" class="dvs-select dvs-select-small" name="other_languages">
-		{{#select page.languageId}}
-		    {{#each page.availableLanguages}}
-			    <option value="{{ id }}" data-url="{{ url }}">{{ code }}</option>
-		    {{/each}}
-	    {{/select}}
-	</select>
-{{/if}}

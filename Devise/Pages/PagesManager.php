@@ -339,35 +339,7 @@ class PagesManager
             $input['route_name'] = $this->findAvailableRoute($input['route_name'], $input['language_id']);
         }
 
-<<<<<<< HEAD:src/Devise/Pages/PageManager.php
-        return !$this->errors || count($this->errors) == 0;
-    }
-
-    /**
-     * Updates the page version dates
-     *
-     * @param  int   $pageVersionId
-     * @param  array $input
-     * @return void
-     */
-    public function updatePageVersionDates($pageVersionId, $input)
-    {
-        return $this->PageVersionManager->updatePageVersionDates($pageVersionId, $input);
-    }
-
-    /**
-     * Updates the page version view
-     *
-     * @param  [type] $pageVersionId
-     * @param  [type] $view
-     * @return [type]
-     */
-    public function updatePageVersionView($pageVersionId, $view)
-    {
-        return $this->PageVersionManager->updatePageVersionView($pageVersionId, $view);
-=======
         return $this->Page->createFromArray($input);
->>>>>>> v2-dev:Devise/Pages/PagesManager.php
     }
 
     /**

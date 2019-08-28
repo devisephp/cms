@@ -145,6 +145,23 @@ class PagesController extends Controller
         return PageResource::collection($pages);
     }
 
+        /**
+     * Request the page listing
+     *
+     */
+    public function suggestList(ApiRequest $request)
+    {
+        $siteId = null;
+        $term = $request->input('term');
+
+        if (!$request->has('multi-site') || !$request->get('multi-site', 0))
+        {
+            $siteId = $this->SiteDetector->current()->id;
+        }
+
+        return $this->PagesRepository->getPagesList($term, $siteId, 20);
+    }
+
     /**
      * Request a new page be created
      *

@@ -20,5 +20,7 @@ A page that appears on a site has a unique URL and serves as the container for a
 
 Slices are small parts of pages that a content manager can add to a page to add content. Slices can appear in any order and can also be nested within each other to build complex structures.
 
+**TODO: Illustration of how sites, pages and slices live together**
+
 
 

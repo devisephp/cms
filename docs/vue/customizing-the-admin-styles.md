@@ -1,6 +1,6 @@
-# Customizing the admin styles
+# Custom Administration Sections
 
-```
+```text
 $admin-bg: rgba(225,128,92,0.9);
 $admin-fg: #FFFFFF;
 $admin-secondary-bg: rgba(190,98,64,0.9);
@@ -198,3 +198,4 @@ $admin-btn-danger-fg: #fff;
     color: $admin-highlight-fg;
 }
 ```
+

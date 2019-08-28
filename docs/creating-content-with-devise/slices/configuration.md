@@ -1,10 +1,23 @@
-# Configuration
+# Slice Configuration
 
-In addition to fields there are a few other properties you can set in your slice to give content managers a little more information about that slice. 
+In addition to fields there are a couple other properties you can set in your slice to give content managers a little more information about that slice. 
 
 ## Description
 
-Descriptions appear in the slice selector when adding them to a page and give the content manager a little more context about what they are about to select.
+Descriptions appear in the slice selector when adding them to a page and give the content manager a little more context about what they are about to select. 
+
+```javascript
+...
+@section('component')
+<script>
+  var component = {
+    preview: ['{B, Bbg, B}'],
+    description: 'Card with information',
+    fields: {
+    ...
+```
+
+**TODO: Screenshot of slice selector**
 
 ## Previews
 
@@ -16,7 +29,7 @@ The markup is an array of strings that represent a full row. of the drawing. The
 
 If you had an image above a title with a paragraph below it you might have markup like this:
 
-```text
+```javascript
 @section('component')
   <script>
     var component = {

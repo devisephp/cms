@@ -113,6 +113,7 @@ Route::group(['prefix' => 'api/devise', 'namespace' => 'Devise\Http\Controllers'
             Route::get('routes', 'PagesController@routes');
             Route::get('pages-suggest', 'PagesController@suggestList');
             Route::get('pages/search', 'PagesController@search');
+            Route::get('pages/admin-search', 'PagesController@adminSearch');
             Route::get('pages/{page_id}', 'PagesController@single');
             Route::post('pages', 'PagesController@store');
             Route::put('pages/{page_id}', 'PagesController@update');

@@ -145,6 +145,24 @@ class PagesController extends Controller
         return PageResource::collection($pages);
     }
 
+    /**
+     * Search for the admin workflow
+     *
+     */
+    public function adminSearch(ApiRequest $request)
+    {
+        $siteId = null;
+        $term = $request->input('term');
+        $list = $request->input('list');
+
+        if (!$request->has('multi-site') || !$request->get('multi-site', 0))
+        {
+            $siteId = $this->SiteDetector->current()->id;
+        }
+        $pages = $this->PagesRepository->searchPages($term, $siteId, $list, 20);
+        return PageResource::collection($pages, false);
+    }
+
         /**
      * Request the page listing
      *

@@ -14,7 +14,7 @@ class PageResource extends Resource
      * @param  \Illuminate\Http\Request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request, $slices = true)
     {
         $data = [
             'id'                 => $this->id,
@@ -37,7 +37,7 @@ class PageResource extends Resource
         ];
 
         // Relationships
-        if ($this->currentVersion && $this->currentVersion->slices->count())
+        if ($slices && $this->currentVersion && $this->currentVersion->slices->count())
         {
             $data['slices'] = SliceInstanceResource::collection($this->currentVersion->slices);
 

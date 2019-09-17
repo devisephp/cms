@@ -255,8 +255,10 @@ class PagesRepository
             ->join('dvs_languages', 'dvs_languages.id', '=', 'dvs_pages.language_id')
             ->join('dvs_sites', 'dvs_sites.id', '=', 'dvs_pages.site_id');
 
-        if (!$list)
+        if (!$list) {
             $pages = $pages->with('versions');
+            $pages = $pages->with('metas');
+        }
 
         if ($siteId != null)
             $pages = $pages->where('site_id', $siteId);

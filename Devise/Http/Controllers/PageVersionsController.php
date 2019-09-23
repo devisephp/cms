@@ -39,6 +39,10 @@ class PageVersionsController extends Controller
             ->join('dvs_sites', 'dvs_sites.id', '=', 'dvs_pages.site_id');
 
         $pages = $pages->where('dvs_pages.title', 'LIKE', '%' . $request->get('term') . '%');
+        
+        if ($request->has('site_id')) {
+            $pages = $pages->where('dvs_pages.site_id', '=', $request->get('site_id'));
+        }
 
         $pages = $pages->select('dvs_page_versions.id', 'dvs_pages.title', 'dvs_pages.site_id', 'dvs_sites.name as site_name', 'dvs_languages.code', 'dvs_page_versions.name')
             ->orderBy('dvs_pages.site_id')

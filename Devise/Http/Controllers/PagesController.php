@@ -177,7 +177,7 @@ class PagesController extends Controller
             $siteId = $this->SiteDetector->current()->id;
         }
 
-        $pages = $this->PagesRepository->searchPages($term, $siteId, true, 20);
+        return $this->PagesRepository->searchPages($term, $siteId, true, 20);
     }
 
     /**

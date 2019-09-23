@@ -33,13 +33,8 @@ class PageVersionsSlicesController extends Controller
         $instance = $this->DvsSliceInstance
             ->findOrFail($request->get('copy_slice_id'));
 
-        if ($instance->parent_instance_id === 0)
-        {
-            $this->copySlice($instance, $pageVersionId);
-        } else
-        {
-            abort('Sorry. Only top level slices can be copied.');
-        }
+        $instance->parent_instance_id = 0;
+        $this->copySlice($instance, $pageVersionId);
     }
 
     /**

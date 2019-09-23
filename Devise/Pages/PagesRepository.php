@@ -275,10 +275,10 @@ class PagesRepository
             $pages = $pages->take($limit);
 
         $pages = $pages->select('dvs_pages.*')->get();
-
+        
         if (!$list)
-            return $pages;
-
+        return $pages;
+        
         $results = [];
         foreach ($pages as $page)
         {
@@ -286,7 +286,7 @@ class PagesRepository
             $name .= $page->title . ' (' . $page->code . ')';
             $results[$page->id] = $name;
         }
-
+        
         return $results;
     }
 

@@ -73,8 +73,7 @@ class Repository
         $fileData['type'] = 'file';
         $fileData['alt'] = $this->ImageAlts->get($fileData['url']);
 
-        $type = $this->Storage->mimeType($file);
-        if (strpos($type, 'image') !== false)
+        if ($this->isImageExtension($file))
         {
             $fileData['type'] = 'image';
         }
@@ -94,6 +93,14 @@ class Repository
         }
 
         return $fileData;
+    }
+
+    private function isImageExtension($path)
+    {
+        $allowed = ['jpg', 'jpeg', 'jpe', 'jif', 'jfif', 'jfi', 'png', 'gif', 'webp', 'tiff', 'tif', 'jp2', 'j2k', 'jpf', 'jpx', 'jpm', 'mj2'];
+        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
+        return in_array($ext, $allowed);
     }
 
     /**

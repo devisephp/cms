@@ -131,6 +131,7 @@ class InstallController extends Controller
     {
         $status = [];
         $optimizers = $this->OptimizerChain->getOptimizers();
+        dd($optimizers);
         foreach ($optimizers as $optimizer)
         {
             $status[$optimizer->binaryName] = $optimizer->binaryPath !== "";

@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="/devise/css/prism-line-numbers.css">
     <link rel="stylesheet" href="/devise/css/themes/prism-okaidia.css">
 
-    <link href=/devise/css/chunk-vendors.css rel=stylesheet>
-    <link href=/devise/css/main.css rel=stylesheet>
-    <link href=/devise/css/styles.css rel=stylesheet>
+    <link rel="stylesheet" href="{{vuemix('/css/devise-installer.css', '/devise')}}">
+    <link rel="stylesheet" href="{{vuemix('/css/chunk-vendors.css', '/devise')}}">
+    <link rel="stylesheet" href="{{vuemix('/css/styles.css', '/devise')}}">
   </head>
 
   <body>
@@ -37,7 +37,7 @@
     </div>
 
     
-    <script rel="prefetch" src="/devise/js/chunk-vendors.js"></script>
-    <script rel="prefetch" src="devise/js/main.js"></script>
+    <script rel="prefetch" src="{{vuemix('/js/chunk-vendors.js', '/app')}}"></script>
+    <script rel="prefetch" src="{{vuemix('/js/app.js', '/app')}}"></script>
   </body>
 </html>

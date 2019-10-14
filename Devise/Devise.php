@@ -29,12 +29,15 @@ class Devise
         $head = '';
         $head .= self::analytics();
         $head .= self::meta($page);
+
         $head .= '<script>';
         $head .= self::data($page);
         $head .= '</script>';
+        
+        $head .= $page->head;
 
         $head .= '<style>';
-        $head .= '#devise-blocker { position:fixed; z-index:999999; top:0; left:0; right:0; bottom:0; background-color:white; 	pointer-events: none; transition:1s opacity; } #devise-blocker.fade { opacity:0; }';
+        $head .= '#devise-blocker { position:fixed; z-index:999999; top:0; left:0; right:0; bottom:0; background-color:white; pointer-events: none; transition:1s opacity; } #devise-blocker.fade { opacity:0; }';
         $head .= '</style>';
 
         return $head;

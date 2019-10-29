@@ -13,8 +13,8 @@
         "php": "^7.1.3",
         "doctrine/dbal": "^2.7",
         "guzzlehttp/guzzle": "~6.0",
-        "kg-bot/laravel-localization-to-vue": "^1.5",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "^6.2",
+        "kg-bot/laravel-localization-to-vue": "^1.6",
         "league/glide-laravel": "^1.0",
         "spatie/laravel-glide": "^3.2",
         "spatie/laravel-image-optimizer": "^1.3"

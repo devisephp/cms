@@ -36,14 +36,18 @@ if (!function_exists('vuemix'))
 
         // HMR isn't loading so check the manifest and return the hashed file
         $manifestFilePath = public_path($manifestDirectory . '/manifest.json');
-        if (file_exists($manifestFilePath)) {
+        if (file_exists($manifestFilePath))
+        {
             $manifestFile = file_get_contents($manifestFilePath);
             $manifest = json_decode($manifestFile);
 
-            return new HtmlString($manifestDirectory . DIRECTORY_SEPARATOR . $manifest->$file); // return path without changing anything aka production
+            $htmlString = new HtmlString($manifestDirectory . DIRECTORY_SEPARATOR . $manifest->$file); // return path without changing anything aka production
+
+            return config('app.asset_url') . $htmlString;
         }
 
-        return new HtmlString($manifestDirectory . DIRECTORY_SEPARATOR . $path); // return path without changing anything aka production
-
+        $htmlString = new HtmlString($manifestDirectory . DIRECTORY_SEPARATOR . $path); // return path without changing anything aka production
+        
+        return config('app.asset_url') . $htmlString;
     }
 }

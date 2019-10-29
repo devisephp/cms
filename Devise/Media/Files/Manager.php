@@ -3,6 +3,7 @@
 use Devise\Media\Directories\DirectoryPaths;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -35,7 +36,7 @@ class Manager
     public function saveUploadedFile($input)
     {
         $categoryPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
-        $file = array_get($input, 'file', null);
+        $file = Arr::get($input, 'file', null);
 
         $serverPath = $this->CategoryPaths->serverPath($categoryPath);
 

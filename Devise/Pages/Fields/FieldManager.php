@@ -3,6 +3,7 @@
 use Devise\Models\DvsField;
 use Devise\Models\DvsSliceInstance;
 use Devise\Support\Framework;
+use Illuminate\Support\Arr;
 
 /**
  * A field manager has the responsibilty of managing fields in
@@ -51,11 +52,11 @@ class FieldManager
 
         $oldValues = clone $field->values;
 
-        $newValues = array_get($fieldInput, 'values', []);
+        $newValues = Arr::get($fieldInput, 'values', []);
 
         $field->values->override($newValues);
 
-        $field->content_requested = array_get($fieldInput, 'content_requested', false) == 1;
+        $field->content_requested = Arr::get($fieldInput, 'content_requested', false) == 1;
 
         $field->json_value = $field->values->toJSON();
 
@@ -106,7 +107,7 @@ class FieldManager
      */
     protected function getFieldToUpdate($fieldId, $fieldInput, $pageInput)
     {
-        $scope = array_get($fieldInput, 'scope');
+        $scope = Arr::get($fieldInput, 'scope');
 
         $field = $scope == 'global'
             ? $this->GlobalField->whereId($fieldId)->firstOrFail()

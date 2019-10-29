@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class DvsPage extends Model
 {
@@ -206,7 +207,7 @@ class DvsPage extends Model
         return array_key_exists($key, $this->attributes)
             or $this->hasGetMutator($key)
             or array_key_exists($key, $this->relations)
-            or method_exists($this, camel_case($key));
+            or method_exists($this, Str::camel($key));
     }
 
     public function getLiveVersion($now = null)

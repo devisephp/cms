@@ -3,6 +3,7 @@
 namespace Devise\Traits;
 
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 /**
  * Trait IsDeviseComponent
@@ -21,7 +22,7 @@ trait IsDeviseComponent
 
     public function getComponentNameAttribute()
     {
-        return 'Devise' . studly_case(preg_replace('/[^A-Za-z0-9\-]/', '', $this->name));
+        return 'Devise' . Str::studly(preg_replace('/[^A-Za-z0-9\-]/', '', $this->name));
     }
 
     public function getHasChildSlotAttribute()

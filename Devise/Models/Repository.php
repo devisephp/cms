@@ -4,6 +4,7 @@ namespace Devise\Models;
 
 use Devise\Languages\LanguageDetector;
 use Devise\Sites\SiteDetector;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
@@ -55,16 +56,16 @@ class Repository
 
     private function getRecords($params)
     {
-        $classPath = array_get($params, 'class');
+        $classPath = Arr::get($params, 'class');
 
         if ($classPath)
         {
-            $scopes = array_get($params, 'scopes', []);
-            $filters = array_get($params, 'filters');
-            $paginated = array_get($params, 'paginated', false);
-            $single = array_get($params, 'single', false);
-            $sort = array_get($params, 'sort');
-            $limit = array_get($params, 'limit', 25);
+            $scopes = Arr::get($params, 'scopes', []);
+            $filters = Arr::get($params, 'filters');
+            $paginated = Arr::get($params, 'paginated', false);
+            $single = Arr::get($params, 'single', false);
+            $sort = Arr::get($params, 'sort');
+            $limit = Arr::get($params, 'limit', 25);
 
             try
             {

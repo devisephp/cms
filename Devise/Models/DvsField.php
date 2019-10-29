@@ -4,6 +4,7 @@ namespace Devise\Models;
 
 use Devise\Traits\HasJsonImage;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 
 class DvsField extends Model
@@ -108,7 +109,7 @@ class DvsField extends Model
         {
             $remove = $this->getRemoveList($value['type']);
 
-            return array_except($value, $remove);
+            return Arr::except($value, $remove);
         }
 
         return $value;

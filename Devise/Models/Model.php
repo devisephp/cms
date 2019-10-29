@@ -6,6 +6,7 @@ use Devise\Http\Requests\ApiRequest;
 
 use Devise\MotherShip\ReleasesToMotherShip;
 use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Support\Arr;
 
 class Model extends BaseModel
 {
@@ -38,6 +39,6 @@ class Model extends BaseModel
       return $request->only($this->fillable);
     }
 
-    return array_only($request, $this->fillable);
+    return Arr::only($request, $this->fillable);
   }
 }

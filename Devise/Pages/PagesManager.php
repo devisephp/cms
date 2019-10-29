@@ -3,6 +3,7 @@
 use Devise\Models\DvsLanguage;
 use Devise\Models\DvsPage;
 use Devise\Sites\SiteDetector;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
@@ -124,11 +125,11 @@ class PagesManager
     {
         $page = $this->createPageFromInput($input);
 
-        $startsAt = array_get($input, 'published', false) ? date('Y-m-d H:i:s') : null;
+        $startsAt = Arr::get($input, 'published', false) ? date('Y-m-d H:i:s') : null;
 
-        $layout = array_get($input, 'layout', '');
+        $layout = Arr::get($input, 'layout', '');
 
-        $copyPageId = array_get($input, 'copy_page_id', false);
+        $copyPageId = Arr::get($input, 'copy_page_id', false);
 
         if ($copyPageId)
         {
@@ -175,7 +176,7 @@ class PagesManager
             $page->currentVersion->save();
         }
 
-        $this->PageMetaManager->savePageMeta($page, array_get($input, 'meta', []));
+        $this->PageMetaManager->savePageMeta($page, Arr::get($input, 'meta', []));
 
         $this->refreshRouteCache();
 
@@ -218,7 +219,7 @@ class PagesManager
         // we'll use the current live version to copy
         $fromPageVersion = $fromPage->getLiveVersion();
 
-        if (array_get($input, 'language_id', false))
+        if (Arr::get($input, 'language_id', false))
         {
             // we are translating the page
             $this->setTranslatedFromPageId($fromPage, $input);
@@ -230,7 +231,7 @@ class PagesManager
             $input['language_id'] = $fromPage->language_id;
         }
 
-        if (!array_get($input, 'site_id', false))
+        if (!Arr::get($input, 'site_id', false))
         {
             $site = $this->SiteDetector->current();
             $input['site_id'] = $site->id;
@@ -333,7 +334,7 @@ class PagesManager
     {
         if (!isset($input['route_name']))
         {
-            $input['route_name'] = $this->findAvailableRoute(Str::slug(array_get($input, 'title', str_random(42))), $input['language_id']);
+            $input['route_name'] = $this->findAvailableRoute(Str::slug(Arr::get($input, 'title', str_random(42))), $input['language_id']);
         } else
         {
             $input['route_name'] = $this->findAvailableRoute($input['route_name'], $input['language_id']);

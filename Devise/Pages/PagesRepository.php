@@ -274,7 +274,7 @@ class PagesRepository
         if ($limit != null)
             $pages = $pages->take($limit);
 
-        $pages = $pages->select('dvs_pages.*')->get();
+        $pages = $pages->select('dvs_pages.*')->paginate();
         
         if (!$list)
         return $pages;

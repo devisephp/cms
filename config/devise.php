@@ -67,24 +67,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Mothership
-    |--------------------------------------------------------------------------
-    |
-    | Configuration for mothership
-    |
-    */
-    'mothership'  => [
-        'url'     => env('MOTHERSHIP_URL', 'https://mothership.app/'),
-        'api-key' => env('MOTHERSHIP_API_KEY', null)
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Permissions
     |--------------------------------------------------------------------------
     |
     | Configuration for user permissions.
-    | Available Permissions: ['access admin','manage pages','manage users','manage mothership',
+    | Available Permissions: ['access admin','manage pages','manage users'
     | 'manage settings','manage meta','manage sites','manage languages','manage redirects']
     |
     */
@@ -95,7 +82,6 @@ return [
             'manage pages',
             'manage slices',
             'manage users',
-            'manage mothership',
             'manage settings',
             'manage meta',
             'manage sites',
@@ -108,7 +94,6 @@ return [
             'manage pages',
             'manage slices',
             'manage users',
-            'manage mothership',
             'manage settings',
             'manage meta',
             'manage sites',

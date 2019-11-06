@@ -22,7 +22,6 @@ use KgBot\LaravelLocalization\Facades\ExportLocalizations as LaravelLocalization
 class Devise
 {
     private static $components = [];
-    private static $mothershipEnabled = null;
 
     public static function head($page = null)
     {
@@ -225,21 +224,6 @@ class Devise
         }
 
         return "Devise.prototype.\$user = null;\n";
-    }
-
-    public static function mothershipEnabled()
-    {
-        if (self::$mothershipEnabled === null)
-        {
-            if (!app()->runningInConsole() && Database::connected() && Schema::hasTable('dvs_releases') && config('devise.mothership.api-key'))
-            {
-                self::$mothershipEnabled = true;
-            }
-
-            self::$mothershipEnabled = false;
-        }
-
-        return self::$mothershipEnabled;
     }
 
     public static function userAvailable()

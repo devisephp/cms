@@ -4,13 +4,11 @@ namespace Devise\Models;
 
 use Devise\Http\Requests\ApiRequest;
 
-use Devise\MotherShip\ReleasesToMotherShip;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Support\Arr;
 
 class Model extends BaseModel
 {
-  use ReleasesToMotherShip;
 
   public function createFromRequest(ApiRequest $request)
   {

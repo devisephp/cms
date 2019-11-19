@@ -49,21 +49,20 @@ class LanguageDetector
 
         $site = $this->SiteDetector->current();
 
-        $language = $site->languages->where('code', $locale)->first();
-
-        // this language is not active, so let's get locale
-        // to be something different, like the default one
-        if (!$language)
+        if ($site)
         {
-            $locale = $this->LocaleDetector->universal();
-            $this->LocaleDetector->update($locale);
-            $language = $site->languages->where('code', $locale)->first();
-        }
+            $language = $site->languages->where('code', $locale)
+                ->first();
 
-        // nothing worked so lets load the default
-        if (!$language)
+            // not found using local so let's load default
+            if (!$language)
+                $language = $site->default_language;
+
+        } else
         {
-            $language = $site->default_language;
+            // let's load the language for the locale not related to the site
+            $language = $this->Language->where('code', $locale)
+                ->first();
         }
 
         self::$currentLangauge = $language;

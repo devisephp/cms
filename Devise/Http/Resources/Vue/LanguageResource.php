@@ -25,6 +25,7 @@ class LanguageResource extends Resource
         return [
             'id'      => $this->id,
             'name'    => $this->name,
+            'code'    => $this->code,
             'default' => $this->pivot_default,
             'path'    => ($this->pivot_default) ? '/' : '/' . $this->code,
             'url'     => ($this->pivot_default) ? $site->url . '/' : $site->url . '/' . $this->code,

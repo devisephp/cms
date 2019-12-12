@@ -182,7 +182,7 @@ class MediaController extends Controller
         return [
             'media'        => $newMediaUrls,
             'defaultImage' => $request->get('defaultImage'),
-            'alt'          => $this->ImageAlts->get($request->get('defaultImage'))
+            'caption'      => $this->ImageAlts->get($request->get('defaultImage'))
         ];
     }
 

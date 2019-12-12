@@ -54,11 +54,16 @@ trait HasJsonImage
 
     private function updateImageAlt(&$value)
     {
-        if (isset($value->type) && $value->type == 'image' && isset($value->media) && isset($value->media->original))
+        if (isset($value->type) && $value->type == 'image')
         {
-            $imageAlts = App::make(ImageAlts::class);
+            $value->caption = "";
 
-            $value->alt = $imageAlts->get($value->media->original);
+            if (isset($value->media) && isset($value->media->defaultImage))
+            {
+                $imageAlts = App::make(ImageAlts::class);
+
+                $value->caption = $imageAlts->get($value->media->defaultImage);
+            }
         }
     }
 

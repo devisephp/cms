@@ -40,7 +40,7 @@ class Glide
             'source_path_prefix'     => $Framework->config->get('devise.media.source-directory'),
             'cache'                  => $Framework->disk->getDriver(),
             'cache_path_prefix'      => $Framework->config->get('devise.media.cached-images-directory'),
-            'group_cache_in_folders' => false,
+            'group_cache_in_folders' => $Framework->config->get('devise.media.group-cache-in-folders', false),
             'base_url'               => '/styled/preview/',
             'driver'                 => $Framework->config->get('devise.media.driver')
         ]);

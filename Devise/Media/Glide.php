@@ -81,7 +81,8 @@ class Glide
     public function getFieldUrl($fieldPath)
     {
         $parts = parse_url($fieldPath);
-        if(isset($parts['query'])){
+        if (isset($parts['query']))
+        {
             parse_str($parts['query'], $input);
 
             return $this->Cache
@@ -102,13 +103,18 @@ class Glide
 
     public function generateSignedUrl($path, $params)
     {
+        // setting visibility
+        $pathForVisibility = str_replace('/storage/media', '', $path);
+        $filePath = $this->server->makeImage($pathForVisibility, $params);
+        $this->Storage->setVisibility($filePath, 'public');
+
         $signKey = $this->getKey();
 
         $fileName = pathinfo($path);
 
-        
+
         if (!isset($fileName['dirname']) || !isset($fileName['basename'])) abort(400, 'Unable to parse given image path ' . $path);
-        
+
         $urlBuilder = $this->UrlBuilderFactory
             ->create($fileName['dirname'] . '/', $signKey);
 

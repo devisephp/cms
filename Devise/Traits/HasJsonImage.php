@@ -13,9 +13,12 @@ trait HasJsonImage
 {
     private function updateImageUrlsToStorage(&$value)
     {
-        if (isset($value->url) && $this->isUsingS3())
+        $user = Auth::user();
+        if ($this->isUsingS3() && (!Auth::check() || !$user->hasPermission('manage slices')))
         {
-            $value->url = $this->convertToStoragePath($value->url);
+            // only public users or loggin in users that can't manage the admin
+            if (isset($value->url))
+                $value->url = $this->convertToStoragePath($value->url);
 
             if (isset($value->media) && $value->media)
             {
@@ -35,15 +38,9 @@ trait HasJsonImage
 
             if (strpos($path, '/storage/styled/') !== false && strpos($path, 's=') !== false)
             {
-                $user = Auth::user();
-                if (!$user || !$user->hasPermission('manage slices'))
-                {
-                    $glide = App::make(Glide::class);
+                $glide = App::make(Glide::class);
 
-                    return $glide->getFieldUrl($path);
-                }
-
-                return $path;
+                return $glide->getFieldUrl($path);
             }
 
             return $storage->url(str_replace('/storage/', '', $path));

@@ -24,11 +24,6 @@ class ModelQueries
      */
     public static function set($description, $classAndMethod, $params = [], $views = [])
     {
-        if (isset(self::$queries[$classAndMethod]))
-        {
-            abort(500, 'ModelQuery key (' . $classAndMethod . ') already registered. Please use a different name.');
-        }
-
         self::$queries[$classAndMethod] = [
             'key'         => $classAndMethod,
             'description' => $description,

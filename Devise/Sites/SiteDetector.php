@@ -55,7 +55,14 @@ class SiteDetector
                 {
                     if ($d == $requested)
                     {
-                        return DvsSite::findOrFail($id);
+                        $site = DvsSite::findOrFail($id);
+
+                        if ($site)
+                        {
+                            self::$site = $site;
+
+                            return $site;
+                        }
                     }
                 }
             }

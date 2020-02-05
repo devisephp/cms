@@ -34,6 +34,15 @@ class ImageAlts
         return $all[$file] ?? '';
     }
 
+    public function addToCache($filePath, $alt)
+    {
+        $all = $this->Cache->get('dvs.image-alts');
+
+        $all[$filePath] = $alt;
+
+        $this->Cache->forever('dvs.image-alts', $all);
+    }
+
     public function cacheAll()
     {
         $path = $this->Config

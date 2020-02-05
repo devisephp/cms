@@ -50,6 +50,6 @@ class MediaAltsController extends Controller
             ->put($altFile, $request->get('alt_text'));
 
         $this->ImageAlts
-            ->cacheAll();
+            ->addToCache($request->get('image'), $request->get('alt_text'));
     }
 }

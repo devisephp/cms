@@ -55,11 +55,11 @@ trait HasJsonImage
         {
             $value->caption = "";
 
-            if (isset($value->media) && isset($value->media->defaultImage))
+            if (isset($value->media) && isset($value->defaultImage))
             {
                 $imageAlts = App::make(ImageAlts::class);
 
-                $value->caption = $imageAlts->get($value->media->defaultImage);
+                $value->caption = $imageAlts->get($value->defaultImage);
             }
         }
     }

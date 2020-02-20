@@ -4,6 +4,7 @@ namespace Devise\Models;
 
 use Devise\Devise;
 use Devise\Models\Repository as ModelRepository;
+use Devise\Support\Framework;
 use Devise\Traits\Filterable;
 use Devise\Traits\Sortable;
 use DateTime;
@@ -36,6 +37,8 @@ class DvsPage extends Model
     ];
 
     protected $table = 'dvs_pages';
+
+    protected $currentABVersion;
 
     public function versions()
     {
@@ -90,13 +93,26 @@ class DvsPage extends Model
 
     public function livePageVersionByAB()
     {
+        // already have an ab version found. let's just return it's value
+        if ($this->currentABVersion) return $this->currentABVersion;
+
         $liveVersion = $this->livePageVersionByCookie();
 
-        if ($liveVersion) return $liveVersion;
+        if ($liveVersion)
+        {
+            $this->currentABVersion = $liveVersion;
+
+            return $liveVersion;
+        }
 
         $liveVersion = $this->livePageVersionByDiceRoll();
 
-        if ($liveVersion) return $liveVersion;
+        if ($liveVersion)
+        {
+            $this->currentABVersion = $liveVersion;
+
+            return $liveVersion;
+        }
 
         return $this->livePageVersionByDate();
     }
@@ -140,7 +156,8 @@ class DvsPage extends Model
         if (isset($versions[$diceroll]))
         {
             $liveVersion = $versions[$diceroll];
-//            $this->Cookie->queue('dvs-ab-testing-' . $this->id, $liveVersion->id);
+            $famework = App::make(Framework::class);
+            $famework->Cookie->queue('dvs-ab-testing-' . $this->id, $liveVersion->id);
         }
 
         return $this->versionById($liveVersion->id)->first();

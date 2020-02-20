@@ -53,13 +53,11 @@ class DvsPage extends Model
             }
         }
 
-        return $this->liveVersion();
+        return $this->livePageVersionByDate();
     }
 
     public function liveVersion()
     {
-        if ($this->ab_testing_enabled) return $this->livePageVersionByAB();
-
         return $this->livePageVersionByDate();
     }
 
@@ -115,7 +113,7 @@ class DvsPage extends Model
 
         if (!$pageVersionId) return null;
 
-        $liveVersion = $this->versionById($pageVersionId);
+        $liveVersion = $this->versionById($pageVersionId)->first();
 
         if ($liveVersion) return $liveVersion;
 
@@ -126,7 +124,7 @@ class DvsPage extends Model
     {
         $liveVersion = null;
 
-        $versions = $this->abEnabledLiveVersions();
+        $versions = $this->abEnabledLiveVersions;
 
         $diceroll = array();
 
@@ -142,10 +140,10 @@ class DvsPage extends Model
         if (isset($versions[$diceroll]))
         {
             $liveVersion = $versions[$diceroll];
-            $this->Cookie->queue('dvs-ab-testing-' . $this->id, $liveVersion->id);
+//            $this->Cookie->queue('dvs-ab-testing-' . $this->id, $liveVersion->id);
         }
 
-        return $this->versionById($liveVersion->id);
+        return $this->versionById($liveVersion->id)->first();
     }
 
     public function localizedPages()
@@ -171,6 +169,34 @@ class DvsPage extends Model
     public function site()
     {
         return $this->belongsTo(DvsSite::class, 'site_id');
+    }
+
+    public function getCurrentVersionAttribute()
+    {
+        // these accessors allow us to check if ab testing is on
+        // if its not we can just use the relationships
+        if ($this->ab_testing_enabled && !$this->forceCurrentVersion())
+            return $this->livePageVersionByAB();
+
+        if (isset($this->relations['currentVersion']))
+            return $this->relations['currentVersion'];
+
+        return $this->currentVersion()
+            ->first();
+    }
+
+    public function getLiveVersionAttribute()
+    {
+        // these accessors allow us to check if ab testing is on
+        // if its not we can just use the relationships
+        if ($this->ab_testing_enabled)
+            return $this->livePageVersionByAB();
+
+        if (isset($this->relations['liveVersion']))
+            return $this->relations['liveVersion'];
+
+        return $this->liveVersion()
+            ->first();
     }
 
     public function getResponseClassAttribute()
@@ -253,5 +279,10 @@ class DvsPage extends Model
         });
 
         return $this->metas->merge($globalMeta);
+    }
+
+    protected function forceCurrentVersion()
+    {
+        return request()->has('version_id') && Auth::check() && Auth::user()->hasPermission('manage pages');
     }
 }

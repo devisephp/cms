@@ -129,19 +129,23 @@ class RoutesGenerator
             if ($siteId > 0)
             {
                 $overwrite = env('SITE_' . $siteId . '_DOMAIN');
-                $domain = (!$overwrite) ? $domains[$siteId] : $overwrite;
-                $this->Route->group(['domain' => $domain], function () use ($routes) {
-
-                    foreach ($routes as $route)
-                    {
-                        $this->Route->get($route->from_url, [
-                            'uses' => 'Devise\Http\Controllers\RedirectsController@show',
-                            'as'   => 'dvs-redirect-' . $route->id
-                        ]);
-                    }
-
-
-                });
+                $domains = (!$overwrite) ? [$domains[$siteId]] : explode(',', $overwrite);
+                foreach ($domains as $domain) {
+                    $this->Route->group(
+                        ['domain' => $domain],
+                        function () use ($routes) {
+                            foreach ($routes as $route) {
+                                $this->Route->get(
+                                    $route->from_url,
+                                    [
+                                        'uses' => 'Devise\Http\Controllers\RedirectsController@show',
+                                        'as' => 'dvs-redirect-' . $route->id
+                                    ]
+                                );
+                            }
+                        }
+                    );
+                }
             } else
             {
                 foreach ($routes as $route)

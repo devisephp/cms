@@ -334,7 +334,7 @@ class PagesManager
     {
         if (!isset($input['route_name']))
         {
-            $input['route_name'] = $this->findAvailableRoute(Str::slug(Arr::get($input, 'title', str_random(42))), $input['language_id']);
+            $input['route_name'] = $this->findAvailableRoute(Str::slug(Arr::get($input, 'title', Str::random(42))), $input['language_id']);
         } else
         {
             $input['route_name'] = $this->findAvailableRoute($input['route_name'], $input['language_id']);

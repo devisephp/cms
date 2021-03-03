@@ -13,6 +13,7 @@ return [
 
     'mode'                      => env('DVS_MODE', 'install'),
     'cache_enabled'             => env('DVS_CACHE_ENABLED', false),
+    'model_cache_ignores' => env('DVS_MODEL_CACHE_IGNORES', null),
 
     /*
     |--------------------------------------------------------------------------

@@ -35,12 +35,10 @@ class RoutesGenerator
      */
     public function loadRoutes()
     {
-        if ($this->pagesTableAvailable())
-        {
+        if ($this->pagesTableAvailable()) {
             $routes = $this->findDvsPageRoutes();
 
-            if ($routes->count())
-            {
+            if ($routes->count()) {
                 $routesBySite = $routes->groupBy('site_id');
                 $domains = $this->DB->table('dvs_sites')->pluck('domain', 'id');
 
@@ -58,21 +56,18 @@ class RoutesGenerator
     {
         $overwritesEnabled = config('devise.domain_overwrites_enabled', false);
 
-        if($overwritesEnabled)
+        if ($overwritesEnabled) {
             $currentDomain = Request::getHost();
+        }
 
-        foreach ($routesBySite as $siteId => $routes)
-        {
-            if ($siteId > 0)
-            {
+        foreach ($routesBySite as $siteId => $routes) {
+            if ($siteId > 0) {
                 $domainSettings = $siteDomains[$siteId];
 
-                if ($overwritesEnabled)
-                {
+                if ($overwritesEnabled) {
                     $overwrites = config('devise.domains.' . $siteId, null);
-                    if ($overwrites)
-                    {
-                        if(strpos($overwrites, $currentDomain) !== false) {
+                    if ($overwrites) {
+                        if (strpos($overwrites, $currentDomain) !== false) {
                             $overwrites = $currentDomain;
                         }
                         $domainSettings = $overwrites;
@@ -80,39 +75,31 @@ class RoutesGenerator
                 }
 
                 $domains = explode(',', $domainSettings);
-                
-                foreach ($domains as $domain)
-                {
-                    $this->Route->domain($domain)->group(function () use ($routes) {
-                        foreach ($routes as $route)
-                        {
-                            $uses = ['as' => $route->route_name, 'uses' => $route->uses];
 
-                            if ($route->middleware)
-                            {
-                                $uses['middleware'] = explode('|', $route->middleware);
-                            } else
-                            {
-                                $uses['middleware'] = 'web';
+                foreach ($domains as $domain) {
+                    $this->Route->domain($domain)->group(
+                        function () use ($routes) {
+                            foreach ($routes as $route) {
+                                $uses = ['as' => $route->route_name, 'uses' => $route->uses];
+
+                                if ($route->middleware) {
+                                    $uses['middleware'] = explode('|', $route->middleware);
+                                } else {
+                                    $uses['middleware'] = 'web';
+                                }
+
+                                $this->Route->get($route->slug, $uses);
                             }
-
-                            $this->Route->get($route->slug, $uses);
                         }
-                    });
+                    );
                 }
-
-            } else
-            {
-
-                foreach ($routes as $route)
-                {
+            } else {
+                foreach ($routes as $route) {
                     $uses = ['as' => $route->route_name, 'uses' => $route->uses];
 
-                    if ($route->middleware)
-                    {
+                    if ($route->middleware) {
                         $uses['middleware'] = explode('|', $route->middleware);
-                    } else
-                    {
+                    } else {
                         $uses['middleware'] = 'web';
                     }
 
@@ -122,15 +109,14 @@ class RoutesGenerator
         }
     }
 
-    private function setRedirects($redirectsBySite, $domains)
+    private function setRedirects($redirectsBySite, $allDomains)
     {
-        foreach ($redirectsBySite as $siteId => $routes)
-        {
-            if ($siteId > 0)
-            {
-                $overwrite = env('SITE_' . $siteId . '_DOMAIN');
-                $domains = (!$overwrite) ? [$domains[$siteId]] : explode(',', $overwrite);
-                foreach ($domains as $domain) {
+        foreach ($redirectsBySite as $siteId => $routes) {
+            if ($siteId > 0) {
+                $overwrite = config('devise.domains.' . $siteId);
+                $overwritesEnabled = config('devise.domain_overwrites_enabled');
+                $siteDomains = (!$overwritesEnabled || !$overwrite) ? [$allDomains[$siteId]] : explode(',', $overwrite);
+                foreach ($siteDomains as $domain) {
                     $this->Route->group(
                         ['domain' => $domain],
                         function () use ($routes) {
@@ -146,14 +132,15 @@ class RoutesGenerator
                         }
                     );
                 }
-            } else
-            {
-                foreach ($routes as $route)
-                {
-                    $this->Route->get($route->from_url, [
-                        'uses' => 'Devise\Http\Controllers\RedirectsController@show',
-                        'as'   => 'dvs-redirect-' . $route->id
-                    ]);
+            } else {
+                foreach ($routes as $route) {
+                    $this->Route->get(
+                        $route->from_url,
+                        [
+                            'uses' => 'Devise\Http\Controllers\RedirectsController@show',
+                            'as' => 'dvs-redirect-' . $route->id
+                        ]
+                    );
                 }
             }
         }
@@ -181,14 +168,19 @@ class RoutesGenerator
             ->whereNull('deleted_at')
             ->get();
 
-        foreach ($pages as $page)
-        {
+        foreach ($pages as $page) {
             // ensure that route slugs are all lower case
             $slugRegex = '/([^[\}]+)(?:$|\{)/';
 
-            $page->slug = preg_replace_callback($slugRegex, function ($matches) {
-                return strtolower($matches[0]);
-            }, $page->slug, -1, $count);
+            $page->slug = preg_replace_callback(
+                $slugRegex,
+                function ($matches) {
+                    return strtolower($matches[0]);
+                },
+                $page->slug,
+                -1,
+                $count
+            );
 
             $page->uses = 'Devise\Http\Controllers\PagesController@show';
         }
@@ -198,12 +190,9 @@ class RoutesGenerator
 
     private function pagesTableAvailable()
     {
-        try
-        {
+        try {
             return Schema::hasTable('dvs_pages');
-        } catch (\Exception $e)
-        {
-
+        } catch (\Exception $e) {
         }
 
         return false;

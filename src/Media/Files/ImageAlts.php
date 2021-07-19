@@ -26,13 +26,9 @@ class ImageAlts
 
     public function get($file)
     {
-        if (!$this->Cache->has('dvs.image-alts')) $this->cacheAll();
-
-        $all = $this->Cache
-            ->get('dvs.image-alts');
-
-        return $all[$file] ?? '';
+        return $this->fromName($file);
     }
+
 
     public function addToCache($filePath, $alt)
     {
@@ -50,22 +46,35 @@ class ImageAlts
 
         $keyVal = [];
 
-        if ($path)
-        {
+        if ($path) {
             $all = $this->Storage
                 ->allFiles($path);
 
-            foreach ($all as $altFile)
-            {
+            foreach ($all as $altFile) {
                 $alt = $this->Storage->get($altFile);
                 $filePath = rtrim($altFile, '.txt');
                 $filePath = str_replace('alts/', '/storage/media/', $filePath);
                 $keyVal[$filePath] = $alt;
             }
-
         }
 
         $this->Cache
             ->forever('dvs.image-alts', $keyVal);
+    }
+
+    protected function fromName($file)
+    {
+        $parts = explode('.', $file);
+        array_pop($parts);
+
+        $withoutExtension = implode('', $parts);
+
+        $parts = explode('/', $withoutExtension);
+        $fileName = array_pop($parts);
+
+        $caption = str_replace('-', ' ', $fileName);
+        $caption = str_replace('_', ' ', $caption);
+
+        return $caption;
     }
 }

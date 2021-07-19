@@ -24,7 +24,7 @@
             "Devise\\": "src/"
         },
         "files": [
-            "Devise/Support/helpers.php"
+            "src/Support/helpers.php"
         ]
     },
     "extra": {

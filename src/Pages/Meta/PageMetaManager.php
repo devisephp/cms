@@ -1,4 +1,4 @@
-<?php namespace Devise\Pages;
+<?php namespace Devise\Pages\Meta;
 
 use Devise\Models\DvsPageMeta;
 

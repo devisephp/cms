@@ -2,6 +2,7 @@
 
 use Devise\Models\DvsLanguage;
 use Devise\Models\DvsPage;
+use Devise\Pages\Meta\PageMetaManager;
 use Devise\Sites\SiteDetector;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;

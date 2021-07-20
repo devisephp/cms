@@ -6,7 +6,7 @@ use Devise\Http\Resources\Vue\SliceInstanceResource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PageResource extends Resource
+class PageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

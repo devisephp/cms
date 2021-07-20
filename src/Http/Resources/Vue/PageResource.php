@@ -4,7 +4,7 @@ namespace Devise\Http\Resources\Vue;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PageResource extends Resource
+class PageResource extends JsonResource
 {
 
     /**

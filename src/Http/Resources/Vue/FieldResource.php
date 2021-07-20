@@ -6,7 +6,7 @@ use Devise\Support\Framework;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 
-class FieldResource extends Resource
+class FieldResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

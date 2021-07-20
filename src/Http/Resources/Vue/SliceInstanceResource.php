@@ -9,7 +9,7 @@ use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class SliceInstanceResource extends Resource
+class SliceInstanceResource extends JsonResource
 {
 
     /**

@@ -4,7 +4,7 @@ namespace Devise\Http\Resources\Vue;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MetaResource extends Resource
+class MetaResource extends JsonResource
 {
   /**
    * Transform the resource into an array.

@@ -4,7 +4,7 @@ namespace Devise\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SliceResource extends Resource
+class SliceResource extends JsonResource
 {
   /**
    * Transform the resource into an array.

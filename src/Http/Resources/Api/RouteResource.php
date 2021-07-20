@@ -5,7 +5,7 @@ namespace Devise\Http\Resources\Api;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 
-class RouteResource extends Resource
+class RouteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

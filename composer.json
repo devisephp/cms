@@ -16,8 +16,8 @@
         "laravel/framework": "^7.24",
         "kg-bot/laravel-localization-to-vue": "^1.6",
         "league/glide-laravel": "^1.0",
-        "spatie/laravel-glide": "^3.2",
-        "spatie/laravel-image-optimizer": "^1.3"
+        "spatie/laravel-glide": "^3.5",
+        "spatie/laravel-image-optimizer": "^1.6"
     },
     "autoload": {
         "psr-4": {

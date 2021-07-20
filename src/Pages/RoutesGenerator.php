@@ -1,6 +1,5 @@
 <?php namespace Devise\Pages;
 
-use Devise\Http\Requests\Redirects\ExecuteRedirect;
 use Devise\Sites\SiteDetector;
 use Devise\Support\Framework;
 use Illuminate\Support\Facades\Request;
@@ -41,13 +40,15 @@ class RoutesGenerator
             if ($routes->count()) {
                 $routesBySite = $routes->groupBy('site_id');
                 $domains = $this->DB->table('dvs_sites')->pluck('domain', 'id');
+                $redirectsBySite = $this->getRedirectsBySite();
 
-                $this->setPageRoutes($routesBySite, $domains);
-
-                $redirects = $this->findDvsRedirects();
-                $redirectsBySite = $redirects->groupBy('site_id');
-
-                $this->setRedirects($redirectsBySite, $domains);
+                if (config('devise.register_redirects_first')) {
+                    $this->setRedirects($redirectsBySite, $domains);
+                    $this->setPageRoutes($routesBySite, $domains);
+                } else {
+                    $this->setPageRoutes($routesBySite, $domains);
+                    $this->setRedirects($redirectsBySite, $domains);
+                }
             }
         }
     }
@@ -196,5 +197,11 @@ class RoutesGenerator
         }
 
         return false;
+    }
+
+    protected function getRedirectsBySite()
+    {
+        $redirects = $this->findDvsRedirects();
+        return $redirects->groupBy('site_id');
     }
 }

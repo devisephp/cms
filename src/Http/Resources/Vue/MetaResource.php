@@ -2,7 +2,7 @@
 
 namespace Devise\Http\Resources\Vue;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class MetaResource extends Resource
 {

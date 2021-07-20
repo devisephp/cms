@@ -2,7 +2,7 @@
 
 namespace Devise\Http\Resources\Api;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 
 class RouteResource extends Resource

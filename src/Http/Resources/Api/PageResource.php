@@ -4,7 +4,7 @@ namespace Devise\Http\Resources\Api;
 
 use Devise\Http\Resources\Vue\SliceInstanceResource;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class PageResource extends Resource
 {

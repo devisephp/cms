@@ -3,7 +3,7 @@
 namespace Devise\Http\Resources\Vue;
 
 use Devise\Sites\SiteDetector;
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
 
 class LanguageResource extends Resource

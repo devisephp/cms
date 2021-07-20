@@ -3,7 +3,7 @@
 namespace Devise\Http\Resources\Vue;
 
 use Devise\Support\Framework;
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 
 class FieldResource extends Resource

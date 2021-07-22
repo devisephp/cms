@@ -5,10 +5,7 @@ namespace Devise\Http\Controllers;
 use Devise\Http\Requests\ApiRequest;
 use Devise\Models\Repository as ModelRepository;
 
-use Devise\Traits\Filterable;
 use Devise\Traits\Sliceable;
-use Devise\Traits\Sortable;
-use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Controller;
 
@@ -19,7 +16,6 @@ use RegexIterator;
 
 class ModelsController extends Controller
 {
-    use DetectsApplicationNamespace;
 
     /**
      * @var ModelRepository

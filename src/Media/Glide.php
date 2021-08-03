@@ -32,18 +32,24 @@ class Glide
     /**
      * Glide constructor.
      */
-    public function __construct(Framework $Framework, SignatureFactory $SignatureFactory, UrlBuilderFactory $UrlBuilderFactory, Str $Str)
-    {
-        $this->server = ServerFactory::create([
-            'response'               => new LaravelResponseFactory(app('request')),
-            'source'                 => $Framework->disk->getDriver(),
-            'source_path_prefix'     => $Framework->config->get('devise.media.source-directory'),
-            'cache'                  => $Framework->disk->getDriver(),
-            'cache_path_prefix'      => $Framework->config->get('devise.media.cached-images-directory'),
-            'group_cache_in_folders' => $Framework->config->get('devise.media.group-cache-in-folders', false),
-            'base_url'               => '/styled/preview/',
-            'driver'                 => $Framework->config->get('devise.media.driver')
-        ]);
+    public function __construct(
+        Framework $Framework,
+        SignatureFactory $SignatureFactory,
+        UrlBuilderFactory $UrlBuilderFactory,
+        Str $Str
+    ) {
+        $this->server = ServerFactory::create(
+            [
+                'response' => new LaravelResponseFactory(app('request')),
+                'source' => $Framework->disk->getDriver(),
+                'source_path_prefix' => $Framework->config->get('devise.media.source-directory'),
+                'cache' => $Framework->disk->getDriver(),
+                'cache_path_prefix' => $Framework->config->get('devise.media.cached-images-directory'),
+                'group_cache_in_folders' => $Framework->config->get('devise.media.group-cache-in-folders', false),
+                'base_url' => '/styled/preview/',
+                'driver' => $Framework->config->get('devise.media.driver')
+            ]
+        );
 
         $this->Config = $Framework->config;
         $this->Storage = $Framework->disk;
@@ -55,12 +61,10 @@ class Glide
 
     public function getImageResponse($path)
     {
-        try
-        {
+        try {
             $image = $this->server->getImageResponse($path, request()->all());
 
-            if (request()->has('s') && !$this->Cache->has('dvs.image.styled.' . request()->get('s')))
-            {
+            if (request()->has('s') && !$this->Cache->has('dvs.image.styled.' . request()->get('s'))) {
                 $cachePath = $this->server->getCachePath($path, request()->all());
                 $cacheUrl = $this->Storage->url($cachePath);
 
@@ -70,9 +74,7 @@ class Glide
             }
 
             return $image;
-
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return Image::make(base_path('vendor/devisephp/cms/resources/images/file-icon.gif'))
                 ->response();
         }
@@ -81,8 +83,7 @@ class Glide
     public function getFieldUrl($fieldPath)
     {
         $parts = parse_url($fieldPath);
-        if (isset($parts['query']))
-        {
+        if (isset($parts['query'])) {
             parse_str($parts['query'], $input);
 
             return $this->Cache
@@ -105,9 +106,11 @@ class Glide
     {
         // setting visibility
         $pathForVisibility = str_replace('/storage/media', '', $path);
-        if(!$this->Storage->exists($pathForVisibility)){
+
+        if (!$this->Storage->exists($pathForVisibility)) {
             abort(404, $pathForVisibility . ' Not Found');
         }
+
         $filePath = $this->server->makeImage($pathForVisibility, $params);
         $this->Storage->setVisibility($filePath, 'public');
 
@@ -116,7 +119,9 @@ class Glide
         $fileName = pathinfo($path);
 
 
-        if (!isset($fileName['dirname']) || !isset($fileName['basename'])) abort(400, 'Unable to parse given image path ' . $path);
+        if (!isset($fileName['dirname']) || !isset($fileName['basename'])) {
+            abort(400, 'Unable to parse given image path ' . $path);
+        }
 
         $urlBuilder = $this->UrlBuilderFactory
             ->create($fileName['dirname'] . '/', $signKey);
@@ -130,8 +135,7 @@ class Glide
     {
         $key = $this->Config->get('devise.media.security.key');
 
-        if ($this->Str->startsWith($key, 'base64:'))
-        {
+        if ($this->Str->startsWith($key, 'base64:')) {
             return substr($key, 7);
         }
 

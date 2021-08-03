@@ -105,6 +105,9 @@ class Glide
     {
         // setting visibility
         $pathForVisibility = str_replace('/storage/media', '', $path);
+        if(!$this->Storage->exists($pathForVisibility)){
+            abort(404, $pathForVisibility . ' Not Found');
+        }
         $filePath = $this->server->makeImage($pathForVisibility, $params);
         $this->Storage->setVisibility($filePath, 'public');
 

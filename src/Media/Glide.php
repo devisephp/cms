@@ -106,9 +106,25 @@ class Glide
     {
         // setting visibility
         $pathForVisibility = str_replace('/storage/media', '', $path);
+        $storagePath = '/media' . $pathForVisibility;
 
-        if (!$this->Storage->exists($pathForVisibility)) {
-            abort(404, $pathForVisibility . ' Not Found');
+        if (!$this->Storage->exists($storagePath)) {
+            $parts = explode('.', $pathForVisibility);
+            $extension = $parts[count($parts) - 1];
+            if (preg_match('/[A-Z]/', $extension)) {
+                // extension has at least 1 upper case letter
+                $pathForVisibility = str_replace(
+                    '.' . $extension,
+                    '.' . strtolower($extension),
+                    $pathForVisibility
+                );
+                $storagePath = '/media' . $pathForVisibility;
+                if (!$this->Storage->exists($storagePath)) {
+                    abort(404, $storagePath . ' Not Found');
+                }
+            } else {
+                abort(404, $storagePath . ' Not Found');
+            }
         }
 
         $filePath = $this->server->makeImage($pathForVisibility, $params);

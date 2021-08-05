@@ -79,9 +79,9 @@ class RoutesGenerator
 
                 foreach ($domains as $domain) {
                     $this->Route->domain($domain)->group(
-                        function () use ($routes) {
+                        function () use ($routes, $siteId) {
                             foreach ($routes as $route) {
-                                $uses = ['as' => $route->route_name, 'uses' => $route->uses];
+                                $uses = ['as' => $route->route_name . '-' . $siteId, 'uses' => $route->uses];
 
                                 if ($route->middleware) {
                                     $uses['middleware'] = explode('|', $route->middleware);
@@ -96,7 +96,7 @@ class RoutesGenerator
                 }
             } else {
                 foreach ($routes as $route) {
-                    $uses = ['as' => $route->route_name, 'uses' => $route->uses];
+                    $uses = ['as' => $route->route_name . '-' . $siteId, 'uses' => $route->uses];
 
                     if ($route->middleware) {
                         $uses['middleware'] = explode('|', $route->middleware);

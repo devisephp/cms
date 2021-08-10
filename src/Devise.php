@@ -74,19 +74,29 @@ class Devise
     public static function meta($page = null)
     {
         $meta = '';
-        if ($page)
-        {
+        if ($page) {
             $meta .= '<title>' . (($page->meta_title) ?: $page->title) . '</title>';
 
-            if ($page->canonical != null)
-            {
-                $meta .= '<link rel="canonical" href="' . $page->canonical . '">';
+            if ($page->canonical != null) {
+                $currentPath = request()->path();
+                $currentDomain = request()->getHost();
+                $canonPath = $page->canonical;
+                $canonDomain = request()->getHost();
+
+                $urlParts = parse_url($page->canonical);
+                if (isset($urlParts['path'])) {
+                    $canonPath = trim($urlParts['path'], '/');
+                }
+                if (isset($urlParts['host'])) {
+                    $canonDomain = $urlParts['host'];
+                }
+                if ($currentPath != $canonPath || $currentDomain != $canonDomain) {
+                    $meta .= '<link rel="canonical" href="' . $page->canonical . '">';
+                }
             }
 
-            if ($allMeta = $page->all_meta)
-            {
-                foreach ($allMeta as $m)
-                {
+            if ($allMeta = $page->all_meta) {
+                foreach ($allMeta as $m) {
                     $meta .= '<meta ' . $m->attribute_name . '="' . $m->attribute_value . '" content="' . $m->content . '">';
                 }
             }

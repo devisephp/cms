@@ -63,7 +63,7 @@ class RedirectsController extends Controller
         $redirect = $this->DvsRedirect
             ->findOrFail($id);
 
-        return redirect($request->newUrl($redirect), $redirect->type);
+        return redirect($redirect->newUrl($request), $redirect->type);
     }
 
     /**
@@ -119,8 +119,7 @@ class RedirectsController extends Controller
 
     private function refreshRouteCache()
     {
-        if (App::routesAreCached())
-        {
+        if (App::routesAreCached()) {
             Artisan::call('route:cache');
         }
     }

@@ -16,30 +16,4 @@ class ExecuteRedirect extends ApiRequest
   {
     return [];
   }
-
-  /**
-   * @param $route
-   * @return string
-   */
-  public function newUrl($route)
-  {
-    $query = '';
-    $allinput = [];
-    $urlParts = parse_url($route->to_url);
-
-    if(isset($urlParts['query'])){
-      parse_str($urlParts['query'], $allinput);
-    }
-
-    $input = $this->all();
-    $allinput = array_merge($allinput, $input);
-
-    if($allinput){
-      $query = '?' . http_build_query($allinput);
-    }
-
-    $parts = explode('?', $route->to_url);
-
-    return $parts[0] . $query;
-  }
 }

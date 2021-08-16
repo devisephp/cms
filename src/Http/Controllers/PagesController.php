@@ -9,6 +9,7 @@ use Devise\Http\Requests\Pages\StorePage;
 use Devise\Http\Requests\Pages\UpdatePage;
 use Devise\Http\Resources\Api\RouteResource;
 use Devise\Http\Resources\Api\PageResource;
+use Devise\Models\DvsRedirect;
 use Devise\Pages\PagesManager;
 use Devise\Pages\PagesRepository;
 use Devise\Sites\SitesRepository;
@@ -40,14 +41,19 @@ class PagesController extends Controller
     /**
      * Creates a new DvsPagesController instance.
      *
-     * @param  PagesRepository $PagesRepository
+     * @param PagesRepository $PagesRepository
      * @param PagesManager $PagesManager
      * @param SiteDetector $SiteDetector
      * @param SitesRepository $SitesRepository
      * @param Framework $Framework
      */
-    public function __construct(PagesRepository $PagesRepository, PagesManager $PagesManager, SiteDetector $SiteDetector, SitesRepository $SitesRepository, Framework $Framework)
-    {
+    public function __construct(
+        PagesRepository $PagesRepository,
+        PagesManager $PagesManager,
+        SiteDetector $SiteDetector,
+        SitesRepository $SitesRepository,
+        Framework $Framework
+    ) {
         $this->PagesRepository = $PagesRepository;
         $this->SitesRepository = $SitesRepository;
         $this->PagesManager = $PagesManager;
@@ -69,7 +75,16 @@ class PagesController extends Controller
     {
         $page = $this->PagesRepository->findByRouteName($this->Route->currentRouteName());
 
-        if (!$page->currentVersion) abort(404);
+        if (!$page->currentVersion) {
+            abort(404);
+        }
+
+        $redirect = DvsRedirect::where('from_url', '/' . $request->path())
+            ->first();
+
+        if ($redirect && trim($redirect->from_url, '/') === $request->path()) {
+            return redirect($redirect->newUrl($request), $redirect->type);
+        }
 
         $page->currentVersion->registerComponents();
 
@@ -99,11 +114,9 @@ class PagesController extends Controller
 
         $languageId = $request->input('language_id', $defaultLanguage->id);
 
-        if ($request->get('paginate', true))
-        {
+        if ($request->get('paginate', true)) {
             $pages = $this->PagesRepository->pages($site->id, $languageId);
-        } else
-        {
+        } else {
             $pages = $this->PagesRepository->all($site->id, $languageId);
         }
 
@@ -137,8 +150,7 @@ class PagesController extends Controller
         $term = $request->input('term');
         $list = $request->input('list');
 
-        if (!$request->has('multi-site') || !$request->get('multi-site', 0))
-        {
+        if (!$request->has('multi-site') || !$request->get('multi-site', 0)) {
             $siteId = $this->SiteDetector->current()->id;
         }
         $pages = $this->PagesRepository->searchPages($term, $siteId, $list, 20);
@@ -155,15 +167,14 @@ class PagesController extends Controller
         $term = $request->input('term');
         $list = $request->input('list');
 
-        if (!$request->has('multi-site') || !$request->get('multi-site', 0))
-        {
+        if (!$request->has('multi-site') || !$request->get('multi-site', 0)) {
             $siteId = $this->SiteDetector->current()->id;
         }
         $pages = $this->PagesRepository->searchPages($term, $siteId, $list, 20);
         return PageResource::collection($pages, false);
     }
 
-        /**
+    /**
      * Request the page listing
      *
      */
@@ -172,8 +183,7 @@ class PagesController extends Controller
         $siteId = null;
         $term = $request->input('term');
 
-        if (!$request->has('multi-site') || !$request->get('multi-site', 0))
-        {
+        if (!$request->has('multi-site') || !$request->get('multi-site', 0)) {
             $siteId = $this->SiteDetector->current()->id;
         }
 
@@ -188,11 +198,9 @@ class PagesController extends Controller
      */
     public function store(StorePage $request)
     {
-        if ($request->input('site_id'))
-        {
+        if ($request->input('site_id')) {
             $site = $this->SitesRepository->findById($request->input('site_id'));
-        } else
-        {
+        } else {
             $site = $this->SiteDetector->current();
         }
 
@@ -206,11 +214,14 @@ class PagesController extends Controller
 
         $page = $this->PagesManager->createNewPage($input);
 
-        if ($request->get('publish_layout', false))
-        {
-            $this->Artisan->call('vendor:publish', [
-                '--tag' => 'dvs-layouts', '--force' => 1
-            ]);
+        if ($request->get('publish_layout', false)) {
+            $this->Artisan->call(
+                'vendor:publish',
+                [
+                    '--tag' => 'dvs-layouts',
+                    '--force' => 1
+                ]
+            );
         }
 
         return new PageResource($page);
@@ -220,7 +231,7 @@ class PagesController extends Controller
      * Request page be updated with given input
      *
      * @param UpdatePage $request
-     * @param  integer $id
+     * @param integer $id
      * @return PageResource
      */
     public function update(UpdatePage $request, $id)
@@ -236,7 +247,7 @@ class PagesController extends Controller
      * Request page be copied
      *
      * @param CopyPage $request
-     * @param  integer $id
+     * @param integer $id
      * @return PageResource
      */
     public function copy(CopyPage $request, $id)
@@ -252,7 +263,7 @@ class PagesController extends Controller
      * ApiRequest the page be copied to another page (duplicated)
      *
      * @param ApiRequest $request
-     * @param  integer $id
+     * @param integer $id
      * @return PageResource
      */
     public function requestCopyPage(ApiRequest $request, $id)
@@ -266,7 +277,7 @@ class PagesController extends Controller
      * Request the page be deleted from database
      *
      * @param ApiRequest $request
-     * @param  integer $id
+     * @param integer $id
      * @return PageResource
      */
     public function delete(ApiRequest $request, $id)

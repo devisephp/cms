@@ -29,6 +29,7 @@ class MediaController extends Controller
     use ValidatesRequests;
 
     protected $FileManager;
+    protected $CategoriesManager;
 
     protected $Repository;
 
@@ -49,9 +50,16 @@ class MediaController extends Controller
      * @param Glide $Glide
      * @param Framework $Framework
      */
-    public function __construct(Manager $FileManager, Repository $Repository, ImageAlts $ImageAlts, Glide $Glide, Framework $Framework)
-    {
+    public function __construct(
+        Manager $FileManager,
+        CategoriesManager $CategoriesManager,
+        Repository $Repository,
+        ImageAlts $ImageAlts,
+        Glide $Glide,
+        Framework $Framework
+    ) {
         $this->FileManager = $FileManager;
+        $this->CategoriesManager = $CategoriesManager;
         $this->Repository = $Repository;
         $this->ImageAlts = $ImageAlts;
         $this->Glide = $Glide;
@@ -96,7 +104,12 @@ class MediaController extends Controller
     {
         $this->validate($request, ['file' => 'required|file']);
 
-        $this->FileManager->saveUploadedFile($request->all());
+        $dir = $this->CategoriesManager->dotToServerPath($request->get('directory'));
+        if (CategoriesManager::dirPermitted($dir, 'write')) {
+            $this->FileManager->saveUploadedFile($request->all());
+        } else {
+            abort(403, 'Action Not Permitted');
+        }
     }
 
     /**
@@ -107,9 +120,12 @@ class MediaController extends Controller
     public function remove($mediaRoute)
     {
         $mediaRoute = str_replace('storage', '', $mediaRoute);
-        if ($this->Storage->get($mediaRoute))
-        {
-            $this->FileManager->removeUploadedFile($mediaRoute);
+        if (CategoriesManager::dirPermitted($mediaRoute, 'write')) {
+            if ($this->Storage->get($mediaRoute)) {
+                $this->FileManager->removeUploadedFile($mediaRoute);
+            }
+        } else {
+            abort(403, 'Action Not Permitted');
         }
     }
 
@@ -132,14 +148,12 @@ class MediaController extends Controller
      */
     public function preview($path)
     {
-        if (strpos($path, 'http') !== false && strpos($path, '/' . config('devise.media.source-directory')) !== false)
-        {
+        if (strpos($path, 'http') !== false && strpos($path, '/' . config('devise.media.source-directory')) !== false) {
             $path = strstr($path, config('devise.media.source-directory') . '/');
             $path = str_replace(config('devise.media.source-directory') . '/', '', $path);
         }
 
-        if (strpos($path, '/styled/') !== false)
-        {
+        if (strpos($path, '/styled/') !== false) {
             $path = str_replace('/styled/', '/media/', $path);
         }
 
@@ -152,7 +166,9 @@ class MediaController extends Controller
 
     public function show(ApiRequest $request, $path)
     {
-        if (!$request->has('s')) return $this->tryLegacyStorageFile($path);
+        if (!$request->has('s')) {
+            return $this->tryLegacyStorageFile($path);
+        }
 
         $this->Glide
             ->validateSignature('/storage/media/' . $path, $request->all());
@@ -166,8 +182,7 @@ class MediaController extends Controller
         $sizes = $request->get('sizes');
 
         $newMediaUrls = [];
-        foreach ($sizes as $name => $sizeSettings)
-        {
+        foreach ($sizes as $name => $sizeSettings) {
             $settings = (array)$sizeSettings;
 
             $imagePath = $this->alterInvalidPaths($settings['url']);
@@ -180,71 +195,77 @@ class MediaController extends Controller
         }
 
         return [
-            'media'        => $newMediaUrls,
+            'media' => $newMediaUrls,
             'defaultImage' => $request->get('defaultImage'),
-            'caption'      => $this->ImageAlts->get($request->get('defaultImage'))
+            'caption' => $this->ImageAlts->get($request->get('defaultImage'))
         ];
     }
 
     public function reGenerateAllSignedUrls(ApiRequest $request, $instanceId, $fieldKey)
     {
         $instance = DvsSliceInstance::find($instanceId);
-        if ($instance)
-        {
-            $allFields = DvsField::join('dvs_slice_instances', 'dvs_slice_instances.id', '=', 'dvs_fields.slice_instance_id')
+        if ($instance) {
+            $allFields = DvsField::join(
+                'dvs_slice_instances',
+                'dvs_slice_instances.id',
+                '=',
+                'dvs_fields.slice_instance_id'
+            )
                 ->where('dvs_slice_instances.view', $instance->view)
                 ->where('dvs_fields.key', $fieldKey)
                 ->select('dvs_fields.*')
                 ->get();
 
             $allSizes = (array)$request->get('allSizes');
-            foreach ($allFields as $field)
-            {
+            foreach ($allFields as $field) {
                 $field->shouldMutateJson = false;
                 $value = array_merge(['media' => []], (array)$field->value);
 
-                if (isset($value['mode']) && $value['mode'] === 'media')
-                {
+                if (isset($value['mode']) && $value['mode'] === 'media') {
                     $defaultImage = $field->original_image;
                     $defaultSettings = config('devise.media.default-settings');
 
                     $storedSizeNames = array_keys((array)$value['media']);
                     $value['media'] = is_array($value['media']) ? new \stdClass() : $value['media'];
 
-                    foreach ($allSizes as $name => $settings)
-                    {
+                    foreach ($allSizes as $name => $settings) {
                         $newSize = !in_array($name, $storedSizeNames);
 
-                        if (!$newSize)
-                        {
+                        if (!$newSize) {
                             $parts = parse_url($value['media']->$name);
                             $path = $parts['path'] ?? [];
 
-                            if (isset($parts['query']))
-                            {
+                            if (isset($parts['query'])) {
                                 parse_str($parts['query'], $params);
-                            } else
-                            {
+                            } else {
                                 // likely a legacy image if it's missing the url query
                                 $path = $defaultImage;
                                 // forcing sizeHasChanged to return true
                                 $params = ['w' => 0, 'h' => 0];
                             }
 
-                            if ($path && $this->sizeHasChanged($settings, $params))
-                            {
-                                if (isset($params['s'])) unset($params['s']);
+                            if ($path && $this->sizeHasChanged($settings, $params)) {
+                                if (isset($params['s'])) {
+                                    unset($params['s']);
+                                }
 
                                 $params['w'] = $settings['w'];
                                 $params['h'] = $settings['h'];
 
-                                $value['media']->$name = $this->Glide->generateSignedUrl($this->alterInvalidPaths($path), $params);
+                                $value['media']->$name = $this->Glide->generateSignedUrl(
+                                    $this->alterInvalidPaths($path),
+                                    $params
+                                );
                             }
-                        } else if ($defaultImage)
-                        {
-                            $defaultSettings['w'] = $settings['w'];
-                            $defaultSettings['h'] = $settings['h'];
-                            $value['media']->$name = $this->Glide->generateSignedUrl($defaultImage, $defaultSettings);
+                        } else {
+                            if ($defaultImage) {
+                                $defaultSettings['w'] = $settings['w'];
+                                $defaultSettings['h'] = $settings['h'];
+                                $value['media']->$name = $this->Glide->generateSignedUrl(
+                                    $defaultImage,
+                                    $defaultSettings
+                                );
+                            }
                         }
                     }
 
@@ -259,8 +280,7 @@ class MediaController extends Controller
 
     private function tryLegacyStorageFile($path)
     {
-        if ($this->Storage->exists('/styled/' . $path))
-        {
+        if ($this->Storage->exists('/styled/' . $path)) {
             return Image::make($this->Storage->path('/styled/' . $path))->response();
         }
 
@@ -269,26 +289,30 @@ class MediaController extends Controller
 
     private function sizeHasChanged($requestedSize, $currentSize)
     {
-        if (!$this->hasWidthAndHeight($requestedSize) || !$this->hasWidthAndHeight($requestedSize)) return true;
+        if (!$this->hasWidthAndHeight($requestedSize) || !$this->hasWidthAndHeight($requestedSize)) {
+            return true;
+        }
 
-        if ($currentSize['w'] != $requestedSize['w'] || $currentSize['h'] != $requestedSize['h']) return true;
+        if ($currentSize['w'] != $requestedSize['w'] || $currentSize['h'] != $requestedSize['h']) {
+            return true;
+        }
 
         return false;
     }
 
     private function alterInvalidPaths($path)
     {
-        if (filter_var($path, FILTER_VALIDATE_URL) && strpos($path, '/' . config('devise.media.source-directory')) !== false)
-        {
+        if (filter_var($path, FILTER_VALIDATE_URL) && strpos(
+                $path,
+                '/' . config('devise.media.source-directory')
+            ) !== false) {
             $parts = parse_url($path);
-            if (isset($parts['path']))
-            {
+            if (isset($parts['path'])) {
                 $path = '/storage' . $parts['path'];
             }
         }
 
-        if (strpos($path, '/storage/styled') === 0)
-        {
+        if (strpos($path, '/storage/styled') === 0) {
             $path = str_replace('/storage/styled', '/storage/' . config('devise.media.source-directory'), $path);
         }
 
@@ -305,8 +329,7 @@ class MediaController extends Controller
     private function alterForCropping(&$settings)
     {
         //crop=100,100,915,155
-        if (isset($settings['crop']))
-        {
+        if (isset($settings['crop'])) {
             $settings['crop'] = $settings['crop']['w'] . ',' . $settings['crop']['h'] . ',' . $settings['crop']['x'] . ',' . $settings['crop']['y'];
         }
     }

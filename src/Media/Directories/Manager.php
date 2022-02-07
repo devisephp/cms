@@ -34,13 +34,10 @@ class Manager
     {
         $category = isset($input['directory']) ? $input['directory'] : null;
 
-        if (isset($input['name']))
-        {
-            $localPath = $this->CategoryPaths->fromDot($category);
-            $serverPath = $this->CategoryPaths->serverPath($localPath);
+        if (isset($input['name'])) {
+            $serverPath = $this->dotToServerPath($category);
 
-            if ($this->Storage->exists($serverPath . $input['name']))
-            {
+            if ($this->Storage->exists($serverPath . $input['name'])) {
                 throw new \Exception('This category already exists, cannot create ' . $input['name']);
             }
 
@@ -55,15 +52,21 @@ class Manager
      */
     public function destroyCategory($input)
     {
-        if (isset($input['directory']))
-        {
-            $localPath = $this->CategoryPaths->fromDot($input['directory']);
-            $serverPath = $this->CategoryPaths->serverPath($localPath);
+        if (isset($input['directory'])) {
+            $serverPath = $this->dotToServerPath($input['directory']);
 
             return $this->Storage->deleteDirectory($serverPath);
         }
 
         return false;
+    }
+
+    public function dotToServerPath($category)
+    {
+        $localPath = $this->CategoryPaths->fromDot($category);
+        $serverPath = $this->CategoryPaths->serverPath($localPath);
+
+        return $serverPath;
     }
 
     public static function getPermittedDirectories()
@@ -73,26 +76,32 @@ class Manager
 
     public static function setPermittedDirectories($dir = [])
     {
-        if ($dir)
+        if ($dir) {
             self::$permittedDirectories = $dir;
+        }
     }
 
-    public static function dirPermitted($dir)
+    public static function dirPermitted($dir, $level = 'read')
     {
+        $dir = trim($dir, '/');
         $base = config('devise.media.source-directory');
         $permittedList = self::getPermittedDirectories();
 
-        if ($permittedList === '*') return true;
-
-        if (is_array($permittedList))
-        {
-            foreach ($permittedList as $permitted)
-            {
-                $permittedPath = $base . '/' . trim($permitted, '/');
-                if (strpos($dir, $permittedPath) === 0)
-                {
-                    return true;
-                }
+        if ($permittedList === '*') {
+            return true;
+        }
+        $permittedPath = $base . '/' . trim($permittedList, '/');
+        if ($level === 'read') {
+            if (
+                strpos($permittedPath, $dir) === 0 ||
+                strpos($dir, $permittedPath) === 0
+            ) {
+                return true;
+            }
+        }
+        if ($level === 'write') {
+            if (strpos($dir, $permittedPath) === 0) {
+                return true;
             }
         }
 

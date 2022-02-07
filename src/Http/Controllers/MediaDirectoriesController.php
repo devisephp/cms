@@ -52,7 +52,12 @@ class MediaDirectoriesController
      */
     public function store(Request $request)
     {
-        $this->Manager->storeNewCategory($request->all());
+        $dir = $this->Manager->dotToServerPath($request->get('directory'));
+        if (Manager::dirPermitted($dir, 'write')) {
+            $this->Manager->storeNewCategory($request->all());
+        } else {
+            abort(403, 'Action Not Permitted');
+        }
     }
 
     /**
@@ -63,6 +68,11 @@ class MediaDirectoriesController
      */
     public function remove(Request $request)
     {
-        $this->Manager->destroyCategory($request->all());
+        $dir = $this->Manager->dotToServerPath($request->get('directory'));
+        if (Manager::dirPermitted($dir, 'write')) {
+            $this->Manager->destroyCategory($request->all());
+        } else {
+            abort(403, 'Action Not Permitted');
+        }
     }
 }

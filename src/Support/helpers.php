@@ -20,17 +20,14 @@ if (!function_exists('vuemix'))
         $pathParts = explode(DIRECTORY_SEPARATOR, $path);
         $file = $pathParts[count($pathParts) - 1];
 
+        
         // check if HMR server is running via helper file 'hot'
         if (file_exists($hotFilePath))
         {
-            if (strpos($file, 'chunk-vendor') !== false)
-            {
-                return new HtmlString('');
-            }
             // Everything is bundled in the app.js so only include it
             $hotFile = file($hotFilePath);
-            $resourcePath = $file === 'app.js' ? $hotFile[0] . 'app/' . $file : $hotFile[0] . 'app/' . $path;
-
+            $resourcePath = 'http://atlantisbahamas-d2.test:8080/app' . $path;
+            
             return new HtmlString($resourcePath);
         }
 

@@ -117,16 +117,16 @@ class RoutesGenerator
                 $overwrite = config('devise.domains.' . $siteId);
                 $overwritesEnabled = config('devise.domain_overwrites_enabled');
                 $siteDomains = (!$overwritesEnabled || !$overwrite) ? [$allDomains[$siteId]] : explode(',', $overwrite);
-                foreach ($siteDomains as $domain) {
+                foreach ($siteDomains as $dIndex => $domain) {
                     $this->Route->group(
                         ['domain' => $domain],
-                        function () use ($routes) {
+                        function () use ($routes, $siteId, $dIndex) {
                             foreach ($routes as $route) {
                                 $this->Route->get(
                                     $route->from_url,
                                     [
                                         'uses' => 'Devise\Http\Controllers\RedirectsController@show',
-                                        'as' => 'dvs-redirect-' . $route->id
+                                        'as' => 'dvs-redirect-' . $route->id . '-' . $siteId . '-' . $dIndex
                                     ]
                                 );
                             }

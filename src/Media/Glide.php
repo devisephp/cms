@@ -4,9 +4,11 @@ namespace Devise\Media;
 
 use Devise\Support\Framework;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\DB;
 
 use League\Glide\Responses\LaravelResponseFactory;
 use League\Glide\ServerFactory;
@@ -28,6 +30,8 @@ class Glide
     private $UrlBuilderFactory;
 
     private $Str;
+
+    protected static $imageURLs = null;
 
     /**
      * Glide constructor.
@@ -64,13 +68,13 @@ class Glide
         try {
             $image = $this->server->getImageResponse($path, request()->all());
 
-            if (request()->has('s') && !$this->Cache->has('dvs.image.styled.' . request()->get('s'))) {
+            if (request()->has('s') && !$this->getImageURL(request()->get('s'))) {
                 $cachePath = $this->server->getCachePath($path, request()->all());
                 $cacheUrl = $this->Storage->url($cachePath);
 
                 $this->Storage->setVisibility($cachePath, 'public');
 
-                $this->Cache->set('dvs.image.styled.' . request()->get('s'), $cacheUrl);
+                $this->saveImageURL(request()->get('s'), $cacheUrl);
             }
 
             return $image;
@@ -86,11 +90,53 @@ class Glide
         if (isset($parts['query'])) {
             parse_str($parts['query'], $input);
 
-            return $this->Cache
-                ->get('dvs.image.styled.' . $input['s'], $fieldPath);
+            return $this->getImageURL($input['s'], $fieldPath);
         }
 
         return $fieldPath;
+    }
+
+    protected function getImageURL($signature, $default = null)
+    {
+        $this->loadAllUrls();
+        if (isset(self::$imageURLs[$signature])) {
+            return self::$imageURLs[$signature];
+        }
+
+        return $default;
+    }
+
+    protected function saveImageURL($signature, $url)
+    {
+        DB::table('dvs_image_urls')
+            ->insert(
+                [
+                    'signature' => $signature,
+                    'url' => $url,
+                ]
+            );
+
+        $this->reloadAllUrls();
+    }
+
+    protected function reloadAllUrls()
+    {
+        Cache::forget('dvs_image_urls');
+        $this->loadAllUrls(true);
+    }
+
+    protected function loadAllUrls($force = false)
+    {
+        if (!self::$imageURLs || $force) {
+            self::$imageURLs = Cache::rememberForever(
+                'dvs_image_urls',
+                function () {
+                    return DB::table('dvs_image_urls')
+                        ->pluck('url', 'signature')
+                        ->toArray();
+                }
+            );
+        }
     }
 
     public function validateSignature($path, $input)

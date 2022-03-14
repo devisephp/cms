@@ -1,8 +1,0 @@
-/vendor
-.DS_Store
-/.idea
-/node_modules
-npm-debug.log
-/vue/src/installer/node_modules
-/.vscode
-composer.lock

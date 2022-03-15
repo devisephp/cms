@@ -126,7 +126,8 @@ class RoutesGenerator
                                     $route->from_url,
                                     [
                                         'uses' => 'Devise\Http\Controllers\RedirectsController@show',
-                                        'as' => 'dvs-redirect-' . $route->id . '-' . $siteId . '-' . $dIndex
+                                        // id must be the end
+                                        'as' => 'dvs-redirect-' . $dIndex . '-' . $siteId . '-' . $route->id
                                     ]
                                 );
                             }

@@ -7,12 +7,38 @@ use Devise\Http\Requests\ApiRequest;
 use Devise\Models\DvsSliceInstance;
 use Illuminate\Routing\Controller;
 
+use Spatie\Browsershot\Browsershot;
+use Spatie\Image\Manipulations;
+
 class SlicesController extends Controller
 {
 
     public function allDirectories(ApiRequest $request)
     {
         return $this->scanSlicesDir(resource_path('views/slices'));
+    }
+
+    public function slicePreview(ApiRequest $request)
+    {
+        $fileName = $request->get('file_name');
+        $width = $request->get('width');
+        $height = $request->get('height');
+        $windowWidth = $request->get('window_width');
+        $windowHeight = $request->get('window_height');
+        $x = $request->get('offset_left');
+        $y = $request->get('offset_top');
+        $url = $request->get('url');
+
+        try {
+            $savePath = storage_path() . '/app/public/slice-previews/' . $fileName .'.png';
+            Browsershot::url($url)
+                ->windowSize($windowWidth, $windowHeight)
+                ->fit(Manipulations::FIT_CONTAIN, 200, 200)
+                ->clip($x, $y, $width, $height)
+                ->save($savePath);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     private function flattenDirectory($directory)

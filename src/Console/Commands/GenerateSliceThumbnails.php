@@ -34,23 +34,28 @@ class GenerateSliceThumbnails extends Command
     public function handle()
     {
         $allSlices = File::allFiles(resource_path('views/slices'));
+        shuffle($allSlices);
+
         foreach ($allSlices as $slice) {
-            $class = $this->getClassFromPath($slice->getPathName());
-            $view = $this->getViewFromPath($slice->getPathName());
-            $url = $this->findURL($view);
+            $name = $this->getClassFromPath($slice->getPathName());
+            if ($this->sliceNeedsThumbnail($name)) {
+                $view = $this->getViewFromPath($slice->getPathName());
+                $url = $this->findURL($view);
 
-            $this->capture($url, $class, $view);
-
-            break;
+                if ($url) {
+                    $this->capture($url, $name);
+                    break;
+                }
+            }
         }
     }
 
-    protected function capture($url, $class, $fileName)
+    protected function capture($url, $name)
     {
-        $savePath = storage_path() . '/app/public/slice-previews/' . $fileName . '.png';
+        $savePath = storage_path() . '/app/public/slice-previews/' . $name . '.png';
 
         Browsershot::url($url)
-            ->select($class, 0)
+            ->select('.' . $name, 0)
             ->windowSize(1024, 768)
             ->fit(Manipulations::FIT_CONTAIN, 500, 500)
             ->save($savePath);
@@ -97,5 +102,10 @@ class GenerateSliceThumbnails extends Command
             ->first();
 
         return $page && $page->permalink != '#' ? $page->permalink : null;
+    }
+
+    protected function sliceNeedsThumbnail($name)
+    {
+        return !File::exists(storage_path() . '/app/public/slice-previews/' . $name . '.png');
     }
 }

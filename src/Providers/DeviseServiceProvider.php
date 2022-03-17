@@ -3,6 +3,7 @@
 namespace Devise\Providers;
 
 use Devise\Console\Commands\CleanStyledMedia;
+use Devise\Console\Commands\GenerateSliceThumbnails;
 use Devise\Devise;
 use Devise\Models\DvsField;
 use Devise\Models\DvsLanguage;
@@ -86,6 +87,7 @@ class DeviseServiceProvider extends ServiceProvider
         {
             $this->commands([
                 CleanStyledMedia::class,
+                GenerateSliceThumbnails::class,
             ]);
         }
     }

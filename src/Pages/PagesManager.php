@@ -124,18 +124,25 @@ class PagesManager
      */
     public function createNewPage($input)
     {
+        $copyPageId = Arr::get($input, 'copy_page_id', false);
+        if ($copyPageId)
+        {
+            $fromPage = $this->Page->findOrFail($copyPageId);
+            $fromPageVersion = $fromPage->getVersionToCopy();
+
+            if(!$fromPageVersion) {
+                abort(400, 'Page cannot be copied');
+            }
+        }
+
         $page = $this->createPageFromInput($input);
 
         $startsAt = Arr::get($input, 'published', false) ? date('Y-m-d H:i:s') : null;
 
         $layout = Arr::get($input, 'layout', '');
 
-        $copyPageId = Arr::get($input, 'copy_page_id', false);
-
         if ($copyPageId)
         {
-            $fromPage = $this->Page->findOrFail($copyPageId);
-            $fromPageVersion = $fromPage->liveVersion;
             $this->PageVersionManager->copyPageVersionToAnotherPage($fromPageVersion, $page, $startsAt);
         } else
         {
@@ -218,7 +225,11 @@ class PagesManager
 
 
         // we'll use the current live version to copy
-        $fromPageVersion = $fromPage->getLiveVersion();
+        $fromPageVersion = $fromPage->getVersionToCopy();
+
+        if(!$fromPageVersion) {
+            abort(400, 'Page cannot be copied');
+        }
 
         if (Arr::get($input, 'language_id', false))
         {

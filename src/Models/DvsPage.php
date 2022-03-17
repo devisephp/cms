@@ -47,11 +47,9 @@ class DvsPage extends Model
 
     public function currentVersion()
     {
-        if (request()->has('version_id') && Auth::check())
-        {
+        if (request()->has('version_id') && Auth::check()) {
             $user = Auth::user();
-            if ($user->hasPermission('manage pages'))
-            {
+            if ($user->hasPermission('manage pages')) {
                 return $this->versionById(request()->get('version_id'));
             }
         }
@@ -70,10 +68,12 @@ class DvsPage extends Model
 
         return $this->hasOne(DvsPageVersion::class, 'page_id')
             ->where('starts_at', '<=', $now)
-            ->where(function ($query) use ($now) {
-                $query->where('ends_at', '>', $now);
-                $query->orWhereNull('ends_at');
-            })
+            ->where(
+                function ($query) use ($now) {
+                    $query->where('ends_at', '>', $now);
+                    $query->orWhereNull('ends_at');
+                }
+            )
             ->orderBy('starts_at', 'DESC');
     }
 
@@ -84,22 +84,25 @@ class DvsPage extends Model
         return $this->hasMany(DvsPageVersion::class, 'page_id')
             ->where('ab_testing_amount', '>', 0)
             ->where('starts_at', '<=', $now)
-            ->where(function ($query) use ($now) {
-                $query->where('ends_at', '>', $now);
-                $query->orWhereNull('ends_at');
-            })
+            ->where(
+                function ($query) use ($now) {
+                    $query->where('ends_at', '>', $now);
+                    $query->orWhereNull('ends_at');
+                }
+            )
             ->orderBy('starts_at', 'DESC');
     }
 
     public function livePageVersionByAB()
     {
         // already have an ab version found. let's just return it's value
-        if ($this->currentABVersion) return $this->currentABVersion;
+        if ($this->currentABVersion) {
+            return $this->currentABVersion;
+        }
 
         $liveVersion = $this->livePageVersionByCookie();
 
-        if ($liveVersion)
-        {
+        if ($liveVersion) {
             $this->currentABVersion = $liveVersion;
 
             return $liveVersion;
@@ -107,8 +110,7 @@ class DvsPage extends Model
 
         $liveVersion = $this->livePageVersionByDiceRoll();
 
-        if ($liveVersion)
-        {
+        if ($liveVersion) {
             $this->currentABVersion = $liveVersion;
 
             return $liveVersion;
@@ -127,11 +129,15 @@ class DvsPage extends Model
     {
         $pageVersionId = request()->cookie('dvs-ab-testing-' . $this->id);
 
-        if (!$pageVersionId) return null;
+        if (!$pageVersionId) {
+            return null;
+        }
 
         $liveVersion = $this->versionById($pageVersionId)->first();
 
-        if ($liveVersion) return $liveVersion;
+        if ($liveVersion) {
+            return $liveVersion;
+        }
 
         return null;
     }
@@ -144,17 +150,17 @@ class DvsPage extends Model
 
         $diceroll = array();
 
-        foreach ($versions as $index => $version)
-        {
+        foreach ($versions as $index => $version) {
             $diceroll = array_merge(array_fill(0, $version->ab_testing_amount, $index), $diceroll);
         }
 
-        if (count($diceroll) == 0) return null;
+        if (count($diceroll) == 0) {
+            return null;
+        }
 
         $diceroll = $diceroll[array_rand($diceroll)];
 
-        if (isset($versions[$diceroll]))
-        {
+        if (isset($versions[$diceroll])) {
             $liveVersion = $versions[$diceroll];
             $famework = App::make(Framework::class);
             $famework->Cookie->queue('dvs-ab-testing-' . $this->id, $liveVersion->id);
@@ -192,11 +198,13 @@ class DvsPage extends Model
     {
         // these accessors allow us to check if ab testing is on
         // if its not we can just use the relationships
-        if ($this->ab_testing_enabled && !$this->forceCurrentVersion())
+        if ($this->ab_testing_enabled && !$this->forceCurrentVersion()) {
             return $this->livePageVersionByAB();
+        }
 
-        if (isset($this->relations['currentVersion']))
+        if (isset($this->relations['currentVersion'])) {
             return $this->relations['currentVersion'];
+        }
 
         return $this->currentVersion()
             ->first();
@@ -206,11 +214,13 @@ class DvsPage extends Model
     {
         // these accessors allow us to check if ab testing is on
         // if its not we can just use the relationships
-        if ($this->ab_testing_enabled)
+        if ($this->ab_testing_enabled) {
             return $this->livePageVersionByAB();
+        }
 
-        if (isset($this->relations['liveVersion']))
+        if (isset($this->relations['liveVersion'])) {
             return $this->relations['liveVersion'];
+        }
 
         return $this->liveVersion()
             ->first();
@@ -237,8 +247,7 @@ class DvsPage extends Model
 
     public function getPermalinkAttribute()
     {
-        if (Route::getRoutes()->hasNamedRoute($this->route_name))
-        {
+        if (Route::getRoutes()->hasNamedRoute($this->route_name)) {
             return URL::route($this->route_name);
         }
 
@@ -259,29 +268,43 @@ class DvsPage extends Model
 
         return $this->versions()
             ->where('starts_at', '<=', $now)
-            ->where(function ($query) use ($now) {
-                $query->where('ends_at', '>', $now);
-                $query->orWhereNull('ends_at');
-            })
+            ->where(
+                function ($query) use ($now) {
+                    $query->where('ends_at', '>', $now);
+                    $query->orWhereNull('ends_at');
+                }
+            )
             ->orderBy('starts_at', 'DESC')
             ->first();
     }
 
+    public function getVersionToCopy($now = null)
+    {
+        $liveVersion = $this->getLiveVersion($now);
+
+        if ($liveVersion) {
+            return $liveVersion;
+        }
+
+        $newestVersion = $this->versions()
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        return $newestVersion;
+    }
+
     public function setIsAdminAttribute($value)
     {
-        if ($value === 'on' || $value === true || $value === 1)
-        {
+        if ($value === 'on' || $value === true || $value === 1) {
             $this->attributes['is_admin'] = 1;
-        } else
-        {
+        } else {
             $this->attributes['is_admin'] = 0;
         }
     }
 
     public function getSlugHasParametersAttribute()
     {
-        if (strpos($this->slug, "{"))
-        {
+        if (strpos($this->slug, "{")) {
             return true;
         }
 
@@ -290,10 +313,13 @@ class DvsPage extends Model
 
     public function getAllMetaAttribute()
     {
-        $globalMeta = Cache::rememberForever('', function () {
-            return DvsPageMeta::where('page_id', 0)
-                ->where('site_id', $this->site_id)->get();
-        });
+        $globalMeta = Cache::rememberForever(
+            '',
+            function () {
+                return DvsPageMeta::where('page_id', 0)
+                    ->where('site_id', $this->site_id)->get();
+            }
+        );
 
         return $this->metas->merge($globalMeta);
     }

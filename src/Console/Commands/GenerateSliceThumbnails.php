@@ -5,6 +5,7 @@ namespace Devise\Console\Commands;
 use Devise\Devise;
 use Devise\Models\DvsPage;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 use Spatie\Browsershot\Browsershot;
@@ -41,7 +42,6 @@ class GenerateSliceThumbnails extends Command
             if ($this->sliceNeedsThumbnail($name)) {
                 $view = $this->getViewFromPath($slice->getPathName());
                 $url = $this->findURL($view);
-
                 if ($url) {
                     $this->capture($url, $name);
                     break;
@@ -53,8 +53,8 @@ class GenerateSliceThumbnails extends Command
     protected function capture($url, $name)
     {
         $savePath = storage_path() . '/app/public/slice-previews/' . $name . '.png';
-        $url .= '?slice_capture=true';
-        
+        $url .= '?slice_capture=' . $name;
+
         Browsershot::url($url)
             ->select('.' . $name, 0)
             ->windowSize(1024, 768)
@@ -86,23 +86,25 @@ class GenerateSliceThumbnails extends Command
 
     protected function findURL($view)
     {
-        $now = Devise::currentDateTime();
-
-        $page = DvsPage::select('dvs_pages.*')
-            ->join('dvs_page_versions', 'dvs_page_versions.page_id', '=', 'dvs_pages.id')
-            ->join('dvs_slice_instances', 'dvs_slice_instances.page_version_id', '=', 'dvs_page_versions.id')
+        $pageVersionIds = DB::table('dvs_slice_instances')
             ->where('dvs_slice_instances.view', $view)
-            ->where('dvs_page_versions.starts_at', '<=', $now)
-            ->where(
-                function ($query) use ($now) {
-                    $query->where('dvs_page_versions.ends_at', '>', $now);
-                    $query->orWhereNull('dvs_page_versions.ends_at');
-                }
-            )
-            ->orderBy('dvs_page_versions.starts_at', 'DESC')
-            ->first();
+            ->pluck('dvs_slice_instances.page_version_id')
+            ->toArray();
 
-        return $page && $page->permalink != '#' ? $page->permalink : null;
+        $pages = DvsPage::select('dvs_pages.*')
+            ->with('currentVersion')
+            ->join('dvs_page_versions', 'dvs_page_versions.page_id', '=', 'dvs_pages.id')
+            ->whereIn('dvs_page_versions.id', $pageVersionIds)
+            ->inRandomOrder()
+            ->get();
+
+        foreach ($pages as $page) {
+            if (in_array($page->currentVersion->id, $pageVersionIds) && $page->permalink != '#') {
+                return $page->permalink;
+            }
+        }
+
+        return null;
     }
 
     protected function sliceNeedsThumbnail($name)

@@ -53,7 +53,8 @@ class GenerateSliceThumbnails extends Command
     protected function capture($url, $name)
     {
         $savePath = storage_path() . '/app/public/slice-previews/' . $name . '.png';
-
+        $url .= '?slice_capture=true';
+        
         Browsershot::url($url)
             ->select('.' . $name, 0)
             ->windowSize(1024, 768)

@@ -108,7 +108,7 @@ class SlicesController extends Controller
                 'dirName'     => $this->getDirName($dir, false),
                 'directories' => $directories,
                 'files'       => $files,
-                'thumbnail-base' => Storage::disk(config('devise.media.disk'))->url('slice-previews')
+                'thumbnailBase' => Storage::disk(config('devise.media.disk'))->url('slice-previews')
             ];
         }
 

@@ -6,6 +6,7 @@ use Devise\Http\Requests\ApiRequest;
 
 use Devise\Models\DvsSliceInstance;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
 use Spatie\Browsershot\Browsershot;
 use Spatie\Image\Manipulations;
@@ -36,8 +37,19 @@ class SlicesController extends Controller
                 ->fit(Manipulations::FIT_CONTAIN, 200, 200)
                 ->clip($x, $y, $width, $height)
                 ->save($savePath);
+
+            $this->moveToCloudIfNecessary($savePath, $fileName . '.png');
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    protected function moveToCloudIfNecessary($savePath, $fileName)
+    {
+        if (config('devise.media.disk') == 's3' || config('devise.media.disk') == 'spaces') {
+            $image = File::get($savePath);
+            Storage::disk(config('devise.media.disk'))->put('/slice-previews/' . $fileName, $image, ['visibility' => 'public']);
         }
     }
 
@@ -95,7 +107,8 @@ class SlicesController extends Controller
                 'path'        => $this->getDirPath($dir),
                 'dirName'     => $this->getDirName($dir, false),
                 'directories' => $directories,
-                'files'       => $files
+                'files'       => $files,
+                'thumbnail-base' => Storage::disk(config('devise.media.disk'))->url('slice-previews')
             ];
         }
 

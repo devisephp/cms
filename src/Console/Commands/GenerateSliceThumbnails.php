@@ -7,6 +7,7 @@ use Devise\Models\DvsPage;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 use Spatie\Browsershot\Browsershot;
 use Spatie\Image\Manipulations;
@@ -60,6 +61,8 @@ class GenerateSliceThumbnails extends Command
             ->windowSize(1024, 768)
             ->fit(Manipulations::FIT_CONTAIN, 500, 500)
             ->save($savePath);
+
+        $this->moveToCloudIfNecessary($savePath, $name . '.png');
     }
 
     protected function getViewFromPath($path)
@@ -110,5 +113,13 @@ class GenerateSliceThumbnails extends Command
     protected function sliceNeedsThumbnail($name)
     {
         return !File::exists(storage_path() . '/app/public/slice-previews/' . $name . '.png');
+    }
+
+    protected function moveToCloudIfNecessary($savePath, $fileName)
+    {
+        if (config('devise.media.disk') == 's3' || config('devise.media.disk') == 'spaces') {
+            $image = File::get($savePath);
+            Storage::disk(config('devise.media.disk'))->put('/slice-previews/' . $fileName, $image, ['visibility' => 'public']);
+        }
     }
 }

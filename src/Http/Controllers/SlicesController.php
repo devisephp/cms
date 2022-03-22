@@ -4,8 +4,8 @@ namespace Devise\Http\Controllers;
 
 use Devise\Http\Requests\ApiRequest;
 
-use Devise\Models\DvsSliceInstance;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 use Spatie\Browsershot\Browsershot;

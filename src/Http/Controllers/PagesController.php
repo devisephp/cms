@@ -79,7 +79,8 @@ class PagesController extends Controller
             abort(404);
         }
 
-        $redirect = DvsRedirect::where('from_url', '/' . $request->path())
+        $redirect = DvsRedirect::where('site_id', $page->site_id)
+            ->where('from_url', '/' . $request->path())
             ->first();
 
         if ($redirect && trim($redirect->from_url, '/') === $request->path()) {

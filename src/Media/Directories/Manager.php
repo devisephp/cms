@@ -90,18 +90,28 @@ class Manager
         if ($permittedList === '*') {
             return true;
         }
-        $permittedPath = $base . '/' . trim($permittedList, '/');
-        if ($level === 'read') {
-            if (
-                strpos($permittedPath, $dir) === 0 ||
-                strpos($dir, $permittedPath) === 0
-            ) {
-                return true;
+
+        $permittedList = is_array($permittedList) ? $permittedList : [$permittedList];
+
+        foreach ($permittedList as $permittedDir) {
+            $permittedPath = trim($permittedDir, '/');
+
+            if (strpos($dir, $base) === false) {
+                $permittedPath = $base . '/' . trim($permittedDir, '/');
             }
-        }
-        if ($level === 'write') {
-            if (strpos($dir, $permittedPath) === 0) {
-                return true;
+
+            if ($level === 'read') {
+                if (
+                    strpos($permittedPath, $dir) === 0 ||
+                    strpos($dir, $permittedPath) === 0
+                ) {
+                    return true;
+                }
+            }
+            if ($level === 'write') {
+                if (strpos($dir, $permittedPath) === 0) {
+                    return true;
+                }
             }
         }
 

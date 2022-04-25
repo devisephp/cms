@@ -30,8 +30,12 @@ class Repository
     /**
      *
      */
-    public function __construct(SiteDetector $SiteDetector, DirectoryPaths $CategoryPaths, ImageAlts $ImageAlts, Framework $Framework)
-    {
+    public function __construct(
+        SiteDetector $SiteDetector,
+        DirectoryPaths $CategoryPaths,
+        ImageAlts $ImageAlts,
+        Framework $Framework
+    ) {
         $this->SiteDetector = $SiteDetector;
         $this->CategoryPaths = $CategoryPaths;
         $this->ImageAlts = $ImageAlts;
@@ -50,13 +54,11 @@ class Repository
         $categoryPath = (isset($input['category'])) ? $this->CategoryPaths->fromDot($input['category']) : '';
         $currentDirectory = $this->CategoryPaths->serverPath($categoryPath);
 
-        if (in_array('categories', $include))
-        {
+        if (in_array('categories', $include)) {
             $data['categories'] = $this->buildCategories($currentDirectory);
         }
 
-        if (in_array('media-items', $include))
-        {
+        if (in_array('media-items', $include)) {
             $data['media-items'] = $this->buildMediaItems($currentDirectory);
         }
 
@@ -73,13 +75,11 @@ class Repository
         $fileData['type'] = 'file';
         $fileData['alt'] = $this->ImageAlts->get($fileData['url']);
 
-        if ($this->isImageExtension($file))
-        {
+        if ($this->isImageExtension($file)) {
             $fileData['type'] = 'image';
         }
 
-        if ($addUsageData)
-        {
+        if ($addUsageData) {
             $search = '%\\/storage' . str_replace('/', '\\\\\\/', $file) . '%';
             $pages = DvsField::where('json_value', 'like', $search)
                 ->join('dvs_slice_instances', 'dvs_slice_instances.id', '=', 'dvs_fields.slice_instance_id')
@@ -97,7 +97,25 @@ class Repository
 
     private function isImageExtension($path)
     {
-        $allowed = ['jpg', 'jpeg', 'jpe', 'jif', 'jfif', 'jfi', 'png', 'gif', 'webp', 'tiff', 'tif', 'jp2', 'j2k', 'jpf', 'jpx', 'jpm', 'mj2'];
+        $allowed = [
+            'jpg',
+            'jpeg',
+            'jpe',
+            'jif',
+            'jfif',
+            'jfi',
+            'png',
+            'gif',
+            'webp',
+            'tiff',
+            'tif',
+            'jp2',
+            'j2k',
+            'jpf',
+            'jpx',
+            'jpm',
+            'mj2'
+        ];
         $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
 
         return in_array($ext, $allowed);
@@ -111,21 +129,17 @@ class Repository
         $dirs = $this->Storage->directories($dir);
 
         $categories = array();
-        foreach ($dirs as $dir)
-        {
-            if (DirectoriesManager::dirPermitted($dir))
-            {
-                $dirArr = explode('/', $dir);
-                $dirName = end($dirArr);
+        foreach ($dirs as $dir) {
+            $dirArr = explode('/', $dir);
+            $dirName = end($dirArr);
 
-                $path = str_replace($this->CategoryPaths->basePath() . '/', '', $dir);
+            $path = str_replace($this->CategoryPaths->basePath() . '/', '', $dir);
 
-                $path = implode('.', explode('/', $path));
-                $categories[] = array(
-                    'name' => $dirName,
-                    'path' => $path
-                );
-            }
+            $path = implode('.', explode('/', $path));
+            $categories[] = array(
+                'name' => $dirName,
+                'path' => $path
+            );
         }
 
         // sort categories alphabetically...
@@ -165,10 +179,10 @@ class Repository
     private function buildMediaItemsFromFiles($files)
     {
         $newFilesArray = array();
-        foreach ($files as $file)
-        {
-            if ($this->passesFilters($file))
+        foreach ($files as $file) {
+            if ($this->passesFilters($file)) {
                 $newFilesArray[] = $this->getFileData($file);
+            }
         }
 
         return $newFilesArray;
@@ -179,17 +193,18 @@ class Repository
      */
     private function passesFilters($file)
     {
-        if (isset($this->input['type']))
-        {
+        if (isset($this->input['type'])) {
             $type = $this->Storage->mimeType($file);
-            if (strpos($type, $this->input['type']) === false)
+            if (strpos($type, $this->input['type']) === false) {
                 return false;
+            }
         }
 
-        if (strpos($file, 'DS_Store') !== false)
+        if (strpos($file, 'DS_Store') !== false) {
             return false;
+        }
 
-        return DirectoriesManager::dirPermitted($file);
+        return true;
     }
 
     /**
@@ -197,7 +212,9 @@ class Repository
      */
     private function sortByCategoryName($category1, $category2)
     {
-        if ($category1['name'] == $category2['name']) return 0;
+        if ($category1['name'] == $category2['name']) {
+            return 0;
+        }
 
         return $category1['name'] > $category2['name'] ? 1 : -1;
     }

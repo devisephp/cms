@@ -33,18 +33,13 @@ class Manager
     /**
      *
      */
-    public function saveUploadedFile($input)
+    public function saveUploadedFile($file, $dir)
     {
-        $categoryPath = (isset($input['directory'])) ? $this->CategoryPaths->fromDot($input['directory']) : '';
-        $file = Arr::get($input, 'file', null);
-
-        $serverPath = $this->CategoryPaths->serverPath($categoryPath);
-
         $originalName = $file->getClientOriginalName();
         $name = Str::slug(pathinfo($originalName, PATHINFO_FILENAME));
         $ext = pathinfo($originalName, PATHINFO_EXTENSION);
 
-        $this->Storage->putFileAs($serverPath, $file, $name . '.' . $ext, ['visibility' => 'public']);
+        $this->Storage->putFileAs($dir, $file, $name . '.' . $ext, ['visibility' => 'public']);
     }
 
     /**

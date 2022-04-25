@@ -104,9 +104,10 @@ class MediaController extends Controller
     {
         $this->validate($request, ['file' => 'required|file']);
 
+
         $dir = $this->CategoriesManager->dotToServerPath($request->get('directory'));
         if (CategoriesManager::dirPermitted($dir, 'write')) {
-            $this->FileManager->saveUploadedFile($request->all());
+            $this->FileManager->saveUploadedFile($request->file('file'), $dir);
         } else {
             abort(403, 'Action Not Permitted');
         }

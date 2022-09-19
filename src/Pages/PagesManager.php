@@ -393,7 +393,7 @@ class PagesManager
     {
         $ignore = (!isset($requestData['force']) || $requestData['force'] === false || $requestData['force'] === 0) ? false : true;
 
-        if (!$ignore && $requestData['version_last_updated_at'] !== $currentVersion->updated_at->format('Y-m-d H:i:s'))
+        if (!$ignore && isset($requestData['version_last_updated_at']) && $requestData['version_last_updated_at'] !== $currentVersion->updated_at->format('Y-m-d H:i:s'))
         {
             abort(480, 'The page being saved is outdated. Please refresh your page before making changes.');
         }

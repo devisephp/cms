@@ -116,7 +116,8 @@ class DvsPage extends Model
             return $liveVersion;
         }
 
-        return $this->livePageVersionByDate();
+        return $this->livePageVersionByDate()
+            ->first();
     }
 
     public function versionById($id)
@@ -133,7 +134,9 @@ class DvsPage extends Model
             return null;
         }
 
-        $liveVersion = $this->versionById($pageVersionId)->first();
+        $liveVersion = $this->abEnabledLiveVersions
+            ->where('id', $pageVersionId)
+            ->first();
 
         if ($liveVersion) {
             return $liveVersion;
